@@ -1,5 +1,5 @@
 import { BorderBeam } from "@/components/magicui/border-beam";
-import MobileNav from "@/components/public/mobile-nav";
+import Nav from "@/components/public/nav";
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon, Menu } from "lucide-react";
 import Image from "next/image";
@@ -21,11 +21,11 @@ const Home = () => {
           </Button>
         </div>
         <div className="flex sm:hidden">
-          <MobileNav>
+          <Nav>
             <Button variant={"ghost"} size={"icon"}>
               <Menu className="w-8 h-8" />
             </Button>
-          </MobileNav>
+          </Nav>
         </div>
       </div>
       <div className="mt-52 mb-36 relative flex flex-col justify-center items-center mx-4 sm:mx-0">
