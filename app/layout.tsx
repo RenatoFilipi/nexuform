@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Noto_Sans, Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
-const notoSans = Noto_Sans({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -19,6 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="min-h-screen relative">{children}</div>
+        <Toaster richColors />
       </body>
     </html>
   );

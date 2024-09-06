@@ -5,8 +5,17 @@ import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import { z } from "zod";
 
 const Signup = () => {
+  const [loading, setLoading] = useState(false);
+
+  const formSchema = z.object({
+    email: z.string(),
+    password: z.string(),
+  });
+
   return (
     <div className="min-h-screen flex flex-col justify-center items-center relative">
       <div className="fixed sm:top-5 top-2 w-full flex sm:justify-center justify-between items-center px-4">
@@ -21,7 +30,7 @@ const Signup = () => {
           </Nav>
         </div>
       </div>
-      <div>Signup page</div>
+      <div className="flex justify-center items-center gap-4"></div>
       <div className="fixed bottom-5 w-full flex justify-center items-center">
         <span className="text-sm">
           Already have an account?{" "}
