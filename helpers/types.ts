@@ -1,0 +1,1 @@
+export type stage = "stage01" | "stage02" | "stage03" | "stage04" | "stage05";
