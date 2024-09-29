@@ -40,7 +40,7 @@ const Home = () => {
           </div>
           <div>
             <Button asChild>
-              <Link href={"/signup"}>
+              <Link href={"/dashboard"}>
                 Start Free Trial
                 <ArrowRightIcon className="w-4 h-4 ml-2" />
               </Link>
