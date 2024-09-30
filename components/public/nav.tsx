@@ -34,8 +34,8 @@ const Nav = ({ children }: { children: React.ReactNode }) => {
               key={link.id}
               href={link.path}
               className={`${
-                isActive(link.path) && "bg-primary"
-              } p-2 border rounded font-semibold`}>
+                isActive(link.path) && "bg-primary/20"
+              } p-2 border rounded`}>
               {link.name}
             </Link>
           ))}

@@ -1,6 +1,13 @@
 "use client";
 
-import { LogOutIcon, Menu, Settings2Icon, UserIcon } from "lucide-react";
+import {
+  ChartAreaIcon,
+  HouseIcon,
+  LogOutIcon,
+  Menu,
+  Settings2Icon,
+  UserIcon,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -18,8 +25,18 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 
 const navLinks = [
-  { id: 1, name: "Dashboard", path: "/dashboard" },
-  { id: 2, name: "Analytics", path: "/dashboard/analytics" },
+  {
+    id: 1,
+    name: "Dashboard",
+    path: "/dashboard",
+    icon: <HouseIcon className="w-4 h-4 mr-2" />,
+  },
+  {
+    id: 2,
+    name: "Analytics",
+    path: "/dashboard/analytics",
+    icon: <ChartAreaIcon className="w-4 h-4 mr-2" />,
+  },
 ];
 
 const Nav = () => {
@@ -38,7 +55,7 @@ const Nav = () => {
               key={link.id}
               href={link.path}
               className={`${
-                isActive(link.path) && "font-semibold"
+                isActive(link.path) && ""
               } text-sm h-full flex justify-center items-center px-3 hover:bg-foreground/5 relative`}>
               {isActive(link.path) && (
                 <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>
@@ -52,7 +69,9 @@ const Nav = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className="cursor-pointer">
-              <AvatarFallback>R</AvatarFallback>
+              <AvatarFallback className="bg-primary/20 hover:bg-primary/30">
+                R
+              </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="mr-6 min-w-44">
@@ -91,26 +110,43 @@ const MobileMenu = ({ children }: { children: ReactNode }) => {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>{children}</SheetTrigger>
-      <SheetContent side={"left"}>
+      <SheetContent
+        side={"left"}
+        className="flex flex-col h-full justify-between">
         <div>
-          <Image
-            src={"/brand.svg"}
-            alt="brand"
-            width={150}
-            height={100}></Image>
+          <div>
+            <Image
+              src={"/brand.svg"}
+              alt="brand"
+              width={150}
+              height={100}></Image>
+          </div>
+          <div className="flex flex-col pt-10 gap-2">
+            {navLinks.map((link) => (
+              <Link
+                onClick={() => setOpen(false)}
+                key={link.id}
+                href={link.path}
+                className={`${
+                  isActive(link.path) && "bg-primary/20"
+                } p-2 border rounded`}>
+                {link.name}
+              </Link>
+            ))}
+          </div>
         </div>
-        <div className="flex flex-col pt-10 gap-2">
-          {navLinks.map((link) => (
-            <Link
-              onClick={() => setOpen(false)}
-              key={link.id}
-              href={link.path}
-              className={`${
-                isActive(link.path) && "bg-primary"
-              } p-2 border rounded font-semibold`}>
-              {link.name}
-            </Link>
-          ))}
+        <div className="flex flex-col w-full gap-2">
+          <div className="flex flex-col">
+            <Button variant={"ghost"} className="flex justify-start">
+              <UserIcon className="h4 w-4 mr-2" /> Profile
+            </Button>
+            <Button variant={"ghost"} className="flex justify-start">
+              <Settings2Icon className="h4 w-4 mr-2" /> Settings
+            </Button>
+          </div>
+          <Button variant={"outline"} className="flex justify-start">
+            <LogOutIcon className="w-4 h-4 mr-2" /> Log out
+          </Button>
         </div>
       </SheetContent>
     </Sheet>
