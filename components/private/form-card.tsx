@@ -5,7 +5,7 @@ interface Props {
 }
 
 const FormCard = ({ title }: Props) => {
-  return <Card className="p-3 flex justify-center items-center h-40">{title}</Card>;
+  return <Card className="p-4 flex h-40">{title}</Card>;
 };
 
 export default FormCard;

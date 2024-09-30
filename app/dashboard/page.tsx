@@ -6,9 +6,11 @@ const Dashboard = () => {
     <div className="flex flex-col h-full gap-10 m-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold">Dashboard</h1>
-        <Button size={"sm"}>Create Form</Button>
+        <Button size={"sm"} variant={"secondary"}>
+          Create Form
+        </Button>
       </div>
-      <div className="flex-1 grid sm:grid-cols-3 gap-10">
+      <div className="sm:grid sm:grid-cols-3 gap-10 flex flex-col flex-1">
         <FormCard title="Customer Success" />
         <FormCard title="Product Feedback" />
       </div>
