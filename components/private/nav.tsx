@@ -62,7 +62,9 @@ const Nav = () => {
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <LogOutIcon className="w-4 h-4 mr-2" /> Log out
+              <Link href={"/"} className="flex justify-center items-center">
+                <LogOutIcon className="w-4 h-4 mr-2" /> Log out
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
