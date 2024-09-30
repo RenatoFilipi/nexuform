@@ -1,9 +1,12 @@
 "use client";
 
+import { LogOutIcon, Menu, Settings2Icon, UserIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ReactNode, useState } from "react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { LogOutIcon, Settings2Icon, UserIcon } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 
 const navLinks = [
   { id: 1, name: "Dashboard", path: "/dashboard" },
@@ -29,7 +32,7 @@ const Nav = () => {
         <Link href={"/dashboard"}>
           <Image alt="logo" src={"/logo.svg"} height={0} width={33} />
         </Link>
-        <div className="flex justify-center items-center gap-2 h-full">
+        <div className="hidden sm:flex justify-center items-center gap-2 h-full">
           {navLinks.map((link) => (
             <Link
               key={link.id}
@@ -37,13 +40,15 @@ const Nav = () => {
               className={`${
                 isActive(link.path) && "font-semibold"
               } text-sm h-full flex justify-center items-center px-3 hover:bg-foreground/5 relative`}>
-              {isActive(link.path) && <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>}
+              {isActive(link.path) && (
+                <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>
+              )}
               {link.name}
             </Link>
           ))}
         </div>
       </div>
-      <div className="flex justify-center items-center">
+      <div className="hidden sm:flex justify-center items-center">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className="cursor-pointer">
@@ -67,7 +72,48 @@ const Nav = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+      <div className="flex sm:hidden">
+        <MobileMenu>
+          <Button variant={"ghost"} size={"icon"}>
+            <Menu className="w-8 h-8" />
+          </Button>
+        </MobileMenu>
+      </div>
     </div>
+  );
+};
+
+const MobileMenu = ({ children }: { children: ReactNode }) => {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const isActive = (path: string) => path === pathname;
+
+  return (
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>{children}</SheetTrigger>
+      <SheetContent side={"left"}>
+        <div>
+          <Image
+            src={"/brand.svg"}
+            alt="brand"
+            width={150}
+            height={100}></Image>
+        </div>
+        <div className="flex flex-col pt-10 gap-2">
+          {navLinks.map((link) => (
+            <Link
+              onClick={() => setOpen(false)}
+              key={link.id}
+              href={link.path}
+              className={`${
+                isActive(link.path) && "bg-primary"
+              } p-2 border rounded font-semibold`}>
+              {link.name}
+            </Link>
+          ))}
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 };
 
