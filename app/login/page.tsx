@@ -10,13 +10,11 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { minWidth640 } from "@/helpers/constants";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { useMediaQuery } from "react-responsive";
 import { z } from "zod";
 
 const Login = () => {
@@ -34,8 +32,6 @@ const Login = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
   };
-
-  const matches = useMediaQuery({ query: minWidth640 });
 
   return (
     <div className="border min-h-screen flex">
