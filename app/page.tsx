@@ -16,7 +16,7 @@ const Home = () => {
           <Button variant={"outline"} size={"sm"} asChild>
             <Link href={"/login"}>Login</Link>
           </Button>
-          <Button size={"sm"} asChild>
+          <Button variant={"secondary"} size={"sm"} asChild>
             <Link href={"/signup"}>Get Started</Link>
           </Button>
         </div>
@@ -32,10 +32,12 @@ const Home = () => {
         <div className="flex justify-center items-center flex-col gap-6 w-full">
           <div className="flex flex-col justify-center items-center w-full text-center gap-6">
             <h1 className="font-bold text-3xl sm:text-6xl max-w-[43.5rem]">
-              Streamline Feedback <span>With Intuitive Forms</span>
+              Streamline Feedback With{" "}
+              <span className="text-primary">Intuitive Forms</span>
             </h1>
-            <p className="max-w-xl text-base font-normal text-foreground/70">
-              Transform Your Business Landscape through Strategic Decision-Making with Data Insights.
+            <p className="max-w-xl text-base font-normal text-foreground/0">
+              Transform Your Business Landscape through Strategic
+              Decision-Making with Data Insights.
             </p>
           </div>
           <div>
@@ -50,7 +52,12 @@ const Home = () => {
         <div className="mt-20">
           <div className="relative rounded-lg border p-2">
             <BorderBeam borderWidth={3} colorTo="#307dff" colorFrom="#30CCFF" />
-            <Image alt="hero preview feature" src={"/dash.webp"} width={1200} height={500} />
+            <Image
+              alt="hero preview feature"
+              src={"/dash.webp"}
+              width={1200}
+              height={500}
+            />
           </div>
         </div>
       </div>

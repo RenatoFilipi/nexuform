@@ -69,7 +69,7 @@ const Nav = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className="cursor-pointer">
-              <AvatarFallback className="bg-primary/20 hover:bg-primary/30">
+              <AvatarFallback className="bg-primary hover:bg-primary/70">
                 R
               </AvatarFallback>
             </Avatar>
@@ -130,7 +130,7 @@ const MobileMenu = ({ children }: { children: ReactNode }) => {
                 key={link.id}
                 href={link.path}
                 className={`${
-                  isActive(link.path) && "bg-primary/20"
+                  isActive(link.path) && "bg-primary"
                 } p-2 border rounded`}>
                 {link.name}
               </Link>
@@ -146,7 +146,7 @@ const MobileMenu = ({ children }: { children: ReactNode }) => {
               <Settings2Icon className="h4 w-4 mr-2" /> Settings
             </Button>
           </div>
-          <Button variant={"outline"} className="flex justify-start">
+          <Button variant={"secondary"} className="flex justify-start">
             <LogOutIcon className="w-4 h-4 mr-2" /> Log out
           </Button>
         </div>

@@ -1,7 +1,6 @@
 "use client";
 
 import DotPattern from "@/components/magicui/dot-pattern";
-import Nav from "@/components/public/nav";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,7 +12,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -114,7 +112,7 @@ const Signup = () => {
           </Form>
         </div>
       </div>
-      <div className="bg-primary/20 flex-1 sm:flex hidden justify-center items-center w-full relative">
+      <div className="bg-primary/40 flex-1 sm:flex hidden justify-center items-center w-full relative">
         <Image alt="brand logo" src={"/brand.svg"} height={0} width={280} />
         <DotPattern
           width={20}
@@ -126,69 +124,6 @@ const Signup = () => {
             "[mask-image:linear-gradient(to_bottom_right,white,white,white)] "
           )}
         />
-      </div>
-    </div>
-  );
-
-  return (
-    <div className="min-h-screen flex flex-col justify-center items-center relative">
-      <div className="fixed sm:top-5 top-2 w-full flex sm:justify-center justify-between items-center px-4">
-        <Link href={"/"}>
-          <Image alt="logo" src={"/logo.svg"} width={40} height={40}></Image>
-        </Link>
-        <div className="flex sm:hidden">
-          <Nav>
-            <Button variant={"ghost"} size={"icon"}>
-              <Menu className="w-8 h-8" />
-            </Button>
-          </Nav>
-        </div>
-      </div>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full sm:max-w-96 flex flex-col gap-6 justify-center items-center sm:p-0 px-12">
-          <h1 className="text-2xl font-bold">Sign up</h1>
-          <div className="flex flex-col gap-3 w-full">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input type="email" {...field} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" {...field} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="flex flex-col w-full gap-2">
-            <Button type="submit" className="w-full">
-              Sign up
-            </Button>
-          </div>
-        </form>
-      </Form>
-      <div className="fixed bottom-5 w-full flex justify-center items-center">
-        <span className="text-sm">
-          Already have an account?{" "}
-          <Link href={"/login"} className="hover:underline text-primary">
-            Log In
-          </Link>
-        </span>
       </div>
     </div>
   );

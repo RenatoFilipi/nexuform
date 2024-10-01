@@ -110,7 +110,7 @@ const Login = () => {
           </Form>
         </div>
       </div>
-      <div className="bg-primary/20 flex-1 sm:flex hidden justify-center items-center w-full relative">
+      <div className="bg-primary/40 flex-1 sm:flex hidden justify-center items-center w-full relative">
         <Image alt="brand logo" src={"/brand.svg"} height={0} width={280} />
         <DotPattern
           width={20}
