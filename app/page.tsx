@@ -35,7 +35,7 @@ const Home = () => {
               Streamline Feedback With{" "}
               <span className="text-primary">Intuitive Forms</span>
             </h1>
-            <p className="max-w-xl text-base font-normal text-foreground/0">
+            <p className="max-w-xl text-base font-normal text-foreground/80">
               Transform Your Business Landscape through Strategic
               Decision-Making with Data Insights.
             </p>
