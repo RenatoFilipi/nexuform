@@ -1,4 +1,5 @@
 import { EditIcon, ViewIcon } from "lucide-react";
+import Link from "next/link";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
@@ -10,7 +11,7 @@ export interface FormCardProps {
   responsesCount: number;
 }
 
-const FormCard = ({ title, status, responsesCount }: FormCardProps) => {
+const FormCard = ({ title, status, responsesCount, id }: FormCardProps) => {
   const responsesDisplay = (count: number) => {
     return count === 1 ? `${count} Response` : `${count} Responses`;
   };
@@ -30,13 +31,17 @@ const FormCard = ({ title, status, responsesCount }: FormCardProps) => {
           {responsesDisplay(responsesCount)}
         </span>
         <div className="flex justify-center items-center gap-2">
-          <Button variant={"outline"} size={"sm"}>
-            <ViewIcon className="w-4 h-4 mr-2" />
-            View
+          <Button variant={"outline"} size={"sm"} asChild>
+            <Link href={`/dashboard/forms/${id}`}>
+              <ViewIcon className="w-4 h-4 mr-2" />
+              View
+            </Link>
           </Button>
-          <Button variant={"outline"} size={"sm"}>
-            <EditIcon className="w-4 h-4 mr-2" />
-            Edit
+          <Button variant={"outline"} size={"sm"} asChild>
+            <Link href={`/dashboard/editor/${id}`}>
+              <EditIcon className="w-4 h-4 mr-2" />
+              Edit
+            </Link>
           </Button>
         </div>
       </div>

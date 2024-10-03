@@ -43,6 +43,14 @@ const AppNav = () => {
   const pathname = usePathname();
   const isActive = (path: string) => path === pathname;
 
+  if (pathname.includes("/editor/")) {
+    return (
+      <div className="border-b flex justify-center items-center h-10">
+        Editor nav
+      </div>
+    );
+  }
+
   return (
     <div className="border-b h-16 flex items-center px-6 justify-between">
       <div className="flex justify-center items-center gap-12 h-full">
@@ -69,7 +77,7 @@ const AppNav = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className="cursor-pointer">
-              <AvatarFallback className="bg-primary hover:bg-primary/70">
+              <AvatarFallback className="bg-foreground text-background">
                 R
               </AvatarFallback>
             </Avatar>

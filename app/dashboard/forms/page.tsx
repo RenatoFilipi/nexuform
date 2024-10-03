@@ -21,37 +21,25 @@ const formList: FormCardProps[] = [
     id: uuid(),
     title: "Customer Satisfaction",
     responsesCount: 1,
-    status: "inactive",
+    status: "published",
   },
   {
     id: uuid(),
     title: "Employee Survey",
     responsesCount: 5,
-    status: "published",
+    status: "draft",
   },
   {
     id: uuid(),
     title: "Event Registration",
     responsesCount: 10,
-    status: "published",
+    status: "draft",
   },
   {
     id: uuid(),
     title: "Market Research",
     responsesCount: 3,
     status: "inactive",
-  },
-  {
-    id: uuid(),
-    title: "New Feature Requests",
-    responsesCount: 7,
-    status: "published",
-  },
-  {
-    id: uuid(),
-    title: "Customer Onboarding",
-    responsesCount: 0,
-    status: "draft",
   },
 ];
 
@@ -90,7 +78,7 @@ const Forms = () => {
       )}
       {/* has form */}
       {state === "has_form" && (
-        <div className="overflow-y-auto grid gap-8 grid-cols-1 sm:grid-cols-4">
+        <div className="overflow-y-auto grid gap-8 grid-cols-1 sm:grid-cols-3">
           {formList.map((form) => (
             <FormCard
               key={form.id}
