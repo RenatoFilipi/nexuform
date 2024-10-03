@@ -1,16 +1,44 @@
 "use client";
 
 import CreateForm from "@/components/private/create-form";
-import FormCard from "@/components/private/form-card";
+import FormCard, { FormCardProps } from "@/components/private/form-card";
 import GenericError from "@/components/private/generic-error";
 import { Button } from "@/components/ui/button";
+import { uuid } from "@/helpers/functions";
 import { BookIcon, Loader2Icon } from "lucide-react";
 import { useState } from "react";
 
 type state = "loading" | "no_form" | "has_form" | "error";
 
+const formList: FormCardProps[] = [
+  {
+    id: uuid(),
+    title: "Product Feedback",
+    responsesCount: 2,
+    status: "published",
+  },
+  {
+    id: uuid(),
+    title: "Customer Satisfaction",
+    responsesCount: 1,
+    status: "inactive",
+  },
+  {
+    id: uuid(),
+    title: "Employee Survey",
+    responsesCount: 5,
+    status: "draft",
+  },
+  {
+    id: uuid(),
+    title: "Event Registration",
+    responsesCount: 10,
+    status: "draft",
+  },
+];
+
 const Forms = () => {
-  const [state] = useState<state>("no_form");
+  const [state] = useState<state>("has_form");
 
   return (
     <div className="flex flex-col h-full gap-10 my-6 mx-6 sm:mx-12 overflow-y-auto">
@@ -45,8 +73,15 @@ const Forms = () => {
       {/* has form */}
       {state === "has_form" && (
         <div className="overflow-y-auto grid gap-8 grid-cols-1 sm:grid-cols-3">
-          <FormCard title="Customer Success" />
-          <FormCard title="Product Feedback" />
+          {formList.map((form) => (
+            <FormCard
+              key={form.id}
+              id={form.id}
+              title={form.title}
+              status={form.status}
+              responsesCount={form.responsesCount}
+            />
+          ))}
         </div>
       )}
       {/* error */}
