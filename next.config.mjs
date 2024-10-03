@@ -7,6 +7,11 @@ const nextConfig = {
         destination: "/dashboard/forms",
         permanent: true,
       },
+      {
+        source: "/dashboard/editor",
+        destination: "/dashboard/forms",
+        permanent: true,
+      },
     ];
   },
 };

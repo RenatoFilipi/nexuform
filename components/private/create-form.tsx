@@ -8,6 +8,7 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { minWidth640 } from "@/helpers/constants";
+import { setState } from "@/helpers/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ReactNode, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -26,8 +27,8 @@ const CreateForm = ({ children }: { children: ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="">
-          <Body />
+        <DialogContent>
+          <Body setState={setOpen} />
         </DialogContent>
       </Dialog>
     );
@@ -36,14 +37,14 @@ const CreateForm = ({ children }: { children: ReactNode }) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-6">
-        <Body />
+      <DrawerContent className="p-3">
+        <Body setState={setOpen} />
       </DrawerContent>
     </Drawer>
   );
 };
 
-const Body = () => {
+const Body = ({ setState }: { setState: setState<boolean> }) => {
   const formSchema = z.object({ name: z.string() });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -56,8 +57,13 @@ const Body = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-xl font-semibold">Create form</h1>
+    <div className="flex flex-col gap-4 pt-8 sm:pt-0">
+      <div className="flex flex-col gap-1.5 justify-center items-center sm:items-start">
+        <h1 className="text-xl font-semibold">Create form</h1>
+        <p className="text-foreground/80 text-sm">
+          Start by giving your form a name.
+        </p>
+      </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -74,7 +80,15 @@ const Body = () => {
               </FormItem>
             )}
           />
-          <div className="flex justify-end items-center">
+          <div className="flex justify-end flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
+            <Button
+              onClick={() => setState(false)}
+              type="button"
+              variant={"outline"}
+              size={"sm"}
+              className="w-full sm:w-fit">
+              Cancel
+            </Button>
             <Button
               type="submit"
               variant={"secondary"}
