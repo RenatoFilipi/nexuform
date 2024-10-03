@@ -19,9 +19,11 @@ const FormCard = ({ title, status, responsesCount }: FormCardProps) => {
     <Card className="flex h-40 p-4 hover:border-foreground/20 items-start flex-col justify-between">
       <div className="flex justify-between items-center w-full">
         <span className="font-semibold text-lg">{title}</span>
-        {status === "draft" && <Badge variant={"warning"}>{status}</Badge>}
+        {status === "draft" && <Badge variant={"secondary"}>{status}</Badge>}
         {status === "published" && <Badge variant={"success"}>{status}</Badge>}
-        {status === "inactive" && <Badge variant={"secondary"}>{status}</Badge>}
+        {status === "inactive" && (
+          <Badge variant={"destructive"}>{status}</Badge>
+        )}
       </div>
       <div className="flex justify-between items-center w-full">
         <span className="text-foreground/80 text-sm">
