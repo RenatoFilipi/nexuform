@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  ChartAreaIcon,
-  HouseIcon,
-  LogOutIcon,
-  Menu,
-  Settings2Icon,
-  UserIcon,
-} from "lucide-react";
+import { ChartAreaIcon, HouseIcon, LogOutIcon, Menu, Settings2Icon, UserIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -27,8 +20,8 @@ import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 const navLinks = [
   {
     id: 1,
-    name: "Dashboard",
-    path: "/dashboard",
+    name: "Forms",
+    path: "/dashboard/forms",
     icon: <HouseIcon className="w-4 h-4 mr-2" />,
   },
   {
@@ -39,7 +32,7 @@ const navLinks = [
   },
 ];
 
-const Nav = () => {
+const AppNav = () => {
   const pathname = usePathname();
   const isActive = (path: string) => path === pathname;
 
@@ -57,9 +50,7 @@ const Nav = () => {
               className={`${
                 isActive(link.path) && ""
               } text-sm h-full flex justify-center items-center px-3 hover:bg-foreground/5 relative`}>
-              {isActive(link.path) && (
-                <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>
-              )}
+              {isActive(link.path) && <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>}
               {link.name}
             </Link>
           ))}
@@ -69,9 +60,7 @@ const Nav = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className="cursor-pointer">
-              <AvatarFallback className="bg-primary hover:bg-primary/70">
-                R
-              </AvatarFallback>
+              <AvatarFallback className="bg-primary hover:bg-primary/70">R</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="mr-6 min-w-44">
@@ -112,16 +101,10 @@ const MobileMenu = ({ children }: { children: ReactNode }) => {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>{children}</SheetTrigger>
-      <SheetContent
-        side={"left"}
-        className="flex flex-col h-full justify-between">
+      <SheetContent side={"left"} className="flex flex-col h-full justify-between">
         <div>
           <div>
-            <Image
-              src={"/brand.svg"}
-              alt="brand"
-              width={150}
-              height={100}></Image>
+            <Image src={"/brand.svg"} alt="brand" width={150} height={100}></Image>
           </div>
           <div className="flex flex-col pt-10 gap-2">
             {navLinks.map((link) => (
@@ -129,9 +112,7 @@ const MobileMenu = ({ children }: { children: ReactNode }) => {
                 onClick={() => setOpen(false)}
                 key={link.id}
                 href={link.path}
-                className={`${
-                  isActive(link.path) && "bg-primary"
-                } p-2 border rounded`}>
+                className={`${isActive(link.path) && "bg-primary"} p-2 border rounded`}>
                 {link.name}
               </Link>
             ))}
@@ -155,4 +136,4 @@ const MobileMenu = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default Nav;
+export default AppNav;

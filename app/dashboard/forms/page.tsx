@@ -5,11 +5,11 @@ import FormCard from "@/components/private/form-card";
 import { Button } from "@/components/ui/button";
 import { BookDashedIcon, Loader2Icon } from "lucide-react";
 
-const Dashboard = () => {
+const Forms = () => {
   return (
     <div className="flex flex-col h-full gap-10 my-6 mx-6 sm:mx-12 overflow-y-auto">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold">Dashboard</h1>
+        <h1 className="text-2xl font-semibold">Forms</h1>
         <CreateForm>
           <Button size={"sm"} variant={"secondary"}>
             Create Form
@@ -29,9 +29,7 @@ const Dashboard = () => {
             <BookDashedIcon className="w-8 h-8" />
             <div className="flex flex-col justify-center items-center">
               <span className="font-semibold">No form to show</span>
-              <span className="text-foreground/80 text-sm">
-                Start by creating your first form.
-              </span>
+              <span className="text-foreground/80 text-sm">Start by creating your first form.</span>
             </div>
           </div>
         </div>
@@ -47,4 +45,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Forms;
