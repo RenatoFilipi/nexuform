@@ -8,9 +8,11 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { minWidth640 } from "@/helpers/constants";
+import { uuid } from "@/helpers/functions";
 import { setState } from "@/helpers/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ReactNode, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMediaQuery } from "react-responsive";
 import { z } from "zod";
@@ -19,7 +21,7 @@ import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
 import { Input } from "../ui/input";
 
-const CreateForm = ({ children }: { children: ReactNode }) => {
+const CreateForm = ({ children }: { children: React.ReactNode }) => {
   const isDesktop = useMediaQuery({ query: minWidth640 });
   const [open, setOpen] = useState(false);
 
@@ -45,6 +47,7 @@ const CreateForm = ({ children }: { children: ReactNode }) => {
 };
 
 const Body = ({ setState }: { setState: setState<boolean> }) => {
+  const router = useRouter();
   const formSchema = z.object({ name: z.string() });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -54,6 +57,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
+    router.push(`/dashboard/editor/${uuid()}`);
   };
 
   return (

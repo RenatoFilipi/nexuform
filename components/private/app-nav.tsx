@@ -6,12 +6,13 @@ import {
   LogOutIcon,
   Menu,
   Settings2Icon,
+  SettingsIcon,
   UserIcon,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
@@ -23,6 +24,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import FormSettings from "./form-settings";
 
 const navLinks = [
   {
@@ -45,14 +47,33 @@ const AppNav = () => {
 
   if (pathname.includes("/editor/")) {
     return (
-      <div className="border-b flex justify-center items-center h-10">
-        Editor nav
+      <div className="flex justify-between items-center h-14 px-6 z-10 bg-background">
+        <div>
+          <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
+            <Link href={"/dashboard/forms"}>
+              <Image alt="logo" src={"/logo.svg"} height={0} width={24} />
+            </Link>
+          </Button>
+        </div>
+        <div className="flex justify-center items-center gap-4">
+          <FormSettings>
+            <Button variant={"outline"} size={"icon"}>
+              <SettingsIcon className="w-5 h-5" />
+            </Button>
+          </FormSettings>
+          <Button variant={"outline"} size={"sm"}>
+            Save
+          </Button>
+          <Button variant={"secondary"} size={"sm"}>
+            Publish
+          </Button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="border-b h-16 flex items-center px-6 justify-between">
+    <div className="border-b h-16 flex items-center px-6 justify-between z-10 bg-background">
       <div className="flex justify-center items-center gap-12 h-full">
         <Link href={"/dashboard"}>
           <Image alt="logo" src={"/logo.svg"} height={0} width={33} />
@@ -112,7 +133,7 @@ const AppNav = () => {
   );
 };
 
-const MobileMenu = ({ children }: { children: ReactNode }) => {
+const MobileMenu = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const isActive = (path: string) => path === pathname;

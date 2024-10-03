@@ -1,47 +1,14 @@
 "use client";
 
 import CreateForm from "@/components/private/create-form";
-import FormCard, { FormCardProps } from "@/components/private/form-card";
+import FormCard from "@/components/private/form-card";
 import GenericError from "@/components/private/generic-error";
 import { Button } from "@/components/ui/button";
-import { uuid } from "@/helpers/functions";
+import { formList } from "@/mocks/forms";
 import { BookIcon, Loader2Icon } from "lucide-react";
 import { useState } from "react";
 
 type state = "loading" | "no_form" | "has_form" | "error";
-
-const formList: FormCardProps[] = [
-  {
-    id: uuid(),
-    title: "Product Feedback",
-    responsesCount: 2,
-    status: "published",
-  },
-  {
-    id: uuid(),
-    title: "Customer Satisfaction",
-    responsesCount: 1,
-    status: "published",
-  },
-  {
-    id: uuid(),
-    title: "Employee Survey",
-    responsesCount: 5,
-    status: "draft",
-  },
-  {
-    id: uuid(),
-    title: "Event Registration",
-    responsesCount: 10,
-    status: "draft",
-  },
-  {
-    id: uuid(),
-    title: "Market Research",
-    responsesCount: 3,
-    status: "inactive",
-  },
-];
 
 const Forms = () => {
   const [state] = useState<state>("has_form");
