@@ -1,15 +1,13 @@
 "use client";
 
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { minWidth640 } from "@/helpers/constants";
+import { setState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
 import {
   ChartAreaIcon,
+  CheckIcon,
   ChevronsUpDownIcon,
   HouseIcon,
   LogOutIcon,
@@ -20,7 +18,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Avatar, AvatarFallback } from "../../ui/avatar";
@@ -50,11 +48,9 @@ const navLinks = [
     icon: <ChartAreaIcon className="w-4 h-4 mr-2" />,
   },
 ];
-
 const Nav = () => {
   const pathname = usePathname();
   const isActive = (path: string) => path === pathname;
-  const router = useRouter();
 
   // editor
   if (pathname.includes("dashboard/editor/")) {
@@ -97,7 +93,7 @@ const Nav = () => {
 
     return (
       <div className="border-b h-16 flex items-center px-6 justify-between z-10 bg-background">
-        <div className="flex justify-center items-center gap-6 h-full">
+        <div className="flex justify-center items-center gap-4 h-full">
           <div className="flex justify-center items-center gap-4">
             <Link href={"/dashboard"}>
               <Image alt="logo" src={"/logo.svg"} height={0} width={33} />
@@ -106,14 +102,14 @@ const Nav = () => {
               <div className="flex justify-center items-center gap-1">
                 <span className="">{currentForm.title}</span>
                 <SelectForm>
-                  <Button variant={"ghost"} size={"icon"}>
+                  <Button variant={"ghost"} size={"icon"} className="w-6">
                     <ChevronsUpDownIcon className="w-4 h-4" />
                   </Button>
                 </SelectForm>
               </div>
             )}
           </div>
-          <div className="hidden sm:flex justify-center items-center gap-2 h-full">
+          <div className="hidden sm:flex justify-center items-center gap-0 h-full">
             {navLinks.map((link) => (
               <Link
                 key={link.id}
@@ -177,7 +173,7 @@ const Nav = () => {
             <Image alt="logo" src={"/logo.svg"} height={0} width={33} />
           </Link>
         </div>
-        <div className="hidden sm:flex justify-center items-center gap-2 h-full">
+        <div className="hidden sm:flex justify-center items-center gap-0 h-full">
           {navLinks.map((link) => (
             <Link
               key={link.id}
@@ -231,7 +227,6 @@ const Nav = () => {
     </div>
   );
 };
-
 const NavMobile = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -253,7 +248,7 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
                 key={link.id}
                 href={link.path}
                 className={`${
-                  isActive(link.path) && "bg-primary hover:bg-primary/70"
+                  isActive(link.path) && "bg-primary/40 hover:bg-primary/50"
                 } p-2 border rounded hover:bg-foreground/5`}>
                 {link.name}
               </Link>
@@ -279,33 +274,65 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
     </Sheet>
   );
 };
-
 const SelectForm = ({ children }: { children: React.ReactNode }) => {
   const isDesktop = useMediaQuery({ query: minWidth640 });
+  const [open, setOpen] = useState(false);
 
   if (isDesktop) {
     return (
-      <Popover>
-        <PopoverTrigger asChild>{children}</PopoverTrigger>
-        <PopoverContent>
-          <SelectFormBody />
-        </PopoverContent>
-      </Popover>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogContent>
+          <SelectFormBody setState={setOpen} />
+        </DialogContent>
+      </Dialog>
     );
   }
 
   return (
-    <Drawer>
+    <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="h-[70%]">
-        <SelectFormBody />
+      <DrawerContent className="p-3">
+        <SelectFormBody setState={setOpen} />
       </DrawerContent>
     </Drawer>
   );
 };
+const SelectFormBody = ({ setState }: { setState: setState<boolean> }) => {
+  const pathname = usePathname();
+  const currentForm = pathname.split("/")[3];
 
-const SelectFormBody = () => {
-  return <div>Select form body</div>;
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex justify-center sm:justify-start items-center mt-8 sm:mt-0">
+        <h1 className="text-xl font-semibold">Your forms</h1>
+      </div>
+      <div className="flex flex-col gap-1">
+        {formList.map((form) => (
+          <Link
+            onClick={() => setState(false)}
+            href={`${form.id}`}
+            key={form.id}
+            className={`${
+              currentForm === form.id && "bg-primary/40 hover:bg-primary/50"
+            } flex justify-between hover:bg-foreground/5 rounded px-2 cursor-pointer text-xs items-center h-8`}>
+            {form.title}
+            {currentForm === form.id && <CheckIcon className="w-5 h-5" />}
+          </Link>
+        ))}
+      </div>
+      <div className="flex justify-end flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
+        <Button
+          onClick={() => setState(false)}
+          type="button"
+          variant={"outline"}
+          size={"sm"}
+          className="w-full sm:w-fit">
+          Cancel
+        </Button>
+      </div>
+    </div>
+  );
 };
 
 export default Nav;
