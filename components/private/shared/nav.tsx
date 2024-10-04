@@ -1,8 +1,10 @@
 "use client";
 
-import BrandSVG from "@/components/brand-SVG";
+import Brand from "@/components/core/brand";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { minWidth640 } from "@/helpers/constants";
 import { setState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
@@ -13,10 +15,14 @@ import {
   HouseIcon,
   LogOutIcon,
   Menu,
+  MonitorIcon,
+  MoonIcon,
   Settings2Icon,
   SettingsIcon,
+  SunIcon,
   UserIcon,
 } from "lucide-react";
+import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -59,7 +65,7 @@ const Nav = () => {
         <div className="flex justify-center items-center gap-4">
           <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
             <Link href={"/dashboard/forms"}>
-              <BrandSVG type="logo_only" className="h-6 fill-foreground" />
+              <Brand type="logo" className="h-6 fill-foreground" />
             </Link>
           </Button>
           <span className="text-foreground/80 text-sm hidden sm:flex ">
@@ -85,7 +91,6 @@ const Nav = () => {
       </div>
     );
   }
-
   // form
   if (pathname.includes("dashboard/forms/")) {
     const currentFormId = pathname.split("/")[3];
@@ -96,7 +101,7 @@ const Nav = () => {
         <div className="flex justify-center items-center gap-4 h-full">
           <div className="flex justify-center items-center gap-4">
             <Link href={"/dashboard"}>
-              <BrandSVG type="logo_only" className="h-7 fill-foreground" />
+              <Brand type="logo" className="h-7 fill-foreground" />
             </Link>
             {currentForm !== undefined && (
               <div className="flex justify-center items-center gap-1">
@@ -126,32 +131,7 @@ const Nav = () => {
           </div>
         </div>
         <div className="hidden sm:flex justify-center items-center">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Avatar className="cursor-pointer">
-                <AvatarFallback className="bg-foreground hover:bg-foreground/70 text-background">
-                  R
-                </AvatarFallback>
-              </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="mr-6 min-w-44">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <UserIcon className="h4 w-4 mr-2" />
-                Profile
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Settings2Icon className="h4 w-4 mr-2" /> Settings
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Link href={"/"} className="flex justify-center items-center">
-                  <LogOutIcon className="w-4 h-4 mr-2" /> Log out
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <AvatarMenu />
         </div>
         <div className="flex sm:hidden">
           <NavMobile>
@@ -163,14 +143,13 @@ const Nav = () => {
       </div>
     );
   }
-
   // app
   return (
     <div className="border-b h-16 flex items-center px-6 justify-between z-10 bg-background">
       <div className="flex justify-center items-center gap-6 h-full">
         <div className="flex justify-center items-center gap-4">
           <Link href={"/dashboard"}>
-            <BrandSVG type="logo_only" className="h-7 fill-foreground" />
+            <Brand type="logo" className="h-7 fill-foreground" />
           </Link>
         </div>
         <div className="hidden sm:flex justify-center items-center gap-0 h-full">
@@ -190,32 +169,7 @@ const Nav = () => {
         </div>
       </div>
       <div className="hidden sm:flex justify-center items-center">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Avatar className="cursor-pointer">
-              <AvatarFallback className="bg-foreground hover:bg-foreground/70 text-background">
-                R
-              </AvatarFallback>
-            </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="mr-6 min-w-44">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <UserIcon className="h4 w-4 mr-2" />
-              Profile
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Settings2Icon className="h4 w-4 mr-2" /> Settings
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Link href={"/"} className="flex justify-center items-center">
-                <LogOutIcon className="w-4 h-4 mr-2" /> Log out
-              </Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <AvatarMenu />
       </div>
       <div className="flex sm:hidden">
         <NavMobile>
@@ -240,7 +194,7 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
         side={"left"}
         className="flex flex-col h-full justify-between">
         <div>
-          <BrandSVG type="with_text" className="h-7 fill-foreground" />
+          <Brand type="logo_text" className="h-7 fill-foreground" />
           <div className="flex flex-col pt-10 gap-2">
             {navLinks.map((link) => (
               <Link
@@ -272,6 +226,81 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
         </div>
       </SheetContent>
     </Sheet>
+  );
+};
+const AvatarMenu = () => {
+  const { setTheme, theme } = useTheme();
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Avatar className="cursor-pointer">
+          <AvatarFallback className="bg-primary/40 hover:bg-primary/50 text-sm">
+            R
+          </AvatarFallback>
+        </Avatar>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="mr-6 min-w-52 text-foreground/80">
+        <DropdownMenuLabel className="text-foreground">
+          My Account
+        </DropdownMenuLabel>
+        <DropdownMenuItem className="flex flex-row justify-between items-center">
+          Profile
+          <UserIcon className="h-4 w-4 mr-2" />
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex flex-row justify-between items-center">
+          Settings
+          <Settings2Icon className="h-4 w-4 mr-2" />
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex flex-row justify-between items-center">
+          Theme
+          <RadioGroup
+            value={theme}
+            onValueChange={setTheme}
+            className="flex gap-1">
+            <div>
+              <RadioGroupItem
+                value="system"
+                id="system"
+                className="peer sr-only"
+              />
+              <Label
+                htmlFor="system"
+                className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-primary/30">
+                <MonitorIcon className="w-3 h-3" />
+              </Label>
+            </div>
+            <div>
+              <RadioGroupItem
+                value="light"
+                id="light"
+                className="peer sr-only"
+              />
+              <Label
+                htmlFor="light"
+                className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-primary/30">
+                <SunIcon className="w-3 h-3" />
+              </Label>
+            </div>
+            <div>
+              <RadioGroupItem value="dark" id="dark" className="peer sr-only" />
+              <Label
+                htmlFor="dark"
+                className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-primary/30">
+                <MoonIcon className="w-3 h-3" />
+              </Label>
+            </div>
+          </RadioGroup>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <Link href={"/"} className="flex justify-between w-full items-center">
+            Log out
+            <LogOutIcon className="w-4 h-4 mr-2" />
+          </Link>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 const SelectForm = ({ children }: { children: React.ReactNode }) => {

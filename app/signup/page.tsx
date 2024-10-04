@@ -1,6 +1,6 @@
 "use client";
 
-import BrandSVG from "@/components/brand-SVG";
+import Brand from "@/components/core/brand";
 import DotPattern from "@/components/magicui/dot-pattern";
 import { Button } from "@/components/ui/button";
 import {
@@ -37,7 +37,7 @@ const Signup = () => {
     <div className="border min-h-screen flex">
       <div className="flex-1 flex justify-center items-center w-full relative">
         <Link href={"/"} className="fixed top-6 flex sm:hidden">
-          <BrandSVG type="logo_only" className="h-10 fill-foreground" />
+          <Brand type="logo" className="h-10 fill-foreground" />
         </Link>
         <Button
           variant={"outline"}
@@ -112,7 +112,7 @@ const Signup = () => {
         </div>
       </div>
       <div className="bg-primary/40 flex-1 sm:flex hidden justify-center items-center w-full relative">
-        <BrandSVG type="with_text" className="h-14 fill-black" />
+        <Brand type="logo_text" className="h-14 fill-black" />
         <DotPattern
           width={20}
           height={20}

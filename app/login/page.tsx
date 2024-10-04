@@ -1,7 +1,7 @@
 "use client";
 
-import BrandSVG from "@/components/brand-SVG";
-import DotPattern from "@/components/magicui/dot-pattern";
+import Brand from "@/components/core/brand";
+import { ModeToggle } from "@/components/core/mode-toggle";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -11,7 +11,6 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -37,15 +36,15 @@ const Login = () => {
     <div className="border min-h-screen flex">
       <div className="flex-1 flex justify-center items-center w-full relative">
         <Link href={"/"} className="fixed top-6 flex sm:hidden">
-          <BrandSVG type="logo_only" className="h-10 fill-foreground" />
+          <Brand type="logo" className="h-10 fill-foreground" />
         </Link>
-        <Button
-          variant={"outline"}
-          size={"sm"}
-          className="fixed top-5 left-5 hidden sm:flex"
-          asChild>
-          <Link href={"/"}>Go back</Link>
-        </Button>
+        <div className="fixed top-5 left-5 hidden sm:flex gap-4">
+          <Button variant={"outline"} size={"sm"} className="" asChild>
+            <Link href={"/"}>Go back</Link>
+          </Button>
+          <ModeToggle />
+        </div>
+
         <div className="w-full flex justify-center items-center">
           <Form {...form}>
             <form
@@ -55,7 +54,9 @@ const Login = () => {
                 <h1 className="text-xl font-semibold">Login</h1>
                 <span className="text-sm text-foreground/80">
                   Don&apos;t have an account?{" "}
-                  <Link href={"/signup"} className="hover:underline text-info">
+                  <Link
+                    href={"/signup"}
+                    className="hover:underline text-info dark:text-blue-500">
                     Sign Up
                   </Link>
                 </span>
@@ -90,7 +91,7 @@ const Login = () => {
                 <div className="flex flex-col w-full gap-4">
                   <Link
                     href={"/reset-password"}
-                    className="text-sm hover:underline text-foreground/80 hover:text-info">
+                    className="text-sm hover:underline text-foreground/80 hover:text-info dark:hover:text-blue-500">
                     Forgot password?
                   </Link>
                   <Button
@@ -106,18 +107,8 @@ const Login = () => {
           </Form>
         </div>
       </div>
-      <div className="bg-primary/40 flex-1 sm:flex hidden justify-center items-center w-full relative">
-        <BrandSVG type="with_text" className="h-14 fill-black" />
-        <DotPattern
-          width={20}
-          height={20}
-          cx={1}
-          cy={1}
-          cr={1}
-          className={cn(
-            "[mask-image:linear-gradient(to_bottom_right,white,white,white)] "
-          )}
-        />
+      <div className="flex-1 sm:flex hidden justify-center items-center w-full relative bg-gradient-to-r from-[#75BDFF] via-[#FF75E9] to-[#FFA775]">
+        <Brand type="logo_text" className="h-14 fill-black" />
       </div>
     </div>
   );

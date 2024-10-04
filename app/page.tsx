@@ -1,4 +1,4 @@
-import BrandSVG from "@/components/brand-SVG";
+import Brand from "@/components/core/brand";
 import { BorderBeam } from "@/components/magicui/border-beam";
 import Nav from "@/components/public/nav";
 import { Button } from "@/components/ui/button";
@@ -9,9 +9,9 @@ import Link from "next/link";
 const Home = () => {
   return (
     <div className="min-h-screen flex flex-col relative">
-      <div className="flex fixed top-0 w-full sm:justify-around justify-between px-4 h-14 bg-background/80 z-10 backdrop-blur-sm items-center">
+      <div className="flex fixed top-0 w-full sm:justify-around justify-between px-4 h-14 bg-background/80 z-10 backdrop-blur-md items-center">
         <Link href={"/"} className="flex justify-center items-center">
-          <BrandSVG type="logo_only" className="h-10 fill-foreground" />
+          <Brand type="logo" className="h-10 fill-foreground" />
         </Link>
         <div className="hidden sm:flex justify-center items-center gap-4">
           <Button variant={"outline"} size={"sm"} asChild>
