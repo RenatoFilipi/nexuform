@@ -3,8 +3,8 @@
 import { minWidth640 } from "@/helpers/constants";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
+import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet";
 
 const FormSettings = ({ children }: { children: React.ReactNode }) => {
   const isDesktop = useMediaQuery({ query: minWidth640 });

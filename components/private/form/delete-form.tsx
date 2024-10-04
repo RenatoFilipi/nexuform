@@ -3,8 +3,8 @@
 import { minWidth640 } from "@/helpers/constants";
 import { ReactNode, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
-import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
+import { Dialog, DialogContent, DialogTrigger } from "../../ui/dialog";
+import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
 
 const DeleteForm = ({ children }: { children: ReactNode }) => {
   const isDesktop = useMediaQuery({ query: minWidth640 });

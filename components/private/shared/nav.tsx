@@ -13,8 +13,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Avatar, AvatarFallback } from "../ui/avatar";
-import { Button } from "../ui/button";
+import { Avatar, AvatarFallback } from "../../ui/avatar";
+import { Button } from "../../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,9 +22,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
-import FormSettings from "./form-settings";
+} from "../../ui/dropdown-menu";
+import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet";
+import FormSettings from "../form/form-settings";
 
 const navLinks = [
   {
@@ -41,13 +41,13 @@ const navLinks = [
   },
 ];
 
-const AppNav = () => {
+const Nav = () => {
   const pathname = usePathname();
   const isActive = (path: string) => path === pathname;
 
   if (pathname.includes("/editor/")) {
     return (
-      <div className="flex justify-between items-center h-14 px-6 z-10 bg-background">
+      <div className="flex justify-between items-center h-16 px-6 z-10 bg-background border-b">
         <div>
           <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
             <Link href={"/dashboard/forms"}>
@@ -57,10 +57,13 @@ const AppNav = () => {
         </div>
         <div className="flex justify-center items-center gap-4">
           <FormSettings>
-            <Button variant={"outline"} size={"icon"}>
+            <Button variant={"outline"} size={"sm"}>
               <SettingsIcon className="w-5 h-5" />
             </Button>
           </FormSettings>
+          <Button variant={"outline"} size={"sm"}>
+            Share
+          </Button>
           <Button variant={"outline"} size={"sm"}>
             Save
           </Button>
@@ -98,7 +101,7 @@ const AppNav = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className="cursor-pointer">
-              <AvatarFallback className="bg-foreground text-background">
+              <AvatarFallback className="bg-foreground hover:bg-foreground/70 text-background">
                 R
               </AvatarFallback>
             </Avatar>
@@ -186,4 +189,4 @@ const MobileMenu = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default AppNav;
+export default Nav;

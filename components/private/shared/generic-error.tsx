@@ -1,6 +1,6 @@
 import { ShieldCloseIcon } from "lucide-react";
 import Link from "next/link";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 
 const GenericError = () => {
   return (

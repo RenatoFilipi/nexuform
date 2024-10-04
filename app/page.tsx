@@ -33,7 +33,9 @@ const Home = () => {
           <div className="flex flex-col justify-center items-center w-full text-center gap-6">
             <h1 className="font-bold text-3xl sm:text-6xl max-w-[43.5rem]">
               Streamline Feedback With{" "}
-              <span className="text-primary">Intuitive Forms</span>
+              <span className="bg-gradient-to-r from-[#75BDFF] via-[#FF75E9] to-primary inline-block text-transparent bg-clip-text">
+                Intuitive Forms
+              </span>
             </h1>
             <p className="max-w-xl text-base font-normal text-foreground/80">
               Transform Your Business Landscape through Strategic

@@ -1,8 +1,10 @@
+"use client";
+
 import { EditIcon, ViewIcon } from "lucide-react";
 import Link from "next/link";
-import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
-import { Card } from "../ui/card";
+import { Badge } from "../../ui/badge";
+import { Button } from "../../ui/button";
+import { Card } from "../../ui/card";
 
 export interface FormCardProps {
   id: string;

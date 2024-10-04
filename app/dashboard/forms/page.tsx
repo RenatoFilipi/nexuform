@@ -1,8 +1,8 @@
 "use client";
 
-import CreateForm from "@/components/private/create-form";
-import FormCard from "@/components/private/form-card";
-import GenericError from "@/components/private/generic-error";
+import CreateForm from "@/components/private/form/create-form";
+import FormCard from "@/components/private/form/form-card";
+import GenericError from "@/components/private/shared/generic-error";
 import { Button } from "@/components/ui/button";
 import { formList } from "@/mocks/forms";
 import { BookIcon, Loader2Icon } from "lucide-react";
