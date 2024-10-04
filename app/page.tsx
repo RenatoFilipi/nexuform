@@ -33,7 +33,7 @@ const Home = () => {
           <div className="flex flex-col justify-center items-center w-full text-center gap-6">
             <h1 className="font-bold text-3xl sm:text-6xl max-w-[43.5rem]">
               Streamline Feedback With{" "}
-              <span className="bg-gradient-to-r from-[#75BDFF] via-[#FF75E9] to-primary inline-block text-transparent bg-clip-text">
+              <span className="bg-gradient-to-r from-[#75BDFF] via-[#FF75E9] to-[#FFA775] inline-block text-transparent bg-clip-text">
                 Intuitive Forms
               </span>
             </h1>
@@ -53,7 +53,7 @@ const Home = () => {
         </div>
         <div className="mt-20">
           <div className="relative rounded-lg border p-2">
-            <BorderBeam borderWidth={3} colorTo="#307dff" colorFrom="#30CCFF" />
+            <BorderBeam borderWidth={3} colorTo="#75BDFF" colorFrom="#FFA775" />
             <Image
               alt="hero preview feature"
               src={"/dash.webp"}
