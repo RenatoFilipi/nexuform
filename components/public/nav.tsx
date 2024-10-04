@@ -28,7 +28,8 @@ const Nav = ({ children }: { children: React.ReactNode }) => {
               key={link.id}
               href={link.path}
               className={`${
-                isActive(link.path) && "bg-primary/40 hover:bg-primary/50"
+                isActive(link.path) &&
+                "bg-secondary text-background hover:bg-secondary/80"
               } p-2 border rounded hover:bg-foreground/5`}>
               {link.name}
             </Link>

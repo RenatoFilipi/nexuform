@@ -202,7 +202,8 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
                 key={link.id}
                 href={link.path}
                 className={`${
-                  isActive(link.path) && "bg-primary/40 hover:bg-primary/50"
+                  isActive(link.path) &&
+                  "bg-secondary text-background hover:bg-secondary/80"
                 } p-2 border rounded hover:bg-foreground/5`}>
                 {link.name}
               </Link>
@@ -235,9 +236,7 @@ const AvatarMenu = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer">
-          <AvatarFallback className="bg-primary/40 hover:bg-primary/50 text-sm">
-            R
-          </AvatarFallback>
+          <AvatarFallback className="text-sm">R</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-6 min-w-52 text-foreground/80">
