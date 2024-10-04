@@ -1,5 +1,6 @@
 "use client";
 
+import BrandSVG from "@/components/brand-SVG";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { minWidth640 } from "@/helpers/constants";
@@ -16,7 +17,6 @@ import {
   SettingsIcon,
   UserIcon,
 } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -59,7 +59,7 @@ const Nav = () => {
         <div className="flex justify-center items-center gap-4">
           <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
             <Link href={"/dashboard/forms"}>
-              <Image alt="logo" src={"/logo.svg"} height={0} width={24} />
+              <BrandSVG type="logo_only" className="h-6 fill-foreground" />
             </Link>
           </Button>
           <span className="text-foreground/80 text-sm hidden sm:flex ">
@@ -96,7 +96,7 @@ const Nav = () => {
         <div className="flex justify-center items-center gap-4 h-full">
           <div className="flex justify-center items-center gap-4">
             <Link href={"/dashboard"}>
-              <Image alt="logo" src={"/logo.svg"} height={0} width={33} />
+              <BrandSVG type="logo_only" className="h-7 fill-foreground" />
             </Link>
             {currentForm !== undefined && (
               <div className="flex justify-center items-center gap-1">
@@ -170,7 +170,7 @@ const Nav = () => {
       <div className="flex justify-center items-center gap-6 h-full">
         <div className="flex justify-center items-center gap-4">
           <Link href={"/dashboard"}>
-            <Image alt="logo" src={"/logo.svg"} height={0} width={33} />
+            <BrandSVG type="logo_only" className="h-7 fill-foreground" />
           </Link>
         </div>
         <div className="hidden sm:flex justify-center items-center gap-0 h-full">
@@ -240,7 +240,7 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
         side={"left"}
         className="flex flex-col h-full justify-between">
         <div>
-          <Image src={"/brand.svg"} alt="brand" width={150} height={100} />
+          <BrandSVG type="with_text" className="h-7 fill-foreground" />
           <div className="flex flex-col pt-10 gap-2">
             {navLinks.map((link) => (
               <Link

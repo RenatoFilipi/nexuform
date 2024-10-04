@@ -1,10 +1,10 @@
 "use client";
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import BrandSVG from "../brand-SVG";
 
 const navLinks = [
   { id: 1, name: "Home", path: "/" },
@@ -21,13 +21,7 @@ const Nav = ({ children }: { children: React.ReactNode }) => {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent side={"left"} className="">
-        <div>
-          <Image
-            src={"/brand.svg"}
-            alt="brand"
-            width={150}
-            height={100}></Image>
-        </div>
+        <BrandSVG type="with_text" className="h-8 fill-foreground" />
         <div className="flex flex-col pt-10 gap-2">
           {navLinks.map((link) => (
             <Link

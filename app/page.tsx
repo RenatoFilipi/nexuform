@@ -1,3 +1,4 @@
+import BrandSVG from "@/components/brand-SVG";
 import { BorderBeam } from "@/components/magicui/border-beam";
 import Nav from "@/components/public/nav";
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,7 @@ const Home = () => {
     <div className="min-h-screen flex flex-col relative">
       <div className="flex fixed top-0 w-full sm:justify-around justify-between px-4 h-14 bg-background/80 z-10 backdrop-blur-sm items-center">
         <Link href={"/"} className="flex justify-center items-center">
-          <Image alt="brand" src={"/brand.svg"} width={180} height={0} />
+          <BrandSVG type="logo_only" className="h-10 fill-foreground" />
         </Link>
         <div className="hidden sm:flex justify-center items-center gap-4">
           <Button variant={"outline"} size={"sm"} asChild>
@@ -34,7 +35,7 @@ const Home = () => {
             <h1 className="font-bold text-3xl sm:text-6xl max-w-[43.5rem]">
               Streamline Feedback With{" "}
               <span className="bg-gradient-to-r from-[#75BDFF] via-[#FF75E9] to-[#FFA775] inline-block text-transparent bg-clip-text">
-                Intuitive Forms
+                Intuitive Forms.
               </span>
             </h1>
             <p className="max-w-xl text-base font-normal text-foreground/80">

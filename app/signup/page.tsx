@@ -1,5 +1,6 @@
 "use client";
 
+import BrandSVG from "@/components/brand-SVG";
 import DotPattern from "@/components/magicui/dot-pattern";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +13,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -37,9 +37,8 @@ const Signup = () => {
     <div className="border min-h-screen flex">
       <div className="flex-1 flex justify-center items-center w-full relative">
         <Link href={"/"} className="fixed top-6 flex sm:hidden">
-          <Image alt="logo" src={"/logo.svg"} height={0} width={45} />
+          <BrandSVG type="logo_only" className="h-10 fill-foreground" />
         </Link>
-
         <Button
           variant={"outline"}
           size={"sm"}
@@ -113,7 +112,7 @@ const Signup = () => {
         </div>
       </div>
       <div className="bg-primary/40 flex-1 sm:flex hidden justify-center items-center w-full relative">
-        <Image alt="brand logo" src={"/brand.svg"} height={0} width={280} />
+        <BrandSVG type="with_text" className="h-14 fill-black" />
         <DotPattern
           width={20}
           height={20}
