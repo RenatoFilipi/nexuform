@@ -68,9 +68,7 @@ const Nav = () => {
               <Brand type="logo" className="h-6 fill-foreground" />
             </Link>
           </Button>
-          <span className="text-foreground/80 text-sm hidden sm:flex ">
-            Form name placeholder
-          </span>
+          <span className="text-foreground/80 text-sm hidden sm:flex ">Form name placeholder</span>
         </div>
         <div className="flex justify-center items-center gap-4">
           <FormSettings>
@@ -122,9 +120,7 @@ const Nav = () => {
                 className={`${
                   isActive(link.path) && ""
                 } text-sm h-full flex justify-center items-center px-3 hover:bg-foreground/5 relative`}>
-                {isActive(link.path) && (
-                  <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>
-                )}
+                {isActive(link.path) && <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>}
                 {link.name}
               </Link>
             ))}
@@ -160,9 +156,7 @@ const Nav = () => {
               className={`${
                 isActive(link.path) && ""
               } text-sm h-full flex justify-center items-center px-3 hover:bg-foreground/5 relative`}>
-              {isActive(link.path) && (
-                <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>
-              )}
+              {isActive(link.path) && <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>}
               {link.name}
             </Link>
           ))}
@@ -190,9 +184,7 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>{children}</SheetTrigger>
-      <SheetContent
-        side={"left"}
-        className="flex flex-col h-full justify-between">
+      <SheetContent side={"left"} className="flex flex-col h-full justify-between">
         <div>
           <Brand type="logo_text" className="h-7 fill-foreground" />
           <div className="flex flex-col pt-10 gap-2">
@@ -202,8 +194,7 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
                 key={link.id}
                 href={link.path}
                 className={`${
-                  isActive(link.path) &&
-                  "bg-secondary text-background hover:bg-secondary/80"
+                  isActive(link.path) && "bg-secondary text-background hover:bg-secondary/80"
                 } p-2 border rounded hover:bg-foreground/5`}>
                 {link.name}
               </Link>
@@ -240,9 +231,7 @@ const AvatarMenu = () => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-6 min-w-52 text-foreground/80">
-        <DropdownMenuLabel className="text-foreground">
-          My Account
-        </DropdownMenuLabel>
+        <DropdownMenuLabel className="text-foreground">My Account</DropdownMenuLabel>
         <DropdownMenuItem className="flex flex-row justify-between items-center">
           Profile
           <UserIcon className="h-4 w-4 mr-2" />
@@ -253,31 +242,20 @@ const AvatarMenu = () => {
         </DropdownMenuItem>
         <DropdownMenuItem className="flex flex-row justify-between items-center">
           Theme
-          <RadioGroup
-            value={theme}
-            onValueChange={setTheme}
-            className="flex gap-1">
+          <RadioGroup value={theme} onValueChange={setTheme} className="flex gap-1">
             <div>
-              <RadioGroupItem
-                value="system"
-                id="system"
-                className="peer sr-only"
-              />
+              <RadioGroupItem value="system" id="system" className="peer sr-only" />
               <Label
                 htmlFor="system"
-                className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-primary/30">
+                className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
                 <MonitorIcon className="w-3 h-3" />
               </Label>
             </div>
             <div>
-              <RadioGroupItem
-                value="light"
-                id="light"
-                className="peer sr-only"
-              />
+              <RadioGroupItem value="light" id="light" className="peer sr-only" />
               <Label
                 htmlFor="light"
-                className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-primary/30">
+                className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
                 <SunIcon className="w-3 h-3" />
               </Label>
             </div>
@@ -285,7 +263,7 @@ const AvatarMenu = () => {
               <RadioGroupItem value="dark" id="dark" className="peer sr-only" />
               <Label
                 htmlFor="dark"
-                className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-primary/30">
+                className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
                 <MoonIcon className="w-3 h-3" />
               </Label>
             </div>
@@ -342,7 +320,7 @@ const SelectFormBody = ({ setState }: { setState: setState<boolean> }) => {
             href={`${form.id}`}
             key={form.id}
             className={`${
-              currentForm === form.id && "bg-primary/40 hover:bg-primary/50"
+              currentForm === form.id && "bg-foreground text-background hover:bg-foreground/80"
             } flex justify-between hover:bg-foreground/5 rounded px-2 cursor-pointer text-xs items-center h-8`}>
             {form.title}
             {currentForm === form.id && <CheckIcon className="w-5 h-5" />}
