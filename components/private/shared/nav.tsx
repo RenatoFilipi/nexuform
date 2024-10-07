@@ -38,7 +38,7 @@ import {
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet";
-import FormSettings from "../form/form-settings";
+import FormSettings from "../forms/form-settings";
 
 const navLinks = [
   {
@@ -97,13 +97,13 @@ const Nav = () => {
     return (
       <div className="border-b h-16 flex items-center px-6 justify-between z-10 bg-background">
         <div className="flex justify-center items-center gap-4 h-full">
-          <div className="flex justify-center items-center gap-4">
+          <div className="flex justify-center items-center gap-8">
             <Link href={"/dashboard"}>
               <Brand type="logo" className="h-7 fill-foreground" />
             </Link>
             {currentForm !== undefined && (
               <div className="flex justify-center items-center gap-1">
-                <span className="">{currentForm.title}</span>
+                <span className="text-sm">{currentForm.title}</span>
                 <SelectForm>
                   <Button variant={"ghost"} size={"icon"} className="w-6">
                     <ChevronsUpDownIcon className="w-4 h-4" />

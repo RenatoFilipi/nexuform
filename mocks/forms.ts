@@ -1,4 +1,4 @@
-import { FormCardProps } from "@/components/private/form/form-card";
+import { FormCardProps } from "@/components/private/forms/form-card";
 
 export const formList: FormCardProps[] = [
   {

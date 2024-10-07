@@ -1,7 +1,7 @@
 "use client";
 
-import CreateForm from "@/components/private/form/create-form";
-import FormCard from "@/components/private/form/form-card";
+import CreateForm from "@/components/private/forms/create-form";
+import FormCard from "@/components/private/forms/form-card";
 import GenericError from "@/components/private/shared/generic-error";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
