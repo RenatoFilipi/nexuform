@@ -12,6 +12,7 @@ import {
   ChartAreaIcon,
   CheckIcon,
   ChevronsUpDownIcon,
+  CreditCardIcon,
   HouseIcon,
   LogOutIcon,
   Menu,
@@ -62,14 +63,16 @@ const Nav = () => {
   // editor
   if (pathname.includes("dashboard/editor/")) {
     return (
-      <div className="flex justify-between items-center h-16 px-6 z-10 bg-background">
+      <div className="flex justify-between items-center h-16 px-2 sm:px-6 z-10 bg-background">
         <div className="flex justify-center items-center gap-4">
           <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
             <Link href={"/dashboard/forms"}>
-              <Brand type="logo" className="h-6 fill-foreground" />
+              <Brand type="logo" className="h-7 fill-foreground" />
             </Link>
           </Button>
-          <span className="text-foreground/80 text-sm hidden sm:flex ">Form name placeholder</span>
+          <span className="text-foreground/80 text-sm hidden sm:flex ">
+            Form name placeholder
+          </span>
         </div>
         <div className="flex justify-center items-center gap-4">
           <FormSettings>
@@ -121,7 +124,9 @@ const Nav = () => {
                 className={`${
                   isActive(link.path) && ""
                 } text-sm h-full flex justify-center items-center px-3 hover:bg-foreground/5 relative`}>
-                {isActive(link.path) && <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>}
+                {isActive(link.path) && (
+                  <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>
+                )}
                 {link.name}
               </Link>
             ))}
@@ -157,7 +162,9 @@ const Nav = () => {
               className={`${
                 isActive(link.path) && ""
               } text-sm h-full flex justify-center items-center px-3 hover:bg-foreground/5 relative`}>
-              {isActive(link.path) && <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>}
+              {isActive(link.path) && (
+                <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>
+              )}
               {link.name}
             </Link>
           ))}
@@ -186,7 +193,9 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>{children}</SheetTrigger>
-      <SheetContent side={"left"} className="flex flex-col h-full justify-between">
+      <SheetContent
+        side={"left"}
+        className="flex flex-col h-full justify-between">
         <div>
           <Brand type="logo_text" className="h-7 fill-foreground" />
           <div className="flex flex-col pt-10 gap-2">
@@ -196,7 +205,8 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
                 key={link.id}
                 href={link.path}
                 className={`${
-                  isActive(link.path) && "bg-secondary text-background hover:bg-secondary/80"
+                  isActive(link.path) &&
+                  "bg-secondary text-background hover:bg-secondary/80"
                 } p-2 border rounded hover:bg-foreground/5`}>
                 {link.name}
               </Link>
@@ -215,9 +225,16 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
               <span className="text-sm flex items-center justify-center">
                 <SunMoonIcon className="w-4 h-4 mr-2" /> Theme
               </span>
-              <RadioGroup value={theme} onValueChange={setTheme} className="flex gap-1">
+              <RadioGroup
+                value={theme}
+                onValueChange={setTheme}
+                className="flex gap-1">
                 <div>
-                  <RadioGroupItem value="system" id="system" className="peer sr-only" />
+                  <RadioGroupItem
+                    value="system"
+                    id="system"
+                    className="peer sr-only"
+                  />
                   <Label
                     htmlFor="system"
                     className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
@@ -225,7 +242,11 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
                   </Label>
                 </div>
                 <div>
-                  <RadioGroupItem value="light" id="light" className="peer sr-only" />
+                  <RadioGroupItem
+                    value="light"
+                    id="light"
+                    className="peer sr-only"
+                  />
                   <Label
                     htmlFor="light"
                     className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
@@ -233,7 +254,11 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
                   </Label>
                 </div>
                 <div>
-                  <RadioGroupItem value="dark" id="dark" className="peer sr-only" />
+                  <RadioGroupItem
+                    value="dark"
+                    id="dark"
+                    className="peer sr-only"
+                  />
                   <Label
                     htmlFor="dark"
                     className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
@@ -255,29 +280,60 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
 };
 const AvatarMenu = () => {
   const { setTheme, theme } = useTheme();
+  const navLinks = [
+    {
+      id: 1,
+      name: "Profile",
+      path: "/dashboard/profile",
+      icon: <HouseIcon className="w-4 h-4" />,
+    },
+    {
+      id: 2,
+      name: "Settings",
+      path: "/dashboard/settings",
+      icon: <ChartAreaIcon className="w-4 h-4" />,
+    },
+    {
+      id: 3,
+      name: "Billing",
+      path: "/dashboard/billing",
+      icon: <CreditCardIcon className="w-4 h-4" />,
+    },
+  ];
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer">
-          <AvatarFallback className="text-sm">R</AvatarFallback>
+          <AvatarFallback className="text-sm bg-gradient-to-r from-[#75BDFF] via-[#FF75E9] to-[#FFA775]">
+            R
+          </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-6 min-w-52 text-foreground/80">
-        <DropdownMenuLabel className="text-foreground">My Account</DropdownMenuLabel>
-        <DropdownMenuItem className="flex flex-row justify-between items-center">
-          Profile
-          <UserIcon className="h-4 w-4 mr-2" />
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex flex-row justify-between items-center">
-          Settings
-          <Settings2Icon className="h-4 w-4 mr-2" />
-        </DropdownMenuItem>
+        <DropdownMenuLabel className="text-foreground">
+          My Account
+        </DropdownMenuLabel>
+        {navLinks.map((nav) => (
+          <DropdownMenuItem
+            key={nav.id}
+            className="flex flex-row justify-between items-center cursor-pointer">
+            {nav.name}
+            {nav.icon}
+          </DropdownMenuItem>
+        ))}
         <DropdownMenuItem className="flex flex-row justify-between items-center">
           Theme
-          <RadioGroup value={theme} onValueChange={setTheme} className="flex gap-1">
+          <RadioGroup
+            value={theme}
+            onValueChange={setTheme}
+            className="flex gap-1">
             <div>
-              <RadioGroupItem value="system" id="system" className="peer sr-only" />
+              <RadioGroupItem
+                value="system"
+                id="system"
+                className="peer sr-only"
+              />
               <Label
                 htmlFor="system"
                 className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
@@ -285,7 +341,11 @@ const AvatarMenu = () => {
               </Label>
             </div>
             <div>
-              <RadioGroupItem value="light" id="light" className="peer sr-only" />
+              <RadioGroupItem
+                value="light"
+                id="light"
+                className="peer sr-only"
+              />
               <Label
                 htmlFor="light"
                 className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
@@ -306,7 +366,7 @@ const AvatarMenu = () => {
         <DropdownMenuItem>
           <Link href={"/"} className="flex justify-between w-full items-center">
             Log out
-            <LogOutIcon className="w-4 h-4 mr-2" />
+            <LogOutIcon className="w-4 h-4" />
           </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -353,7 +413,8 @@ const SelectFormBody = ({ setState }: { setState: setState<boolean> }) => {
             href={`${form.id}`}
             key={form.id}
             className={`${
-              currentForm === form.id && "bg-foreground text-background hover:bg-foreground/80"
+              currentForm === form.id &&
+              "bg-foreground text-background hover:bg-foreground/80"
             } flex justify-between hover:bg-foreground/5 rounded px-2 cursor-pointer text-xs items-center h-8`}>
             {form.title}
             {currentForm === form.id && <CheckIcon className="w-5 h-5" />}

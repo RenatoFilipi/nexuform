@@ -55,7 +55,7 @@ const Forms = () => {
       {/* loading */}
       {state === "loading" && (
         <div className="h-full flex justify-center items-center">
-          <Loader2Icon className="w-8 h-8 animate-spin" />
+          <Loader2Icon className="w-6 h-6 animate-spin" />
         </div>
       )}
       {/* no form */}
