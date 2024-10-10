@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
 
-const FormResponseView = ({ children }: { children: React.ReactNode }) => {
+const FormSubmissionView = ({ children }: { children: React.ReactNode }) => {
   const isDesktop = useMediaQuery({ query: minWidth640 });
   const [open, setOpen] = useState(false);
 
@@ -35,9 +35,9 @@ const Body = () => {
   console.log("renderizou");
   return (
     <div className="flex justify-center items-center h-full">
-      Form response view body
+      Form response view
     </div>
   );
 };
 
-export default FormResponseView;
+export default FormSubmissionView;

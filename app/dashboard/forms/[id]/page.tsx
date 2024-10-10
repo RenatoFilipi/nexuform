@@ -1,6 +1,6 @@
 "use client";
 
-import FormResponseView from "@/components/private/forms/form-response-view";
+import FormSubmissionView from "@/components/private/forms/form-submission-view";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formList } from "@/mocks/forms";
+import { formList, formSubmissionList } from "@/mocks/forms";
 import { BookIcon, Loader2Icon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -24,6 +24,9 @@ const Form = () => {
   const pathname = usePathname();
   const currentFormId = pathname.split("/")[3];
   const currentForm = formList.find((x) => x.id === currentFormId);
+  const submissions = formSubmissionList.filter(
+    (x) => x.form_id === currentForm?.id
+  );
 
   return (
     <div className="flex flex-col h-full gap-6 sm:gap-10 my-6 mx-3 sm:mx-12 overflow-y-auto">
@@ -39,7 +42,7 @@ const Form = () => {
           <Link href={`/dashboard/editor/${currentFormId}`}>Edit Form</Link>
         </Button>
       </div>
-      <div className="h-full border flex flex-col">
+      <div className="h-full border flex flex-col overflow-y-auto">
         <div className="border-b p-2">
           <span className="text-base">Submissions</span>
         </div>
@@ -57,30 +60,26 @@ const Form = () => {
         )}
         {/* has submissions */}
         {state === "has_submissions" && (
-          <Table>
+          <Table className="overflow-y-auto">
             <TableHeader>
               <TableRow>
                 <TableHead>Email</TableHead>
                 <TableHead className="text-right">Submitted</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
-              <TableRow className="overflow-x-auto">
-                <TableCell className="truncate">re.rosa98@gmail.com</TableCell>
-                <TableCell
-                  className="text-right truncate"
-                  suppressHydrationWarning>
-                  {new Date().toLocaleString()}
-                </TableCell>
-                <TableCell className="text-right">
-                  <FormResponseView>
-                    <Button variant={"outline"} size={"sm"}>
-                      View responses
-                    </Button>
-                  </FormResponseView>
-                </TableCell>
-              </TableRow>
+            <TableBody className="overflow-y-auto">
+              {submissions.map((sub) => (
+                <FormSubmissionView key={sub.id}>
+                  <TableRow className="overflow-x-auto cursor-pointer">
+                    <TableCell className="truncate">{sub.email}</TableCell>
+                    <TableCell
+                      className="truncate text-right"
+                      suppressHydrationWarning>
+                      {sub.submitted_at}
+                    </TableCell>
+                  </TableRow>
+                </FormSubmissionView>
+              ))}
             </TableBody>
           </Table>
         )}
