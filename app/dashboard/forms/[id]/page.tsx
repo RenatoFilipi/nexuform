@@ -1,7 +1,7 @@
 "use client";
 
 import FormSubmissionView from "@/components/private/forms/form-submission-view";
-import { Badge } from "@/components/ui/badge";
+import { Badge2 } from "@/components/ui/badge2";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -36,7 +36,7 @@ const Form = () => {
             <BookIcon className="w-5 h-5" />
             <span className="font-semibold">{currentForm?.title}</span>
           </div>
-          <Badge>{currentForm?.status}</Badge>
+          <Badge2>{currentForm?.status}</Badge2>
         </div>
         <Button variant={"secondary"} size={"sm"} asChild>
           <Link href={`/dashboard/editor/${currentFormId}`}>Edit Form</Link>

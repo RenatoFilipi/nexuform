@@ -1,8 +1,8 @@
 "use client";
 
+import { Badge2 } from "@/components/ui/badge2";
 import { EditIcon, ViewIcon } from "lucide-react";
 import Link from "next/link";
-import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
 import { Card } from "../../ui/card";
 
@@ -22,11 +22,7 @@ const FormItem = ({ title, status, responsesCount, id }: FormItemProps) => {
     <Card className="flex h-40 p-4 hover:border-foreground/20 items-start flex-col justify-between">
       <div className="flex justify-between items-center w-full">
         <span className="font-semibold text-lg">{title}</span>
-        {status === "draft" && <Badge variant={"default"}>{status}</Badge>}
-        {status === "published" && <Badge variant={"default"}>{status}</Badge>}
-        {status === "inactive" && (
-          <Badge variant={"destructive"}>{status}</Badge>
-        )}
+        <Badge2 variant={"default"}>{status}</Badge2>
       </div>
       <div className="flex justify-between items-center w-full">
         <span className="text-foreground/80 text-sm">
