@@ -1,20 +1,6 @@
 import { FormItemProps } from "@/components/private/forms/form-item";
 import { FormSubmissionItemProps } from "@/components/private/forms/form-submission-item";
 
-export const formList: FormItemProps[] = [
-  {
-    id: "a4175311-07b7-4399-934f-df93d1fc9942",
-    title: "Product Feedback",
-    responsesCount: 2,
-    status: "published",
-  },
-  {
-    id: "5c093f9b-e780-4a69-83d8-9a9834f24716",
-    title: "Customer Satisfaction",
-    responsesCount: 1,
-    status: "draft",
-  },
-];
 export const formSubmissionList: FormSubmissionItemProps[] = [
   {
     id: "0788ac41-a14c-40ee-8e53-011591e4e0d0",
@@ -123,5 +109,23 @@ export const formSubmissionList: FormSubmissionItemProps[] = [
     form_id: "5c093f9b-e780-4a69-83d8-9a9834f24716",
     email: "laura.moore@example.com",
     submitted_at: new Date().toLocaleString(),
+  },
+];
+export const formList: FormItemProps[] = [
+  {
+    id: "a4175311-07b7-4399-934f-df93d1fc9942",
+    title: "Product Feedback",
+    responsesCount: formSubmissionList.filter(
+      (x) => x.form_id === "a4175311-07b7-4399-934f-df93d1fc9942"
+    ).length,
+    status: "published",
+  },
+  {
+    id: "5c093f9b-e780-4a69-83d8-9a9834f24716",
+    title: "Customer Satisfaction",
+    responsesCount: formSubmissionList.filter(
+      (x) => x.form_id === "5c093f9b-e780-4a69-83d8-9a9834f24716"
+    ).length,
+    status: "draft",
   },
 ];
