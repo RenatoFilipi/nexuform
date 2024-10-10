@@ -1,6 +1,6 @@
-import { FormCardProps } from "@/components/private/forms/form-card";
+import { FormItemProps } from "@/components/private/forms/form-item";
 
-export const formList: FormCardProps[] = [
+export const formList: FormItemProps[] = [
   {
     id: "a4175311-07b7-4399-934f-df93d1fc9942",
     title: "Product Feedback",

@@ -82,7 +82,6 @@ const Forms = () => {
               title={form.title}
               status={form.status}
               responsesCount={form.responsesCount}
-              view="grid"
             />
           ))}
         </div>
@@ -97,7 +96,6 @@ const Forms = () => {
               title={form.title}
               status={form.status}
               responsesCount={form.responsesCount}
-              view="list"
             />
           ))}
         </div>
