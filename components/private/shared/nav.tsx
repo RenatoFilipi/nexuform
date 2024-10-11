@@ -19,7 +19,6 @@ import {
   MonitorIcon,
   MoonIcon,
   Settings2Icon,
-  SettingsIcon,
   SunIcon,
   SunMoonIcon,
   UserIcon,
@@ -40,7 +39,6 @@ import {
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet";
-import FormSettings from "../forms/form-settings";
 
 const navLinks = [
   {
@@ -62,36 +60,7 @@ const Nav = () => {
 
   // editor
   if (pathname.includes("dashboard/editor/")) {
-    return (
-      <div className="flex justify-between items-center h-16 px-2 sm:px-6 z-10 bg-background">
-        <div className="flex justify-center items-center gap-4">
-          <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
-            <Link href={"/dashboard/forms"}>
-              <Brand type="logo" className="h-7 fill-foreground" />
-            </Link>
-          </Button>
-          <span className="text-foreground/80 text-sm hidden sm:flex ">
-            Form name placeholder
-          </span>
-        </div>
-        <div className="flex justify-center items-center gap-4">
-          <FormSettings>
-            <Button variant={"outline"} size={"sm"}>
-              <SettingsIcon className="w-5 h-5" />
-            </Button>
-          </FormSettings>
-          <Button variant={"outline"} size={"sm"}>
-            Share
-          </Button>
-          <Button variant={"outline"} size={"sm"}>
-            Save
-          </Button>
-          <Button variant={"secondary"} size={"sm"}>
-            Publish
-          </Button>
-        </div>
-      </div>
-    );
+    return null;
   }
   // form
   if (pathname.includes("dashboard/forms/")) {
