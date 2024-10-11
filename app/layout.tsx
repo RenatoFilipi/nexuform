@@ -1,5 +1,6 @@
 import { ThemeProvider } from "@/components/core/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import QueryProvider from "@/lib/query-provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -19,14 +20,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange>
-          <div className="min-h-screen relative">{children}</div>
-          <Toaster richColors position="bottom-center" />
-        </ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange>
+            <div className="min-h-screen relative">{children}</div>
+            <Toaster richColors position="bottom-center" />
+          </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );
