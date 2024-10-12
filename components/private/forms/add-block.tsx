@@ -95,11 +95,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
         {blocks.map((block, index) => {
           return (
             <div key={index}>
-              <RadioGroupItem
-                value={block.type}
-                id={block.type}
-                className="peer sr-only"
-              />
+              <RadioGroupItem value={block.type} id={block.type} className="peer sr-only" />
               <Label
                 htmlFor={block.type}
                 className="text-sm cursor-pointer flex items-center justify-start gap-2 rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 [&:has([data-state=checked])]:border-primary">
@@ -112,11 +108,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
       </RadioGroup>
 
       <div className="flex justify-end items-center gap-4 sm:flex-row flex-col-reverse">
-        <Button
-          onClick={() => setState(false)}
-          variant={"outline"}
-          size={"sm"}
-          className="w-full sm:w-fit">
+        <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
           Cancel
         </Button>
         <Button variant={"secondary"} size={"sm"} className="w-full sm:w-fit">

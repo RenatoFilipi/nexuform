@@ -29,9 +29,7 @@ const Editor = () => {
               <Brand type="logo" className="h-7 fill-foreground" />
             </Link>
           </Button>
-          <span className="text-foreground/80 text-sm hidden sm:flex ">
-            {currentForm?.title}
-          </span>
+          <span className="text-foreground/80 text-sm hidden sm:flex ">{currentForm?.title}</span>
         </div>
         <div className="flex justify-center items-center gap-4">
           <Button variant={"outline"} size={"sm"}>
@@ -45,8 +43,8 @@ const Editor = () => {
           </Button>
         </div>
       </div>
-      <div className="flex h-full w-full relative">
-        <Card className="absolute border p-1 sm:left-4 left-2 top-4 sm:top-8 flex flex-col items-center justify-center gap-2">
+      <div className="flex h-full w-full relative justify-center items-center">
+        <Card className="absolute border p-1 sm:left-4 bottom-4 sm:bottom-auto sm:top-8 flex flex-row sm:flex-col items-center justify-center gap-2">
           <AddBlock>
             <Button variant={"ghost"} size={"icon"}>
               <LayoutGridIcon className="w-5 h-5" />
