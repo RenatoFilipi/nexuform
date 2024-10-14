@@ -1,3 +1,4 @@
+import { formStatus } from "@/helpers/types";
 import { BlockProps } from "@/models/form";
 import { create } from "zustand";
 
@@ -22,6 +23,8 @@ interface FormStoreProps {
   addBlock: (value: BlockProps) => void;
   updateBlock: (id: string, value: BlockProps) => void;
   removeBlock: (id: string) => void;
+  status: formStatus;
+  setStatus: (value: formStatus) => void;
 }
 
 const useEditorStore = create<FormStoreProps>((set) => ({
@@ -53,6 +56,8 @@ const useEditorStore = create<FormStoreProps>((set) => ({
     set((state) => ({
       blocks: state.blocks.filter((block) => block.id !== id),
     })),
+  status: "draft",
+  setStatus: (value) => set({ status: value }),
 }));
 
 export default useEditorStore;

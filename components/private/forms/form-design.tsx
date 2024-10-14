@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { minWidth640 } from "@/helpers/constants";
 import { setState } from "@/helpers/types";
+import useEditorStore from "@/stores/editor";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
@@ -152,22 +153,25 @@ const FormDesign = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Body = ({ setState }: { setState: setState<boolean> }) => {
+  const { primaryColor, setPrimaryColor } = useEditorStore();
+
   return (
     <div className="flex flex-col gap-6 h-full overflow-y-auto">
       <h1 className="text-xl font-semibold">Design</h1>
       <div className="flex-1 overflow-y-auto">
         <div className="grid grid-cols-2 gap-2">
           {colors.map((color, index) => {
-            console.log(color.color);
             return (
-              <Button
+              <button
+                onClick={() => setPrimaryColor(color.label)}
                 key={index}
-                variant={"outline"}
-                size={"sm"}
-                className="flex justify-start items-center gap-4">
+                className={`${
+                  color.label === primaryColor &&
+                  "bg-primary/10 border-primary hover:bg-primary/10"
+                } flex justify-start items-center gap-4 border py-1 px-3 rounded hover:bg-foreground/10`}>
                 <div className={`${color.color} w-4 h-4 rounded-full`}></div>
                 <span>{color.label}</span>
-              </Button>
+              </button>
             );
           })}
         </div>

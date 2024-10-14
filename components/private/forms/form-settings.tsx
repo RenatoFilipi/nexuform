@@ -6,32 +6,43 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { minWidth640 } from "@/helpers/constants";
 import { formStatus, setState } from "@/helpers/types";
+import useEditorStore from "@/stores/editor";
+import { BookDashedIcon, GlobeIcon, PenOffIcon } from "lucide-react";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
 import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet";
 
-const statusList: { status: formStatus; label: string; description: string }[] =
-  [
-    {
-      status: "draft",
-      label: "Draft",
-      description:
-        "The form is currently being created or edited and is not yet available for users to fill out.",
-    },
-    {
-      status: "published",
-      label: "Published",
-      description:
-        "The form is live and available for users to fill out and submit.",
-    },
-    {
-      status: "inactive",
-      label: "Inactive",
-      description:
-        "The form is no longer active and cannot be filled out or submitted by users.",
-    },
-  ];
+interface statusProps {
+  status: formStatus;
+  label: string;
+  description: string;
+  icon: JSX.Element | null;
+}
+
+const statusList: statusProps[] = [
+  {
+    status: "draft",
+    label: "Draft",
+    description:
+      "The form is currently being created or edited and is not yet available for users to fill out.",
+    icon: <BookDashedIcon className="w-5 h-5 text-primary" />,
+  },
+  {
+    status: "published",
+    label: "Published",
+    description:
+      "The form is live and available for users to fill out and submit.",
+    icon: <GlobeIcon className="w-5 h-5 text-primary" />,
+  },
+  {
+    status: "inactive",
+    label: "Inactive",
+    description:
+      "The form is no longer active and cannot be filled out or submitted by users.",
+    icon: <PenOffIcon className="w-5 h-5 text-primary" />,
+  },
+];
 
 const FormSettings = ({ children }: { children: React.ReactNode }) => {
   const isDesktop = useMediaQuery({ query: minWidth640 });
@@ -41,7 +52,7 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
     return (
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>{children}</SheetTrigger>
-        <SheetContent className="min-w-[400px] p-0">
+        <SheetContent className="min-w-[480px] p-0">
           <Body setState={setOpen} />
         </SheetContent>
       </Sheet>
@@ -59,6 +70,8 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Body = ({ setState }: { setState: setState<boolean> }) => {
+  const { status: st, setStatus } = useEditorStore();
+
   return (
     <div className="flex flex-col gap-6 h-full overflow-y-auto sm:p-6">
       <h1 className="text-xl font-semibold">Settings</h1>
@@ -73,14 +86,23 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
         </div>
         <div className="overflow-y-auto flex-1 flex flex-col gap-1.5">
           <Label>Status</Label>
-          <div className="grid gap-6 overflow-y-auto">
+          <div className="grid gap-3 overflow-y-auto grid-cols-1">
             {statusList.map((status, index) => {
               return (
-                <button key={index} className="border p-3">
-                  <div>
-                    <span className="text-sm">{status.label}</span>
-                    <p className="text-xs">{status.description}</p>
+                <button
+                  onClick={() => setStatus(status.status)}
+                  key={index}
+                  className={`${
+                    status.status === st &&
+                    "bg-primary/10 border-primary hover:bg-primary/10"
+                  } border rounded hover:bg-foreground/10 p-2 flex flex-col gap-2`}>
+                  <div className="flex gap-2 items-center">
+                    {status.icon}
+                    <span className="text-sm font-semibold">
+                      {status.label}
+                    </span>
                   </div>
+                  <p className="text-xs text-start">{status.description}</p>
                 </button>
               );
             })}
