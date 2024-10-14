@@ -7,6 +7,7 @@ import FormSettings from "@/components/private/forms/form-settings";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { formList } from "@/mocks/forms";
+import useEditorStore from "@/stores/editor";
 import { BrushIcon, LayoutGridIcon, Loader2, SettingsIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -15,6 +16,7 @@ import { useState } from "react";
 type state = "loading" | "no_block" | "has_block" | "error";
 
 const Editor = () => {
+  const { blocks } = useEditorStore();
   const pathname = usePathname();
   const [state] = useState<state>("no_block");
   const currentFormId = pathname.split("/")[3];
@@ -65,7 +67,7 @@ const Editor = () => {
             <Loader2 className="animate-spin w-7 h-7" />
           </div>
         )}
-        {state === "no_block" && (
+        {blocks.length <= 0 && (
           <div className="flex justify-center items-center h-full w-full">
             <div className="flex flex-col justify-center items-center gap-2">
               <LayoutGridIcon className="w-7 h-7" />
@@ -75,6 +77,21 @@ const Editor = () => {
                   Add block
                 </Button>
               </AddBlock>
+            </div>
+          </div>
+        )}
+        {blocks.length >= 1 && (
+          <div className="border border-blue-500 flex w-full h-full pt-6 pb-20 justify-center px-2 sm:px-0">
+            <div className="border border-green-500 w-full flex flex-col items-center justify-start sm:max-w-[500px]">
+              {blocks.map((block) => {
+                return (
+                  <div
+                    key={block.id}
+                    className="border border-purple-500 flex w-full justify-center items-center">
+                    {block.type}
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}

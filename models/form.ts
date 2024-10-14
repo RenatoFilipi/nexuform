@@ -16,7 +16,7 @@ export interface FormProps {
 
 export interface BlockProps {
   id: string;
-  question: string;
+  label: string;
   description: string | null;
   type: block;
   required: boolean;
