@@ -1,6 +1,7 @@
 "use client";
 
 import { Badge2 } from "@/components/ui/badge2";
+import { formStatus } from "@/helpers/types";
 import { EditIcon, ViewIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../../ui/button";
@@ -9,7 +10,7 @@ import { Card } from "../../ui/card";
 export interface FormItemProps {
   id: string;
   title: string;
-  status: "inactive" | "draft" | "published";
+  status: formStatus;
   responsesCount: number;
 }
 

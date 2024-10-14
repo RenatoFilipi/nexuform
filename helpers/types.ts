@@ -10,3 +10,4 @@ export type block =
   | "number"
   | "email"
   | "rating";
+export type formStatus = "inactive" | "draft" | "published";

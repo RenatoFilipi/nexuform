@@ -29,17 +29,16 @@ const Editor = () => {
               <Brand type="logo" className="h-7 fill-foreground" />
             </Link>
           </Button>
-          <span className="text-foreground/80 text-sm hidden sm:flex ">{currentForm?.title}</span>
+          <span className="text-foreground/80 text-sm hidden sm:flex ">
+            {currentForm?.title}
+          </span>
         </div>
         <div className="flex justify-center items-center gap-4">
           <Button variant={"outline"} size={"sm"}>
-            Share
-          </Button>
-          <Button variant={"outline"} size={"sm"}>
-            Save
+            Preview
           </Button>
           <Button variant={"secondary"} size={"sm"}>
-            Publish
+            Save
           </Button>
         </div>
       </div>
