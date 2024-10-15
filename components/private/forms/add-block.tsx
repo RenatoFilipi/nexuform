@@ -117,7 +117,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
       label: targetBlock.label,
       description: "",
       options: null,
-      required: false,
+      required: true,
       type: blockType,
     };
     addBlock(block);

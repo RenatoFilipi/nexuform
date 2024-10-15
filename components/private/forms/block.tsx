@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { block } from "@/helpers/types";
 import { BlockProps } from "@/models/form";
+import useEditorStore from "@/stores/editor";
 import {
   CheckCheckIcon,
   CheckCircleIcon,
@@ -29,23 +31,34 @@ const blockIcons: { [key in block]: JSX.Element } = {
 };
 
 const Block = (block: BlockProps) => {
+  const { removeBlock } = useEditorStore();
+
   return (
-    <div className="flex justify-between items-center w-full border p-1">
-      <div className="flex justify-center items-center gap-2 pl-2">
+    <Card className="flex justify-between items-center w-full border py-2 px-2">
+      <div className="flex justify-center items-center gap-3">
         {blockIcons[block.type]}
-        <span className="text-sm">{block.label}</span>
+        <div className="flex flex-col">
+          <div className="relative flex justify-center items-center gap-1">
+            <span className="font-semibold">{block.label}</span>
+            {block.required && <span className="text-red-500">*</span>}
+          </div>
+          <span className="text-xs">{block.type}</span>
+        </div>
       </div>
-      <div className="flex justify-center items-center gap-1">
+      <div className="flex justify-center items-center gap-0.5">
         <BlockSettings block={block}>
           <Button variant={"ghost"} size={"sm"}>
             <SettingsIcon className="w-4 h-4" />
           </Button>
         </BlockSettings>
-        <Button variant={"ghost"} size={"sm"}>
+        <Button
+          onClick={() => removeBlock(block.id)}
+          variant={"ghost"}
+          size={"sm"}>
           <TrashIcon className="w-4 h-4" />
         </Button>
       </div>
-    </div>
+    </Card>
   );
 };
 
