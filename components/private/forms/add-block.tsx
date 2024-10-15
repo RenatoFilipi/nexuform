@@ -108,9 +108,13 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
   });
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const blockType = values.block as block;
+
+    const targetBlock = blocks.find((x) => x.type === blockType);
+    if (targetBlock === undefined) return;
+
     const block: BlockProps = {
       id: uuid(),
-      label: "",
+      label: targetBlock.label,
       description: "",
       options: null,
       required: false,

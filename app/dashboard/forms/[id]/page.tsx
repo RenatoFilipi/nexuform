@@ -11,16 +11,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { dashboardFormState } from "@/helpers/types";
 import { formList, formSubmissionList } from "@/mocks/forms";
 import { BookIcon, Loader2Icon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-type state = "loading" | "no_submissions" | "has_submissions" | "error";
-
 const Form = () => {
-  const [state] = useState<state>("has_submissions");
+  const [state] = useState<dashboardFormState>("has_submissions");
   const pathname = usePathname();
   const currentFormId = pathname.split("/")[3];
   const currentForm = formList.find((x) => x.id === currentFormId);

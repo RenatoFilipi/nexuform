@@ -2,10 +2,12 @@
 
 import Brand from "@/components/core/brand";
 import AddBlock from "@/components/private/forms/add-block";
+import Block from "@/components/private/forms/block";
 import FormDesign from "@/components/private/forms/form-design";
 import FormSettings from "@/components/private/forms/form-settings";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { dashboardEditorState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
 import useEditorStore from "@/stores/editor";
 import { BrushIcon, LayoutGridIcon, Loader2, SettingsIcon } from "lucide-react";
@@ -13,12 +15,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-type state = "loading" | "no_block" | "has_block" | "error";
-
 const Editor = () => {
   const { blocks } = useEditorStore();
   const pathname = usePathname();
-  const [state] = useState<state>("no_block");
+  const [state] = useState<dashboardEditorState>("no_block");
   const currentFormId = pathname.split("/")[3];
   const currentForm = formList.find((x) => x.id === currentFormId);
 
@@ -44,7 +44,7 @@ const Editor = () => {
           </Button>
         </div>
       </div>
-      <div className="flex h-full w-full relative justify-center items-center">
+      <div className="flex h-full w-full relative justify-center items-center overflow-y-auto">
         <Card className="absolute border p-1 sm:left-4 bottom-4 sm:bottom-auto sm:top-8 flex flex-row sm:flex-col items-center justify-center gap-2">
           <AddBlock>
             <Button variant={"ghost"} size={"icon"}>
@@ -81,16 +81,10 @@ const Editor = () => {
           </div>
         )}
         {blocks.length >= 1 && (
-          <div className="border border-blue-500 flex w-full h-full pt-6 pb-20 justify-center px-2 sm:px-0">
-            <div className="border border-green-500 w-full flex flex-col items-center justify-start sm:max-w-[500px]">
+          <div className="flex w-full h-full pt-6 pb-20 justify-center px-2 sm:px-0 overflow-y-auto">
+            <div className="w-full flex flex-col items-center justify-start sm:max-w-[500px] gap-2 overflow-y-auto">
               {blocks.map((block) => {
-                return (
-                  <div
-                    key={block.id}
-                    className="border border-purple-500 flex w-full justify-center items-center">
-                    {block.type}
-                  </div>
-                );
+                return <Block key={block.id} {...block} />;
               })}
             </div>
           </div>

@@ -5,16 +5,15 @@ import FormItem from "@/components/private/forms/form-item";
 import GenericError from "@/components/private/shared/generic-error";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { dashboardFormsState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
 import { BookIcon, LayoutGridIcon, ListIcon, Loader2Icon } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-type state = "loading" | "no_form" | "has_form" | "error";
-
 const Forms = () => {
-  const [state] = useState<state>("has_form");
+  const [state] = useState<dashboardFormsState>("has_form");
   const searchParams = useSearchParams();
   const view = searchParams.get("view");
 

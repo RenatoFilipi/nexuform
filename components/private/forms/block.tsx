@@ -1,0 +1,52 @@
+import { Button } from "@/components/ui/button";
+import { block } from "@/helpers/types";
+import { BlockProps } from "@/models/form";
+import {
+  CheckCheckIcon,
+  CheckCircleIcon,
+  CheckSquareIcon,
+  ChevronDownIcon,
+  HashIcon,
+  MailIcon,
+  MinusIcon,
+  SettingsIcon,
+  StarIcon,
+  TextIcon,
+  TrashIcon,
+} from "lucide-react";
+import BlockSettings from "./block-settings";
+
+const blockIcons: { [key in block]: JSX.Element } = {
+  short_answer: <MinusIcon className="w-5 h-5" />,
+  long_answer: <TextIcon className="w-5 h-5" />,
+  multiple_choice: <CheckSquareIcon className="w-5 h-5" />,
+  checkboxes: <CheckCircleIcon className="w-5 h-5" />,
+  dropdown: <ChevronDownIcon className="w-5 h-5" />,
+  multi_select: <CheckCheckIcon className="w-5 h-5" />,
+  number: <HashIcon className="w-5 h-5" />,
+  email: <MailIcon className="w-5 h-5" />,
+  rating: <StarIcon className="w-5 h-5" />,
+};
+
+const Block = (block: BlockProps) => {
+  return (
+    <div className="flex justify-between items-center w-full border p-1">
+      <div className="flex justify-center items-center gap-2 pl-2">
+        {blockIcons[block.type]}
+        <span className="text-sm">{block.label}</span>
+      </div>
+      <div className="flex justify-center items-center gap-1">
+        <BlockSettings block={block}>
+          <Button variant={"ghost"} size={"sm"}>
+            <SettingsIcon className="w-4 h-4" />
+          </Button>
+        </BlockSettings>
+        <Button variant={"ghost"} size={"sm"}>
+          <TrashIcon className="w-4 h-4" />
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default Block;

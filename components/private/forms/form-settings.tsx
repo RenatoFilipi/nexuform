@@ -70,7 +70,7 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Body = ({ setState }: { setState: setState<boolean> }) => {
-  const { status: st, setStatus } = useEditorStore();
+  const store = useEditorStore();
 
   return (
     <div className="flex flex-col gap-6 h-full overflow-y-auto sm:p-6">
@@ -90,10 +90,10 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
             {statusList.map((status, index) => {
               return (
                 <button
-                  onClick={() => setStatus(status.status)}
+                  onClick={() => store.setStatus(status.status)}
                   key={index}
                   className={`${
-                    status.status === st &&
+                    status.status === store.status &&
                     "bg-primary/10 border-primary hover:bg-primary/10"
                   } border rounded hover:bg-foreground/10 p-2 flex flex-col gap-2`}>
                   <div className="flex gap-2 items-center">
