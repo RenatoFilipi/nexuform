@@ -23,7 +23,17 @@ const Editor = () => {
   const currentForm = formList.find((x) => x.id === currentFormId);
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex flex-col w-full h-full relative">
+      {/* <DotPattern
+        width={20}
+        height={20}
+        cx={1}
+        cy={1}
+        cr={1}
+        className={cn(
+          "[mask-image:linear-gradient(to_bottom_right,white,white,white)] "
+        )}
+      /> */}
       <div className="flex justify-between items-center h-16 px-2 sm:px-6 z-10 bg-background">
         <div className="flex justify-center items-center gap-4">
           <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>

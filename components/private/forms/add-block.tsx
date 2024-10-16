@@ -119,6 +119,9 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
       options: null,
       required: true,
       type: blockType,
+      placeholder: null,
+      max_character_limit: null,
+      show_character_limit: null,
     };
     addBlock(block);
     setState(false);

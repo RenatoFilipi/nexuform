@@ -21,4 +21,7 @@ export interface BlockProps {
   type: block;
   required: boolean;
   options: string[] | null;
+  placeholder: string | null;
+  max_character_limit: number | null;
+  show_character_limit: boolean | null;
 }

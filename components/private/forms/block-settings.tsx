@@ -4,6 +4,15 @@ import { minWidth640 } from "@/helpers/constants";
 import { BlockProps } from "@/models/form";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import CheckboxesBlock from "./blocks/check-boxes-block";
+import DropdownBlock from "./blocks/dropdown-block";
+import EmailBlock from "./blocks/email-block";
+import LongAnswerBlock from "./blocks/long-answer-block";
+import MultiSelectBlock from "./blocks/multi-select-block";
+import MultipleChoiceBlock from "./blocks/multiple-choice-block";
+import NumberBlock from "./blocks/number-block";
+import RatingBlock from "./blocks/rating-block";
+import ShortAnswerBlock from "./blocks/short-answer-block";
 
 const BlockSettings = ({
   children,
@@ -37,12 +46,37 @@ const BlockSettings = ({
 };
 
 const Body = ({ block }: { block: BlockProps }) => {
-  return (
-    <div className="flex justify-center items-center h-full flex-col gap-4">
-      <span>{block.id}</span>
-      <span>{block.label}</span>
-    </div>
-  );
+  switch (block.type) {
+    case "short_answer": {
+      return <ShortAnswerBlock block={block} />;
+    }
+    case "long_answer": {
+      return <LongAnswerBlock block={block} />;
+    }
+    case "multiple_choice": {
+      return <MultipleChoiceBlock block={block} />;
+    }
+    case "checkboxes": {
+      return <CheckboxesBlock block={block} />;
+    }
+    case "dropdown": {
+      return <DropdownBlock block={block} />;
+    }
+    case "multi_select": {
+      return <MultiSelectBlock block={block} />;
+    }
+    case "number": {
+      return <NumberBlock block={block} />;
+    }
+    case "email": {
+      return <EmailBlock block={block} />;
+    }
+    case "rating": {
+      return <RatingBlock block={block} />;
+    }
+    default:
+      return null;
+  }
 };
 
 export default BlockSettings;
