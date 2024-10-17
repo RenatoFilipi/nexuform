@@ -5,13 +5,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { setState } from "@/helpers/types";
 import { BlockProps } from "@/models/form";
 
-const ShortAnswerBlock = ({ block }: { block: BlockProps }) => {
+const ShortAnswerBlock = ({
+  block,
+  setState,
+}: {
+  block: BlockProps;
+  setState: setState<boolean>;
+}) => {
   return (
     <div className="h-full flex flex-col gap-8">
       <h1 className="text-xl font-semibold">Settings</h1>
-      <div className="h-full flex flex-col gap-4">
+      <div className="h-full flex flex-col gap-4 overflow-y-auto">
         <div className="grid gap-1.5">
           <Label htmlFor="name">Name</Label>
           <Input type="text" id="name" />
@@ -34,7 +41,11 @@ const ShortAnswerBlock = ({ block }: { block: BlockProps }) => {
         </div>
       </div>
       <div className="flex justify-end items-center">
-        <Button variant={"outline"} size={"sm"} className="w-full sm:w-fit">
+        <Button
+          onClick={() => setState(false)}
+          variant={"outline"}
+          size={"sm"}
+          className="w-full sm:w-fit">
           Close
         </Button>
       </div>
