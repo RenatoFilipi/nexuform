@@ -12,13 +12,13 @@ import { BlockProps } from "@/models/form";
 import useEditorStore from "@/stores/editor";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  CheckCheckIcon,
   CheckCircleIcon,
   CheckSquareIcon,
   ChevronDownIcon,
   HashIcon,
   MailIcon,
   MinusIcon,
+  ScaleIcon,
   StarIcon,
   TextIcon,
 } from "lucide-react";
@@ -59,14 +59,10 @@ const blocks: addBlockProps[] = [
     label: "Dropdown",
     icon: <ChevronDownIcon className="w-4 h-4" />,
   },
-  {
-    type: "multi_select",
-    label: "Multi select",
-    icon: <CheckCheckIcon className="w-4 h-4" />,
-  },
   { type: "number", label: "Number", icon: <HashIcon className="w-4 h-4" /> },
   { type: "email", label: "Email", icon: <MailIcon className="w-4 h-4" /> },
   { type: "rating", label: "Rating", icon: <StarIcon className="w-4 h-4" /> },
+  { type: "scale", label: "Scale", icon: <ScaleIcon className="w-4 h-4" /> },
 ];
 
 const AddBlock = ({ children }: { children: React.ReactNode }) => {

@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { setState } from "@/helpers/types";
 import { BlockProps } from "@/models/form";
 
-const DropdownBlock = ({
+const ScaleBlock = ({
   block,
   setState,
 }: {
@@ -28,8 +28,8 @@ const DropdownBlock = ({
           <Textarea id="description" />
         </div>
         <div className="grid gap-1.5">
-          <Label htmlFor="options">Options</Label>
-          <Textarea id="options" />
+          <Label htmlFor="max-scaling">Max scale</Label>
+          <Input type="number" id="max-scale" />
         </div>
         <div className="flex justify-between items-center">
           <Label htmlFor="required">Required</Label>
@@ -49,4 +49,4 @@ const DropdownBlock = ({
   );
 };
 
-export default DropdownBlock;
+export default ScaleBlock;

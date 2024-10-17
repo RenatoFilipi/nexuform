@@ -4,10 +4,10 @@ export type block =
   | "multiple_choice"
   | "checkboxes"
   | "dropdown"
-  | "multi_select"
   | "number"
   | "email"
-  | "rating";
+  | "rating"
+  | "scale";
 export type setState<T> = React.Dispatch<React.SetStateAction<T>>;
 export type stage = "stage01" | "stage02" | "stage03" | "stage04" | "stage05";
 export type formStatus = "inactive" | "draft" | "published";

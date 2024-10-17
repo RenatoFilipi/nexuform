@@ -9,10 +9,10 @@ import CheckboxesBlock from "./blocks/check-boxes-block";
 import DropdownBlock from "./blocks/dropdown-block";
 import EmailBlock from "./blocks/email-block";
 import LongAnswerBlock from "./blocks/long-answer-block";
-import MultiSelectBlock from "./blocks/multi-select-block";
 import MultipleChoiceBlock from "./blocks/multiple-choice-block";
 import NumberBlock from "./blocks/number-block";
 import RatingBlock from "./blocks/rating-block";
+import ScaleBlock from "./blocks/scale-block";
 import ShortAnswerBlock from "./blocks/short-answer-block";
 
 const BlockSettings = ({
@@ -69,9 +69,6 @@ const Body = ({
     case "dropdown": {
       return <DropdownBlock block={block} setState={setState} />;
     }
-    case "multi_select": {
-      return <MultiSelectBlock block={block} setState={setState} />;
-    }
     case "number": {
       return <NumberBlock block={block} setState={setState} />;
     }
@@ -80,6 +77,9 @@ const Body = ({
     }
     case "rating": {
       return <RatingBlock block={block} setState={setState} />;
+    }
+    case "scale": {
+      return <ScaleBlock block={block} setState={setState} />;
     }
     default:
       return null;
