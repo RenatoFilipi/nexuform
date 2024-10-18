@@ -3,7 +3,7 @@ import { block } from "@/helpers/types";
 export interface FormProps {
   id: string;
   owner_id: string;
-  title: string;
+  name: string;
   description: string | null;
   created_at: string;
   updated_at: string;
@@ -16,7 +16,7 @@ export interface FormProps {
 
 export interface BlockProps {
   id: string;
-  label: string;
+  name: string;
   description: string | null;
   type: block;
   required: boolean;

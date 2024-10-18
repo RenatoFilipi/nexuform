@@ -17,7 +17,7 @@ const ShortAnswerBlock = ({
   setState: setState<boolean>;
 }) => {
   const { id } = block;
-  const { updateBlock, blocks } = useEditorStore();
+  const { updateBlock } = useEditorStore();
 
   return (
     <div className="h-full flex flex-col gap-8">
@@ -28,9 +28,9 @@ const ShortAnswerBlock = ({
           <Input
             type="text"
             id="name"
-            value={block.label}
+            value={block.name}
             onChange={(e) => {
-              updateBlock(id, { ...block, label: e.target.value });
+              updateBlock(id, { ...block, name: e.target.value });
             }}
           />
         </div>

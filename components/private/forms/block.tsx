@@ -7,9 +7,9 @@ import {
   CheckCircleIcon,
   CheckSquareIcon,
   ChevronDownIcon,
+  EqualIcon,
   HashIcon,
   MailIcon,
-  MinusIcon,
   ScaleIcon,
   SettingsIcon,
   StarIcon,
@@ -19,7 +19,7 @@ import {
 import BlockSettings from "./block-settings";
 
 const blockIcons: { [key in block]: JSX.Element } = {
-  short_answer: <MinusIcon className="w-5 h-5" />,
+  short_answer: <EqualIcon className="w-5 h-5" />,
   long_answer: <TextIcon className="w-5 h-5" />,
   multiple_choice: <CheckSquareIcon className="w-5 h-5" />,
   checkboxes: <CheckCircleIcon className="w-5 h-5" />,
@@ -36,10 +36,12 @@ const Block = (block: BlockProps) => {
   return (
     <Card className="flex justify-between items-center w-full border py-2 px-2">
       <div className="flex justify-center items-center gap-3">
-        {blockIcons[block.type]}
+        <div className="border flex justify-center items-center bg-primary/10 dark:bg-primary/50 p-2 rounded">
+          {blockIcons[block.type]}
+        </div>
         <div className="flex flex-col">
           <span className="font-semibold sm:truncate sm:w-[450px]">
-            {block.label}
+            {block.name}
           </span>
           <div>
             <span className="text-xs">{block.type}</span>

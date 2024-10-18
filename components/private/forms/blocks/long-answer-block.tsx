@@ -7,6 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { setState } from "@/helpers/types";
 import { BlockProps } from "@/models/form";
+import useEditorStore from "@/stores/editor";
 
 const LongAnswerBlock = ({
   block,
@@ -15,13 +16,23 @@ const LongAnswerBlock = ({
   block: BlockProps;
   setState: setState<boolean>;
 }) => {
+  const { id } = block;
+  const { updateBlock } = useEditorStore();
+
   return (
     <div className="h-full flex flex-col gap-8">
       <h1 className="text-xl font-semibold">Settings</h1>
       <div className="h-full flex flex-col gap-4 overflow-y-auto">
         <div className="grid gap-1.5">
           <Label htmlFor="name">Name</Label>
-          <Input type="text" id="name" />
+          <Input
+            type="text"
+            id="name"
+            value={block.name}
+            onChange={(e) => {
+              updateBlock(id, { ...block, name: e.target.value });
+            }}
+          />
         </div>
         <div className="grid gap-1.5">
           <Label htmlFor="description">Description</Label>

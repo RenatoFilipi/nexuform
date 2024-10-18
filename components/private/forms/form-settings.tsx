@@ -80,8 +80,8 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
           <Label>Name</Label>
           <Input
             type="text"
-            value={store.title}
-            onChange={(e) => store.setTitle(e.target.value)}
+            value={store.name}
+            onChange={(e) => store.setName(e.target.value)}
           />
         </div>
         <div className="grid gap-1.5">

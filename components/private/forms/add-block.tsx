@@ -15,9 +15,9 @@ import {
   CheckCircleIcon,
   CheckSquareIcon,
   ChevronDownIcon,
+  EqualIcon,
   HashIcon,
   MailIcon,
-  MinusIcon,
   ScaleIcon,
   StarIcon,
   TextIcon,
@@ -30,39 +30,39 @@ import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
 
 interface addBlockProps {
   type: block;
-  label: string;
+  name: string;
   icon: JSX.Element | null;
 }
 const blocks: addBlockProps[] = [
   {
     type: "short_answer",
-    label: "Short answer",
-    icon: <MinusIcon className="w-4 h-4" />,
+    name: "Short answer",
+    icon: <EqualIcon className="w-4 h-4" />,
   },
   {
     type: "long_answer",
-    label: "Long answer",
+    name: "Long answer",
     icon: <TextIcon className="w-4 h-4" />,
   },
   {
     type: "multiple_choice",
-    label: "Multiple choice",
+    name: "Multiple choice",
     icon: <CheckSquareIcon className="w-4 h-4" />,
   },
   {
     type: "checkboxes",
-    label: "Checkboxes",
+    name: "Checkboxes",
     icon: <CheckCircleIcon className="w-4 h-4" />,
   },
   {
     type: "dropdown",
-    label: "Dropdown",
+    name: "Dropdown",
     icon: <ChevronDownIcon className="w-4 h-4" />,
   },
-  { type: "number", label: "Number", icon: <HashIcon className="w-4 h-4" /> },
-  { type: "email", label: "Email", icon: <MailIcon className="w-4 h-4" /> },
-  { type: "rating", label: "Rating", icon: <StarIcon className="w-4 h-4" /> },
-  { type: "scale", label: "Scale", icon: <ScaleIcon className="w-4 h-4" /> },
+  { type: "number", name: "Number", icon: <HashIcon className="w-4 h-4" /> },
+  { type: "email", name: "Email", icon: <MailIcon className="w-4 h-4" /> },
+  { type: "rating", name: "Rating", icon: <StarIcon className="w-4 h-4" /> },
+  { type: "scale", name: "Scale", icon: <ScaleIcon className="w-4 h-4" /> },
 ];
 
 const AddBlock = ({ children }: { children: React.ReactNode }) => {
@@ -110,7 +110,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
 
     const block: BlockProps = {
       id: uuid(),
-      label: targetBlock.label,
+      name: targetBlock.name,
       description: "",
       options: null,
       required: true,
@@ -152,7 +152,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
                             htmlFor={block.type}
                             className="text-sm cursor-pointer flex items-center justify-start gap-2 rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 [&:has([data-state=checked])]:border-primary">
                             {block.icon}
-                            {block.label}
+                            {block.name}
                           </Label>
                         </div>
                       );

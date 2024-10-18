@@ -7,8 +7,8 @@ interface FormStoreProps {
   setId: (value: string) => void;
   ownerId: string;
   setOwnerId: (value: string) => void;
-  title: string;
-  setTitle: (value: string) => void;
+  name: string;
+  setName: (value: string) => void;
   description: string | null;
   setDescription: (value: string | null) => void;
   primaryColor: string;
@@ -32,8 +32,8 @@ const useEditorStore = create<FormStoreProps>((set) => ({
   setId: (value) => set({ id: value }),
   ownerId: "",
   setOwnerId: (value) => set({ ownerId: value }),
-  title: "",
-  setTitle: (value) => set({ title: value }),
+  name: "",
+  setName: (value) => set({ name: value }),
   description: null,
   setDescription: (value) => set({ description: value }),
   primaryColor: "",
