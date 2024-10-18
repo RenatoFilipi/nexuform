@@ -17,7 +17,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const Editor = () => {
-  const { blocks, setTitle } = useEditorStore();
+  const { blocks, setTitle, title } = useEditorStore();
   const pathname = usePathname();
   const [state] = useState<dashboardEditorState>("no_block");
   const currentFormId = pathname.split("/")[3];
@@ -42,7 +42,7 @@ const Editor = () => {
             </Link>
           </Button>
           <span className="text-foreground/80 text-sm hidden sm:flex ">
-            {currentForm?.title}
+            {title}
           </span>
         </div>
         <div className="flex justify-center items-center gap-4">
@@ -92,7 +92,7 @@ const Editor = () => {
         )}
         {blocks.length >= 1 && (
           <div className="flex w-full h-full pt-6 pb-20 justify-center px-2 sm:px-0 overflow-y-auto">
-            <div className="w-full flex flex-col items-center justify-start sm:max-w-[500px] gap-2 overflow-y-auto">
+            <div className="w-full flex flex-col items-center justify-start sm:max-w-[600px] gap-2 overflow-y-auto">
               {blocks.map((block) => {
                 return <Block key={block.id} {...block} />;
               })}

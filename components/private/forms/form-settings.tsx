@@ -78,11 +78,18 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
       <div className="flex flex-1 flex-col overflow-y-auto gap-4 px-1">
         <div className="grid gap-1.5">
           <Label>Name</Label>
-          <Input />
+          <Input
+            type="text"
+            value={store.title}
+            onChange={(e) => store.setTitle(e.target.value)}
+          />
         </div>
         <div className="grid gap-1.5">
           <Label>Description</Label>
-          <Textarea />
+          <Textarea
+            value={store.description ?? ""}
+            onChange={(e) => store.setDescription(e.target.value)}
+          />
         </div>
         <div className="overflow-y-auto flex-1 flex flex-col gap-1.5">
           <Label>Status</Label>

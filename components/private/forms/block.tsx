@@ -38,11 +38,13 @@ const Block = (block: BlockProps) => {
       <div className="flex justify-center items-center gap-3">
         {blockIcons[block.type]}
         <div className="flex flex-col">
-          <div className="relative flex justify-center items-center gap-1">
-            <span className="font-semibold">{block.label}</span>
+          <span className="font-semibold sm:truncate sm:w-[450px]">
+            {block.label}
+          </span>
+          <div>
+            <span className="text-xs">{block.type}</span>
             {block.required && <span className="text-red-500">*</span>}
           </div>
-          <span className="text-xs">{block.type}</span>
         </div>
       </div>
       <div className="flex justify-center items-center gap-0.5">
@@ -54,7 +56,8 @@ const Block = (block: BlockProps) => {
         <Button
           onClick={() => removeBlock(block.id)}
           variant={"ghost"}
-          size={"sm"}>
+          size={"sm"}
+          className="hover:text-red-500">
           <TrashIcon className="w-4 h-4" />
         </Button>
       </div>
