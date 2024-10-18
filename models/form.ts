@@ -20,7 +20,7 @@ export interface BlockProps {
   description: string | null;
   type: block;
   required: boolean;
-  options: string[] | null;
+  options: { id: string; text: string }[] | null;
   placeholder: string | null;
   max_character_limit: number | null;
   show_character_limit: boolean | null;
