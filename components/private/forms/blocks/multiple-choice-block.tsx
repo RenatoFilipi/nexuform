@@ -13,21 +13,6 @@ import { Tag, TagInput } from "emblor";
 import { XIcon } from "lucide-react";
 import { useState } from "react";
 
-const tags = [
-  {
-    id: "3395934042",
-    text: "Sports",
-  },
-  {
-    id: "3949583688",
-    text: "Programming",
-  },
-  {
-    id: "1649108559",
-    text: "Travel",
-  },
-];
-
 const MultipleChoiceBlock = ({
   block,
   setState,
@@ -79,7 +64,7 @@ const MultipleChoiceBlock = ({
             }}
           />
         </div>
-        <div className="grid gap-1.5">
+        <div className="grid gap-1.5 overflow-y-auto">
           <Label htmlFor="options">Options</Label>
           <div>
             <TagInput

@@ -11,7 +11,13 @@ import { dashboardEditorState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
 import useEditorStore from "@/stores/editor";
 import { useQuery } from "@tanstack/react-query";
-import { BrushIcon, LayoutGridIcon, Loader2, SettingsIcon } from "lucide-react";
+import {
+  BlocksIcon,
+  ChevronLeftIcon,
+  Loader2,
+  PaintbrushIcon,
+  Settings2Icon,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -19,6 +25,7 @@ import { useState } from "react";
 const Editor = () => {
   const { blocks, setName, name } = useEditorStore();
   const pathname = usePathname();
+  const [isPreview, setIsPreview] = useState(false);
   const [state] = useState<dashboardEditorState>("no_block");
   const currentFormId = pathname.split("/")[3];
   const currentForm = formList.find((x) => x.id === currentFormId);
@@ -31,6 +38,25 @@ const Editor = () => {
       return null;
     },
   });
+
+  if (isPreview) {
+    return (
+      <div className="h-full flex flex-col">
+        <div className="w-full flex justify-end p-3">
+          <Button
+            variant={"outline"}
+            size={"sm"}
+            onClick={() => setIsPreview(false)}>
+            <ChevronLeftIcon className="w-4 h-4 mr-2" />
+            Return to editor
+          </Button>
+        </div>
+        <div className="flex justify-center items-center h-full">
+          Preview page
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col w-full h-full relative">
@@ -46,7 +72,10 @@ const Editor = () => {
           </span>
         </div>
         <div className="flex justify-center items-center gap-4">
-          <Button variant={"outline"} size={"sm"}>
+          <Button
+            variant={"outline"}
+            size={"sm"}
+            onClick={() => setIsPreview(true)}>
             Preview
           </Button>
           <Button variant={"secondary"} size={"sm"}>
@@ -58,17 +87,17 @@ const Editor = () => {
         <Card className="absolute border p-1 sm:left-4 bottom-4 sm:bottom-auto sm:top-8 flex flex-row sm:flex-col items-center justify-center gap-2">
           <AddBlock>
             <Button variant={"ghost"} size={"icon"}>
-              <LayoutGridIcon className="w-5 h-5" />
+              <BlocksIcon className="w-5 h-5" />
             </Button>
           </AddBlock>
           <FormDesign>
             <Button variant={"ghost"} size={"icon"}>
-              <BrushIcon className="w-5 h-5" />
+              <PaintbrushIcon className="w-5 h-5" />
             </Button>
           </FormDesign>
           <FormSettings>
             <Button variant={"ghost"} size={"icon"}>
-              <SettingsIcon className="w-5 h-5" />
+              <Settings2Icon className="w-5 h-5" />
             </Button>
           </FormSettings>
         </Card>
@@ -79,11 +108,11 @@ const Editor = () => {
         )}
         {blocks.length <= 0 && (
           <div className="flex justify-center items-center h-full w-full">
-            <div className="flex flex-col justify-center items-center gap-2">
-              <LayoutGridIcon className="w-7 h-7" />
+            <div className="flex flex-col justify-center items-center gap-3">
+              <BlocksIcon className="w-8 h-8" />
               <span>This form has no blocks.</span>
               <AddBlock>
-                <Button variant={"secondary"} size={"sm"} className="mt-3">
+                <Button variant={"secondary"} size={"sm"} className="w-full">
                   Add block
                 </Button>
               </AddBlock>
