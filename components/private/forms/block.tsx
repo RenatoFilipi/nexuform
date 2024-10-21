@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { block } from "@/helpers/types";
 import { BlockProps } from "@/models/form";
 import useEditorStore from "@/stores/editor";
+import { useDragControls } from "framer-motion";
 import {
   CheckCircleIcon,
   CheckSquareIcon,
@@ -16,6 +17,7 @@ import {
   TextIcon,
   TrashIcon,
 } from "lucide-react";
+import { PointerEvent } from "react";
 import BlockSettings from "./block-settings";
 
 const blockIcons: { [key in block]: JSX.Element } = {
@@ -32,15 +34,23 @@ const blockIcons: { [key in block]: JSX.Element } = {
 
 const Block = (block: BlockProps) => {
   const { removeBlock } = useEditorStore();
+  const controls = useDragControls();
+
+  function startDrag(event: PointerEvent<HTMLDivElement>) {
+    controls.start(event);
+  }
 
   return (
-    <Card className="flex justify-between items-center w-full border py-2 px-2">
+    <Card
+      style={{ touchAction: "none" }}
+      onPointerDown={startDrag}
+      className="flex justify-between items-center w-full border py-2 px-2">
       <div className="flex justify-center items-center gap-3">
         <div className="border flex justify-center items-center bg-primary/10 dark:bg-primary/50 p-2 rounded">
           {blockIcons[block.type]}
         </div>
         <div className="flex flex-col">
-          <span className="font-semibold sm:truncate sm:w-[450px]">
+          <span className="font-semibold sm:truncate sm:w-[400px]">
             {block.name}
           </span>
           <div>

@@ -20,6 +20,7 @@ interface FormStoreProps {
   submitLabel: string;
   setSubmitLabel: (value: string) => void;
   blocks: BlockProps[];
+  setBlocks: (value: BlockProps[]) => void;
   addBlock: (value: BlockProps) => void;
   updateBlock: (id: string, value: BlockProps) => void;
   removeBlock: (id: string) => void;
@@ -45,6 +46,7 @@ const useEditorStore = create<FormStoreProps>((set) => ({
   submitLabel: "",
   setSubmitLabel: (value) => set({ submitLabel: value }),
   blocks: [],
+  setBlocks: (value) => set({ blocks: value }),
   addBlock: (block) => set((state) => ({ blocks: [...state.blocks, block] })),
   updateBlock: (id, updatedBlock) =>
     set((state) => ({

@@ -33,7 +33,7 @@ interface addBlockProps {
   name: string;
   icon: JSX.Element | null;
 }
-const blocks: addBlockProps[] = [
+const blockList: addBlockProps[] = [
   {
     type: "short_answer",
     name: "Short answer",
@@ -105,7 +105,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const blockType = values.block as block;
 
-    const targetBlock = blocks.find((x) => x.type === blockType);
+    const targetBlock = blockList.find((x) => x.type === blockType);
     if (targetBlock === undefined) return;
 
     const block: BlockProps = {
@@ -140,7 +140,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
                     className="grid gap-2"
                     value={field.value}
                     onValueChange={field.onChange}>
-                    {blocks.map((block, index) => {
+                    {blockList.map((block, index) => {
                       return (
                         <div key={index}>
                           <RadioGroupItem

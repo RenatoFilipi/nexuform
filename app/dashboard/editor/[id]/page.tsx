@@ -11,6 +11,7 @@ import { dashboardEditorState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
 import useEditorStore from "@/stores/editor";
 import { useQuery } from "@tanstack/react-query";
+import { Reorder } from "framer-motion";
 import {
   BlocksIcon,
   ChevronLeftIcon,
@@ -23,7 +24,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const Editor = () => {
-  const { blocks, setName, name } = useEditorStore();
+  const { blocks, setName, name, setBlocks } = useEditorStore();
   const pathname = usePathname();
   const [isPreview, setIsPreview] = useState(false);
   const [state] = useState<dashboardEditorState>("no_block");
@@ -78,7 +79,10 @@ const Editor = () => {
             onClick={() => setIsPreview(true)}>
             Preview
           </Button>
-          <Button variant={"secondary"} size={"sm"}>
+          <Button
+            onClick={() => console.log(blocks)}
+            variant={"secondary"}
+            size={"sm"}>
             Save
           </Button>
         </div>
@@ -121,11 +125,16 @@ const Editor = () => {
         )}
         {blocks.length >= 1 && (
           <div className="flex w-full h-full pt-6 pb-20 justify-center px-2 sm:px-0 overflow-y-auto">
-            <div className="w-full flex flex-col items-center justify-start sm:max-w-[600px] gap-2 overflow-y-auto">
-              {blocks.map((block) => {
-                return <Block key={block.id} {...block} />;
-              })}
-            </div>
+            <Reorder.Group
+              values={blocks}
+              onReorder={setBlocks}
+              className="w-full flex flex-col items-center justify-start sm:max-w-[600px] gap-2 overflow-y-auto">
+              {blocks.map((block) => (
+                <Reorder.Item key={block.id} value={block} className="w-full">
+                  <Block {...block} />
+                </Reorder.Item>
+              ))}
+            </Reorder.Group>
           </div>
         )}
       </div>
