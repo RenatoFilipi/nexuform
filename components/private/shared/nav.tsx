@@ -274,9 +274,7 @@ const AvatarMenu = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer">
-          <AvatarFallback className="text-sm bg-gradient-to-r from-[#75BDFF] via-[#FF75E9] to-[#FFA775]">
-            R
-          </AvatarFallback>
+          <AvatarFallback className="text-sm">R</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-6 min-w-52 text-foreground/80">
