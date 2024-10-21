@@ -49,7 +49,7 @@ const ShortAnswerBlock = ({
           <Input
             type="number"
             id="max-character-limit"
-            value={block.max_character_limit ?? 0}
+            value={block.max_character_limit ?? 1}
             onChange={(e) =>
               updateBlock(id, {
                 ...block,

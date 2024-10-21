@@ -39,7 +39,7 @@ const BlockSettings = ({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3">
+      <DrawerContent className="p-3 h-[90%]">
         <Body block={block} setState={setOpen} />
       </DrawerContent>
     </Drawer>

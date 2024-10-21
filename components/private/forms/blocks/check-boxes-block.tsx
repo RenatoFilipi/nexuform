@@ -40,7 +40,7 @@ const CheckboxesBlock = ({
   };
 
   return (
-    <div className="h-full flex flex-col gap-8">
+    <div className="h-full flex flex-col gap-8 overflow-y-auto">
       <h1 className="text-xl font-semibold">Settings</h1>
       <div className="h-full flex flex-col gap-4 overflow-y-auto">
         <div className="grid gap-1.5">

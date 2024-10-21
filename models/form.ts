@@ -23,6 +23,9 @@ export interface BlockProps {
   options: { id: string; text: string }[] | null;
   placeholder: string | null;
   max_character_limit: number | null;
+  min_character_limit: number | null;
   show_character_limit: boolean | null;
   position: number;
+  max_rating: number | null;
+  max_scale: number | null;
 }
