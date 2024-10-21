@@ -5,6 +5,7 @@ import AddBlock from "@/components/private/blocks/add-block";
 import Block from "@/components/private/blocks/block";
 import FormDesign from "@/components/private/forms/form-design";
 import FormSettings from "@/components/private/forms/form-settings";
+import FormWrapper from "@/components/private/forms/form-wrapper";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { dashboardEditorState } from "@/helpers/types";
@@ -24,7 +25,17 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const Editor = () => {
-  const { blocks, setName, name, setBlocks } = useEditorStore();
+  const {
+    blocks,
+    setName,
+    name,
+    setBlocks,
+    description,
+    primaryColor,
+    background,
+    foreground,
+    submitLabel,
+  } = useEditorStore();
   const pathname = usePathname();
   const [isPreview, setIsPreview] = useState(false);
   const [state] = useState<dashboardEditorState>("no_block");
@@ -52,8 +63,17 @@ const Editor = () => {
             Return to editor
           </Button>
         </div>
-        <div className="flex justify-center items-center h-full">
-          Preview page
+        <div className="flex h-full w-full">
+          <FormWrapper
+            mode="preview"
+            name={name}
+            description={description}
+            primaryColor={primaryColor}
+            background={background}
+            foreground={foreground}
+            label={submitLabel}
+            blocks={blocks}
+          />
         </div>
       </div>
     );

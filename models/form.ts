@@ -9,7 +9,7 @@ export interface FormProps {
   updated_at: string;
   primary_color: string;
   background: string;
-  foreground: String;
+  foreground: string;
   submit_label: string;
   blocks: BlockProps[];
 }
