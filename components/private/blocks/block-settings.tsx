@@ -5,15 +5,15 @@ import { setState } from "@/helpers/types";
 import { BlockProps } from "@/models/form";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import CheckboxesBlock from "./blocks/check-boxes-block";
-import DropdownBlock from "./blocks/dropdown-block";
-import EmailBlock from "./blocks/email-block";
-import LongAnswerBlock from "./blocks/long-answer-block";
-import MultipleChoiceBlock from "./blocks/multiple-choice-block";
-import NumberBlock from "./blocks/number-block";
-import RatingBlock from "./blocks/rating-block";
-import ScaleBlock from "./blocks/scale-block";
-import ShortAnswerBlock from "./blocks/short-answer-block";
+import CheckboxesBlock from "./check-boxes-block";
+import DropdownBlock from "./dropdown-block";
+import EmailBlock from "./email-block";
+import LongAnswerBlock from "./long-answer-block";
+import MultipleChoiceBlock from "./multiple-choice-block";
+import NumberBlock from "./number-block";
+import RatingBlock from "./rating-block";
+import ScaleBlock from "./scale-block";
+import ShortAnswerBlock from "./short-answer-block";
 
 const BlockSettings = ({
   children,

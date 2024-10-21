@@ -1,8 +1,8 @@
 "use client";
 
 import Brand from "@/components/core/brand";
-import AddBlock from "@/components/private/forms/add-block";
-import Block from "@/components/private/forms/block";
+import AddBlock from "@/components/private/blocks/add-block";
+import Block from "@/components/private/blocks/block";
 import FormDesign from "@/components/private/forms/form-design";
 import FormSettings from "@/components/private/forms/form-settings";
 import { Button } from "@/components/ui/button";
