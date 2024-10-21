@@ -91,7 +91,7 @@ const AddBlock = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Body = ({ setState }: { setState: setState<boolean> }) => {
-  const { addBlock } = useEditorStore();
+  const { addBlock, blocks } = useEditorStore();
 
   const formSchema = z.object({
     block: z.string(),
@@ -118,6 +118,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
       placeholder: null,
       max_character_limit: null,
       show_character_limit: null,
+      position: blocks.length + 1,
     };
     addBlock(block);
     setState(false);

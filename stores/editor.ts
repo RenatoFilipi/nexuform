@@ -46,7 +46,12 @@ const useEditorStore = create<FormStoreProps>((set) => ({
   submitLabel: "",
   setSubmitLabel: (value) => set({ submitLabel: value }),
   blocks: [],
-  setBlocks: (value) => set({ blocks: value }),
+  setBlocks: (value) => {
+    const updatedPosition = value.map((block, index) => {
+      return { ...block, position: index + 1 };
+    });
+    set({ blocks: updatedPosition });
+  },
   addBlock: (block) => set((state) => ({ blocks: [...state.blocks, block] })),
   updateBlock: (id, updatedBlock) =>
     set((state) => ({

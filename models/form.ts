@@ -24,4 +24,5 @@ export interface BlockProps {
   placeholder: string | null;
   max_character_limit: number | null;
   show_character_limit: boolean | null;
+  position: number;
 }
