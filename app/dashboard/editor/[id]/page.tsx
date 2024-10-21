@@ -112,7 +112,7 @@ const Editor = () => {
         )}
         {blocks.length <= 0 && (
           <div className="flex justify-center items-center h-full w-full">
-            <div className="flex flex-col justify-center items-center gap-3">
+            <div className="flex flex-col justify-center items-center gap-3 mb-32">
               <BlocksIcon className="w-8 h-8" />
               <span>This form has no blocks.</span>
               <AddBlock>

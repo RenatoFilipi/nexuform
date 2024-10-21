@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { minWidth640 } from "@/helpers/constants";
 import { setState } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
@@ -133,12 +133,12 @@ const FormDesign = ({ children }: { children: React.ReactNode }) => {
 
   if (isDesktop) {
     return (
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild>{children}</SheetTrigger>
-        <SheetContent className="min-w-[420px]">
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogContent className="min-w-[420px]">
           <Body setState={setOpen} />
-        </SheetContent>
-      </Sheet>
+        </DialogContent>
+      </Dialog>
     );
   }
 
