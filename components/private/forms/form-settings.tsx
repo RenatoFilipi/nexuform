@@ -92,6 +92,14 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
               onChange={(e) => store.setDescription(e.target.value)}
             />
           </div>
+          <div className="grid gap-1.5">
+            <Label>Submit button</Label>
+            <Input
+              type="text"
+              value={store.submitLabel}
+              onChange={(e) => store.setSubmitLabel(e.target.value)}
+            />
+          </div>
         </div>
         <div className="overflow-y-auto flex-1 flex flex-col gap-1.5">
           <Label>Status</Label>

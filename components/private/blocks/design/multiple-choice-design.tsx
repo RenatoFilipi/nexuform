@@ -3,7 +3,7 @@ import { ColorProps } from "@/helpers/interfaces";
 import { BlockProps } from "@/models/form";
 import { twMerge } from "tailwind-merge";
 
-export const checkboxesDesign: ColorProps[] = [
+export const multipleChoicesDesign: ColorProps[] = [
   {
     label: "Slate",
     tw_class:
@@ -125,8 +125,8 @@ const MultipleChoiceDesign = ({
 }) => {
   const { name, description, required, options } = block;
   const currentColor =
-    checkboxesDesign.find((x) => x.label === primaryColor) ??
-    checkboxesDesign[0];
+    multipleChoicesDesign.find((x) => x.label === primaryColor) ??
+    multipleChoicesDesign[0];
 
   return (
     <div className="flex flex-col gap-4">

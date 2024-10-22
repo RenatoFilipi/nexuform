@@ -72,7 +72,7 @@ const Editor = () => {
             name={name}
             description={description}
             primaryColor={primaryColor}
-            label={submitLabel}
+            submitLabel={submitLabel}
             blocks={blocks}
           />
         </div>
