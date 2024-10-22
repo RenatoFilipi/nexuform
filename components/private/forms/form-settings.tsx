@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -11,7 +12,6 @@ import { BookDashedIcon, GlobeIcon, PenOffIcon } from "lucide-react";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
-import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet";
 
 interface statusProps {
   status: formStatus;
@@ -50,12 +50,12 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
 
   if (isDesktop) {
     return (
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild>{children}</SheetTrigger>
-        <SheetContent className="min-w-[480px] p-0">
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogContent className="min-w-[700px] p-0">
           <Body setState={setOpen} />
-        </SheetContent>
-      </Sheet>
+        </DialogContent>
+      </Dialog>
     );
   }
 
@@ -75,21 +75,23 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
   return (
     <div className="flex flex-col gap-6 h-full overflow-y-auto sm:p-6">
       <h1 className="text-xl font-semibold">Settings</h1>
-      <div className="flex flex-1 flex-col overflow-y-auto gap-4 px-1">
-        <div className="grid gap-1.5">
-          <Label>Name</Label>
-          <Input
-            type="text"
-            value={store.name}
-            onChange={(e) => store.setName(e.target.value)}
-          />
-        </div>
-        <div className="grid gap-1.5">
-          <Label>Description</Label>
-          <Textarea
-            value={store.description ?? ""}
-            onChange={(e) => store.setDescription(e.target.value)}
-          />
+      <div className="flex flex-1 overflow-y-auto gap-6 px-1 flex-col sm:flex-row">
+        <div className="flex flex-col gap-4 flex-1">
+          <div className="grid gap-1.5">
+            <Label>Name</Label>
+            <Input
+              type="text"
+              value={store.name}
+              onChange={(e) => store.setName(e.target.value)}
+            />
+          </div>
+          <div className="grid gap-1.5">
+            <Label>Description</Label>
+            <Textarea
+              value={store.description ?? ""}
+              onChange={(e) => store.setDescription(e.target.value)}
+            />
+          </div>
         </div>
         <div className="overflow-y-auto flex-1 flex flex-col gap-1.5">
           <Label>Status</Label>

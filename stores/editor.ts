@@ -1,4 +1,4 @@
-import { formStatus } from "@/helpers/types";
+import { colorLabel, formStatus } from "@/helpers/types";
 import { BlockProps } from "@/models/form";
 import { create } from "zustand";
 
@@ -12,11 +12,7 @@ interface FormStoreProps {
   description: string | null;
   setDescription: (value: string | null) => void;
   primaryColor: string;
-  setPrimaryColor: (value: string) => void;
-  background: string;
-  setBackground: (value: string) => void;
-  foreground: string;
-  setForeground: (value: string) => void;
+  setPrimaryColor: (value: colorLabel) => void;
   submitLabel: string;
   setSubmitLabel: (value: string) => void;
   blocks: BlockProps[];
@@ -39,10 +35,6 @@ const useEditorStore = create<FormStoreProps>((set) => ({
   setDescription: (value) => set({ description: value }),
   primaryColor: "",
   setPrimaryColor: (value) => set({ primaryColor: value }),
-  background: "",
-  setBackground: (value) => set({ background: value }),
-  foreground: "",
-  setForeground: (value) => set({ foreground: value }),
   submitLabel: "",
   setSubmitLabel: (value) => set({ submitLabel: value }),
   blocks: [],

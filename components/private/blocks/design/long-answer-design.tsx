@@ -1,7 +1,7 @@
-import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { BlockProps } from "@/models/form";
 
-const ShortAnswerDesign = ({ block }: { block: BlockProps }) => {
+const LongAnswerDesign = ({ block }: { block: BlockProps }) => {
   const {
     name,
     description,
@@ -18,7 +18,7 @@ const ShortAnswerDesign = ({ block }: { block: BlockProps }) => {
         <span className="text-xs text-foreground/80">{description}</span>
       </div>
       <div className="">
-        <Input type="text" maxLength={max_character_limit ?? 256} />
+        <Textarea maxLength={max_character_limit ?? 256} />
         {show_character_limit && (
           <div className="w-full flex justify-end mt-1">
             <span className="text-xs">{max_character_limit}</span>
@@ -29,4 +29,4 @@ const ShortAnswerDesign = ({ block }: { block: BlockProps }) => {
   );
 };
 
-export default ShortAnswerDesign;
+export default LongAnswerDesign;

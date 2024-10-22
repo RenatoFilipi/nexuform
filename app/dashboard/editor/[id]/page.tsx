@@ -32,8 +32,6 @@ const Editor = () => {
     setBlocks,
     description,
     primaryColor,
-    background,
-    foreground,
     submitLabel,
   } = useEditorStore();
   const pathname = usePathname();
@@ -50,6 +48,11 @@ const Editor = () => {
       return null;
     },
   });
+
+  const handleDebug = () => {
+    console.log(primaryColor);
+    console.log(blocks);
+  };
 
   if (isPreview) {
     return (
@@ -69,8 +72,6 @@ const Editor = () => {
             name={name}
             description={description}
             primaryColor={primaryColor}
-            background={background}
-            foreground={foreground}
             label={submitLabel}
             blocks={blocks}
           />
@@ -99,10 +100,7 @@ const Editor = () => {
             onClick={() => setIsPreview(true)}>
             Preview
           </Button>
-          <Button
-            onClick={() => console.log(blocks)}
-            variant={"secondary"}
-            size={"sm"}>
+          <Button onClick={handleDebug} variant={"secondary"} size={"sm"}>
             Save
           </Button>
         </div>
