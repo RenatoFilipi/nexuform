@@ -148,8 +148,8 @@ const FormWrapper = ({
           <p className="text-sm text-foreground/80">{description}</p>
         )}
       </div>
-      <div className="w-full flex-1 p-2 gap-4 flex flex-col justify-start items-center max-w-[700px] ">
-        <div className="flex flex-col gap-2 w-full">
+      <div className="w-full flex-1 p-2 gap-6 flex flex-col justify-start items-center max-w-[700px] ">
+        <div className="flex flex-col gap-8 w-full">
           {sortedBlocks.map((block) => {
             switch (block.type) {
               case "short_answer":
