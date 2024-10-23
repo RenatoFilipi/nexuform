@@ -93,7 +93,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
             />
           </div>
           <div className="grid gap-1.5">
-            <Label>Submit button</Label>
+            <Label>Submit label</Label>
             <Input
               type="text"
               value={store.submitLabel}

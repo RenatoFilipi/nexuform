@@ -11,7 +11,7 @@ const Home = () => {
     <div className="min-h-screen flex flex-col relative">
       <div className="flex fixed top-0 w-full sm:justify-around sm:gap-40 justify-between px-3 h-14 bg-background/80 z-10 backdrop-blur-md items-center">
         <Link href={"/"} className="flex justify-center items-center">
-          <Brand type="logo" className="h-10 fill-foreground" />
+          <Brand type="logo_text" className="h-8 fill-foreground" />
         </Link>
         <div className="hidden sm:flex justify-center items-center gap-4">
           <Button variant={"outline"} size={"sm"} asChild>
@@ -43,7 +43,8 @@ const Home = () => {
               Decision-Making with Data Insights.
             </p>
           </div>
-          <div>
+          <div className="flex justify-center items-center gap-4">
+            <Button variant={"outline"}>View Demo</Button>
             <Button asChild variant={"secondary"}>
               <Link href={"/dashboard/forms"}>
                 Start Free Trial

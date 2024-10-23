@@ -1,6 +1,7 @@
 "use client";
 
 import Brand from "@/components/core/brand";
+import { Badge2 } from "@/components/ui/badge2";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Label } from "@/components/ui/label";
@@ -76,7 +77,10 @@ const Nav = () => {
             </Link>
             {currentForm !== undefined && (
               <div className="flex justify-center items-center gap-1">
-                <span className="text-sm">{currentForm.title}</span>
+                <div className="flex justify-center items-center gap-2">
+                  <span className="text-sm">{currentForm.title}</span>
+                  <Badge2>{currentForm.status}</Badge2>
+                </div>
                 <SelectForm>
                   <Button variant={"ghost"} size={"icon"} className="w-6">
                     <ChevronsUpDownIcon className="w-4 h-4" />

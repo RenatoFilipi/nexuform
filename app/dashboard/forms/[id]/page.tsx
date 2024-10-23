@@ -1,7 +1,7 @@
 "use client";
 
+import FormShare from "@/components/private/forms/form-share";
 import FormSubmissionView from "@/components/private/forms/form-submission-view";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -30,16 +30,22 @@ const Form = () => {
   return (
     <div className="flex flex-col h-full gap-6 sm:gap-10 my-6 mx-3 sm:mx-12 overflow-y-auto">
       <div className="flex justify-between items-center">
-        <div className="flex justify-center items-center gap-4 sm:gap-8">
+        <div className="flex justify-center items-center gap-4">
           <div className="flex justify-center items-center gap-2">
             <BookIcon className="w-5 h-5" />
             <span className="font-semibold">{currentForm?.title}</span>
           </div>
-          <Badge>{currentForm?.status}</Badge>
         </div>
-        <Button variant={"secondary"} size={"sm"} asChild>
-          <Link href={`/dashboard/editor/${currentFormId}`}>Edit Form</Link>
-        </Button>
+        <div className="flex justify-center items-center sm:gap-4 gap-2">
+          <FormShare id={currentFormId}>
+            <Button variant={"outline"} size={"sm"}>
+              Share
+            </Button>
+          </FormShare>
+          <Button variant={"secondary"} size={"sm"} asChild>
+            <Link href={`/dashboard/editor/${currentFormId}`}>Edit</Link>
+          </Button>
+        </div>
       </div>
       <div className="h-full border flex flex-col overflow-y-auto">
         <div className="border-b p-2">
