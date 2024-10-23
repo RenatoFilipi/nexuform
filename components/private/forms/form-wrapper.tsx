@@ -5,8 +5,11 @@ import { BlockProps } from "@/models/form";
 import { twMerge } from "tailwind-merge";
 import CheckboxesDesign from "../blocks/design/checkboxes-design";
 import DropdownDesign from "../blocks/design/dropdown-design";
+import EmailDesign from "../blocks/design/email-design";
 import LongAnswerDesign from "../blocks/design/long-answer-design";
 import MultipleChoiceDesign from "../blocks/design/multiple-choice-design";
+import NumberDesign from "../blocks/design/number-design";
+import RatingDesign from "../blocks/design/rating-design";
 import ShortAnswerDesign from "../blocks/design/short-answer-design";
 
 interface FormWrapperProps {
@@ -152,11 +155,11 @@ const FormWrapper = ({
               case "dropdown":
                 return <DropdownDesign block={block} />;
               case "number":
-                return <Card>{block.type}</Card>;
+                return <NumberDesign block={block} />;
               case "email":
-                return <Card>{block.type}</Card>;
+                return <EmailDesign block={block} />;
               case "rating":
-                return <Card>{block.type}</Card>;
+                return <RatingDesign block={block} />;
               case "scale":
                 return <Card>{block.type}</Card>;
             }
