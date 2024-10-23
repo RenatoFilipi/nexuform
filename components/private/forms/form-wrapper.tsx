@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { ColorProps } from "@/helpers/interfaces";
 import { BlockProps } from "@/models/form";
 import { twMerge } from "tailwind-merge";
@@ -10,6 +9,7 @@ import LongAnswerDesign from "../blocks/design/long-answer-design";
 import MultipleChoiceDesign from "../blocks/design/multiple-choice-design";
 import NumberDesign from "../blocks/design/number-design";
 import RatingDesign from "../blocks/design/rating-design";
+import ScaleDesign from "../blocks/design/scale-design";
 import ShortAnswerDesign from "../blocks/design/short-answer-design";
 
 interface FormWrapperProps {
@@ -161,7 +161,9 @@ const FormWrapper = ({
               case "rating":
                 return <RatingDesign block={block} />;
               case "scale":
-                return <Card>{block.type}</Card>;
+                return (
+                  <ScaleDesign block={block} primaryColor={primaryColor} />
+                );
             }
           })}
         </div>

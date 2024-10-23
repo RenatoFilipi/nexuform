@@ -49,7 +49,7 @@ const RatingBlock = ({
           <Input
             type="number"
             id="max-rating"
-            value={block.max_rating ?? 1}
+            value={block.max_rating ?? 5}
             onChange={(e) => {
               updateBlock(id, {
                 ...block,
