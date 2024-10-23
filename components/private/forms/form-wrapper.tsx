@@ -4,6 +4,7 @@ import { ColorProps } from "@/helpers/interfaces";
 import { BlockProps } from "@/models/form";
 import { twMerge } from "tailwind-merge";
 import CheckboxesDesign from "../blocks/design/checkboxes-design";
+import DropdownDesign from "../blocks/design/dropdown-design";
 import LongAnswerDesign from "../blocks/design/long-answer-design";
 import MultipleChoiceDesign from "../blocks/design/multiple-choice-design";
 import ShortAnswerDesign from "../blocks/design/short-answer-design";
@@ -149,7 +150,7 @@ const FormWrapper = ({
                   <CheckboxesDesign block={block} primaryColor={primaryColor} />
                 );
               case "dropdown":
-                return <Card>{block.type}</Card>;
+                return <DropdownDesign block={block} />;
               case "number":
                 return <Card>{block.type}</Card>;
               case "email":
