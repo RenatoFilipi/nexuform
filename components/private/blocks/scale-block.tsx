@@ -49,7 +49,7 @@ const ScaleBlock = ({
           <Input
             type="number"
             id="max-scale"
-            value={block.max_scale ?? 1}
+            value={block.max_scale ?? 5}
             onChange={(e) => {
               updateBlock(id, {
                 ...block,
