@@ -27,7 +27,7 @@ const Nav = ({ children }: { children: React.ReactNode }) => {
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent
         side={"left"}
-        className="flex flex-col h-full justify-between">
+        className="flex flex-col h-full justify-between p-2">
         <div className="flex flex-col">
           <div className="flex justify-start items-center w-full">
             <Brand type="logo_text" className="h-6 fill-foreground" />

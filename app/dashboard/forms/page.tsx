@@ -10,10 +10,10 @@ import { BookIcon, Loader2Icon } from "lucide-react";
 import { useState } from "react";
 
 const Forms = () => {
-  const [state] = useState<dashboardFormsState>("no_form");
+  const [state] = useState<dashboardFormsState>("has_form");
 
   return (
-    <div className="flex flex-col h-full gap-4 overflow-y-auto py-6 px-3 sm:px-12 flex-1 mt-14">
+    <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-14">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold">Forms</h1>
         <div className="flex justify-center items-center gap-4">
