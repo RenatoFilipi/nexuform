@@ -30,7 +30,7 @@ const Nav = ({ children }: { children: React.ReactNode }) => {
         className="flex flex-col h-full justify-between">
         <div className="flex flex-col">
           <div className="flex justify-start items-center w-full">
-            <Brand type="logo_text" className="h-8 fill-foreground" />
+            <Brand type="logo_text" className="h-6 fill-foreground" />
           </div>
           <div className="flex flex-col pt-10 gap-2">
             {navLinks.map((link) => (
@@ -40,7 +40,7 @@ const Nav = ({ children }: { children: React.ReactNode }) => {
                 className={`${
                   isActive(link.path) &&
                   "bg-secondary text-background hover:bg-secondary/80"
-                } p-2 border rounded hover:bg-foreground/5`}>
+                } p-2 border rounded hover:bg-foreground/5 text-sm`}>
                 {link.name}
               </Link>
             ))}

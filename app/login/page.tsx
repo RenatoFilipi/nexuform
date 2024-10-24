@@ -3,7 +3,13 @@
 import Brand from "@/components/core/brand";
 import { ModeToggle } from "@/components/core/mode-toggle";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -30,7 +36,7 @@ const Login = () => {
     <div className="border min-h-screen flex">
       <div className="flex-1 flex justify-center items-center w-full relative">
         <Link href={"/"} className="fixed top-6 flex sm:hidden">
-          <Brand type="logo" className="h-10 fill-foreground" />
+          <Brand type="logo" className="h-7 fill-foreground" />
         </Link>
         <div className="fixed top-5 left-5 hidden sm:flex gap-4">
           <Button variant={"outline"} size={"sm"} className="" asChild>
@@ -48,7 +54,9 @@ const Login = () => {
                 <h1 className="text-xl font-semibold">Login</h1>
                 <span className="text-sm text-foreground/80">
                   Don&apos;t have an account?{" "}
-                  <Link href={"/signup"} className="hover:underline text-info dark:text-blue-500">
+                  <Link
+                    href={"/signup"}
+                    className="hover:underline text-info dark:text-blue-500">
                     Sign Up
                   </Link>
                 </span>
@@ -86,7 +94,11 @@ const Login = () => {
                     className="text-sm hover:underline text-foreground/80 hover:text-info dark:hover:text-blue-500">
                     Forgot password?
                   </Link>
-                  <Button variant={"secondary"} type="submit" size={"sm"} className="w-full">
+                  <Button
+                    variant={"secondary"}
+                    type="submit"
+                    size={"sm"}
+                    className="w-full">
                     Login
                   </Button>
                 </div>

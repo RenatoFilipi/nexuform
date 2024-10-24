@@ -27,7 +27,7 @@ export default function RootLayout({
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange>
-            <div className="min-h-screen relative">{children}</div>
+            <div className="">{children}</div>
             <Toaster richColors position="bottom-center" />
           </ThemeProvider>
         </QueryProvider>

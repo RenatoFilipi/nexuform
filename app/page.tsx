@@ -9,9 +9,9 @@ import Link from "next/link";
 const Home = () => {
   return (
     <div className="min-h-screen flex flex-col relative">
-      <div className="flex fixed top-0 w-full sm:justify-around sm:gap-40 justify-between px-3 h-14 bg-background/80 z-10 backdrop-blur-md items-center">
+      <div className="flex fixed top-0 w-full sm:justify-around justify-between px-3 h-14 bg-background/80 z-10 backdrop-blur-md items-center">
         <Link href={"/"} className="flex justify-center items-center">
-          <Brand type="logo_text" className="h-8 fill-foreground" />
+          <Brand type="logo_text" className="h-7 fill-foreground" />
         </Link>
         <div className="hidden sm:flex justify-center items-center gap-4">
           <Button variant={"outline"} size={"sm"} asChild>
@@ -24,12 +24,12 @@ const Home = () => {
         <div className="flex sm:hidden">
           <Nav>
             <Button variant={"ghost"} size={"icon"}>
-              <Menu className="w-8 h-8" />
+              <Menu className="w-6 h-6" />
             </Button>
           </Nav>
         </div>
       </div>
-      <div className="mt-32 mb-36 relative flex flex-col justify-center items-center mx-4 sm:mx-0">
+      <div className="mt-32 mb-36 relative flex flex-col justify-center items-center px-4 sm:px-0">
         <div className="flex justify-center items-center flex-col gap-6 w-full">
           <div className="flex flex-col justify-center items-center w-full text-center gap-6">
             <h1 className="font-bold text-3xl sm:text-6xl max-w-[43.5rem]">
