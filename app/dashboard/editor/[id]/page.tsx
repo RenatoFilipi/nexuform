@@ -56,8 +56,8 @@ const Editor = () => {
 
   if (isPreview) {
     return (
-      <div className="h-full flex flex-col overflow-y-auto">
-        <div className="w-full flex justify-end p-3">
+      <div className="h-full flex flex-col overflow-y-auto relative">
+        <div className="w-full flex justify-end p-2 sm:p-4 sm:absolute right-4">
           <Button
             variant={"outline"}
             size={"sm"}
@@ -76,7 +76,7 @@ const Editor = () => {
             blocks={blocks}
           />
         </div>
-        <div className="flex justify-end items-center border-t sm:border-transparent sm:p-4 p-3">
+        <div className="flex sm:justify-end justify-center items-center border-t sm:border-transparent sm:p-4 p-2 sm:absolute bottom-0 right-4">
           <Button
             variant={"outline"}
             size={"sm"}
