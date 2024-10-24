@@ -126,15 +126,15 @@ const FormWrapper = ({
     submitButtonDesign[0];
 
   return (
-    <div className="flex flex-col w-full h-full gap-6 p-2 justify-start items-center">
-      <div className="flex flex-col justify-center items-center w-full gap-1">
+    <div className="flex flex-col w-full gap-6 p-2 justify-start items-center overflow-y-auto">
+      <div className="flex flex-col justify-center items-center w-full gap-1 max-w-[700px] px-2">
         <h1 className="font-bold text-3xl">{name}</h1>
         {description && (
           <p className="text-sm text-foreground/80">{description}</p>
         )}
       </div>
-      <div className="w-full flex-1 p-2 gap-6 flex flex-col justify-start items-center max-w-[700px] ">
-        <div className="flex flex-col gap-8 w-full">
+      <div className="w-full flex-1 p-2 gap-10 flex flex-col justify-start items-center max-w-[700px]">
+        <div className="flex flex-col gap-8 w-full ">
           {sortedBlocks.map((block) => {
             switch (block.type) {
               case "short_answer":
@@ -167,7 +167,7 @@ const FormWrapper = ({
             }
           })}
         </div>
-        <div className="flex w-full">
+        <div className="flex w-full justify-end">
           <Button
             variant={"secondary"}
             size={"sm"}

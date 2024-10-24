@@ -56,7 +56,7 @@ const Editor = () => {
 
   if (isPreview) {
     return (
-      <div className="h-full flex flex-col">
+      <div className="h-full flex flex-col overflow-y-auto">
         <div className="w-full flex justify-end p-3">
           <Button
             variant={"outline"}
@@ -66,7 +66,7 @@ const Editor = () => {
             Return to editor
           </Button>
         </div>
-        <div className="flex h-full w-full">
+        <div className="flex h-full w-full overflow-y-auto">
           <FormWrapper
             mode="preview"
             name={name}
@@ -75,6 +75,24 @@ const Editor = () => {
             submitLabel={submitLabel}
             blocks={blocks}
           />
+        </div>
+        <div className="flex justify-end items-center border-t sm:border-transparent sm:p-4 p-3">
+          <Button
+            variant={"outline"}
+            size={"sm"}
+            className="flex justify-center items-center gap-2"
+            asChild>
+            <Link
+              href={"/"}
+              className="flex justify-center items-center gap-1 text-base font-semibold">
+              <span>
+                Powered by{" "}
+                <span className="font-bold bg-gradient-to-r from-[#75BDFF] via-[#FF75E9] to-[#FFA775] inline-block text-transparent bg-clip-text">
+                  Nebulaform
+                </span>
+              </span>
+            </Link>
+          </Button>
         </div>
       </div>
     );
