@@ -33,10 +33,10 @@ const Signup = () => {
   };
 
   return (
-    <div className="border min-h-screen flex">
+    <div className="min-h-screen flex">
       <div className="flex-1 flex justify-center items-center w-full relative">
         <Link href={"/"} className="fixed top-6 flex sm:hidden">
-          <Brand type="logo" className="h-10 fill-foreground" />
+          <Brand type="logo" className="h-7 fill-foreground" />
         </Link>
         <div className="fixed top-5 left-5 hidden sm:flex gap-4">
           <Button variant={"outline"} size={"sm"} className="" asChild>
