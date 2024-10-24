@@ -111,7 +111,7 @@ const Nav = () => {
         <div className="flex sm:hidden">
           <NavMobile>
             <Button variant={"ghost"} size={"icon"}>
-              <Menu className="w-8 h-8" />
+              <Menu className="w-6 h-6" />
             </Button>
           </NavMobile>
         </div>
@@ -120,7 +120,7 @@ const Nav = () => {
   }
   // app
   return (
-    <div className="border-b h-16 flex items-center px-2 sm:px-6 justify-between z-10 bg-background">
+    <div className="border-b h-14 flex items-center px-2 sm:px-6 justify-between z-10 bg-background fixed w-full">
       <div className="flex justify-center items-center gap-6 h-full">
         <div className="flex justify-center items-center gap-4">
           <Link href={"/dashboard"}>
@@ -149,7 +149,7 @@ const Nav = () => {
       <div className="flex sm:hidden">
         <NavMobile>
           <Button variant={"ghost"} size={"icon"}>
-            <Menu className="w-8 h-8" />
+            <Menu className="w-6 h-6" />
           </Button>
         </NavMobile>
       </div>
@@ -168,7 +168,7 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent
         side={"left"}
-        className="flex flex-col h-full justify-between">
+        className="flex flex-col h-full justify-between p-4">
         <div>
           <Brand type="logo_text" className="h-7 fill-foreground" />
           <div className="flex flex-col pt-10 gap-2">
@@ -189,10 +189,10 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
         <div className="flex flex-col w-full gap-2">
           <div className="flex flex-col">
             <Button variant={"ghost"} className="flex justify-start">
-              <UserIcon className="h4 w-4 mr-2" /> Profile
+              <UserIcon className="h-4 w-4 mr-2" /> Profile
             </Button>
             <Button variant={"ghost"} className="flex justify-start">
-              <Settings2Icon className="h4 w-4 mr-2" /> Settings
+              <Settings2Icon className="h-4 w-4 mr-2" /> Settings
             </Button>
             <div className="flex justify-between items-center px-4 py-2">
               <span className="text-sm flex items-center justify-center">
@@ -241,7 +241,11 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
               </RadioGroup>
             </div>
           </div>
-          <Button variant={"secondary"} className="flex justify-start" asChild>
+          <Button
+            variant={"outline"}
+            size={"sm"}
+            className="flex justify-start"
+            asChild>
             <Link href={"/"}>
               <LogOutIcon className="w-4 h-4 mr-2" /> Log out
             </Link>

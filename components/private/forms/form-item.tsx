@@ -20,26 +20,24 @@ const FormItem = ({ title, status, responsesCount, id }: FormItemProps) => {
   };
 
   return (
-    <Card className="flex h-40 p-4 hover:border-foreground/20 items-start flex-col justify-between">
+    <Card className="flex h-32 p-4 hover:border-foreground/20 items-start flex-col justify-between shadow-none">
       <div className="flex justify-between items-center w-full">
-        <span className="font-semibold text-lg">{title}</span>
+        <span className="text-base font-medium">{title}</span>
         <Badge2 variant={"default"}>{status}</Badge2>
       </div>
       <div className="flex justify-between items-center w-full">
         <span className="text-foreground/80 text-sm">
           {responsesDisplay(responsesCount)}
         </span>
-        <div className="flex justify-center items-center gap-2">
+        <div className="flex justify-center items-center gap-3">
           <Button variant={"outline"} size={"sm"} asChild>
             <Link href={`/dashboard/forms/${id}`}>
-              <ViewIcon className="w-4 h-4 mr-2" />
-              View
+              <ViewIcon className="w-4 h-4" />
             </Link>
           </Button>
           <Button variant={"outline"} size={"sm"} asChild>
             <Link href={`/dashboard/editor/${id}`}>
-              <EditIcon className="w-4 h-4 mr-2" />
-              Edit
+              <EditIcon className="w-4 h-4" />
             </Link>
           </Button>
         </div>
