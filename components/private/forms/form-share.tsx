@@ -1,3 +1,4 @@
+import { Alert2, AlertDescription2 } from "@/components/ui/alert2";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { minWidth640 } from "@/helpers/constants";
@@ -23,7 +24,7 @@ const FormShare = ({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent>
+        <DialogContent className="sm:min-w-[550px]">
           <Body setState={setOpen} id={id} />
         </DialogContent>
       </Dialog>
@@ -51,18 +52,32 @@ const Body = ({
   const shareLink = `${window.location.host}/r/${currentForm?.id}`;
 
   return (
-    <div className="flex flex-col justify-center gap-4">
-      <div>
-        <h1>Share Link</h1>
+    <div className="flex flex-col gap-4 pt-8 sm:pt-0">
+      <div className="flex flex-col gap-1.5 justify-center items-center sm:items-start">
+        <h1 className="text-xl font-semibold">Share link</h1>
+        {currentForm?.status !== "published" ? (
+          <p className="text-foreground/80 text-sm">
+            Your form is live! Share it via link on social media, messaging, or
+            email.
+          </p>
+        ) : (
+          <Alert2 variant={"destructive"}>
+            <AlertDescription2>
+              This form is not currently public, change the status in the editor
+              page.
+            </AlertDescription2>
+          </Alert2>
+        )}
       </div>
-      <div className="flex justify-center items-center gap-4">
-        <Input value={shareLink} />
+      <div className="flex justify-center items-center gap-4 flex-col sm:flex-row">
+        <Input value={shareLink} className="text-foreground/60" />
         <Button
           onClick={() => {
             navigator.clipboard.writeText(shareLink);
           }}
           variant={"secondary"}
-          size={"sm"}>
+          size={"sm"}
+          className="w-full sm:w-fit">
           <Link2Icon className="w-4 h-4 mr-2" />
           Copy Link
         </Button>

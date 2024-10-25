@@ -19,10 +19,7 @@ import {
   Menu,
   MonitorIcon,
   MoonIcon,
-  Settings2Icon,
   SunIcon,
-  SunMoonIcon,
-  UserIcon,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
@@ -39,7 +36,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
-import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet";
 
 const navLinks = [
   {
@@ -69,9 +65,9 @@ const Nav = () => {
     const currentForm = formList.find((x) => x.id === currentFormId);
 
     return (
-      <div className="border-b h-16 flex items-center px-2 sm:px-6 justify-between z-10 bg-background">
+      <div className="border-b h-14 flex items-center px-2 sm:px-6 justify-between z-10 bg-background fixed w-full">
         <div className="flex justify-center items-center gap-4 h-full">
-          <div className="flex justify-center items-center gap-8">
+          <div className="flex justify-center items-center gap-4">
             <Link href={"/dashboard"}>
               <Brand type="logo" className="h-7 fill-foreground" />
             </Link>
@@ -164,95 +160,83 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
 
   // app
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>{children}</SheetTrigger>
-      <SheetContent
-        side={"left"}
-        className="flex flex-col h-full justify-between p-4">
-        <div>
-          <Brand type="logo_text" className="h-7 fill-foreground" />
-          <div className="flex flex-col pt-10 gap-2">
-            {navLinks.map((link) => (
-              <Link
-                onClick={() => setOpen(false)}
-                key={link.id}
-                href={link.path}
-                className={`${
-                  isActive(link.path) &&
-                  "bg-secondary text-background hover:bg-secondary/80"
-                } p-2 border rounded hover:bg-foreground/5`}>
-                {link.name}
-              </Link>
-            ))}
-          </div>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
+      <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
+      <DropdownMenuContent className="w-screen flex flex-col gap-4">
+        <div className="flex flex-col">
+          {navLinks.map((link) => (
+            <Link
+              onClick={() => setOpen(false)}
+              key={link.id}
+              href={link.path}
+              className={`${
+                isActive(link.path) &&
+                "bg-secondary text-background hover:bg-secondary/80"
+              } p-2 border hover:bg-foreground/5 text-sm`}>
+              {link.name}
+            </Link>
+          ))}
         </div>
         <div className="flex flex-col w-full gap-2">
-          <div className="flex flex-col">
-            <Button variant={"ghost"} className="flex justify-start">
-              <UserIcon className="h-4 w-4 mr-2" /> Profile
-            </Button>
-            <Button variant={"ghost"} className="flex justify-start">
-              <Settings2Icon className="h-4 w-4 mr-2" /> Settings
-            </Button>
-            <div className="flex justify-between items-center px-4 py-2">
-              <span className="text-sm flex items-center justify-center">
-                <SunMoonIcon className="w-4 h-4 mr-2" /> Theme
-              </span>
-              <RadioGroup
-                value={theme}
-                onValueChange={setTheme}
-                className="flex gap-1">
-                <div>
-                  <RadioGroupItem
-                    value="system"
-                    id="system"
-                    className="peer sr-only"
-                  />
-                  <Label
-                    htmlFor="system"
-                    className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
-                    <MonitorIcon className="w-3 h-3" />
-                  </Label>
-                </div>
-                <div>
-                  <RadioGroupItem
-                    value="light"
-                    id="light"
-                    className="peer sr-only"
-                  />
-                  <Label
-                    htmlFor="light"
-                    className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
-                    <SunIcon className="w-3 h-3" />
-                  </Label>
-                </div>
-                <div>
-                  <RadioGroupItem
-                    value="dark"
-                    id="dark"
-                    className="peer sr-only"
-                  />
-                  <Label
-                    htmlFor="dark"
-                    className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
-                    <MoonIcon className="w-3 h-3" />
-                  </Label>
-                </div>
-              </RadioGroup>
-            </div>
+          <div className="flex justify-between items-center px-2 py-2">
+            <span className="text-sm flex items-center justify-center">
+              Theme
+            </span>
+            <RadioGroup
+              value={theme}
+              onValueChange={setTheme}
+              className="flex gap-1">
+              <div>
+                <RadioGroupItem
+                  value="system"
+                  id="system"
+                  className="peer sr-only"
+                />
+                <Label
+                  htmlFor="system"
+                  className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
+                  <MonitorIcon className="w-3 h-3" />
+                </Label>
+              </div>
+              <div>
+                <RadioGroupItem
+                  value="light"
+                  id="light"
+                  className="peer sr-only"
+                />
+                <Label
+                  htmlFor="light"
+                  className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
+                  <SunIcon className="w-3 h-3" />
+                </Label>
+              </div>
+              <div>
+                <RadioGroupItem
+                  value="dark"
+                  id="dark"
+                  className="peer sr-only"
+                />
+                <Label
+                  htmlFor="dark"
+                  className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
+                  <MoonIcon className="w-3 h-3" />
+                </Label>
+              </div>
+            </RadioGroup>
           </div>
           <Button
-            variant={"outline"}
+            variant={"ghost"}
             size={"sm"}
-            className="flex justify-start"
+            className="flex justify-between"
             asChild>
             <Link href={"/"}>
-              <LogOutIcon className="w-4 h-4 mr-2" /> Log out
+              Log out
+              <LogOutIcon className="w-4 h-4" />
             </Link>
           </Button>
         </div>
-      </SheetContent>
-    </Sheet>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 const AvatarMenu = () => {
@@ -289,14 +273,14 @@ const AvatarMenu = () => {
         <DropdownMenuLabel className="text-foreground">
           My Account
         </DropdownMenuLabel>
-        {navLinks.map((nav) => (
+        {/* {navLinks.map((nav) => (
           <DropdownMenuItem
             key={nav.id}
             className="flex flex-row justify-between items-center cursor-pointer">
             {nav.name}
             {nav.icon}
           </DropdownMenuItem>
-        ))}
+        ))} */}
         <DropdownMenuItem className="flex flex-row justify-between items-center">
           Theme
           <RadioGroup
@@ -389,10 +373,12 @@ const SelectFormBody = ({ setState }: { setState: setState<boolean> }) => {
             key={form.id}
             className={`${
               currentForm === form.id &&
-              "bg-foreground text-background hover:bg-foreground/80"
-            } flex justify-between hover:bg-foreground/5 rounded px-2 cursor-pointer text-xs items-center h-8`}>
-            {form.title}
-            {currentForm === form.id && <CheckIcon className="w-5 h-5" />}
+              "bg-foreground/5 hover:bg-foreground/10"
+            } flex justify-between hover:bg-foreground/5  px-2 cursor-pointer items-center h-8`}>
+            <div className="flex justify-center items-center gap-2">
+              <span className="text-xs">{form.title}</span>
+            </div>
+            {currentForm === form.id && <CheckIcon className="w-4 h-4" />}
           </Link>
         ))}
       </div>

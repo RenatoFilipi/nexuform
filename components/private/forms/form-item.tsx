@@ -20,9 +20,9 @@ const FormItem = ({ title, status, responsesCount, id }: FormItemProps) => {
   };
 
   return (
-    <Card className="flex h-32 p-4 hover:border-foreground/20 items-start flex-col justify-between shadow-none">
+    <Card className="flex h-28 p-4 hover:border-foreground/20 items-start flex-col justify-between shadow-none">
       <div className="flex justify-between items-center w-full">
-        <span className="text-base font-medium">{title}</span>
+        <span className="text-base font-semibold">{title}</span>
         <Badge2 variant={"default"}>{status}</Badge2>
       </div>
       <div className="flex justify-between items-center w-full">
