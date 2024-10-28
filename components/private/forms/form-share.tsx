@@ -55,7 +55,7 @@ const Body = ({
     <div className="flex flex-col gap-4 pt-8 sm:pt-0">
       <div className="flex flex-col gap-1.5 justify-center items-center sm:items-start">
         <h1 className="text-xl font-semibold">Share link</h1>
-        {currentForm?.status !== "published" ? (
+        {currentForm?.status === "published" ? (
           <p className="text-foreground/80 text-sm">
             Your form is live! Share it via link on social media, messaging, or
             email.
