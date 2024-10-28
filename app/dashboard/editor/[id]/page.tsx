@@ -99,6 +99,80 @@ const Editor = () => {
   }
 
   return (
+    <div className="flex flex-col h-full flex-1">
+      <div className="flex justify-between items-center h-14 px-2 sm:px-6 z-10 bg-background w-full fixed">
+        <div className="flex justify-center items-center gap-4">
+          <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
+            <Link href={"/dashboard/forms"}>
+              <Brand type="logo" className="h-7 fill-foreground" />
+            </Link>
+          </Button>
+          <span className="text-foreground/80 text-sm hidden sm:flex ">
+            {name}
+          </span>
+        </div>
+        <div className="flex justify-center items-center gap-4">
+          <Button
+            variant={"outline"}
+            size={"sm"}
+            onClick={() => setIsPreview(true)}>
+            Preview
+          </Button>
+          <Button onClick={handleDebug} variant={"secondary"} size={"sm"}>
+            Save
+          </Button>
+        </div>
+      </div>
+      <div className="flex w-full h-full flex-1 mt-14 relative">
+        <Card className="absolute border p-1 sm:left-4 bottom-4 sm:bottom-auto sm:top-8 flex flex-row sm:flex-col items-center justify-center gap-2">
+          <AddBlock>
+            <Button variant={"ghost"} size={"icon"}>
+              <BlocksIcon className="w-5 h-5" />
+            </Button>
+          </AddBlock>
+          <FormDesign>
+            <Button variant={"ghost"} size={"icon"}>
+              <PaintbrushIcon className="w-5 h-5" />
+            </Button>
+          </FormDesign>
+          <FormSettings>
+            <Button variant={"ghost"} size={"icon"}>
+              <Settings2Icon className="w-5 h-5" />
+            </Button>
+          </FormSettings>
+        </Card>
+        {blocks.length <= 0 && (
+          <div className="flex justify-center items-center w-full">
+            <div className="flex flex-col justify-center items-center gap-3 ">
+              <BlocksIcon className="w-8 h-8" />
+              <span>This form has no blocks.</span>
+              <AddBlock>
+                <Button variant={"secondary"} size={"sm"} className="w-full">
+                  Add block
+                </Button>
+              </AddBlock>
+            </div>
+          </div>
+        )}
+        {blocks.length >= 1 && (
+          <div className="flex justify-center items-start w-full px-2">
+            <Reorder.Group
+              values={blocks}
+              onReorder={setBlocks}
+              className="w-full flex flex-col items-center justify-start sm:max-w-[600px] gap-2 overflow-y-auto">
+              {blocks.map((block) => (
+                <Reorder.Item key={block.id} value={block} className="w-full">
+                  <Block {...block} />
+                </Reorder.Item>
+              ))}
+            </Reorder.Group>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
+  return (
     <div className="flex flex-col w-full h-full relative">
       <div className="flex justify-between items-center h-16 px-2 sm:px-6 z-10 bg-background">
         <div className="flex justify-center items-center gap-4">
