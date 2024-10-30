@@ -73,7 +73,7 @@ const Home = () => {
             </Link>
             . All Rights Reserved.
           </span>
-          <div className="absolute right-4">
+          <div className="absolute right-4 sm:flex hidden">
             <ModeToggle />
           </div>
         </footer>
