@@ -38,11 +38,11 @@ const Signup = () => {
         <Link href={"/"} className="fixed top-6 flex sm:hidden">
           <Brand type="logo" className="h-7 fill-foreground" />
         </Link>
-        <div className="fixed top-5 left-5 hidden sm:flex gap-4">
-          <Button variant={"outline"} size={"sm"} className="" asChild>
+        <div className="fixed top-5 left-5 hidden sm:flex gap-2">
+          <ModeToggle />
+          <Button variant={"outline"} size={"sm"} asChild>
             <Link href={"/"}>Go back</Link>
           </Button>
-          <ModeToggle />
         </div>
         <div className="w-full flex justify-center items-center">
           <Form {...form}>
@@ -115,8 +115,8 @@ const Signup = () => {
           </Form>
         </div>
       </div>
-      <div className="flex-1 sm:flex hidden justify-center items-center w-full relative bg-gradient-to-r from-[#75BDFF] via-[#FF75E9] to-[#FFA775]">
-        <Brand type="logo_text" className="h-14 fill-black" />
+      <div className="flex-1 sm:flex hidden justify-center items-center w-full relative bg-gradient-to-br from-[#75BDFF] via-[#FF75E9] to-[#FFA775]">
+        <Brand type="logo_text" className="h-16 fill-black" />
       </div>
     </div>
   );

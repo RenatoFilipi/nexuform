@@ -14,13 +14,13 @@ import {
 } from "@/components/ui/table";
 import { dashboardFormState } from "@/helpers/types";
 import { formList, formSubmissionList } from "@/mocks/forms";
-import { LayersIcon, LoaderIcon } from "lucide-react";
+import { LoaderIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const Form = () => {
-  const [state] = useState<dashboardFormState>("error");
+  const [state] = useState<dashboardFormState>("no_submissions");
   const pathname = usePathname();
   const currentFormId = pathname.split("/")[3];
   const currentForm = formList.find((x) => x.id === currentFormId);
@@ -31,17 +31,16 @@ const Form = () => {
   return (
     <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-14">
       <div className="flex justify-between items-center">
-        <div className="flex justify-center items-center gap-3">
-          <LayersIcon className="w-5 h-5" />
-          <span className="font-semibold">{currentForm?.title}</span>
-        </div>
-        <div className="flex justify-center items-center sm:gap-4 gap-2">
+        <span className="font-semibold hidden sm:flex">
+          {currentForm?.title}
+        </span>
+        <div className="flex justify-center items-center sm:gap-4 gap-2 w-full sm:w-fit">
           <FormShare id={currentFormId}>
-            <Button variant={"outline"} size={"sm"}>
+            <Button variant={"outline"} size={"sm"} className="w-full">
               Share
             </Button>
           </FormShare>
-          <Button variant={"secondary"} size={"sm"} asChild>
+          <Button variant={"secondary"} size={"sm"} className="w-full" asChild>
             <Link href={`/dashboard/editor/${currentFormId}`}>Edit</Link>
           </Button>
         </div>
@@ -58,7 +57,7 @@ const Form = () => {
         )}
         {/* no submissions */}
         {state === "no_submissions" && (
-          <div className="flex justify-center items-center h-full">
+          <div className="flex justify-center items-center h-full flex-1">
             <span className="text-foreground/80">No submissions to show.</span>
           </div>
         )}

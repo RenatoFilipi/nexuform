@@ -6,7 +6,7 @@ const GenericError = () => {
   return (
     <div className="flex h-full justify-center items-center">
       <div className="flex flex-col justify-center items-center gap-3">
-        <ShieldBanIcon className="" />
+        <ShieldBanIcon className="text-destructive" />
         <div className="flex flex-col justify-center items-center gap-3">
           <span className="text-sm text-foreground/80">
             Something went wrong

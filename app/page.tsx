@@ -1,4 +1,5 @@
 import Brand from "@/components/core/brand";
+import { ModeToggle } from "@/components/core/mode-toggle";
 import { BorderBeam } from "@/components/magicui/border-beam";
 import Nav from "@/components/public/nav";
 import { Button } from "@/components/ui/button";
@@ -29,7 +30,7 @@ const Home = () => {
           </Nav>
         </div>
       </div>
-      <div className="mt-32 mb-36 relative flex flex-col justify-center items-center px-4 sm:px-0">
+      <div className="mt-20 relative flex flex-col justify-center items-center px-4 sm:px-0 flex-1 gap-14">
         <div className="flex justify-center items-center flex-col gap-6 w-full">
           <div className="flex flex-col justify-center items-center w-full text-center gap-6">
             <h1 className="font-bold text-3xl sm:text-6xl max-w-[43.5rem]">
@@ -53,7 +54,7 @@ const Home = () => {
             </Button>
           </div>
         </div>
-        <div className="mt-20">
+        <div className="mb-20">
           <div className="relative rounded-lg border p-2">
             <BorderBeam borderWidth={3} colorTo="#75BDFF" colorFrom="#FFA775" />
             <Image
@@ -64,6 +65,18 @@ const Home = () => {
             />
           </div>
         </div>
+        <footer className="flex justify-center items-center w-full h-12 absolute bottom-0 border-t">
+          <span className="text-sm text-foreground/80 sm:text-center">
+            © 2023{" "}
+            <Link href="/" className="hover:underline">
+              Nebulaform
+            </Link>
+            . All Rights Reserved.
+          </span>
+          <div className="absolute right-4">
+            <ModeToggle />
+          </div>
+        </footer>
       </div>
     </div>
   );
