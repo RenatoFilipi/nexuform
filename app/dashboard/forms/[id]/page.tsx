@@ -46,9 +46,6 @@ const Form = () => {
         </div>
       </div>
       <div className="h-full border flex flex-col overflow-y-auto flex-1">
-        <div className="border-b p-2 px-4">
-          <span className="text-sm">Submissions</span>
-        </div>
         {/* loading */}
         {state === "loading" && (
           <div className="flex justify-center items-center h-full flex-1">

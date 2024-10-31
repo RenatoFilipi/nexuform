@@ -6,7 +6,7 @@ import GenericError from "@/components/private/shared/generic-error";
 import { Button } from "@/components/ui/button";
 import { dashboardFormsState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
-import { BookDashedIcon, LoaderIcon } from "lucide-react";
+import { BookTextIcon, LoaderIcon } from "lucide-react";
 import { useState } from "react";
 
 const Forms = () => {
@@ -36,7 +36,7 @@ const Forms = () => {
       {state === "no_form" && (
         <div className="flex justify-center items-center h-full flex-1">
           <div className="flex flex-col justify-center items-center gap-3">
-            <BookDashedIcon className="" />
+            <BookTextIcon className="w-6 h-6 text-foreground" />
             <div className="flex flex-col justify-center items-center">
               <span className="font-semibold">No form to show</span>
               <span className="text-foreground/80 text-sm">

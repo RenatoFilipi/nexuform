@@ -2,16 +2,19 @@
 
 import Brand from "@/components/core/brand";
 import { Badge2 } from "@/components/ui/badge2";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Label } from "@/components/ui/label";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { minWidth640 } from "@/helpers/constants";
 import { formStatus, setState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
 import {
   ChartAreaIcon,
-  CheckIcon,
   ChevronsUpDownIcon,
   CreditCardIcon,
   HouseIcon,
@@ -36,6 +39,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
+import CreateForm from "../forms/create-form";
 
 const navLinks = [
   {
@@ -89,23 +93,24 @@ const Nav = () => {
 
     return (
       <div className="border-b h-14 flex items-center px-2 sm:px-6 justify-between z-10 bg-background fixed w-full">
-        <div className="flex justify-center items-center gap-4 h-full">
-          <div className="flex justify-center items-center gap-4">
+        <div className="flex justify-center items-center gap-1 h-full">
+          <div className="flex justify-center items-center gap-1">
             <Link href={"/dashboard"}>
               <Brand type="logo" className="h-7 fill-foreground" />
             </Link>
             {currentForm !== undefined && (
-              <div className="flex justify-center items-center gap-1">
-                <div className="flex justify-center items-center gap-2">
-                  <span className="text-sm">{currentForm.title}</span>
-                  {BadgeColor(currentForm.status)}
-                </div>
-                <SelectForm>
-                  <Button variant={"ghost"} size={"icon"} className="w-6">
-                    <ChevronsUpDownIcon className="w-4 h-4" />
-                  </Button>
-                </SelectForm>
-              </div>
+              <SelectForm>
+                <Button
+                  variant={"ghost"}
+                  size={"sm"}
+                  className="flex justify-center items-center gap-2">
+                  <div className="flex justify-center items-center gap-1">
+                    <span className="text-sm">{currentForm.title}</span>
+                    {BadgeColor(currentForm.status)}
+                  </div>
+                  <ChevronsUpDownIcon className="w-4 h-4" />
+                </Button>
+              </SelectForm>
             )}
           </div>
           <div className="hidden sm:flex justify-center items-center gap-0 h-full">
@@ -289,7 +294,7 @@ const AvatarMenu = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer">
-          <AvatarFallback className="text-sm">R</AvatarFallback>
+          <AvatarFallback className="text-sm">RF</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-6 min-w-52 text-foreground/80">
@@ -361,12 +366,12 @@ const SelectForm = ({ children }: { children: React.ReactNode }) => {
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>{children}</PopoverTrigger>
+        <PopoverContent>
           <SelectFormBody setState={setOpen} />
-        </DialogContent>
-      </Dialog>
+        </PopoverContent>
+      </Popover>
     );
   }
 
@@ -383,12 +388,35 @@ const SelectFormBody = ({ setState }: { setState: setState<boolean> }) => {
   const pathname = usePathname();
   const currentForm = pathname.split("/")[3];
 
+  const BadgeColor = (status: formStatus) => {
+    switch (status) {
+      case "published":
+        return (
+          <Badge2 variant={"green"} uppercase>
+            {status}
+          </Badge2>
+        );
+      case "draft":
+        return (
+          <Badge2 variant={"orange"} uppercase>
+            {status}
+          </Badge2>
+        );
+      case "inactive":
+        return (
+          <Badge2 variant={"gray"} uppercase>
+            {status}
+          </Badge2>
+        );
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-center sm:justify-start items-center mt-8 sm:mt-0">
         <h1 className="text-xl font-semibold">Your forms</h1>
       </div>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-0">
         {formList.map((form) => (
           <Link
             onClick={() => setState(false)}
@@ -397,15 +425,15 @@ const SelectFormBody = ({ setState }: { setState: setState<boolean> }) => {
             className={`${
               currentForm === form.id &&
               "bg-foreground/5 hover:bg-foreground/10"
-            } flex justify-between hover:bg-foreground/5  px-2 cursor-pointer items-center h-8`}>
+            } flex justify-between hover:bg-foreground/5 px-2 cursor-pointer items-center h-9`}>
             <div className="flex justify-center items-center gap-2">
               <span className="text-xs">{form.title}</span>
             </div>
-            {currentForm === form.id && <CheckIcon className="w-4 h-4" />}
+            {BadgeColor(form.status)}
           </Link>
         ))}
       </div>
-      <div className="flex justify-end flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
+      <div className="flex justify-between flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
         <Button
           onClick={() => setState(false)}
           type="button"
@@ -414,6 +442,11 @@ const SelectFormBody = ({ setState }: { setState: setState<boolean> }) => {
           className="w-full sm:w-fit">
           Cancel
         </Button>
+        <CreateForm>
+          <Button variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
+            New form
+          </Button>
+        </CreateForm>
       </div>
     </div>
   );
