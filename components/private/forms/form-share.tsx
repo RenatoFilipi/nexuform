@@ -7,6 +7,7 @@ import { formList } from "@/mocks/forms";
 import { Link2Icon } from "lucide-react";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { toast } from "sonner";
 import { Dialog, DialogContent, DialogTrigger } from "../../ui/dialog";
 import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
 
@@ -51,6 +52,11 @@ const Body = ({
   const currentForm = formList.find((x) => x.id === id);
   const shareLink = `${window.location.host}/r/${currentForm?.id}`;
 
+  const handleCopy = () => {
+    navigator.clipboard.writeText(shareLink);
+    toast.success("Link Copied");
+  };
+
   return (
     <div className="flex flex-col gap-4 pt-8 sm:pt-0">
       <div className="flex flex-col gap-1.5 justify-center items-center sm:items-start">
@@ -72,9 +78,7 @@ const Body = ({
       <div className="flex justify-center items-center gap-4 flex-col sm:flex-row">
         <Input value={shareLink} className="text-foreground/60" />
         <Button
-          onClick={() => {
-            navigator.clipboard.writeText(shareLink);
-          }}
+          onClick={handleCopy}
           variant={"secondary"}
           size={"sm"}
           className="w-full sm:w-fit">
