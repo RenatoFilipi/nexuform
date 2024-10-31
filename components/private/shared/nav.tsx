@@ -7,7 +7,7 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { minWidth640 } from "@/helpers/constants";
-import { setState } from "@/helpers/types";
+import { formStatus, setState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
 import {
   ChartAreaIcon,
@@ -64,6 +64,29 @@ const Nav = () => {
     const currentFormId = pathname.split("/")[3];
     const currentForm = formList.find((x) => x.id === currentFormId);
 
+    const BadgeColor = (status: formStatus) => {
+      switch (status) {
+        case "published":
+          return (
+            <Badge2 variant={"green"} uppercase>
+              {status}
+            </Badge2>
+          );
+        case "draft":
+          return (
+            <Badge2 variant={"orange"} uppercase>
+              {status}
+            </Badge2>
+          );
+        case "inactive":
+          return (
+            <Badge2 variant={"gray"} uppercase>
+              {status}
+            </Badge2>
+          );
+      }
+    };
+
     return (
       <div className="border-b h-14 flex items-center px-2 sm:px-6 justify-between z-10 bg-background fixed w-full">
         <div className="flex justify-center items-center gap-4 h-full">
@@ -75,7 +98,7 @@ const Nav = () => {
               <div className="flex justify-center items-center gap-1">
                 <div className="flex justify-center items-center gap-2">
                   <span className="text-sm">{currentForm.title}</span>
-                  <Badge2>{currentForm.status}</Badge2>
+                  {BadgeColor(currentForm.status)}
                 </div>
                 <SelectForm>
                   <Button variant={"ghost"} size={"icon"} className="w-6">

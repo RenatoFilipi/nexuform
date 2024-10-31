@@ -19,11 +19,34 @@ const FormItem = ({ title, status, responsesCount, id }: FormItemProps) => {
     return count === 1 ? `${count} Response` : `${count} Responses`;
   };
 
+  const BadgeColor = (status: formStatus) => {
+    switch (status) {
+      case "published":
+        return (
+          <Badge2 variant={"green"} uppercase>
+            {status}
+          </Badge2>
+        );
+      case "draft":
+        return (
+          <Badge2 variant={"orange"} uppercase>
+            {status}
+          </Badge2>
+        );
+      case "inactive":
+        return (
+          <Badge2 variant={"gray"} uppercase>
+            {status}
+          </Badge2>
+        );
+    }
+  };
+
   return (
     <Card className="flex h-28 p-4 hover:border-foreground/20 items-start flex-col justify-between shadow-none">
       <div className="flex justify-between items-center w-full">
         <span className="text-base font-semibold">{title}</span>
-        <Badge2 variant={"default"}>{status}</Badge2>
+        {BadgeColor(status)}
       </div>
       <div className="flex justify-between items-center w-full">
         <span className="text-foreground/80 text-sm">
