@@ -1,11 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { minWidth640 } from "@/helpers/constants";
 import { ColorProps } from "@/helpers/interfaces";
 import { setState } from "@/helpers/types";
@@ -133,19 +131,19 @@ const FormDesign = ({ children }: { children: React.ReactNode }) => {
 
   if (isDesktop) {
     return (
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>{children}</PopoverTrigger>
-        <PopoverContent className="min-w-[420px]">
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogContent className="min-w-[420px]">
           <Body setState={setOpen} />
-        </PopoverContent>
-      </Popover>
+        </DialogContent>
+      </Dialog>
     );
   }
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3 flex flex-col gap-8 h-[95%]">
+      <DrawerContent className="p-3 flex flex-col gap-8 h-[80%]">
         <Body setState={setOpen} />
       </DrawerContent>
     </Drawer>
@@ -153,27 +151,46 @@ const FormDesign = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Body = ({ setState }: { setState: setState<boolean> }) => {
-  const { primaryColor, setPrimaryColor } = useEditorStore();
+  const {
+    primaryColor,
+    setPrimaryColor,
+    setName,
+    name,
+    setSubmitLabel,
+    submitLabel,
+  } = useEditorStore();
 
   return (
     <div className="flex flex-col gap-6 h-full overflow-y-auto">
       <h1 className="text-xl font-semibold">Design</h1>
-      <div className="flex-1 overflow-y-auto">
-        <div className="grid grid-cols-2 gap-2">
-          {availableColors.map((color, index) => {
-            return (
-              <button
-                onClick={() => setPrimaryColor(color.label)}
-                key={index}
-                className={`${
-                  color.label === primaryColor &&
-                  "bg-primary/10 border-primary hover:bg-primary/10"
-                } flex justify-start items-center gap-4 border py-1 px-3 rounded hover:bg-foreground/10`}>
-                <div className={`${color.tw_class} w-4 h-4 rounded-full`}></div>
-                <span>{color.label}</span>
-              </button>
-            );
-          })}
+      <div className="flex-1 overflow-y-auto flex flex-col gap-4">
+        <div className="grid gap-1.5">
+          <Label>Submit button</Label>
+          <Input
+            type="text"
+            value={submitLabel}
+            onChange={(e) => setSubmitLabel(e.target.value)}
+          />
+        </div>
+        <div className="grid gap-1.5 overflow-y-auto">
+          <Label>Color</Label>
+          <div className="grid grid-cols-1 gap-2 overflow-y-auto sm:h-64">
+            {availableColors.map((color, index) => {
+              return (
+                <button
+                  onClick={() => setPrimaryColor(color.label)}
+                  key={index}
+                  className={`${
+                    color.label === primaryColor &&
+                    "bg-primary/10 border-primary hover:bg-primary/10"
+                  } flex justify-start items-center gap-4 border py-1 px-3 rounded hover:bg-foreground/10`}>
+                  <div
+                    className={`${color.tw_class} w-4 h-4 rounded-full`}></div>
+                  <span>{color.label}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
       <div className="flex justify-end items-center ">

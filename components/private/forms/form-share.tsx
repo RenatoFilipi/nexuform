@@ -58,14 +58,16 @@ const Body = ({
   };
 
   return (
-    <div className="flex flex-col gap-4 pt-8 sm:pt-0">
-      <div className="flex flex-col gap-1.5 justify-center items-center sm:items-start">
+    <div className="flex flex-col gap-4 pt-4 sm:pt-0">
+      <div className="flex flex-col gap-1 justify-center items-start">
         <h1 className="text-xl font-semibold">Share link</h1>
         {currentForm?.status === "published" ? (
-          <p className="text-foreground/80 text-sm">
-            Your form is live! Share it via link on social media, messaging, or
-            email.
-          </p>
+          <Alert2 variant={"info"}>
+            <AlertDescription2>
+              Your form is live! Share it via link on social media, messaging,
+              or email.
+            </AlertDescription2>
+          </Alert2>
         ) : (
           <Alert2 variant={"destructive"}>
             <AlertDescription2>

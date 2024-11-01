@@ -16,6 +16,7 @@ import {
   BlocksIcon,
   ChevronLeftIcon,
   PaintbrushIcon,
+  PlusIcon,
   Settings2Icon,
 } from "lucide-react";
 import Link from "next/link";
@@ -168,11 +169,17 @@ const Editor = () => {
       <div className="flex w-full h-full flex-1 mt-24 sm:mt-14 pt-2 relative">
         {blocks.length <= 0 && (
           <div className="flex justify-center items-center w-full">
-            <div className="flex flex-col justify-center items-center gap-3 ">
+            <div className="flex flex-col justify-center items-center gap-4">
               <BlocksIcon className="w-8 h-8" />
-              <span>This form has no blocks.</span>
+              <div className="flex flex-col justify-center items-center gap-0">
+                <span className="font-semibold">This form has no blocks.</span>
+                <p className="text-foreground/80 text-center">
+                  Start designing your form by adding customizable blocks.
+                </p>
+              </div>
               <AddBlock>
-                <Button variant={"secondary"} size={"sm"} className="w-full">
+                <Button variant={"secondary"} size={"sm"} className="">
+                  <PlusIcon className=" w-4 h-4 mr-2" />
                   Add block
                 </Button>
               </AddBlock>

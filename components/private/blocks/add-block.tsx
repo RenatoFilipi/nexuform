@@ -1,13 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { minWidth640 } from "@/helpers/constants";
 import { uuid } from "@/helpers/functions";
@@ -101,12 +97,12 @@ const AddBlock = ({ children }: { children: React.ReactNode }) => {
 
   if (isDesktop) {
     return (
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>{children}</PopoverTrigger>
-        <PopoverContent>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogContent>
           <Body setState={setOpen} />
-        </PopoverContent>
-      </Popover>
+        </DialogContent>
+      </Dialog>
     );
   }
 

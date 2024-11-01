@@ -52,7 +52,7 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="min-w-[700px] p-0">
+        <DialogContent className="min-w-[650px]">
           <Body setState={setOpen} />
         </DialogContent>
       </Dialog>
@@ -73,7 +73,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
   const store = useEditorStore();
 
   return (
-    <div className="flex flex-col gap-6 h-full overflow-y-auto sm:p-6">
+    <div className="flex flex-col gap-6 h-full overflow-y-auto pt-4 sm:pt-0">
       <h1 className="text-xl font-semibold">Settings</h1>
       <div className="flex flex-1 overflow-y-auto gap-6 px-1 flex-col">
         <div className="flex flex-col gap-4 flex-1">
@@ -86,43 +86,39 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
             />
           </div>
           <div className="grid gap-1.5">
-            <Label>Description</Label>
+            <Label>Description (Optional)</Label>
             <Textarea
               value={store.description ?? ""}
               onChange={(e) => store.setDescription(e.target.value)}
             />
           </div>
-          <div className="grid gap-1.5">
-            <Label>Submit label</Label>
-            <Input
-              type="text"
-              value={store.submitLabel}
-              onChange={(e) => store.setSubmitLabel(e.target.value)}
-            />
-          </div>
         </div>
-        <div className="overflow-y-auto flex-1 flex flex-col gap-1.5">
+        <div className="flex-1 flex flex-col gap-1.5">
           <Label>Status</Label>
-          <div className="grid gap-3 overflow-y-auto grid-cols-1">
-            {statusList.map((status, index) => {
-              return (
-                <button
-                  onClick={() => store.setStatus(status.status)}
-                  key={index}
-                  className={`${
-                    status.status === store.status &&
-                    "bg-primary/10 border-primary hover:bg-primary/10"
-                  } border rounded hover:bg-foreground/10 p-2 flex flex-col gap-2`}>
-                  <div className="flex gap-2 items-center">
-                    {status.icon}
-                    <span className="text-sm font-semibold">
-                      {status.label}
-                    </span>
-                  </div>
-                  <p className="text-xs text-start">{status.description}</p>
-                </button>
-              );
-            })}
+          <div className="flex flex-col gap-4">
+            <div className="grid gap-3 overflow-y-auto grid-cols-3">
+              {statusList.map((status, index) => {
+                return (
+                  <button
+                    onClick={() => store.setStatus(status.status)}
+                    key={index}
+                    className={`${
+                      status.status === store.status &&
+                      "bg-primary/10 border-primary hover:bg-primary/10"
+                    } border rounded hover:bg-foreground/10 p-2 flex flex-col gap-2`}>
+                    <div className="flex justify-center w-full items-center gap-2 flex-col">
+                      {status.icon}
+                      <span className="text-sm font-semibold">
+                        {status.label}
+                      </span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+            <p className="text-sm">
+              {statusList.find((x) => x.status === store.status)?.description}
+            </p>
           </div>
         </div>
       </div>

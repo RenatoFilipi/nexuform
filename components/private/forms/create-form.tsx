@@ -61,8 +61,8 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 pt-8 sm:pt-0">
-      <div className="flex flex-col gap-1.5 justify-center items-center sm:items-start">
+    <div className="flex flex-col gap-4 pt-4 sm:pt-0">
+      <div className="flex flex-col gap-1 justify-center items-start">
         <h1 className="text-xl font-semibold">Create form</h1>
         <p className="text-foreground/80 text-sm">
           Start by giving your form a name.
