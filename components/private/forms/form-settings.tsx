@@ -75,7 +75,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
   return (
     <div className="flex flex-col gap-6 h-full overflow-y-auto sm:p-6">
       <h1 className="text-xl font-semibold">Settings</h1>
-      <div className="flex flex-1 overflow-y-auto gap-6 px-1 flex-col sm:flex-row">
+      <div className="flex flex-1 overflow-y-auto gap-6 px-1 flex-col">
         <div className="flex flex-col gap-4 flex-1">
           <div className="grid gap-1.5">
             <Label>Name</Label>

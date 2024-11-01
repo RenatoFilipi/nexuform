@@ -98,7 +98,7 @@ const Editor = () => {
 
   return (
     <div className="flex flex-col h-full flex-1">
-      <div className="fixed w-full z-10 bg-background px-2 sm:px-6">
+      <div className="fixed w-full z-10 bg-background px-2 sm:px-6 sm:border-b">
         <div className="flex justify-between items-center h-14 w-full">
           <div className="flex justify-center items-center gap-4">
             <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>

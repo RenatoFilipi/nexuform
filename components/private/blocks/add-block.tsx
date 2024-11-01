@@ -1,9 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { minWidth640 } from "@/helpers/constants";
 import { uuid } from "@/helpers/functions";
@@ -32,37 +36,63 @@ interface addBlockProps {
   type: block;
   name: string;
   icon: JSX.Element | null;
+  enabled: boolean;
 }
 const blockList: addBlockProps[] = [
   {
     type: "short_answer",
     name: "Short answer",
     icon: <EqualIcon className="w-4 h-4" />,
+    enabled: true,
   },
   {
     type: "long_answer",
     name: "Long answer",
     icon: <TextIcon className="w-4 h-4" />,
+    enabled: true,
   },
   {
     type: "multiple_choice",
     name: "Multiple choice",
     icon: <CheckSquareIcon className="w-4 h-4" />,
+    enabled: true,
   },
   {
     type: "checkboxes",
     name: "Checkboxes",
     icon: <CheckCircleIcon className="w-4 h-4" />,
+    enabled: true,
   },
   {
     type: "dropdown",
     name: "Dropdown",
     icon: <ChevronDownIcon className="w-4 h-4" />,
+    enabled: true,
   },
-  { type: "number", name: "Number", icon: <HashIcon className="w-4 h-4" /> },
-  { type: "email", name: "Email", icon: <MailIcon className="w-4 h-4" /> },
-  { type: "rating", name: "Rating", icon: <StarIcon className="w-4 h-4" /> },
-  { type: "scale", name: "Scale", icon: <ScaleIcon className="w-4 h-4" /> },
+  {
+    type: "number",
+    name: "Number",
+    icon: <HashIcon className="w-4 h-4" />,
+    enabled: true,
+  },
+  {
+    type: "email",
+    name: "Email",
+    icon: <MailIcon className="w-4 h-4" />,
+    enabled: true,
+  },
+  {
+    type: "rating",
+    name: "Rating",
+    icon: <StarIcon className="w-4 h-4" />,
+    enabled: true,
+  },
+  {
+    type: "scale",
+    name: "Scale",
+    icon: <ScaleIcon className="w-4 h-4" />,
+    enabled: true,
+  },
 ];
 
 const AddBlock = ({ children }: { children: React.ReactNode }) => {
@@ -71,12 +101,12 @@ const AddBlock = ({ children }: { children: React.ReactNode }) => {
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>{children}</PopoverTrigger>
+        <PopoverContent>
           <Body setState={setOpen} />
-        </DialogContent>
-      </Dialog>
+        </PopoverContent>
+      </Popover>
     );
   }
 
@@ -145,21 +175,22 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
                     value={field.value}
                     onValueChange={field.onChange}>
                     {blockList.map((block, index) => {
-                      return (
-                        <div key={index}>
-                          <RadioGroupItem
-                            value={block.type}
-                            id={block.type}
-                            className="peer sr-only"
-                          />
-                          <Label
-                            htmlFor={block.type}
-                            className="text-sm cursor-pointer flex items-center justify-start gap-2 rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 [&:has([data-state=checked])]:border-primary">
-                            {block.icon}
-                            {block.name}
-                          </Label>
-                        </div>
-                      );
+                      if (block.enabled)
+                        return (
+                          <div key={index}>
+                            <RadioGroupItem
+                              value={block.type}
+                              id={block.type}
+                              className="peer sr-only"
+                            />
+                            <Label
+                              htmlFor={block.type}
+                              className="text-sm cursor-pointer flex items-center justify-start gap-2 rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 [&:has([data-state=checked])]:border-primary">
+                              {block.icon}
+                              {block.name}
+                            </Label>
+                          </div>
+                        );
                     })}
                   </RadioGroup>
                 </FormControl>

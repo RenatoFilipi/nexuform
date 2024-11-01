@@ -1,7 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { minWidth640 } from "@/helpers/constants";
 import { ColorProps } from "@/helpers/interfaces";
 import { setState } from "@/helpers/types";
@@ -129,12 +133,12 @@ const FormDesign = ({ children }: { children: React.ReactNode }) => {
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="min-w-[420px]">
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>{children}</PopoverTrigger>
+        <PopoverContent className="min-w-[420px]">
           <Body setState={setOpen} />
-        </DialogContent>
-      </Dialog>
+        </PopoverContent>
+      </Popover>
     );
   }
 
