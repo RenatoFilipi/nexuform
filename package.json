@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lh": "ssh -R 80:localhost:3000 localhost.run"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

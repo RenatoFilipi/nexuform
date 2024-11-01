@@ -110,6 +110,16 @@ const config = {
         shimmer: "shimmer 8s infinite",
         "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
       },
+      width: {
+        fill: "fill-available",
+        "webkit-fill": "-webkit-fill-available",
+        "moz-fill": "-moz-available",
+      },
+      height: {
+        fill: "fill-available",
+        "webkit-fill": "-webkit-fill-available",
+        "moz-fill": "-moz-available",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
