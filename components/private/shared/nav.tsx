@@ -20,6 +20,7 @@ import {
   HouseIcon,
   LogOutIcon,
   Menu,
+  MenuIcon,
   MonitorIcon,
   MoonIcon,
   SunIcon,
@@ -135,7 +136,7 @@ const Nav = () => {
         <div className="flex sm:hidden">
           <NavMobile>
             <Button variant={"ghost"} size={"icon"}>
-              <Menu className="w-6 h-6" />
+              <MenuIcon className="w-6 h-6" />
             </Button>
           </NavMobile>
         </div>

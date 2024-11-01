@@ -7,6 +7,11 @@ import FormDesign from "@/components/private/forms/form-design";
 import FormSettings from "@/components/private/forms/form-settings";
 import FormWrapper from "@/components/private/forms/form-wrapper";
 import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { dashboardEditorState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
 import useEditorStore from "@/stores/editor";
@@ -15,9 +20,12 @@ import { Reorder } from "framer-motion";
 import {
   BlocksIcon,
   ChevronLeftIcon,
+  CogIcon,
+  LoaderIcon,
   PaintbrushIcon,
   PlusIcon,
   Settings2Icon,
+  ViewIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -93,23 +101,98 @@ const Editor = () => {
   }
 
   return (
-    <div className="flex flex-col h-full flex-1 px-2 relative">
-      <div className="border border-red-500 h-14 flex justify-between items-center w-full sticky top-0 bg-background">
-        <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
-          <Link href={"/dashboard/forms"}>
-            <Brand type="logo" className="h-7 fill-foreground" />
-          </Link>
-        </Button>
-        <div>
-          <Button variant={"secondary"} size={"sm"}>
-            Save
-          </Button>
+    <div className="flex flex-col h-full flex-1 gap-4">
+      <div className="fixed top-0 w-full">
+        <div className="h-14 flex justify-between items-center relative w-full top-0 bg-background sm:px-3 px-2">
+          <div className="flex justify-center items-center gap-2">
+            <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
+              <Link href={"/dashboard/forms"}>
+                <Brand type="logo" className="h-7 fill-foreground" />
+              </Link>
+            </Button>
+            {name === "".trim() ? (
+              <LoaderIcon className="animate-spin w-4 h-4" />
+            ) : (
+              <span className="text-foreground/80 text-sm">{name}</span>
+            )}
+          </div>
+          <div className="hidden sm:flex justify-center items-center gap-4 absolute right-0 left-0">
+            <AddBlock>
+              <Button variant={"outline"} size={"sm"}>
+                <BlocksIcon className="w-4 h-4 mr-2" />
+                Blocks
+              </Button>
+            </AddBlock>
+            <FormDesign>
+              <Button variant={"outline"} size={"sm"}>
+                <PaintbrushIcon className="w-4 h-4 mr-2" />
+                Design
+              </Button>
+            </FormDesign>
+            <FormSettings>
+              <Button variant={"outline"} size={"sm"}>
+                <Settings2Icon className="w-4 h-4 mr-2" />
+                Settings
+              </Button>
+            </FormSettings>
+          </div>
+          <div className="hidden sm:flex">
+            <Button variant={"secondary"} size={"sm"}>
+              Save
+            </Button>
+          </div>
+          <div className="flex sm:hidden justify-center items-center">
+            <Button variant={"ghost"} size={"icon"}>
+              <ViewIcon className="w-6 h-6" />
+            </Button>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant={"ghost"} size={"icon"}>
+                  <CogIcon className="w-6 h-6" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="flex flex-col w-fit gap-1 p-1 mr-2">
+                <AddBlock>
+                  <Button variant={"ghost"} size={"sm"}>
+                    <BlocksIcon className="w-4 h-4 mr-2" />
+                    Blocks
+                  </Button>
+                </AddBlock>
+                <FormDesign>
+                  <Button variant={"ghost"} size={"sm"}>
+                    <PaintbrushIcon className="w-4 h-4 mr-2" />
+                    Design
+                  </Button>
+                </FormDesign>
+                <FormSettings>
+                  <Button variant={"ghost"} size={"sm"}>
+                    <Settings2Icon className="w-4 h-4 mr-2" />
+                    Settings
+                  </Button>
+                </FormSettings>
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
       </div>
-      <div className="border border-blue-500 flex flex-1 overflow-y-auto p-2">
-        <div className="border border-green-500 h-[1000px] overflow-y-auto">
-          body
-        </div>
+      <div className="flex flex-1 overflow-y-auto justify-center items-center sm:px-3 px-2 mt-14 relative">
+        {blocks.length <= 0 && (
+          <div className="flex flex-col justify-center items-center gap-4">
+            <BlocksIcon className="w-8 h-8" />
+            <div className="flex flex-col justify-center items-center gap-0">
+              <span className="font-semibold">This form has no blocks.</span>
+              <p className="text-foreground/80 text-center">
+                Start designing your form by adding customizable blocks.
+              </p>
+            </div>
+            <AddBlock>
+              <Button variant={"secondary"} size={"sm"} className="">
+                <PlusIcon className=" w-4 h-4 mr-2" />
+                Add block
+              </Button>
+            </AddBlock>
+          </div>
+        )}
       </div>
     </div>
   );
