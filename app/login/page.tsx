@@ -107,7 +107,7 @@ const Login = () => {
           </Form>
         </div>
       </div>
-      <div className="flex-1 sm:flex hidden justify-center items-center w-full relative bg-gradient-to-br from-[#75BDFF] via-[#FF75E9] to-[#FFA775]">
+      <div className="flex-1 sm:flex hidden justify-center items-center w-full relative bg-gradient-to-r from-[#FFA14D] via-[#F5536B] to-[#0D91F6]">
         <Brand type="logo_text" className="h-16 fill-black fixed" />
       </div>
     </div>

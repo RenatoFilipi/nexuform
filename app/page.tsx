@@ -35,7 +35,7 @@ const Home = () => {
           <div className="flex flex-col justify-center items-center w-full text-center gap-6">
             <h1 className="font-bold text-3xl sm:text-6xl max-w-[43.5rem]">
               Streamline Feedback With{" "}
-              <span className="bg-gradient-to-r from-[#75BDFF] via-[#FF75E9] to-[#FFA775] inline-block text-transparent bg-clip-text">
+              <span className="bg-gradient-to-r from-[#FFA14D] via-[#F5536B] to-[#0D91F6] inline-block text-transparent bg-clip-text">
                 Intuitive Forms.
               </span>
             </h1>
@@ -57,7 +57,7 @@ const Home = () => {
         <div className="mb-20">
           <ShineBorder
             className="relative rounded-lg border"
-            color={["#75BDFF", "#FF75E9", "#FFA775"]}>
+            color={["#FFA14D", "#F5536B", "#0D91F6"]}>
             <Image
               alt="hero preview feature"
               src={"/dash.webp"}

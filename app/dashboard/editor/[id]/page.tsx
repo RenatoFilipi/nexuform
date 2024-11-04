@@ -89,7 +89,7 @@ const Editor = () => {
               className="flex justify-center items-center gap-1 text-base font-semibold">
               <span>
                 Powered by{" "}
-                <span className="font-bold bg-gradient-to-r from-[#75BDFF] via-[#FF75E9] to-[#FFA775] inline-block text-transparent bg-clip-text">
+                <span className="font-bold bg-gradient-to-r from-[#FFA14D] via-[#F5536B] to-[#0D91F6] inline-block text-transparent bg-clip-text">
                   Nebulaform
                 </span>
               </span>
@@ -116,7 +116,7 @@ const Editor = () => {
               <span className="text-foreground/80 text-sm">{name}</span>
             )}
           </div>
-          <div className="hidden sm:flex justify-center items-center gap-4 absolute right-0 left-0">
+          <div className="hidden sm:flex justify-center items-center gap-4">
             <AddBlock>
               <Button variant={"outline"} size={"sm"}>
                 <BlocksIcon className="w-4 h-4 mr-2" />
@@ -135,8 +135,6 @@ const Editor = () => {
                 Settings
               </Button>
             </FormSettings>
-          </div>
-          <div className="hidden sm:flex">
             <Button variant={"secondary"} size={"sm"}>
               Save
             </Button>
@@ -170,6 +168,9 @@ const Editor = () => {
                     Settings
                   </Button>
                 </FormSettings>
+                <Button variant={"secondary"} size={"sm"}>
+                  Save
+                </Button>
               </PopoverContent>
             </Popover>
           </div>
