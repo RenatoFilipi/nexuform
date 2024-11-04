@@ -295,7 +295,7 @@ const AvatarMenu = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer">
-          <AvatarFallback className="text-sm">RF</AvatarFallback>
+          <AvatarFallback className="text-sm bg-primary">RF</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-6 min-w-52 text-foreground/80">

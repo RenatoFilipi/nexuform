@@ -140,7 +140,10 @@ const Editor = () => {
             </Button>
           </div>
           <div className="flex sm:hidden justify-center items-center">
-            <Button variant={"ghost"} size={"icon"}>
+            <Button
+              onClick={() => setIsPreview(true)}
+              variant={"ghost"}
+              size={"icon"}>
               <ViewIcon className="w-6 h-6" />
             </Button>
             <Popover>
