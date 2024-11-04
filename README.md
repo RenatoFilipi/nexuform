@@ -93,9 +93,31 @@ Para desenvolver um MVP eficaz, é essencial focar nas funcionalidades básicas 
 
 ### Integrações
 
-- **Ferramentas de Marketing**: Integração com plataformas como Mailchimp, HubSpot.
-- **Pagamentos**: Integração com Stripe, PayPal para planos pagos.
-- **APIs**: Disponibilização de APIs para integrações personalizadas.
+- **APIs de Dados**
+
+  - **Disponibilidade de API**: O NebulaForm oferece uma API RESTful que permite que os usuários integrem formulários com suas próprias plataformas e aplicativos.
+  - **Webhooks**: Possibilidade de configurar webhooks para envio de dados em tempo real para outros sistemas, como CRMs e ERPs.
+
+- **Integração com Ferramentas de Marketing e CRM**
+
+  - **Mailchimp e HubSpot**: Sincronização de contatos e dados de resposta com ferramentas de marketing e CRM para facilitar campanhas de e-mail e segmentação de leads.
+  - **Salesforce**: Integração direta para acompanhamento de leads e clientes, simplificando a gestão de relacionamento.
+
+- **Integrações de Pagamento**
+
+  - **Stripe e PayPal**: Suporte para formulários de pagamento e inscrição, permitindo transações financeiras diretamente nos formulários.
+  - **Pagamento via PIX**: Suporte ao método de pagamento brasileiro, PIX, possibilitando maior flexibilidade para usuários no Brasil.
+
+- **Automação com Zapier e Make (antigo Integromat)**
+
+  - **Automatização**: Conexão com mais de 5.000 aplicativos usando Zapier e Make, permitindo automação de tarefas como enviar notificações, criar entradas em planilhas e adicionar leads em CRMs.
+
+- **Integração com Serviços de Armazenamento em Nuvem**
+
+  - **Google Drive e Dropbox**: Possibilidade de armazenar arquivos enviados através de formulários em serviços de nuvem, permitindo fácil acesso e organização dos dados coletados.
+
+- **Integração com Google Analytics e Facebook Pixel**
+  - **Análise de Tráfego e Comportamento**: Permite que os usuários rastreiem a performance de seus formulários e obtenham insights sobre o comportamento dos visitantes, ajudando na otimização de taxas de conversão.
 
 ### Segurança
 
