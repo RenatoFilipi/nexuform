@@ -230,3 +230,5 @@ Essas funcionalidades com IA oferecem ao **NebulaForm** um diferencial competiti
 ## Conclusão
 
 O **NebulaForm** é uma plataforma SaaS poderosa e flexível que combina facilidade de uso com funcionalidades avançadas suportadas por IA, permitindo aos usuários criar e analisar formulários de maneira eficiente. Com um modelo de negócios flexível e escalável, há potencial para gerar um fluxo de receita recorrente sólido enquanto oferece valor real aos clientes.
+
+Made by Renato Rosa
