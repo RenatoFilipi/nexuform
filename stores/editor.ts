@@ -33,7 +33,7 @@ const useEditorStore = create<FormStoreProps>((set) => ({
   setName: (value) => set({ name: value }),
   description: null,
   setDescription: (value) => set({ description: value }),
-  primaryColor: "",
+  primaryColor: "Slate",
   setPrimaryColor: (value) => set({ primaryColor: value }),
   submitLabel: "Submit",
   setSubmitLabel: (value) => set({ submitLabel: value }),

@@ -10,12 +10,6 @@ export const formList: FormItemProps[] = [
     responsesCount: 474,
   },
   {
-    id: "01abd5e5-ece5-4908-aad9-4815024ae4a5",
-    title: "Employee Survey",
-    status: "inactive",
-    responsesCount: 206,
-  },
-  {
     id: "d9dd8f26-dabc-4f4c-bac3-facb19d621a8",
     title: "Course Feedback",
     status: "draft",

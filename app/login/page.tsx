@@ -12,11 +12,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { EyeClosedIcon, EyeIcon } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const formSchema = z.object({
     email: z.string(),
     password: z.string(),
@@ -82,7 +86,23 @@ const Login = () => {
                       <FormItem>
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <Input type="password" {...field} />
+                          <div className="flex justify-center items-center gap-2">
+                            <Input
+                              type={showPassword ? "text" : "password"}
+                              {...field}
+                            />
+                            <Button
+                              type="button"
+                              variant={"ghost"}
+                              size={"icon"}
+                              onClick={() => setShowPassword(!showPassword)}>
+                              {showPassword ? (
+                                <EyeIcon className="w-5 h-5" />
+                              ) : (
+                                <EyeClosedIcon className="w-5 h-5" />
+                              )}
+                            </Button>
+                          </div>
                         </FormControl>
                       </FormItem>
                     )}
@@ -91,7 +111,7 @@ const Login = () => {
                 <div className="flex flex-col w-full gap-4">
                   <Link
                     href={"/reset-password"}
-                    className="text-sm hover:underline text-foreground/80 hover:text-info dark:hover:text-blue-500">
+                    className="text-sm hover:underline text-foreground/80 hover:text-info dark:hover:text-blue-500 w-fit">
                     Forgot password?
                   </Link>
                   <Button
