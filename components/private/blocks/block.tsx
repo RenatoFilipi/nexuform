@@ -46,7 +46,7 @@ const Block = (block: BlockProps) => {
       onPointerDown={startDrag}
       className="flex justify-between items-center w-full border px-2 shadow-none rounded">
       <div className="flex justify-center items-center gap-3">
-        <div className="flex justify-center items-center bg-foreground text-background dark:bg-primary/50 p-2 rounded">
+        <div className="flex justify-center items-center bg-foreground text-background p-2 rounded">
           {blockIcons[block.type]}
         </div>
         <div className="flex flex-col">

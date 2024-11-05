@@ -5,10 +5,45 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ColorProps } from "@/helpers/interfaces";
 import { BlockProps } from "@/models/form";
 
-const DropdownDesign = ({ block }: { block: BlockProps }) => {
+const design: ColorProps[] = [
+  { label: "Slate", tw_class: "focus-visible:ring-slate-500" },
+  { label: "Gray", tw_class: "focus-visible:ring-gray-500" },
+  { label: "Zinc", tw_class: "focus-visible:ring-zinc-500" },
+  { label: "Neutral", tw_class: "focus-visible:ring-neutral-500" },
+  { label: "Stone", tw_class: "focus-visible:ring-stone-500" },
+  { label: "Red", tw_class: "focus-visible:ring-red-500" },
+  { label: "Orange", tw_class: "focus-visible:ring-orange-500" },
+  { label: "Amber", tw_class: "focus-visible:ring-amber-500" },
+  { label: "Yellow", tw_class: "focus-visible:ring-yellow-500" },
+  { label: "Lime", tw_class: "focus-visible:ring-lime-500" },
+  { label: "Green", tw_class: "focus-visible:ring-green-500" },
+  { label: "Emerald", tw_class: "focus-visible:ring-emerald-500" },
+  { label: "Teal", tw_class: "focus-visible:ring-teal-500" },
+  { label: "Cyan", tw_class: "focus-visible:ring-cyan-500" },
+  { label: "Sky", tw_class: "focus-visible:ring-sky-500" },
+  { label: "Blue", tw_class: "focus-visible:ring-blue-500" },
+  { label: "Indigo", tw_class: "focus-visible:ring-indigo-500" },
+  { label: "Violet", tw_class: "focus-visible:ring-violet-500" },
+  { label: "Purple", tw_class: "focus-visible:ring-purple-500" },
+  { label: "Fuchsia", tw_class: "focus-visible:ring-fuchsia-500" },
+  { label: "Pink", tw_class: "focus-visible:ring-pink-500" },
+  { label: "Rose", tw_class: "focus-visible:ring-rose-500" },
+];
+
+const DropdownDesign = ({
+  block,
+  primaryColor,
+}: {
+  block: BlockProps;
+  primaryColor: string;
+}) => {
   const { id, options, required, name, description } = block;
+
+  const currentColor =
+    design.find((x) => x.label === primaryColor) ?? design[0];
 
   return (
     <div className="flex flex-col gap-4">
@@ -20,7 +55,7 @@ const DropdownDesign = ({ block }: { block: BlockProps }) => {
       </div>
       {options && options.length >= 1 && (
         <Select>
-          <SelectTrigger>
+          <SelectTrigger className={`${currentColor.tw_class}`}>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
