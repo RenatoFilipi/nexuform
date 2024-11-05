@@ -81,7 +81,7 @@ const Editor = () => {
             blocks={blocks}
           />
         </div>
-        <div className="flex sm:justify-end justify-center items-center border-t sm:border-transparent sm:p-4 p-2 sm:absolute bottom-0 right-4">
+        <div className="flex sm:justify-end justify-center items-center sm:border-transparent sm:p-4 p-2">
           <Button
             variant={"outline"}
             size={"sm"}
@@ -105,7 +105,7 @@ const Editor = () => {
 
   return (
     <div className="flex flex-col h-full flex-1 gap-4">
-      <div className="fixed top-0 w-full border-b">
+      <div className="fixed top-0 w-full">
         <div className="h-14 flex justify-between items-center relative w-full top-0 bg-background sm:px-3 px-2">
           <div className="flex justify-center items-center gap-2">
             <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
@@ -202,7 +202,7 @@ const Editor = () => {
         </div>
       )}
       {blocks.length >= 1 && (
-        <div className="mt-24 px-6 mb-4 flex flex-1 w-full gap-4 overflow-y-auto">
+        <div className="sm:mt-24 mt-16 sm:px-6 px-2 mb-4 flex flex-1 w-full gap-4 overflow-y-auto">
           <div className="flex overflow-y-auto w-full">
             <Reorder.Group
               values={blocks}
@@ -223,7 +223,7 @@ const Editor = () => {
               ))}
             </Reorder.Group>
           </div>
-          <Card className="hidden sm:flex w-full shadow-none border-2 border-dashed overflow-y-auto">
+          <Card className="hidden sm:flex w-full flex-col shadow-none border-2 border-dashed overflow-y-auto">
             <FormWrapper
               mode="preview"
               name={name}
@@ -232,6 +232,24 @@ const Editor = () => {
               submitLabel={submitLabel}
               blocks={blocks}
             />
+            <div className="flex justify-center items-center mb-6">
+              <Button
+                variant={"outline"}
+                size={"sm"}
+                className="flex justify-center items-center gap-2 w-fit"
+                asChild>
+                <Link
+                  href={"/"}
+                  className="flex justify-center items-center gap-1 text-base font-semibold">
+                  <span>
+                    Powered by{" "}
+                    <span className="font-bold bg-gradient-to-r from-[#FFA14D] via-[#F5536B] to-[#0D91F6] inline-block text-transparent bg-clip-text">
+                      Nebulaform
+                    </span>
+                  </span>
+                </Link>
+              </Button>
+            </div>
           </Card>
         </div>
       )}

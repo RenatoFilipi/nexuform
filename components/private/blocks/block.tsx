@@ -57,23 +57,21 @@ const Block = (block: BlockProps) => {
           </div>
         </div>
       </div>
-      <div className="flex justify-center items-center gap-2">
+      <div className="flex justify-center items-center gap-0">
         <BlockSettings block={block}>
           <Button
-            variant={"outline"}
+            variant={"ghost"}
             size={"sm"}
             className="flex justify-center items-center gap-2">
             <Settings2Icon className="w-4 h-4" />
-            <span className="hidden sm:flex">Settings</span>
           </Button>
         </BlockSettings>
         <Button
           onClick={() => removeBlock(block.id)}
-          variant={"outline"}
+          variant={"ghost"}
           size={"sm"}
           className="hover:text-red-500 flex justify-center items-center gap-2">
           <TrashIcon className="w-4 h-4" />
-          <span className="hidden sm:flex">Delete</span>
         </Button>
       </div>
     </Card>
