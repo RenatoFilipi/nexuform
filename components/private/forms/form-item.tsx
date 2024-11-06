@@ -49,7 +49,7 @@ const FormItem = ({ title, status, responsesCount, id }: FormItemProps) => {
         {BadgeColor(status)}
       </div>
       <div className="flex justify-between items-center w-full">
-        <span className="text-foreground/80 text-sm">
+        <span className="text-foreground/80 text-xs">
           {responsesDisplay(responsesCount)}
         </span>
         <div className="flex justify-center items-center gap-3">

@@ -1,13 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { Card } from "@/components/ui/card";
 
 const Analytics = () => {
-  const [items, setItems] = useState([0, 1, 2, 3]);
-
   return (
-    <div className="flex flex-col h-full gap-10 my-6 mx-3 sm:mx-12 overflow-y-auto">
-      debugs
+    <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-14">
+      <div className="flex flex-col gap-4">
+        <h1 className="text-xl font-semibold">Analytics</h1>
+        <div>
+          <Card className="">analytics card</Card>
+        </div>
+      </div>
     </div>
   );
 };
