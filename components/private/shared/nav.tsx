@@ -15,8 +15,10 @@ import { formStatus, setState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
 import {
   ChartAreaIcon,
+  ChartColumnIcon,
   ChevronsUpDownIcon,
   CreditCardIcon,
+  FileIcon,
   HouseIcon,
   LogOutIcon,
   Menu,
@@ -47,13 +49,13 @@ const navLinks = [
     id: 1,
     name: "Forms",
     path: "/dashboard/forms",
-    icon: <HouseIcon className="w-4 h-4 mr-2" />,
+    icon: <FileIcon className="w-4 h-4 mr-2" />,
   },
   {
     id: 2,
     name: "Analytics",
     path: "/dashboard/analytics",
-    icon: <ChartAreaIcon className="w-4 h-4 mr-2" />,
+    icon: <ChartColumnIcon className="w-4 h-4 mr-2" />,
   },
 ];
 const Nav = () => {
@@ -125,6 +127,7 @@ const Nav = () => {
                 {isActive(link.path) && (
                   <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>
                 )}
+                {link.icon}
                 {link.name}
               </Link>
             ))}
@@ -163,6 +166,7 @@ const Nav = () => {
               {isActive(link.path) && (
                 <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>
               )}
+              {link.icon}
               {link.name}
             </Link>
           ))}
@@ -201,13 +205,14 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
               className={`${
                 isActive(link.path) &&
                 "bg-secondary text-background hover:bg-secondary/80"
-              } p-2 border hover:bg-foreground/5 text-sm`}>
+              } p-2 border hover:bg-foreground/5 text-sm flex justify-start items-center`}>
+              {link.icon}
               {link.name}
             </Link>
           ))}
         </div>
         <div className="flex flex-col w-full gap-2">
-          <div className="flex justify-between items-center px-2 py-2">
+          <div className="flex justify-between items-center px-2">
             <span className="text-sm flex items-center justify-center">
               Theme
             </span>
