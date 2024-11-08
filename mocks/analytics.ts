@@ -1,8 +1,8 @@
 import { AnalyticsProps } from "@/models/analytics";
 
 export const AnalyticsContent: AnalyticsProps = {
-  forms_total: 0,
-  submissions_total: 0,
+  forms_total: 2,
+  submissions_total: 791,
   forms: [
     {
       id: "01b1c3c1-0993-4ba5-a53f-604b7708f6e4",
