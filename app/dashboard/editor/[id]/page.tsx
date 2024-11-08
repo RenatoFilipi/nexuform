@@ -116,7 +116,9 @@ const Editor = () => {
             {name === "".trim() ? (
               <LoaderIcon className="animate-spin w-4 h-4" />
             ) : (
-              <span className="text-foreground/80 text-sm">{name}</span>
+              <span className="text-foreground/80 text-sm font-semibold">
+                {name}
+              </span>
             )}
           </div>
           <div className="hidden sm:flex justify-center items-center gap-4">

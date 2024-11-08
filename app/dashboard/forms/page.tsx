@@ -38,7 +38,7 @@ const Forms = () => {
           <div className="flex flex-col justify-center items-center gap-3">
             <FileIcon className="w-6 h-6 text-foreground" />
             <div className="flex flex-col justify-center items-center">
-              <span className="font-semibold">No form to show</span>
+              <span className="font-semibold">No form to show.</span>
               <span className="text-foreground/80 text-sm">
                 Start by creating your first form.
               </span>
