@@ -2,7 +2,7 @@
 
 import Brand from "@/components/core/brand";
 import AddBlock from "@/components/private/blocks/add-block";
-import Block from "@/components/private/blocks/block";
+import BlocksGroup from "@/components/private/editor/blocks-group";
 import FormDesign from "@/components/private/forms/form-design";
 import FormSettings from "@/components/private/forms/form-settings";
 import FormWrapper from "@/components/private/forms/form-wrapper";
@@ -13,16 +13,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { dashboardEditorState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
 import useEditorStore from "@/stores/editor";
 import { useQuery } from "@tanstack/react-query";
-import { Reorder, useDragControls } from "framer-motion";
 import {
   BlocksIcon,
   ChevronLeftIcon,
   CogIcon,
-  GripVerticalIcon,
   LoaderIcon,
   PaintbrushIcon,
   PlusIcon,
@@ -34,19 +31,10 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const Editor = () => {
-  const {
-    blocks,
-    setName,
-    name,
-    setBlocks,
-    description,
-    primaryColor,
-    submitLabel,
-  } = useEditorStore();
+  const { blocks, setName, name, description, primaryColor, submitLabel } =
+    useEditorStore();
   const pathname = usePathname();
-  const controls = useDragControls();
   const [isPreview, setIsPreview] = useState(false);
-  const [state] = useState<dashboardEditorState>("no_block");
   const currentFormId = pathname.split("/")[3];
   const currentForm = formList.find((x) => x.id === currentFormId);
 
@@ -205,27 +193,8 @@ const Editor = () => {
       )}
       {blocks.length >= 1 && (
         <div className="sm:mt-24 mt-16 sm:px-6 px-2 mb-4 flex flex-1 w-full gap-4 overflow-y-auto">
-          <div className="flex overflow-y-auto w-full">
-            <Reorder.Group
-              values={blocks}
-              onReorder={setBlocks}
-              className="w-full flex flex-col items-center justify-start gap-2">
-              {blocks.map((block) => (
-                <Reorder.Item
-                  key={block.id}
-                  value={block}
-                  dragListener={false}
-                  dragControls={controls}
-                  className="flex justify-center items-center gap-2 w-full">
-                  <Button variant={"ghost"} size={"icon"} className="h-full">
-                    <GripVerticalIcon />
-                  </Button>
-                  <Block {...block} />
-                </Reorder.Item>
-              ))}
-            </Reorder.Group>
-          </div>
-          <Card className="hidden sm:flex w-full flex-col shadow-none border-2 border-dashed overflow-y-auto">
+          <BlocksGroup blocks={blocks} />
+          <Card className="hidden sm:flex w-full flex-col shadow-none overflow-y-auto">
             <FormWrapper
               mode="preview"
               name={name}

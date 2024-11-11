@@ -13,12 +13,12 @@ const Analytics = () => {
         <div className="flex flex-col gap-4">
           <div className="grid sm:grid-cols-2 gap-4">
             <AnalyticsCard
-              icon={<FileIcon className="text-primary w-6 h-6" />}
+              icon={<FileIcon className="text-background w-6 h-6" />}
               title="Total Forms"
               value={AnalyticsContent.forms_total.toString()}
             />
             <AnalyticsCard
-              icon={<BookCheckIcon className="text-primary w-6 h-6" />}
+              icon={<BookCheckIcon className="text-background w-6 h-6" />}
               title="Total Submissions"
               value={AnalyticsContent.submissions_total.toString()}
             />
