@@ -1,6 +1,6 @@
 "use client";
 
-import Brand from "@/components/core/brand";
+import Brand2 from "@/components/core/brand-2";
 import { Badge2 } from "@/components/ui/badge2";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Label } from "@/components/ui/label";
@@ -98,16 +98,18 @@ const Nav = () => {
       <div className="border-b h-14 flex items-center px-2 sm:px-6 justify-between z-10 bg-background fixed w-full">
         <div className="flex justify-center items-center gap-1 h-full">
           <div className="flex justify-center items-center gap-1">
-            <Link href={"/dashboard"}>
-              <Brand type="logo" className="h-7 fill-foreground" />
-            </Link>
+            <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
+              <Link href={"/dashboard/forms"}>
+                <Brand2 type="logo" className="h-7 fill-foreground" />
+              </Link>
+            </Button>
             {currentForm !== undefined && (
               <SelectForm>
                 <Button
                   variant={"ghost"}
                   size={"sm"}
                   className="flex justify-center items-center gap-2">
-                  <div className="flex justify-center items-center gap-1">
+                  <div className="flex justify-center items-center gap-2">
                     <span className="text-sm">{currentForm.title}</span>
                     {BadgeColor(currentForm.status)}
                   </div>
@@ -149,11 +151,13 @@ const Nav = () => {
   // app
   return (
     <div className="border-b h-14 flex items-center px-2 sm:px-6 justify-between z-10 bg-background fixed w-full">
-      <div className="flex justify-center items-center gap-6 h-full">
+      <div className="flex justify-center items-center gap-3 h-full">
         <div className="flex justify-center items-center gap-4">
-          <Link href={"/dashboard"}>
-            <Brand type="logo" className="h-7 fill-foreground" />
-          </Link>
+          <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
+            <Link href={"/dashboard/forms"}>
+              <Brand2 type="logo" className="h-7 fill-foreground" />
+            </Link>
+          </Button>
         </div>
         <div className="hidden sm:flex justify-center items-center gap-0 h-full">
           {navLinks.map((link) => (

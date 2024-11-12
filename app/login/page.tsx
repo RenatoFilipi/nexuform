@@ -1,6 +1,6 @@
 "use client";
 
-import Brand from "@/components/core/brand";
+import Brand2 from "@/components/core/brand-2";
 import { ModeToggle } from "@/components/core/mode-toggle";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,7 +40,7 @@ const Login = () => {
     <div className="border min-h-screen flex">
       <div className="flex-1 flex justify-center items-center w-full relative">
         <Link href={"/"} className="fixed top-6 flex sm:hidden">
-          <Brand type="logo" className="h-7 fill-foreground" />
+          <Brand2 type="logo" className="h-8 fill-foreground" />
         </Link>
         <div className="fixed top-5 left-5 hidden sm:flex gap-2">
           <ModeToggle />
@@ -127,8 +127,8 @@ const Login = () => {
           </Form>
         </div>
       </div>
-      <div className="flex-1 sm:flex hidden justify-center items-center w-full relative bg-gradient-to-r from-[#FFA14D] via-[#F5536B] to-[#0D91F6]">
-        <Brand type="logo_text" className="h-16 fill-black" />
+      <div className="flex-1 sm:flex hidden justify-center items-center w-full relative bg-primary">
+        <Brand2 type="logo_text" className="h-16 fill-black" />
       </div>
     </div>
   );

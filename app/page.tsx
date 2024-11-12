@@ -1,4 +1,4 @@
-import Brand from "@/components/core/brand";
+import Brand2 from "@/components/core/brand-2";
 import ModeToggle2 from "@/components/core/mode-toggle2";
 import ShineBorder from "@/components/magicui/shine-border";
 import Nav from "@/components/public/nav";
@@ -10,9 +10,9 @@ import Link from "next/link";
 const Home = () => {
   return (
     <div className="min-h-screen flex flex-col relative">
-      <div className="flex fixed top-0 w-full justify-between sm:px-5 px-3 h-14 bg-background/80 z-10 backdrop-blur-md items-center">
+      <div className="flex fixed top-0 w-full justify-between sm:justify-around sm:px-5 px-3 h-14 bg-background/80 z-10 backdrop-blur-md items-center">
         <Link href={"/"} className="flex justify-center items-center">
-          <Brand type="logo_text" className="h-7 fill-foreground" />
+          <Brand2 type="logo_text" className="h-7 fill-foreground" />
         </Link>
         <div className="hidden sm:flex justify-center items-center gap-4">
           <Button variant={"outline"} size={"sm"} asChild>
@@ -35,9 +35,7 @@ const Home = () => {
           <div className="flex flex-col justify-center items-center w-full text-center gap-6">
             <h1 className="font-bold text-3xl sm:text-6xl max-w-[43.5rem]">
               Streamline Feedback With{" "}
-              <span className="bg-gradient-to-r from-[#FFA14D] via-[#F5536B] to-[#0D91F6] inline-block text-transparent bg-clip-text">
-                Intuitive Forms.
-              </span>
+              <span className="text-primary">Intuitive Forms.</span>
             </h1>
             <p className="max-w-xl text-base font-normal text-foreground/80">
               Transform Your Business Landscape through Strategic
@@ -57,7 +55,7 @@ const Home = () => {
         <div className="mb-20">
           <ShineBorder
             className="relative rounded-lg border"
-            color={["#FFA14D", "#F5536B", "#0D91F6"]}>
+            color={["#89FF4D", "#89FF4D", "#89FF4D"]}>
             <Image
               alt="hero preview feature"
               src={"/dash.webp"}

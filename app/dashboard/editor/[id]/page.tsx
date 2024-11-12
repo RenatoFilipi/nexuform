@@ -1,6 +1,6 @@
 "use client";
 
-import Brand from "@/components/core/brand";
+import Brand2 from "@/components/core/brand-2";
 import AddBlock from "@/components/private/blocks/add-block";
 import BlocksGroup from "@/components/private/editor/blocks-group";
 import FormDesign from "@/components/private/forms/form-design";
@@ -94,11 +94,11 @@ const Editor = () => {
   return (
     <div className="flex flex-col h-full flex-1 gap-4">
       <div className="fixed top-0 w-full">
-        <div className="h-14 flex justify-between items-center relative w-full top-0 bg-background sm:px-3 px-2">
+        <div className="h-14 flex justify-between items-center relative w-full top-0 bg-background sm:px-6 px-2">
           <div className="flex justify-center items-center gap-2">
             <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
               <Link href={"/dashboard/forms"}>
-                <Brand type="logo" className="h-7 fill-foreground" />
+                <Brand2 type="logo" className="h-7 fill-foreground" />
               </Link>
             </Button>
             {name === "".trim() ? (
