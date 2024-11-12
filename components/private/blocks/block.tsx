@@ -44,9 +44,7 @@ const Block = (block: BlockProps) => {
           {/* {block.required && <Badge2 variant={"red"}>Required</Badge2>} */}
         </div>
         <div className="flex flex-col w-full">
-          <span className="font-semibold sm:truncate sm:w-[360px]">
-            {block.name}
-          </span>
+          <span className="font-semibold sm:truncate">{block.name}</span>
         </div>
       </div>
       <div className="flex justify-center items-center gap-0">

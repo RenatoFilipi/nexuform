@@ -2,23 +2,14 @@
 
 import Brand2 from "@/components/core/brand-2";
 import AddBlock from "@/components/private/blocks/add-block";
-import BlocksGroup from "@/components/private/editor/blocks-group";
 import FormDesign from "@/components/private/forms/form-design";
 import FormSettings from "@/components/private/forms/form-settings";
 import FormWrapper from "@/components/private/forms/form-wrapper";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { formList } from "@/mocks/forms";
 import useEditorStore from "@/stores/editor";
 import { useQuery } from "@tanstack/react-query";
 import {
-  BlocksIcon,
-  CogIcon,
   LoaderIcon,
   PaintbrushIcon,
   PlusIcon,
@@ -90,7 +81,7 @@ const Editor = () => {
   }
 
   return (
-    <div className="flex flex-col h-full flex-1 gap-4 bg-foreground/5">
+    <div className="flex flex-col h-full flex-1 gap-4">
       <div className="fixed h-14 flex justify-between items-center w-full top-0 bg-background border-b sm:px-6 px-2 z-20">
         <div className="flex justify-center items-center gap-2">
           <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
@@ -107,69 +98,61 @@ const Editor = () => {
           )}
         </div>
         <div className="hidden sm:flex justify-center items-center gap-4">
-          <AddBlock>
-            <Button variant={"outline"} size={"sm"}>
-              <BlocksIcon className="w-4 h-4 mr-2" />
-              Blocks
-            </Button>
-          </AddBlock>
-          <FormDesign>
-            <Button variant={"outline"} size={"sm"}>
-              <PaintbrushIcon className="w-4 h-4 mr-2" />
-              Design
-            </Button>
-          </FormDesign>
-          <FormSettings>
-            <Button variant={"outline"} size={"sm"}>
-              <Settings2Icon className="w-4 h-4 mr-2" />
-              Settings
-            </Button>
-          </FormSettings>
           <Button variant={"secondary"} size={"sm"}>
             Save
           </Button>
         </div>
-        <div className="flex sm:hidden justify-center items-center">
+        <div className="flex sm:hidden justify-center items-center gap-2">
           <Button
             onClick={() => setIsPreview(true)}
             variant={"ghost"}
-            size={"icon"}>
+            size={"sm"}>
             <ViewIcon className="w-6 h-6" />
           </Button>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant={"ghost"} size={"icon"}>
-                <CogIcon className="w-6 h-6" />
+          <Button variant={"secondary"} size={"sm"}>
+            Save
+          </Button>
+        </div>
+      </div>
+      <div className="mt-14 flex flex-1">
+        <div className="sm:w-[360px] w-full flex flex-col p-4 gap-4">
+          <div className="flex flex-col gap-4">
+            <AddBlock>
+              <Button variant={"secondary"} size={"sm"} className="w-full">
+                <PlusIcon className="w-4 h-4 mr-2" />
+                Add New Block
               </Button>
-            </PopoverTrigger>
-            <PopoverContent className="flex flex-col w-fit gap-1 p-1 mr-2">
-              <AddBlock>
-                <Button variant={"ghost"} size={"sm"}>
-                  <BlocksIcon className="w-4 h-4 mr-2" />
-                  Blocks
-                </Button>
-              </AddBlock>
+            </AddBlock>
+            <div className="flex justify-center items-center gap-4">
               <FormDesign>
-                <Button variant={"ghost"} size={"sm"}>
+                <Button variant={"outline"} size={"sm"} className="flex-1">
                   <PaintbrushIcon className="w-4 h-4 mr-2" />
                   Design
                 </Button>
               </FormDesign>
               <FormSettings>
-                <Button variant={"ghost"} size={"sm"}>
+                <Button variant={"outline"} size={"sm"} className="flex-1">
                   <Settings2Icon className="w-4 h-4 mr-2" />
                   Settings
                 </Button>
               </FormSettings>
-              <Button variant={"secondary"} size={"sm"}>
-                Save
-              </Button>
-            </PopoverContent>
-          </Popover>
+            </div>
+          </div>
+          {blocks.length <= 0 && (
+            <div className="flex flex-1 justify-center items-center">
+              <span className="text-foreground/80 text-sm">
+                No block added.
+              </span>
+            </div>
+          )}
+        </div>
+        <div className="hidden sm:flex justify-center items-center flex-1 bg-foreground/5">
+          <span className="text-sm">No blocks to preview.</span>
         </div>
       </div>
-      {blocks.length <= 0 && (
-        <div className="flex flex-1 overflow-y-auto justify-center items-center sm:px-3 px-2 mt-14 relative">
+
+      {/* {blocks.length <= 0 && (
+        <div className="flex flex-1 overflow-y-auto justify-center items-center sm:px-3 px-2 mt-14">
           <div className="flex flex-col justify-center items-center gap-4">
             <BlocksIcon className="w-8 h-8" />
             <div className="flex flex-col justify-center items-center gap-0">
@@ -223,7 +206,7 @@ const Editor = () => {
             </Card>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
