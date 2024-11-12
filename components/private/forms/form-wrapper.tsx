@@ -128,7 +128,7 @@ const FormWrapper = ({
   return (
     <div className="flex flex-col w-full gap-6 p-2 justify-start items-center overflow-y-auto">
       <div className="flex flex-col justify-center items-center w-full gap-1  px-2 sm:pt-6">
-        <h1 className="font-bold text-3xl">{name}</h1>
+        <h1 className="font-bold text-2xl">{name}</h1>
         {description && (
           <p className="text-sm text-foreground/80">{description}</p>
         )}

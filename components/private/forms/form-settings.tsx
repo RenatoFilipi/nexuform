@@ -26,21 +26,21 @@ const statusList: statusProps[] = [
     label: "Draft",
     description:
       "The form is currently being created or edited and is not yet available for users to fill out.",
-    icon: <BookDashedIcon className="w-5 h-5 text-primary" />,
+    icon: <BookDashedIcon className="w-5 h-5" />,
   },
   {
     status: "published",
     label: "Published",
     description:
       "The form is live and available for users to fill out and submit.",
-    icon: <GlobeIcon className="w-5 h-5 text-primary" />,
+    icon: <GlobeIcon className="w-5 h-5" />,
   },
   {
     status: "inactive",
     label: "Inactive",
     description:
       "The form is no longer active and cannot be filled out or submitted by users.",
-    icon: <PenOffIcon className="w-5 h-5 text-primary" />,
+    icon: <PenOffIcon className="w-5 h-5" />,
   },
 ];
 

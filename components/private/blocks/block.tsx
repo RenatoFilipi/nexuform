@@ -35,42 +35,38 @@ const Block = (block: BlockProps) => {
   const { removeBlock } = useEditorStore();
 
   return (
-    <div className="w-full flex justify-center items-center gap-1">
-      <Card
-        style={{ touchAction: "none" }}
-        className="flex justify-between items-center w-full border px-2 shadow-none rounded">
-        <div className="flex justify-center items-center gap-3">
-          <div className="flex justify-center items-center bg-foreground text-background p-2 rounded">
+    <Card className="flex justify-between items-center shadow-none rounded p-0 w-full">
+      <div className="flex justify-center items-center gap-3 w-full">
+        <div className="flex justify-center items-center gap-2">
+          <div className="flex justify-center items-center bg-foreground/20 p-2 rounded relative rounded-r-none">
             {blockIcons[block.type]}
           </div>
-          <div className="flex flex-col">
-            <span className="font-semibold sm:truncate">{block.name}</span>
-            <div>
-              <span className="text-xs">{block.type}</span>
-              {block.required && <span className="text-red-500">*</span>}
-            </div>
-          </div>
+          {/* {block.required && <Badge2 variant={"red"}>Required</Badge2>} */}
         </div>
-        <div className="flex justify-center items-center gap-0">
-          <BlockSettings block={block}>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="flex justify-center items-center gap-2">
-              <Settings2Icon className="w-4 h-4" />
-            </Button>
-          </BlockSettings>
+        <div className="flex flex-col w-full">
+          <span className="font-semibold sm:truncate sm:w-[360px]">
+            {block.name}
+          </span>
+        </div>
+      </div>
+      <div className="flex justify-center items-center gap-0">
+        <BlockSettings block={block}>
           <Button
-            onClick={() => removeBlock(block.id)}
             variant="ghost"
             size="sm"
-            className="hover:text-red-500 flex justify-center items-center gap-2">
-            <TrashIcon className="w-4 h-4" />
+            className="flex justify-center items-center gap-2">
+            <Settings2Icon className="w-4 h-4" />
           </Button>
-        </div>
-      </Card>
-      <DragButton />
-    </div>
+        </BlockSettings>
+        <Button
+          onClick={() => removeBlock(block.id)}
+          variant="ghost"
+          size="sm"
+          className="hover:text-red-500 flex justify-center items-center gap-2">
+          <TrashIcon className="w-4 h-4" />
+        </Button>
+      </div>
+    </Card>
   );
 };
 

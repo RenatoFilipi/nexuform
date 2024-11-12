@@ -1,5 +1,5 @@
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { minWidth640 } from "@/helpers/constants";
 import { setState } from "@/helpers/types";
 import { BlockProps } from "@/models/form";
@@ -27,12 +27,12 @@ const BlockSettings = ({
 
   if (isDesktop) {
     return (
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild>{children}</SheetTrigger>
-        <SheetContent>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogContent>
           <Body block={block} setState={setOpen} />
-        </SheetContent>
-      </Sheet>
+        </DialogContent>
+      </Dialog>
     );
   }
 
