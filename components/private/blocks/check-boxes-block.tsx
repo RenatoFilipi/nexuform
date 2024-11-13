@@ -1,5 +1,6 @@
 "use client";
 
+import { Badge2 } from "@/components/ui/badge2";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,7 +22,7 @@ const CheckboxesBlock = ({
   setState: setState<boolean>;
 }) => {
   const { id } = block;
-  const { updateBlock } = useEditorStore();
+  const { updateBlock, removeBlock } = useEditorStore();
   const [localTags, setLocalTags] = useState<Tag[]>(block.options ?? []);
   const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null);
 
@@ -40,8 +41,11 @@ const CheckboxesBlock = ({
   };
 
   return (
-    <div className="h-full flex flex-col gap-8 overflow-y-auto">
-      <h1 className="text-xl font-semibold">Settings</h1>
+    <div className="h-full flex flex-col gap-8 pt-4 overflow-y-auto">
+      <div className="flex justify-start items-center gap-3">
+        <h1 className="text-xl font-semibold">Settings</h1>
+        <Badge2 variant={"indigo"}>Check boxes</Badge2>
+      </div>
       <div className="h-full flex flex-col gap-4 overflow-y-auto">
         <div className="grid gap-1.5">
           <Label htmlFor="name">Name</Label>
@@ -104,7 +108,16 @@ const CheckboxesBlock = ({
           />
         </div>
       </div>
-      <div className="flex justify-end items-center">
+      <div className="flex justify-between items-center">
+        <Button
+          onClick={() => {
+            removeBlock(block.id);
+            setState(false);
+          }}
+          variant={"destructive_outline"}
+          size={"sm"}>
+          Remove Block
+        </Button>
         <Button
           onClick={() => setState(false)}
           variant={"outline"}

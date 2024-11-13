@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { minWidth640 } from "@/helpers/constants";
 import { formStatus, setState } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
-import { BookDashedIcon, GlobeIcon, PenOffIcon } from "lucide-react";
+import { BookDashedIcon, GlobeIcon, PencilOffIcon } from "lucide-react";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
@@ -41,7 +41,7 @@ const statusList: statusProps[] = [
     label: "Inactive",
     description:
       "The form is no longer active and cannot be filled out or submitted by users.",
-    icon: <PenOffIcon className="w-5 h-5" />,
+    icon: <PencilOffIcon className="w-5 h-5" />,
   },
 ];
 

@@ -14,7 +14,6 @@ import {
   Settings2Icon,
   StarIcon,
   TextIcon,
-  TrashIcon,
 } from "lucide-react";
 import BlockSettings from "./block-settings";
 
@@ -55,13 +54,6 @@ const Block = (block: BlockProps) => {
             <Settings2Icon className="w-4 h-4" />
           </Button>
         </BlockSettings>
-        <Button
-          onClick={() => removeBlock(block.id)}
-          variant="ghost"
-          size="icon"
-          className="hover:text-red-500 flex justify-center items-center gap-2">
-          <TrashIcon className="w-4 h-4" />
-        </Button>
       </div>
     </Card>
   );
