@@ -456,7 +456,7 @@ const SelectFormBody = ({ setState }: { setState: setState<boolean> }) => {
         </Button>
         <CreateForm>
           <Button variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
-            New form
+            New Form
           </Button>
         </CreateForm>
       </div>

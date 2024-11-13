@@ -63,7 +63,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
   return (
     <div className="flex flex-col gap-4 pt-4 sm:pt-0">
       <div className="flex flex-col gap-1 justify-center items-start">
-        <h1 className="text-xl font-semibold">Create form</h1>
+        <h1 className="text-xl font-semibold">Create Form</h1>
         <p className="text-foreground/80 text-sm">
           Start by giving your form a name.
         </p>
@@ -98,7 +98,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
               variant={"secondary"}
               size={"sm"}
               className="w-full sm:w-fit">
-              Create form
+              Create Form
             </Button>
           </div>
         </form>

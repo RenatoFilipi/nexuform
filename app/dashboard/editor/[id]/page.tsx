@@ -14,7 +14,6 @@ import {
   PaintbrushIcon,
   PlusIcon,
   Settings2Icon,
-  ViewIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -105,9 +104,9 @@ const Editor = () => {
         <div className="flex sm:hidden justify-center items-center gap-2">
           <Button
             onClick={() => setIsPreview(true)}
-            variant={"ghost"}
+            variant={"outline"}
             size={"sm"}>
-            <ViewIcon className="w-6 h-6" />
+            Preview
           </Button>
           <Button variant={"secondary"} size={"sm"}>
             Save

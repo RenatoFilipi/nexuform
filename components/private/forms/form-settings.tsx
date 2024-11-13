@@ -1,5 +1,6 @@
 "use client";
 
+import { Alert2, AlertDescription2 } from "@/components/ui/alert2";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -52,7 +53,7 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="min-w-[650px]">
+        <DialogContent className="min-w-[690px]">
           <Body setState={setOpen} />
         </DialogContent>
       </Dialog>
@@ -116,9 +117,11 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
                 );
               })}
             </div>
-            <p className="text-sm">
-              {statusList.find((x) => x.status === store.status)?.description}
-            </p>
+            <Alert2 variant={"info"}>
+              <AlertDescription2>
+                {statusList.find((x) => x.status === store.status)?.description}
+              </AlertDescription2>
+            </Alert2>
           </div>
         </div>
       </div>
