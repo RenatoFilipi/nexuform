@@ -2,6 +2,7 @@
 
 import Brand2 from "@/components/core/brand-2";
 import AddBlock from "@/components/private/blocks/add-block";
+import Block from "@/components/private/blocks/block";
 import FormDesign from "@/components/private/forms/form-design";
 import FormSettings from "@/components/private/forms/form-settings";
 import FormWrapper from "@/components/private/forms/form-wrapper";
@@ -114,7 +115,7 @@ const Editor = () => {
         </div>
       </div>
       <div className="mt-14 flex flex-1">
-        <div className="sm:w-[360px] w-full flex flex-col p-4 gap-4">
+        <div className="sm:w-[360px] w-full flex flex-col p-4 gap-6">
           <div className="flex flex-col gap-4">
             <AddBlock>
               <Button variant={"secondary"} size={"sm"} className="w-full">
@@ -144,68 +145,18 @@ const Editor = () => {
               </span>
             </div>
           )}
+          {blocks.length >= 1 && (
+            <div className="flex justify-start flex-col gap-2 overflow-y-auto">
+              {blocks.map((block) => {
+                return <Block key={block.id} {...block} />;
+              })}
+            </div>
+          )}
         </div>
         <div className="hidden sm:flex justify-center items-center flex-1 bg-foreground/5">
           <span className="text-sm">No blocks to preview.</span>
         </div>
       </div>
-
-      {/* {blocks.length <= 0 && (
-        <div className="flex flex-1 overflow-y-auto justify-center items-center sm:px-3 px-2 mt-14">
-          <div className="flex flex-col justify-center items-center gap-4">
-            <BlocksIcon className="w-8 h-8" />
-            <div className="flex flex-col justify-center items-center gap-0">
-              <span className="font-semibold">This form has no blocks.</span>
-              <p className="text-foreground/80 text-center">
-                Start designing your form by adding customizable blocks.
-              </p>
-            </div>
-            <AddBlock>
-              <Button variant={"secondary"} size={"sm"} className="">
-                <PlusIcon className=" w-4 h-4 mr-2" />
-                Add block
-              </Button>
-            </AddBlock>
-          </div>
-        </div>
-      )}
-      {blocks.length >= 1 && (
-        <div className="sm:mt-24 mt-16 sm:px-6 px-2 mb-4 lg:gap-16 sm:gap-4 overflow-y-auto h-full flex z-10">
-          <div className="sm:w-[500px] w-full">
-            <BlocksGroup blocks={blocks} />
-          </div>
-          <div className="hidden sm:flex flex-1">
-            <Card className="flex w-full flex-col shadow-none overflow-y-auto">
-              <FormWrapper
-                mode="preview"
-                name={name}
-                description={description}
-                primaryColor={primaryColor}
-                submitLabel={submitLabel}
-                blocks={blocks}
-              />
-              <div className="flex justify-center items-center mb-6">
-                <Button
-                  variant={"outline"}
-                  size={"sm"}
-                  className="flex justify-center items-center gap-2 w-fit"
-                  asChild>
-                  <Link
-                    href={"/"}
-                    className="flex justify-center items-center gap-1 text-base font-semibold">
-                    <span>
-                      Powered by{" "}
-                      <span className="font-bold bg-gradient-to-r from-[#FFA14D] via-[#F5536B] to-[#0D91F6] inline-block text-transparent bg-clip-text">
-                        Nebulaform
-                      </span>
-                    </span>
-                  </Link>
-                </Button>
-              </div>
-            </Card>
-          </div>
-        </div>
-      )} */}
     </div>
   );
 };
