@@ -33,6 +33,7 @@ interface addBlockProps {
   name: string;
   icon: JSX.Element | null;
   enabled: boolean;
+  description: string;
 }
 const blockList: addBlockProps[] = [
   {
@@ -40,54 +41,63 @@ const blockList: addBlockProps[] = [
     name: "Short answer",
     icon: <EqualIcon className="w-4 h-4" />,
     enabled: true,
+    description: "A single-line input field for short text responses.",
   },
   {
     type: "long_answer",
     name: "Long answer",
     icon: <TextIcon className="w-4 h-4" />,
     enabled: true,
+    description: "A multi-line input field for longer text responses.",
   },
   {
     type: "multiple_choice",
     name: "Multiple choice",
     icon: <CheckSquareIcon className="w-4 h-4" />,
     enabled: true,
+    description: "Allows selection of one option from a list of choices.",
   },
   {
     type: "checkboxes",
     name: "Checkboxes",
     icon: <CheckCircleIcon className="w-4 h-4" />,
     enabled: true,
+    description: "Enables selection of multiple options from a list.",
   },
   {
     type: "dropdown",
     name: "Dropdown",
     icon: <ChevronDownIcon className="w-4 h-4" />,
     enabled: true,
+    description: "A dropdown menu for selecting one option from many.",
   },
   {
     type: "number",
     name: "Number",
     icon: <HashIcon className="w-4 h-4" />,
     enabled: true,
+    description: "An input field specifically for numerical entries.",
   },
   {
     type: "email",
     name: "Email",
     icon: <MailIcon className="w-4 h-4" />,
     enabled: true,
+    description: "Input field designed for capturing email addresses.",
   },
   {
     type: "rating",
     name: "Rating",
     icon: <StarIcon className="w-4 h-4" />,
     enabled: true,
+    description: "A rating scale, typically using stars or numbers.",
   },
   {
     type: "scale",
     name: "Scale",
     icon: <ScaleIcon className="w-4 h-4" />,
     enabled: true,
+    description: "A custom scale allowing responses across a set range.",
   },
 ];
 
@@ -167,7 +177,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
               <FormItem>
                 <FormControl>
                   <RadioGroup
-                    className="grid gap-2"
+                    className="grid gap-2 "
                     value={field.value}
                     onValueChange={field.onChange}>
                     {blockList.map((block, index) => {
@@ -183,7 +193,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
                               htmlFor={block.type}
                               className="text-sm cursor-pointer flex items-center justify-start gap-2 rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 [&:has([data-state=checked])]:border-primary">
                               {block.icon}
-                              {block.name}
+                              <span>{block.name}</span>
                             </Label>
                           </div>
                         );
@@ -204,7 +214,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
             </Button>
             <Button
               type="submit"
-              variant={"secondary"}
+              variant={"default"}
               size={"sm"}
               className="w-full sm:w-fit">
               Add Block

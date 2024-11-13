@@ -18,7 +18,7 @@ const Home = () => {
           <Button variant={"outline"} size={"sm"} asChild>
             <Link href={"/login"}>Login</Link>
           </Button>
-          <Button variant={"secondary"} size={"sm"} asChild>
+          <Button variant={"default"} size={"sm"} asChild>
             <Link href={"/signup"}>Get Started</Link>
           </Button>
         </div>

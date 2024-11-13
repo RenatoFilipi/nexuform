@@ -40,7 +40,7 @@ const Form = () => {
               Share
             </Button>
           </FormShare>
-          <Button variant={"secondary"} size={"sm"} className="w-full" asChild>
+          <Button variant={"default"} size={"sm"} className="w-full" asChild>
             <Link href={`/dashboard/editor/${currentFormId}`}>Edit</Link>
           </Button>
         </div>

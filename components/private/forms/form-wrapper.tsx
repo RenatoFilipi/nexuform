@@ -113,7 +113,6 @@ const submitButtonDesign: ColorProps[] = [
 ];
 
 const FormWrapper = ({
-  mode,
   name,
   description,
   blocks,

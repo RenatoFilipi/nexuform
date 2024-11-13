@@ -195,7 +195,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
       <div className="flex justify-end items-center">
         <Button
           onClick={() => setState(false)}
-          variant={"outline"}
+          variant={"secondary"}
           size={"sm"}
           className="w-full sm:w-fit">
           Close

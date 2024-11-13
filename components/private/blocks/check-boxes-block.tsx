@@ -120,7 +120,7 @@ const CheckboxesBlock = ({
         </Button>
         <Button
           onClick={() => setState(false)}
-          variant={"outline"}
+          variant={"secondary"}
           size={"sm"}
           className="w-full sm:w-fit">
           Close

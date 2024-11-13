@@ -18,7 +18,7 @@ const Forms = () => {
         <h1 className="text-xl font-semibold">Forms</h1>
         <div className="flex justify-center items-center gap-4">
           <CreateForm>
-            <Button size={"sm"} variant={"secondary"}>
+            <Button size={"sm"} variant={"default"}>
               Create Form
             </Button>
           </CreateForm>

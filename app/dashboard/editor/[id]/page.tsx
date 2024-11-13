@@ -11,6 +11,7 @@ import { formList } from "@/mocks/forms";
 import useEditorStore from "@/stores/editor";
 import { useQuery } from "@tanstack/react-query";
 import {
+  BlocksIcon,
   LoaderIcon,
   PaintbrushIcon,
   PlusIcon,
@@ -118,7 +119,7 @@ const Editor = () => {
         <div className="sm:w-[360px] w-full flex flex-col p-4 gap-6">
           <div className="flex flex-col gap-4">
             <AddBlock>
-              <Button variant={"secondary"} size={"sm"} className="w-full">
+              <Button variant={"default"} size={"sm"} className="w-full">
                 <PlusIcon className="w-4 h-4 mr-2" />
                 Add New Block
               </Button>
@@ -139,7 +140,7 @@ const Editor = () => {
             </div>
           </div>
           {blocks.length <= 0 && (
-            <div className="flex flex-1 justify-center items-center">
+            <div className="hidden flex-1 justify-center items-center">
               <span className="text-foreground/80 text-sm">
                 No block added.
               </span>
@@ -153,9 +154,32 @@ const Editor = () => {
             </div>
           )}
         </div>
-        <div className="hidden sm:flex justify-center items-center flex-1 bg-foreground/5">
-          <span className="text-sm">No blocks to preview.</span>
-        </div>
+        {blocks.length <= 0 && (
+          <div className="hidden sm:flex justify-center items-center flex-1 bg-foreground/5">
+            <div className="flex justify-center items-center gap-3 flex-col">
+              <div className="flex justify-center items-center p-2 bg-primary w-fit rounded">
+                <BlocksIcon className="text-black" />
+              </div>
+              <span className="text-foreground/80 text-sm">
+                No blocks to preview.
+              </span>
+            </div>
+          </div>
+        )}
+        {blocks.length >= 1 && (
+          <div className="hidden sm:flex flex-1 bg-foreground/5 justify-center items-start">
+            <div className="bg-background w-full rounded mx-10 my-10">
+              <FormWrapper
+                mode="preview"
+                name={name}
+                description={description}
+                primaryColor={primaryColor}
+                submitLabel={submitLabel}
+                blocks={blocks}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -207,8 +207,7 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
               key={link.id}
               href={link.path}
               className={`${
-                isActive(link.path) &&
-                "bg-secondary text-background hover:bg-secondary/80"
+                isActive(link.path) && "bg-primary text-black hover:bg-primary"
               } p-2 border hover:bg-foreground/5 text-sm flex justify-start items-center`}>
               {link.icon}
               {link.name}
@@ -304,7 +303,7 @@ const AvatarMenu = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer">
-          <AvatarFallback className="text-sm bg-primary text-black">
+          <AvatarFallback className="text-sm bg-foreground/10 text-foreground font-bold">
             RF
           </AvatarFallback>
         </Avatar>
@@ -313,14 +312,6 @@ const AvatarMenu = () => {
         <DropdownMenuLabel className="text-foreground">
           My Account
         </DropdownMenuLabel>
-        {/* {navLinks.map((nav) => (
-          <DropdownMenuItem
-            key={nav.id}
-            className="flex flex-row justify-between items-center cursor-pointer">
-            {nav.name}
-            {nav.icon}
-          </DropdownMenuItem>
-        ))} */}
         <DropdownMenuItem className="flex flex-row justify-between items-center">
           Theme
           <RadioGroup
