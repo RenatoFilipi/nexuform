@@ -151,14 +151,11 @@ const FormDesign = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Body = ({ setState }: { setState: setState<boolean> }) => {
-  const {
-    primaryColor,
-    setPrimaryColor,
-    setName,
-    name,
-    setSubmitLabel,
-    submitLabel,
-  } = useEditorStore();
+  const { primaryColor, setPrimaryColor, name, setSubmitLabel, submitLabel } =
+    useEditorStore();
+
+  const currentColor =
+    availableColors.find((x) => x.label === primaryColor) ?? availableColors[0];
 
   return (
     <div className="flex flex-col gap-6 h-full overflow-y-auto">
@@ -172,9 +169,12 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
             onChange={(e) => setSubmitLabel(e.target.value)}
           />
         </div>
-        <div className="grid gap-1.5 overflow-y-auto">
-          <Label>Color</Label>
-          <div className="grid grid-cols-1 gap-2 overflow-y-auto sm:h-64">
+        <div className="grid gap-3 overflow-y-auto">
+          <div className="flex justify-start items-center gap-2">
+            <Label>Color</Label>
+            <div className={`${currentColor.tw_class} w-4 h-4 rounded`}></div>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-2 overflow-y-auto sm:h-64">
             {availableColors.map((color, index) => {
               return (
                 <button
@@ -184,8 +184,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
                     color.label === primaryColor &&
                     "bg-primary/10 border-primary hover:bg-primary/10"
                   } flex justify-start items-center gap-4 border py-1 px-3 rounded hover:bg-foreground/10`}>
-                  <div
-                    className={`${color.tw_class} w-4 h-4 rounded-full`}></div>
+                  <div className={`${color.tw_class} w-4 h-4 rounded`}></div>
                   <span>{color.label}</span>
                 </button>
               );
