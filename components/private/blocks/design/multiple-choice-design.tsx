@@ -3,7 +3,7 @@ import { ColorProps } from "@/helpers/interfaces";
 import { BlockProps } from "@/models/form";
 import { twMerge } from "tailwind-merge";
 
-export const design: ColorProps[] = [
+const design: ColorProps[] = [
   {
     label: "Slate",
     tw_class:

@@ -3,7 +3,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ColorProps } from "@/helpers/interfaces";
 import { BlockProps } from "@/models/form";
 
-const scaleBoxDesign: ColorProps[] = [
+const design: ColorProps[] = [
   {
     label: "Slate",
     tw_class:
@@ -126,7 +126,7 @@ const ScaleDesign = ({
   const { name, description, required, max_scale } = block;
   const maxScaleArray = Array.from({ length: max_scale ?? 5 }, (_, i) => i + 1);
   const currentColor =
-    scaleBoxDesign.find((x) => x.label === primaryColor) ?? scaleBoxDesign[0];
+    design.find((x) => x.label === primaryColor) ?? design[0];
 
   return (
     <div className="flex flex-col gap-4">

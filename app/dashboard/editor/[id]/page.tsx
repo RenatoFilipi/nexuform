@@ -46,8 +46,26 @@ const Editor = () => {
             variant={"outline"}
             size={"sm"}
             onClick={() => setIsPreview(false)}>
-            Return to editor
+            Close preview
           </Button>
+        </div>
+        <div className="mx-2 flex flex-col justify-center items-center gap-6">
+          <FormWrapper
+            mode="preview"
+            name={name}
+            description={description}
+            primaryColor={primaryColor}
+            submitLabel={submitLabel}
+            blocks={blocks}
+          />
+          <div className="flex justify-center items-center">
+            <span className="border rounded p-2 flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
+              <Brand2 type="logo" className="fill-foreground w-4 h-4" />
+              <span className="text-foreground/80 text-sm font-semibold ">
+                Powered by Nebulaform
+              </span>
+            </span>
+          </div>
         </div>
       </div>
     );
@@ -150,9 +168,11 @@ const Editor = () => {
                 blocks={blocks}
               />
               <div className="flex justify-center items-center">
-                <span className="border rounded p-2 text-sm font-semibold flex justify-center items-center gap-2 text-foreground hover:bg-foreground/5 cursor-pointer">
+                <span className="border rounded p-2 flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
                   <Brand2 type="logo" className="fill-foreground w-4 h-4" />
-                  Powered by Nebulaform
+                  <span className="text-foreground/80 text-sm font-semibold ">
+                    Powered by Nebulaform
+                  </span>
                 </span>
               </div>
             </div>

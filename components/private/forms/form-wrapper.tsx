@@ -127,7 +127,7 @@ const FormWrapper = ({
   return (
     <div className="flex flex-col w-full gap-6 justify-start items-center overflow-y-auto">
       <div className="flex flex-col justify-center items-center w-full gap-1">
-        <h1 className="font-bold text-2xl">{name}</h1>
+        <h1 className="font-bold text-xl">{name}</h1>
         {description && (
           <p className="text-sm text-foreground/80">{description}</p>
         )}
@@ -183,7 +183,7 @@ const FormWrapper = ({
           <Button
             variant={"secondary"}
             size={"sm"}
-            className={twMerge(currentColor.tw_class)}>
+            className={twMerge(currentColor.tw_class, "w-full sm:w-fit")}>
             {submitLabel}
           </Button>
         </div>

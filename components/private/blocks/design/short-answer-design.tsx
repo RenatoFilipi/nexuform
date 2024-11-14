@@ -53,7 +53,7 @@ const ShortAnswerDesign = ({
         </h1>
         <span className="text-xs text-foreground/80">{description}</span>
       </div>
-      <div className="">
+      <div className="flex flex-col">
         <Input
           type="text"
           className={`${currentColor.tw_class}`}

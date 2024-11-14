@@ -29,7 +29,7 @@ const ShortAnswerBlock = ({
         </Badge>
       </div>
       <div className="h-full flex flex-col gap-4 overflow-y-auto">
-        <div className="grid gap-1.5">
+        <div className="grid gap-3">
           <Label htmlFor="name">Name</Label>
           <Input
             type="text"
@@ -40,7 +40,7 @@ const ShortAnswerBlock = ({
             }}
           />
         </div>
-        <div className="grid gap-1.5">
+        <div className="grid gap-3">
           <Label htmlFor="description">Description</Label>
           <Textarea
             id="description"
@@ -50,7 +50,7 @@ const ShortAnswerBlock = ({
             }}
           />
         </div>
-        <div className="grid gap-1.5">
+        <div className="grid gap-3">
           <Label htmlFor="max-character-limit">Max character limit</Label>
           <Input
             type="number"

@@ -41,7 +41,7 @@ const Block = (block: BlockProps) => {
         <div className="flex relative">
           <span className="text-sm font-medium">{block.name}</span>
           {block.required && (
-            <div className="text-red-500 -right-1.5 -top-1.5 absolute">*</div>
+            <div className="text-red-500 -right-2.5 -top-0.5 absolute">*</div>
           )}
         </div>
       </div>
