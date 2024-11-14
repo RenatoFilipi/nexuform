@@ -162,7 +162,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
       <h1 className="text-xl font-semibold">Design</h1>
       <div className="flex-1 overflow-y-auto flex flex-col gap-4">
         <div className="grid gap-3">
-          <Label>Submit button</Label>
+          <Label>Button</Label>
           <Input
             type="text"
             value={submitLabel}
@@ -184,7 +184,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
                     "bg-foreground border-primary hover:bg-foreground/80"
                   } flex justify-center items-center rounded hover:bg-foreground/10 w-9 h-9`}>
                   <div
-                    className={`${color.tw_class} w-5 h-5 rounded-full`}></div>
+                    className={`${color.tw_class} w-6 h-6 rounded-full`}></div>
                 </button>
               );
             })}

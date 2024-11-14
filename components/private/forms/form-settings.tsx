@@ -53,7 +53,7 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="min-w-[690px]">
+        <DialogContent className="min-w-[590px]">
           <Body setState={setOpen} />
         </DialogContent>
       </Dialog>
@@ -78,7 +78,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
       <h1 className="text-xl font-semibold">Settings</h1>
       <div className="flex flex-1 overflow-y-auto gap-6 px-1 flex-col">
         <div className="flex flex-col gap-4 flex-1">
-          <div className="grid gap-1.5">
+          <div className="grid gap-3">
             <Label>Name</Label>
             <Input
               type="text"
@@ -86,7 +86,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
               onChange={(e) => store.setName(e.target.value)}
             />
           </div>
-          <div className="grid gap-1.5">
+          <div className="grid gap-3">
             <Label>Description (Optional)</Label>
             <Textarea
               value={store.description ?? ""}
@@ -94,7 +94,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
             />
           </div>
         </div>
-        <div className="flex-1 flex flex-col gap-1.5">
+        <div className="flex-1 flex flex-col gap-3">
           <Label>Status</Label>
           <div className="flex flex-col gap-4">
             <div className="grid gap-3 overflow-y-auto grid-cols-3">
