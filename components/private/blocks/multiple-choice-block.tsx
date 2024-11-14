@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge2 } from "@/components/ui/badge2";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -44,7 +44,7 @@ const MultipleChoiceBlock = ({
     <div className="h-full flex flex-col gap-8 pt-4 overflow-y-auto">
       <div className="flex justify-start items-center gap-3">
         <h1 className="text-xl font-semibold">Settings</h1>
-        <Badge2 variant={"indigo"}>Multiple choice</Badge2>
+        <Badge variant={"indigo"}>Multiple choice</Badge>
       </div>
       <div className="h-full flex flex-col gap-4 overflow-y-auto">
         <div className="grid gap-1.5">

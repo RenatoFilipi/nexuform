@@ -1,7 +1,7 @@
 "use client";
 
 import Brand2 from "@/components/core/brand-2";
-import { Badge2 } from "@/components/ui/badge2";
+import { Badge } from "@/components/ui/badge";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Label } from "@/components/ui/label";
 import {
@@ -75,21 +75,21 @@ const Nav = () => {
       switch (status) {
         case "published":
           return (
-            <Badge2 variant={"green"} uppercase>
+            <Badge variant={"green"} uppercase>
               {status}
-            </Badge2>
+            </Badge>
           );
         case "draft":
           return (
-            <Badge2 variant={"orange"} uppercase>
+            <Badge variant={"orange"} uppercase>
               {status}
-            </Badge2>
+            </Badge>
           );
         case "inactive":
           return (
-            <Badge2 variant={"gray"} uppercase>
+            <Badge variant={"gray"} uppercase>
               {status}
-            </Badge2>
+            </Badge>
           );
       }
     };
@@ -395,21 +395,21 @@ const SelectFormBody = ({ setState }: { setState: setState<boolean> }) => {
     switch (status) {
       case "published":
         return (
-          <Badge2 variant={"green"} uppercase>
+          <Badge variant={"green"} uppercase>
             {status}
-          </Badge2>
+          </Badge>
         );
       case "draft":
         return (
-          <Badge2 variant={"orange"} uppercase>
+          <Badge variant={"orange"} uppercase>
             {status}
-          </Badge2>
+          </Badge>
         );
       case "inactive":
         return (
-          <Badge2 variant={"gray"} uppercase>
+          <Badge variant={"gray"} uppercase>
             {status}
-          </Badge2>
+          </Badge>
         );
     }
   };

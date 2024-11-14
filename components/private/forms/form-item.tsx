@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge2 } from "@/components/ui/badge2";
+import { Badge } from "@/components/ui/badge";
 import { formStatus } from "@/helpers/types";
 import { EditIcon, ViewIcon } from "lucide-react";
 import Link from "next/link";
@@ -23,21 +23,21 @@ const FormItem = ({ title, status, responsesCount, id }: FormItemProps) => {
     switch (status) {
       case "published":
         return (
-          <Badge2 variant={"green"} uppercase>
+          <Badge variant={"green"} uppercase>
             {status}
-          </Badge2>
+          </Badge>
         );
       case "draft":
         return (
-          <Badge2 variant={"orange"} uppercase>
+          <Badge variant={"orange"} uppercase>
             {status}
-          </Badge2>
+          </Badge>
         );
       case "inactive":
         return (
-          <Badge2 variant={"gray"} uppercase>
+          <Badge variant={"gray"} uppercase>
             {status}
-          </Badge2>
+          </Badge>
         );
     }
   };

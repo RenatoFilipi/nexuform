@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert2, AlertDescription2 } from "@/components/ui/alert2";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -117,11 +117,11 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
                 );
               })}
             </div>
-            <Alert2 variant={"info"}>
-              <AlertDescription2>
+            <Alert variant={"info"}>
+              <AlertDescription>
                 {statusList.find((x) => x.status === store.status)?.description}
-              </AlertDescription2>
-            </Alert2>
+              </AlertDescription>
+            </Alert>
           </div>
         </div>
       </div>

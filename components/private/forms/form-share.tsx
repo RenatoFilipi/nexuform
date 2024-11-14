@@ -1,4 +1,4 @@
-import { Alert2, AlertDescription2 } from "@/components/ui/alert2";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { minWidth640 } from "@/helpers/constants";
@@ -62,19 +62,19 @@ const Body = ({
       <div className="flex flex-col gap-1 justify-center items-start">
         <h1 className="text-xl font-semibold">Share link</h1>
         {currentForm?.status === "published" ? (
-          <Alert2 variant={"info"}>
-            <AlertDescription2>
+          <Alert variant={"info"}>
+            <AlertDescription>
               Your form is live! Share it via link on social media, messaging,
               or email.
-            </AlertDescription2>
-          </Alert2>
+            </AlertDescription>
+          </Alert>
         ) : (
-          <Alert2 variant={"destructive"}>
-            <AlertDescription2>
+          <Alert variant={"destructive"}>
+            <AlertDescription>
               This form is not currently public, change the status in the editor
               page.
-            </AlertDescription2>
-          </Alert2>
+            </AlertDescription>
+          </Alert>
         )}
       </div>
       {currentForm?.status === "published" && (
