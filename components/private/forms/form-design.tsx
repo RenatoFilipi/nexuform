@@ -181,7 +181,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
                   key={index}
                   className={`${
                     color.label === primaryColor &&
-                    "bg-foreground border-primary hover:bg-foreground/80"
+                    "bg-foreground/10 hover:bg-foreground/10"
                   } flex justify-center items-center rounded hover:bg-foreground/10 w-9 h-9`}>
                   <div
                     className={`${color.tw_class} w-6 h-6 rounded-full`}></div>

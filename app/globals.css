@@ -38,13 +38,13 @@
   }
 
   .dark {
-    --background: 240 3.23% 6.08%;
+    --background: 205.71 12.73% 10.78%;
     --foreground: 0 0% 98%;
     --muted: 260 0% 18.46%;
     --muted-foreground: 260 5% 49%;
-    --popover: 270 6% 7%;
+    --popover: 205.71 12.73% 10.78%;
     --popover-foreground: 0 0% 98%;
-    --card: 240 3.23% 6.08%;
+    --card: 205.71 12.73% 10.78%;
     --card-foreground: 0 0% 98%;
     --border: 260 4.92% 11.96%;
     --input: 255 4% 18%;
