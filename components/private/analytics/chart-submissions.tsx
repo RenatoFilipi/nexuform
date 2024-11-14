@@ -13,7 +13,7 @@ const ChartSubmissions = ({ forms }: Props) => {
   );
 
   return (
-    <Card className="p-6">
+    <Card className="p-4">
       {forms.length <= 0 && (
         <div className="flex justify-center items-center">
           <span className="text-foreground/80">No data to show.</span>

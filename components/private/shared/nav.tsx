@@ -15,7 +15,6 @@ import { formStatus, setState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
 import {
   ChartAreaIcon,
-  ChartColumnIcon,
   ChevronsUpDownIcon,
   CreditCardIcon,
   FileIcon,
@@ -26,6 +25,7 @@ import {
   MonitorIcon,
   MoonIcon,
   SunIcon,
+  TrendingUpDownIcon,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
@@ -55,7 +55,7 @@ const navLinks = [
     id: 2,
     name: "Analytics",
     path: "/dashboard/analytics",
-    icon: <ChartColumnIcon className="w-4 h-4 mr-2" />,
+    icon: <TrendingUpDownIcon className="w-4 h-4 mr-2" />,
   },
 ];
 const Nav = () => {

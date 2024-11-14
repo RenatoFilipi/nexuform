@@ -8,7 +8,7 @@ interface Props {
 
 const AnalyticsCard = ({ icon, title, value }: Props) => {
   return (
-    <Card className="p-6">
+    <Card className="p-4">
       <div className="flex justify-between items-center">
         <div className="bg-foreground p-3 rounded">{icon}</div>
         <div className="flex flex-col justify-center items-end">
