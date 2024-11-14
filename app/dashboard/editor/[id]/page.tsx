@@ -40,7 +40,7 @@ const Editor = () => {
 
   if (isPreview) {
     return (
-      <div className="flex flex-col h-full flex-1 gap-4">
+      <div className="flex flex-col h-screen flex-1 gap-4">
         <div className="flex justify-center items-center pt-2">
           <Button
             variant={"outline"}
@@ -49,7 +49,7 @@ const Editor = () => {
             Close preview
           </Button>
         </div>
-        <div className="mx-2 flex flex-col justify-center items-center gap-6">
+        <div className="mx-2 flex flex-col justify-center items-center gap-6 overflow-y-auto">
           <FormWrapper
             mode="preview"
             name={name}
@@ -72,7 +72,7 @@ const Editor = () => {
   }
 
   return (
-    <div className="flex flex-col h-full flex-1 gap-4">
+    <div className="flex flex-col h-screen flex-1 gap-4">
       <div className="fixed h-14 flex justify-between items-center w-full top-0 bg-background border-b sm:px-6 px-2 z-20">
         <div className="flex justify-center items-center gap-2">
           <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
@@ -105,9 +105,9 @@ const Editor = () => {
           </Button>
         </div>
       </div>
-      <div className="mt-14 flex flex-1">
-        <div className="sm:w-[360px] w-full flex flex-col p-4 gap-6">
-          <div className="flex flex-col gap-4">
+      <div className="flex flex-1 relative">
+        <div className="sm:w-[360px] w-full flex flex-col p-4 gap-6 fixed bg-background h-full overflow-y-auto pt-14">
+          <div className="flex flex-col gap-4 mt-4">
             <AddBlock>
               <Button variant={"default"} size={"sm"} className="w-full">
                 <PlusIcon className="w-4 h-4 mr-2" />
@@ -130,7 +130,7 @@ const Editor = () => {
             </div>
           </div>
           {blocks.length <= 0 && (
-            <div className="hidden flex-1 justify-center items-center">
+            <div className="flex flex-1 justify-center items-center">
               <span className="text-foreground/80 text-sm">
                 No block added.
               </span>
@@ -145,7 +145,7 @@ const Editor = () => {
           )}
         </div>
         {blocks.length <= 0 && (
-          <div className="hidden sm:flex justify-center items-center flex-1 bg-foreground/5">
+          <div className="hidden sm:flex justify-center items-center flex-1 bg-foreground/5 ml-[360px] pt-14">
             <div className="flex justify-center items-center gap-3 flex-col">
               <div className="flex justify-center items-center p-2 bg-primary w-fit rounded">
                 <BlocksIcon className="text-black" />
@@ -157,7 +157,7 @@ const Editor = () => {
           </div>
         )}
         {blocks.length >= 1 && (
-          <div className="hidden sm:flex flex-1 bg-foreground/5 justify-center items-start">
+          <div className="hidden sm:flex flex-1 bg-foreground/5 justify-center items-start ml-[360px] pt-14">
             <div className="bg-background w-full rounded mx-10 my-10 flex flex-col px-10 py-4 gap-6">
               <FormWrapper
                 mode="preview"

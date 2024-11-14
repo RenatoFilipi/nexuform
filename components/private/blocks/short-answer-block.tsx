@@ -85,14 +85,15 @@ const ShortAnswerBlock = ({
           />
         </div>
       </div>
-      <div className="flex justify-between gap-4 items-center">
+      <div className="flex justify-between gap-4 items-center flex-col-reverse sm:flex-row">
         <Button
           onClick={() => {
             removeBlock(block.id);
             setState(false);
           }}
           variant={"destructive_outline"}
-          size={"sm"}>
+          size={"sm"}
+          className="w-full sm:w-fit">
           Remove Block
         </Button>
         <Button
