@@ -133,7 +133,7 @@ const FormDesign = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="min-w-[420px]">
+        <DialogContent className="">
           <Body setState={setOpen} />
         </DialogContent>
       </Dialog>
@@ -143,7 +143,7 @@ const FormDesign = ({ children }: { children: React.ReactNode }) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3 flex flex-col gap-8 h-[80%]">
+      <DrawerContent className="p-3 flex flex-col gap-8 ">
         <Body setState={setOpen} />
       </DrawerContent>
     </Drawer>
@@ -161,7 +161,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
     <div className="flex flex-col gap-6 h-full overflow-y-auto">
       <h1 className="text-xl font-semibold">Design</h1>
       <div className="flex-1 overflow-y-auto flex flex-col gap-4">
-        <div className="grid gap-1.5">
+        <div className="grid gap-3">
           <Label>Submit button</Label>
           <Input
             type="text"
@@ -171,10 +171,9 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
         </div>
         <div className="grid gap-3 overflow-y-auto">
           <div className="flex justify-start items-center gap-2">
-            <Label>Color</Label>
-            <div className={`${currentColor.tw_class} w-4 h-4 rounded`}></div>
+            <Label>Theme</Label>
           </div>
-          <div className="grid sm:grid-cols-2 gap-2 overflow-y-auto sm:h-64">
+          <div className="grid sm:grid-cols-10 grid-cols-8 gap-2 overflow-y-auto ">
             {availableColors.map((color, index) => {
               return (
                 <button
@@ -182,10 +181,10 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
                   key={index}
                   className={`${
                     color.label === primaryColor &&
-                    "bg-primary/10 border-primary hover:bg-primary/10"
-                  } flex justify-start items-center gap-4 border py-1 px-3 rounded hover:bg-foreground/10`}>
-                  <div className={`${color.tw_class} w-4 h-4 rounded`}></div>
-                  <span>{color.label}</span>
+                    "bg-foreground border-primary hover:bg-foreground/80"
+                  } flex justify-center items-center rounded hover:bg-foreground/10 w-9 h-9`}>
+                  <div
+                    className={`${color.tw_class} w-5 h-5 rounded-full`}></div>
                 </button>
               );
             })}

@@ -40,41 +40,13 @@ const Editor = () => {
 
   if (isPreview) {
     return (
-      <div className="h-full flex flex-col overflow-y-auto relative">
-        <div className="w-full flex justify-start p-2 sm:p-4 sm:absolute right-4">
+      <div className="flex flex-col h-full flex-1 gap-4">
+        <div className="flex justify-center items-center pt-2">
           <Button
             variant={"outline"}
             size={"sm"}
             onClick={() => setIsPreview(false)}>
             Return to editor
-          </Button>
-        </div>
-        <div className="flex h-full w-full overflow-y-auto">
-          <FormWrapper
-            mode="preview"
-            name={name}
-            description={description}
-            primaryColor={primaryColor}
-            submitLabel={submitLabel}
-            blocks={blocks}
-          />
-        </div>
-        <div className="flex sm:justify-end justify-center items-center sm:border-transparent sm:p-4 p-2">
-          <Button
-            variant={"outline"}
-            size={"sm"}
-            className="flex justify-center items-center gap-2"
-            asChild>
-            <Link
-              href={"/"}
-              className="flex justify-center items-center gap-1 text-base font-semibold">
-              <span>
-                Powered by{" "}
-                <span className="font-bold bg-gradient-to-r from-[#FFA14D] via-[#F5536B] to-[#0D91F6] inline-block text-transparent bg-clip-text">
-                  Nebulaform
-                </span>
-              </span>
-            </Link>
           </Button>
         </div>
       </div>
