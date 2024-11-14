@@ -23,19 +23,19 @@ const FormItem = ({ title, status, responsesCount, id }: FormItemProps) => {
     switch (status) {
       case "published":
         return (
-          <Badge variant={"green"} uppercase>
+          <Badge variant={"success"} uppercase>
             {status}
           </Badge>
         );
       case "draft":
         return (
-          <Badge variant={"orange"} uppercase>
+          <Badge variant={"warning"} uppercase>
             {status}
           </Badge>
         );
       case "inactive":
         return (
-          <Badge variant={"gray"} uppercase>
+          <Badge variant={"default"} uppercase>
             {status}
           </Badge>
         );
@@ -52,7 +52,7 @@ const FormItem = ({ title, status, responsesCount, id }: FormItemProps) => {
         <span className="text-foreground/80 text-xs">
           {responsesDisplay(responsesCount)}
         </span>
-        <div className="flex justify-center items-center gap-3">
+        <div className="flex justify-center items-center gap-2">
           <Button variant={"outline"} size={"sm"} asChild>
             <Link href={`/dashboard/forms/${id}`}>
               <ViewIcon className="w-4 h-4" />

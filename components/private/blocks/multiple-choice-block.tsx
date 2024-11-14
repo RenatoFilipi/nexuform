@@ -44,7 +44,9 @@ const MultipleChoiceBlock = ({
     <div className="h-full flex flex-col gap-8 pt-4 overflow-y-auto">
       <div className="flex justify-start items-center gap-3">
         <h1 className="text-xl font-semibold">Settings</h1>
-        <Badge variant={"indigo"}>Multiple choice</Badge>
+        <Badge variant={"indigo"} uppercase>
+          Multiple choice
+        </Badge>
       </div>
       <div className="h-full flex flex-col gap-4 overflow-y-auto">
         <div className="grid gap-1.5">

@@ -75,19 +75,19 @@ const Nav = () => {
       switch (status) {
         case "published":
           return (
-            <Badge variant={"green"} uppercase>
+            <Badge variant={"success"} uppercase>
               {status}
             </Badge>
           );
         case "draft":
           return (
-            <Badge variant={"orange"} uppercase>
+            <Badge variant={"warning"} uppercase>
               {status}
             </Badge>
           );
         case "inactive":
           return (
-            <Badge variant={"gray"} uppercase>
+            <Badge variant={"default"} uppercase>
               {status}
             </Badge>
           );
@@ -395,19 +395,19 @@ const SelectFormBody = ({ setState }: { setState: setState<boolean> }) => {
     switch (status) {
       case "published":
         return (
-          <Badge variant={"green"} uppercase>
+          <Badge variant={"success"} uppercase>
             {status}
           </Badge>
         );
       case "draft":
         return (
-          <Badge variant={"orange"} uppercase>
+          <Badge variant={"warning"} uppercase>
             {status}
           </Badge>
         );
       case "inactive":
         return (
-          <Badge variant={"gray"} uppercase>
+          <Badge variant={"default"} uppercase>
             {status}
           </Badge>
         );

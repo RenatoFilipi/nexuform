@@ -8,6 +8,15 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
+        default:
+          "inline-flex items-center rounded-md bg-foreground/5 px-2 py-1 text-xs font-medium text-foreground/80 ring-1 ring-inset ring-foreground/20 dark:bg-foreground/20 dark:text-foreground",
+        success:
+          "inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20 dark:bg-emerald-900/50 dark:text-emerald-500",
+        warning:
+          "inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-700 ring-1 ring-inset ring-yellow-600/20 dark:bg-yellow-900/50 dark:text-yellow-500",
+        info: "inline-flex items-center rounded-md bg-sky-50 px-2 py-1 text-xs font-medium text-sky-700 ring-1 ring-inset ring-sky-600/20 dark:bg-sky-900/50 dark:text-sky-500",
+        destructive:
+          "inline-flex items-center rounded-md bg-rose-50 px-2 py-1 text-xs font-medium text-rose-700 ring-1 ring-inset ring-rose-600/20 dark:bg-rose-900/50 dark:text-rose-500",
         green:
           "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-900/50 dark:text-green-500",
         gray: "inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-600/20 dark:bg-gray-900/50 dark:text-gray-500",
@@ -30,7 +39,7 @@ const badgeVariants = cva(
       },
     },
     defaultVariants: {
-      variant: "blue",
+      variant: "default",
       uppercase: false,
     },
   }

@@ -24,7 +24,9 @@ const EmailBlock = ({
     <div className="h-full flex flex-col gap-8 pt-4">
       <div className="flex justify-start items-center gap-3">
         <h1 className="text-xl font-semibold">Settings</h1>
-        <Badge variant={"indigo"}>Email</Badge>
+        <Badge variant={"indigo"} uppercase>
+          Email
+        </Badge>
       </div>
       <div className="h-full flex flex-col gap-4 overflow-y-auto">
         <div className="grid gap-1.5">

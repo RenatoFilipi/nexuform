@@ -125,14 +125,14 @@ const FormWrapper = ({
     submitButtonDesign[0];
 
   return (
-    <div className="flex flex-col w-full gap-6 p-2 justify-start items-center overflow-y-auto">
-      <div className="flex flex-col justify-center items-center w-full gap-1  px-2 sm:pt-6">
+    <div className="flex flex-col w-full gap-6 justify-start items-center overflow-y-auto">
+      <div className="flex flex-col justify-center items-center w-full gap-1">
         <h1 className="font-bold text-2xl">{name}</h1>
         {description && (
           <p className="text-sm text-foreground/80">{description}</p>
         )}
       </div>
-      <div className="w-full flex-1 px-2 gap-6 flex flex-col justify-start items-center sm:pb-8">
+      <div className="w-full flex-1 gap-6 flex flex-col justify-start items-center">
         <div className="flex flex-col gap-8 w-full ">
           {sortedBlocks.map((block) => {
             switch (block.type) {

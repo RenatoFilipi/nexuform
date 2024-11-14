@@ -168,7 +168,7 @@ const Editor = () => {
         )}
         {blocks.length >= 1 && (
           <div className="hidden sm:flex flex-1 bg-foreground/5 justify-center items-start">
-            <div className="bg-background w-full rounded mx-10 my-10">
+            <div className="bg-background w-full rounded mx-10 my-10 flex flex-col px-10 py-4 gap-6">
               <FormWrapper
                 mode="preview"
                 name={name}
@@ -177,6 +177,12 @@ const Editor = () => {
                 submitLabel={submitLabel}
                 blocks={blocks}
               />
+              <div className="flex justify-center items-center">
+                <span className="border rounded p-2 text-sm font-semibold flex justify-center items-center gap-2 text-foreground hover:bg-foreground/5 cursor-pointer">
+                  <Brand2 type="logo" className="fill-foreground w-4 h-4" />
+                  Powered by Nebulaform
+                </span>
+              </div>
             </div>
           </div>
         )}
