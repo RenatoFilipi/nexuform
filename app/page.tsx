@@ -33,7 +33,7 @@ const Home = () => {
       <div className="sm:mt-36 mt-20 relative flex flex-col justify-center items-center px-4 sm:px-0 flex-1 gap-14">
         <div className="flex justify-center items-center flex-col gap-6 w-full">
           <div className="flex flex-col justify-center items-center w-full text-center gap-6">
-            <h1 className="font-bold text-3xl sm:text-6xl max-w-[43.5rem]">
+            <h1 className="font-bold text-2xl sm:text-5xl max-w-[43.5rem]">
               Streamline Feedback With{" "}
               <span className="text-primary">Intuitive Forms.</span>
             </h1>
@@ -42,13 +42,15 @@ const Home = () => {
               Decision-Making with Data Insights.
             </p>
           </div>
-          <div className="flex justify-center items-center gap-4">
-            <Button variant={"outline"}>View Demo</Button>
-            <Button asChild variant={"secondary"}>
+          <div className="flex justify-center items-center gap-4 flex-col sm:flex-row w-full">
+            <Button asChild variant={"secondary"} className="w-full sm:w-fit">
               <Link href={"/dashboard/forms"}>
                 Start Free Trial
                 <ArrowRightIcon className="w-4 h-4 ml-2" />
               </Link>
+            </Button>
+            <Button variant={"outline"} className="w-full sm:w-fit">
+              View Demo
             </Button>
           </div>
         </div>
