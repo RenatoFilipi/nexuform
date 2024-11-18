@@ -7,6 +7,7 @@ import {
   CheckSquareIcon,
   ChevronDownIcon,
   EqualIcon,
+  GripVerticalIcon,
   HashIcon,
   MailIcon,
   ScaleIcon,
@@ -30,29 +31,34 @@ const blockIcons: { [key in block]: JSX.Element } = {
 
 const Block = (block: BlockProps) => {
   return (
-    <Card className="flex justify-between items-center shadow-none rounded p-0 w-full">
-      <div className="flex gap-2 w-full items-center pl-2">
-        <div className="flex justify-center items-center bg-foreground/10 rounded relative p-1">
-          {blockIcons[block.type]}
+    <div className="flex justify-center items-center gap-2">
+      <Card className="flex justify-between items-center shadow-none rounded p-0 w-full">
+        <div className="flex gap-2 w-full items-center pl-2">
+          <div className="flex justify-center items-center bg-foreground/10 rounded relative p-1">
+            {blockIcons[block.type]}
+          </div>
+          <div className="flex relative">
+            <span className="text-sm font-medium">{block.name}</span>
+            {block.required && (
+              <div className="text-red-500 -right-2.5 -top-0.5 absolute">*</div>
+            )}
+          </div>
         </div>
-        <div className="flex relative">
-          <span className="text-sm font-medium">{block.name}</span>
-          {block.required && (
-            <div className="text-red-500 -right-2.5 -top-0.5 absolute">*</div>
-          )}
+        <div className="flex justify-center items-center gap-0">
+          <BlockSettings block={block}>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="flex justify-center items-center gap-2">
+              <Settings2Icon className="w-4 h-4" />
+            </Button>
+          </BlockSettings>
         </div>
-      </div>
-      <div className="flex justify-center items-center gap-0">
-        <BlockSettings block={block}>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="flex justify-center items-center gap-2">
-            <Settings2Icon className="w-4 h-4" />
-          </Button>
-        </BlockSettings>
-      </div>
-    </Card>
+      </Card>
+      <Button variant={"outline"} size={"icon"}>
+        <GripVerticalIcon />
+      </Button>
+    </div>
   );
 };
 
