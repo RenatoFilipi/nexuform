@@ -19,6 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* <script
+          src="https://unpkg.com/react-scan/dist/auto.global.js"
+          defer></script> */}
+      </head>
       <body className={inter.className}>
         <QueryProvider>
           <ThemeProvider

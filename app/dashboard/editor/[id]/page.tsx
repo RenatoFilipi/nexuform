@@ -16,6 +16,7 @@ import {
   PaintbrushIcon,
   PlusIcon,
   Settings2Icon,
+  XIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -41,12 +42,12 @@ const Editor = () => {
   if (isPreview) {
     return (
       <div className="flex flex-col h-screen flex-1 gap-4">
-        <div className="flex justify-center items-center pt-2">
+        <div className="flex justify-end items-center p-2">
           <Button
             variant={"outline"}
-            size={"sm"}
+            size={"icon"}
             onClick={() => setIsPreview(false)}>
-            Close preview
+            <XIcon />
           </Button>
         </div>
         <div className="mx-2 flex flex-col justify-center items-center gap-6 overflow-y-auto">
@@ -58,7 +59,7 @@ const Editor = () => {
             submitLabel={submitLabel}
             blocks={blocks}
           />
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center w-full py-2">
             <span className="border rounded p-2 flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
               <Brand2 type="logo" className="fill-foreground w-4 h-4" />
               <span className="text-foreground/80 text-sm font-semibold ">

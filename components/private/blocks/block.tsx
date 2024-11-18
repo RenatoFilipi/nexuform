@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { block } from "@/helpers/types";
 import { BlockProps } from "@/models/form";
-import useEditorStore from "@/stores/editor";
 import {
   CheckCircleIcon,
   CheckSquareIcon,
@@ -30,8 +29,6 @@ const blockIcons: { [key in block]: JSX.Element } = {
 };
 
 const Block = (block: BlockProps) => {
-  const { removeBlock } = useEditorStore();
-
   return (
     <Card className="flex justify-between items-center shadow-none rounded p-0 w-full">
       <div className="flex gap-2 w-full items-center pl-2">
