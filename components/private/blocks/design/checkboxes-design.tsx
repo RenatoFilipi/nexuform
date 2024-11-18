@@ -105,7 +105,7 @@ const CheckboxesDesign = ({
   block: BlockProps;
   primaryColor: string;
 }) => {
-  const { name, description, required, options } = block;
+  const { name, description, required, options, id } = block;
   const currentColor =
     design.find((x) => x.label === primaryColor) ?? design[0];
 
@@ -119,18 +119,21 @@ const CheckboxesDesign = ({
       </div>
       {options && options.length >= 1 && (
         <RadioGroup className="flex flex-col gap-1">
-          {options.map((opt) => (
-            <div key={opt.id} className="flex items-center space-x-2">
-              <RadioGroupItem
-                className={twMerge(currentColor.tw_class)}
-                value={opt.text}
-                id={opt.text}
-              />
-              <Label htmlFor={opt.text} className="text-sm">
-                {opt.text}
-              </Label>
-            </div>
-          ))}
+          {options.map((opt) => {
+            const optionId = `${id}_${opt.id}`;
+            return (
+              <div key={opt.id} className="flex items-center space-x-2">
+                <RadioGroupItem
+                  className={twMerge(currentColor.tw_class)}
+                  value={opt.text}
+                  id={optionId}
+                />
+                <Label htmlFor={optionId} className="text-sm">
+                  {opt.text}
+                </Label>
+              </div>
+            );
+          })}
         </RadioGroup>
       )}
     </div>

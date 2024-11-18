@@ -123,7 +123,7 @@ const MultipleChoiceDesign = ({
   block: BlockProps;
   primaryColor: string;
 }) => {
-  const { name, description, required, options } = block;
+  const { name, description, required, options, id } = block;
   const currentColor =
     design.find((x) => x.label === primaryColor) ?? design[0];
 
@@ -142,7 +142,7 @@ const MultipleChoiceDesign = ({
               <div
                 key={opt.id}
                 className="flex justify-start items-center gap-3">
-                <Checkbox className={twMerge(currentColor.tw_class)} />
+                <Checkbox id={id} className={twMerge(currentColor.tw_class)} />
                 <span className="text-sm">{opt.text}</span>
               </div>
             );

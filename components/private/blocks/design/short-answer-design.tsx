@@ -40,6 +40,7 @@ const ShortAnswerDesign = ({
     max_character_limit,
     show_character_limit,
     required,
+    id,
   } = block;
 
   const currentColor =
@@ -56,6 +57,7 @@ const ShortAnswerDesign = ({
       <div className="flex flex-col">
         <Input
           type="text"
+          id={id}
           className={`${currentColor.tw_class}`}
           maxLength={max_character_limit ?? 256}
         />

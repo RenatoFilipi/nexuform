@@ -40,6 +40,7 @@ const NumberDesign = ({
     max_character_limit,
     min_character_limit,
     required,
+    id,
   } = block;
 
   const currentColor =
@@ -55,6 +56,7 @@ const NumberDesign = ({
       </div>
       <div className="">
         <Input
+          id={id}
           className={`${currentColor.tw_class}`}
           type="number"
           min={min_character_limit ?? 1}

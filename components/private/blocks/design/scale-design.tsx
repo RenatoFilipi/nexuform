@@ -123,7 +123,7 @@ const ScaleDesign = ({
   block: BlockProps;
   primaryColor: string;
 }) => {
-  const { name, description, required, max_scale } = block;
+  const { name, description, required, max_scale, id } = block;
   const maxScaleArray = Array.from({ length: max_scale ?? 5 }, (_, i) => i + 1);
   const currentColor =
     design.find((x) => x.label === primaryColor) ?? design[0];
@@ -138,15 +138,16 @@ const ScaleDesign = ({
       </div>
       <RadioGroup className="flex w-full">
         {maxScaleArray.map((scale) => {
+          const scaleId = `${id}_${scale}`;
           return (
             <div key={scale} className="w-full">
               <RadioGroupItem
                 value={scale.toString()}
-                id={scale.toString()}
+                id={scaleId}
                 className="peer sr-only"
               />
               <Label
-                htmlFor={scale.toString()}
+                htmlFor={scaleId}
                 className={`${currentColor.tw_class} text-sm cursor-pointer flex items-center justify-center gap-2 rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground`}>
                 {scale}
               </Label>

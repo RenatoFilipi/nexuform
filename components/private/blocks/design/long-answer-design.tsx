@@ -40,6 +40,7 @@ const LongAnswerDesign = ({
     max_character_limit,
     show_character_limit,
     required,
+    id,
   } = block;
 
   const currentColor =
@@ -55,6 +56,7 @@ const LongAnswerDesign = ({
       </div>
       <div className="">
         <Textarea
+          id={id}
           className={`${currentColor.tw_class}`}
           maxLength={max_character_limit ?? 256}
         />

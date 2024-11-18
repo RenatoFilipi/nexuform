@@ -34,7 +34,7 @@ const EmailDesign = ({
   block: BlockProps;
   primaryColor: string;
 }) => {
-  const { name, description, required } = block;
+  const { name, description, required, id } = block;
 
   const currentColor =
     design.find((x) => x.label === primaryColor) ?? design[0];
@@ -47,7 +47,7 @@ const EmailDesign = ({
         </h1>
         <span className="text-xs text-foreground/80">{description}</span>
       </div>
-      <Input type="email" className={`${currentColor.tw_class}`} />
+      <Input id={id} type="email" className={`${currentColor.tw_class}`} />
     </div>
   );
 };
