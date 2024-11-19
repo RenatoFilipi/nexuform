@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { blockName } from "@/helpers/functions";
 import { block } from "@/helpers/types";
 import { BlockProps } from "@/models/form";
 import {
@@ -38,7 +39,7 @@ const Block = (block: BlockProps) => {
             {blockIcons[block.type]}
           </div>
           <div className="flex relative">
-            <span className="text-sm font-medium">{block.name}</span>
+            <span className="text-sm font-medium">{blockName(block.type)}</span>
             {block.required && (
               <div className="text-red-500 -right-2.5 -top-0.5 absolute">*</div>
             )}
@@ -55,7 +56,7 @@ const Block = (block: BlockProps) => {
           </BlockSettings>
         </div>
       </Card>
-      <Button variant={"outline"} size={"icon"}>
+      <Button variant={"outline"} size={"icon"} className="hidden">
         <GripVerticalIcon />
       </Button>
     </div>

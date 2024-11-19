@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ColorProps } from "@/helpers/interfaces";
 import { BlockProps } from "@/models/form";
+import useEditorStore from "@/stores/editor";
 import { twMerge } from "tailwind-merge";
 import CheckboxesDesign from "../blocks/design/checkboxes-design";
 import DropdownDesign from "../blocks/design/dropdown-design";
@@ -120,6 +121,7 @@ const FormWrapper = ({
   submitLabel,
 }: FormWrapperProps) => {
   const sortedBlocks = blocks.sort((a, b) => a.position - b.position);
+  const { blocks: bc } = useEditorStore();
   const currentColor =
     submitButtonDesign.find((x) => x.label === primaryColor) ??
     submitButtonDesign[0];
@@ -134,7 +136,7 @@ const FormWrapper = ({
       </div>
       <div className="w-full flex-1 gap-6 flex flex-col justify-start items-center">
         <div className="flex flex-col gap-8 w-full ">
-          {sortedBlocks.map((block) => {
+          {bc.map((block) => {
             switch (block.type) {
               case "short_answer":
                 return (

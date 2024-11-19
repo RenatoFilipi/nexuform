@@ -4,6 +4,7 @@ import Brand2 from "@/components/core/brand-2";
 import AddBlock from "@/components/private/blocks/add-block";
 import Block from "@/components/private/blocks/block";
 import FormDesign from "@/components/private/forms/form-design";
+import FormOrder from "@/components/private/forms/form-order";
 import FormSettings from "@/components/private/forms/form-settings";
 import FormWrapper from "@/components/private/forms/form-wrapper";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,7 @@ import useEditorStore from "@/stores/editor";
 import { useQuery } from "@tanstack/react-query";
 import {
   BlocksIcon,
+  ListIcon,
   LoaderIcon,
   PaintbrushIcon,
   PlusIcon,
@@ -50,7 +52,7 @@ const Editor = () => {
             <XIcon />
           </Button>
         </div>
-        <div className="mx-2 flex flex-col justify-center items-center gap-6 overflow-y-auto">
+        <div className="px-8 flex flex-col justify-center items-center gap-6 overflow-y-auto">
           <FormWrapper
             mode="preview"
             name={name}
@@ -128,6 +130,12 @@ const Editor = () => {
                   Settings
                 </Button>
               </FormSettings>
+              <FormOrder>
+                <Button variant={"outline"} size={"sm"} className="flex-1">
+                  <ListIcon className="w-4 h-4 mr-2" />
+                  Reorder
+                </Button>
+              </FormOrder>
             </div>
           </div>
           {blocks.length <= 0 && (
