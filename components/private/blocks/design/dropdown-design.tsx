@@ -46,7 +46,7 @@ const DropdownDesign = ({
     design.find((x) => x.label === primaryColor) ?? design[0];
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4  w-full">
       <div className="grid">
         <h1 className="text-base font-medium">
           {name} {required && <span className="text-red-500">*</span>}

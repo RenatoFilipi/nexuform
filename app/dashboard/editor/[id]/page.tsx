@@ -4,6 +4,7 @@ import Brand2 from "@/components/core/brand-2";
 import AddBlock from "@/components/private/blocks/add-block";
 import Block from "@/components/private/blocks/block";
 import FormDesign from "@/components/private/forms/form-design";
+import FormGroup from "@/components/private/forms/form-group";
 import FormOrder from "@/components/private/forms/form-order";
 import FormSettings from "@/components/private/forms/form-settings";
 import FormWrapper from "@/components/private/forms/form-wrapper";
@@ -168,14 +169,7 @@ const Editor = () => {
         {blocks.length >= 1 && (
           <div className="hidden sm:flex flex-1 bg-foreground/5 justify-center items-start ml-[360px] pt-14">
             <div className="bg-background w-full rounded mx-10 my-10 flex flex-col px-10 py-4 gap-6">
-              <FormWrapper
-                mode="preview"
-                name={name}
-                description={description}
-                primaryColor={primaryColor}
-                submitLabel={submitLabel}
-                blocks={blocks}
-              />
+              <FormGroup blocks={blocks} primaryColor={primaryColor} />
               <div className="flex justify-center items-center">
                 <span className="border rounded p-2 flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
                   <Brand2 type="logo" className="fill-foreground w-4 h-4" />
