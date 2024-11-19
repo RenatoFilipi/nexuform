@@ -2,6 +2,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ColorProps } from "@/helpers/interfaces";
 import { BlockProps } from "@/models/form";
+import useEditorStore from "@/stores/editor";
 
 const design: ColorProps[] = [
   {
@@ -123,17 +124,23 @@ const ScaleDesign = ({
   block: BlockProps;
   primaryColor: string;
 }) => {
-  const { name, description, required, max_scale, id } = block;
+  const { name, description, required, max_scale, id, position } = block;
   const maxScaleArray = Array.from({ length: max_scale ?? 5 }, (_, i) => i + 1);
   const currentColor =
     design.find((x) => x.label === primaryColor) ?? design[0];
+  const { numericBlocks } = useEditorStore();
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      <div className="grid">
-        <h1 className="text-base font-medium">
-          {name} {required && <span className="text-red-500">*</span>}
-        </h1>
+      <div className="grid gap-1">
+        <div className="flex gap-2">
+          {numericBlocks && (
+            <span className="bg-foreground/5 px-2 rounded">{position}</span>
+          )}
+          <h1 className="text-base font-medium">
+            {name} {required && <span className="text-red-500">*</span>}
+          </h1>
+        </div>
         <span className="text-xs text-foreground/80">{description}</span>
       </div>
       <RadioGroup className="flex w-full">

@@ -7,7 +7,6 @@ import FormDesign from "@/components/private/forms/form-design";
 import FormGroup from "@/components/private/forms/form-group";
 import FormOrder from "@/components/private/forms/form-order";
 import FormSettings from "@/components/private/forms/form-settings";
-import FormWrapper from "@/components/private/forms/form-wrapper";
 import { Button } from "@/components/ui/button";
 import { formList } from "@/mocks/forms";
 import useEditorStore from "@/stores/editor";
@@ -53,15 +52,8 @@ const Editor = () => {
             <XIcon />
           </Button>
         </div>
-        <div className="px-8 flex flex-col justify-center items-center gap-6 overflow-y-auto">
-          <FormWrapper
-            mode="preview"
-            name={name}
-            description={description}
-            primaryColor={primaryColor}
-            submitLabel={submitLabel}
-            blocks={blocks}
-          />
+        <div className="px-7 flex flex-col justify-center items-center gap-6 overflow-y-auto">
+          <FormGroup mode="preview" />
           <div className="flex justify-center items-center w-full py-2">
             <span className="border rounded p-2 flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
               <Brand2 type="logo" className="fill-foreground w-4 h-4" />
@@ -168,8 +160,8 @@ const Editor = () => {
         )}
         {blocks.length >= 1 && (
           <div className="hidden sm:flex flex-1 bg-foreground/5 justify-center items-start ml-[360px] pt-14">
-            <div className="bg-background w-full rounded mx-10 my-10 flex flex-col px-10 py-4 gap-6">
-              <FormGroup blocks={blocks} primaryColor={primaryColor} />
+            <div className="bg-background w-full rounded mx-8 my-8 flex flex-col px-10 py-4 gap-6">
+              <FormGroup mode="preview" />
               <div className="flex justify-center items-center">
                 <span className="border rounded p-2 flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
                   <Brand2 type="logo" className="fill-foreground w-4 h-4" />

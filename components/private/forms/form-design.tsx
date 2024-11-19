@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { minWidth640 } from "@/helpers/constants";
 import { ColorProps } from "@/helpers/interfaces";
 import { setState } from "@/helpers/types";
@@ -151,23 +152,30 @@ const FormDesign = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Body = ({ setState }: { setState: setState<boolean> }) => {
-  const { primaryColor, setPrimaryColor, name, setSubmitLabel, submitLabel } =
-    useEditorStore();
-
-  const currentColor =
-    availableColors.find((x) => x.label === primaryColor) ?? availableColors[0];
+  const {
+    primaryColor,
+    setPrimaryColor,
+    setSubmitLabel,
+    submitLabel,
+    numericBlocks,
+    setNumericBlock,
+  } = useEditorStore();
 
   return (
-    <div className="flex flex-col gap-6 h-full overflow-y-auto">
+    <div className="flex flex-col gap-6 h-full overflow-y-auto w-full">
       <h1 className="text-xl font-semibold">Design</h1>
-      <div className="flex-1 overflow-y-auto flex flex-col gap-4">
-        <div className="grid gap-3">
+      <div className="flex-1 overflow-y-auto flex flex-col gap-4 w-full">
+        <div className="grid gap-3 w-full">
           <Label>Button</Label>
           <Input
             type="text"
             value={submitLabel}
             onChange={(e) => setSubmitLabel(e.target.value)}
           />
+        </div>
+        <div className="flex justify-between items-center w-full">
+          <Label>Show numeric blocks</Label>
+          <Switch checked={numericBlocks} onCheckedChange={setNumericBlock} />
         </div>
         <div className="grid gap-3 overflow-y-auto">
           <div className="flex justify-start items-center gap-2">
@@ -191,7 +199,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
           </div>
         </div>
       </div>
-      <div className="flex justify-end items-center">
+      <div className="flex justify-end items-center w-full">
         <Button
           onClick={() => setState(false)}
           variant={"secondary"}
