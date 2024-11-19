@@ -141,7 +141,7 @@ const MultipleChoiceDesign = ({
             return (
               <div
                 key={opt.id}
-                className="flex justify-start items-center gap-3">
+                className="flex justify-center sm:justify-start items-center gap-3">
                 <Checkbox id={id} className={twMerge(currentColor.tw_class)} />
                 <span className="text-sm">{opt.text}</span>
               </div>

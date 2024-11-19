@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { blockName } from "@/helpers/functions";
 import { block } from "@/helpers/types";
 import { BlockProps } from "@/models/form";
 import {
@@ -8,7 +7,6 @@ import {
   CheckSquareIcon,
   ChevronDownIcon,
   EqualIcon,
-  GripVerticalIcon,
   HashIcon,
   MailIcon,
   ScaleIcon,
@@ -19,47 +17,44 @@ import {
 import BlockSettings from "./block-settings";
 
 const blockIcons: { [key in block]: JSX.Element } = {
-  short_answer: <EqualIcon className="w-5 h-5" />,
-  long_answer: <TextIcon className="w-5 h-5" />,
-  multiple_choice: <CheckSquareIcon className="w-5 h-5" />,
-  checkboxes: <CheckCircleIcon className="w-5 h-5" />,
-  dropdown: <ChevronDownIcon className="w-5 h-5" />,
-  number: <HashIcon className="w-5 h-5" />,
-  email: <MailIcon className="w-5 h-5" />,
-  rating: <StarIcon className="w-5 h-5" />,
-  scale: <ScaleIcon className="w-5 h-5" />,
+  short_answer: <EqualIcon className="w-5 h-5 text-background" />,
+  long_answer: <TextIcon className="w-5 h-5 text-background" />,
+  multiple_choice: <CheckSquareIcon className="w-5 h-5 text-background" />,
+  checkboxes: <CheckCircleIcon className="w-5 h-5 text-background" />,
+  dropdown: <ChevronDownIcon className="w-5 h-5 text-background" />,
+  number: <HashIcon className="w-5 h-5 text-background" />,
+  email: <MailIcon className="w-5 h-5 text-background" />,
+  rating: <StarIcon className="w-5 h-5 text-background" />,
+  scale: <ScaleIcon className="w-5 h-5 text-background" />,
 };
 
 const Block = (block: BlockProps) => {
   return (
-    <div className="flex justify-center items-center gap-2">
-      <Card className="flex justify-between items-center shadow-none rounded p-0 w-full">
-        <div className="flex gap-2 w-full items-center pl-2">
-          <div className="flex justify-center items-center bg-foreground/10 rounded relative p-1">
-            {blockIcons[block.type]}
-          </div>
-          <div className="flex relative">
-            <span className="text-sm font-medium">{blockName(block.type)}</span>
+    <Card className="flex justify-between items-center shadow-none rounded-none w-full">
+      <div className="flex gap-1 w-full items-center h-full">
+        <div className="flex justify-center items-center bg-foreground/80 relative p-2 h-full">
+          {blockIcons[block.type]}
+        </div>
+        <div className="flex">
+          <span className="text-sm font-medium relative p-2">
+            {block.name}
             {block.required && (
-              <div className="text-red-500 -right-2.5 -top-0.5 absolute">*</div>
+              <span className="text-red-500 absolute ml-1">*</span>
             )}
-          </div>
+          </span>
         </div>
-        <div className="flex justify-center items-center gap-0">
-          <BlockSettings block={block}>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="flex justify-center items-center gap-2">
-              <Settings2Icon className="w-4 h-4" />
-            </Button>
-          </BlockSettings>
-        </div>
-      </Card>
-      <Button variant={"outline"} size={"icon"} className="hidden">
-        <GripVerticalIcon />
-      </Button>
-    </div>
+      </div>
+      <div className="flex justify-center items-center gap-0 h-full">
+        <BlockSettings block={block}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="flex justify-center items-center gap-2 h-full rounded-none">
+            <Settings2Icon className="w-4 h-4" />
+          </Button>
+        </BlockSettings>
+      </div>
+    </Card>
   );
 };
 
