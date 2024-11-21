@@ -23,7 +23,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const Form = () => {
-  const [appState] = useState<appState>("idle");
+  const [appState, setAppState] = useState<appState>("loading");
   const pathname = usePathname();
   const formId = pathname.split("/")[3];
   const [submissions, setSubmissions] = useState<FormSubmissionItemProps[]>([]);
@@ -37,6 +37,7 @@ const Form = () => {
       setSubmissions(
         formSubmissionList.filter((x) => x.form_id === currentForm?.id)
       );
+      setAppState("idle");
       return null;
     },
   });
@@ -79,9 +80,11 @@ const Form = () => {
               {submissions.map((sub) => (
                 <FormSubmissionView key={sub.id}>
                   <TableRow className="overflow-x-auto cursor-pointer">
-                    <TableCell className="truncate">{sub.email}</TableCell>
+                    <TableCell className="truncate text-foreground/80 text-xs p-3">
+                      {sub.email}
+                    </TableCell>
                     <TableCell
-                      className="truncate text-right"
+                      className="truncate text-right text-foreground/80 text-xs p-3"
                       suppressHydrationWarning>
                       {sub.submitted_at}
                     </TableCell>

@@ -7,12 +7,21 @@ import FormItem, { FormItemProps } from "@/components/private/forms/form-item";
 import { Button } from "@/components/ui/button";
 import { appState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
-import { FileIcon } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 const Forms = () => {
-  const [appState] = useState<appState>("idle");
-  const [forms] = useState<FormItemProps[]>(formList);
+  const [appState, setAppState] = useState<appState>("loading");
+  const [forms, setForms] = useState<FormItemProps[]>([]);
+
+  useQuery({
+    queryKey: ["formsData"],
+    queryFn: () => {
+      setForms(formList);
+      setAppState("idle");
+      return null;
+    },
+  });
 
   return (
     <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-14">
@@ -36,7 +45,6 @@ const Forms = () => {
       {appState === "idle" && forms.length <= 0 && (
         <div className="flex justify-center items-center h-full flex-1">
           <div className="flex flex-col justify-center items-center gap-3">
-            <FileIcon className="w-6 h-6 text-foreground" />
             <div className="flex flex-col justify-center items-center">
               <span className="font-semibold">No form to show.</span>
               <span className="text-foreground/80 text-sm">

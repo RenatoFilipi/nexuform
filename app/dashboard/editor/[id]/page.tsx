@@ -7,7 +7,7 @@ import AddBlock from "@/components/private/blocks/add-block";
 import Block from "@/components/private/blocks/block";
 import FormDesign from "@/components/private/forms/form-design";
 import FormGroup from "@/components/private/forms/form-group";
-import FormOrder from "@/components/private/forms/form-order";
+import FormReorder from "@/components/private/forms/form-reorder";
 import FormSettings from "@/components/private/forms/form-settings";
 import { Button } from "@/components/ui/button";
 import { appState } from "@/helpers/types";
@@ -133,12 +133,12 @@ const Editor = () => {
                     Settings
                   </Button>
                 </FormSettings>
-                <FormOrder>
+                <FormReorder>
                   <Button variant={"outline"} size={"sm"} className="flex-1">
                     <ListIcon className="w-4 h-4 mr-2" />
                     Reorder
                   </Button>
-                </FormOrder>
+                </FormReorder>
               </div>
             </div>
             {blocks.length <= 0 && (

@@ -32,7 +32,7 @@ const blockIcons: { [key in block]: JSX.Element } = {
   scale: <ScaleIcon className="w-5 h-5 text-background" />,
 };
 
-const FormOrder = ({ children }: { children: React.ReactNode }) => {
+const FormReorder = ({ children }: { children: React.ReactNode }) => {
   const isDesktop = useMediaQuery({ query: minWidth640 });
   const [open, setOpen] = useState(false);
 
@@ -73,7 +73,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
       {blocks.length <= 0 && (
         <div className="flex justify-center items-center py-4">
           <span className="text-sm text-foreground/80">
-            No Blocks to reorder.
+            No blocks to reorder.
           </span>
         </div>
       )}
@@ -119,4 +119,4 @@ const Item = ({ block }: { block: BlockProps }) => {
   );
 };
 
-export default FormOrder;
+export default FormReorder;
