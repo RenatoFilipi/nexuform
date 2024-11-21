@@ -3,8 +3,9 @@
 import GenericError from "@/components/core/generic-error";
 import GenericLoader from "@/components/core/generic-loader";
 import CreateForm from "@/components/private/forms/create-form";
-import FormItem, { FormItemProps } from "@/components/private/forms/form-item";
+import FormItem from "@/components/private/forms/form-item";
 import { Button } from "@/components/ui/button";
+import { FormItemProps } from "@/helpers/interfaces";
 import { appState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
 import { useQuery } from "@tanstack/react-query";

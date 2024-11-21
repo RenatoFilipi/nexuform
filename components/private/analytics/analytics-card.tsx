@@ -6,7 +6,7 @@ const AnalyticsCard = ({ icon, title, value, state }: AnalyticsCardProps) => {
   return (
     <Card className="p-4 h-20">
       <div className="flex justify-between items-center h-full">
-        <div className="bg-foreground p-3 rounded">{icon}</div>
+        <div className="bg-foreground/5 p-3 rounded">{icon}</div>
         <div className="flex justify-between items-end flex-col h-full">
           <span className="text-sm text-foreground/80">{title}</span>
           {state === "loading" && (
