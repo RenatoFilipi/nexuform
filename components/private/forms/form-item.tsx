@@ -1,18 +1,12 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { FormItemProps } from "@/helpers/interfaces";
 import { formStatus } from "@/helpers/types";
 import { EditIcon, ViewIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../../ui/button";
 import { Card } from "../../ui/card";
-
-export interface FormItemProps {
-  id: string;
-  title: string;
-  status: formStatus;
-  responsesCount: number;
-}
 
 const FormItem = ({ title, status, responsesCount, id }: FormItemProps) => {
   const responsesDisplay = (count: number) => {

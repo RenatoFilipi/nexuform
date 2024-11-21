@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { minWidth640 } from "@/helpers/constants";
 import { uuid } from "@/helpers/functions";
+import { addBlockProps } from "@/helpers/interfaces";
 import { block, setState } from "@/helpers/types";
 import { BlockProps } from "@/models/form";
 import useEditorStore from "@/stores/editor";
@@ -28,13 +29,6 @@ import { useMediaQuery } from "react-responsive";
 import { z } from "zod";
 import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
 
-interface addBlockProps {
-  type: block;
-  name: string;
-  icon: JSX.Element | null;
-  enabled: boolean;
-  description: string;
-}
 const blockList: addBlockProps[] = [
   {
     type: "short_answer",

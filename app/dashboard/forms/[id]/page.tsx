@@ -4,7 +4,6 @@ import GenericError from "@/components/core/generic-error";
 import GenericLoader from "@/components/core/generic-loader";
 import { FormItemProps } from "@/components/private/forms/form-item";
 import FormShare from "@/components/private/forms/form-share";
-import { FormSubmissionItemProps } from "@/components/private/forms/form-submission-item";
 import FormSubmissionView from "@/components/private/forms/form-submission-view";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { FormSubmissionItemProps } from "@/helpers/interfaces";
 import { appState } from "@/helpers/types";
 import { formList, formSubmissionList } from "@/mocks/forms";
 import { useQuery } from "@tanstack/react-query";
@@ -45,7 +45,14 @@ const Form = () => {
   return (
     <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-14">
       <div className="flex justify-between items-center">
-        <span className="font-semibold hidden sm:flex">{form?.title}</span>
+        {form === undefined || form.title === "".trim() ? (
+          <GenericLoader className="hidden sm:flex animate-spin w-5 h-5" />
+        ) : (
+          <div className="hidden sm:flex">
+            <span className="font-semibold">{form?.title}</span>
+            <div></div>
+          </div>
+        )}
         <div className="flex justify-center items-center sm:gap-4 gap-2 w-full sm:w-fit">
           <FormShare id={formId}>
             <Button variant={"outline"} size={"sm"} className="w-full">
@@ -81,7 +88,7 @@ const Form = () => {
                 <FormSubmissionView key={sub.id}>
                   <TableRow className="overflow-x-auto cursor-pointer">
                     <TableCell className="truncate text-foreground/80 text-xs p-3">
-                      {sub.email}
+                      {sub.sender}
                     </TableCell>
                     <TableCell
                       className="truncate text-right text-foreground/80 text-xs p-3"

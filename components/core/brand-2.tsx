@@ -1,9 +1,5 @@
+import { BrandProps } from "@/helpers/interfaces";
 import { twMerge } from "tailwind-merge";
-
-interface BrandProps {
-  className?: string;
-  type: "logo" | "logo_text";
-}
 
 const Brand2 = ({ className, type }: BrandProps) => {
   switch (type) {

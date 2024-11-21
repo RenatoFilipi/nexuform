@@ -2,15 +2,9 @@ import GenericError from "@/components/core/generic-error";
 import GenericLoader from "@/components/core/generic-loader";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { appState } from "@/helpers/types";
-import { FormProgressProps } from "@/models/analytics";
+import { ChartSubmissionsProps } from "@/helpers/interfaces";
 
-interface Props {
-  forms: FormProgressProps[];
-  state: appState;
-}
-
-const ChartSubmissions = ({ forms, state }: Props) => {
+const ChartSubmissions = ({ forms, state }: ChartSubmissionsProps) => {
   const totalSubmissions = forms.reduce(
     (sum, form) => sum + form.submissions,
     0

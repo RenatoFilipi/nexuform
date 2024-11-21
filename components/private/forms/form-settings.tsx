@@ -7,21 +7,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { minWidth640 } from "@/helpers/constants";
-import { formStatus, setState } from "@/helpers/types";
+import { FormSettingsStatusProps } from "@/helpers/interfaces";
+import { setState } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
 import { BookDashedIcon, GlobeIcon, PencilOffIcon } from "lucide-react";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
 
-interface statusProps {
-  status: formStatus;
-  label: string;
-  description: string;
-  icon: JSX.Element | null;
-}
-
-const statusList: statusProps[] = [
+const statusList: FormSettingsStatusProps[] = [
   {
     status: "draft",
     label: "Draft",

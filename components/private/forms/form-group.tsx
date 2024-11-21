@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ColorProps } from "@/helpers/interfaces";
+import { ColorProps, FormGroupProps } from "@/helpers/interfaces";
 import useEditorStore from "@/stores/editor";
 import { twMerge } from "tailwind-merge";
 import CheckboxesDesign from "../blocks/design/checkboxes-design";
@@ -11,10 +11,6 @@ import NumberDesign from "../blocks/design/number-design";
 import RatingDesign from "../blocks/design/rating-design";
 import ScaleDesign from "../blocks/design/scale-design";
 import ShortAnswerDesign from "../blocks/design/short-answer-design";
-
-interface Props {
-  mode: "preview" | "release";
-}
 
 const design: ColorProps[] = [
   {
@@ -107,7 +103,7 @@ const design: ColorProps[] = [
   },
 ];
 
-const FormGroup = ({ mode }: Props) => {
+const FormGroup = ({ mode }: FormGroupProps) => {
   const { blocks, primaryColor, submitLabel, name, description } =
     useEditorStore();
   const currentColor =

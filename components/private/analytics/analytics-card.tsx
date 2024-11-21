@@ -1,15 +1,8 @@
 import GenericLoader from "@/components/core/generic-loader";
 import { Card } from "@/components/ui/card";
-import { appState } from "@/helpers/types";
+import { AnalyticsCardProps } from "@/helpers/interfaces";
 
-interface Props {
-  icon: JSX.Element;
-  title: string;
-  value: string;
-  state: appState;
-}
-
-const AnalyticsCard = ({ icon, title, value, state }: Props) => {
+const AnalyticsCard = ({ icon, title, value, state }: AnalyticsCardProps) => {
   return (
     <Card className="p-4 h-20">
       <div className="flex justify-between items-center h-full">

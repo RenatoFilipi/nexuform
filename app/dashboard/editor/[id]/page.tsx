@@ -69,6 +69,10 @@ const Editor = () => {
     );
   }
 
+  const onSave = () => {
+    console.log(blocks);
+  };
+
   return (
     <div className="flex flex-col h-screen flex-1 gap-4">
       <div className="fixed h-14 flex justify-between items-center w-full top-0 bg-background border-b sm:px-6 px-2 z-20">
@@ -87,7 +91,7 @@ const Editor = () => {
           )}
         </div>
         <div className="hidden sm:flex justify-center items-center gap-4">
-          <Button variant={"secondary"} size={"sm"}>
+          <Button onClick={onSave} variant={"secondary"} size={"sm"}>
             Save
           </Button>
         </div>
