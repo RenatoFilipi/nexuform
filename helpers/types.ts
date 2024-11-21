@@ -9,19 +9,14 @@ export type block =
   | "rating"
   | "scale";
 export type setState<T> = React.Dispatch<React.SetStateAction<T>>;
-export type stage = "stage01" | "stage02" | "stage03" | "stage04" | "stage05";
+export type appStage =
+  | "stage01"
+  | "stage02"
+  | "stage03"
+  | "stage04"
+  | "stage05";
 export type formStatus = "inactive" | "draft" | "published";
-export type dashboardFormsState = "loading" | "no_form" | "has_form" | "error";
-export type dashboardFormState =
-  | "loading"
-  | "no_submissions"
-  | "has_submissions"
-  | "error";
-export type dashboardEditorState =
-  | "loading"
-  | "no_block"
-  | "has_block"
-  | "error";
+export type appState = "loading" | "idle" | "error";
 export type colorLabel =
   | "Slate"
   | "Gray"

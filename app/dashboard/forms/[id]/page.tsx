@@ -1,6 +1,8 @@
 "use client";
 
+import { FormItemProps } from "@/components/private/forms/form-item";
 import FormShare from "@/components/private/forms/form-share";
+import { FormSubmissionItemProps } from "@/components/private/forms/form-submission-item";
 import FormSubmissionView from "@/components/private/forms/form-submission-view";
 import GenericError from "@/components/private/shared/generic-error";
 import { Button } from "@/components/ui/button";
@@ -12,54 +14,62 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { dashboardFormState } from "@/helpers/types";
+import { appState } from "@/helpers/types";
 import { formList, formSubmissionList } from "@/mocks/forms";
+import { useQuery } from "@tanstack/react-query";
 import { LoaderIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const Form = () => {
-  const [state] = useState<dashboardFormState>("no_submissions");
+  const [appState] = useState<appState>("idle");
   const pathname = usePathname();
-  const currentFormId = pathname.split("/")[3];
-  const currentForm = formList.find((x) => x.id === currentFormId);
-  const submissions = formSubmissionList.filter(
-    (x) => x.form_id === currentForm?.id
-  );
+  const formId = pathname.split("/")[3];
+  const [submissions, setSubmissions] = useState<FormSubmissionItemProps[]>([]);
+  const [form, setForm] = useState<FormItemProps | undefined>();
+
+  useQuery({
+    queryKey: ["formPageData"],
+    queryFn: () => {
+      const currentForm = formList.find((x) => x.id === formId);
+      setForm(currentForm);
+      setSubmissions(
+        formSubmissionList.filter((x) => x.form_id === currentForm?.id)
+      );
+      return null;
+    },
+  });
 
   return (
     <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-14">
       <div className="flex justify-between items-center">
-        <span className="font-semibold hidden sm:flex">
-          {currentForm?.title}
-        </span>
+        <span className="font-semibold hidden sm:flex">{form?.title}</span>
         <div className="flex justify-center items-center sm:gap-4 gap-2 w-full sm:w-fit">
-          <FormShare id={currentFormId}>
+          <FormShare id={formId}>
             <Button variant={"outline"} size={"sm"} className="w-full">
               Share
             </Button>
           </FormShare>
           <Button variant={"default"} size={"sm"} className="w-full" asChild>
-            <Link href={`/dashboard/editor/${currentFormId}`}>Edit</Link>
+            <Link href={`/dashboard/editor/${formId}`}>Edit</Link>
           </Button>
         </div>
       </div>
       <div className="h-full border flex flex-col overflow-y-auto flex-1">
         {/* loading */}
-        {state === "loading" && (
+        {appState === "loading" && (
           <div className="flex justify-center items-center h-full flex-1">
             <LoaderIcon className="w-8 h-8 animate-spin" />
           </div>
         )}
-        {/* no submissions */}
-        {state === "no_submissions" && (
+        {/* idle */}
+        {appState === "idle" && submissions.length <= 0 && (
           <div className="flex justify-center items-center h-full flex-1">
             <span className="text-foreground/80">No submissions to show.</span>
           </div>
         )}
-        {/* has submissions */}
-        {state === "has_submissions" && (
+        {appState === "idle" && submissions.length >= 1 && (
           <Table className="overflow-y-auto">
             <TableHeader>
               <TableRow>
@@ -83,7 +93,8 @@ const Form = () => {
             </TableBody>
           </Table>
         )}
-        {state === "error" && (
+        {/* error */}
+        {appState === "error" && (
           <div className="flex justify-center items-center h-full flex-1">
             <GenericError />
           </div>

@@ -1,16 +1,17 @@
 "use client";
 
 import CreateForm from "@/components/private/forms/create-form";
-import FormItem from "@/components/private/forms/form-item";
+import FormItem, { FormItemProps } from "@/components/private/forms/form-item";
 import GenericError from "@/components/private/shared/generic-error";
 import { Button } from "@/components/ui/button";
-import { dashboardFormsState } from "@/helpers/types";
+import { appState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
 import { FileIcon, LoaderIcon } from "lucide-react";
 import { useState } from "react";
 
 const Forms = () => {
-  const [state] = useState<dashboardFormsState>("has_form");
+  const [appState] = useState<appState>("idle");
+  const [forms] = useState<FormItemProps[]>(formList);
 
   return (
     <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-14">
@@ -25,15 +26,15 @@ const Forms = () => {
         </div>
       </div>
       {/* loading */}
-      {state === "loading" && (
+      {appState === "loading" && (
         <div className="h-full flex-1 flex justify-center items-center">
           <div className="flex justify-center items-center flex-col gap-3">
             <LoaderIcon className="w-8 h-8 animate-spin" />
           </div>
         </div>
       )}
-      {/* no form */}
-      {state === "no_form" && (
+      {/* idle */}
+      {appState === "idle" && forms.length <= 0 && (
         <div className="flex justify-center items-center h-full flex-1">
           <div className="flex flex-col justify-center items-center gap-3">
             <FileIcon className="w-6 h-6 text-foreground" />
@@ -46,10 +47,9 @@ const Forms = () => {
           </div>
         </div>
       )}
-      {/* has form grid */}
-      {state === "has_form" && (
+      {appState === "idle" && forms.length >= 1 && (
         <div className="overflow-y-auto grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {formList.map((form) => (
+          {forms.map((form) => (
             <FormItem
               key={form.id}
               id={form.id}
@@ -61,7 +61,7 @@ const Forms = () => {
         </div>
       )}
       {/* error */}
-      {state === "error" && (
+      {appState === "error" && (
         <div className="flex justify-center items-center h-full flex-1">
           <GenericError />
         </div>

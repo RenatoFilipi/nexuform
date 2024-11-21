@@ -1,3 +1,5 @@
+"use client";
+
 import { FrownIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../../ui/button";
@@ -6,7 +8,7 @@ const GenericError = () => {
   return (
     <div className="flex h-full justify-center items-center">
       <div className="flex flex-col justify-center items-center gap-3">
-        <div className="flex justify-center items-center p-2 rounded bg-secondary/10">
+        <div className="flex justify-center items-center p-2 rounded bg-foreground/5">
           <FrownIcon />
         </div>
         <div className="flex flex-col justify-center items-center gap-3">
