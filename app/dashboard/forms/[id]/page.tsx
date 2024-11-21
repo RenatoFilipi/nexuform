@@ -1,10 +1,11 @@
 "use client";
 
+import GenericError from "@/components/core/generic-error";
+import GenericLoader from "@/components/core/generic-loader";
 import { FormItemProps } from "@/components/private/forms/form-item";
 import FormShare from "@/components/private/forms/form-share";
 import { FormSubmissionItemProps } from "@/components/private/forms/form-submission-item";
 import FormSubmissionView from "@/components/private/forms/form-submission-view";
-import GenericError from "@/components/private/shared/generic-error";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -17,7 +18,6 @@ import {
 import { appState } from "@/helpers/types";
 import { formList, formSubmissionList } from "@/mocks/forms";
 import { useQuery } from "@tanstack/react-query";
-import { LoaderIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -57,13 +57,11 @@ const Form = () => {
         </div>
       </div>
       <div className="h-full border flex flex-col overflow-y-auto flex-1">
-        {/* loading */}
         {appState === "loading" && (
           <div className="flex justify-center items-center h-full flex-1">
-            <LoaderIcon className="w-8 h-8 animate-spin" />
+            <GenericLoader className="w-8 h-8 animate-spin" />
           </div>
         )}
-        {/* idle */}
         {appState === "idle" && submissions.length <= 0 && (
           <div className="flex justify-center items-center h-full flex-1">
             <span className="text-foreground/80">No submissions to show.</span>
@@ -93,7 +91,6 @@ const Form = () => {
             </TableBody>
           </Table>
         )}
-        {/* error */}
         {appState === "error" && (
           <div className="flex justify-center items-center h-full flex-1">
             <GenericError />

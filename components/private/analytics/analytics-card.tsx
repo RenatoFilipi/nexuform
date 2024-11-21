@@ -1,19 +1,32 @@
+import GenericLoader from "@/components/core/generic-loader";
 import { Card } from "@/components/ui/card";
+import { appState } from "@/helpers/types";
 
 interface Props {
   icon: JSX.Element;
   title: string;
   value: string;
+  state: appState;
 }
 
-const AnalyticsCard = ({ icon, title, value }: Props) => {
+const AnalyticsCard = ({ icon, title, value, state }: Props) => {
   return (
-    <Card className="p-4">
-      <div className="flex justify-between items-center">
+    <Card className="p-4 h-20">
+      <div className="flex justify-between items-center h-full">
         <div className="bg-foreground p-3 rounded">{icon}</div>
-        <div className="flex flex-col justify-center items-end">
+        <div className="flex justify-between items-end flex-col h-full">
           <span className="text-sm text-foreground/80">{title}</span>
-          <span className="font-semibold text-2xl">{value}</span>
+          {state === "loading" && (
+            <GenericLoader className="w-6 h-6 animate-spin mt-2" />
+          )}
+          {state === "idle" && (
+            <span className="font-semibold text-2xl">{value}</span>
+          )}
+          {state === "error" && (
+            <span className="text-destructive text-sm">
+              Something went wrong
+            </span>
+          )}
         </div>
       </div>
     </Card>

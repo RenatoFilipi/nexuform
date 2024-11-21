@@ -1,12 +1,13 @@
 "use client";
 
+import GenericError from "@/components/core/generic-error";
+import GenericLoader from "@/components/core/generic-loader";
 import CreateForm from "@/components/private/forms/create-form";
 import FormItem, { FormItemProps } from "@/components/private/forms/form-item";
-import GenericError from "@/components/private/shared/generic-error";
 import { Button } from "@/components/ui/button";
 import { appState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
-import { FileIcon, LoaderIcon } from "lucide-react";
+import { FileIcon } from "lucide-react";
 import { useState } from "react";
 
 const Forms = () => {
@@ -25,15 +26,13 @@ const Forms = () => {
           </CreateForm>
         </div>
       </div>
-      {/* loading */}
       {appState === "loading" && (
         <div className="h-full flex-1 flex justify-center items-center">
           <div className="flex justify-center items-center flex-col gap-3">
-            <LoaderIcon className="w-8 h-8 animate-spin" />
+            <GenericLoader className="w-8 h-8 animate-spin" />
           </div>
         </div>
       )}
-      {/* idle */}
       {appState === "idle" && forms.length <= 0 && (
         <div className="flex justify-center items-center h-full flex-1">
           <div className="flex flex-col justify-center items-center gap-3">
@@ -60,7 +59,6 @@ const Forms = () => {
           ))}
         </div>
       )}
-      {/* error */}
       {appState === "error" && (
         <div className="flex justify-center items-center h-full flex-1">
           <GenericError />

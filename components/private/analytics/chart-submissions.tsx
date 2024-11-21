@@ -1,12 +1,16 @@
+import GenericError from "@/components/core/generic-error";
+import GenericLoader from "@/components/core/generic-loader";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { appState } from "@/helpers/types";
 import { FormProgressProps } from "@/models/analytics";
 
 interface Props {
   forms: FormProgressProps[];
+  state: appState;
 }
 
-const ChartSubmissions = ({ forms }: Props) => {
+const ChartSubmissions = ({ forms, state }: Props) => {
   const totalSubmissions = forms.reduce(
     (sum, form) => sum + form.submissions,
     0
@@ -14,12 +18,17 @@ const ChartSubmissions = ({ forms }: Props) => {
 
   return (
     <Card className="p-4">
-      {forms.length <= 0 && (
+      {state === "loading" && (
+        <div className="flex justify-center items-center py-8">
+          <GenericLoader className="w-5 h-5 animate-spin" />
+        </div>
+      )}
+      {state === "idle" && forms.length <= 0 && (
         <div className="flex justify-center items-center">
           <span className="text-foreground/80">No data to show.</span>
         </div>
       )}
-      {forms.length >= 1 && (
+      {state === "idle" && forms.length >= 1 && (
         <div className="flex flex-col gap-6">
           {forms.map((form) => (
             <div key={form.id} className="space-y-2">
@@ -35,6 +44,11 @@ const ChartSubmissions = ({ forms }: Props) => {
               />
             </div>
           ))}
+        </div>
+      )}
+      {state === "error" && (
+        <div className="flex justify-center items-center py-4">
+          <GenericError />
         </div>
       )}
     </Card>

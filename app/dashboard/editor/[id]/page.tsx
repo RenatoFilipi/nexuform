@@ -1,13 +1,14 @@
 "use client";
 
 import Brand2 from "@/components/core/brand-2";
+import GenericError from "@/components/core/generic-error";
+import GenericLoader from "@/components/core/generic-loader";
 import AddBlock from "@/components/private/blocks/add-block";
 import Block from "@/components/private/blocks/block";
 import FormDesign from "@/components/private/forms/form-design";
 import FormGroup from "@/components/private/forms/form-group";
 import FormOrder from "@/components/private/forms/form-order";
 import FormSettings from "@/components/private/forms/form-settings";
-import GenericError from "@/components/private/shared/generic-error";
 import { Button } from "@/components/ui/button";
 import { appState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
@@ -16,7 +17,6 @@ import { useQuery } from "@tanstack/react-query";
 import {
   BlocksIcon,
   ListIcon,
-  LoaderIcon,
   PaintbrushIcon,
   PlusIcon,
   Settings2Icon,
@@ -79,7 +79,7 @@ const Editor = () => {
             </Link>
           </Button>
           {name === "".trim() ? (
-            <LoaderIcon className="animate-spin w-4 h-4" />
+            <GenericLoader className="animate-spin w-4 h-4" />
           ) : (
             <span className="text-foreground/80 text-sm font-semibold">
               {name}
@@ -103,15 +103,13 @@ const Editor = () => {
           </Button>
         </div>
       </div>
-      {/* loading */}
       {appState === "loading" && (
         <div className="flex flex-1 justify-center items-center h-full pt-14">
           <div className="flex justify-center items-center gap-2 flex-col">
-            <LoaderIcon className="w-8 h-8 animate-spin" />
+            <GenericLoader className="w-8 h-8 animate-spin" />
           </div>
         </div>
       )}
-      {/* idle */}
       {appState === "idle" && (
         <div className="flex flex-1 relative">
           <div className="sm:w-[360px] w-full flex flex-col p-4 gap-6 fixed bg-background h-full overflow-y-auto pt-14">
@@ -187,7 +185,6 @@ const Editor = () => {
           )}
         </div>
       )}
-      {/* error */}
       {appState === "error" && (
         <div className="flex flex-1 justify-center items-center h-full pt-14">
           <GenericError />

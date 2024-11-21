@@ -32,8 +32,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Avatar, AvatarFallback } from "../../ui/avatar";
-import { Button } from "../../ui/button";
+import CreateForm from "../private/forms/create-form";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -41,8 +42,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../../ui/dropdown-menu";
-import CreateForm from "../forms/create-form";
+} from "../ui/dropdown-menu";
 
 const navLinks = [
   {
