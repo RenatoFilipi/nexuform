@@ -12,6 +12,7 @@ import FormSettings from "@/components/private/forms/form-settings";
 import { Button } from "@/components/ui/button";
 import { appState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
+import { FormProps } from "@/models/form";
 import useEditorStore from "@/stores/editor";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -27,7 +28,19 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const Editor = () => {
-  const { blocks, setName, name } = useEditorStore();
+  const {
+    blocks,
+    setName,
+    name,
+    description,
+    ownerId,
+    id,
+    numericBlocks,
+    primaryColor,
+    status,
+    submitLabel,
+    setId,
+  } = useEditorStore();
   const pathname = usePathname();
   const [isPreview, setIsPreview] = useState(false);
   const currentFormId = pathname.split("/")[3];
@@ -38,6 +51,7 @@ const Editor = () => {
     queryKey: ["editorPageData"],
     queryFn: () => {
       if (!currentForm) return null;
+      setId(currentFormId);
       setName(currentForm.title);
       return null;
     },
@@ -70,7 +84,19 @@ const Editor = () => {
   }
 
   const onSave = () => {
-    console.log(blocks);
+    const formModel: FormProps = {
+      id,
+      owner_id: ownerId,
+      name,
+      description,
+      blocks,
+      created_at: "",
+      updated_at: "",
+      numeric_blocks: numericBlocks,
+      primary_color: primaryColor,
+      submit_label: submitLabel,
+    };
+    console.log(JSON.stringify(formModel));
   };
 
   return (

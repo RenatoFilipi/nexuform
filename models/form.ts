@@ -8,10 +8,9 @@ export interface FormProps {
   created_at: string;
   updated_at: string;
   primary_color: string;
-  background: string;
-  foreground: string;
   submit_label: string;
   blocks: BlockProps[];
+  numeric_blocks: boolean;
 }
 
 export interface BlockProps {
