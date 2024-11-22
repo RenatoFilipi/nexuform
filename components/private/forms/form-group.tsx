@@ -122,35 +122,70 @@ const FormGroup = ({ mode }: FormGroupProps) => {
           switch (block.type) {
             case "short_answer":
               return (
-                <ShortAnswerDesign block={block} primaryColor={primaryColor} />
+                <ShortAnswerDesign
+                  key={block.id}
+                  block={block}
+                  primaryColor={primaryColor}
+                />
               );
             case "long_answer":
               return (
-                <LongAnswerDesign block={block} primaryColor={primaryColor} />
+                <LongAnswerDesign
+                  key={block.id}
+                  block={block}
+                  primaryColor={primaryColor}
+                />
               );
             case "multiple_choice":
               return (
                 <MultipleChoiceDesign
+                  key={block.id}
                   block={block}
                   primaryColor={primaryColor}
                 />
               );
             case "checkboxes":
               return (
-                <CheckboxesDesign block={block} primaryColor={primaryColor} />
+                <CheckboxesDesign
+                  key={block.id}
+                  block={block}
+                  primaryColor={primaryColor}
+                />
               );
             case "dropdown":
               return (
-                <DropdownDesign block={block} primaryColor={primaryColor} />
+                <DropdownDesign
+                  key={block.id}
+                  block={block}
+                  primaryColor={primaryColor}
+                />
               );
             case "number":
-              return <NumberDesign block={block} primaryColor={primaryColor} />;
+              return (
+                <NumberDesign
+                  key={block.id}
+                  block={block}
+                  primaryColor={primaryColor}
+                />
+              );
             case "email":
-              return <EmailDesign block={block} primaryColor={primaryColor} />;
+              return (
+                <EmailDesign
+                  key={block.id}
+                  block={block}
+                  primaryColor={primaryColor}
+                />
+              );
             case "rating":
-              return <RatingDesign block={block} />;
+              return <RatingDesign key={block.id} block={block} />;
             case "scale":
-              return <ScaleDesign block={block} primaryColor={primaryColor} />;
+              return (
+                <ScaleDesign
+                  key={block.id}
+                  block={block}
+                  primaryColor={primaryColor}
+                />
+              );
           }
         })}
       </div>

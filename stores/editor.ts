@@ -24,6 +24,7 @@ interface FormStoreProps {
   setStatus: (value: formStatus) => void;
   numericBlocks: boolean;
   setNumericBlock: (value: boolean) => void;
+  reset: () => void;
 }
 
 const useEditorStore = create<FormStoreProps>((set) => ({
@@ -56,6 +57,18 @@ const useEditorStore = create<FormStoreProps>((set) => ({
   setStatus: (value) => set({ status: value }),
   numericBlocks: false,
   setNumericBlock: (value) => set({ numericBlocks: value }),
+  reset: () =>
+    set({
+      id: "",
+      ownerId: "",
+      name: "",
+      description: null,
+      primaryColor: "Slate",
+      submitLabel: "Submit",
+      blocks: [],
+      status: "draft",
+      numericBlocks: false,
+    }),
 }));
 
 export default useEditorStore;

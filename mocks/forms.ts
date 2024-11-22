@@ -1,5 +1,5 @@
-import { FormSubmissionItemProps } from "@/app/dashboard/forms/[id]/page";
-import { FormItemProps } from "@/components/private/forms/form-item";
+import { FormItemProps, FormSubmissionItemProps } from "@/helpers/interfaces";
+import { FormProps } from "@/models/form";
 
 export const formList: FormItemProps[] = [
   {
@@ -57,5 +57,65 @@ export const formSubmissionList: FormSubmissionItemProps[] = [
     form_id: "d9dd8f26-dabc-4f4c-bac3-facb19d621a8",
     sender: "user7@example.com",
     submitted_at: new Date().toISOString(),
+  },
+];
+export const formSettingsList: FormProps[] = [
+  {
+    id: "01b1c3c1-0993-4ba5-a53f-604b7708f6e4",
+    owner_id: "",
+    name: "Product Evaluation",
+    description:
+      "Seu feedback é muito importante para nós! Estamos constantemente trabalhando para melhorar nosso produto e oferecer a melhor experiência possível.",
+    blocks: [
+      {
+        id: "6f785bda-24bf-4c0a-8a64-eba208e7b225",
+        name: "Quais funcionalidades você mais usa?",
+        description: "",
+        options: null,
+        required: true,
+        type: "short_answer",
+        placeholder: null,
+        max_character_limit: 100,
+        min_character_limit: 1,
+        show_character_limit: true,
+        position: 1,
+        max_rating: null,
+        max_scale: null,
+      },
+      {
+        id: "08bdbb6f-13d0-4ede-a7ae-6acdb41eb9c5",
+        name: "Houve alguma dificuldade ao usar o produto?",
+        description: "",
+        options: null,
+        required: false,
+        type: "long_answer",
+        placeholder: null,
+        max_character_limit: 100,
+        min_character_limit: 1,
+        show_character_limit: null,
+        position: 2,
+        max_rating: null,
+        max_scale: null,
+      },
+    ],
+    created_at: "",
+    updated_at: "",
+    numeric_blocks: true,
+    primary_color: "Purple",
+    submit_label: "Enviar",
+    status: "draft",
+  },
+  {
+    id: "d9dd8f26-dabc-4f4c-bac3-facb19d621a8",
+    owner_id: "",
+    name: "Course Feedback",
+    description: null,
+    blocks: [],
+    created_at: "",
+    updated_at: "",
+    numeric_blocks: false,
+    primary_color: "Cyan",
+    submit_label: "Submit",
+    status: "draft",
   },
 ];

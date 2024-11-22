@@ -1,4 +1,4 @@
-import { block } from "@/helpers/types";
+import { block, formStatus } from "@/helpers/types";
 
 export interface FormProps {
   id: string;
@@ -11,6 +11,7 @@ export interface FormProps {
   submit_label: string;
   blocks: BlockProps[];
   numeric_blocks: boolean;
+  status: formStatus;
 }
 
 export interface BlockProps {

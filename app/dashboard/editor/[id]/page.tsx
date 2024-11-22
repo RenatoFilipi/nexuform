@@ -10,8 +10,8 @@ import FormGroup from "@/components/private/forms/form-group";
 import FormReorder from "@/components/private/forms/form-reorder";
 import FormSettings from "@/components/private/forms/form-settings";
 import { Button } from "@/components/ui/button";
-import { appState } from "@/helpers/types";
-import { formList } from "@/mocks/forms";
+import { appState, colorLabel } from "@/helpers/types";
+import { formSettingsList } from "@/mocks/forms";
 import { FormProps } from "@/models/form";
 import useEditorStore from "@/stores/editor";
 import { useQuery } from "@tanstack/react-query";
@@ -40,19 +40,42 @@ const Editor = () => {
     status,
     submitLabel,
     setId,
+    setBlocks,
+    setDescription,
+    setNumericBlock,
+    setOwnerId,
+    setPrimaryColor,
+    setStatus,
+    setSubmitLabel,
+    reset,
   } = useEditorStore();
+
   const pathname = usePathname();
   const [isPreview, setIsPreview] = useState(false);
-  const currentFormId = pathname.split("/")[3];
-  const currentForm = formList.find((x) => x.id === currentFormId);
-  const [appState] = useState<appState>("idle");
+  const [appState, setAppState] = useState<appState>("loading");
 
   useQuery({
     queryKey: ["editorPageData"],
     queryFn: () => {
-      if (!currentForm) return null;
-      setId(currentFormId);
-      setName(currentForm.title);
+      reset();
+      const formId = pathname.split("/")[3];
+      const formItem = formSettingsList.find((x) => x.id === formId);
+
+      if (!formItem) {
+        setAppState("idle");
+        return null;
+      }
+
+      setId(formId);
+      setOwnerId(formItem.owner_id);
+      setName(formItem.name);
+      setDescription(formItem.description);
+      setStatus(formItem.status);
+      setSubmitLabel(formItem.submit_label);
+      setNumericBlock(formItem.numeric_blocks);
+      setPrimaryColor(formItem.primary_color as colorLabel);
+      setBlocks(formItem.blocks);
+      setAppState("idle");
       return null;
     },
   });
@@ -95,7 +118,9 @@ const Editor = () => {
       numeric_blocks: numericBlocks,
       primary_color: primaryColor,
       submit_label: submitLabel,
+      status,
     };
+    console.log(formModel);
     console.log(JSON.stringify(formModel));
   };
 
@@ -108,9 +133,10 @@ const Editor = () => {
               <Brand2 type="logo" className="h-7 fill-foreground" />
             </Link>
           </Button>
-          {name === "".trim() ? (
+          {appState === "loading" && (
             <GenericLoader className="animate-spin w-4 h-4" />
-          ) : (
+          )}
+          {appState === "idle" && (
             <span className="text-foreground/80 text-sm font-semibold">
               {name}
             </span>
