@@ -2,7 +2,6 @@
 
 import GenericError from "@/components/core/generic-error";
 import GenericLoader from "@/components/core/generic-loader";
-import { FormItemProps } from "@/components/private/forms/form-item";
 import FormShare from "@/components/private/forms/form-share";
 import FormSubmissionView from "@/components/private/forms/form-submission-view";
 import { Button } from "@/components/ui/button";
@@ -14,7 +13,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { FormSubmissionItemProps } from "@/helpers/interfaces";
+import { formatDateRelativeToNow } from "@/helpers/functions";
+import { FormItemProps, FormSubmissionItemProps } from "@/helpers/interfaces";
 import { appState } from "@/helpers/types";
 import { formList, formSubmissionList } from "@/mocks/forms";
 import { useQuery } from "@tanstack/react-query";
@@ -93,7 +93,7 @@ const Form = () => {
                     <TableCell
                       className="truncate text-right text-foreground/80 text-xs p-3"
                       suppressHydrationWarning>
-                      {sub.submitted_at}
+                      {formatDateRelativeToNow(sub.submitted_at)}
                     </TableCell>
                   </TableRow>
                 </FormSubmissionView>

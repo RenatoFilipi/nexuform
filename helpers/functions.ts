@@ -1,10 +1,10 @@
+import { formatDistance } from "date-fns";
 import { block } from "./types";
 
 export const uuid = () => {
   const uuid = self.crypto.randomUUID();
   return uuid;
 };
-
 export const blockName = (type: block) => {
   switch (type) {
     case "short_answer":
@@ -26,4 +26,10 @@ export const blockName = (type: block) => {
     case "scale":
       return "Scale";
   }
+};
+export const formatDateRelativeToNow = (isoDate: string) => {
+  const date = new Date(isoDate);
+  return formatDistance(date, new Date(), {
+    addSuffix: true,
+  });
 };
