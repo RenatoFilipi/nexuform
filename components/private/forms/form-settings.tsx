@@ -14,6 +14,7 @@ import { BookDashedIcon, GlobeIcon, PencilOffIcon } from "lucide-react";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
+import DeleteForm from "./delete-form";
 
 const statusList: FormSettingsStatusProps[] = [
   {
@@ -119,7 +120,15 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
           </div>
         </div>
       </div>
-      <div className="flex justify-end items-center">
+      <div className="flex justify-between items-center gap-2 flex-col-reverse sm:flex-row">
+        <DeleteForm formId={store.id}>
+          <Button
+            variant={"destructive_outline"}
+            size={"sm"}
+            className="w-full sm:w-fit">
+            Delete Form
+          </Button>
+        </DeleteForm>
         <Button
           onClick={() => setState(false)}
           variant={"secondary"}
