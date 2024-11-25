@@ -57,6 +57,7 @@ const Editor = () => {
   useQuery({
     queryKey: ["editorPageData"],
     queryFn: () => {
+      console.log("editor query");
       reset();
       const formId = pathname.split("/")[3];
       const formItem = formSettingsList.find((x) => x.id === formId);
@@ -78,6 +79,7 @@ const Editor = () => {
       setAppState("idle");
       return null;
     },
+    refetchOnWindowFocus: false,
   });
 
   if (isPreview) {

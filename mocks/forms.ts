@@ -1,20 +1,6 @@
 import { FormItemProps, FormSubmissionItemProps } from "@/helpers/interfaces";
 import { FormModel } from "@/models/form";
 
-export const formList: FormItemProps[] = [
-  {
-    id: "01b1c3c1-0993-4ba5-a53f-604b7708f6e4",
-    title: "Product Evaluation",
-    status: "published",
-    responsesCount: 474,
-  },
-  {
-    id: "d9dd8f26-dabc-4f4c-bac3-facb19d621a8",
-    title: "Course Feedback",
-    status: "draft",
-    responsesCount: 317,
-  },
-];
 export const formSubmissionList: FormSubmissionItemProps[] = [
   {
     id: "a1b2c3d4-e5f6-7890-1234-56789abcdef0",
@@ -115,13 +101,109 @@ export const formSettingsList: FormModel[] = [
     id: "d9dd8f26-dabc-4f4c-bac3-facb19d621a8",
     owner_id: "",
     name: "Course Feedback",
-    description: null,
-    blocks: [],
+    description:
+      "Thank you for participating in our course! Your feedback is vital for us to improve and deliver a better learning experience in the future.",
+    blocks: [
+      {
+        id: "fab4304e-650a-4f26-950d-0191fbbbcec4",
+        form_id: "d9dd8f26-dabc-4f4c-bac3-facb19d621a8",
+        created_at: "",
+        updated_at: "",
+        name: "What did you enjoy most about the course?",
+        description:
+          "Share your favorite aspects of the course, such as specific lessons, teaching methods, or practical activities.",
+        options: null,
+        required: true,
+        type: "long_answer",
+        placeholder: null,
+        max_character_limit: 100,
+        min_character_limit: 1,
+        show_character_limit: null,
+        position: 1,
+        max_rating: null,
+        max_scale: null,
+      },
+      {
+        id: "e913527a-3a31-4ec7-9e25-a4d852fa84cf",
+        form_id: "d9dd8f26-dabc-4f4c-bac3-facb19d621a8",
+        created_at: "",
+        updated_at: "",
+        name: "How would you rate the overall quality of the course?",
+        description:
+          "Please evaluate the course as a whole, considering the content, teaching style, and learning experience.",
+        options: null,
+        required: true,
+        type: "scale",
+        placeholder: null,
+        max_character_limit: 100,
+        min_character_limit: 1,
+        show_character_limit: null,
+        position: 2,
+        max_rating: null,
+        max_scale: null,
+      },
+      {
+        id: "3ca5017b-4b2e-40ef-80ee-2c12a65626a1",
+        form_id: "d9dd8f26-dabc-4f4c-bac3-facb19d621a8",
+        created_at: "",
+        updated_at: "",
+        name: "Any additional comments or suggestions?",
+        description:
+          "Feel free to share any other thoughts or feedback about the course. Your input is always appreciated.",
+        options: null,
+        required: true,
+        type: "short_answer",
+        placeholder: null,
+        max_character_limit: 100,
+        min_character_limit: 1,
+        show_character_limit: null,
+        position: 3,
+        max_rating: null,
+        max_scale: null,
+      },
+      {
+        id: "b4b34508-f13b-4057-b37e-ebaaeb892ead",
+        form_id: "d9dd8f26-dabc-4f4c-bac3-facb19d621a8",
+        created_at: "",
+        updated_at: "",
+        name: "How do you rate the instructor’s delivery and knowledge?",
+        description:
+          "Evaluate the instructor’s ability to present the content effectively and demonstrate expertise in the subject matter.",
+        options: null,
+        required: true,
+        type: "rating",
+        placeholder: null,
+        max_character_limit: 100,
+        min_character_limit: 1,
+        show_character_limit: null,
+        position: 4,
+        max_rating: null,
+        max_scale: null,
+      },
+    ],
     created_at: "",
     updated_at: "",
     numeric_blocks: false,
-    primary_color: "Cyan",
-    submit_label: "Submit",
+    primary_color: "Orange",
+    submit_label: "Send Response",
     status: "draft",
+  },
+];
+export const formList: FormItemProps[] = [
+  {
+    id: "01b1c3c1-0993-4ba5-a53f-604b7708f6e4",
+    title: "Product Evaluation",
+    status: "published",
+    responsesCount: formSubmissionList.filter(
+      (x) => x.form_id === "01b1c3c1-0993-4ba5-a53f-604b7708f6e4"
+    ).length,
+  },
+  {
+    id: "d9dd8f26-dabc-4f4c-bac3-facb19d621a8",
+    title: "Course Feedback",
+    status: "draft",
+    responsesCount: formSubmissionList.filter(
+      (x) => x.form_id === "d9dd8f26-dabc-4f4c-bac3-facb19d621a8"
+    ).length,
   },
 ];
