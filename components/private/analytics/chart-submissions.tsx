@@ -14,12 +14,12 @@ const ChartSubmissions = ({ forms, state }: ChartSubmissionsProps) => {
     <Card className="p-4">
       {state === "loading" && (
         <div className="flex justify-center items-center py-8">
-          <GenericLoader className="w-5 h-5 animate-spin" />
+          <GenericLoader className="w-5 h-5" />
         </div>
       )}
       {state === "idle" && forms.length <= 0 && (
-        <div className="flex justify-center items-center">
-          <span className="text-foreground/80">No data to show.</span>
+        <div className="flex justify-center items-center py-4">
+          <span className="text-foreground/80 text-sm">No data to show.</span>
         </div>
       )}
       {state === "idle" && forms.length >= 1 && (

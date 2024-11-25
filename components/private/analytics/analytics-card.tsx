@@ -9,9 +9,7 @@ const AnalyticsCard = ({ icon, title, value, state }: AnalyticsCardProps) => {
         <div className="bg-foreground/5 p-3 rounded">{icon}</div>
         <div className="flex justify-between items-end flex-col h-full">
           <span className="text-sm text-foreground/80">{title}</span>
-          {state === "loading" && (
-            <GenericLoader className="w-6 h-6 animate-spin mt-2" />
-          )}
+          {state === "loading" && <GenericLoader className="w-6 h-6 mt-2" />}
           {state === "idle" && (
             <span className="font-semibold text-2xl">{value}</span>
           )}

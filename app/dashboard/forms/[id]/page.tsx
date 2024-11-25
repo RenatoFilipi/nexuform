@@ -46,7 +46,7 @@ const Form = () => {
     <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-14">
       <div className="flex justify-between items-center">
         {form === undefined || form.title === "".trim() ? (
-          <GenericLoader className="hidden sm:flex animate-spin w-5 h-5" />
+          <GenericLoader className="hidden sm:flex w-5 h-5" />
         ) : (
           <div className="hidden sm:flex">
             <span className="font-semibold">{form?.title}</span>
@@ -67,7 +67,7 @@ const Form = () => {
       <div className="h-full border flex flex-col overflow-y-auto flex-1">
         {appState === "loading" && (
           <div className="flex justify-center items-center h-full flex-1">
-            <GenericLoader className="w-8 h-8 animate-spin" />
+            <GenericLoader className="w-8 h-8" />
           </div>
         )}
         {appState === "idle" && submissions.length <= 0 && (
@@ -85,7 +85,10 @@ const Form = () => {
             </TableHeader>
             <TableBody className="overflow-y-auto">
               {submissions.map((sub) => (
-                <FormSubmissionView subId={sub.id} key={sub.id}>
+                <FormSubmissionView
+                  subId={sub.id}
+                  key={sub.id}
+                  sender={sub.sender}>
                   <TableRow className="overflow-x-auto cursor-pointer">
                     <TableCell className="truncate text-foreground/80 text-xs p-3">
                       {sub.sender}

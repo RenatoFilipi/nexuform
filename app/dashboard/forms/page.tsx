@@ -39,7 +39,7 @@ const Forms = () => {
       {appState === "loading" && (
         <div className="h-full flex-1 flex justify-center items-center">
           <div className="flex justify-center items-center flex-col gap-3">
-            <GenericLoader className="w-8 h-8 animate-spin" />
+            <GenericLoader className="w-8 h-8" />
           </div>
         </div>
       )}

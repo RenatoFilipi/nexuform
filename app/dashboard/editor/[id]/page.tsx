@@ -135,9 +135,7 @@ const Editor = () => {
               <Brand2 type="logo" className="h-7 fill-foreground" />
             </Link>
           </Button>
-          {appState === "loading" && (
-            <GenericLoader className="animate-spin w-4 h-4" />
-          )}
+          {appState === "loading" && <GenericLoader className="w-4 h-4" />}
           {appState === "idle" && (
             <span className="text-foreground/80 text-sm font-semibold">
               {name}
@@ -164,7 +162,7 @@ const Editor = () => {
       {appState === "loading" && (
         <div className="flex flex-1 justify-center items-center h-full pt-14">
           <div className="flex justify-center items-center gap-2 flex-col">
-            <GenericLoader className="w-8 h-8 animate-spin" />
+            <GenericLoader className="w-8 h-8" />
           </div>
         </div>
       )}

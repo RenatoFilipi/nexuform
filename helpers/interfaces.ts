@@ -21,7 +21,16 @@ export interface FormSubmissionItemProps {
   form_id: string;
   sender: string;
   submitted_at: string;
+  blocks: FormSubmissionBlockProps[];
 }
+
+export interface FormSubmissionBlockProps {
+  id: string;
+  block_id: string;
+  type: block;
+  value: string;
+}
+
 export interface AnalyticsCardProps {
   icon: JSX.Element;
   title: string;
@@ -47,4 +56,10 @@ export interface FormSettingsStatusProps {
   label: string;
   description: string;
   icon: JSX.Element | null;
+}
+
+export interface BlockResponseProps {
+  formId: string;
+  name: string;
+  response: string;
 }
