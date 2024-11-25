@@ -1,6 +1,6 @@
-import { AnalyticsProps } from "@/models/analytics";
+import { AnalyticsModel } from "@/models/analytics";
 
-export const AnalyticsContent: AnalyticsProps = {
+export const AnalyticsContent: AnalyticsModel = {
   forms_total: 2,
   submissions_total: 791,
   forms: [

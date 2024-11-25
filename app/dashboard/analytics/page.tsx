@@ -4,7 +4,7 @@ import AnalyticsCard from "@/components/private/analytics/analytics-card";
 import ChartSubmissions from "@/components/private/analytics/chart-submissions";
 import { appState } from "@/helpers/types";
 import { AnalyticsContent } from "@/mocks/analytics";
-import { FormProgressProps } from "@/models/analytics";
+import { FormProgressModel } from "@/models/analytics";
 import { useQuery } from "@tanstack/react-query";
 import { BookCheckIcon, FileIcon } from "lucide-react";
 import { useState } from "react";
@@ -13,7 +13,7 @@ const Analytics = () => {
   const [appState, setAppState] = useState<appState>("loading");
   const [totalForms, setTotalForms] = useState("");
   const [totalSubmissions, setTotalSubmissions] = useState("");
-  const [forms, setForms] = useState<FormProgressProps[]>([]);
+  const [forms, setForms] = useState<FormProgressModel[]>([]);
 
   useQuery({
     queryKey: ["analyticsData"],

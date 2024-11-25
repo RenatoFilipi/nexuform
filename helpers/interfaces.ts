@@ -1,20 +1,21 @@
-import { FormProgressProps } from "@/models/analytics";
-import { appState, block, colorLabel, formStatus } from "./types";
+import { FormProgressModel } from "@/models/analytics";
+import { appState, block, brand, colorLabel, formStatus, mode } from "./types";
 
-export interface FormItemProps {
-  id: string;
-  title: string;
-  status: formStatus;
-  responsesCount: number;
-}
 export interface ColorProps {
   label: colorLabel;
   tw_class: string;
 }
 export interface BrandProps {
   className?: string;
-  type: "logo" | "logo_text";
+  type: brand;
 }
+export interface FormItemProps {
+  id: string;
+  title: string;
+  status: formStatus;
+  responsesCount: number;
+}
+
 export interface FormSubmissionItemProps {
   id: string;
   form_id: string;
@@ -28,7 +29,7 @@ export interface AnalyticsCardProps {
   state: appState;
 }
 export interface ChartSubmissionsProps {
-  forms: FormProgressProps[];
+  forms: FormProgressModel[];
   state: appState;
 }
 export interface addBlockProps {
@@ -39,7 +40,7 @@ export interface addBlockProps {
   description: string;
 }
 export interface FormGroupProps {
-  mode: "preview" | "release";
+  mode: mode;
 }
 export interface FormSettingsStatusProps {
   status: formStatus;

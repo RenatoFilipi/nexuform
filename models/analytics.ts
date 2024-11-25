@@ -1,10 +1,10 @@
-export interface AnalyticsProps {
+export interface AnalyticsModel {
   forms_total: number;
   submissions_total: number;
-  forms: FormProgressProps[];
+  forms: FormProgressModel[];
 }
 
-export interface FormProgressProps {
+export interface FormProgressModel {
   id: string;
   name: string;
   submissions: number;

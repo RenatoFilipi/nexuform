@@ -13,7 +13,6 @@ export interface FormModel {
   numeric_blocks: boolean;
   status: formStatus;
 }
-
 export interface BlockModel {
   id: string;
   form_id: string;
@@ -32,5 +31,4 @@ export interface BlockModel {
   max_rating: number | null;
   max_scale: number | null;
 }
-
 export interface SubmissionModel {}
