@@ -188,6 +188,19 @@ export const formSettingsList: FormModel[] = [
     submit_label: "Send Response",
     status: "draft",
   },
+  {
+    id: "d6d11529-8880-44cc-868f-c562ca460fed",
+    owner_id: "",
+    name: "Services",
+    description: null,
+    blocks: [],
+    created_at: "",
+    updated_at: "",
+    numeric_blocks: false,
+    primary_color: "Slate",
+    submit_label: "Submit",
+    status: "draft",
+  },
 ];
 export const formList: FormItemProps[] = [
   {
@@ -205,5 +218,11 @@ export const formList: FormItemProps[] = [
     responsesCount: formSubmissionList.filter(
       (x) => x.form_id === "d9dd8f26-dabc-4f4c-bac3-facb19d621a8"
     ).length,
+  },
+  {
+    id: "d6d11529-8880-44cc-868f-c562ca460fed",
+    responsesCount: 0,
+    status: "draft",
+    title: "Services",
   },
 ];
