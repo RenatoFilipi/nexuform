@@ -2,7 +2,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { minWidth640 } from "@/helpers/constants";
 import { setState } from "@/helpers/types";
-import { BlockProps } from "@/models/form";
+import { BlockModel } from "@/models/form";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import CheckboxesBlock from "./check-boxes-block";
@@ -20,7 +20,7 @@ const BlockSettings = ({
   block,
 }: {
   children: React.ReactNode;
-  block: BlockProps;
+  block: BlockModel;
 }) => {
   const isDesktop = useMediaQuery({ query: minWidth640 });
   const [open, setOpen] = useState(false);
@@ -50,7 +50,7 @@ const Body = ({
   block,
   setState,
 }: {
-  block: BlockProps;
+  block: BlockModel;
   setState: setState<boolean>;
 }) => {
   switch (block.type) {

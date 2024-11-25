@@ -1,8 +1,8 @@
 import Rating from "@/components/ui/rating";
-import { BlockProps } from "@/models/form";
+import { BlockModel } from "@/models/form";
 import useEditorStore from "@/stores/editor";
 
-const RatingDesign = ({ block }: { block: BlockProps }) => {
+const RatingDesign = ({ block }: { block: BlockModel }) => {
   const { name, description, required, max_rating, position } = block;
   const { numericBlocks } = useEditorStore();
 

@@ -6,7 +6,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ColorProps } from "@/helpers/interfaces";
-import { BlockProps } from "@/models/form";
+import { BlockModel } from "@/models/form";
 import useEditorStore from "@/stores/editor";
 
 const design: ColorProps[] = [
@@ -38,7 +38,7 @@ const DropdownDesign = ({
   block,
   primaryColor,
 }: {
-  block: BlockProps;
+  block: BlockModel;
   primaryColor: string;
 }) => {
   const { id, options, required, name, description, position } = block;

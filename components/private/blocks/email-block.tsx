@@ -7,14 +7,14 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { setState } from "@/helpers/types";
-import { BlockProps } from "@/models/form";
+import { BlockModel } from "@/models/form";
 import useEditorStore from "@/stores/editor";
 
 const EmailBlock = ({
   block,
   setState,
 }: {
-  block: BlockProps;
+  block: BlockModel;
   setState: setState<boolean>;
 }) => {
   const { id } = block;

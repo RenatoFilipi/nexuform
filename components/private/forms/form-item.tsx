@@ -12,7 +12,6 @@ const FormItem = ({ title, status, responsesCount, id }: FormItemProps) => {
   const responsesDisplay = (count: number) => {
     return count === 1 ? `${count} Response` : `${count} Responses`;
   };
-
   const BadgeColor = (status: formStatus) => {
     switch (status) {
       case "published":

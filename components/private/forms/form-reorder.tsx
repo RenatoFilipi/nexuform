@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { minWidth640 } from "@/helpers/constants";
 import { blockName } from "@/helpers/functions";
 import { block, setState } from "@/helpers/types";
-import { BlockProps } from "@/models/form";
+import { BlockModel } from "@/models/form";
 import useEditorStore from "@/stores/editor";
 import { Reorder } from "framer-motion";
 import {
@@ -60,7 +60,7 @@ const FormReorder = ({ children }: { children: React.ReactNode }) => {
 const Body = ({ setState }: { setState: setState<boolean> }) => {
   const { blocks, setBlocks } = useEditorStore();
 
-  const onReorderedBlocks = (payload: BlockProps[]) => {
+  const onReorderedBlocks = (payload: BlockModel[]) => {
     const newPositionBlocks = payload.map((pay, index) => {
       return { ...pay, position: index + 1 };
     });
@@ -102,7 +102,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
   );
 };
 
-const Item = ({ block }: { block: BlockProps }) => {
+const Item = ({ block }: { block: BlockModel }) => {
   return (
     <Reorder.Item
       value={block}

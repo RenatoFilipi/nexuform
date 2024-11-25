@@ -9,7 +9,7 @@ import { minWidth640 } from "@/helpers/constants";
 import { uuid } from "@/helpers/functions";
 import { addBlockProps } from "@/helpers/interfaces";
 import { block, setState } from "@/helpers/types";
-import { BlockProps } from "@/models/form";
+import { BlockModel } from "@/models/form";
 import useEditorStore from "@/stores/editor";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -95,7 +95,13 @@ const blockList: addBlockProps[] = [
   },
 ];
 
-const AddBlock = ({ children }: { children: React.ReactNode }) => {
+const AddBlock = ({
+  children,
+  formId,
+}: {
+  children: React.ReactNode;
+  formId: string;
+}) => {
   const isDesktop = useMediaQuery({ query: minWidth640 });
   const [open, setOpen] = useState(false);
 
@@ -104,7 +110,7 @@ const AddBlock = ({ children }: { children: React.ReactNode }) => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent>
-          <Body setState={setOpen} />
+          <Body setState={setOpen} formId={formId} />
         </DialogContent>
       </Dialog>
     );
@@ -114,13 +120,19 @@ const AddBlock = ({ children }: { children: React.ReactNode }) => {
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3">
-        <Body setState={setOpen} />
+        <Body setState={setOpen} formId={formId} />
       </DrawerContent>
     </Drawer>
   );
 };
 
-const Body = ({ setState }: { setState: setState<boolean> }) => {
+const Body = ({
+  setState,
+  formId,
+}: {
+  setState: setState<boolean>;
+  formId: string;
+}) => {
   const { addBlock, blocks } = useEditorStore();
 
   const formSchema = z.object({
@@ -138,8 +150,11 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
     const targetBlock = blockList.find((x) => x.type === blockType);
     if (targetBlock === undefined) return;
 
-    const block: BlockProps = {
+    const block: BlockModel = {
       id: uuid(),
+      form_id: formId,
+      created_at: "",
+      updated_at: "",
       name: targetBlock.name,
       description: "",
       options: null,

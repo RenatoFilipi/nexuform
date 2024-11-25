@@ -1,7 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ColorProps } from "@/helpers/interfaces";
-import { BlockProps } from "@/models/form";
+import { BlockModel } from "@/models/form";
 import useEditorStore from "@/stores/editor";
 
 const design: ColorProps[] = [
@@ -121,7 +121,7 @@ const ScaleDesign = ({
   block,
   primaryColor,
 }: {
-  block: BlockProps;
+  block: BlockModel;
   primaryColor: string;
 }) => {
   const { name, description, required, max_scale, id, position } = block;

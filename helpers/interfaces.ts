@@ -1,6 +1,12 @@
 import { FormProgressProps } from "@/models/analytics";
 import { appState, block, colorLabel, formStatus } from "./types";
 
+export interface FormItemProps {
+  id: string;
+  title: string;
+  status: formStatus;
+  responsesCount: number;
+}
 export interface ColorProps {
   label: colorLabel;
   tw_class: string;
@@ -34,12 +40,6 @@ export interface addBlockProps {
 }
 export interface FormGroupProps {
   mode: "preview" | "release";
-}
-export interface FormItemProps {
-  id: string;
-  title: string;
-  status: formStatus;
-  responsesCount: number;
 }
 export interface FormSettingsStatusProps {
   status: formStatus;

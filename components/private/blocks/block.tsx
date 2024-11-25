@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { block } from "@/helpers/types";
-import { BlockProps } from "@/models/form";
+import { BlockModel } from "@/models/form";
 import {
   CheckCircleIcon,
   CheckSquareIcon,
@@ -28,7 +28,7 @@ const blockIcons: { [key in block]: JSX.Element } = {
   scale: <ScaleIcon className="w-5 h-5 text-background" />,
 };
 
-const Block = (block: BlockProps) => {
+const Block = (block: BlockModel) => {
   return (
     <Card className="flex justify-between items-center shadow-none rounded-none w-full">
       <div className="flex gap-1 w-full items-center h-full">

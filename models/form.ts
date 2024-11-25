@@ -1,27 +1,30 @@
 import { block, formStatus } from "@/helpers/types";
 
-export interface FormProps {
+export interface FormModel {
   id: string;
   owner_id: string;
-  name: string;
-  description: string | null;
   created_at: string;
   updated_at: string;
+  name: string;
+  description: string | null;
   primary_color: string;
   submit_label: string;
-  blocks: BlockProps[];
+  blocks: BlockModel[];
   numeric_blocks: boolean;
   status: formStatus;
 }
 
-export interface BlockProps {
+export interface BlockModel {
   id: string;
+  form_id: string;
+  created_at: string;
+  updated_at: string;
   name: string;
   description: string | null;
   type: block;
   required: boolean;
-  options: { id: string; text: string }[] | null;
   placeholder: string | null;
+  options: { id: string; text: string }[] | null;
   max_character_limit: number | null;
   min_character_limit: number | null;
   show_character_limit: boolean | null;
@@ -29,3 +32,5 @@ export interface BlockProps {
   max_rating: number | null;
   max_scale: number | null;
 }
+
+export interface SubmissionModel {}

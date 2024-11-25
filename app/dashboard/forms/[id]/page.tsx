@@ -54,7 +54,7 @@ const Form = () => {
           </div>
         )}
         <div className="flex justify-center items-center sm:gap-4 gap-2 w-full sm:w-fit">
-          <FormShare id={formId}>
+          <FormShare formId={formId}>
             <Button variant={"outline"} size={"sm"} className="w-full">
               Share
             </Button>
@@ -85,7 +85,7 @@ const Form = () => {
             </TableHeader>
             <TableBody className="overflow-y-auto">
               {submissions.map((sub) => (
-                <FormSubmissionView key={sub.id}>
+                <FormSubmissionView subId={sub.id} key={sub.id}>
                   <TableRow className="overflow-x-auto cursor-pointer">
                     <TableCell className="truncate text-foreground/80 text-xs p-3">
                       {sub.sender}

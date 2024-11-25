@@ -2,11 +2,18 @@
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { minWidth640 } from "@/helpers/constants";
+import { setState } from "@/helpers/types";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
 
-const FormSubmissionView = ({ children }: { children: React.ReactNode }) => {
+const FormSubmissionView = ({
+  children,
+  subId,
+}: {
+  children: React.ReactNode;
+  subId: string;
+}) => {
   const isDesktop = useMediaQuery({ query: minWidth640 });
   const [open, setOpen] = useState(false);
 
@@ -15,7 +22,7 @@ const FormSubmissionView = ({ children }: { children: React.ReactNode }) => {
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>{children}</SheetTrigger>
         <SheetContent>
-          <Body />
+          <Body setState={setOpen} subId={subId} />
         </SheetContent>
       </Sheet>
     );
@@ -25,17 +32,24 @@ const FormSubmissionView = ({ children }: { children: React.ReactNode }) => {
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3 h-[90%]">
-        <Body />
+        <Body setState={setOpen} subId={subId} />
       </DrawerContent>
     </Drawer>
   );
 };
 
-const Body = () => {
-  console.log("renderizou");
+const Body = ({
+  setState,
+  subId,
+}: {
+  setState: setState<boolean>;
+  subId: string;
+}) => {
   return (
-    <div className="flex justify-center items-center h-full">
-      Form response view
+    <div className="flex h-full">
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
   );
 };

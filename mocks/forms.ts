@@ -1,5 +1,5 @@
 import { FormItemProps, FormSubmissionItemProps } from "@/helpers/interfaces";
-import { FormProps } from "@/models/form";
+import { FormModel } from "@/models/form";
 
 export const formList: FormItemProps[] = [
   {
@@ -59,7 +59,7 @@ export const formSubmissionList: FormSubmissionItemProps[] = [
     submitted_at: new Date().toISOString(),
   },
 ];
-export const formSettingsList: FormProps[] = [
+export const formSettingsList: FormModel[] = [
   {
     id: "01b1c3c1-0993-4ba5-a53f-604b7708f6e4",
     owner_id: "",
@@ -70,6 +70,9 @@ export const formSettingsList: FormProps[] = [
       {
         id: "6f785bda-24bf-4c0a-8a64-eba208e7b225",
         name: "Quais funcionalidades você mais usa?",
+        form_id: "01b1c3c1-0993-4ba5-a53f-604b7708f6e4",
+        created_at: "",
+        updated_at: "",
         description: "",
         options: null,
         required: true,
@@ -85,6 +88,9 @@ export const formSettingsList: FormProps[] = [
       {
         id: "08bdbb6f-13d0-4ede-a7ae-6acdb41eb9c5",
         name: "Houve alguma dificuldade ao usar o produto?",
+        form_id: "01b1c3c1-0993-4ba5-a53f-604b7708f6e4",
+        created_at: "",
+        updated_at: "",
         description: "",
         options: null,
         required: false,

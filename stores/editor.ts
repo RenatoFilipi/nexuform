@@ -1,5 +1,5 @@
 import { colorLabel, formStatus } from "@/helpers/types";
-import { BlockProps } from "@/models/form";
+import { BlockModel } from "@/models/form";
 import { create } from "zustand";
 
 interface FormStoreProps {
@@ -15,10 +15,10 @@ interface FormStoreProps {
   setPrimaryColor: (value: colorLabel) => void;
   submitLabel: string;
   setSubmitLabel: (value: string) => void;
-  blocks: BlockProps[];
-  setBlocks: (value: BlockProps[]) => void;
-  addBlock: (value: BlockProps) => void;
-  updateBlock: (id: string, value: BlockProps) => void;
+  blocks: BlockModel[];
+  setBlocks: (value: BlockModel[]) => void;
+  addBlock: (value: BlockModel) => void;
+  updateBlock: (id: string, value: BlockModel) => void;
   removeBlock: (id: string) => void;
   status: formStatus;
   setStatus: (value: formStatus) => void;

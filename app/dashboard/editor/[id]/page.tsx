@@ -12,7 +12,7 @@ import FormSettings from "@/components/private/forms/form-settings";
 import { Button } from "@/components/ui/button";
 import { appState, colorLabel } from "@/helpers/types";
 import { formSettingsList } from "@/mocks/forms";
-import { FormProps } from "@/models/form";
+import { FormModel } from "@/models/form";
 import useEditorStore from "@/stores/editor";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -107,7 +107,7 @@ const Editor = () => {
   }
 
   const onSave = () => {
-    const formModel: FormProps = {
+    const formModel: FormModel = {
       id,
       owner_id: ownerId,
       name,
@@ -170,7 +170,7 @@ const Editor = () => {
         <div className="flex flex-1 relative">
           <div className="sm:w-[360px] w-full flex flex-col p-4 gap-6 fixed bg-background h-full overflow-y-auto pt-14">
             <div className="flex flex-col gap-4 mt-4">
-              <AddBlock>
+              <AddBlock formId={id}>
                 <Button variant={"default"} size={"sm"} className="w-full">
                   <PlusIcon className="w-4 h-4 mr-2" />
                   Add New Block

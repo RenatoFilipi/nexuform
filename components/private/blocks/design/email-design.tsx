@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { ColorProps } from "@/helpers/interfaces";
-import { BlockProps } from "@/models/form";
+import { BlockModel } from "@/models/form";
 import useEditorStore from "@/stores/editor";
 
 const design: ColorProps[] = [
@@ -32,7 +32,7 @@ const EmailDesign = ({
   block,
   primaryColor,
 }: {
-  block: BlockProps;
+  block: BlockModel;
   primaryColor: string;
 }) => {
   const { name, description, required, id, position } = block;

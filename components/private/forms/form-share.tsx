@@ -13,10 +13,10 @@ import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
 
 const FormShare = ({
   children,
-  id,
+  formId,
 }: {
   children: React.ReactNode;
-  id: string;
+  formId: string;
 }) => {
   const isDesktop = useMediaQuery({ query: minWidth640 });
   const [open, setOpen] = useState(false);
@@ -26,7 +26,7 @@ const FormShare = ({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="sm:min-w-[550px]">
-          <Body setState={setOpen} id={id} />
+          <Body setState={setOpen} formId={formId} />
         </DialogContent>
       </Dialog>
     );
@@ -36,7 +36,7 @@ const FormShare = ({
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3">
-        <Body setState={setOpen} id={id} />
+        <Body setState={setOpen} formId={formId} />
       </DrawerContent>
     </Drawer>
   );
@@ -44,12 +44,12 @@ const FormShare = ({
 
 const Body = ({
   setState,
-  id,
+  formId,
 }: {
   setState: setState<boolean>;
-  id: string;
+  formId: string;
 }) => {
-  const currentForm = formList.find((x) => x.id === id);
+  const currentForm = formList.find((x) => x.id === formId);
   const shareLink = `${window.location.host}/r/${currentForm?.id}`;
 
   const handleCopy = () => {
