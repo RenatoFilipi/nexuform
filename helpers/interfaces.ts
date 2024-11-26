@@ -21,6 +21,7 @@ export interface FormSubmissionItemProps {
   form_id: string;
   sender: string;
   submitted_at: string;
+  reviewed: boolean;
   blocks: FormSubmissionBlockProps[];
 }
 
@@ -28,7 +29,7 @@ export interface FormSubmissionBlockProps {
   id: string;
   block_id: string;
   type: block;
-  value: string;
+  answer: string;
 }
 
 export interface AnalyticsCardProps {
@@ -61,5 +62,5 @@ export interface FormSettingsStatusProps {
 export interface BlockResponseProps {
   formId: string;
   name: string;
-  response: string;
+  answer: string;
 }

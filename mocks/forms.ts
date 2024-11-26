@@ -7,13 +7,20 @@ export const formSubmissionList: FormSubmissionItemProps[] = [
     form_id: "4d6b48e1-5a1f-47c0-ae52-0eda19bed5e9",
     sender: "anonymous submission",
     submitted_at: new Date().toISOString(),
+    reviewed: false,
     blocks: [
       {
         id: "f6d8ff43-176a-4b0b-b0c7-f1571382d721",
         block_id: "42a272fd-1cc3-488e-8148-4381e4ffefeb",
         type: "long_answer",
-        value:
+        answer:
           "I really appreciate how user-friendly the product is. The interface is intuitive, and I was able to get started right away without needing a lot of guidance. I also love the range of features it offers, especially the customization options that allow me to tailor the product to my needs.",
+      },
+      {
+        id: "7a767fa0-8f12-4fae-b9a7-e1510ed538ec",
+        block_id: "0a52a29c-5c0d-4800-b9a2-49f779a0dd8d",
+        type: "rating",
+        answer: "4",
       },
     ],
   },
