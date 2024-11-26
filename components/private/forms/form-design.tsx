@@ -134,7 +134,7 @@ const FormDesign = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="">
+        <DialogContent>
           <Body setState={setOpen} />
         </DialogContent>
       </Dialog>

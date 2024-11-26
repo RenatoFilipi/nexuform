@@ -88,7 +88,9 @@ const Form = () => {
                 <FormSubmissionView
                   subId={sub.id}
                   key={sub.id}
-                  sender={sub.sender}>
+                  sender={sub.sender}
+                  formId={formId}
+                  submitted_at={sub.submitted_at}>
                   <TableRow className="overflow-x-auto cursor-pointer">
                     <TableCell className="truncate text-foreground/80 text-xs p-3">
                       {sub.sender}
