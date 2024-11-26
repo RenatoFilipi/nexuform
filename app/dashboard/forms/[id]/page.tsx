@@ -3,6 +3,7 @@
 import GenericError from "@/components/core/generic-error";
 import GenericLoader from "@/components/core/generic-loader";
 import FormShare from "@/components/private/forms/form-share";
+import FormSubmissionView from "@/components/private/forms/form-submission-view";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -87,20 +88,22 @@ const Form = () => {
                 <TableRow
                   key={sub.id}
                   className="overflow-x-auto cursor-pointer">
-                  <TableCell className="truncate text-foreground/80 text-xs p-3">
-                    {sub.sender}
-                  </TableCell>
+                  <TableCell className="">{sub.sender}</TableCell>
                   <TableCell
                     className="truncate text-foreground/80 text-xs p-3"
                     suppressHydrationWarning>
                     {formatDateRelativeToNow(sub.submitted_at)}
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button variant={"outline"} size={"sm"}>
-                      <Link href={`/dashboard/submission/${sub.id}`}>
-                        View Details
-                      </Link>
-                    </Button>
+                    <FormSubmissionView
+                      subId={sub.id}
+                      formId={formId}
+                      sender={sub.sender}
+                      submitted_at={sub.submitted_at}>
+                      <Button variant={"outline"} size={"sm"}>
+                        View
+                      </Button>
+                    </FormSubmissionView>
                   </TableCell>
                 </TableRow>
               ))}

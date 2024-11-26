@@ -80,23 +80,23 @@ const Body = ({
       {currentForm?.status === "published" && (
         <div className="flex justify-center items-center gap-4 flex-col sm:flex-row">
           <Input value={shareLink} className="text-foreground/60" />
-          <Button
-            onClick={handleCopy}
-            variant={"secondary"}
-            size={"sm"}
-            className="w-full sm:w-fit">
-            <Link2Icon className="w-4 h-4 mr-2" />
-            Copy Link
-          </Button>
         </div>
       )}
-      <div className="flex w-full justify-end items-center">
+      <div className="flex w-full justify-between items-center gap-4 flex-col-reverse sm:flex-row">
         <Button
           className="w-full sm:w-fit"
           variant={"outline"}
           size={"sm"}
           onClick={() => setState(false)}>
           Close
+        </Button>
+        <Button
+          onClick={handleCopy}
+          variant={"secondary"}
+          size={"sm"}
+          className="w-full sm:w-fit">
+          <Link2Icon className="w-4 h-4 mr-2" />
+          Copy Link
         </Button>
       </div>
     </div>

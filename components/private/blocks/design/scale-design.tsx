@@ -135,7 +135,9 @@ const ScaleDesign = ({
       <div className="grid gap-1">
         <div className="flex gap-2">
           {numericBlocks && (
-            <span className="bg-foreground/5 px-2 rounded">{position}</span>
+            <span className="bg-foreground/5 px-2 rounded h-fit">
+              {position}
+            </span>
           )}
           <h1 className="text-base font-medium">
             {name} {required && <span className="text-red-500">*</span>}

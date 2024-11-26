@@ -92,7 +92,7 @@ const Editor = () => {
             <XIcon />
           </Button>
         </div>
-        <div className="px-7 flex flex-col justify-center items-center gap-6 overflow-y-auto">
+        <div className="px-5 flex flex-col justify-center items-center gap-6 overflow-y-auto">
           <FormGroup mode="preview" />
           <div className="flex justify-center items-center w-full py-2">
             <span className="border rounded p-2 flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">

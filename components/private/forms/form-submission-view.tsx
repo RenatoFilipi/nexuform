@@ -1,7 +1,9 @@
 "use client";
 
 import GenericLoader from "@/components/core/generic-loader";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { minWidth640 } from "@/helpers/constants";
 import { formatDateRelativeToNow } from "@/helpers/functions";
@@ -106,11 +108,18 @@ const Body = ({
 
   return (
     <div className="flex flex-col h-full gap-4">
-      <div className="pt-4 sm:pt-0 flex justify-center sm:justify-start items-center text-sm gap-2 flex-col sm:flex-row">
-        <span className="font-semibold text-xl">{sender}</span>
-        <span className="text-foreground/80">
-          {formatDateRelativeToNow(submitted_at)}
-        </span>
+      <div className="flex flex-col gap-2">
+        <div className="pt-4 sm:pt-0 flex justify-center sm:justify-start items-center text-sm gap-2 flex-col sm:flex-row">
+          <span className="font-semibold text-xl">{sender}</span>
+        </div>
+        <div className="flex justify-center sm:justify-start w-full items-center gap-2">
+          <Badge variant={"success"} className="w-fit">
+            Reviewed
+          </Badge>
+          <span className="text-foreground/80 text-xs">
+            {formatDateRelativeToNow(submitted_at)}
+          </span>
+        </div>
       </div>
       {appState === "loading" && (
         <div className="flex justify-center items-center h-full">
@@ -118,24 +127,39 @@ const Body = ({
         </div>
       )}
       {appState === "idle" && (
-        <div className="h-full flex flex-col">
-          {blocks.map((b, i) => {
+        <div className="h-full flex flex-col gap-4 mt-2">
+          {blocks.map((block, i) => {
             return (
-              <div key={i} className="flex flex-col gap-2">
-                <p className="font-semibold">{b.name}</p>
-                <p className="text-sm text-foreground/50">{b.response}</p>
+              <div key={i} className="flex flex-col gap-3">
+                <p className="text-sm font-medium">{block.name}</p>
+                {block.response === "".trim() ? (
+                  <Card className="flex justify-center items-center py-3">
+                    <span className="text-xs text-foreground/60">
+                      No Answer
+                    </span>
+                  </Card>
+                ) : (
+                  <p className="text-xs text-foreground/50">{block.response}</p>
+                )}
               </div>
             );
           })}
         </div>
       )}
-      <div className="flex sm:justify-end justify-center items-center">
+      <div className="flex sm:justify-end justify-center items-center gap-4 flex-col-reverse sm:flex-row">
         <Button
           onClick={() => setState(false)}
           variant={"outline"}
           size={"sm"}
           className="w-full sm:w-fit">
           Close
+        </Button>
+        <Button
+          onClick={() => setState(false)}
+          variant={"secondary"}
+          size={"sm"}
+          className="w-full sm:w-fit">
+          Mark as Reviewed
         </Button>
       </div>
     </div>
