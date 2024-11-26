@@ -3,7 +3,6 @@
 import GenericError from "@/components/core/generic-error";
 import GenericLoader from "@/components/core/generic-loader";
 import FormShare from "@/components/private/forms/form-share";
-import FormSubmissionView from "@/components/private/forms/form-submission-view";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -49,8 +48,7 @@ const Form = () => {
           <GenericLoader className="hidden sm:flex w-5 h-5" />
         ) : (
           <div className="hidden sm:flex">
-            <span className="font-semibold">{form?.title}</span>
-            <div></div>
+            <h1 className="text-xl font-semibold">{form?.title}</h1>
           </div>
         )}
         <div className="flex justify-center items-center sm:gap-4 gap-2 w-full sm:w-fit">
@@ -80,28 +78,31 @@ const Form = () => {
             <TableHeader>
               <TableRow>
                 <TableHead>Email</TableHead>
-                <TableHead className="text-right">Submitted</TableHead>
+                <TableHead>Submitted</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody className="overflow-y-auto">
               {submissions.map((sub) => (
-                <FormSubmissionView
-                  subId={sub.id}
+                <TableRow
                   key={sub.id}
-                  sender={sub.sender}
-                  formId={formId}
-                  submitted_at={sub.submitted_at}>
-                  <TableRow className="overflow-x-auto cursor-pointer">
-                    <TableCell className="truncate text-foreground/80 text-xs p-3">
-                      {sub.sender}
-                    </TableCell>
-                    <TableCell
-                      className="truncate text-right text-foreground/80 text-xs p-3"
-                      suppressHydrationWarning>
-                      {formatDateRelativeToNow(sub.submitted_at)}
-                    </TableCell>
-                  </TableRow>
-                </FormSubmissionView>
+                  className="overflow-x-auto cursor-pointer">
+                  <TableCell className="truncate text-foreground/80 text-xs p-3">
+                    {sub.sender}
+                  </TableCell>
+                  <TableCell
+                    className="truncate text-foreground/80 text-xs p-3"
+                    suppressHydrationWarning>
+                    {formatDateRelativeToNow(sub.submitted_at)}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <Button variant={"outline"} size={"sm"}>
+                      <Link href={`/dashboard/submission/${sub.id}`}>
+                        View Details
+                      </Link>
+                    </Button>
+                  </TableCell>
+                </TableRow>
               ))}
             </TableBody>
           </Table>
