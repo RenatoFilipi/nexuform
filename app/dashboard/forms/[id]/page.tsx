@@ -3,18 +3,8 @@
 import GenericError from "@/components/core/generic-error";
 import GenericLoader from "@/components/core/generic-loader";
 import FormShare from "@/components/private/forms/form-share";
-import FormSubmissionView from "@/components/private/forms/form-submission-view";
-import { Badge } from "@/components/ui/badge";
+import FormSubmissionGroup from "@/components/private/forms/form-submission-group";
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { formatDateRelativeToNow } from "@/helpers/functions";
 import { FormItemProps, FormSubmissionItemProps } from "@/helpers/interfaces";
 import { appState } from "@/helpers/types";
 import { formList, formSubmissionList } from "@/mocks/forms";
@@ -64,7 +54,7 @@ const Form = () => {
           </Button>
         </div>
       </div>
-      <div className="h-full border flex flex-col overflow-y-auto flex-1">
+      <div className="h-full flex flex-col overflow-y-auto flex-1">
         {appState === "loading" && (
           <div className="flex justify-center items-center h-full flex-1">
             <GenericLoader className="w-8 h-8" />
@@ -76,53 +66,7 @@ const Form = () => {
           </div>
         )}
         {appState === "idle" && submissions.length >= 1 && (
-          <Table className="overflow-y-auto">
-            <TableHeader>
-              <TableRow>
-                <TableHead>Submitted</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>State</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody className="overflow-y-auto">
-              {submissions.map((sub) => (
-                <TableRow
-                  key={sub.id}
-                  className="overflow-x-auto cursor-pointer">
-                  <TableCell
-                    className="truncate text-foreground/80 text-xs p-3"
-                    suppressHydrationWarning>
-                    {formatDateRelativeToNow(sub.submitted_at)}
-                  </TableCell>
-                  <TableCell className="">{sub.sender}</TableCell>
-                  <TableCell>
-                    {sub.reviewed ? (
-                      <Badge variant={"success"} className="w-fit">
-                        Reviewed
-                      </Badge>
-                    ) : (
-                      <Badge variant={"warning"} className="w-fit">
-                        Not Reviewed
-                      </Badge>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <FormSubmissionView
-                      subId={sub.id}
-                      formId={formId}
-                      sender={sub.sender}
-                      submitted_at={sub.submitted_at}
-                      reviewed={sub.reviewed}>
-                      <Button variant={"outline"} size={"sm"}>
-                        View
-                      </Button>
-                    </FormSubmissionView>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <FormSubmissionGroup formId={formId} submissions={submissions} />
         )}
         {appState === "error" && (
           <div className="flex justify-center items-center h-full flex-1">
