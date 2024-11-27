@@ -15,6 +15,7 @@ import {
 import { minWidth640 } from "@/helpers/constants";
 import { formatDateRelativeToNow } from "@/helpers/functions";
 import { FormSubmissionItemProps } from "@/helpers/interfaces";
+import { submissionStatus } from "@/helpers/types";
 import { useMediaQuery } from "react-responsive";
 
 const FormSubmissionGroup = ({
@@ -26,18 +27,29 @@ const FormSubmissionGroup = ({
 }) => {
   const isDesktop = useMediaQuery({ query: minWidth640 });
 
-  const badgeDisplay = (reviewed: boolean) => {
-    if (reviewed)
-      return (
-        <Badge variant={"success"} className="w-fit">
-          Reviewed
-        </Badge>
-      );
-    return (
-      <Badge variant={"warning"} className="w-fit">
-        Not Reviewed
-      </Badge>
-    );
+  const statusDisplay = (value: submissionStatus) => {
+    switch (value) {
+      case "reviewed":
+        return (
+          <Badge variant={"success"} className="w-fit">
+            Reviewed
+          </Badge>
+        );
+      case "not_reviewed":
+        return (
+          <Badge variant={"warning"} className="w-fit">
+            Not Reviewed
+          </Badge>
+        );
+      case "ignored":
+        return (
+          <Badge variant={"destructive"} className="w-fit">
+            Ignored
+          </Badge>
+        );
+      default:
+        return <></>;
+    }
   };
 
   if (isDesktop) {
@@ -46,8 +58,8 @@ const FormSubmissionGroup = ({
         <TableHeader>
           <TableRow>
             <TableHead>Submitted</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>State</TableHead>
+            <TableHead>Sender</TableHead>
+            <TableHead>Status</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -59,15 +71,15 @@ const FormSubmissionGroup = ({
                 suppressHydrationWarning>
                 {formatDateRelativeToNow(sub.submitted_at)}
               </TableCell>
-              <TableCell className="">{sub.sender}</TableCell>
-              <TableCell>{badgeDisplay(sub.reviewed)}</TableCell>
+              <TableCell>{sub.sender}</TableCell>
+              <TableCell>{statusDisplay(sub.status)}</TableCell>
               <TableCell className="text-right">
                 <FormSubmissionView
                   subId={sub.id}
                   formId={formId}
                   sender={sub.sender}
                   submitted_at={sub.submitted_at}
-                  reviewed={sub.reviewed}>
+                  status={sub.status}>
                   <Button variant={"outline"} size={"sm"}>
                     View Details
                   </Button>
@@ -87,7 +99,7 @@ const FormSubmissionGroup = ({
           <Card key={sub.id} className="p-3 flex flex-col gap-3">
             <div className="flex justify-between items-center">
               <span className="font-semibold text-lg">{sub.sender}</span>
-              {badgeDisplay(sub.reviewed)}
+              {statusDisplay(sub.status)}
             </div>
             <div className="flex justify-between items-center">
               <span className="text-sm text-foreground/80">
@@ -98,7 +110,7 @@ const FormSubmissionGroup = ({
                 formId={formId}
                 sender={sub.sender}
                 submitted_at={sub.submitted_at}
-                reviewed={sub.reviewed}>
+                status={sub.status}>
                 <Button variant={"outline"} size={"sm"}>
                   View Details
                 </Button>

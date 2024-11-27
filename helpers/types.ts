@@ -19,6 +19,7 @@ export type formStatus = "inactive" | "draft" | "published";
 export type appState = "loading" | "idle" | "error";
 export type brand = "logo" | "logo_text";
 export type mode = "preview" | "release";
+export type submissionStatus = "reviewed" | "not_reviewed" | "ignored";
 export type colorLabel =
   | "Slate"
   | "Gray"

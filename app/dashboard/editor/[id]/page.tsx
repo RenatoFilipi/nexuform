@@ -10,6 +10,7 @@ import FormGroup from "@/components/private/forms/form-group";
 import FormReorder from "@/components/private/forms/form-reorder";
 import FormSettings from "@/components/private/forms/form-settings";
 import { Button } from "@/components/ui/button";
+import { nanoid } from "@/helpers/functions";
 import { appState, colorLabel } from "@/helpers/types";
 import { formSettingsList } from "@/mocks/forms";
 import { FormModel } from "@/models/form";
@@ -108,6 +109,8 @@ const Editor = () => {
   }
 
   const onSave = () => {
+    console.log(nanoid());
+
     const formModel: FormModel = {
       id,
       owner_id: ownerId,
@@ -121,8 +124,6 @@ const Editor = () => {
       submit_label: submitLabel,
       status,
     };
-    console.log(formModel);
-    console.log(JSON.stringify(formModel));
   };
 
   return (

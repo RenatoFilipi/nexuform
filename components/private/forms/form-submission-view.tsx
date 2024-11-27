@@ -8,7 +8,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { minWidth640 } from "@/helpers/constants";
 import { formatDateRelativeToNow } from "@/helpers/functions";
 import { BlockResponseProps } from "@/helpers/interfaces";
-import { appState, setState } from "@/helpers/types";
+import { appState, setState, submissionStatus } from "@/helpers/types";
 import { formSettingsList, formSubmissionList } from "@/mocks/forms";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -21,14 +21,14 @@ const FormSubmissionView = ({
   sender,
   formId,
   submitted_at,
-  reviewed,
+  status,
 }: {
   children: React.ReactNode;
   subId: string;
   formId: string;
   sender: string;
   submitted_at: string;
-  reviewed: boolean;
+  status: submissionStatus;
 }) => {
   const isDesktop = useMediaQuery({ query: minWidth640 });
   const [open, setOpen] = useState(false);
@@ -44,7 +44,7 @@ const FormSubmissionView = ({
             sender={sender}
             formId={formId}
             submitted_at={submitted_at}
-            reviewed={reviewed}
+            status={status}
           />
         </SheetContent>
       </Sheet>
@@ -61,7 +61,7 @@ const FormSubmissionView = ({
           sender={sender}
           formId={formId}
           submitted_at={submitted_at}
-          reviewed={reviewed}
+          status={status}
         />
       </DrawerContent>
     </Drawer>
@@ -74,14 +74,14 @@ const Body = ({
   formId,
   sender,
   submitted_at,
-  reviewed,
+  status,
 }: {
   setState: setState<boolean>;
   subId: string;
   formId: string;
   sender: string;
   submitted_at: string;
-  reviewed: boolean;
+  status: submissionStatus;
 }) => {
   const [appState, setAppState] = useState<appState>("loading");
   const [blocks, setBlocks] = useState<BlockResponseProps[]>([]);
@@ -110,25 +110,42 @@ const Body = ({
     refetchOnWindowFocus: false,
   });
 
+  const statusDisplay = (value: submissionStatus) => {
+    switch (value) {
+      case "reviewed":
+        return (
+          <Badge variant={"success"} className="w-fit">
+            Reviewed
+          </Badge>
+        );
+      case "not_reviewed":
+        return (
+          <Badge variant={"warning"} className="w-fit">
+            Not Reviewed
+          </Badge>
+        );
+      case "ignored":
+        return (
+          <Badge variant={"destructive"} className="w-fit">
+            Ignored
+          </Badge>
+        );
+      default:
+        return <></>;
+    }
+  };
+
   return (
     <div className="flex flex-col h-full gap-4">
       <div className="flex flex-col gap-2">
         <div className="pt-4 sm:pt-0 flex justify-center sm:justify-start items-center text-sm gap-0 sm:gap-2 flex-col sm:flex-row">
           <span className="font-semibold text-xl">{sender}</span>
           <span className="text-foreground/80 text-xs">
-            {formatDateRelativeToNow(submitted_at)}
+            ({formatDateRelativeToNow(submitted_at)})
           </span>
         </div>
         <div className="flex justify-center sm:justify-start w-full items-center gap-2">
-          {reviewed ? (
-            <Badge variant={"success"} className="w-fit">
-              Reviewed
-            </Badge>
-          ) : (
-            <Badge variant={"warning"} className="w-fit">
-              Not Reviewed
-            </Badge>
-          )}
+          {statusDisplay(status)}
         </div>
       </div>
       {appState === "loading" && (

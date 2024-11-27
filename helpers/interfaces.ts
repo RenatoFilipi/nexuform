@@ -1,5 +1,13 @@
 import { FormProgressModel } from "@/models/analytics";
-import { appState, block, brand, colorLabel, formStatus, mode } from "./types";
+import {
+  appState,
+  block,
+  brand,
+  colorLabel,
+  formStatus,
+  mode,
+  submissionStatus,
+} from "./types";
 
 export interface ColorProps {
   label: colorLabel;
@@ -21,7 +29,7 @@ export interface FormSubmissionItemProps {
   form_id: string;
   sender: string;
   submitted_at: string;
-  reviewed: boolean;
+  status: submissionStatus;
   blocks: FormSubmissionBlockProps[];
 }
 

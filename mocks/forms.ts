@@ -5,9 +5,9 @@ export const formSubmissionList: FormSubmissionItemProps[] = [
   {
     id: "35f94feb-ae0c-41a1-b425-83cb6f60df70",
     form_id: "4d6b48e1-5a1f-47c0-ae52-0eda19bed5e9",
-    sender: "anonymous submission",
+    sender: "SUB-6N4USPYM3QIG",
     submitted_at: new Date().toISOString(),
-    reviewed: false,
+    status: "not_reviewed",
     blocks: [
       {
         id: "f6d8ff43-176a-4b0b-b0c7-f1571382d721",
@@ -85,6 +85,8 @@ export const formList: FormItemProps[] = [
     id: "4d6b48e1-5a1f-47c0-ae52-0eda19bed5e9",
     title: "Product Feedback",
     status: "published",
-    responsesCount: 0,
+    responsesCount: formSubmissionList.filter(
+      (x) => x.form_id === "4d6b48e1-5a1f-47c0-ae52-0eda19bed5e9"
+    ).length,
   },
 ];

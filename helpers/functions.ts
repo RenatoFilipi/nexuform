@@ -1,9 +1,14 @@
 import { formatDistance } from "date-fns";
+import { customAlphabet } from "nanoid";
 import { block } from "./types";
 
 export const uuid = () => {
   const uuid = self.crypto.randomUUID();
   return uuid;
+};
+export const nanoid = (length: number = 12) => {
+  const nnid = customAlphabet("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ", length);
+  return nnid();
 };
 export const blockName = (type: block) => {
   switch (type) {
