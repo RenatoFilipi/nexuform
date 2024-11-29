@@ -6,13 +6,14 @@ import { appState } from "@/helpers/types";
 import { AnalyticsContent } from "@/mocks/analytics";
 import { FormProgressModel } from "@/models/analytics";
 import { useQuery } from "@tanstack/react-query";
-import { BookCheckIcon, FileIcon } from "lucide-react";
+import { BookCheckIcon, FileIcon, ViewIcon } from "lucide-react";
 import { useState } from "react";
 
 const Analytics = () => {
   const [appState, setAppState] = useState<appState>("loading");
   const [totalForms, setTotalForms] = useState("");
   const [totalSubmissions, setTotalSubmissions] = useState("");
+  const [totalViews, setTotalViews] = useState("");
   const [forms, setForms] = useState<FormProgressModel[]>([]);
 
   useQuery({
@@ -20,6 +21,7 @@ const Analytics = () => {
     queryFn: () => {
       setTotalForms(AnalyticsContent.forms_total.toString());
       setTotalSubmissions(AnalyticsContent.submissions_total.toString());
+      setTotalViews(AnalyticsContent.views_total.toString());
       setForms(AnalyticsContent.forms);
       setAppState("idle");
       return null;
@@ -31,11 +33,17 @@ const Analytics = () => {
       <div className="flex flex-col gap-4">
         <h1 className="text-xl font-semibold">Analytics</h1>
         <div className="flex flex-col gap-4">
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-3 gap-4">
             <AnalyticsCard
               icon={<FileIcon className="text-foreground w-6 h-6" />}
               title="Total Forms"
               value={totalForms}
+              state={appState}
+            />
+            <AnalyticsCard
+              icon={<ViewIcon className="text-foreground w-6 h-6" />}
+              title="Total Views"
+              value={totalViews}
               state={appState}
             />
             <AnalyticsCard

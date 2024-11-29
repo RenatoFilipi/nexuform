@@ -123,6 +123,8 @@ const Editor = () => {
       primary_color: primaryColor,
       submit_label: submitLabel,
       status,
+      responses: 1,
+      views: 4,
     };
   };
 

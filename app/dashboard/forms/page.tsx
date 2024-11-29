@@ -63,7 +63,8 @@ const Forms = () => {
               id={form.id}
               title={form.title}
               status={form.status}
-              responsesCount={form.responsesCount}
+              responses={form.responses}
+              views={form.views}
             />
           ))}
         </div>

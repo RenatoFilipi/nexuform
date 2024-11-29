@@ -21,7 +21,8 @@ export interface FormItemProps {
   id: string;
   title: string;
   status: formStatus;
-  responsesCount: number;
+  views: number;
+  responses: number;
 }
 
 export interface FormSubmissionItemProps {

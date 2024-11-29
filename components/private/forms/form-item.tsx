@@ -8,9 +8,12 @@ import Link from "next/link";
 import { Button } from "../../ui/button";
 import { Card } from "../../ui/card";
 
-const FormItem = ({ title, status, responsesCount, id }: FormItemProps) => {
+const FormItem = ({ title, status, responses, views, id }: FormItemProps) => {
   const responsesDisplay = (count: number) => {
     return count === 1 ? `${count} Response` : `${count} Responses`;
+  };
+  const viewsDisplay = (count: number) => {
+    return count === 1 ? `${count} View` : `${count} Views`;
   };
   const BadgeColor = (status: formStatus) => {
     switch (status) {
@@ -42,9 +45,14 @@ const FormItem = ({ title, status, responsesCount, id }: FormItemProps) => {
         {BadgeColor(status)}
       </div>
       <div className="flex justify-between items-center w-full">
-        <span className="text-foreground/80 text-xs">
-          {responsesDisplay(responsesCount)}
-        </span>
+        <div className="flex justify-center items-center gap-3">
+          <span className="text-foreground/80 text-xs">
+            {viewsDisplay(views)}
+          </span>
+          <span className="text-foreground/80 text-xs">
+            {responsesDisplay(responses)}
+          </span>
+        </div>
         <div className="flex justify-center items-center gap-2">
           <Button variant={"outline"} size={"sm"} asChild>
             <Link href={`/dashboard/forms/${id}`}>

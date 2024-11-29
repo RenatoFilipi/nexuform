@@ -78,6 +78,10 @@ export const formSettingsList: FormModel[] = [
     primary_color: "Cyan",
     submit_label: "Send Response",
     status: "published",
+    responses: formSubmissionList.filter(
+      (x) => x.form_id === "4d6b48e1-5a1f-47c0-ae52-0eda19bed5e9"
+    ).length,
+    views: 4,
   },
 ];
 export const formList: FormItemProps[] = [
@@ -85,7 +89,8 @@ export const formList: FormItemProps[] = [
     id: "4d6b48e1-5a1f-47c0-ae52-0eda19bed5e9",
     title: "Product Feedback",
     status: "published",
-    responsesCount: formSubmissionList.filter(
+    views: 4,
+    responses: formSubmissionList.filter(
       (x) => x.form_id === "4d6b48e1-5a1f-47c0-ae52-0eda19bed5e9"
     ).length,
   },

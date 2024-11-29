@@ -12,6 +12,8 @@ export interface FormModel {
   blocks: BlockModel[];
   numeric_blocks: boolean;
   status: formStatus;
+  views: number;
+  responses: number;
 }
 export interface BlockModel {
   id: string;

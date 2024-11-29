@@ -41,7 +41,7 @@ const Hero = () => {
           color={["#89FF4D", "#89FF4D", "#89FF4D"]}>
           <Image
             alt="hero preview feature"
-            src={`${theme === "light" ? "/mail.webp" : "/mail-dark.webp"}`}
+            src={`/mail.webp`}
             width={1000}
             height={500}
           />

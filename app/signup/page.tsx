@@ -1,7 +1,6 @@
 "use client";
 
 import Brand2 from "@/components/core/brand-2";
-import { ModeToggle } from "@/components/core/mode-toggle";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ChevronLeftIcon } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -38,10 +38,12 @@ const Signup = () => {
         <Link href={"/"} className="fixed top-6 flex sm:hidden">
           <Brand2 type="logo" className="h-8 fill-foreground" />
         </Link>
-        <div className="fixed top-5 left-5 hidden sm:flex gap-2">
-          <ModeToggle />
+        <div className="fixed top-3 left-3 hidden sm:flex gap-2">
           <Button variant={"outline"} size={"sm"} asChild>
-            <Link href={"/"}>Go back</Link>
+            <Link href={"/"}>
+              <ChevronLeftIcon className="w-4 h-4 mr-2" />
+              Go back
+            </Link>
           </Button>
         </div>
         <div className="w-full flex justify-center items-center">
