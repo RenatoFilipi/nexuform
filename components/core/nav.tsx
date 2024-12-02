@@ -1,6 +1,5 @@
 "use client";
 
-import Brand2 from "@/components/core/brand-2";
 import { Badge } from "@/components/ui/badge";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Label } from "@/components/ui/label";
@@ -43,6 +42,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { default as Brand } from "./brand";
 
 const navLinks = [
   {
@@ -100,7 +100,7 @@ const Nav = () => {
           <div className="flex justify-center items-center gap-1">
             <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
               <Link href={"/dashboard/forms"}>
-                <Brand2 type="logo" className="h-7 fill-foreground" />
+                <Brand type="logo" className="h-7 fill-foreground" />
               </Link>
             </Button>
             {currentForm !== undefined && (
@@ -155,7 +155,7 @@ const Nav = () => {
         <div className="flex justify-center items-center gap-4">
           <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
             <Link href={"/dashboard/forms"}>
-              <Brand2 type="logo" className="h-7 fill-foreground" />
+              <Brand type="logo" className="h-7 fill-foreground" />
             </Link>
           </Button>
         </div>
@@ -371,7 +371,7 @@ const SelectForm = ({ children }: { children: React.ReactNode }) => {
     return (
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>{children}</PopoverTrigger>
-        <PopoverContent>
+        <PopoverContent className="ml-7">
           <SelectFormBody setState={setOpen} />
         </PopoverContent>
       </Popover>

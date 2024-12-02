@@ -28,7 +28,7 @@ const ChartSubmissions = ({ forms, state }: ChartSubmissionsProps) => {
             <div key={form.id} className="space-y-2">
               <div className="flex justify-between items-center">
                 <span className="font-medium">{form.name}</span>
-                <span className="text-sm text-muted-foreground">
+                <span className="text-sm text-foreground/80">
                   {form.submissions} / {totalSubmissions} submissions
                 </span>
               </div>

@@ -11,5 +11,10 @@ export const AnalyticsContent: AnalyticsModel = {
       name: "Product Feedback",
       submissions: 1,
     },
+    {
+      id: "c4d7cf22-fe45-49ad-9e64-537770fef406",
+      name: "Services",
+      submissions: 0,
+    },
   ],
 };

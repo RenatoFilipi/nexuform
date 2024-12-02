@@ -1,6 +1,6 @@
 "use client";
 
-import Brand2 from "@/components/core/brand-2";
+import { default as Brand } from "@/components/core/brand";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -36,7 +36,7 @@ const Signup = () => {
     <div className="min-h-screen flex">
       <div className="flex-1 flex justify-center items-center w-full relative">
         <Link href={"/"} className="fixed top-6 flex sm:hidden">
-          <Brand2 type="logo" className="h-8 fill-foreground" />
+          <Brand type="logo" className="h-8 fill-foreground" />
         </Link>
         <div className="fixed top-3 left-3 hidden sm:flex gap-2">
           <Button variant={"outline"} size={"sm"} asChild>
@@ -118,7 +118,7 @@ const Signup = () => {
         </div>
       </div>
       <div className="flex-1 sm:flex hidden justify-center items-center w-full relative bg-primary">
-        <Brand2 type="logo_text" className="h-16 fill-black" />
+        <Brand type="logo_text" className="h-16 fill-black" />
       </div>
     </div>
   );

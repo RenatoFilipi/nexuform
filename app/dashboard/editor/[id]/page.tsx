@@ -1,6 +1,6 @@
 "use client";
 
-import Brand2 from "@/components/core/brand-2";
+import { default as Brand } from "@/components/core/brand";
 import GenericError from "@/components/core/generic-error";
 import GenericLoader from "@/components/core/generic-loader";
 import AddBlock from "@/components/private/blocks/add-block";
@@ -97,7 +97,7 @@ const Editor = () => {
           <FormGroup mode="preview" />
           <div className="flex justify-center items-center w-full py-2">
             <span className="border rounded p-2 flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
-              <Brand2 type="logo" className="fill-foreground w-4 h-4" />
+              <Brand type="logo" className="fill-foreground w-4 h-4" />
               <span className="text-foreground/80 text-sm font-semibold ">
                 Powered by Nebulaform
               </span>
@@ -134,7 +134,7 @@ const Editor = () => {
         <div className="flex justify-center items-center gap-2">
           <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
             <Link href={"/dashboard/forms"}>
-              <Brand2 type="logo" className="h-7 fill-foreground" />
+              <Brand type="logo" className="h-7 fill-foreground" />
             </Link>
           </Button>
           {appState === "loading" && <GenericLoader className="w-4 h-4" />}
@@ -232,7 +232,7 @@ const Editor = () => {
                 <FormGroup mode="preview" />
                 <div className="flex justify-center items-center">
                   <span className="border rounded p-2 flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
-                    <Brand2 type="logo" className="fill-foreground w-4 h-4" />
+                    <Brand type="logo" className="fill-foreground w-4 h-4" />
                     <span className="text-foreground/80 text-sm font-semibold ">
                       Powered by Nebulaform
                     </span>

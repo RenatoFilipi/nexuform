@@ -1,4 +1,4 @@
-import Brand2 from "@/components/core/brand-2";
+import Brand from "@/components/core/brand";
 import ModeToggle2 from "@/components/core/mode-toggle2";
 import Hero from "@/components/public/hero";
 import Nav from "@/components/public/nav";
@@ -11,7 +11,7 @@ const Home = () => {
     <div className="min-h-screen flex flex-col relative">
       <div className="flex fixed top-0 w-full justify-between sm:justify-around sm:px-5 px-3 h-14 bg-background/80 z-10 backdrop-blur-md items-center">
         <Link href={"/"} className="flex justify-center items-center">
-          <Brand2 type="logo_text" className="h-7 fill-foreground" />
+          <Brand type="logo_text" className="h-7 fill-foreground" />
         </Link>
         <div className="hidden sm:flex justify-center items-center gap-4">
           <Button variant={"outline"} size={"sm"} asChild>
