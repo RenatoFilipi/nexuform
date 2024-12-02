@@ -53,6 +53,21 @@ const Editor = () => {
   const pathname = usePathname();
   const [isPreview, setIsPreview] = useState(false);
   const [appState, setAppState] = useState<appState>("loading");
+  const [formModel, setFormModel] = useState<FormModel>({
+    id: "",
+    owner_id: "",
+    created_at: "",
+    updated_at: "",
+    name: "",
+    description: "",
+    numeric_blocks: false,
+    primary_color: "",
+    blocks: [],
+    responses: 0,
+    views: 0,
+    status: "draft",
+    submit_label: "",
+  });
 
   useQuery({
     queryKey: ["editorPageData"],
@@ -75,6 +90,23 @@ const Editor = () => {
       setNumericBlock(formItem.numeric_blocks);
       setPrimaryColor(formItem.primary_color as colorLabel);
       setBlocks(formItem.blocks);
+
+      setFormModel({
+        id: formId,
+        owner_id: "",
+        name: formItem.name,
+        description: formItem.description,
+        status: formItem.status,
+        submit_label: formItem.submit_label,
+        numeric_blocks: formItem.numeric_blocks,
+        primary_color: formItem.primary_color,
+        blocks: formItem.blocks,
+        created_at: "",
+        updated_at: "",
+        responses: 0,
+        views: 0,
+      });
+
       setAppState("idle");
       return null;
     },
