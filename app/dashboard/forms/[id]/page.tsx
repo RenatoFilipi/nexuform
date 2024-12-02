@@ -5,9 +5,9 @@ import GenericLoader from "@/components/core/generic-loader";
 import FormShare from "@/components/private/forms/form-share";
 import FormSubmissionGroup from "@/components/private/forms/form-submission-group";
 import { Button } from "@/components/ui/button";
-import { FormItemProps, FormSubmissionItemProps } from "@/helpers/interfaces";
 import { appState } from "@/helpers/types";
-import { formList, formSubmissionList } from "@/mocks/forms";
+import { mockFormItens, mockFormSubmissions } from "@/mocks/core";
+import { FormItemProps, FormSubmissionProps } from "@/models/modules";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -17,17 +17,22 @@ const Form = () => {
   const [appState, setAppState] = useState<appState>("loading");
   const pathname = usePathname();
   const formId = pathname.split("/")[3];
-  const [submissions, setSubmissions] = useState<FormSubmissionItemProps[]>([]);
-  const [form, setForm] = useState<FormItemProps | undefined>();
+  const [submissions, setSubmissions] = useState<FormSubmissionProps[]>([]);
+  const [form, setForm] = useState<FormItemProps | null>(null);
 
   useQuery({
     queryKey: ["formPageData"],
     queryFn: () => {
-      const currentForm = formList.find((x) => x.id === formId);
-      setForm(currentForm);
-      setSubmissions(
-        formSubmissionList.filter((x) => x.form_id === currentForm?.id)
+      const currentForm = mockFormItens.find((x) => x.id === formId);
+      const currentSubmissions = mockFormSubmissions.filter(
+        (x) => x.form_id === formId
       );
+      if (!currentForm || !currentSubmissions) {
+        setAppState("idle");
+        return;
+      }
+      setForm(currentForm);
+      setSubmissions(currentSubmissions);
       setAppState("idle");
       return null;
     },
@@ -36,11 +41,11 @@ const Form = () => {
   return (
     <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-14">
       <div className="flex justify-between items-center">
-        {form === undefined || form.title === "".trim() ? (
+        {!form || form.title === "".trim() ? (
           <GenericLoader className="hidden sm:flex w-5 h-5" />
         ) : (
           <div className="hidden sm:flex">
-            <h1 className="text-xl font-semibold">{form?.title}</h1>
+            <h1 className="text-xl font-semibold">{form.title}</h1>
           </div>
         )}
         <div className="flex justify-center items-center sm:gap-4 gap-2 w-full sm:w-fit">

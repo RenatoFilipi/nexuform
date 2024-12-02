@@ -5,9 +5,9 @@ import GenericLoader from "@/components/core/generic-loader";
 import CreateForm from "@/components/private/forms/create-form";
 import FormItem from "@/components/private/forms/form-item";
 import { Button } from "@/components/ui/button";
-import { FormItemProps } from "@/helpers/interfaces";
 import { appState } from "@/helpers/types";
-import { formList } from "@/mocks/forms";
+import { mockFormItens } from "@/mocks/core";
+import { FormItemProps } from "@/models/modules";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -18,7 +18,7 @@ const Forms = () => {
   useQuery({
     queryKey: ["formsData"],
     queryFn: () => {
-      setForms(formList);
+      setForms(mockFormItens);
       setAppState("idle");
       return null;
     },
@@ -46,8 +46,8 @@ const Forms = () => {
       {appState === "idle" && forms.length <= 0 && (
         <div className="flex justify-center items-center h-full flex-1">
           <div className="flex flex-col justify-center items-center gap-3">
-            <div className="flex flex-col justify-center items-center">
-              <span className="font-semibold">No form to show.</span>
+            <div className="flex flex-col justify-center items-center gap-1">
+              <span className="font-semibold text-lg">No form to show.</span>
               <span className="text-foreground/80 text-sm">
                 Start by creating your first form.
               </span>
@@ -63,7 +63,7 @@ const Forms = () => {
               id={form.id}
               title={form.title}
               status={form.status}
-              responses={form.responses}
+              submissions={form.submissions}
               views={form.views}
             />
           ))}

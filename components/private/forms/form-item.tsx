@@ -1,16 +1,16 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { FormItemProps } from "@/helpers/interfaces";
 import { formStatus } from "@/helpers/types";
+import { FormItemProps } from "@/models/modules";
 import { EditIcon, ViewIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../../ui/button";
 import { Card } from "../../ui/card";
 
-const FormItem = ({ title, status, responses, views, id }: FormItemProps) => {
-  const responsesDisplay = (count: number) => {
-    return count === 1 ? `${count} Response` : `${count} Responses`;
+const FormItem = ({ title, status, submissions, views, id }: FormItemProps) => {
+  const submissionsDisplay = (count: number) => {
+    return count === 1 ? `${count} Response` : `${count} Submissions`;
   };
   const viewsDisplay = (count: number) => {
     return count === 1 ? `${count} View` : `${count} Views`;
@@ -50,7 +50,7 @@ const FormItem = ({ title, status, responses, views, id }: FormItemProps) => {
             {viewsDisplay(views)}
           </span>
           <span className="text-foreground/80 text-xs">
-            {responsesDisplay(responses)}
+            {submissionsDisplay(submissions)}
           </span>
         </div>
         <div className="flex justify-center items-center gap-2">

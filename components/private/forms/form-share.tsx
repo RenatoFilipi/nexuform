@@ -3,7 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { minWidth640 } from "@/helpers/constants";
 import { setState } from "@/helpers/types";
-import { formList } from "@/mocks/forms";
+import { mockFormItens } from "@/mocks/core";
+import { FormItemProps } from "@/models/modules";
+import { useQuery } from "@tanstack/react-query";
 import { ExternalLinkIcon, Link2Icon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -50,11 +52,22 @@ const Body = ({
   setState: setState<boolean>;
   formId: string;
 }) => {
-  const currentForm = formList.find((x) => x.id === formId);
-  const shareLink = `${window.location.host}/r/${currentForm?.id}`;
+  const [url, setUrl] = useState("");
+  const [form, setForm] = useState<FormItemProps | null>(null);
+
+  useQuery({
+    queryKey: ["formShareData"],
+    queryFn: () => {
+      const currentForm = mockFormItens.find((x) => x.id === formId);
+      if (!currentForm) return;
+      setForm(currentForm);
+      setUrl(`${window.location.host}/r/${currentForm.id}`);
+      return null;
+    },
+  });
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(shareLink);
+    navigator.clipboard.writeText(url);
     toast.success("Link Copied");
   };
 
@@ -62,7 +75,7 @@ const Body = ({
     <div className="flex flex-col gap-4 pt-4 sm:pt-0">
       <div className="flex flex-col gap-1 justify-center items-start">
         <h1 className="text-xl font-semibold">Share link</h1>
-        {currentForm?.status === "published" ? (
+        {form?.status === "published" ? (
           <Alert variant={"info"}>
             <AlertDescription>
               Your form is live! Share it via link on social media, messaging,
@@ -78,9 +91,9 @@ const Body = ({
           </Alert>
         )}
       </div>
-      {currentForm?.status === "published" && (
+      {form?.status === "published" && (
         <div className="flex justify-center items-center gap-4 flex-col sm:flex-row">
-          <Input value={shareLink} className="text-foreground/60" />
+          <Input value={url} className="text-foreground/60" />
         </div>
       )}
       <div className="flex w-full justify-between items-center gap-4 flex-col-reverse sm:flex-row">
@@ -97,7 +110,7 @@ const Body = ({
             size={"sm"}
             className="w-full sm:w-fit"
             asChild>
-            <Link href={`/r/${currentForm?.id}`}>
+            <Link href={`/r/${form?.id}`}>
               <ExternalLinkIcon className="w-4 h-4 mr-2" />
               Go to Form
             </Link>

@@ -1,21 +1,22 @@
 import { block, formStatus } from "@/helpers/types";
 
-export interface FormModel {
+export interface Form {
   id: string;
   owner_id: string;
   created_at: string;
   updated_at: string;
   name: string;
   description: string | null;
-  primary_color: string;
-  submit_label: string;
-  blocks: BlockModel[];
-  numeric_blocks: boolean;
+  theme: string;
+  submit: string;
+  numeric: boolean;
   status: formStatus;
   views: number;
-  responses: number;
+  submissions: number;
+  blocks: Block[];
 }
-export interface BlockModel {
+
+export interface Block {
   id: string;
   form_id: string;
   created_at: string;
@@ -25,11 +26,10 @@ export interface BlockModel {
   type: block;
   required: boolean;
   placeholder: string | null;
-  options: { id: string; text: string }[] | null;
-  max_character_limit: number | null;
-  min_character_limit: number | null;
-  show_character_limit: boolean | null;
+  max_char: number | null;
+  min_char: number | null;
   position: number;
-  max_rating: number | null;
+  rating: number | null;
   max_scale: number | null;
+  min_scale: number | null;
 }
