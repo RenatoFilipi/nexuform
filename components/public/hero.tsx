@@ -30,9 +30,6 @@ const Hero = () => {
               <ArrowRightIcon className="w-4 h-4 ml-2" />
             </Link>
           </Button>
-          <Button variant={"outline"} className="w-full sm:w-fit">
-            View Demo
-          </Button>
         </div>
       </div>
       <div className="mb-20">

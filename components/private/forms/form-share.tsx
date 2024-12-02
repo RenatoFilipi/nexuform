@@ -4,7 +4,8 @@ import { Input } from "@/components/ui/input";
 import { minWidth640 } from "@/helpers/constants";
 import { setState } from "@/helpers/types";
 import { formList } from "@/mocks/forms";
-import { Link2Icon } from "lucide-react";
+import { ExternalLinkIcon, Link2Icon } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { toast } from "sonner";
@@ -90,14 +91,26 @@ const Body = ({
           onClick={() => setState(false)}>
           Close
         </Button>
-        <Button
-          onClick={handleCopy}
-          variant={"secondary"}
-          size={"sm"}
-          className="w-full sm:w-fit">
-          <Link2Icon className="w-4 h-4 mr-2" />
-          Copy Link
-        </Button>
+        <div className="flex justify-center items-center gap-3 w-full sm:w-fit">
+          <Button
+            variant={"outline"}
+            size={"sm"}
+            className="w-full sm:w-fit"
+            asChild>
+            <Link href={`/r/${currentForm?.id}`}>
+              <ExternalLinkIcon className="w-4 h-4 mr-2" />
+              Go to Form
+            </Link>
+          </Button>
+          <Button
+            onClick={handleCopy}
+            variant={"secondary"}
+            size={"sm"}
+            className="w-full sm:w-fit">
+            <Link2Icon className="w-4 h-4 mr-2" />
+            Copy Link
+          </Button>
+        </div>
       </div>
     </div>
   );

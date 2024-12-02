@@ -12,6 +12,11 @@ const nextConfig = {
         destination: "/dashboard/forms",
         permanent: true,
       },
+      {
+        source: "/r",
+        destination: "/",
+        permanent: true,
+      },
     ];
   },
 };
