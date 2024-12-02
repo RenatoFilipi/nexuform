@@ -83,6 +83,21 @@ export const formSettingsList: FormModel[] = [
     ).length,
     views: 4,
   },
+  {
+    id: "c4d7cf22-fe45-49ad-9e64-537770fef406",
+    owner_id: "",
+    name: "Services",
+    description: null,
+    blocks: [],
+    created_at: "",
+    updated_at: "",
+    numeric_blocks: false,
+    primary_color: "Emerald",
+    submit_label: "Submit",
+    status: "draft",
+    responses: 0,
+    views: 0,
+  },
 ];
 export const formList: FormItemProps[] = [
   {

@@ -10,7 +10,6 @@ import FormGroup from "@/components/private/forms/form-group";
 import FormReorder from "@/components/private/forms/form-reorder";
 import FormSettings from "@/components/private/forms/form-settings";
 import { Button } from "@/components/ui/button";
-import { nanoid } from "@/helpers/functions";
 import { appState, colorLabel } from "@/helpers/types";
 import { formSettingsList } from "@/mocks/forms";
 import { FormModel } from "@/models/form";
@@ -109,8 +108,6 @@ const Editor = () => {
   }
 
   const onSave = () => {
-    console.log(nanoid());
-
     const formModel: FormModel = {
       id,
       owner_id: ownerId,
@@ -126,6 +123,8 @@ const Editor = () => {
       responses: 1,
       views: 4,
     };
+
+    console.log(JSON.stringify(formModel));
   };
 
   return (
@@ -170,7 +169,7 @@ const Editor = () => {
       )}
       {appState === "idle" && (
         <div className="flex flex-1 relative">
-          <div className="sm:w-[360px] w-full flex flex-col p-4 gap-6 fixed bg-background h-full overflow-y-auto pt-14">
+          <div className="sm:w-[360px] w-full flex flex-col p-4 gap-6 fixed bg-background h-full overflow-y-auto pt-14 border-r">
             <div className="flex flex-col gap-4 mt-4">
               <AddBlock formId={id}>
                 <Button variant={"default"} size={"sm"} className="w-full">
@@ -215,10 +214,10 @@ const Editor = () => {
             )}
           </div>
           {blocks.length <= 0 && (
-            <div className="hidden sm:flex justify-center items-center flex-1 bg-foreground/5 ml-[360px] pt-14">
+            <div className="hidden sm:flex justify-center items-center flex-1 ml-[360px] pt-14 bg-foreground/5">
               <div className="flex justify-center items-center gap-3 flex-col">
-                <div className="flex justify-center items-center p-2 bg-primary w-fit rounded">
-                  <BlocksIcon className="text-black" />
+                <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/15">
+                  <BlocksIcon className="text-foreground/80 w-8 h-8" />
                 </div>
                 <span className="text-foreground/80 text-sm">
                   No blocks to preview.
