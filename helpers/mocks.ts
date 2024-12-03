@@ -1,5 +1,9 @@
-import { AnalyticsModel } from "@/models/entity";
-import { BlockModel, FormModel, SubmissionModel } from "./models";
+import {
+  AnalyticsModel,
+  BlockModel,
+  FormModel,
+  SubmissionModel,
+} from "./models";
 
 export const mockForms: FormModel[] = [
   {
@@ -43,13 +47,6 @@ export const mockAnalytics: AnalyticsModel = {
   total_forms: 1,
   total_submissions: 1,
   total_views: 1,
-  forms: [
-    {
-      id: "b68e83e3-f646-4ddd-8eac-2d7ce0abddf6",
-      name: "Product",
-      submissions: 1,
-    },
-  ],
 };
 export const mockSubmissions: SubmissionModel[] = [
   {

@@ -1,5 +1,4 @@
-import { FormProgressModel } from "@/models/analytics";
-import { appState, block, brand, colorLabel, formStatus } from "./types";
+import { block, brand, colorLabel, formStatus } from "./types";
 
 export interface ColorProps {
   label: colorLabel;
@@ -8,10 +7,6 @@ export interface ColorProps {
 export interface BrandProps {
   className?: string;
   type: brand;
-}
-export interface ChartSubmissionsProps {
-  forms: FormProgressModel[];
-  state: appState;
 }
 export interface addBlockProps {
   type: block;
@@ -26,7 +21,7 @@ export interface FormSettingsStatusProps {
   description: string;
   icon: JSX.Element | null;
 }
-export interface BlockResponseProps {
+export interface AnswerProps {
   formId: string;
   name: string;
   answer: string;

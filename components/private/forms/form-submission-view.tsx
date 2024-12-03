@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { minWidth640 } from "@/helpers/constants";
 import { formatDateRelativeToNow } from "@/helpers/functions";
-import { BlockResponseProps } from "@/helpers/interfaces";
+import { AnswerProps } from "@/helpers/interfaces";
 import { mockSubmissions } from "@/helpers/mocks";
 import { appState, setState, submissionStatus } from "@/helpers/types";
 import { useQuery } from "@tanstack/react-query";
@@ -84,7 +84,7 @@ const Body = ({
   status: submissionStatus;
 }) => {
   const [appState, setAppState] = useState<appState>("loading");
-  const [blocks, setBlocks] = useState<BlockResponseProps[]>([]);
+  const [blocks, setBlocks] = useState<AnswerProps[]>([]);
 
   useQuery({
     queryKey: ["formSubmissionView", subId],
