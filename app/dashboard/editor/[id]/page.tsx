@@ -10,8 +10,8 @@ import FormGroupPreview from "@/components/private/forms/form-group-preview";
 import FormReorder from "@/components/private/forms/form-reorder";
 import FormSettings from "@/components/private/forms/form-settings";
 import { Button } from "@/components/ui/button";
-import { mockForms } from "@/helpers/mocks";
-import { appState } from "@/helpers/types";
+import { mockBlocks, mockForms } from "@/helpers/mocks";
+import { appState, colorLabel } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -59,12 +59,20 @@ const Editor = () => {
     queryFn: () => {
       reset();
       const form = mockForms.find((x) => x.id === formId);
+      const blocks = mockBlocks.filter((x) => x.form_id === formId);
       if (!form) {
         setAppState("idle");
         return;
       }
+      setId(form.id);
       setName(form.name);
-      console.log(form);
+      setDescription(form.description);
+      setOwnerId(form.owner_id);
+      setNumericBlock(form.numeric_blocks);
+      setTheme(form.theme as colorLabel);
+      setStatus(form.status);
+      setSubmitLabel(form.submit_label);
+      setBlocks(blocks);
 
       setAppState("idle");
       return null;
@@ -84,7 +92,7 @@ const Editor = () => {
           </Button>
         </div>
         <div className="px-5 flex flex-col justify-center items-center gap-6 overflow-y-auto">
-          {/* preview */}
+          <FormGroupPreview />
           <div className="flex justify-center items-center w-full py-2">
             <span className="border rounded p-2 flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
               <Brand type="logo" className="fill-foreground w-4 h-4" />
@@ -193,7 +201,7 @@ const Editor = () => {
                   <BlocksIcon className="text-foreground/80 w-8 h-8" />
                 </div>
                 <span className="text-foreground/80 text-sm">
-                  No blocks to preview.
+                  No block to preview.
                 </span>
               </div>
             </div>

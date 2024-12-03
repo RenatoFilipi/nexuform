@@ -19,4 +19,8 @@ export interface AnalyticsProps {
   label: string;
   value: string;
 }
-export interface EditorProps {}
+export interface AnalyticsProgressProps {
+  id: string;
+  name: string;
+  submissions: number;
+}

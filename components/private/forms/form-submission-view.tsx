@@ -8,8 +8,8 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { minWidth640 } from "@/helpers/constants";
 import { formatDateRelativeToNow } from "@/helpers/functions";
 import { BlockResponseProps } from "@/helpers/interfaces";
+import { mockSubmissions } from "@/helpers/mocks";
 import { appState, setState, submissionStatus } from "@/helpers/types";
-import { formSettingsList, formSubmissionList } from "@/mocks/forms";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -89,21 +89,12 @@ const Body = ({
   useQuery({
     queryKey: ["formSubmissionView", subId],
     queryFn: () => {
-      const sub = formSubmissionList.find((x) => x.id === subId);
-      const settings = formSettingsList.find((x) => x.id === formId);
+      const sub = mockSubmissions.find((x) => x.id === subId);
 
-      if (!sub || !settings) {
+      if (!sub) {
         setAppState("idle");
         return null;
       }
-      const blocksResponse = settings.blocks.map((x) => {
-        return {
-          formId,
-          name: x.name,
-          answer: sub.blocks.find((z) => z.block_id === x.id)?.answer ?? "",
-        };
-      });
-      setBlocks(blocksResponse);
       setAppState("idle");
       return null;
     },

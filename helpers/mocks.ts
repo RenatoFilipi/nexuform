@@ -35,6 +35,8 @@ export const mockBlocks: BlockModel[] = [
     rating: null,
     required: false,
     type: "short_answer",
+    options: null,
+    show_char: null,
   },
 ];
 export const mockAnalytics: AnalyticsModel = {
@@ -44,7 +46,7 @@ export const mockAnalytics: AnalyticsModel = {
   forms: [
     {
       id: "b68e83e3-f646-4ddd-8eac-2d7ce0abddf6",
-      title: "Product",
+      name: "Product",
       submissions: 1,
     },
   ],

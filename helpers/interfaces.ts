@@ -1,12 +1,5 @@
 import { FormProgressModel } from "@/models/analytics";
-import {
-  appState,
-  block,
-  brand,
-  colorLabel,
-  formStatus,
-  submissionStatus,
-} from "./types";
+import { appState, block, brand, colorLabel, formStatus } from "./types";
 
 export interface ColorProps {
   label: colorLabel;
@@ -15,33 +8,6 @@ export interface ColorProps {
 export interface BrandProps {
   className?: string;
   type: brand;
-}
-export interface FormItemProps {
-  id: string;
-  title: string;
-  status: formStatus;
-  views: number;
-  responses: number;
-}
-export interface FormSubmissionItemProps {
-  id: string;
-  form_id: string;
-  sender: string;
-  submitted_at: string;
-  status: submissionStatus;
-  blocks: FormSubmissionBlockProps[];
-}
-export interface FormSubmissionBlockProps {
-  id: string;
-  block_id: string;
-  type: block;
-  answer: string;
-}
-export interface AnalyticsCardProps {
-  icon: JSX.Element;
-  title: string;
-  value: string;
-  state: appState;
 }
 export interface ChartSubmissionsProps {
   forms: FormProgressModel[];

@@ -2,7 +2,9 @@
 
 import GenericLoader from "@/components/core/generic-loader";
 import AnalyticsCard from "@/components/private/analytics/analytics-card";
-import { mockAnalytics } from "@/helpers/mocks";
+import AnalyticsProgress from "@/components/private/analytics/analytics-progress";
+import { mockAnalytics, mockForms } from "@/helpers/mocks";
+import { FormProps } from "@/helpers/modules";
 import { appState } from "@/helpers/types";
 import { useQuery } from "@tanstack/react-query";
 import { BookCheckIcon, FileIcon, ViewIcon } from "lucide-react";
@@ -13,6 +15,7 @@ const Analytics = () => {
   const [totalForms, setTotalForms] = useState(0);
   const [totalSubmissions, setTotalSubmissions] = useState(0);
   const [totalViews, setTotalViews] = useState(0);
+  const [forms, setForms] = useState<FormProps[]>([]);
 
   useQuery({
     queryKey: ["analyticsData"],
@@ -20,6 +23,7 @@ const Analytics = () => {
       setTotalForms(mockAnalytics.total_forms);
       setTotalSubmissions(mockAnalytics.total_submissions);
       setTotalViews(mockAnalytics.total_views);
+      setForms(mockForms);
       setAppState("idle");
       return null;
     },
@@ -53,6 +57,7 @@ const Analytics = () => {
                 value={totalSubmissions.toString()}
               />
             </div>
+            <AnalyticsProgress forms={forms} />
           </div>
         </div>
       )}

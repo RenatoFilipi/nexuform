@@ -128,7 +128,7 @@ const Login = () => {
         </div>
       </div>
       <div className="flex-1 sm:flex hidden justify-center items-center w-full relative bg-primary">
-        <Brand type="logo_text" className="h-16 fill-foreground" />
+        <Brand type="top_logo_bottom_text" className="h-24 fill-black" />
       </div>
     </div>
   );
