@@ -1,9 +1,9 @@
 import Rating from "@/components/ui/rating";
-import { BlockModel } from "@/models/form";
+import { BlockModel } from "@/helpers/models";
 import useEditorStore from "@/stores/editor";
 
 const RatingDesign = ({ block }: { block: BlockModel }) => {
-  const { name, description, required, max_rating, position } = block;
+  const { name, description, required, rating, position } = block;
   const { numericBlocks } = useEditorStore();
 
   const onChange = (rating: number) => {
@@ -25,7 +25,7 @@ const RatingDesign = ({ block }: { block: BlockModel }) => {
         </div>
         <span className="text-xs text-foreground/80">{description}</span>
       </div>
-      <Rating maxRating={max_rating ?? 5} onChange={onChange} />
+      <Rating maxRating={rating ?? 5} onChange={onChange} />
     </div>
   );
 };

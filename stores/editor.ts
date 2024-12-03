@@ -1,46 +1,48 @@
+import { BlockModel } from "@/helpers/models";
 import { colorLabel, formStatus } from "@/helpers/types";
-import { BlockModel } from "@/models/form";
 import { create } from "zustand";
 
-interface FormStoreProps {
+interface EditorProps {
   id: string;
-  setId: (value: string) => void;
   ownerId: string;
-  setOwnerId: (value: string) => void;
   name: string;
-  setName: (value: string) => void;
   description: string | null;
-  setDescription: (value: string | null) => void;
-  primaryColor: string;
-  setPrimaryColor: (value: colorLabel) => void;
+  theme: string;
   submitLabel: string;
-  setSubmitLabel: (value: string) => void;
   blocks: BlockModel[];
+  status: formStatus;
+  numericBlocks: boolean;
+  setId: (value: string) => void;
+  setOwnerId: (value: string) => void;
+  setName: (value: string) => void;
+  setDescription: (value: string | null) => void;
+  setTheme: (value: colorLabel) => void;
+  setSubmitLabel: (value: string) => void;
   setBlocks: (value: BlockModel[]) => void;
   addBlock: (value: BlockModel) => void;
   updateBlock: (id: string, value: BlockModel) => void;
   removeBlock: (id: string) => void;
-  status: formStatus;
   setStatus: (value: formStatus) => void;
-  numericBlocks: boolean;
   setNumericBlock: (value: boolean) => void;
   reset: () => void;
 }
 
-const useEditorStore = create<FormStoreProps>((set) => ({
+const useEditorStore = create<EditorProps>((set) => ({
   id: "",
-  setId: (value) => set({ id: value }),
   ownerId: "",
-  setOwnerId: (value) => set({ ownerId: value }),
   name: "",
-  setName: (value) => set({ name: value }),
   description: null,
-  setDescription: (value) => set({ description: value }),
-  primaryColor: "Slate",
-  setPrimaryColor: (value) => set({ primaryColor: value }),
+  theme: "Slate",
   submitLabel: "Submit",
-  setSubmitLabel: (value) => set({ submitLabel: value }),
   blocks: [],
+  status: "draft",
+  numericBlocks: false,
+  setId: (value) => set({ id: value }),
+  setOwnerId: (value) => set({ ownerId: value }),
+  setName: (value) => set({ name: value }),
+  setDescription: (value) => set({ description: value }),
+  setTheme: (value) => set({ theme: value }),
+  setSubmitLabel: (value) => set({ submitLabel: value }),
   setBlocks: (newBlocks) => set(() => ({ blocks: newBlocks })),
   addBlock: (block) => set((state) => ({ blocks: [...state.blocks, block] })),
   updateBlock: (id, updatedBlock) =>
@@ -53,9 +55,7 @@ const useEditorStore = create<FormStoreProps>((set) => ({
     set((state) => ({
       blocks: state.blocks.filter((block) => block.id !== id),
     })),
-  status: "draft",
   setStatus: (value) => set({ status: value }),
-  numericBlocks: false,
   setNumericBlock: (value) => set({ numericBlocks: value }),
   reset: () =>
     set({
@@ -63,7 +63,7 @@ const useEditorStore = create<FormStoreProps>((set) => ({
       ownerId: "",
       name: "",
       description: null,
-      primaryColor: "Slate",
+      theme: "Slate",
       submitLabel: "Submit",
       blocks: [],
       status: "draft",

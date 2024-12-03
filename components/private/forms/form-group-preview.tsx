@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ColorProps, FormGroupProps } from "@/helpers/interfaces";
+import { ColorProps } from "@/helpers/interfaces";
 import useEditorStore from "@/stores/editor";
 import { twMerge } from "tailwind-merge";
 import CheckboxesDesign from "../blocks/design/checkboxes-design";
@@ -103,11 +103,9 @@ const design: ColorProps[] = [
   },
 ];
 
-const FormGroup = ({ mode }: FormGroupProps) => {
-  const { blocks, primaryColor, submitLabel, name, description } =
-    useEditorStore();
-  const currentColor =
-    design.find((x) => x.label === primaryColor) ?? design[0];
+const FormGroupPreview = () => {
+  const { blocks, theme, submitLabel, name, description } = useEditorStore();
+  const currentColor = design.find((x) => x.label === theme) ?? design[0];
 
   return (
     <div className="flex flex-col gap-6 w-full">
@@ -122,70 +120,38 @@ const FormGroup = ({ mode }: FormGroupProps) => {
           switch (block.type) {
             case "short_answer":
               return (
-                <ShortAnswerDesign
-                  key={block.id}
-                  block={block}
-                  primaryColor={primaryColor}
-                />
+                <ShortAnswerDesign key={block.id} block={block} theme={theme} />
               );
             case "long_answer":
               return (
-                <LongAnswerDesign
-                  key={block.id}
-                  block={block}
-                  primaryColor={primaryColor}
-                />
+                <LongAnswerDesign key={block.id} block={block} theme={theme} />
               );
             case "multiple_choice":
               return (
                 <MultipleChoiceDesign
                   key={block.id}
                   block={block}
-                  primaryColor={primaryColor}
+                  theme={theme}
                 />
               );
             case "checkboxes":
               return (
-                <CheckboxesDesign
-                  key={block.id}
-                  block={block}
-                  primaryColor={primaryColor}
-                />
+                <CheckboxesDesign key={block.id} block={block} theme={theme} />
               );
             case "dropdown":
               return (
-                <DropdownDesign
-                  key={block.id}
-                  block={block}
-                  primaryColor={primaryColor}
-                />
+                <DropdownDesign key={block.id} block={block} theme={theme} />
               );
             case "number":
               return (
-                <NumberDesign
-                  key={block.id}
-                  block={block}
-                  primaryColor={primaryColor}
-                />
+                <NumberDesign key={block.id} block={block} theme={theme} />
               );
             case "email":
-              return (
-                <EmailDesign
-                  key={block.id}
-                  block={block}
-                  primaryColor={primaryColor}
-                />
-              );
+              return <EmailDesign key={block.id} block={block} theme={theme} />;
             case "rating":
               return <RatingDesign key={block.id} block={block} />;
             case "scale":
-              return (
-                <ScaleDesign
-                  key={block.id}
-                  block={block}
-                  primaryColor={primaryColor}
-                />
-              );
+              return <ScaleDesign key={block.id} block={block} theme={theme} />;
           }
         })}
       </div>
@@ -201,4 +167,4 @@ const FormGroup = ({ mode }: FormGroupProps) => {
   );
 };
 
-export default FormGroup;
+export default FormGroupPreview;

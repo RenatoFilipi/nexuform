@@ -6,13 +6,12 @@ import GenericLoader from "@/components/core/generic-loader";
 import AddBlock from "@/components/private/blocks/add-block";
 import Block from "@/components/private/blocks/block";
 import FormDesign from "@/components/private/forms/form-design";
-import FormGroup from "@/components/private/forms/form-group";
+import FormGroupPreview from "@/components/private/forms/form-group-preview";
 import FormReorder from "@/components/private/forms/form-reorder";
 import FormSettings from "@/components/private/forms/form-settings";
 import { Button } from "@/components/ui/button";
-import { appState, colorLabel } from "@/helpers/types";
-import { formSettingsList } from "@/mocks/forms";
-import { FormModel } from "@/models/form";
+import { mockForms } from "@/helpers/mocks";
+import { appState } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -30,82 +29,42 @@ import { useState } from "react";
 const Editor = () => {
   const {
     blocks,
-    setName,
     name,
     description,
     ownerId,
     id,
     numericBlocks,
-    primaryColor,
+    theme,
     status,
     submitLabel,
     setId,
+    setName,
     setBlocks,
     setDescription,
     setNumericBlock,
     setOwnerId,
-    setPrimaryColor,
+    setTheme,
     setStatus,
     setSubmitLabel,
     reset,
   } = useEditorStore();
 
   const pathname = usePathname();
+  const formId = pathname.split("/")[3];
   const [isPreview, setIsPreview] = useState(false);
   const [appState, setAppState] = useState<appState>("loading");
-  const [formModel, setFormModel] = useState<FormModel>({
-    id: "",
-    owner_id: "",
-    created_at: "",
-    updated_at: "",
-    name: "",
-    description: "",
-    numeric_blocks: false,
-    primary_color: "",
-    blocks: [],
-    responses: 0,
-    views: 0,
-    status: "draft",
-    submit_label: "",
-  });
 
   useQuery({
     queryKey: ["editorPageData"],
     queryFn: () => {
       reset();
-      const formId = pathname.split("/")[3];
-      const formItem = formSettingsList.find((x) => x.id === formId);
-
-      if (!formItem) {
+      const form = mockForms.find((x) => x.id === formId);
+      if (!form) {
         setAppState("idle");
-        return null;
+        return;
       }
-
-      setId(formId);
-      setOwnerId(formItem.owner_id);
-      setName(formItem.name);
-      setDescription(formItem.description);
-      setStatus(formItem.status);
-      setSubmitLabel(formItem.submit_label);
-      setNumericBlock(formItem.numeric_blocks);
-      setPrimaryColor(formItem.primary_color as colorLabel);
-      setBlocks(formItem.blocks);
-
-      setFormModel({
-        id: formId,
-        owner_id: "",
-        name: formItem.name,
-        description: formItem.description,
-        status: formItem.status,
-        submit_label: formItem.submit_label,
-        numeric_blocks: formItem.numeric_blocks,
-        primary_color: formItem.primary_color,
-        blocks: formItem.blocks,
-        created_at: "",
-        updated_at: "",
-        responses: 0,
-        views: 0,
-      });
+      setName(form.name);
+      console.log(form);
 
       setAppState("idle");
       return null;
@@ -125,7 +84,7 @@ const Editor = () => {
           </Button>
         </div>
         <div className="px-5 flex flex-col justify-center items-center gap-6 overflow-y-auto">
-          <FormGroup mode="preview" />
+          {/* preview */}
           <div className="flex justify-center items-center w-full py-2">
             <span className="border rounded p-2 flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
               <Brand type="logo" className="fill-foreground w-4 h-4" />
@@ -139,30 +98,12 @@ const Editor = () => {
     );
   }
 
-  const onSave = () => {
-    const formModel: FormModel = {
-      id,
-      owner_id: ownerId,
-      name,
-      description,
-      blocks,
-      created_at: "",
-      updated_at: "",
-      numeric_blocks: numericBlocks,
-      primary_color: primaryColor,
-      submit_label: submitLabel,
-      status,
-      responses: 1,
-      views: 4,
-    };
-
-    console.log(JSON.stringify(formModel));
-  };
+  const onSave = () => {};
 
   return (
     <div className="flex flex-col h-screen flex-1 gap-4">
       <div className="fixed h-14 flex justify-between items-center w-full top-0 bg-background border-b sm:px-6 px-2 z-20">
-        <div className="flex justify-center items-center gap-2">
+        <div className="flex justify-center items-center gap-3">
           <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
             <Link href={"/dashboard/forms"}>
               <Brand type="logo" className="h-7 fill-foreground" />
@@ -260,7 +201,7 @@ const Editor = () => {
           {blocks.length >= 1 && (
             <div className="hidden sm:flex flex-1 bg-foreground/5 justify-center items-start ml-[360px] pt-14">
               <div className="bg-background w-full rounded mx-8 my-8 flex flex-col px-10 py-4 gap-6">
-                <FormGroup mode="preview" />
+                <FormGroupPreview />
                 <div className="flex justify-center items-center">
                   <span className="border rounded p-2 flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
                     <Brand type="logo" className="fill-foreground w-4 h-4" />

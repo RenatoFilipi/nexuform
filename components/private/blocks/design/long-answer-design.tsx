@@ -1,6 +1,6 @@
 import { Textarea } from "@/components/ui/textarea";
 import { ColorProps } from "@/helpers/interfaces";
-import { BlockModel } from "@/models/form";
+import { BlockModel } from "@/helpers/models";
 import useEditorStore from "@/stores/editor";
 
 const design: ColorProps[] = [
@@ -30,23 +30,15 @@ const design: ColorProps[] = [
 
 const LongAnswerDesign = ({
   block,
-  primaryColor,
+  theme,
 }: {
   block: BlockModel;
-  primaryColor: string;
+  theme: string;
 }) => {
-  const {
-    name,
-    description,
-    max_character_limit,
-    show_character_limit,
-    required,
-    id,
-    position,
-  } = block;
+  const { name, description, max_char, show_char, required, id, position } =
+    block;
 
-  const currentColor =
-    design.find((x) => x.label === primaryColor) ?? design[0];
+  const currentColor = design.find((x) => x.label === theme) ?? design[0];
   const { numericBlocks } = useEditorStore();
 
   return (
@@ -68,11 +60,11 @@ const LongAnswerDesign = ({
         <Textarea
           id={id}
           className={`${currentColor.tw_class}`}
-          maxLength={max_character_limit ?? 256}
+          maxLength={max_char ?? 256}
         />
-        {show_character_limit && (
+        {show_char && (
           <div className="w-full flex justify-end mt-1">
-            <span className="text-xs">{max_character_limit}</span>
+            <span className="text-xs">{max_char}</span>
           </div>
         )}
       </div>

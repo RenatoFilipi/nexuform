@@ -8,8 +8,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { minWidth640 } from "@/helpers/constants";
 import { uuid } from "@/helpers/functions";
 import { addBlockProps } from "@/helpers/interfaces";
+import { BlockModel } from "@/helpers/models";
 import { block, setState } from "@/helpers/types";
-import { BlockModel } from "@/models/form";
 import useEditorStore from "@/stores/editor";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -161,12 +161,13 @@ const Body = ({
       required: true,
       type: blockType,
       placeholder: null,
-      max_character_limit: 100,
-      min_character_limit: 1,
-      show_character_limit: null,
+      max_char: 100,
+      min_char: 1,
+      show_char: null,
       position: blocks.length + 1,
-      max_rating: null,
+      rating: null,
       max_scale: null,
+      min_scale: null,
     };
     addBlock(block);
     setState(false);
@@ -186,7 +187,7 @@ const Body = ({
               <FormItem>
                 <FormControl>
                   <RadioGroup
-                    className="grid gap-2 "
+                    className="flex flex-col h-[300px] overflow-y-auto"
                     value={field.value}
                     onValueChange={field.onChange}>
                     {blockList.map((block, index) => {
@@ -223,7 +224,7 @@ const Body = ({
             </Button>
             <Button
               type="submit"
-              variant={"default"}
+              variant={"secondary"}
               size={"sm"}
               className="w-full sm:w-fit">
               Add Block

@@ -5,7 +5,6 @@ import {
   brand,
   colorLabel,
   formStatus,
-  mode,
   submissionStatus,
 } from "./types";
 
@@ -24,7 +23,6 @@ export interface FormItemProps {
   views: number;
   responses: number;
 }
-
 export interface FormSubmissionItemProps {
   id: string;
   form_id: string;
@@ -33,14 +31,12 @@ export interface FormSubmissionItemProps {
   status: submissionStatus;
   blocks: FormSubmissionBlockProps[];
 }
-
 export interface FormSubmissionBlockProps {
   id: string;
   block_id: string;
   type: block;
   answer: string;
 }
-
 export interface AnalyticsCardProps {
   icon: JSX.Element;
   title: string;
@@ -58,16 +54,12 @@ export interface addBlockProps {
   enabled: boolean;
   description: string;
 }
-export interface FormGroupProps {
-  mode: mode;
-}
 export interface FormSettingsStatusProps {
   status: formStatus;
   label: string;
   description: string;
   icon: JSX.Element | null;
 }
-
 export interface BlockResponseProps {
   formId: string;
   name: string;

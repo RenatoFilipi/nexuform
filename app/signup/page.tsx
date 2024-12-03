@@ -11,12 +11,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronLeftIcon } from "lucide-react";
+import { ChevronLeftIcon, EyeClosedIcon, EyeIcon } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const Signup = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const formSchema = z.object({
     email: z.string(),
     password: z.string(),
@@ -83,7 +86,23 @@ const Signup = () => {
                       <FormItem>
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <Input type="password" {...field} />
+                          <div className="flex justify-center items-center gap-2">
+                            <Input
+                              type={showPassword ? "text" : "password"}
+                              {...field}
+                            />
+                            <Button
+                              type="button"
+                              variant={"ghost"}
+                              size={"icon"}
+                              onClick={() => setShowPassword(!showPassword)}>
+                              {showPassword ? (
+                                <EyeIcon className="w-5 h-5" />
+                              ) : (
+                                <EyeClosedIcon className="w-5 h-5" />
+                              )}
+                            </Button>
+                          </div>
                         </FormControl>
                       </FormItem>
                     )}

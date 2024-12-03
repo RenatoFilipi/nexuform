@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { BlockModel } from "@/helpers/models";
 import { setState } from "@/helpers/types";
-import { BlockModel } from "@/models/form";
 import useEditorStore from "@/stores/editor";
 
 const RatingBlock = ({
@@ -55,11 +55,11 @@ const RatingBlock = ({
           <Input
             type="number"
             id="max-rating"
-            value={block.max_rating ?? 5}
+            value={block.rating ?? 5}
             onChange={(e) => {
               updateBlock(id, {
                 ...block,
-                max_rating: Number(e.target.value),
+                rating: Number(e.target.value),
               });
             }}
           />

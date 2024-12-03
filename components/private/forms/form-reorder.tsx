@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { minWidth640 } from "@/helpers/constants";
 import { blockName } from "@/helpers/functions";
+import { BlockModel } from "@/helpers/models";
 import { block, setState } from "@/helpers/types";
-import { BlockModel } from "@/models/form";
 import useEditorStore from "@/stores/editor";
 import { Reorder } from "framer-motion";
 import {
@@ -20,7 +20,7 @@ import {
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
-const blockIcons: { [key in block]: JSX.Element } = {
+const icons: { [key in block]: JSX.Element } = {
   short_answer: <EqualIcon className="w-5 h-5 text-background" />,
   long_answer: <TextIcon className="w-5 h-5 text-background" />,
   multiple_choice: <CheckSquareIcon className="w-5 h-5 text-background" />,
@@ -109,7 +109,7 @@ const Item = ({ block }: { block: BlockModel }) => {
       id={block.id}
       className="flex border cursor-grab bg-background">
       <div className="flex justify-center items-center bg-foreground/80 relative p-2 h-full">
-        {blockIcons[block.type]}
+        {icons[block.type]}
       </div>
       <div className="flex flex-col p-2">
         <span className="text-sm font-semibold">{blockName(block.type)}</span>

@@ -1,7 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ColorProps } from "@/helpers/interfaces";
-import { BlockModel } from "@/models/form";
+import { BlockModel } from "@/helpers/models";
 import useEditorStore from "@/stores/editor";
 import { twMerge } from "tailwind-merge";
 
@@ -101,14 +101,13 @@ const design: ColorProps[] = [
 
 const CheckboxesDesign = ({
   block,
-  primaryColor,
+  theme,
 }: {
   block: BlockModel;
-  primaryColor: string;
+  theme: string;
 }) => {
   const { name, description, required, options, id, position } = block;
-  const currentColor =
-    design.find((x) => x.label === primaryColor) ?? design[0];
+  const currentColor = design.find((x) => x.label === theme) ?? design[0];
   const { numericBlocks } = useEditorStore();
 
   return (

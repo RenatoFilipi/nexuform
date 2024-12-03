@@ -14,15 +14,15 @@ import {
 } from "@/components/ui/table";
 import { minWidth640 } from "@/helpers/constants";
 import { formatDateRelativeToNow } from "@/helpers/functions";
+import { SubmissionProps } from "@/helpers/modules";
 import { submissionStatus } from "@/helpers/types";
-import { FormSubmissionProps } from "@/models/modules";
 import { useMediaQuery } from "react-responsive";
 
 const FormSubmissionGroup = ({
   submissions,
   formId,
 }: {
-  submissions: FormSubmissionProps[];
+  submissions: SubmissionProps[];
   formId: string;
 }) => {
   const isDesktop = useMediaQuery({ query: minWidth640 });

@@ -24,12 +24,18 @@ export interface BlockModel {
   type: block;
   required: boolean;
   placeholder: string | null;
+  options: OptionModel[] | null;
   max_char: number | null;
   min_char: number | null;
+  show_char: boolean | null;
   position: number;
   rating: number | null;
   max_scale: number | null;
   min_scale: number | null;
+}
+export interface OptionModel {
+  id: string;
+  text: string;
 }
 export interface SubmissionModel {
   id: string;

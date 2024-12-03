@@ -1,6 +1,6 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColorProps } from "@/helpers/interfaces";
-import { BlockModel } from "@/models/form";
+import { BlockModel } from "@/helpers/models";
 import useEditorStore from "@/stores/editor";
 import { twMerge } from "tailwind-merge";
 
@@ -119,14 +119,13 @@ const design: ColorProps[] = [
 
 const MultipleChoiceDesign = ({
   block,
-  primaryColor,
+  theme,
 }: {
   block: BlockModel;
-  primaryColor: string;
+  theme: string;
 }) => {
   const { name, description, required, options, id, position } = block;
-  const currentColor =
-    design.find((x) => x.label === primaryColor) ?? design[0];
+  const currentColor = design.find((x) => x.label === theme) ?? design[0];
   const { numericBlocks } = useEditorStore();
 
   return (

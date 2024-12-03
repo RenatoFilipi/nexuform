@@ -1,8 +1,8 @@
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { minWidth640 } from "@/helpers/constants";
+import { BlockModel } from "@/helpers/models";
 import { setState } from "@/helpers/types";
-import { BlockModel } from "@/models/form";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import CheckboxesBlock from "./check-boxes-block";

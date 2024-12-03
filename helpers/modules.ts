@@ -19,3 +19,4 @@ export interface AnalyticsProps {
   label: string;
   value: string;
 }
+export interface EditorProps {}

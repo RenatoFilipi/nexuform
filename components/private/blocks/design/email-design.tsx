@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { ColorProps } from "@/helpers/interfaces";
-import { BlockModel } from "@/models/form";
+import { BlockModel } from "@/helpers/models";
 import useEditorStore from "@/stores/editor";
 
 const design: ColorProps[] = [
@@ -30,15 +30,14 @@ const design: ColorProps[] = [
 
 const EmailDesign = ({
   block,
-  primaryColor,
+  theme,
 }: {
   block: BlockModel;
-  primaryColor: string;
+  theme: string;
 }) => {
   const { name, description, required, id, position } = block;
 
-  const currentColor =
-    design.find((x) => x.label === primaryColor) ?? design[0];
+  const currentColor = design.find((x) => x.label === theme) ?? design[0];
   const { numericBlocks } = useEditorStore();
 
   return (

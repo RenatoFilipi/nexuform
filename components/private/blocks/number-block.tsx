@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { BlockModel } from "@/helpers/models";
 import { setState } from "@/helpers/types";
-import { BlockModel } from "@/models/form";
 import useEditorStore from "@/stores/editor";
 
 const NumberBlock = ({
@@ -56,11 +56,11 @@ const NumberBlock = ({
             <Input
               type="number"
               id="min-character-limit"
-              value={block.min_character_limit ?? 1}
+              value={block.min_char ?? 1}
               onChange={(e) => {
                 updateBlock(id, {
                   ...block,
-                  min_character_limit: Number(e.target.value),
+                  min_char: Number(e.target.value),
                 });
               }}
             />
@@ -70,11 +70,11 @@ const NumberBlock = ({
             <Input
               type="number"
               id="max-character-limit"
-              value={block.max_character_limit ?? 1}
+              value={block.max_char ?? 1}
               onChange={(e) => {
                 updateBlock(id, {
                   ...block,
-                  max_character_limit: Number(e.target.value),
+                  max_char: Number(e.target.value),
                 });
               }}
             />

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { BlockModel } from "@/helpers/models";
 import { block } from "@/helpers/types";
-import { BlockModel } from "@/models/form";
 import {
   CheckCircleIcon,
   CheckSquareIcon,
@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import BlockSettings from "./block-settings";
 
-const blockIcons: { [key in block]: JSX.Element } = {
+const icons: { [key in block]: JSX.Element } = {
   short_answer: <EqualIcon className="w-5 h-5 text-background" />,
   long_answer: <TextIcon className="w-5 h-5 text-background" />,
   multiple_choice: <CheckSquareIcon className="w-5 h-5 text-background" />,
@@ -33,7 +33,7 @@ const Block = (block: BlockModel) => {
     <Card className="flex justify-between items-center shadow-none rounded-none w-full">
       <div className="flex gap-1 w-full items-center h-full">
         <div className="flex justify-center items-center bg-foreground/80 relative p-2 h-full">
-          {blockIcons[block.type]}
+          {icons[block.type]}
         </div>
         <div className="flex">
           <span className="text-sm font-medium relative p-2">

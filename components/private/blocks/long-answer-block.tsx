@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { BlockModel } from "@/helpers/models";
 import { setState } from "@/helpers/types";
-import { BlockModel } from "@/models/form";
 import useEditorStore from "@/stores/editor";
 
 const LongAnswerBlock = ({
@@ -55,11 +55,11 @@ const LongAnswerBlock = ({
           <Input
             type="number"
             id="max-character-limit"
-            value={block.max_character_limit ?? 100}
+            value={block.max_char ?? 100}
             onChange={(e) =>
               updateBlock(id, {
                 ...block,
-                max_character_limit: Number(e.target.value),
+                max_char: Number(e.target.value),
               })
             }
           />
@@ -68,9 +68,9 @@ const LongAnswerBlock = ({
           <Label htmlFor="show-character-limit">Show character limit</Label>
           <Switch
             id="show-character-limit"
-            checked={block.show_character_limit ?? false}
+            checked={block.show_char ?? false}
             onCheckedChange={(checked: boolean) => {
-              updateBlock(id, { ...block, show_character_limit: checked });
+              updateBlock(id, { ...block, show_char: checked });
             }}
           />
         </div>

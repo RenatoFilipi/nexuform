@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { ColorProps } from "@/helpers/interfaces";
-import { BlockModel } from "@/models/form";
+import { BlockModel } from "@/helpers/models";
 import useEditorStore from "@/stores/editor";
 
 const design: ColorProps[] = [
@@ -30,23 +30,15 @@ const design: ColorProps[] = [
 
 const NumberDesign = ({
   block,
-  primaryColor,
+  theme,
 }: {
   block: BlockModel;
-  primaryColor: string;
+  theme: string;
 }) => {
-  const {
-    name,
-    description,
-    max_character_limit,
-    min_character_limit,
-    required,
-    id,
-    position,
-  } = block;
+  const { name, description, max_char, min_char, required, id, position } =
+    block;
 
-  const currentColor =
-    design.find((x) => x.label === primaryColor) ?? design[0];
+  const currentColor = design.find((x) => x.label === theme) ?? design[0];
   const { numericBlocks } = useEditorStore();
 
   return (
@@ -69,8 +61,8 @@ const NumberDesign = ({
           id={id}
           className={`${currentColor.tw_class}`}
           type="number"
-          min={min_character_limit ?? 1}
-          max={max_character_limit ?? 256}
+          min={min_char ?? 1}
+          max={max_char ?? 256}
         />
       </div>
     </div>
