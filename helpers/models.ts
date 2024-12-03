@@ -1,4 +1,4 @@
-import { block, formStatus } from "@/helpers/types";
+import { block, formStatus, submissionStatus } from "@/helpers/types";
 
 export interface FormModel {
   id: string;
@@ -8,14 +8,12 @@ export interface FormModel {
   name: string;
   description: string | null;
   theme: string;
-  submit: string;
-  numeric: boolean;
+  submit_label: string;
+  numeric_blocks: boolean;
   status: formStatus;
   views: number;
   submissions: number;
-  blocks: BlockModel[];
 }
-
 export interface BlockModel {
   id: string;
   form_id: string;
@@ -33,7 +31,18 @@ export interface BlockModel {
   max_scale: number | null;
   min_scale: number | null;
 }
-
+export interface SubmissionModel {
+  id: string;
+  form_id: string;
+  sender: string;
+  submitted_at: string;
+  status: submissionStatus;
+}
+export interface AnswerModel {
+  id: string;
+  block_id: string;
+  answer: String;
+}
 export interface AnalyticsModel {
   total_forms: number;
   total_submissions: number;

@@ -1,28 +1,22 @@
 "use client";
 
 import AnalyticsCard from "@/components/private/analytics/analytics-card";
-import ChartSubmissions from "@/components/private/analytics/chart-submissions";
 import { appState } from "@/helpers/types";
-import { AnalyticsContent } from "@/mocks/analytics";
-import { FormProgressModel } from "@/models/analytics";
+import { AnalyticsModel } from "@/models/entity";
 import { useQuery } from "@tanstack/react-query";
-import { BookCheckIcon, FileIcon, ViewIcon } from "lucide-react";
+import { FileIcon } from "lucide-react";
 import { useState } from "react";
 
 const Analytics = () => {
   const [appState, setAppState] = useState<appState>("loading");
-  const [totalForms, setTotalForms] = useState("");
-  const [totalSubmissions, setTotalSubmissions] = useState("");
-  const [totalViews, setTotalViews] = useState("");
-  const [forms, setForms] = useState<FormProgressModel[]>([]);
+  const [totalForms, setTotalForms] = useState(0);
+  const [totalSubmissions, setTotalSubmissions] = useState(0);
+  const [totalViews, setTotalViews] = useState(0);
+  const [forms, setForms] = useState<AnalyticsModel["forms"][]>([]);
 
   useQuery({
     queryKey: ["analyticsData"],
     queryFn: () => {
-      setTotalForms(AnalyticsContent.forms_total.toString());
-      setTotalSubmissions(AnalyticsContent.submissions_total.toString());
-      setTotalViews(AnalyticsContent.views_total.toString());
-      setForms(AnalyticsContent.forms);
       setAppState("idle");
       return null;
     },
@@ -40,20 +34,7 @@ const Analytics = () => {
               value={totalForms}
               state={appState}
             />
-            <AnalyticsCard
-              icon={<ViewIcon className="text-foreground w-6 h-6" />}
-              title="Total Views"
-              value={totalViews}
-              state={appState}
-            />
-            <AnalyticsCard
-              icon={<BookCheckIcon className="text-foreground w-6 h-6" />}
-              title="Total Submissions"
-              value={totalSubmissions}
-              state={appState}
-            />
           </div>
-          <ChartSubmissions forms={forms} state={appState} />
         </div>
       </div>
     </div>

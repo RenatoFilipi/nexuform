@@ -10,14 +10,13 @@ import {
 } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { minWidth640 } from "@/helpers/constants";
+import { mockForms } from "@/helpers/mocks";
+import { FormProps } from "@/helpers/modules";
 import { formStatus, setState } from "@/helpers/types";
-import { formList } from "@/mocks/forms";
+import { useQuery } from "@tanstack/react-query";
 import {
-  ChartAreaIcon,
   ChevronsUpDownIcon,
-  CreditCardIcon,
   FileIcon,
-  HouseIcon,
   LogOutIcon,
   Menu,
   MenuIcon,
@@ -69,7 +68,7 @@ const Nav = () => {
   // form
   if (pathname.includes("dashboard/forms/")) {
     const currentFormId = pathname.split("/")[3];
-    const currentForm = formList.find((x) => x.id === currentFormId);
+    const currentForm = mockForms.find((x) => x.id === currentFormId);
 
     const BadgeColor = (status: formStatus) => {
       switch (status) {
@@ -110,7 +109,7 @@ const Nav = () => {
                   size={"sm"}
                   className="flex justify-center items-center gap-2">
                   <div className="flex justify-center items-center gap-2">
-                    <span className="text-sm">{currentForm.title}</span>
+                    <span className="text-sm">{currentForm.name}</span>
                     {BadgeColor(currentForm.status)}
                   </div>
                   <ChevronsUpDownIcon className="w-4 h-4" />
@@ -278,26 +277,6 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
 };
 const AvatarMenu = () => {
   const { setTheme, theme } = useTheme();
-  const navLinks = [
-    {
-      id: 1,
-      name: "Profile",
-      path: "/dashboard/profile",
-      icon: <HouseIcon className="w-4 h-4" />,
-    },
-    {
-      id: 2,
-      name: "Settings",
-      path: "/dashboard/settings",
-      icon: <ChartAreaIcon className="w-4 h-4" />,
-    },
-    {
-      id: 3,
-      name: "Billing",
-      path: "/dashboard/billing",
-      icon: <CreditCardIcon className="w-4 h-4" />,
-    },
-  ];
 
   return (
     <DropdownMenu>
@@ -390,6 +369,16 @@ const SelectForm = ({ children }: { children: React.ReactNode }) => {
 const SelectFormBody = ({ setState }: { setState: setState<boolean> }) => {
   const pathname = usePathname();
   const currentForm = pathname.split("/")[3];
+  const [forms, setForms] = useState<FormProps[]>([]);
+
+  useQuery({
+    queryKey: ["navFormsData"],
+    queryFn: () => {
+      setForms(mockForms);
+      return null;
+    },
+    refetchOnWindowFocus: false,
+  });
 
   const BadgeColor = (status: formStatus) => {
     switch (status) {
@@ -420,7 +409,7 @@ const SelectFormBody = ({ setState }: { setState: setState<boolean> }) => {
         <h1 className="text-xl font-semibold">Your forms</h1>
       </div>
       <div className="flex flex-col gap-0">
-        {formList.map((form) => (
+        {forms.map((form) => (
           <Link
             onClick={() => setState(false)}
             href={`${form.id}`}
@@ -430,7 +419,7 @@ const SelectFormBody = ({ setState }: { setState: setState<boolean> }) => {
               "bg-foreground/5 hover:bg-foreground/10"
             } flex justify-between hover:bg-foreground/5 px-2 cursor-pointer items-center h-9`}>
             <div className="flex justify-center items-center gap-2">
-              <span className="text-xs">{form.title}</span>
+              <span className="text-xs">{form.name}</span>
             </div>
             {BadgeColor(form.status)}
           </Link>

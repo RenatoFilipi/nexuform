@@ -2,9 +2,9 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { minWidth640 } from "@/helpers/constants";
+import { mockForms } from "@/helpers/mocks";
+import { FormProps } from "@/helpers/modules";
 import { setState } from "@/helpers/types";
-import { mockFormItens } from "@/mocks/core";
-import { FormItemProps } from "@/models/modules";
 import { useQuery } from "@tanstack/react-query";
 import { ExternalLinkIcon, Link2Icon } from "lucide-react";
 import Link from "next/link";
@@ -53,12 +53,12 @@ const Body = ({
   formId: string;
 }) => {
   const [url, setUrl] = useState("");
-  const [form, setForm] = useState<FormItemProps | null>(null);
+  const [form, setForm] = useState<FormProps | null>(null);
 
   useQuery({
     queryKey: ["formShareData"],
     queryFn: () => {
-      const currentForm = mockFormItens.find((x) => x.id === formId);
+      const currentForm = mockForms.find((x) => x.id === formId);
       if (!currentForm) return;
       setForm(currentForm);
       setUrl(`${window.location.host}/r/${currentForm.id}`);
@@ -96,35 +96,45 @@ const Body = ({
           <Input value={url} className="text-foreground/60" />
         </div>
       )}
-      <div className="flex w-full justify-between items-center gap-4 flex-col-reverse sm:flex-row">
-        <Button
-          className="w-full sm:w-fit"
-          variant={"outline"}
-          size={"sm"}
-          onClick={() => setState(false)}>
-          Close
-        </Button>
-        <div className="flex justify-center items-center gap-3 w-full sm:w-fit">
+      {form?.status === "published" ? (
+        <div className="flex w-full justify-between items-center gap-4 flex-col-reverse sm:flex-row">
           <Button
+            className="w-full sm:w-fit"
             variant={"outline"}
             size={"sm"}
-            className="w-full sm:w-fit"
-            asChild>
-            <Link href={`/r/${form?.id}`}>
-              <ExternalLinkIcon className="w-4 h-4 mr-2" />
-              Go to Form
-            </Link>
+            onClick={() => setState(false)}>
+            Close
           </Button>
+          <div className="flex justify-center items-center gap-3 w-full sm:w-fit">
+            <Button variant={"outline"} size={"sm"} className="w-full sm:w-fit">
+              <Link
+                href={`/r/${form?.id}`}
+                className="flex justify-center items-center">
+                <ExternalLinkIcon className="w-4 h-4 mr-2" />
+                Go to Form
+              </Link>
+            </Button>
+            <Button
+              onClick={handleCopy}
+              variant={"secondary"}
+              size={"sm"}
+              className="w-full sm:w-fit">
+              <Link2Icon className="w-4 h-4 mr-2" />
+              Copy Link
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <div className="flex justify-end items-center">
           <Button
-            onClick={handleCopy}
-            variant={"secondary"}
+            className="w-full sm:w-fit"
+            variant={"outline"}
             size={"sm"}
-            className="w-full sm:w-fit">
-            <Link2Icon className="w-4 h-4 mr-2" />
-            Copy Link
+            onClick={() => setState(false)}>
+            Close
           </Button>
         </div>
-      </div>
+      )}
     </div>
   );
 };

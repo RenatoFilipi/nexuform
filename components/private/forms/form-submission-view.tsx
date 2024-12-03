@@ -153,7 +153,14 @@ const Body = ({
           <GenericLoader className="w-8 h-8" />
         </div>
       )}
-      {appState === "idle" && (
+      {appState === "idle" && blocks.length <= 0 && (
+        <div className="h-full flex overflow-y-auto justify-center items-center">
+          <span className="text-sm text-foreground/80">
+            No details to review.
+          </span>
+        </div>
+      )}
+      {appState === "idle" && blocks.length >= 1 && (
         <div className="h-full flex flex-col gap-4 mt-2 overflow-y-auto">
           {blocks.map((block, i) => {
             return (

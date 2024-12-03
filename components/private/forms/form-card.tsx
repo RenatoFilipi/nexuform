@@ -1,16 +1,16 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { FormProps } from "@/helpers/modules";
 import { formStatus } from "@/helpers/types";
-import { FormItemProps } from "@/models/modules";
 import { EditIcon, ViewIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../../ui/button";
 import { Card } from "../../ui/card";
 
-const FormItem = ({ title, status, submissions, views, id }: FormItemProps) => {
+const FormCard = ({ name, status, submissions, views, id }: FormProps) => {
   const submissionsDisplay = (count: number) => {
-    return count === 1 ? `${count} Response` : `${count} Submissions`;
+    return count === 1 ? `${count} Submission` : `${count} Submissions`;
   };
   const viewsDisplay = (count: number) => {
     return count === 1 ? `${count} View` : `${count} Views`;
@@ -41,7 +41,7 @@ const FormItem = ({ title, status, submissions, views, id }: FormItemProps) => {
   return (
     <Card className="flex h-28 p-4 hover:border-foreground/20 items-start flex-col justify-between shadow-none">
       <div className="flex justify-between items-center w-full">
-        <span className="text-base font-semibold">{title}</span>
+        <span className="text-base font-semibold">{name}</span>
         {BadgeColor(status)}
       </div>
       <div className="flex justify-between items-center w-full">
@@ -70,4 +70,4 @@ const FormItem = ({ title, status, submissions, views, id }: FormItemProps) => {
   );
 };
 
-export default FormItem;
+export default FormCard;

@@ -3,22 +3,22 @@
 import GenericError from "@/components/core/generic-error";
 import GenericLoader from "@/components/core/generic-loader";
 import CreateForm from "@/components/private/forms/create-form";
-import FormItem from "@/components/private/forms/form-item";
+import FormCard from "@/components/private/forms/form-card";
 import { Button } from "@/components/ui/button";
+import { mockForms } from "@/helpers/mocks";
+import { FormProps } from "@/helpers/modules";
 import { appState } from "@/helpers/types";
-import { mockFormItens } from "@/mocks/core";
-import { FormItemProps } from "@/models/modules";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 const Forms = () => {
   const [appState, setAppState] = useState<appState>("loading");
-  const [forms, setForms] = useState<FormItemProps[]>([]);
+  const [forms, setForms] = useState<FormProps[]>([]);
 
   useQuery({
     queryKey: ["formsData"],
     queryFn: () => {
-      setForms(mockFormItens);
+      setForms(mockForms);
       setAppState("idle");
       return null;
     },
@@ -58,10 +58,10 @@ const Forms = () => {
       {appState === "idle" && forms.length >= 1 && (
         <div className="overflow-y-auto grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {forms.map((form) => (
-            <FormItem
+            <FormCard
               key={form.id}
               id={form.id}
-              title={form.title}
+              name={form.name}
               status={form.status}
               submissions={form.submissions}
               views={form.views}
