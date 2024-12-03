@@ -1,5 +1,6 @@
 import {
   AnalyticsModel,
+  AnswerModel,
   BlockModel,
   FormModel,
   SubmissionModel,
@@ -55,5 +56,14 @@ export const mockSubmissions: SubmissionModel[] = [
     submitted_at: new Date().toISOString(),
     sender: "sub-6N4USPYM3QIG",
     status: "not_reviewed",
+  },
+];
+export const mockAnswers: AnswerModel[] = [
+  {
+    id: "e7bf67df-ebcb-42f5-8d42-a955d4f8dcc5",
+    block_id: "94a712ed-9e93-4298-824b-3e7fd1f3341",
+    submission_id: "82f99639-1669-4da9-9b0e-afb2b3cf484",
+    answer:
+      "I would rate the overall quality of the product as a 4 out of 5. The product is well-designed and performs reliably in most scenarios. The features are comprehensive and meet my needs effectively.",
   },
 ];

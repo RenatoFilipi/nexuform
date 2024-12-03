@@ -46,6 +46,7 @@ export interface SubmissionModel {
 }
 export interface AnswerModel {
   id: string;
+  submission_id: string;
   block_id: string;
   answer: String;
 }

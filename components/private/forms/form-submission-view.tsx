@@ -8,7 +8,8 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { minWidth640 } from "@/helpers/constants";
 import { formatDateRelativeToNow } from "@/helpers/functions";
 import { AnswerProps } from "@/helpers/interfaces";
-import { mockSubmissions } from "@/helpers/mocks";
+import { mockBlocks, mockSubmissions } from "@/helpers/mocks";
+import { BlockModel } from "@/helpers/models";
 import { appState, setState, submissionStatus } from "@/helpers/types";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -84,17 +85,20 @@ const Body = ({
   status: submissionStatus;
 }) => {
   const [appState, setAppState] = useState<appState>("loading");
-  const [blocks, setBlocks] = useState<AnswerProps[]>([]);
+  const [answers, setAnswers] = useState<AnswerProps[]>([]);
+  const [blocks, setBlocks] = useState<BlockModel[]>([]);
 
   useQuery({
     queryKey: ["formSubmissionView", subId],
     queryFn: () => {
+      const blocks = mockBlocks.filter((x) => x.form_id === formId);
       const sub = mockSubmissions.find((x) => x.id === subId);
 
       if (!sub) {
         setAppState("idle");
         return null;
       }
+
       setAppState("idle");
       return null;
     },
@@ -144,27 +148,27 @@ const Body = ({
           <GenericLoader className="w-8 h-8" />
         </div>
       )}
-      {appState === "idle" && blocks.length <= 0 && (
+      {appState === "idle" && answers.length <= 0 && (
         <div className="h-full flex overflow-y-auto justify-center items-center">
           <span className="text-sm text-foreground/80">
             No details to review.
           </span>
         </div>
       )}
-      {appState === "idle" && blocks.length >= 1 && (
+      {appState === "idle" && answers.length >= 1 && (
         <div className="h-full flex flex-col gap-4 mt-2 overflow-y-auto">
-          {blocks.map((block, i) => {
+          {answers.map((answer, i) => {
             return (
               <div key={i} className="flex flex-col gap-3">
-                <p className="text-sm font-medium">{block.name}</p>
-                {block.answer === "".trim() ? (
+                <p className="text-sm font-medium">{answer.name}</p>
+                {answer.answer === "".trim() ? (
                   <Card className="flex justify-center items-center py-3">
                     <span className="text-xs text-foreground/60">
                       No Answer
                     </span>
                   </Card>
                 ) : (
-                  <p className="text-xs text-foreground/50">{block.answer}</p>
+                  <p className="text-xs text-foreground/50">{answer.answer}</p>
                 )}
               </div>
             );
