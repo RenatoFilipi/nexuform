@@ -12,7 +12,7 @@ import { ReactNode, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
 
-const DeleteForm = ({
+const FormDelete = ({
   children,
   formId,
 }: {
@@ -79,4 +79,4 @@ const Body = ({
   );
 };
 
-export default DeleteForm;
+export default FormDelete;

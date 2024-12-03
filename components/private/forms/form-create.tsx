@@ -21,7 +21,7 @@ import { Dialog, DialogContent, DialogTrigger } from "../../ui/dialog";
 import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
 import { Input } from "../../ui/input";
 
-const CreateForm = ({ children }: { children: React.ReactNode }) => {
+const FormCreate = ({ children }: { children: React.ReactNode }) => {
   const isDesktop = useMediaQuery({ query: minWidth640 });
   const [open, setOpen] = useState(false);
 
@@ -95,7 +95,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
             </Button>
             <Button
               type="submit"
-              variant={"default"}
+              variant={"secondary"}
               size={"sm"}
               className="w-full sm:w-fit">
               Create Form
@@ -107,4 +107,4 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
   );
 };
 
-export default CreateForm;
+export default FormCreate;

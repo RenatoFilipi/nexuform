@@ -66,23 +66,11 @@ const Body = ({
     },
   });
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(url);
-    toast.success("Link Copied");
-  };
-
   return (
     <div className="flex flex-col gap-4 pt-4 sm:pt-0">
       <div className="flex flex-col gap-1 justify-center items-start">
-        <h1 className="text-xl font-semibold">Share link</h1>
-        {form?.status === "published" ? (
-          <Alert variant={"info"}>
-            <AlertDescription>
-              Your form is live! Share it via link on social media, messaging,
-              or email.
-            </AlertDescription>
-          </Alert>
-        ) : (
+        <h1 className="text-xl font-semibold">Share</h1>
+        {form?.status !== "published" && (
           <Alert variant={"destructive"}>
             <AlertDescription>
               This form is not currently public, change the status in the editor
@@ -115,7 +103,10 @@ const Body = ({
               </Link>
             </Button>
             <Button
-              onClick={handleCopy}
+              onClick={() => {
+                navigator.clipboard.writeText(url);
+                toast.success("Link Copied");
+              }}
               variant={"secondary"}
               size={"sm"}
               className="w-full sm:w-fit">

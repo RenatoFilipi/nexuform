@@ -2,8 +2,8 @@
 
 import GenericError from "@/components/core/generic-error";
 import GenericLoader from "@/components/core/generic-loader";
-import CreateForm from "@/components/private/forms/create-form";
 import FormCard from "@/components/private/forms/form-card";
+import FormCreate from "@/components/private/forms/form-create";
 import { Button } from "@/components/ui/button";
 import { mockForms } from "@/helpers/mocks";
 import { FormProps } from "@/helpers/modules";
@@ -29,11 +29,11 @@ const Forms = () => {
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-semibold">Forms</h1>
         <div className="flex justify-center items-center gap-4">
-          <CreateForm>
+          <FormCreate>
             <Button size={"sm"} variant={"default"}>
               Create Form
             </Button>
-          </CreateForm>
+          </FormCreate>
         </div>
       </div>
       {appState === "loading" && (

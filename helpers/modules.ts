@@ -14,3 +14,8 @@ export interface SubmissionProps {
   submitted_at: string;
   status: submissionStatus;
 }
+export interface AnalyticsProps {
+  icon: JSX.Element;
+  label: string;
+  value: string;
+}

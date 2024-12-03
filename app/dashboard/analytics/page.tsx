@@ -1,10 +1,11 @@
 "use client";
 
+import GenericLoader from "@/components/core/generic-loader";
 import AnalyticsCard from "@/components/private/analytics/analytics-card";
+import { mockAnalytics } from "@/helpers/mocks";
 import { appState } from "@/helpers/types";
-import { AnalyticsModel } from "@/models/entity";
 import { useQuery } from "@tanstack/react-query";
-import { FileIcon } from "lucide-react";
+import { BookCheckIcon, FileIcon, ViewIcon } from "lucide-react";
 import { useState } from "react";
 
 const Analytics = () => {
@@ -12,11 +13,13 @@ const Analytics = () => {
   const [totalForms, setTotalForms] = useState(0);
   const [totalSubmissions, setTotalSubmissions] = useState(0);
   const [totalViews, setTotalViews] = useState(0);
-  const [forms, setForms] = useState<AnalyticsModel["forms"][]>([]);
 
   useQuery({
     queryKey: ["analyticsData"],
     queryFn: () => {
+      setTotalForms(mockAnalytics.total_forms);
+      setTotalSubmissions(mockAnalytics.total_submissions);
+      setTotalViews(mockAnalytics.total_views);
       setAppState("idle");
       return null;
     },
@@ -24,19 +27,35 @@ const Analytics = () => {
 
   return (
     <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-14">
-      <div className="flex flex-col gap-4">
-        <h1 className="text-xl font-semibold">Analytics</h1>
+      {appState === "loading" && (
+        <div className="flex justify-center items-center flex-1">
+          <GenericLoader />
+        </div>
+      )}
+      {appState === "idle" && (
         <div className="flex flex-col gap-4">
-          <div className="grid sm:grid-cols-3 gap-4">
-            <AnalyticsCard
-              icon={<FileIcon className="text-foreground w-6 h-6" />}
-              title="Total Forms"
-              value={totalForms}
-              state={appState}
-            />
+          <h1 className="text-xl font-semibold">Analytics</h1>
+          <div className="flex flex-col gap-4">
+            <div className="grid sm:grid-cols-3 gap-4">
+              <AnalyticsCard
+                icon={<FileIcon />}
+                label="Total Forms"
+                value={totalForms.toString()}
+              />
+              <AnalyticsCard
+                icon={<ViewIcon />}
+                label="Total Views"
+                value={totalViews.toString()}
+              />
+              <AnalyticsCard
+                icon={<BookCheckIcon />}
+                label="Total Submissions"
+                value={totalSubmissions.toString()}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -10,10 +10,10 @@ export const mockForms: FormModel[] = [
     name: "Product",
     description: null,
     numeric_blocks: true,
-    status: "draft",
+    status: "published",
     submit_label: "Submit",
-    submissions: 0,
-    views: 0,
+    submissions: 1,
+    views: 1,
     theme: "Slate",
   },
 ];

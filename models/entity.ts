@@ -15,7 +15,6 @@ export interface FormModel {
   submissions: number;
   blocks: BlockModel[];
 }
-
 export interface BlockModel {
   id: string;
   form_id: string;
@@ -33,7 +32,6 @@ export interface BlockModel {
   max_scale: number | null;
   min_scale: number | null;
 }
-
 export interface AnalyticsModel {
   total_forms: number;
   total_submissions: number;

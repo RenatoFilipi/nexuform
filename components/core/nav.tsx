@@ -30,7 +30,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import CreateForm from "../private/forms/create-form";
+import FormCreate from "../private/forms/form-create";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
@@ -434,11 +434,11 @@ const SelectFormBody = ({ setState }: { setState: setState<boolean> }) => {
           className="w-full sm:w-fit">
           Cancel
         </Button>
-        <CreateForm>
+        <FormCreate>
           <Button variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
             New Form
           </Button>
-        </CreateForm>
+        </FormCreate>
       </div>
     </div>
   );

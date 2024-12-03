@@ -47,5 +47,4 @@ export interface AnalyticsModel {
   total_forms: number;
   total_submissions: number;
   total_views: number;
-  forms: { id: string; title: string; submissions: number }[];
 }
