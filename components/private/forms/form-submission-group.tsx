@@ -1,6 +1,5 @@
 "use client";
 
-import FormSubmissionView from "@/components/private/forms/form-submission-view";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -17,6 +16,7 @@ import { formatDateRelativeToNow } from "@/helpers/functions";
 import { SubmissionProps } from "@/helpers/modules";
 import { submissionStatus } from "@/helpers/types";
 import { useMediaQuery } from "react-responsive";
+import FormSubmissionView from "./form-submission-view";
 
 const FormSubmissionGroup = ({
   submissions,
@@ -74,12 +74,7 @@ const FormSubmissionGroup = ({
               <TableCell>{sub.sender}</TableCell>
               <TableCell>{statusDisplay(sub.status)}</TableCell>
               <TableCell className="text-right">
-                <FormSubmissionView
-                  subId={sub.id}
-                  formId={formId}
-                  sender={sub.sender}
-                  submitted_at={sub.submitted_at}
-                  status={sub.status}>
+                <FormSubmissionView subId={sub.id} formId={formId}>
                   <Button variant={"outline"} size={"sm"}>
                     View Details
                   </Button>
@@ -105,12 +100,7 @@ const FormSubmissionGroup = ({
               <span className="text-sm text-foreground/80">
                 {formatDateRelativeToNow(sub.submitted_at)}
               </span>
-              <FormSubmissionView
-                subId={sub.id}
-                formId={formId}
-                sender={sub.sender}
-                submitted_at={sub.submitted_at}
-                status={sub.status}>
+              <FormSubmissionView subId={sub.id} formId={formId}>
                 <Button variant={"outline"} size={"sm"}>
                   View Details
                 </Button>

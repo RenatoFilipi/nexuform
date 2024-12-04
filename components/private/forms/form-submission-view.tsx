@@ -1,15 +1,12 @@
 "use client";
 
-import GenericLoader from "@/components/core/generic-loader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { minWidth640 } from "@/helpers/constants";
-import { formatDateRelativeToNow } from "@/helpers/functions";
-import { AnswerProps } from "@/helpers/interfaces";
-import { mockBlocks, mockSubmissions } from "@/helpers/mocks";
-import { BlockModel } from "@/helpers/models";
+import { mockAnswers, mockBlocks, mockSubmissions } from "@/helpers/mocks";
+import { SubmissionModel } from "@/helpers/models";
+import { SubmissionSegmentProps } from "@/helpers/modules";
 import { appState, setState, submissionStatus } from "@/helpers/types";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -19,17 +16,11 @@ import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
 const FormSubmissionView = ({
   children,
   subId,
-  sender,
   formId,
-  submitted_at,
-  status,
 }: {
   children: React.ReactNode;
   subId: string;
   formId: string;
-  sender: string;
-  submitted_at: string;
-  status: submissionStatus;
 }) => {
   const isDesktop = useMediaQuery({ query: minWidth640 });
   const [open, setOpen] = useState(false);
@@ -39,31 +30,16 @@ const FormSubmissionView = ({
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>{children}</SheetTrigger>
         <SheetContent className="min-w-[600px]">
-          <Body
-            setState={setOpen}
-            subId={subId}
-            sender={sender}
-            formId={formId}
-            submitted_at={submitted_at}
-            status={status}
-          />
+          <Body setState={setOpen} subId={subId} formId={formId} />
         </SheetContent>
       </Sheet>
     );
   }
-
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3 h-[90%]">
-        <Body
-          setState={setOpen}
-          subId={subId}
-          sender={sender}
-          formId={formId}
-          submitted_at={submitted_at}
-          status={status}
-        />
+        <Body setState={setOpen} subId={subId} formId={formId} />
       </DrawerContent>
     </Drawer>
   );
@@ -73,33 +49,40 @@ const Body = ({
   setState,
   subId,
   formId,
-  sender,
-  submitted_at,
-  status,
 }: {
   setState: setState<boolean>;
   subId: string;
   formId: string;
-  sender: string;
-  submitted_at: string;
-  status: submissionStatus;
 }) => {
-  const [appState, setAppState] = useState<appState>("loading");
-  const [answers, setAnswers] = useState<AnswerProps[]>([]);
-  const [blocks, setBlocks] = useState<BlockModel[]>([]);
+  const [appState, setAppState] = useState<appState>("idle");
+  const [segments, setSegments] = useState<SubmissionSegmentProps[]>([]);
+  const [submission, setSubmission] = useState<SubmissionModel>({
+    id: "",
+    form_id: "",
+    sender: "",
+    status: "not_reviewed",
+    submitted_at: "",
+  });
 
   useQuery({
-    queryKey: ["formSubmissionView", subId],
+    queryKey: ["formSubmissionView"],
     queryFn: () => {
-      const blocks = mockBlocks.filter((x) => x.form_id === formId);
       const sub = mockSubmissions.find((x) => x.id === subId);
+      const answers = mockAnswers.filter((x) => x.submission_id === subId);
+      const blocks = mockBlocks.filter((x) => x.form_id === formId);
 
       if (!sub) {
         setAppState("idle");
-        return null;
+        return;
       }
 
-      setAppState("idle");
+      const seg = blocks.map((b) => {
+        const answer = answers.find((x) => x.block_id === b.id)?.answer ?? "";
+        return { question: b.name, answer };
+      });
+
+      setSegments(seg);
+      setSubmission(sub);
       return null;
     },
     refetchOnWindowFocus: false,
@@ -129,52 +112,24 @@ const Body = ({
         return <></>;
     }
   };
-
   return (
     <div className="flex flex-col h-full gap-4">
-      <div className="flex flex-col gap-2">
-        <div className="pt-4 sm:pt-0 flex justify-center sm:justify-start items-center text-sm gap-0 sm:gap-2 flex-col sm:flex-row">
-          <span className="font-semibold text-xl">{sender}</span>
-          <span className="text-foreground/80 text-xs">
-            ({formatDateRelativeToNow(submitted_at)})
-          </span>
-        </div>
-        <div className="flex justify-center sm:justify-start w-full items-center gap-2">
-          {statusDisplay(status)}
+      <div className="flex flex-col gap-1">
+        <div className="flex flex-col justify-center items-start gap-2">
+          <span className="font-semibold text-lg">{submission.sender}</span>
+          {statusDisplay(submission.status)}
         </div>
       </div>
-      {appState === "loading" && (
-        <div className="flex justify-center items-center h-full">
-          <GenericLoader className="w-8 h-8" />
-        </div>
-      )}
-      {appState === "idle" && answers.length <= 0 && (
-        <div className="h-full flex overflow-y-auto justify-center items-center">
-          <span className="text-sm text-foreground/80">
-            No details to review.
-          </span>
-        </div>
-      )}
-      {appState === "idle" && answers.length >= 1 && (
-        <div className="h-full flex flex-col gap-4 mt-2 overflow-y-auto">
-          {answers.map((answer, i) => {
-            return (
-              <div key={i} className="flex flex-col gap-3">
-                <p className="text-sm font-medium">{answer.name}</p>
-                {answer.answer === "".trim() ? (
-                  <Card className="flex justify-center items-center py-3">
-                    <span className="text-xs text-foreground/60">
-                      No Answer
-                    </span>
-                  </Card>
-                ) : (
-                  <p className="text-xs text-foreground/50">{answer.answer}</p>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      )}
+      <div className="flex flex-col h-full gap-4">
+        {segments.map((seg, index) => {
+          return (
+            <div key={index} className="flex flex-col gap-1">
+              <h1 className="font-semibold text-sm">{seg.question}</h1>
+              <p className="text-xs text-foreground/60">{seg.answer}</p>
+            </div>
+          );
+        })}
+      </div>
       <div className="flex sm:justify-end justify-center items-center gap-4 flex-col-reverse sm:flex-row">
         <Button
           onClick={() => setState(false)}

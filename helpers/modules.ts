@@ -24,3 +24,7 @@ export interface AnalyticsProgressProps {
   name: string;
   submissions: number;
 }
+export interface SubmissionSegmentProps {
+  question: string;
+  answer: string;
+}

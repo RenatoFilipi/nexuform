@@ -48,7 +48,7 @@ export interface AnswerModel {
   id: string;
   submission_id: string;
   block_id: string;
-  answer: String;
+  answer: string;
 }
 export interface AnalyticsModel {
   total_forms: number;
