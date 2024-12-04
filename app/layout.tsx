@@ -31,7 +31,7 @@ export default function RootLayout({
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange>
-            <div className="">{children}</div>
+            <div>{children}</div>
             <Toaster richColors expand position="bottom-right" />
           </ThemeProvider>
         </QueryProvider>

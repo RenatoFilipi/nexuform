@@ -35,7 +35,7 @@ const Hero = () => {
       <div className="mb-20">
         <ShineBorder
           className="relative rounded-lg border"
-          color={["#00A8CC", "#00A8CC", "#00A8CC"]}>
+          color={["#7C3AED", "#7C3AED", "#7C3AED"]}>
           <Image
             alt="hero preview feature"
             src={`/mail.webp`}
