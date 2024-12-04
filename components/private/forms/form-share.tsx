@@ -107,7 +107,7 @@ const Body = ({
                 navigator.clipboard.writeText(url);
                 toast.success("Link Copied");
               }}
-              variant={"secondary"}
+              variant={"default"}
               size={"sm"}
               className="w-full sm:w-fit">
               <Link2Icon className="w-4 h-4 mr-2" />

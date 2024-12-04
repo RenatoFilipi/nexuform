@@ -185,7 +185,7 @@ const Body = ({
         </Button>
         <Button
           onClick={() => setState(false)}
-          variant={"secondary"}
+          variant={"default"}
           size={"sm"}
           className="w-full sm:w-fit">
           Mark as Reviewed

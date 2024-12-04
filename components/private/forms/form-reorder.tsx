@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { minWidth640 } from "@/helpers/constants";
-import { blockName } from "@/helpers/functions";
 import { BlockModel } from "@/helpers/models";
 import { block, setState } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
@@ -88,11 +87,10 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
           })}
         </Reorder.Group>
       )}
-
       <div className="flex justify-end items-center">
         <Button
           onClick={() => setState(false)}
-          variant={"secondary"}
+          variant={"outline"}
           size={"sm"}
           className="w-full sm:w-fit">
           Close
@@ -112,7 +110,6 @@ const Item = ({ block }: { block: BlockModel }) => {
         {icons[block.type]}
       </div>
       <div className="flex flex-col p-2">
-        <span className="text-sm font-semibold">{blockName(block.type)}</span>
         <span className="text-sm text-foreground/80">{block.name}</span>
       </div>
     </Reorder.Item>

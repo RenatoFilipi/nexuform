@@ -206,7 +206,7 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
               key={link.id}
               href={link.path}
               className={`${
-                isActive(link.path) && "bg-primary text-black hover:bg-primary"
+                isActive(link.path) && "bg-primary text-white hover:bg-primary"
               } p-2 border hover:bg-foreground/5 text-sm flex justify-start items-center`}>
               {link.icon}
               {link.name}
@@ -435,7 +435,7 @@ const SelectFormBody = ({ setState }: { setState: setState<boolean> }) => {
           Cancel
         </Button>
         <FormCreate>
-          <Button variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
+          <Button variant={"default"} size={"sm"} className="w-full sm:w-fit">
             New Form
           </Button>
         </FormCreate>

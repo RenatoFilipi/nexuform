@@ -125,7 +125,7 @@ const Editor = () => {
           )}
         </div>
         <div className="hidden sm:flex justify-center items-center gap-4">
-          <Button onClick={onSave} variant={"secondary"} size={"sm"}>
+          <Button onClick={onSave} variant={"default"} size={"sm"}>
             Save
           </Button>
         </div>
@@ -136,7 +136,7 @@ const Editor = () => {
             size={"sm"}>
             Preview
           </Button>
-          <Button variant={"secondary"} size={"sm"}>
+          <Button variant={"default"} size={"sm"}>
             Save
           </Button>
         </div>

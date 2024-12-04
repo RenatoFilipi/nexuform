@@ -224,7 +224,7 @@ const Body = ({
             </Button>
             <Button
               type="submit"
-              variant={"secondary"}
+              variant={"default"}
               size={"sm"}
               className="w-full sm:w-fit">
               Add Block
