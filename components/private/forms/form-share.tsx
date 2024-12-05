@@ -61,7 +61,7 @@ const Body = ({
       const currentForm = mockForms.find((x) => x.id === formId);
       if (!currentForm) return;
       setForm(currentForm);
-      setUrl(`${window.location.host}/r/${currentForm.id}`);
+      setUrl(`${window.location.host}/s/${currentForm.id}`);
       return null;
     },
   });
@@ -96,7 +96,7 @@ const Body = ({
           <div className="flex justify-center items-center gap-3 w-full sm:w-fit">
             <Button variant={"outline"} size={"sm"} className="w-full sm:w-fit">
               <Link
-                href={`/r/${form?.id}`}
+                href={`/s/${form?.id}`}
                 className="flex justify-center items-center">
                 <ExternalLinkIcon className="w-4 h-4 mr-2" />
                 Go to Form

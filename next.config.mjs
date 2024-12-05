@@ -13,7 +13,7 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/r",
+        source: "/s",
         destination: "/",
         permanent: true,
       },
