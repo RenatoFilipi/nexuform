@@ -6,17 +6,20 @@ interface SubmissionProps {
   id: string;
   name: string;
   description: string | null;
+  status: formStatus;
   theme: string;
   submitLabel: string;
+  numericBlocks: boolean;
   blocks: BlockModel[];
-  status: formStatus;
   setId: (value: string) => void;
   setName: (value: string) => void;
   setDescription: (value: string | null) => void;
   setStatus: (value: formStatus) => void;
   setTheme: (value: colorLabel) => void;
   setSubmitLabel: (value: string) => void;
+  setNumericBlock: (value: boolean) => void;
   setBlocks: (value: BlockModel[]) => void;
+  reset: () => void;
 }
 
 const useSubmissionStore = create<SubmissionProps>((set) => ({
@@ -26,6 +29,7 @@ const useSubmissionStore = create<SubmissionProps>((set) => ({
   status: "draft",
   theme: "Slate",
   submitLabel: "Submit",
+  numericBlocks: false,
   blocks: [],
   setId: (value) => set({ id: value }),
   setName: (value) => set({ name: value }),
@@ -34,6 +38,18 @@ const useSubmissionStore = create<SubmissionProps>((set) => ({
   setTheme: (value) => set({ theme: value }),
   setSubmitLabel: (value) => set({ submitLabel: value }),
   setBlocks: (newBlocks) => set(() => ({ blocks: newBlocks })),
+  setNumericBlock: (value) => set({ numericBlocks: value }),
+  reset: () =>
+    set({
+      id: "",
+      name: "",
+      description: "",
+      status: "draft",
+      theme: "Slate",
+      submitLabel: "Submit",
+      numericBlocks: false,
+      blocks: [],
+    }),
 }));
 
 export default useSubmissionStore;

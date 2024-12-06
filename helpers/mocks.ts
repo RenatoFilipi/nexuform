@@ -16,7 +16,7 @@ export const mockForms: FormModel[] = [
     description: null,
     numeric_blocks: true,
     status: "published",
-    submit_label: "Submit",
+    submit_label: "Finish form",
     submissions: 1,
     views: 1,
     theme: "Emerald",

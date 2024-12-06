@@ -73,7 +73,6 @@ const Editor = () => {
       setStatus(form.status);
       setSubmitLabel(form.submit_label);
       setBlocks(blocks);
-
       setAppState("idle");
       return null;
     },
