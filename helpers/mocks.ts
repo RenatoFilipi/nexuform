@@ -13,7 +13,8 @@ export const mockForms: FormModel[] = [
     created_at: "",
     updated_at: "",
     name: "Product",
-    description: null,
+    description:
+      "We value your feedback! Your insights help us improve our product and ensure it meets your needs.",
     numeric_blocks: true,
     status: "published",
     submit_label: "Finish form",

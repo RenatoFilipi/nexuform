@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { ColorProps } from "@/helpers/interfaces";
 import { BlockModel } from "@/helpers/models";
 import useEditorStore from "@/stores/editor";
+import { useState } from "react";
 
 const design: ColorProps[] = [
   { label: "Slate", tw_class: "focus-visible:ring-slate-500" },
@@ -38,8 +39,8 @@ const ShortAnswerDesign = ({
   const { name, description, max_char, show_char, required, id, position } =
     block;
   const { numericBlocks } = useEditorStore();
-
   const currentColor = design.find((x) => x.label === theme) ?? design[0];
+  const [value, setValue] = useState("");
 
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -58,6 +59,8 @@ const ShortAnswerDesign = ({
       </div>
       <div className="flex flex-col">
         <Input
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
           type="text"
           id={id}
           className={`${currentColor.tw_class}`}

@@ -1,4 +1,4 @@
-import { BlockModel } from "@/helpers/models";
+import { AnswerModel, BlockModel } from "@/helpers/models";
 import { colorLabel, formStatus } from "@/helpers/types";
 import { create } from "zustand";
 
@@ -11,6 +11,7 @@ interface SubmissionProps {
   submitLabel: string;
   numericBlocks: boolean;
   blocks: BlockModel[];
+  answers: AnswerModel[];
   setId: (value: string) => void;
   setName: (value: string) => void;
   setDescription: (value: string | null) => void;
@@ -19,6 +20,7 @@ interface SubmissionProps {
   setSubmitLabel: (value: string) => void;
   setNumericBlock: (value: boolean) => void;
   setBlocks: (value: BlockModel[]) => void;
+  setAnswers: (value: AnswerModel[]) => void;
   reset: () => void;
 }
 
@@ -31,6 +33,7 @@ const useSubmissionStore = create<SubmissionProps>((set) => ({
   submitLabel: "Submit",
   numericBlocks: false,
   blocks: [],
+  answers: [],
   setId: (value) => set({ id: value }),
   setName: (value) => set({ name: value }),
   setDescription: (value) => set({ description: value }),
@@ -50,6 +53,7 @@ const useSubmissionStore = create<SubmissionProps>((set) => ({
       numericBlocks: false,
       blocks: [],
     }),
+  setAnswers: (newAnswers) => set(() => ({ answers: newAnswers })),
 }));
 
 export default useSubmissionStore;

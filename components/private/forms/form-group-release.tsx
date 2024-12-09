@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { nanoid } from "@/helpers/functions";
 import { ColorProps } from "@/helpers/interfaces";
 import useSubmissionStore from "@/stores/submission";
 import { twMerge } from "tailwind-merge";
@@ -103,10 +104,17 @@ const design: ColorProps[] = [
   },
 ];
 
+const submissionId = nanoid();
+
 const FormGroupRelease = () => {
-  const { blocks, theme, name, description, submitLabel } =
+  const { blocks, theme, name, description, submitLabel, answers } =
     useSubmissionStore();
   const currentColor = design.find((x) => x.label === theme) ?? design[0];
+
+  const onSubmit = () => {
+    console.log(submissionId);
+    console.log(answers);
+  };
 
   return (
     <div className="flex flex-col gap-6 h-full w-full">
@@ -158,6 +166,7 @@ const FormGroupRelease = () => {
       </div>
       <div className="flex w-full justify-end">
         <Button
+          onClick={onSubmit}
           variant={"secondary"}
           size={"sm"}
           className={twMerge(currentColor.tw_class, "w-full sm:w-fit")}>

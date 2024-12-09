@@ -57,7 +57,7 @@ const R = () => {
   }
   if (appState === "idle") {
     return (
-      <div className="flex justify-center h-screen overflow-y-auto">
+      <div className="flex justify-center h-screen overflow-y-auto pt-6 sm:pt-10">
         <div className="flex flex-col sm:w-[600px] px-5 sm:px-0">
           <FormGroupRelease />
         </div>
