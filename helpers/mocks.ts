@@ -27,8 +27,8 @@ export const mockBlocks: BlockModel[] = [
   {
     id: "94a712ed-9e93-4298-824b-3e7fd1f3341d",
     form_id: "b68e83e3-f646-4ddd-8eac-2d7ce0abddf6",
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
+    created_at: "2024-12-10T20:36:56.028Z",
+    updated_at: "2024-12-10T20:36:56.028Z",
     name: "How would you rate the overall quality of the product?",
     description:
       "Evaluate the product as a whole, considering its performance, features, and reliability.",
@@ -43,6 +43,26 @@ export const mockBlocks: BlockModel[] = [
     type: "short_answer",
     options: null,
     show_char: null,
+  },
+  {
+    id: "b982735a-0c09-45a6-bf11-9ee6ab262f23",
+    form_id: "b68e83e3-f646-4ddd-8eac-2d7ce0abddf6",
+    created_at: "",
+    updated_at: "",
+    name: "Would you recommend this product to others?",
+    description:
+      "Share if you would suggest this product to friends, colleagues, or others. Explain your reasons",
+    options: null,
+    required: true,
+    type: "scale",
+    placeholder: null,
+    max_char: 100,
+    min_char: 1,
+    show_char: null,
+    position: 2,
+    rating: null,
+    max_scale: null,
+    min_scale: null,
   },
 ];
 export const mockAnalytics: AnalyticsModel = {

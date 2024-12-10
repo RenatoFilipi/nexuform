@@ -105,7 +105,9 @@ const Editor = () => {
     );
   }
 
-  const onSave = () => {};
+  const onSave = () => {
+    console.log(JSON.stringify(blocks));
+  };
 
   return (
     <div className="flex flex-col h-screen flex-1 gap-4">

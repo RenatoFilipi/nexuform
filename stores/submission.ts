@@ -12,6 +12,7 @@ interface SubmissionProps {
   numericBlocks: boolean;
   blocks: BlockModel[];
   answers: AnswerModel[];
+  submissionId: string;
   setId: (value: string) => void;
   setName: (value: string) => void;
   setDescription: (value: string | null) => void;
@@ -21,6 +22,7 @@ interface SubmissionProps {
   setNumericBlock: (value: boolean) => void;
   setBlocks: (value: BlockModel[]) => void;
   setAnswers: (value: AnswerModel[]) => void;
+  setSubmissionId: (value: string) => void;
   reset: () => void;
 }
 
@@ -34,6 +36,7 @@ const useSubmissionStore = create<SubmissionProps>((set) => ({
   numericBlocks: false,
   blocks: [],
   answers: [],
+  submissionId: "",
   setId: (value) => set({ id: value }),
   setName: (value) => set({ name: value }),
   setDescription: (value) => set({ description: value }),
@@ -42,6 +45,8 @@ const useSubmissionStore = create<SubmissionProps>((set) => ({
   setSubmitLabel: (value) => set({ submitLabel: value }),
   setBlocks: (newBlocks) => set(() => ({ blocks: newBlocks })),
   setNumericBlock: (value) => set({ numericBlocks: value }),
+  setAnswers: (newAnswers) => set(() => ({ answers: newAnswers })),
+  setSubmissionId: (newId) => set({ submissionId: newId }),
   reset: () =>
     set({
       id: "",
@@ -53,7 +58,6 @@ const useSubmissionStore = create<SubmissionProps>((set) => ({
       numericBlocks: false,
       blocks: [],
     }),
-  setAnswers: (newAnswers) => set(() => ({ answers: newAnswers })),
 }));
 
 export default useSubmissionStore;

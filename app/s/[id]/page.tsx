@@ -2,14 +2,16 @@
 
 import GenericLoader from "@/components/core/generic-loader";
 import FormGroupRelease from "@/components/private/forms/form-group-release";
+import { nanoid, uuid } from "@/helpers/functions";
 import { mockBlocks, mockForms } from "@/helpers/mocks";
+import { AnswerModel } from "@/helpers/models";
 import { appState, colorLabel } from "@/helpers/types";
 import useSubmissionStore from "@/stores/submission";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-const R = () => {
+const S = () => {
   const {
     setId,
     setName,
@@ -18,6 +20,9 @@ const R = () => {
     setTheme,
     setSubmitLabel,
     setBlocks,
+    setSubmissionId,
+    setAnswers,
+    setNumericBlock,
   } = useSubmissionStore();
   const pathname = usePathname();
   const formId = pathname.split("/")[2];
@@ -26,8 +31,17 @@ const R = () => {
   useQuery({
     queryKey: ["submissionPageData"],
     queryFn: () => {
+      const nnid = nanoid();
       const form = mockForms.find((x) => x.id === formId);
       const blocks = mockBlocks.filter((x) => x.form_id === formId);
+      const answers: AnswerModel[] = blocks.map((block) => {
+        return {
+          id: uuid(),
+          submission_id: nnid,
+          block_id: block.id,
+          answer: "",
+        };
+      });
       if (!form) {
         setAppState("idle");
         return null;
@@ -38,7 +52,10 @@ const R = () => {
       setTheme(form.theme as colorLabel);
       setSubmitLabel(form.submit_label);
       setStatus(form.status);
+      setNumericBlock(form.numeric_blocks);
       setBlocks(blocks);
+      setSubmissionId(nnid);
+      setAnswers(answers);
       setAppState("idle");
       return null;
     },
@@ -71,4 +88,4 @@ const R = () => {
   }
 };
 
-export default R;
+export default S;

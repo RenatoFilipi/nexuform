@@ -1,10 +1,14 @@
 import Rating from "@/components/ui/rating";
 import { BlockModel } from "@/helpers/models";
-import useEditorStore from "@/stores/editor";
 
-const RatingDesign = ({ block }: { block: BlockModel }) => {
+const RatingDesign = ({
+  block,
+  numericBlocks,
+}: {
+  block: BlockModel;
+  numericBlocks: boolean;
+}) => {
   const { name, description, required, rating, position } = block;
-  const { numericBlocks } = useEditorStore();
 
   const onChange = (rating: number) => {
     console.log(rating);

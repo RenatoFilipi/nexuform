@@ -1,7 +1,6 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColorProps } from "@/helpers/interfaces";
 import { BlockModel } from "@/helpers/models";
-import useEditorStore from "@/stores/editor";
 import { twMerge } from "tailwind-merge";
 
 const design: ColorProps[] = [
@@ -120,13 +119,14 @@ const design: ColorProps[] = [
 const MultipleChoiceDesign = ({
   block,
   theme,
+  numericBlocks,
 }: {
   block: BlockModel;
   theme: string;
+  numericBlocks: boolean;
 }) => {
   const { name, description, required, options, id, position } = block;
   const currentColor = design.find((x) => x.label === theme) ?? design[0];
-  const { numericBlocks } = useEditorStore();
 
   return (
     <div className="flex flex-col gap-4 w-full">

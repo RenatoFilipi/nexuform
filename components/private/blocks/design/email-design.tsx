@@ -1,7 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { ColorProps } from "@/helpers/interfaces";
 import { BlockModel } from "@/helpers/models";
-import useEditorStore from "@/stores/editor";
 
 const design: ColorProps[] = [
   { label: "Slate", tw_class: "focus-visible:ring-slate-500" },
@@ -31,14 +30,15 @@ const design: ColorProps[] = [
 const EmailDesign = ({
   block,
   theme,
+  numericBlocks,
 }: {
   block: BlockModel;
   theme: string;
+  numericBlocks: boolean;
 }) => {
   const { name, description, required, id, position } = block;
 
   const currentColor = design.find((x) => x.label === theme) ?? design[0];
-  const { numericBlocks } = useEditorStore();
 
   return (
     <div className="flex flex-col gap-4 w-full">

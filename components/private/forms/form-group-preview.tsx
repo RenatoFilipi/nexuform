@@ -104,7 +104,8 @@ const design: ColorProps[] = [
 ];
 
 const FormGroupPreview = () => {
-  const { blocks, theme, submitLabel, name, description } = useEditorStore();
+  const { blocks, theme, submitLabel, name, description, numericBlocks } =
+    useEditorStore();
   const currentColor = design.find((x) => x.label === theme) ?? design[0];
 
   return (
@@ -120,11 +121,22 @@ const FormGroupPreview = () => {
           switch (block.type) {
             case "short_answer":
               return (
-                <ShortAnswerDesign key={block.id} block={block} theme={theme} />
+                <ShortAnswerDesign
+                  key={block.id}
+                  block={block}
+                  theme={theme}
+                  numericBlocks={numericBlocks}
+                  onValueChange={() => {}}
+                />
               );
             case "long_answer":
               return (
-                <LongAnswerDesign key={block.id} block={block} theme={theme} />
+                <LongAnswerDesign
+                  key={block.id}
+                  block={block}
+                  theme={theme}
+                  numericBlocks={numericBlocks}
+                />
               );
             case "multiple_choice":
               return (
@@ -132,26 +144,62 @@ const FormGroupPreview = () => {
                   key={block.id}
                   block={block}
                   theme={theme}
+                  numericBlocks={numericBlocks}
                 />
               );
             case "checkboxes":
               return (
-                <CheckboxesDesign key={block.id} block={block} theme={theme} />
+                <CheckboxesDesign
+                  key={block.id}
+                  block={block}
+                  theme={theme}
+                  numericBlocks={numericBlocks}
+                />
               );
             case "dropdown":
               return (
-                <DropdownDesign key={block.id} block={block} theme={theme} />
+                <DropdownDesign
+                  key={block.id}
+                  block={block}
+                  theme={theme}
+                  numericBlocks={numericBlocks}
+                />
               );
             case "number":
               return (
-                <NumberDesign key={block.id} block={block} theme={theme} />
+                <NumberDesign
+                  key={block.id}
+                  block={block}
+                  theme={theme}
+                  numericBlocks={numericBlocks}
+                />
               );
             case "email":
-              return <EmailDesign key={block.id} block={block} theme={theme} />;
+              return (
+                <EmailDesign
+                  key={block.id}
+                  block={block}
+                  theme={theme}
+                  numericBlocks={numericBlocks}
+                />
+              );
             case "rating":
-              return <RatingDesign key={block.id} block={block} />;
+              return (
+                <RatingDesign
+                  key={block.id}
+                  block={block}
+                  numericBlocks={numericBlocks}
+                />
+              );
             case "scale":
-              return <ScaleDesign key={block.id} block={block} theme={theme} />;
+              return (
+                <ScaleDesign
+                  key={block.id}
+                  block={block}
+                  theme={theme}
+                  numericBlocks={numericBlocks}
+                />
+              );
           }
         })}
       </div>
