@@ -98,14 +98,16 @@ const design: ColorProps[] = [
   },
 ];
 
-const CheckboxesDesign = ({
+const RadioButtonDesign = ({
   block,
   theme,
   numericBlocks,
+  onValueChange,
 }: {
   block: BlockModel;
   theme: string;
   numericBlocks: boolean;
+  onValueChange: (value: string, blockId: string) => void;
 }) => {
   const { name, description, required, options, id, position } = block;
   const currentColor = design.find((x) => x.label === theme) ?? design[0];
@@ -148,4 +150,4 @@ const CheckboxesDesign = ({
   );
 };
 
-export default CheckboxesDesign;
+export default RadioButtonDesign;

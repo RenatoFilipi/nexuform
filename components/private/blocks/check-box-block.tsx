@@ -14,7 +14,7 @@ import { Tag, TagInput } from "emblor";
 import { XIcon } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 
-const MultipleChoiceBlock = ({
+const CheckBoxBlock = ({
   block,
   setState,
 }: {
@@ -142,4 +142,4 @@ const MultipleChoiceBlock = ({
   );
 };
 
-export default MultipleChoiceBlock;
+export default CheckBoxBlock;

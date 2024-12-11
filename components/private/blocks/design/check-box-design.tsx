@@ -118,7 +118,7 @@ const design: ColorProps[] = [
   },
 ];
 
-const MultipleChoiceDesign = ({
+const CheckBoxDesign = ({
   block,
   theme,
   numericBlocks,
@@ -190,4 +190,4 @@ const MultipleChoiceDesign = ({
   );
 };
 
-export default MultipleChoiceDesign;
+export default CheckBoxDesign;

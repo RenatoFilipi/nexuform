@@ -22,8 +22,8 @@ import { useMediaQuery } from "react-responsive";
 const icons: { [key in block]: JSX.Element } = {
   short_answer: <EqualIcon className="w-5 h-5 text-background" />,
   long_answer: <TextIcon className="w-5 h-5 text-background" />,
-  multiple_choice: <CheckSquareIcon className="w-5 h-5 text-background" />,
-  checkboxes: <CheckCircleIcon className="w-5 h-5 text-background" />,
+  checkbox: <CheckSquareIcon className="w-5 h-5 text-background" />,
+  radio_button: <CheckCircleIcon className="w-5 h-5 text-background" />,
   dropdown: <ChevronDownIcon className="w-5 h-5 text-background" />,
   number: <HashIcon className="w-5 h-5 text-background" />,
   email: <MailIcon className="w-5 h-5 text-background" />,

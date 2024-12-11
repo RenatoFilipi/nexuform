@@ -30,13 +30,7 @@ const Editor = () => {
   const {
     blocks,
     name,
-    description,
-    ownerId,
     id,
-    numericBlocks,
-    theme,
-    status,
-    submitLabel,
     setId,
     setName,
     setBlocks,

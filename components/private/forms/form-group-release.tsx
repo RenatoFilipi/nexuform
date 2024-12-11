@@ -3,12 +3,12 @@ import { ColorProps } from "@/helpers/interfaces";
 import { AnswerModel } from "@/helpers/models";
 import useSubmissionStore from "@/stores/submission";
 import { twMerge } from "tailwind-merge";
-import CheckboxesDesign from "../blocks/design/checkboxes-design";
+import CheckBoxDesign from "../blocks/design/check-box-design";
 import DropdownDesign from "../blocks/design/dropdown-design";
 import EmailDesign from "../blocks/design/email-design";
 import LongAnswerDesign from "../blocks/design/long-answer-design";
-import MultipleChoiceDesign from "../blocks/design/multiple-choice-design";
 import NumberDesign from "../blocks/design/number-design";
+import RadioButtonDesign from "../blocks/design/radio-button-design";
 import RatingDesign from "../blocks/design/rating-design";
 import ScaleDesign from "../blocks/design/scale-design";
 import ShortAnswerDesign from "../blocks/design/short-answer-design";
@@ -162,24 +162,27 @@ const FormGroupRelease = () => {
                   block={block}
                   theme={theme}
                   numericBlocks={numericBlocks}
+                  onValueChange={onValueChange}
                 />
               );
-            case "multiple_choice":
+            case "radio_button":
               return (
-                <MultipleChoiceDesign
+                <RadioButtonDesign
                   key={block.id}
                   block={block}
                   theme={theme}
                   numericBlocks={numericBlocks}
+                  onValueChange={onValueChange}
                 />
               );
-            case "checkboxes":
+            case "checkbox":
               return (
-                <CheckboxesDesign
+                <CheckBoxDesign
                   key={block.id}
                   block={block}
                   theme={theme}
                   numericBlocks={numericBlocks}
+                  onValueChange={onValueChange}
                 />
               );
             case "dropdown":
@@ -189,6 +192,7 @@ const FormGroupRelease = () => {
                   block={block}
                   theme={theme}
                   numericBlocks={numericBlocks}
+                  onValueChange={onValueChange}
                 />
               );
             case "number":
@@ -198,6 +202,7 @@ const FormGroupRelease = () => {
                   block={block}
                   theme={theme}
                   numericBlocks={numericBlocks}
+                  onValueChange={onValueChange}
                 />
               );
             case "email":
@@ -207,6 +212,7 @@ const FormGroupRelease = () => {
                   block={block}
                   theme={theme}
                   numericBlocks={numericBlocks}
+                  onValueChange={onValueChange}
                 />
               );
             case "rating":
@@ -215,6 +221,7 @@ const FormGroupRelease = () => {
                   key={block.id}
                   block={block}
                   numericBlocks={numericBlocks}
+                  onValueChange={onValueChange}
                 />
               );
             case "scale":
@@ -224,6 +231,7 @@ const FormGroupRelease = () => {
                   block={block}
                   theme={theme}
                   numericBlocks={numericBlocks}
+                  onValueChange={onValueChange}
                 />
               );
           }

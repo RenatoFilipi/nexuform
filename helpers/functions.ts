@@ -16,10 +16,10 @@ export const blockName = (type: block) => {
       return "Short Answer";
     case "long_answer":
       return "Long Answer";
-    case "multiple_choice":
-      return "Multiple Choice";
-    case "checkboxes":
-      return "Checkboxes";
+    case "radio_button":
+      return "Radio Button";
+    case "checkbox":
+      return "checkbox";
     case "dropdown":
       return "Dropdown";
     case "number":

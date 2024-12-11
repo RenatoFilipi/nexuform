@@ -5,12 +5,12 @@ import { BlockModel } from "@/helpers/models";
 import { setState } from "@/helpers/types";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import CheckboxesBlock from "./check-boxes-block";
+import CheckBoxBlock from "./check-box-block";
 import DropdownBlock from "./dropdown-block";
 import EmailBlock from "./email-block";
 import LongAnswerBlock from "./long-answer-block";
-import MultipleChoiceBlock from "./multiple-choice-block";
 import NumberBlock from "./number-block";
+import RadioButtonBlock from "./radio-button-block";
 import RatingBlock from "./rating-block";
 import ScaleBlock from "./scale-block";
 import ShortAnswerBlock from "./short-answer-block";
@@ -60,11 +60,11 @@ const Body = ({
     case "long_answer": {
       return <LongAnswerBlock block={block} setState={setState} />;
     }
-    case "multiple_choice": {
-      return <MultipleChoiceBlock block={block} setState={setState} />;
+    case "radio_button": {
+      return <RadioButtonBlock block={block} setState={setState} />;
     }
-    case "checkboxes": {
-      return <CheckboxesBlock block={block} setState={setState} />;
+    case "checkbox": {
+      return <CheckBoxBlock block={block} setState={setState} />;
     }
     case "dropdown": {
       return <DropdownBlock block={block} setState={setState} />;

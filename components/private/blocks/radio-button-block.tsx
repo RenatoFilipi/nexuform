@@ -14,7 +14,7 @@ import { Tag, TagInput } from "emblor";
 import { XIcon } from "lucide-react";
 import { useState } from "react";
 
-const CheckboxesBlock = ({
+const RadioButtonBlock = ({
   block,
   setState,
 }: {
@@ -45,7 +45,7 @@ const CheckboxesBlock = ({
       <div className="flex justify-center sm:justify-start items-center gap-3">
         <h1 className="text-xl font-semibold">Settings</h1>
         <Badge variant={"indigo"} uppercase>
-          Check boxes
+          Radio button
         </Badge>
       </div>
       <div className="h-full flex flex-col gap-4 overflow-y-auto">
@@ -133,4 +133,4 @@ const CheckboxesBlock = ({
   );
 };
 
-export default CheckboxesBlock;
+export default RadioButtonBlock;

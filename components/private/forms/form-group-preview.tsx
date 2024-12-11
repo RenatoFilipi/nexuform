@@ -2,12 +2,12 @@ import { Button } from "@/components/ui/button";
 import { ColorProps } from "@/helpers/interfaces";
 import useEditorStore from "@/stores/editor";
 import { twMerge } from "tailwind-merge";
-import CheckboxesDesign from "../blocks/design/checkboxes-design";
+import CheckBoxDesign from "../blocks/design/check-box-design";
 import DropdownDesign from "../blocks/design/dropdown-design";
 import EmailDesign from "../blocks/design/email-design";
 import LongAnswerDesign from "../blocks/design/long-answer-design";
-import MultipleChoiceDesign from "../blocks/design/multiple-choice-design";
 import NumberDesign from "../blocks/design/number-design";
+import RadioButtonDesign from "../blocks/design/radio-button-design";
 import RatingDesign from "../blocks/design/rating-design";
 import ScaleDesign from "../blocks/design/scale-design";
 import ShortAnswerDesign from "../blocks/design/short-answer-design";
@@ -139,9 +139,9 @@ const FormGroupPreview = () => {
                   onValueChange={() => {}}
                 />
               );
-            case "multiple_choice":
+            case "radio_button":
               return (
-                <MultipleChoiceDesign
+                <RadioButtonDesign
                   key={block.id}
                   block={block}
                   theme={theme}
@@ -149,13 +149,14 @@ const FormGroupPreview = () => {
                   onValueChange={() => {}}
                 />
               );
-            case "checkboxes":
+            case "checkbox":
               return (
-                <CheckboxesDesign
+                <CheckBoxDesign
                   key={block.id}
                   block={block}
                   theme={theme}
                   numericBlocks={numericBlocks}
+                  onValueChange={() => {}}
                 />
               );
             case "dropdown":

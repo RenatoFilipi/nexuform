@@ -1,8 +1,8 @@
 export type block =
   | "short_answer"
   | "long_answer"
-  | "multiple_choice"
-  | "checkboxes"
+  | "radio_button"
+  | "checkbox"
   | "dropdown"
   | "number"
   | "email"
