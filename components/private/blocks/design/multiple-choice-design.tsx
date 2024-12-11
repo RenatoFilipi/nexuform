@@ -1,6 +1,8 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColorProps } from "@/helpers/interfaces";
 import { BlockModel } from "@/helpers/models";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 const design: ColorProps[] = [
@@ -120,13 +122,34 @@ const MultipleChoiceDesign = ({
   block,
   theme,
   numericBlocks,
+  onValueChange,
 }: {
   block: BlockModel;
   theme: string;
   numericBlocks: boolean;
+  onValueChange: (value: string, blockId: string) => void;
 }) => {
   const { name, description, required, options, id, position } = block;
   const currentColor = design.find((x) => x.label === theme) ?? design[0];
+  const [value, setValue] = useState<string[]>([]);
+
+  const handleCheckboxChange = (optionId: string) => {
+    setValue((prevValue) =>
+      prevValue.includes(optionId)
+        ? prevValue.filter((id) => id !== optionId)
+        : [...prevValue, optionId]
+    );
+  };
+
+  useQuery({
+    queryKey: [value],
+    queryFn: () => {
+      console.log(value);
+      onValueChange(value.toString(), block.id);
+      return null;
+    },
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -146,11 +169,17 @@ const MultipleChoiceDesign = ({
       {options && options.length >= 1 && (
         <div className="flex flex-col gap-1">
           {options.map((opt) => {
+            const isChecked = value.includes(opt.id);
             return (
               <div
                 key={opt.id}
                 className="flex justify-center sm:justify-start items-center gap-3">
-                <Checkbox id={id} className={twMerge(currentColor.tw_class)} />
+                <Checkbox
+                  id={id}
+                  className={twMerge(currentColor.tw_class)}
+                  checked={isChecked}
+                  onCheckedChange={() => handleCheckboxChange(opt.id)}
+                />
                 <span className="text-sm">{opt.text}</span>
               </div>
             );

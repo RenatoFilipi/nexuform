@@ -1,6 +1,7 @@
 import { Textarea } from "@/components/ui/textarea";
 import { ColorProps } from "@/helpers/interfaces";
 import { BlockModel } from "@/helpers/models";
+import { useState } from "react";
 
 const design: ColorProps[] = [
   { label: "Slate", tw_class: "focus-visible:ring-slate-500" },
@@ -31,15 +32,25 @@ const LongAnswerDesign = ({
   block,
   theme,
   numericBlocks,
+  onValueChange,
 }: {
   block: BlockModel;
   theme: string;
   numericBlocks: boolean;
+  onValueChange: (value: string, blockId: string) => void;
 }) => {
-  const { name, description, max_char, show_char, required, id, position } =
-    block;
-
+  const {
+    name,
+    description,
+    max_char,
+    show_char,
+    required,
+    id,
+    position,
+    min_char,
+  } = block;
   const currentColor = design.find((x) => x.label === theme) ?? design[0];
+  const [value, setValue] = useState("");
 
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -58,8 +69,14 @@ const LongAnswerDesign = ({
       </div>
       <div className="">
         <Textarea
+          value={value}
+          onChange={(e) => {
+            setValue(e.target.value);
+            onValueChange(e.target.value, block.id);
+          }}
           id={id}
           className={`${currentColor.tw_class}`}
+          minLength={min_char ?? 1}
           maxLength={max_char ?? 256}
         />
         {show_char && (

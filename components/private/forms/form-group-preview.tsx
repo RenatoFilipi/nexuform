@@ -136,6 +136,7 @@ const FormGroupPreview = () => {
                   block={block}
                   theme={theme}
                   numericBlocks={numericBlocks}
+                  onValueChange={() => {}}
                 />
               );
             case "multiple_choice":
@@ -145,6 +146,7 @@ const FormGroupPreview = () => {
                   block={block}
                   theme={theme}
                   numericBlocks={numericBlocks}
+                  onValueChange={() => {}}
                 />
               );
             case "checkboxes":
@@ -163,6 +165,7 @@ const FormGroupPreview = () => {
                   block={block}
                   theme={theme}
                   numericBlocks={numericBlocks}
+                  onValueChange={() => {}}
                 />
               );
             case "number":
@@ -172,6 +175,7 @@ const FormGroupPreview = () => {
                   block={block}
                   theme={theme}
                   numericBlocks={numericBlocks}
+                  onValueChange={() => {}}
                 />
               );
             case "email":
@@ -181,6 +185,7 @@ const FormGroupPreview = () => {
                   block={block}
                   theme={theme}
                   numericBlocks={numericBlocks}
+                  onValueChange={() => {}}
                 />
               );
             case "rating":
@@ -189,6 +194,7 @@ const FormGroupPreview = () => {
                   key={block.id}
                   block={block}
                   numericBlocks={numericBlocks}
+                  onValueChange={() => {}}
                 />
               );
             case "scale":
@@ -198,6 +204,7 @@ const FormGroupPreview = () => {
                   block={block}
                   theme={theme}
                   numericBlocks={numericBlocks}
+                  onValueChange={() => {}}
                 />
               );
           }

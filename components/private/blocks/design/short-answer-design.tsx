@@ -39,8 +39,16 @@ const ShortAnswerDesign = ({
   numericBlocks: boolean;
   onValueChange: (value: string, blockId: string) => void;
 }) => {
-  const { name, description, max_char, show_char, required, id, position } =
-    block;
+  const {
+    name,
+    description,
+    max_char,
+    show_char,
+    required,
+    id,
+    position,
+    min_char,
+  } = block;
   const currentColor = design.find((x) => x.label === theme) ?? design[0];
   const [value, setValue] = useState("");
 
@@ -69,6 +77,7 @@ const ShortAnswerDesign = ({
           type="text"
           id={id}
           className={`${currentColor.tw_class}`}
+          minLength={min_char ?? 1}
           maxLength={max_char ?? 256}
         />
         {show_char && (

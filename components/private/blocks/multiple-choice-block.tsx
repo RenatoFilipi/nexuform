@@ -12,7 +12,7 @@ import useEditorStore from "@/stores/editor";
 import { useQuery } from "@tanstack/react-query";
 import { Tag, TagInput } from "emblor";
 import { XIcon } from "lucide-react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 const MultipleChoiceBlock = ({
   block,
@@ -38,6 +38,17 @@ const MultipleChoiceBlock = ({
     console.log(id);
     const updatedTags = localTags.filter((tag) => tag.id !== id);
     setLocalTags(updatedTags);
+  };
+
+  const handleSetTags: Dispatch<SetStateAction<Tag[]>> = (newTagsOrFn) => {
+    setLocalTags((prevTags) => {
+      const newTags =
+        typeof newTagsOrFn === "function" ? newTagsOrFn(prevTags) : newTagsOrFn;
+      return newTags.map((tag) => ({
+        id: tag.text,
+        text: tag.text,
+      }));
+    });
   };
 
   return (
@@ -75,9 +86,7 @@ const MultipleChoiceBlock = ({
           <div>
             <TagInput
               tags={localTags}
-              setTags={(newTags) => {
-                setLocalTags(newTags);
-              }}
+              setTags={handleSetTags} // Função modificada para atualizar tags
               placeholder="Add an option"
               styleClasses={{
                 input: "w-full",

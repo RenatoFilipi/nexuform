@@ -2,6 +2,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ColorProps } from "@/helpers/interfaces";
 import { BlockModel } from "@/helpers/models";
+import { useState } from "react";
 
 const design: ColorProps[] = [
   {
@@ -120,14 +121,17 @@ const ScaleDesign = ({
   block,
   theme,
   numericBlocks,
+  onValueChange,
 }: {
   block: BlockModel;
   theme: string;
   numericBlocks: boolean;
+  onValueChange: (value: string, blockId: string) => void;
 }) => {
   const { name, description, required, max_scale, id, position } = block;
   const maxScaleArray = Array.from({ length: max_scale ?? 5 }, (_, i) => i + 1);
   const currentColor = design.find((x) => x.label === theme) ?? design[0];
+  const [value, setValue] = useState("");
 
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -144,7 +148,13 @@ const ScaleDesign = ({
         </div>
         <span className="text-xs text-foreground/80">{description}</span>
       </div>
-      <RadioGroup className="flex w-full">
+      <RadioGroup
+        defaultValue={value}
+        onValueChange={(e) => {
+          setValue(e);
+          onValueChange(e, block.id);
+        }}
+        className="flex w-full">
         {maxScaleArray.map((scale) => {
           const scaleId = `${id}_${scale}`;
           return (

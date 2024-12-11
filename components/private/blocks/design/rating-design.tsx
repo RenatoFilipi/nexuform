@@ -4,15 +4,13 @@ import { BlockModel } from "@/helpers/models";
 const RatingDesign = ({
   block,
   numericBlocks,
+  onValueChange,
 }: {
   block: BlockModel;
   numericBlocks: boolean;
+  onValueChange: (value: string, blockId: string) => void;
 }) => {
   const { name, description, required, rating, position } = block;
-
-  const onChange = (rating: number) => {
-    console.log(rating);
-  };
 
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -29,7 +27,12 @@ const RatingDesign = ({
         </div>
         <span className="text-xs text-foreground/80">{description}</span>
       </div>
-      <Rating maxRating={rating ?? 5} onChange={onChange} />
+      <Rating
+        maxRating={rating ?? 5}
+        onChange={(e) => {
+          onValueChange(e.toString(), block.id);
+        }}
+      />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { ColorProps } from "@/helpers/interfaces";
 import { BlockModel } from "@/helpers/models";
+import { useState } from "react";
 
 const design: ColorProps[] = [
   { label: "Slate", tw_class: "focus-visible:ring-slate-500" },
@@ -31,14 +32,16 @@ const EmailDesign = ({
   block,
   theme,
   numericBlocks,
+  onValueChange,
 }: {
   block: BlockModel;
   theme: string;
   numericBlocks: boolean;
+  onValueChange: (value: string, blockId: string) => void;
 }) => {
   const { name, description, required, id, position } = block;
-
   const currentColor = design.find((x) => x.label === theme) ?? design[0];
+  const [value, setValue] = useState("");
 
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -55,7 +58,16 @@ const EmailDesign = ({
         </div>
         <span className="text-xs text-foreground/80">{description}</span>
       </div>
-      <Input id={id} type="email" className={`${currentColor.tw_class}`} />
+      <Input
+        value={value}
+        onChange={(e) => {
+          setValue(e.target.value);
+          onValueChange(e.target.value, block.id);
+        }}
+        id={id}
+        type="email"
+        className={`${currentColor.tw_class}`}
+      />
     </div>
   );
 };

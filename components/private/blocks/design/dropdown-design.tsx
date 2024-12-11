@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/select";
 import { ColorProps } from "@/helpers/interfaces";
 import { BlockModel } from "@/helpers/models";
+import { useState } from "react";
 
 const design: ColorProps[] = [
   { label: "Slate", tw_class: "focus-visible:ring-slate-500" },
@@ -37,14 +38,16 @@ const DropdownDesign = ({
   block,
   theme,
   numericBlocks,
+  onValueChange,
 }: {
   block: BlockModel;
   theme: string;
   numericBlocks: boolean;
+  onValueChange: (value: string, blockId: string) => void;
 }) => {
   const { options, required, name, description, position } = block;
-
   const currentColor = design.find((x) => x.label === theme) ?? design[0];
+  const [value, setValue] = useState("");
 
   return (
     <div className="flex flex-col gap-4  w-full">
@@ -62,7 +65,12 @@ const DropdownDesign = ({
         <span className="text-xs text-foreground/80">{description}</span>
       </div>
       {options && options.length >= 1 && (
-        <Select>
+        <Select
+          onValueChange={(e) => {
+            setValue(e);
+            onValueChange(e, block.id);
+          }}
+          defaultValue={value}>
           <SelectTrigger className={`${currentColor.tw_class}`}>
             <SelectValue />
           </SelectTrigger>
