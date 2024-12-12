@@ -120,12 +120,18 @@ const Body = ({
           {statusDisplay(submission.status)}
         </div>
       </div>
-      <div className="flex flex-col h-full gap-4">
+      <div className="flex flex-col h-full gap-4 overflow-y-auto">
         {segments.map((seg, index) => {
           return (
             <div key={index} className="flex flex-col gap-1">
               <h1 className="font-semibold text-sm">{seg.question}</h1>
-              <p className="text-xs text-foreground/60">{seg.answer}</p>
+              {seg.answer !== "".trim() ? (
+                <p className="text-xs text-foreground/60">{seg.answer}</p>
+              ) : (
+                <div className="flex justify-center items-center py-2 border border-dashed mt-2">
+                  <span className="text-xs">No answer to this question.</span>
+                </div>
+              )}
             </div>
           );
         })}

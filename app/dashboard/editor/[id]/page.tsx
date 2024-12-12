@@ -56,7 +56,7 @@ const Editor = () => {
       const blocks = mockBlocks.filter((x) => x.form_id === formId);
       if (!form) {
         setAppState("idle");
-        return;
+        return null;
       }
       setId(form.id);
       setName(form.name);
@@ -101,6 +101,7 @@ const Editor = () => {
 
   const onSave = () => {
     console.log(JSON.stringify(blocks));
+    console.log(blocks);
   };
 
   return (
@@ -203,7 +204,7 @@ const Editor = () => {
           )}
           {blocks.length >= 1 && (
             <div className="hidden sm:flex flex-1 bg-foreground/5 justify-center items-start ml-[360px] pt-14">
-              <div className="bg-background w-full rounded mx-8 my-8 flex flex-col p-6 gap-6">
+              <div className="bg-background w-full rounded mx-8 my-8 flex flex-col p-6 gap-6 sm:w-[600px]">
                 <FormGroupPreview />
                 <div className="flex justify-center items-center">
                   <span className="border rounded p-2 flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">

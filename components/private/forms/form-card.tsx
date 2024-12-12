@@ -3,7 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { FormProps } from "@/helpers/modules";
 import { formStatus } from "@/helpers/types";
-import { EditIcon, ViewIcon } from "lucide-react";
+import { EditIcon, ExternalLinkIcon, ViewIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../../ui/button";
 import { Card } from "../../ui/card";
@@ -54,6 +54,11 @@ const FormCard = ({ name, status, submissions, views, id }: FormProps) => {
           </span>
         </div>
         <div className="flex justify-center items-center gap-2">
+          <Button variant={"outline"} size={"sm"} asChild>
+            <Link href={`/s/${id}`}>
+              <ExternalLinkIcon className="w-4 h-4" />
+            </Link>
+          </Button>
           <Button variant={"outline"} size={"sm"} asChild>
             <Link href={`/dashboard/forms/${id}`}>
               <ViewIcon className="w-4 h-4" />
