@@ -144,7 +144,6 @@ const CheckBoxDesign = ({
   useQuery({
     queryKey: [value],
     queryFn: () => {
-      console.log(value);
       onValueChange(value.toString(), block.id);
       return null;
     },

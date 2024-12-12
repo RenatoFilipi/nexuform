@@ -11,8 +11,22 @@ import Link from "next/link";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { toast } from "sonner";
-import { Dialog, DialogContent, DialogTrigger } from "../../ui/dialog";
-import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../../ui/dialog";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../../ui/drawer";
 
 const FormShare = ({
   children,
@@ -28,7 +42,13 @@ const FormShare = ({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="sm:min-w-[550px]">
+        <DialogContent className="flex flex-col">
+          <DialogHeader>
+            <DialogTitle>Form Share</DialogTitle>
+            <DialogDescription>
+              Share this form with others using the provided link.
+            </DialogDescription>
+          </DialogHeader>
           <Body setState={setOpen} formId={formId} />
         </DialogContent>
       </Dialog>
@@ -38,7 +58,13 @@ const FormShare = ({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3">
+      <DrawerContent className="p-3 flex flex-col">
+        <DrawerHeader>
+          <DrawerTitle>Form Share</DrawerTitle>
+          <DrawerDescription>
+            Share this form with others using the provided link.
+          </DrawerDescription>
+        </DrawerHeader>
         <Body setState={setOpen} formId={formId} />
       </DrawerContent>
     </Drawer>
@@ -67,9 +93,8 @@ const Body = ({
   });
 
   return (
-    <div className="flex flex-col gap-4 pt-4 sm:pt-0">
+    <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1 justify-center items-start">
-        <h1 className="text-xl font-semibold">Share</h1>
         {form?.status !== "published" && (
           <Alert variant={"destructive"}>
             <AlertDescription>
@@ -81,7 +106,7 @@ const Body = ({
       </div>
       {form?.status === "published" && (
         <div className="flex justify-center items-center gap-4 flex-col sm:flex-row">
-          <Input value={url} className="text-foreground/60" />
+          <Input value={url} className="text-foreground/60" readOnly />
         </div>
       )}
       {form?.status === "published" ? (
@@ -94,7 +119,10 @@ const Body = ({
             Close
           </Button>
           <div className="flex justify-center items-center gap-3 w-full sm:w-fit">
-            <Button variant={"outline"} size={"sm"} className="w-full sm:w-fit">
+            <Button
+              variant={"secondary"}
+              size={"sm"}
+              className="w-full sm:w-fit">
               <Link
                 href={`/s/${form?.id}`}
                 className="flex justify-center items-center">

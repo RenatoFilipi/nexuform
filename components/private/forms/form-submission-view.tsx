@@ -2,7 +2,14 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { minWidth640 } from "@/helpers/constants";
 import { mockAnswers, mockBlocks, mockSubmissions } from "@/helpers/mocks";
 import { SubmissionModel } from "@/helpers/models";
@@ -11,7 +18,14 @@ import { appState, setState, submissionStatus } from "@/helpers/types";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../../ui/drawer";
 
 const FormSubmissionView = ({
   children,
@@ -29,7 +43,14 @@ const FormSubmissionView = ({
     return (
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>{children}</SheetTrigger>
-        <SheetContent className="min-w-[600px]">
+        <SheetContent className="min-w-[600px] flex flex-col">
+          <SheetHeader className="hidden">
+            <SheetTitle>Submission Details</SheetTitle>
+            <SheetDescription>
+              View the details of this submission. You can review the
+              information and take further actions if necessary.
+            </SheetDescription>
+          </SheetHeader>
           <Body setState={setOpen} subId={subId} formId={formId} />
         </SheetContent>
       </Sheet>
@@ -38,7 +59,14 @@ const FormSubmissionView = ({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3 h-[90%]">
+      <DrawerContent className="p-3 h-[90%] flex flex-col">
+        <DrawerHeader className="hidden">
+          <DrawerTitle>Submission Details</DrawerTitle>
+          <DrawerDescription>
+            View the details of this submission. You can review the information
+            and take further actions if necessary.
+          </DrawerDescription>
+        </DrawerHeader>
         <Body setState={setOpen} subId={subId} formId={formId} />
       </DrawerContent>
     </Drawer>
@@ -65,7 +93,7 @@ const Body = ({
   });
 
   useQuery({
-    queryKey: ["formSubmissionView"],
+    queryKey: [],
     queryFn: () => {
       const sub = mockSubmissions.find((x) => x.id === subId);
       const answers = mockAnswers.filter((x) => x.submission_id === subId);
@@ -114,22 +142,24 @@ const Body = ({
   };
   return (
     <div className="flex flex-col h-full gap-4">
-      <div className="flex flex-col gap-1">
-        <div className="flex flex-col justify-center items-start gap-2">
-          <span className="font-semibold text-lg">{submission.sender}</span>
+      <div className="flex flex-col pt-4 sm:pt-0">
+        <div className="flex justify-center sm:justify-start items-center gap-2">
+          <span className="font-semibold text-base">{submission.sender}</span>
           {statusDisplay(submission.status)}
         </div>
       </div>
-      <div className="flex flex-col h-full gap-4 overflow-y-auto">
+      <div className="flex flex-col h-full gap-4 overflow-y-auto mt-4">
         {segments.map((seg, index) => {
           return (
             <div key={index} className="flex flex-col gap-1">
-              <h1 className="font-semibold text-sm">{seg.question}</h1>
+              <h1 className="font-semibold text-xs">{seg.question}</h1>
               {seg.answer !== "".trim() ? (
                 <p className="text-xs text-foreground/60">{seg.answer}</p>
               ) : (
                 <div className="flex justify-center items-center py-2 border border-dashed mt-2">
-                  <span className="text-xs">No answer to this question.</span>
+                  <span className="text-xs text-foreground/80">
+                    No answer to this question.
+                  </span>
                 </div>
               )}
             </div>

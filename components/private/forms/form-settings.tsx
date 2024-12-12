@@ -2,7 +2,13 @@
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,10 +16,18 @@ import { minWidth640 } from "@/helpers/constants";
 import { FormSettingsStatusProps } from "@/helpers/interfaces";
 import { setState } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
+import { DialogTitle } from "@radix-ui/react-dialog";
 import { BookDashedIcon, GlobeIcon, PencilOffIcon } from "lucide-react";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../../ui/drawer";
 import FormDelete from "./form-delete";
 
 const statusList: FormSettingsStatusProps[] = [
@@ -48,7 +62,15 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="min-w-[590px]">
+        <DialogContent className="h-[600px] flex flex-col">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-semibold">
+              Settings
+            </DialogTitle>
+            <DialogDescription>
+              Configure your form preferences and update settings as needed.
+            </DialogDescription>
+          </DialogHeader>
           <Body setState={setOpen} />
         </DialogContent>
       </Dialog>
@@ -58,7 +80,13 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3">
+      <DrawerContent className="p-3 flex flex-col">
+        <DrawerHeader>
+          <DrawerTitle className="text-xl font-semibold">Settings</DrawerTitle>
+          <DrawerDescription>
+            Configure your form preferences and update settings as needed.
+          </DrawerDescription>
+        </DrawerHeader>
         <Body setState={setOpen} />
       </DrawerContent>
     </Drawer>
@@ -70,7 +98,6 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
 
   return (
     <div className="flex flex-col gap-6 h-full overflow-y-auto pt-4 sm:pt-0">
-      <h1 className="text-xl font-semibold">Settings</h1>
       <div className="flex flex-1 overflow-y-auto gap-6 px-1 flex-col">
         <div className="flex flex-col gap-4 flex-1">
           <div className="grid gap-3">

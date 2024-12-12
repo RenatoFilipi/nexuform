@@ -17,8 +17,22 @@ import { useForm } from "react-hook-form";
 import { useMediaQuery } from "react-responsive";
 import { z } from "zod";
 import { Button } from "../../ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "../../ui/dialog";
-import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../../ui/dialog";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../../ui/drawer";
 import { Input } from "../../ui/input";
 
 const FormCreate = ({ children }: { children: React.ReactNode }) => {
@@ -29,7 +43,16 @@ const FormCreate = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent>
+        <DialogContent className="flex flex-col">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-semibold">
+              Create Form
+            </DialogTitle>
+            <DialogDescription>
+              Fill in the details below to create a new form. You can customize
+              the settings as needed.
+            </DialogDescription>
+          </DialogHeader>
           <Body setState={setOpen} />
         </DialogContent>
       </Dialog>
@@ -40,6 +63,15 @@ const FormCreate = ({ children }: { children: React.ReactNode }) => {
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3">
+        <DrawerHeader>
+          <DrawerTitle className="text-xl font-semibold">
+            Create Form
+          </DrawerTitle>
+          <DrawerDescription>
+            Fill in the details below to create a new form. You can customize
+            the settings as needed.
+          </DrawerDescription>
+        </DrawerHeader>
         <Body setState={setOpen} />
       </DrawerContent>
     </Drawer>
@@ -62,12 +94,6 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
 
   return (
     <div className="flex flex-col gap-4 pt-4 sm:pt-0">
-      <div className="flex flex-col gap-1 justify-center items-start">
-        <h1 className="text-xl font-semibold">Create Form</h1>
-        <p className="text-foreground/80 text-sm">
-          Start by giving your form a name.
-        </p>
-      </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

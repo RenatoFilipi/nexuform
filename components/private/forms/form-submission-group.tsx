@@ -88,7 +88,7 @@ const FormSubmissionGroup = ({
   }
 
   return (
-    <div>
+    <div className="">
       {submissions.map((sub) => {
         return (
           <Card key={sub.id} className="p-3 flex flex-col gap-3">

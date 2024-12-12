@@ -16,7 +16,7 @@ export const mockForms: FormModel[] = [
     description:
       "We value your feedback! Your insights help us improve our product and ensure it meets your needs.",
     numeric_blocks: true,
-    status: "published",
+    status: "draft",
     submit_label: "Finish form",
     submissions: 1,
     views: 1,
@@ -27,7 +27,7 @@ export const mockForms: FormModel[] = [
     owner_id: "",
     created_at: "",
     updated_at: "",
-    name: "Debug Blocks",
+    name: "Debug Report",
     description: "A form used to report and debug application issues.",
     numeric_blocks: true,
     status: "published",
@@ -299,7 +299,7 @@ export const mockSubmissions: SubmissionModel[] = [
     id: "82f99639-1669-4da9-9b0e-afb2b3cf484e",
     form_id: "b68e83e3-f646-4ddd-8eac-2d7ce0abddf6",
     submitted_at: new Date().toISOString(),
-    sender: "sub-6N4USPYM3QIG",
+    sender: "SUB-6N4USPYM3QIG",
     status: "not_reviewed",
   },
 ];

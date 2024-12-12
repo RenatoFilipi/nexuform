@@ -188,8 +188,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
                   onClick={() => setTheme(color.label)}
                   key={index}
                   className={`${
-                    color.label === theme &&
-                    "bg-foreground/10 hover:bg-foreground/10"
+                    color.label === theme && "bg-foreground/20"
                   } flex justify-center items-center rounded hover:bg-foreground/10 w-9 h-9`}>
                   <div
                     className={`${color.tw_class} w-6 h-6 rounded-full`}></div>
