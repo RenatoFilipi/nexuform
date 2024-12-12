@@ -28,13 +28,13 @@ export const mockForms: FormModel[] = [
     created_at: "",
     updated_at: "",
     name: "Debug Blocks",
-    description: "",
+    description: "A form used to report and debug application issues.",
     numeric_blocks: true,
     status: "published",
-    submit_label: "Debug Submit",
+    submit_label: "Submit Report",
     submissions: 1,
     views: 1,
-    theme: "Yellow",
+    theme: "Blue",
   },
 ];
 export const mockBlocks: BlockModel[] = [

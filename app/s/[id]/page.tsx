@@ -1,5 +1,6 @@
 "use client";
 
+import Brand from "@/components/core/brand";
 import GenericLoader from "@/components/core/generic-loader";
 import FormGroupRelease from "@/components/private/forms/form-group-release";
 import { nanoid, uuid } from "@/helpers/functions";
@@ -74,9 +75,15 @@ const S = () => {
   }
   if (appState === "idle") {
     return (
-      <div className="flex justify-center h-screen overflow-y-auto pt-6 sm:pt-10">
-        <div className="flex flex-col sm:w-[600px] px-5 sm:px-0">
+      <div className="flex justify-center pt-6 sm:pt-10 pb-20 sm:pb-14">
+        <div className="flex flex-col justify-center items-center sm:w-[600px] px-5 sm:px-0 gap-4">
           <FormGroupRelease />
+          <span className="border rounded p-2 w-fit flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
+            <Brand type="logo" className="fill-foreground w-4 h-4" />
+            <span className="text-foreground/80 text-sm font-semibold ">
+              Powered by Nebulaform
+            </span>
+          </span>
         </div>
       </div>
     );
