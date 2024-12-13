@@ -33,6 +33,18 @@ const Home = () => {
         <Hero />
       </div>
       <footer className="flex justify-center items-center w-full h-12 absolute bottom-0 border-t">
+        <div className="absolute left-4 hidden sm:flex justify-center items-center gap-2">
+          <Link
+            href={"/legal/privacy"}
+            className="text-xs text-foreground/80 hover:underline">
+            Privacy
+          </Link>
+          <Link
+            href={"/legal/terms"}
+            className="text-xs text-foreground/80 hover:underline">
+            Terms
+          </Link>
+        </div>
         <span className="text-xs text-foreground/80 sm:text-center">
           © 2024{" "}
           <Link href="/" className="hover:underline">

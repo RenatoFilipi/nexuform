@@ -10,6 +10,7 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { appStage, appState } from "@/helpers/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronLeftIcon, EyeClosedIcon, EyeIcon } from "lucide-react";
 import Link from "next/link";
@@ -19,6 +20,8 @@ import { z } from "zod";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [appState, setAppState] = useState<appState>("idle");
+  const [appStage, setAppStage] = useState<appStage>("stage01");
 
   const formSchema = z.object({
     email: z.string(),

@@ -83,6 +83,18 @@ const Nav = ({ children }: { children: React.ReactNode }) => {
             </div>
           </RadioGroup>
         </div>
+        <div className="flex justify-end items-center gap-2 p-2">
+          <Link
+            href={"/legal/privacy"}
+            className="text-xs text-foreground/80 hover:underline">
+            Privacy
+          </Link>
+          <Link
+            href={"/legal/terms"}
+            className="text-xs text-foreground/80 hover:underline">
+            Terms
+          </Link>
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );

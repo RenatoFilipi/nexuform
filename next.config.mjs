@@ -17,6 +17,11 @@ const nextConfig = {
         destination: "/",
         permanent: true,
       },
+      {
+        source: "/legal",
+        destination: "/",
+        permanent: true,
+      },
     ];
   },
 };

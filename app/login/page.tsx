@@ -8,21 +8,33 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { appState } from "@/helpers/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronLeftIcon, EyeClosedIcon, EyeIcon } from "lucide-react";
+import {
+  ChevronLeftIcon,
+  EyeClosedIcon,
+  EyeIcon,
+  LoaderIcon,
+} from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const Login = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [appState, setAppState] = useState<appState>("idle");
 
   const formSchema = z.object({
-    email: z.string(),
-    password: z.string(),
+    email: z.string().email(),
+    password: z
+      .string()
+      .min(8, { message: "Password needs to be atleast 8 characters long" }),
   });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -33,6 +45,11 @@ const Login = () => {
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
+    setAppState("loading");
+    setTimeout(() => {
+      setAppState("idle");
+      router.push("/dashboard/forms");
+    }, 2000);
   };
 
   return (
@@ -72,10 +89,11 @@ const Login = () => {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel htmlFor="email">Email</FormLabel>
                         <FormControl>
-                          <Input type="email" {...field} />
+                          <Input id="email" type="email" {...field} />
                         </FormControl>
+                        <FormMessage />
                       </FormItem>
                     )}
                   />
@@ -84,10 +102,11 @@ const Login = () => {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Password</FormLabel>
+                        <FormLabel htmlFor="password">Password</FormLabel>
                         <FormControl>
                           <div className="flex justify-center items-center gap-2">
                             <Input
+                              id="password"
                               type={showPassword ? "text" : "password"}
                               {...field}
                             />
@@ -104,6 +123,7 @@ const Login = () => {
                             </Button>
                           </div>
                         </FormControl>
+                        <FormMessage />
                       </FormItem>
                     )}
                   />
@@ -115,11 +135,15 @@ const Login = () => {
                     Forgot password?
                   </Link>
                   <Button
+                    disabled={appState === "loading"}
                     variant={"secondary"}
                     type="submit"
                     size={"sm"}
                     className="w-full">
-                    Login
+                    {appState === "loading" && (
+                      <LoaderIcon className="animate-spin w-4 h-4" />
+                    )}
+                    {appState === "idle" && "Login"}
                   </Button>
                 </div>
               </div>
