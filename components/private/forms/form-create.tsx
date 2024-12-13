@@ -45,9 +45,7 @@ const FormCreate = ({ children }: { children: React.ReactNode }) => {
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="flex flex-col">
           <DialogHeader>
-            <DialogTitle className="text-xl font-semibold">
-              Create Form
-            </DialogTitle>
+            <DialogTitle>Create Form</DialogTitle>
             <DialogDescription>
               Fill in the details below to create a new form. You can customize
               the settings as needed.
@@ -62,11 +60,9 @@ const FormCreate = ({ children }: { children: React.ReactNode }) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3">
+      <DrawerContent className="p-3 flex flex-col">
         <DrawerHeader>
-          <DrawerTitle className="text-xl font-semibold">
-            Create Form
-          </DrawerTitle>
+          <DrawerTitle>Create Form</DrawerTitle>
           <DrawerDescription>
             Fill in the details below to create a new form. You can customize
             the settings as needed.

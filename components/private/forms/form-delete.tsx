@@ -3,6 +3,9 @@
 import {
   AlertDialog,
   AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
@@ -10,7 +13,14 @@ import { minWidth640 } from "@/helpers/constants";
 import { setState } from "@/helpers/types";
 import { ReactNode, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../../ui/drawer";
 
 const FormDelete = ({
   children,
@@ -27,6 +37,13 @@ const FormDelete = ({
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
         <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete this
+              form and remove the data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
           <Body formId={formId} setState={setOpen} />
         </AlertDialogContent>
       </AlertDialog>
@@ -37,6 +54,13 @@ const FormDelete = ({
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3">
+        <DrawerHeader>
+          <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+          <DrawerDescription>
+            This action cannot be undone. This will permanently delete this form
+            and remove the data from our servers.
+          </DrawerDescription>
+        </DrawerHeader>
         <Body formId={formId} setState={setOpen} />
       </DrawerContent>
     </Drawer>
@@ -52,13 +76,6 @@ const Body = ({
 }) => {
   return (
     <div className="flex flex-col gap-6 h-full overflow-y-auto pt-4 sm:pt-0">
-      <h1 className="text-xl font-semibold">Are you absolutely sure?</h1>
-      <div className="flex">
-        <p className="text-sm text-foreground/80">
-          This action cannot be undone. This will permanently delete this form
-          and remove the data from our servers.
-        </p>
-      </div>
       <div className="flex justify-end flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
         <Button
           onClick={() => setState(false)}

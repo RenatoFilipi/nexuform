@@ -52,11 +52,10 @@ const CheckBoxBlock = ({
   };
 
   return (
-    <div className="h-full flex flex-col gap-8 pt-4 overflow-y-auto">
+    <div className="h-full flex flex-col gap-8 overflow-y-auto">
       <div className="flex justify-center sm:justify-start items-center gap-3">
-        <h1 className="text-xl font-semibold">Settings</h1>
         <Badge variant={"indigo"} uppercase>
-          Multiple choice
+          Checkbox
         </Badge>
       </div>
       <div className="h-full flex flex-col gap-4 overflow-y-auto">

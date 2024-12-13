@@ -1,5 +1,19 @@
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { minWidth640 } from "@/helpers/constants";
 import { BlockModel } from "@/helpers/models";
 import { setState } from "@/helpers/types";
@@ -29,7 +43,14 @@ const BlockSettings = ({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent>
+        <DialogContent className="flex flex-col">
+          <DialogHeader>
+            <DialogTitle>Block Settings</DialogTitle>
+            <DialogDescription>
+              Customize the settings for this form block. Adjust its properties
+              to match your desired design and functionality.
+            </DialogDescription>
+          </DialogHeader>
           <Body block={block} setState={setOpen} />
         </DialogContent>
       </Dialog>
@@ -39,7 +60,14 @@ const BlockSettings = ({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3 h-[90%]">
+      <DrawerContent className="p-3 h-[90%] flex flex-col">
+        <DrawerHeader>
+          <DrawerTitle>Block Settings</DrawerTitle>
+          <DrawerDescription>
+            Customize the settings for this form block. Adjust its properties to
+            match your desired design and functionality.
+          </DrawerDescription>
+        </DrawerHeader>
         <Body block={block} setState={setOpen} />
       </DrawerContent>
     </Drawer>

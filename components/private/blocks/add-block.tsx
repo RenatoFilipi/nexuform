@@ -1,7 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -27,71 +34,78 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMediaQuery } from "react-responsive";
 import { z } from "zod";
-import { Drawer, DrawerContent, DrawerTrigger } from "../../ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../../ui/drawer";
 
 const blockList: addBlockProps[] = [
   {
     type: "short_answer",
-    name: "Short answer",
+    name: "Short Text",
     icon: <EqualIcon className="w-4 h-4" />,
     enabled: true,
-    description: "A single-line input field for short text responses.",
+    description: "A single-line input field for brief text responses.",
   },
   {
     type: "long_answer",
-    name: "Long answer",
+    name: "Paragraph Text",
     icon: <TextIcon className="w-4 h-4" />,
     enabled: true,
-    description: "A multi-line input field for longer text responses.",
+    description: "A multi-line input field for detailed text responses.",
   },
   {
     type: "checkbox",
-    name: "Checkbox",
+    name: "Checkboxes",
     icon: <CheckSquareIcon className="w-4 h-4" />,
     enabled: true,
-    description: "Allows selection of one option from a list of choices.",
+    description: "Allows the selection of multiple options from a list.",
   },
   {
     type: "radio_button",
-    name: "Radio button",
+    name: "Multiple Choice",
     icon: <CheckCircleIcon className="w-4 h-4" />,
     enabled: true,
-    description: "Enables selection of multiple options from a list.",
+    description: "Allows the selection of a single option from a list.",
   },
   {
     type: "dropdown",
-    name: "Dropdown",
+    name: "Dropdown Menu",
     icon: <ChevronDownIcon className="w-4 h-4" />,
     enabled: true,
-    description: "A dropdown menu for selecting one option from many.",
+    description: "A collapsible menu for selecting a single option.",
   },
   {
     type: "number",
-    name: "Number",
+    name: "Number Input",
     icon: <HashIcon className="w-4 h-4" />,
     enabled: true,
-    description: "An input field specifically for numerical entries.",
+    description: "An input field specifically for numeric values.",
   },
   {
     type: "email",
-    name: "Email",
+    name: "Email Address",
     icon: <MailIcon className="w-4 h-4" />,
     enabled: true,
-    description: "Input field designed for capturing email addresses.",
+    description: "An input field for capturing valid email addresses.",
   },
   {
     type: "rating",
-    name: "Rating",
+    name: "Star Rating",
     icon: <StarIcon className="w-4 h-4" />,
     enabled: true,
-    description: "A rating scale, typically using stars or numbers.",
+    description: "A scale for rating, typically displayed as stars or numbers.",
   },
   {
     type: "scale",
-    name: "Scale",
+    name: "Custom Scale",
     icon: <ScaleIcon className="w-4 h-4" />,
     enabled: true,
-    description: "A custom scale allowing responses across a set range.",
+    description: "A range-based scale for responses, such as 1–10.",
   },
 ];
 
@@ -109,7 +123,14 @@ const AddBlock = ({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent>
+        <DialogContent className="flex flex-col">
+          <DialogHeader>
+            <DialogTitle>Blocks</DialogTitle>
+            <DialogDescription>
+              Select and add new blocks to your form. Customize each block to
+              suit your needs and enhance the user experience.
+            </DialogDescription>
+          </DialogHeader>
           <Body setState={setOpen} formId={formId} />
         </DialogContent>
       </Dialog>
@@ -120,6 +141,13 @@ const AddBlock = ({
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3">
+        <DrawerHeader>
+          <DrawerTitle>Blocks</DrawerTitle>
+          <DrawerDescription>
+            Select and add new blocks to your form. Customize each block to suit
+            your needs and enhance the user experience.
+          </DrawerDescription>
+        </DrawerHeader>
         <Body setState={setOpen} formId={formId} />
       </DrawerContent>
     </Drawer>
@@ -175,7 +203,6 @@ const Body = ({
 
   return (
     <div className="flex flex-col gap-6 h-full">
-      <h1 className="text-xl font-semibold">Blocks</h1>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

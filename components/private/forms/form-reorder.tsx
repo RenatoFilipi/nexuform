@@ -1,5 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { minWidth640 } from "@/helpers/constants";
 import { BlockModel } from "@/helpers/models";
 import { block, setState } from "@/helpers/types";
@@ -12,12 +19,14 @@ import {
   EqualIcon,
   HashIcon,
   MailIcon,
+  PlusIcon,
   ScaleIcon,
   StarIcon,
   TextIcon,
 } from "lucide-react";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import AddBlock from "../blocks/add-block";
 
 const icons: { [key in block]: JSX.Element } = {
   short_answer: <EqualIcon className="w-5 h-5 text-background" />,
@@ -39,7 +48,14 @@ const FormReorder = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="min-w-[550px]">
+        <DialogContent className="flex flex-col">
+          <DialogHeader>
+            <DialogTitle>Reorder Blocks</DialogTitle>
+            <DialogDescription>
+              Rearrange the blocks in your form to adjust the flow and
+              structure. Drag and drop to reorder them as needed.
+            </DialogDescription>
+          </DialogHeader>
           <Body setState={setOpen} />
         </DialogContent>
       </Dialog>
@@ -49,7 +65,14 @@ const FormReorder = ({ children }: { children: React.ReactNode }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="p-3">
+      <DialogContent className="p-3 flex flex-col pt-10">
+        <DialogHeader>
+          <DialogTitle>Reorder Blocks</DialogTitle>
+          <DialogDescription>
+            Rearrange the blocks in your form to adjust the flow and structure.
+            Drag and drop to reorder them as needed.
+          </DialogDescription>
+        </DialogHeader>
         <Body setState={setOpen} />
       </DialogContent>
     </Dialog>
@@ -57,7 +80,7 @@ const FormReorder = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Body = ({ setState }: { setState: setState<boolean> }) => {
-  const { blocks, setBlocks } = useEditorStore();
+  const { blocks, setBlocks, id } = useEditorStore();
 
   const onReorderedBlocks = (payload: BlockModel[]) => {
     const newPositionBlocks = payload.map((pay, index) => {
@@ -67,13 +90,18 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
   };
 
   return (
-    <div className="flex flex-col gap-6 h-full overflow-y-auto pt-4 sm:pt-0">
-      <h1 className="text-xl font-semibold">Reorder blocks</h1>
+    <div className="flex flex-col gap-6 overflow-y-auto pt-4 sm:pt-0">
       {blocks.length <= 0 && (
-        <div className="flex justify-center items-center py-4">
+        <div className="flex justify-center items-center py-14 border border-dashed gap-4 flex-col">
           <span className="text-sm text-foreground/80">
             No blocks to reorder.
           </span>
+          <AddBlock formId={id}>
+            <Button variant={"default"} size={"sm"}>
+              <PlusIcon className="w-4 h-4 mr-2" />
+              Add New Block
+            </Button>
+          </AddBlock>
         </div>
       )}
       {blocks.length >= 1 && (
@@ -81,7 +109,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
           axis="y"
           onReorder={(e) => onReorderedBlocks(e)}
           values={blocks}
-          className="flex flex-col gap-2">
+          className="flex flex-col gap-2 overflow-y-auto max-h-[300px]">
           {blocks.map((block) => {
             return <Item key={block.id} block={block} />;
           })}
