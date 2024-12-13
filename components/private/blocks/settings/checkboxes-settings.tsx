@@ -12,9 +12,9 @@ import useEditorStore from "@/stores/editor";
 import { useQuery } from "@tanstack/react-query";
 import { Tag, TagInput } from "emblor";
 import { XIcon } from "lucide-react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
-const DropdownBlock = ({
+const CheckboxesSettings = ({
   block,
   setState,
 }: {
@@ -40,11 +40,22 @@ const DropdownBlock = ({
     setLocalTags(updatedTags);
   };
 
+  const handleSetTags: Dispatch<SetStateAction<Tag[]>> = (newTagsOrFn) => {
+    setLocalTags((prevTags) => {
+      const newTags =
+        typeof newTagsOrFn === "function" ? newTagsOrFn(prevTags) : newTagsOrFn;
+      return newTags.map((tag) => ({
+        id: tag.text,
+        text: tag.text,
+      }));
+    });
+  };
+
   return (
     <div className="h-full flex flex-col gap-8 overflow-y-auto">
       <div className="flex justify-center sm:justify-start items-center gap-3">
         <Badge variant={"indigo"} uppercase>
-          Dropdown
+          Checkboxes
         </Badge>
       </div>
       <div className="h-full flex flex-col gap-4 overflow-y-auto">
@@ -69,14 +80,12 @@ const DropdownBlock = ({
             }}
           />
         </div>
-        <div className="grid gap-3">
+        <div className="grid gap-3 overflow-y-auto">
           <Label htmlFor="options">Options</Label>
           <div>
             <TagInput
               tags={localTags}
-              setTags={(newTags) => {
-                setLocalTags(newTags);
-              }}
+              setTags={handleSetTags}
               placeholder="Add an option"
               styleClasses={{
                 input: "w-full",
@@ -132,4 +141,4 @@ const DropdownBlock = ({
   );
 };
 
-export default DropdownBlock;
+export default CheckboxesSettings;

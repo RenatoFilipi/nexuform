@@ -10,7 +10,7 @@ import { BlockModel } from "@/helpers/models";
 import { setState } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
 
-const LongAnswerBlock = ({
+const CustomScaleSettings = ({
   block,
   setState,
 }: {
@@ -24,7 +24,7 @@ const LongAnswerBlock = ({
     <div className="h-full flex flex-col gap-8 overflow-y-auto">
       <div className="flex justify-center sm:justify-start items-center gap-3">
         <Badge variant={"indigo"} uppercase>
-          Long answer
+          Scale
         </Badge>
       </div>
       <div className="h-full flex flex-col gap-4 overflow-y-auto">
@@ -50,26 +50,16 @@ const LongAnswerBlock = ({
           />
         </div>
         <div className="grid gap-3">
-          <Label htmlFor="max-character-limit">Max character limit</Label>
+          <Label htmlFor="max-scaling">Max scale</Label>
           <Input
             type="number"
-            id="max-character-limit"
-            value={block.max_char ?? 100}
-            onChange={(e) =>
+            id="max-scale"
+            value={block.max_scale ?? 5}
+            onChange={(e) => {
               updateBlock(id, {
                 ...block,
-                max_char: Number(e.target.value),
-              })
-            }
-          />
-        </div>
-        <div className="flex justify-between items-center">
-          <Label htmlFor="show-character-limit">Show character limit</Label>
-          <Switch
-            id="show-character-limit"
-            checked={block.show_char ?? false}
-            onCheckedChange={(checked: boolean) => {
-              updateBlock(id, { ...block, show_char: checked });
+                max_scale: Number(e.target.value),
+              });
             }}
           />
         </div>
@@ -107,4 +97,4 @@ const LongAnswerBlock = ({
   );
 };
 
-export default LongAnswerBlock;
+export default CustomScaleSettings;

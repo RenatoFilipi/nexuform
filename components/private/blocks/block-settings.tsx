@@ -19,15 +19,15 @@ import { BlockModel } from "@/helpers/models";
 import { setState } from "@/helpers/types";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import CheckBoxBlock from "./check-box-block";
-import DropdownBlock from "./dropdown-block";
-import EmailBlock from "./email-block";
-import LongAnswerBlock from "./long-answer-block";
-import NumberBlock from "./number-block";
-import RadioButtonBlock from "./radio-button-block";
-import RatingBlock from "./rating-block";
-import ScaleBlock from "./scale-block";
-import ShortAnswerBlock from "./short-answer-block";
+import CheckboxesSettings from "./settings/checkboxes-settings";
+import CustomScaleSettings from "./settings/custom-scale-settings";
+import DropdownMenuSettings from "./settings/dropdown-menu-settings";
+import EmailAddressSettings from "./settings/email-address-settings";
+import MultipleChoiceSettings from "./settings/multiple-choice-settings";
+import NumberInputSettings from "./settings/number-input-settings";
+import ParagraphTextSettings from "./settings/paragraph-text-settings";
+import ShortTextSettings from "./settings/short-text-settings";
+import StarRatingSettings from "./settings/star-rating-settings";
 
 const BlockSettings = ({
   children,
@@ -83,31 +83,31 @@ const Body = ({
 }) => {
   switch (block.type) {
     case "short_answer": {
-      return <ShortAnswerBlock block={block} setState={setState} />;
+      return <ShortTextSettings block={block} setState={setState} />;
     }
     case "long_answer": {
-      return <LongAnswerBlock block={block} setState={setState} />;
+      return <ParagraphTextSettings block={block} setState={setState} />;
     }
     case "radio_button": {
-      return <RadioButtonBlock block={block} setState={setState} />;
+      return <MultipleChoiceSettings block={block} setState={setState} />;
     }
     case "checkbox": {
-      return <CheckBoxBlock block={block} setState={setState} />;
+      return <CheckboxesSettings block={block} setState={setState} />;
     }
     case "dropdown": {
-      return <DropdownBlock block={block} setState={setState} />;
+      return <DropdownMenuSettings block={block} setState={setState} />;
     }
     case "number": {
-      return <NumberBlock block={block} setState={setState} />;
+      return <NumberInputSettings block={block} setState={setState} />;
     }
     case "email": {
-      return <EmailBlock block={block} setState={setState} />;
+      return <EmailAddressSettings block={block} setState={setState} />;
     }
     case "rating": {
-      return <RatingBlock block={block} setState={setState} />;
+      return <StarRatingSettings block={block} setState={setState} />;
     }
     case "scale": {
-      return <ScaleBlock block={block} setState={setState} />;
+      return <CustomScaleSettings block={block} setState={setState} />;
     }
     default:
       return null;

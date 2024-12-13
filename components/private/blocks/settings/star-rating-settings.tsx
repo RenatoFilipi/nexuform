@@ -10,7 +10,7 @@ import { BlockModel } from "@/helpers/models";
 import { setState } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
 
-const ShortAnswerBlock = ({
+const StarRatingSettings = ({
   block,
   setState,
 }: {
@@ -24,10 +24,10 @@ const ShortAnswerBlock = ({
     <div className="h-full flex flex-col gap-8 overflow-y-auto">
       <div className="flex justify-center sm:justify-start items-center gap-3">
         <Badge variant={"indigo"} uppercase>
-          Short answer
+          Rating
         </Badge>
       </div>
-      <div className="h-full flex flex-col gap-4 overflow-y-auto flex-1">
+      <div className="h-full flex flex-col gap-4 overflow-y-auto">
         <div className="grid gap-3">
           <Label htmlFor="name">Name</Label>
           <Input
@@ -50,26 +50,16 @@ const ShortAnswerBlock = ({
           />
         </div>
         <div className="grid gap-3">
-          <Label htmlFor="max-character-limit">Max character limit</Label>
+          <Label htmlFor="max-rating">Max rating</Label>
           <Input
             type="number"
-            id="max-character-limit"
-            value={block.max_char ?? 100}
-            onChange={(e) =>
+            id="max-rating"
+            value={block.rating ?? 5}
+            onChange={(e) => {
               updateBlock(id, {
                 ...block,
-                max_char: Number(e.target.value),
-              })
-            }
-          />
-        </div>
-        <div className="flex justify-between items-center">
-          <Label htmlFor="show-character-limit">Show character limit</Label>
-          <Switch
-            id="show-character-limit"
-            checked={block.show_char ?? false}
-            onCheckedChange={(checked: boolean) => {
-              updateBlock(id, { ...block, show_char: checked });
+                rating: Number(e.target.value),
+              });
             }}
           />
         </div>
@@ -107,4 +97,4 @@ const ShortAnswerBlock = ({
   );
 };
 
-export default ShortAnswerBlock;
+export default StarRatingSettings;

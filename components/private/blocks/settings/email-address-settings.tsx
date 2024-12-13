@@ -10,7 +10,7 @@ import { BlockModel } from "@/helpers/models";
 import { setState } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
 
-const RatingBlock = ({
+const EmailAddressSettings = ({
   block,
   setState,
 }: {
@@ -24,7 +24,7 @@ const RatingBlock = ({
     <div className="h-full flex flex-col gap-8 overflow-y-auto">
       <div className="flex justify-center sm:justify-start items-center gap-3">
         <Badge variant={"indigo"} uppercase>
-          Rating
+          Email
         </Badge>
       </div>
       <div className="h-full flex flex-col gap-4 overflow-y-auto">
@@ -46,20 +46,6 @@ const RatingBlock = ({
             value={block.description ?? ""}
             onChange={(e) => {
               updateBlock(id, { ...block, description: e.target.value });
-            }}
-          />
-        </div>
-        <div className="grid gap-3">
-          <Label htmlFor="max-rating">Max rating</Label>
-          <Input
-            type="number"
-            id="max-rating"
-            value={block.rating ?? 5}
-            onChange={(e) => {
-              updateBlock(id, {
-                ...block,
-                rating: Number(e.target.value),
-              });
             }}
           />
         </div>
@@ -97,4 +83,4 @@ const RatingBlock = ({
   );
 };
 
-export default RatingBlock;
+export default EmailAddressSettings;

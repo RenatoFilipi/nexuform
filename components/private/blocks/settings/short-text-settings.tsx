@@ -9,12 +9,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { BlockModel } from "@/helpers/models";
 import { setState } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
-import { useQuery } from "@tanstack/react-query";
-import { Tag, TagInput } from "emblor";
-import { XIcon } from "lucide-react";
-import { useState } from "react";
 
-const RadioButtonBlock = ({
+const ShortTextSettings = ({
   block,
   setState,
 }: {
@@ -23,31 +19,15 @@ const RadioButtonBlock = ({
 }) => {
   const { id } = block;
   const { updateBlock, removeBlock } = useEditorStore();
-  const [localTags, setLocalTags] = useState<Tag[]>(block.options ?? []);
-  const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null);
-
-  useQuery({
-    queryKey: [localTags],
-    queryFn: () => {
-      updateBlock(id, { ...block, options: localTags });
-      return null;
-    },
-  });
-
-  const removeTag = (id: string) => {
-    console.log(id);
-    const updatedTags = localTags.filter((tag) => tag.id !== id);
-    setLocalTags(updatedTags);
-  };
 
   return (
     <div className="h-full flex flex-col gap-8 overflow-y-auto">
       <div className="flex justify-center sm:justify-start items-center gap-3">
         <Badge variant={"indigo"} uppercase>
-          Radio button
+          Short Text
         </Badge>
       </div>
-      <div className="h-full flex flex-col gap-4 overflow-y-auto">
+      <div className="h-full flex flex-col gap-4 overflow-y-auto flex-1">
         <div className="grid gap-3">
           <Label htmlFor="name">Name</Label>
           <Input
@@ -70,33 +50,28 @@ const RadioButtonBlock = ({
           />
         </div>
         <div className="grid gap-3">
-          <Label htmlFor="options">Options</Label>
-          <div>
-            <TagInput
-              tags={localTags}
-              setTags={(newTags) => {
-                setLocalTags(newTags);
-              }}
-              placeholder="Add an option"
-              styleClasses={{
-                input: "w-full",
-              }}
-              activeTagIndex={activeTagIndex}
-              setActiveTagIndex={setActiveTagIndex}
-              inlineTags={false}
-              direction="column"
-              customTagRenderer={(tag) => (
-                <div
-                  key={tag.id}
-                  className="rounded p-1 px-2 flex justify-between items-center border bg-foreground/5">
-                  <span className="text-xs">{tag.text}</span>
-                  <button onClick={() => removeTag(tag.id)}>
-                    <XIcon className="w-3 h-3" />
-                  </button>
-                </div>
-              )}
-            />
-          </div>
+          <Label htmlFor="max-character-limit">Max character limit</Label>
+          <Input
+            type="number"
+            id="max-character-limit"
+            value={block.max_char ?? 100}
+            onChange={(e) =>
+              updateBlock(id, {
+                ...block,
+                max_char: Number(e.target.value),
+              })
+            }
+          />
+        </div>
+        <div className="flex justify-between items-center">
+          <Label htmlFor="show-character-limit">Show character limit</Label>
+          <Switch
+            id="show-character-limit"
+            checked={block.show_char ?? false}
+            onCheckedChange={(checked: boolean) => {
+              updateBlock(id, { ...block, show_char: checked });
+            }}
+          />
         </div>
         <div className="flex justify-between items-center">
           <Label htmlFor="required">Required</Label>
@@ -132,4 +107,4 @@ const RadioButtonBlock = ({
   );
 };
 
-export default RadioButtonBlock;
+export default ShortTextSettings;

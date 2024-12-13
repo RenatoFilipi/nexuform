@@ -13,9 +13,9 @@ export const nanoid = (length: number = 12) => {
 export const blockName = (type: block) => {
   switch (type) {
     case "short_answer":
-      return "Short Answer";
+      return "Short Text";
     case "long_answer":
-      return "Long Answer";
+      return "Paragraph Text";
     case "radio_button":
       return "Radio Button";
     case "checkbox":

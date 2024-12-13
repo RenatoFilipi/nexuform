@@ -9,8 +9,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { BlockModel } from "@/helpers/models";
 import { setState } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
+import { useQuery } from "@tanstack/react-query";
+import { Tag, TagInput } from "emblor";
+import { XIcon } from "lucide-react";
+import { useState } from "react";
 
-const ScaleBlock = ({
+const MultipleChoiceSettings = ({
   block,
   setState,
 }: {
@@ -19,12 +23,28 @@ const ScaleBlock = ({
 }) => {
   const { id } = block;
   const { updateBlock, removeBlock } = useEditorStore();
+  const [localTags, setLocalTags] = useState<Tag[]>(block.options ?? []);
+  const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null);
+
+  useQuery({
+    queryKey: [localTags],
+    queryFn: () => {
+      updateBlock(id, { ...block, options: localTags });
+      return null;
+    },
+  });
+
+  const removeTag = (id: string) => {
+    console.log(id);
+    const updatedTags = localTags.filter((tag) => tag.id !== id);
+    setLocalTags(updatedTags);
+  };
 
   return (
     <div className="h-full flex flex-col gap-8 overflow-y-auto">
       <div className="flex justify-center sm:justify-start items-center gap-3">
         <Badge variant={"indigo"} uppercase>
-          Scale
+          Multiple Choice
         </Badge>
       </div>
       <div className="h-full flex flex-col gap-4 overflow-y-auto">
@@ -50,18 +70,33 @@ const ScaleBlock = ({
           />
         </div>
         <div className="grid gap-3">
-          <Label htmlFor="max-scaling">Max scale</Label>
-          <Input
-            type="number"
-            id="max-scale"
-            value={block.max_scale ?? 5}
-            onChange={(e) => {
-              updateBlock(id, {
-                ...block,
-                max_scale: Number(e.target.value),
-              });
-            }}
-          />
+          <Label htmlFor="options">Options</Label>
+          <div>
+            <TagInput
+              tags={localTags}
+              setTags={(newTags) => {
+                setLocalTags(newTags);
+              }}
+              placeholder="Add an option"
+              styleClasses={{
+                input: "w-full",
+              }}
+              activeTagIndex={activeTagIndex}
+              setActiveTagIndex={setActiveTagIndex}
+              inlineTags={false}
+              direction="column"
+              customTagRenderer={(tag) => (
+                <div
+                  key={tag.id}
+                  className="rounded p-1 px-2 flex justify-between items-center border bg-foreground/5">
+                  <span className="text-xs">{tag.text}</span>
+                  <button onClick={() => removeTag(tag.id)}>
+                    <XIcon className="w-3 h-3" />
+                  </button>
+                </div>
+              )}
+            />
+          </div>
         </div>
         <div className="flex justify-between items-center">
           <Label htmlFor="required">Required</Label>
@@ -97,4 +132,4 @@ const ScaleBlock = ({
   );
 };
 
-export default ScaleBlock;
+export default MultipleChoiceSettings;

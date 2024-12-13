@@ -10,7 +10,7 @@ import { BlockModel } from "@/helpers/models";
 import { setState } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
 
-const EmailBlock = ({
+const NumberInputSettings = ({
   block,
   setState,
 }: {
@@ -24,7 +24,7 @@ const EmailBlock = ({
     <div className="h-full flex flex-col gap-8 overflow-y-auto">
       <div className="flex justify-center sm:justify-start items-center gap-3">
         <Badge variant={"indigo"} uppercase>
-          Email
+          Number
         </Badge>
       </div>
       <div className="h-full flex flex-col gap-4 overflow-y-auto">
@@ -48,6 +48,36 @@ const EmailBlock = ({
               updateBlock(id, { ...block, description: e.target.value });
             }}
           />
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="grid gap-3">
+            <Label htmlFor="min-character-limit">Min</Label>
+            <Input
+              type="number"
+              id="min-character-limit"
+              value={block.min_char ?? 1}
+              onChange={(e) => {
+                updateBlock(id, {
+                  ...block,
+                  min_char: Number(e.target.value),
+                });
+              }}
+            />
+          </div>
+          <div className="grid gap-3">
+            <Label htmlFor="max-character-limit">Max</Label>
+            <Input
+              type="number"
+              id="max-character-limit"
+              value={block.max_char ?? 1}
+              onChange={(e) => {
+                updateBlock(id, {
+                  ...block,
+                  max_char: Number(e.target.value),
+                });
+              }}
+            />
+          </div>
         </div>
         <div className="flex justify-between items-center">
           <Label htmlFor="required">Required</Label>
@@ -83,4 +113,4 @@ const EmailBlock = ({
   );
 };
 
-export default EmailBlock;
+export default NumberInputSettings;
