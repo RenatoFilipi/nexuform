@@ -24,8 +24,10 @@ const Signup = () => {
   const [appStage, setAppStage] = useState<appStage>("stage01");
 
   const formSchema = z.object({
-    email: z.string(),
-    password: z.string(),
+    email: z.string().email(),
+    password: z
+      .string()
+      .min(8, { message: "Password needs to be atleast 8 characters long" }),
   });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -115,13 +117,13 @@ const Signup = () => {
                   <p className="text-xs text-foreground/80">
                     By signing up for an account, you agree to all{" "}
                     <Link
-                      href={"/"}
+                      href={"/legal/terms"}
                       className="text-info hover:underline dark:text-blue-500">
                       terms of service
                     </Link>{" "}
                     and{" "}
                     <Link
-                      href={"/"}
+                      href={"/legal/privacy"}
                       className="text-info hover:underline dark:text-blue-500">
                       privacy policy.
                     </Link>
@@ -140,7 +142,7 @@ const Signup = () => {
         </div>
       </div>
       <div className="flex-1 sm:flex hidden justify-center items-center w-full relative bg-primary">
-        <Brand type="logo_text" className="h-14 fill-black" />
+        <Brand type="logo_text" className="h-16 fill-white" />
       </div>
     </div>
   );
