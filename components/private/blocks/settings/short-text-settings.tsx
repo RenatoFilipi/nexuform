@@ -52,7 +52,7 @@ const ShortTextSettings = ({
         <div className="grid gap-3">
           <Label htmlFor="max-character-limit">Max character limit</Label>
           <Input
-            type="number"
+            type="number_input"
             id="max-character-limit"
             value={block.max_char ?? 100}
             onChange={(e) =>

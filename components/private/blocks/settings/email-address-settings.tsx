@@ -24,7 +24,7 @@ const EmailAddressSettings = ({
     <div className="h-full flex flex-col gap-8 overflow-y-auto">
       <div className="flex justify-center sm:justify-start items-center gap-3">
         <Badge variant={"indigo"} uppercase>
-          Email
+          Email Address
         </Badge>
       </div>
       <div className="h-full flex flex-col gap-4 overflow-y-auto">

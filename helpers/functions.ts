@@ -12,24 +12,24 @@ export const nanoid = (length: number = 12) => {
 };
 export const blockName = (type: block) => {
   switch (type) {
-    case "short_answer":
+    case "short_text":
       return "Short Text";
-    case "long_answer":
+    case "paragraph_text":
       return "Paragraph Text";
-    case "radio_button":
-      return "Radio Button";
-    case "checkbox":
-      return "checkbox";
-    case "dropdown":
-      return "Dropdown";
-    case "number":
+    case "multiple_choice":
+      return "Multiple Choice";
+    case "checkboxes":
+      return "Checkboxes";
+    case "dropdown_menu":
+      return "Dropdown Menu";
+    case "number_input":
       return "Number";
-    case "email":
-      return "Email";
-    case "rating":
-      return "Rating";
-    case "scale":
-      return "Scale";
+    case "email_address":
+      return "Email Address";
+    case "star_rating":
+      return "star_rating";
+    case "custom_scale":
+      return "custom_scale";
   }
 };
 export const formatDateRelativeToNow = (isoDate: string) => {

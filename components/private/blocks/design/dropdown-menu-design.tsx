@@ -34,7 +34,7 @@ const design: ColorProps[] = [
   { label: "Rose", tw_class: "focus-visible:ring-rose-500" },
 ];
 
-const DropdownDesign = ({
+const DropdownMenuDesign = ({
   block,
   theme,
   numericBlocks,
@@ -87,4 +87,4 @@ const DropdownDesign = ({
   );
 };
 
-export default DropdownDesign;
+export default DropdownMenuDesign;

@@ -118,7 +118,7 @@ const design: ColorProps[] = [
   },
 ];
 
-const CheckBoxDesign = ({
+const CheckBoxesDesign = ({
   block,
   theme,
   numericBlocks,
@@ -189,4 +189,4 @@ const CheckBoxDesign = ({
   );
 };
 
-export default CheckBoxDesign;
+export default CheckBoxesDesign;

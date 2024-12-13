@@ -29,15 +29,15 @@ import { useMediaQuery } from "react-responsive";
 import AddBlock from "../blocks/add-block";
 
 const icons: { [key in block]: JSX.Element } = {
-  short_answer: <EqualIcon className="w-5 h-5 text-background" />,
-  long_answer: <TextIcon className="w-5 h-5 text-background" />,
-  checkbox: <CheckSquareIcon className="w-5 h-5 text-background" />,
-  radio_button: <CheckCircleIcon className="w-5 h-5 text-background" />,
-  dropdown: <ChevronDownIcon className="w-5 h-5 text-background" />,
-  number: <HashIcon className="w-5 h-5 text-background" />,
-  email: <MailIcon className="w-5 h-5 text-background" />,
-  rating: <StarIcon className="w-5 h-5 text-background" />,
-  scale: <ScaleIcon className="w-5 h-5 text-background" />,
+  short_text: <EqualIcon className="w-5 h-5 text-background" />,
+  paragraph_text: <TextIcon className="w-5 h-5 text-background" />,
+  checkboxes: <CheckSquareIcon className="w-5 h-5 text-background" />,
+  multiple_choice: <CheckCircleIcon className="w-5 h-5 text-background" />,
+  dropdown_menu: <ChevronDownIcon className="w-5 h-5 text-background" />,
+  number_input: <HashIcon className="w-5 h-5 text-background" />,
+  email_address: <MailIcon className="w-5 h-5 text-background" />,
+  star_rating: <StarIcon className="w-5 h-5 text-background" />,
+  custom_scale: <ScaleIcon className="w-5 h-5 text-background" />,
 };
 
 const FormReorder = ({ children }: { children: React.ReactNode }) => {

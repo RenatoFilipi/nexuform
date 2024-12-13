@@ -24,7 +24,7 @@ const NumberInputSettings = ({
     <div className="h-full flex flex-col gap-8 overflow-y-auto">
       <div className="flex justify-center sm:justify-start items-center gap-3">
         <Badge variant={"indigo"} uppercase>
-          Number
+          Number Input
         </Badge>
       </div>
       <div className="h-full flex flex-col gap-4 overflow-y-auto">
@@ -53,7 +53,7 @@ const NumberInputSettings = ({
           <div className="grid gap-3">
             <Label htmlFor="min-character-limit">Min</Label>
             <Input
-              type="number"
+              type="number_input"
               id="min-character-limit"
               value={block.min_char ?? 1}
               onChange={(e) => {
@@ -67,7 +67,7 @@ const NumberInputSettings = ({
           <div className="grid gap-3">
             <Label htmlFor="max-character-limit">Max</Label>
             <Input
-              type="number"
+              type="number_input"
               id="max-character-limit"
               value={block.max_char ?? 1}
               onChange={(e) => {

@@ -82,31 +82,31 @@ const Body = ({
   setState: setState<boolean>;
 }) => {
   switch (block.type) {
-    case "short_answer": {
+    case "short_text": {
       return <ShortTextSettings block={block} setState={setState} />;
     }
-    case "long_answer": {
+    case "paragraph_text": {
       return <ParagraphTextSettings block={block} setState={setState} />;
     }
-    case "radio_button": {
+    case "multiple_choice": {
       return <MultipleChoiceSettings block={block} setState={setState} />;
     }
-    case "checkbox": {
+    case "checkboxes": {
       return <CheckboxesSettings block={block} setState={setState} />;
     }
-    case "dropdown": {
+    case "dropdown_menu": {
       return <DropdownMenuSettings block={block} setState={setState} />;
     }
-    case "number": {
+    case "number_input": {
       return <NumberInputSettings block={block} setState={setState} />;
     }
-    case "email": {
+    case "email_address": {
       return <EmailAddressSettings block={block} setState={setState} />;
     }
-    case "rating": {
+    case "star_rating": {
       return <StarRatingSettings block={block} setState={setState} />;
     }
-    case "scale": {
+    case "custom_scale": {
       return <CustomScaleSettings block={block} setState={setState} />;
     }
     default:

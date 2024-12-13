@@ -1,13 +1,13 @@
 export type block =
-  | "short_answer"
-  | "long_answer"
-  | "radio_button"
-  | "checkbox"
-  | "dropdown"
-  | "number"
-  | "email"
-  | "rating"
-  | "scale";
+  | "short_text"
+  | "paragraph_text"
+  | "multiple_choice"
+  | "checkboxes"
+  | "dropdown_menu"
+  | "number_input"
+  | "email_address"
+  | "star_rating"
+  | "custom_scale";
 export type setState<T> = React.Dispatch<React.SetStateAction<T>>;
 export type appStage =
   | "stage01"

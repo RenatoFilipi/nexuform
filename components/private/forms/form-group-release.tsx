@@ -3,15 +3,15 @@ import { ColorProps } from "@/helpers/interfaces";
 import { AnswerModel } from "@/helpers/models";
 import useSubmissionStore from "@/stores/submission";
 import { twMerge } from "tailwind-merge";
-import CheckBoxDesign from "../blocks/design/check-box-design";
-import DropdownDesign from "../blocks/design/dropdown-design";
-import EmailDesign from "../blocks/design/email-design";
-import LongAnswerDesign from "../blocks/design/long-answer-design";
-import NumberDesign from "../blocks/design/number-design";
-import RadioButtonDesign from "../blocks/design/radio-button-design";
-import RatingDesign from "../blocks/design/rating-design";
-import ScaleDesign from "../blocks/design/scale-design";
-import ShortAnswerDesign from "../blocks/design/short-answer-design";
+import CheckBoxesDesign from "../blocks/design/checkboxes-design";
+import CustomScaleDesign from "../blocks/design/custom-scale-design";
+import DropdownMenuDesign from "../blocks/design/dropdown-menu-design";
+import EmailAddressDesign from "../blocks/design/email-address-design";
+import MultipleChoiceDesign from "../blocks/design/multiple-choice-design";
+import NumberInputDesign from "../blocks/design/number-input-design";
+import ParagraphTextDesign from "../blocks/design/paragraph-text-design";
+import ShortTextDesign from "../blocks/design/short-text-design";
+import StarRatingDesign from "../blocks/design/star-rating-design";
 
 const design: ColorProps[] = [
   {
@@ -145,9 +145,9 @@ const FormGroupRelease = () => {
       <div className="flex flex-col justify-center items-center gap-8 w-full">
         {blocks.map((block) => {
           switch (block.type) {
-            case "short_answer":
+            case "short_text":
               return (
-                <ShortAnswerDesign
+                <ShortTextDesign
                   key={block.id}
                   block={block}
                   theme={theme}
@@ -155,9 +155,9 @@ const FormGroupRelease = () => {
                   onValueChange={onValueChange}
                 />
               );
-            case "long_answer":
+            case "paragraph_text":
               return (
-                <LongAnswerDesign
+                <ParagraphTextDesign
                   key={block.id}
                   block={block}
                   theme={theme}
@@ -165,9 +165,9 @@ const FormGroupRelease = () => {
                   onValueChange={onValueChange}
                 />
               );
-            case "radio_button":
+            case "multiple_choice":
               return (
-                <RadioButtonDesign
+                <MultipleChoiceDesign
                   key={block.id}
                   block={block}
                   theme={theme}
@@ -175,9 +175,9 @@ const FormGroupRelease = () => {
                   onValueChange={onValueChange}
                 />
               );
-            case "checkbox":
+            case "checkboxes":
               return (
-                <CheckBoxDesign
+                <CheckBoxesDesign
                   key={block.id}
                   block={block}
                   theme={theme}
@@ -185,9 +185,9 @@ const FormGroupRelease = () => {
                   onValueChange={onValueChange}
                 />
               );
-            case "dropdown":
+            case "dropdown_menu":
               return (
-                <DropdownDesign
+                <DropdownMenuDesign
                   key={block.id}
                   block={block}
                   theme={theme}
@@ -195,9 +195,9 @@ const FormGroupRelease = () => {
                   onValueChange={onValueChange}
                 />
               );
-            case "number":
+            case "number_input":
               return (
-                <NumberDesign
+                <NumberInputDesign
                   key={block.id}
                   block={block}
                   theme={theme}
@@ -205,9 +205,9 @@ const FormGroupRelease = () => {
                   onValueChange={onValueChange}
                 />
               );
-            case "email":
+            case "email_address":
               return (
-                <EmailDesign
+                <EmailAddressDesign
                   key={block.id}
                   block={block}
                   theme={theme}
@@ -215,18 +215,18 @@ const FormGroupRelease = () => {
                   onValueChange={onValueChange}
                 />
               );
-            case "rating":
+            case "star_rating":
               return (
-                <RatingDesign
+                <StarRatingDesign
                   key={block.id}
                   block={block}
                   numericBlocks={numericBlocks}
                   onValueChange={onValueChange}
                 />
               );
-            case "scale":
+            case "custom_scale":
               return (
-                <ScaleDesign
+                <CustomScaleDesign
                   key={block.id}
                   block={block}
                   theme={theme}

@@ -1,7 +1,7 @@
 import Rating from "@/components/ui/rating";
 import { BlockModel } from "@/helpers/models";
 
-const RatingDesign = ({
+const StarRatingDesign = ({
   block,
   numericBlocks,
   onValueChange,
@@ -37,4 +37,4 @@ const RatingDesign = ({
   );
 };
 
-export default RatingDesign;
+export default StarRatingDesign;

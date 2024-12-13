@@ -1,4 +1,4 @@
-import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { ColorProps } from "@/helpers/interfaces";
 import { BlockModel } from "@/helpers/models";
 import { useState } from "react";
@@ -28,7 +28,7 @@ const design: ColorProps[] = [
   { label: "Rose", tw_class: "focus-visible:ring-rose-500" },
 ];
 
-const EmailDesign = ({
+const ParagraphTextDesign = ({
   block,
   theme,
   numericBlocks,
@@ -39,7 +39,16 @@ const EmailDesign = ({
   numericBlocks: boolean;
   onValueChange: (value: string, blockId: string) => void;
 }) => {
-  const { name, description, required, id, position } = block;
+  const {
+    name,
+    description,
+    max_char,
+    show_char,
+    required,
+    id,
+    position,
+    min_char,
+  } = block;
   const currentColor = design.find((x) => x.label === theme) ?? design[0];
   const [value, setValue] = useState("");
 
@@ -58,18 +67,26 @@ const EmailDesign = ({
         </div>
         <span className="text-xs text-foreground/80">{description}</span>
       </div>
-      <Input
-        value={value}
-        onChange={(e) => {
-          setValue(e.target.value);
-          onValueChange(e.target.value, block.id);
-        }}
-        id={id}
-        type="email"
-        className={`${currentColor.tw_class}`}
-      />
+      <div className="">
+        <Textarea
+          value={value}
+          onChange={(e) => {
+            setValue(e.target.value);
+            onValueChange(e.target.value, block.id);
+          }}
+          id={id}
+          className={`${currentColor.tw_class}`}
+          minLength={min_char ?? 1}
+          maxLength={max_char ?? 256}
+        />
+        {show_char && (
+          <div className="w-full flex justify-end mt-1">
+            <span className="text-xs">{max_char}</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
-export default EmailDesign;
+export default ParagraphTextDesign;

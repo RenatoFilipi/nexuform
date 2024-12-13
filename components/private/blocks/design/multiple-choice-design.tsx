@@ -98,7 +98,7 @@ const design: ColorProps[] = [
   },
 ];
 
-const RadioButtonDesign = ({
+const MultipleChoiceDesign = ({
   block,
   theme,
   numericBlocks,
@@ -150,4 +150,4 @@ const RadioButtonDesign = ({
   );
 };
 
-export default RadioButtonDesign;
+export default MultipleChoiceDesign;

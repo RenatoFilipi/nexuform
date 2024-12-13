@@ -117,7 +117,7 @@ const design: ColorProps[] = [
   },
 ];
 
-const ScaleDesign = ({
+const CustomScaleDesign = ({
   block,
   theme,
   numericBlocks,
@@ -177,4 +177,4 @@ const ScaleDesign = ({
   );
 };
 
-export default ScaleDesign;
+export default CustomScaleDesign;

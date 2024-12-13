@@ -28,7 +28,7 @@ const design: ColorProps[] = [
   { label: "Rose", tw_class: "focus-visible:ring-rose-500" },
 ];
 
-const NumberDesign = ({
+const NumberInputDesign = ({
   block,
   theme,
   numericBlocks,
@@ -68,7 +68,7 @@ const NumberDesign = ({
           }}
           id={id}
           className={`${currentColor.tw_class}`}
-          type="number"
+          type="number_input"
           min={min_char ?? 1}
           max={max_char ?? 256}
         />
@@ -77,4 +77,4 @@ const NumberDesign = ({
   );
 };
 
-export default NumberDesign;
+export default NumberInputDesign;

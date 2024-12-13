@@ -28,7 +28,7 @@ const design: ColorProps[] = [
   { label: "Rose", tw_class: "focus-visible:ring-rose-500" },
 ];
 
-const ShortAnswerDesign = ({
+const ShortTextDesign = ({
   block,
   theme,
   numericBlocks,
@@ -90,4 +90,4 @@ const ShortAnswerDesign = ({
   );
 };
 
-export default ShortAnswerDesign;
+export default ShortTextDesign;
