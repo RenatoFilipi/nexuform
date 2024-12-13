@@ -98,7 +98,7 @@ const blockList: addBlockProps[] = [
     name: "Star Rating",
     icon: <StarIcon className="w-4 h-4" />,
     enabled: true,
-    description: "A scale for rating, typically displayed as stars or numbers.",
+    description: "A scale for rating, typically displayed as stars.",
   },
   {
     type: "custom_scale",
@@ -214,7 +214,7 @@ const Body = ({
               <FormItem>
                 <FormControl>
                   <RadioGroup
-                    className="flex flex-col h-[300px] overflow-y-auto"
+                    className="flex flex-col h-[300px] overflow-y-auto sm:pr-2"
                     value={field.value}
                     onValueChange={field.onChange}>
                     {blockList.map((block, index) => {
@@ -229,8 +229,17 @@ const Body = ({
                             <Label
                               htmlFor={block.type}
                               className="text-sm cursor-pointer flex items-center justify-start gap-2 rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 [&:has([data-state=checked])]:border-primary">
-                              {block.icon}
-                              <span>{block.name}</span>
+                              <div className="p-2 flex justify-center items-center bg-primary/15 rounded">
+                                {block.icon}
+                              </div>
+                              <div className="flex flex-col gap-1">
+                                <span className="font-semibold">
+                                  {block.name}
+                                </span>
+                                <p className="text-xs text-foreground/60">
+                                  {block.description}
+                                </p>
+                              </div>
                             </Label>
                           </div>
                         );
