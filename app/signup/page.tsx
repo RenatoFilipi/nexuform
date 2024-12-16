@@ -180,7 +180,7 @@ const Signup = () => {
         )}
       </div>
       <div className="flex-1 sm:flex hidden justify-center items-center w-full relative bg-primary">
-        <Brand type="logo_text" className="h-16 fill-white" />
+        <Brand type="logo_text" className="h-16 fill-black" />
       </div>
     </div>
   );
