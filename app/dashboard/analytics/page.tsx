@@ -2,7 +2,6 @@
 
 import GenericLoader from "@/components/core/generic-loader";
 import AnalyticsCard from "@/components/private/analytics/analytics-card";
-import AnalyticsChart from "@/components/private/analytics/analytics-chart";
 import AnalyticsProgress from "@/components/private/analytics/analytics-progress";
 import { mockAnalytics, mockForms } from "@/helpers/mocks";
 import { FormProps } from "@/helpers/modules";
@@ -61,7 +60,7 @@ const Analytics = () => {
               </div>
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
-              <AnalyticsChart />
+              {/* <AnalyticsChart /> */}
               <AnalyticsProgress forms={forms} />
             </div>
           </div>
