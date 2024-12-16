@@ -2,6 +2,7 @@
 
 import GenericLoader from "@/components/core/generic-loader";
 import AnalyticsCard from "@/components/private/analytics/analytics-card";
+import AnalyticsChart from "@/components/private/analytics/analytics-chart";
 import AnalyticsProgress from "@/components/private/analytics/analytics-progress";
 import { mockAnalytics, mockForms } from "@/helpers/mocks";
 import { FormProps } from "@/helpers/modules";
@@ -40,7 +41,7 @@ const Analytics = () => {
         <div className="flex flex-col gap-4">
           <h1 className="text-xl font-semibold">Analytics</h1>
           <div className="flex flex-col gap-4">
-            <div className="grid sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               <AnalyticsCard
                 icon={<FileIcon />}
                 label="Total Forms"
@@ -51,13 +52,18 @@ const Analytics = () => {
                 label="Total Views"
                 value={totalViews.toString()}
               />
-              <AnalyticsCard
-                icon={<BookCheckIcon />}
-                label="Total Submissions"
-                value={totalSubmissions.toString()}
-              />
+              <div className="col-span-2 sm:col-span-1">
+                <AnalyticsCard
+                  icon={<BookCheckIcon />}
+                  label="Total Submissions"
+                  value={totalSubmissions.toString()}
+                />
+              </div>
             </div>
-            <AnalyticsProgress forms={forms} />
+            <div className="grid sm:grid-cols-2 gap-4">
+              <AnalyticsChart />
+              <AnalyticsProgress forms={forms} />
+            </div>
           </div>
         </div>
       )}
