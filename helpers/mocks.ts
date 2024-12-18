@@ -16,11 +16,11 @@ export const mockForms: FormModel[] = [
     description:
       "We value your feedback! Your insights help us improve our product and ensure it meets your needs.",
     numeric_blocks: true,
-    status: "draft",
+    status: "published",
     submit_label: "Finish form",
     submissions: 1,
     views: 1,
-    theme: "Emerald",
+    theme: "Orange",
   },
   {
     id: "4a2b1f43-9cfd-42bd-b482-3ad8f50a994a",
@@ -30,7 +30,7 @@ export const mockForms: FormModel[] = [
     name: "Debug Report",
     description: "A form used to report and debug application issues.",
     numeric_blocks: true,
-    status: "published",
+    status: "draft",
     submit_label: "Submit Report",
     submissions: 1,
     views: 1,
