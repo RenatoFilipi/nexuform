@@ -158,7 +158,7 @@ const Body = ({
               ) : (
                 <div className="flex justify-center items-center py-2 border border-dashed mt-2">
                   <span className="text-xs text-foreground/80">
-                    No answer to this question.
+                    this block has no answer.
                   </span>
                 </div>
               )}

@@ -3,13 +3,10 @@
 import ShineBorder from "@/components/magicui/shine-border";
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon } from "lucide-react";
-import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 
 const Hero = () => {
-  const { theme } = useTheme();
-
   return (
     <>
       <div className="flex justify-center items-center flex-col gap-6 w-full">
@@ -41,6 +38,7 @@ const Hero = () => {
             src={`/mail.webp`}
             width={1000}
             height={500}
+            priority
           />
         </ShineBorder>
       </div>

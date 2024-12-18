@@ -26,6 +26,41 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
+const tips = [
+  {
+    desc: "Add new blocks to enrich the form",
+    icon: (
+      <div className="flex justify-center items-center p-3 rounded bg-blue-500/15 text-blue-600">
+        <BlocksIcon />
+      </div>
+    ),
+  },
+  {
+    desc: "Customize the layout and appearance of your form",
+    icon: (
+      <div className="flex justify-center items-center p-3 rounded bg-green-500/15 text-green-600">
+        <PaintbrushIcon />
+      </div>
+    ),
+  },
+  {
+    desc: "Configure your form preferences and update settings as needed",
+    icon: (
+      <div className="flex justify-center items-center p-3 rounded bg-yellow-500/15 text-yellow-600">
+        <Settings2Icon />
+      </div>
+    ),
+  },
+  {
+    desc: "Rearrange the blocks in your form to adjust the flow and structure. Drag and drop to reorder them as needed",
+    icon: (
+      <div className="flex justify-center items-center p-3 rounded bg-purple-500/15 text-purple-600">
+        <ListIcon />
+      </div>
+    ),
+  },
+];
+
 const Editor = () => {
   const {
     blocks,
@@ -177,9 +212,7 @@ const Editor = () => {
             </div>
             {blocks.length <= 0 && (
               <div className="flex flex-1 justify-center items-center">
-                <span className="text-foreground/80 text-sm">
-                  No block added.
-                </span>
+                <span className="text-foreground/80 text-sm">No block.</span>
               </div>
             )}
             {blocks.length >= 1 && (
@@ -191,14 +224,22 @@ const Editor = () => {
             )}
           </div>
           {blocks.length <= 0 && (
-            <div className="hidden sm:flex justify-center items-center flex-1 ml-[360px] pt-14 bg-foreground/5">
+            <div className="hidden sm:flex justify-center items-center flex-1 ml-[360px] pt-14 ">
               <div className="flex justify-center items-center gap-3 flex-col">
-                <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/15">
-                  <BlocksIcon className="text-foreground/80 w-8 h-8" />
+                <div className="grid grid-cols-2 gap-8">
+                  {tips.map((tip, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="bg-background border border-foreground/20 rounded flex flex-col justify-center items-center w-60 p-6">
+                        {tip.icon}
+                        <span className="text-center text-sm text-foreground/80 mt-4">
+                          {tip.desc}
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
-                <span className="text-foreground/80 text-sm">
-                  No block to preview.
-                </span>
               </div>
             </div>
           )}

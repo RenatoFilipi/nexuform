@@ -66,7 +66,7 @@ const Form = () => {
           </div>
         )}
         {appState === "idle" && submissions.length <= 0 && (
-          <div className="flex justify-center items-center h-full flex-1">
+          <div className="flex justify-center items-center h-full flex-1 border rounded">
             <span className="text-foreground/80">No submissions to show.</span>
           </div>
         )}

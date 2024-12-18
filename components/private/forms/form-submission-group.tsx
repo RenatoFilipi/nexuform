@@ -71,9 +71,9 @@ const FormSubmissionGroup = ({
                 suppressHydrationWarning>
                 {formatDateRelativeToNow(sub.submitted_at)}
               </TableCell>
-              <TableCell>{sub.sender}</TableCell>
-              <TableCell>{statusDisplay(sub.status)}</TableCell>
-              <TableCell className="text-right">
+              <TableCell className="p-3">{sub.sender}</TableCell>
+              <TableCell className="p-3">{statusDisplay(sub.status)}</TableCell>
+              <TableCell className="text-right p-3">
                 <FormSubmissionView subId={sub.id} formId={formId}>
                   <Button variant={"outline"} size={"sm"}>
                     View Details

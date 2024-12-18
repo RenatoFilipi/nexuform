@@ -9,7 +9,7 @@ import Link from "next/link";
 const Home = () => {
   return (
     <div className="min-h-screen flex flex-col relative">
-      <div className="flex fixed top-0 w-full justify-between sm:justify-around sm:px-5 px-3 h-16 bg-background/80 z-10 backdrop-blur-md items-center">
+      <div className="flex fixed top-0 w-full justify-between sm:px-5 px-3 h-16 bg-background/80 z-10 backdrop-blur-md items-center">
         <Link href={"/"} className="flex justify-center items-center">
           <Brand type="logo_text" className="h-7 fill-foreground" />
         </Link>
