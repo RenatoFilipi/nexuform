@@ -28,7 +28,7 @@ import { useState } from "react";
 
 const tips = [
   {
-    desc: "Add new blocks to enrich the form",
+    desc: "Add new blocks to enrich your form",
     icon: (
       <div className="flex justify-center items-center p-3 rounded bg-blue-500/15 text-blue-600">
         <BlocksIcon />
@@ -244,7 +244,7 @@ const Editor = () => {
             </div>
           )}
           {blocks.length >= 1 && (
-            <div className="hidden sm:flex flex-1 bg-foreground/5 justify-center items-start ml-[360px] pt-14">
+            <div className="hidden sm:flex flex-1 bg-stone-100 dark:bg-black/30 justify-center items-start ml-[360px] pt-14">
               <div className="bg-background w-full rounded mx-8 my-8 flex flex-col p-6 gap-6 sm:w-[600px]">
                 <FormGroupPreview />
                 <div className="flex justify-center items-center">
