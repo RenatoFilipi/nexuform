@@ -66,6 +66,12 @@ const Editor = () => {
     blocks,
     name,
     id,
+    description,
+    numericBlocks,
+    ownerId,
+    status,
+    submitLabel,
+    theme,
     setId,
     setName,
     setBlocks,
@@ -82,6 +88,7 @@ const Editor = () => {
   const formId = pathname.split("/")[3];
   const [isPreview, setIsPreview] = useState(false);
   const [appState, setAppState] = useState<appState>("loading");
+  const [saveState, setSaveState] = useState<appState>("idle");
 
   useQuery({
     queryKey: ["editorPageData"],
@@ -135,8 +142,19 @@ const Editor = () => {
   }
 
   const onSave = () => {
-    console.log(JSON.stringify(blocks));
+    setSaveState("loading");
+    console.log(id);
+    console.log(ownerId);
+    console.log(name);
+    console.log(description);
+    console.log(status);
+    console.log(numericBlocks);
+    console.log(submitLabel);
+    console.log(theme);
     console.log(blocks);
+    setTimeout(() => {
+      setSaveState("idle");
+    }, 2000);
   };
 
   return (
@@ -156,8 +174,16 @@ const Editor = () => {
           )}
         </div>
         <div className="hidden sm:flex justify-center items-center gap-4">
-          <Button onClick={onSave} variant={"default"} size={"sm"}>
-            Save
+          <Button
+            onClick={onSave}
+            variant={"default"}
+            size={"sm"}
+            className="w-24">
+            {saveState === "loading" ? (
+              <GenericLoader className="w-5 h-5" />
+            ) : (
+              "Save Form"
+            )}
           </Button>
         </div>
         <div className="flex sm:hidden justify-center items-center gap-2">
@@ -167,8 +193,16 @@ const Editor = () => {
             size={"sm"}>
             Preview
           </Button>
-          <Button variant={"default"} size={"sm"}>
-            Save
+          <Button
+            onClick={onSave}
+            variant={"default"}
+            size={"sm"}
+            className="w-24">
+            {saveState === "loading" ? (
+              <GenericLoader className="w-5 h-5" />
+            ) : (
+              "Save Form"
+            )}
           </Button>
         </div>
       </div>
