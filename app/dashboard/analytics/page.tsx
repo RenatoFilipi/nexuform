@@ -43,18 +43,18 @@ const Analytics = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               <AnalyticsCard
                 icon={<FileIcon />}
-                label="Total Forms"
+                label="Forms"
                 value={totalForms.toString()}
               />
               <AnalyticsCard
                 icon={<ViewIcon />}
-                label="Total Views"
+                label="Views"
                 value={totalViews.toString()}
               />
               <div className="col-span-2 sm:col-span-1">
                 <AnalyticsCard
                   icon={<BookCheckIcon />}
-                  label="Total Submissions"
+                  label="Submissions"
                   value={totalSubmissions.toString()}
                 />
               </div>

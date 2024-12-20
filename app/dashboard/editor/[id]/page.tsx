@@ -1,6 +1,6 @@
 "use client";
 
-import { default as Brand } from "@/components/core/brand";
+import Brand from "@/components/core/brand";
 import GenericError from "@/components/core/generic-error";
 import GenericLoader from "@/components/core/generic-loader";
 import AddBlock from "@/components/private/blocks/add-block";
@@ -25,6 +25,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const tips = [
   {
@@ -154,6 +155,7 @@ const Editor = () => {
     console.log(blocks);
     setTimeout(() => {
       setSaveState("idle");
+      toast.success("Form updated.");
     }, 2000);
   };
 
