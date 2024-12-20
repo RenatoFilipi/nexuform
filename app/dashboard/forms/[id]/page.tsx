@@ -45,7 +45,7 @@ const Form = () => {
           <GenericLoader className="hidden sm:flex w-5 h-5" />
         ) : (
           <div className="hidden sm:flex">
-            <h1 className="text-xl font-semibold">{form.name}</h1>
+            <h1 className="text-xl font-medium">{form.name}</h1>
           </div>
         )}
         <div className="flex justify-center items-center sm:gap-4 gap-2 w-full sm:w-fit">

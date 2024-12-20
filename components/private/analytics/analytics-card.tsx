@@ -8,7 +8,7 @@ const AnalyticsCard = ({ icon, label, value }: AnalyticsProps) => {
         <div className="bg-primary/15 p-3 rounded">{icon}</div>
         <div className="flex justify-between items-end flex-col h-full">
           <span className="text-sm text-foreground/80">{label}</span>
-          <span className="font-semibold text-2xl">{value}</span>
+          <span className="font-medium text-2xl">{value}</span>
         </div>
       </div>
     </Card>

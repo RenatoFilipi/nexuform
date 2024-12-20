@@ -144,7 +144,7 @@ const Body = ({
     <div className="flex flex-col h-full gap-4">
       <div className="flex flex-col pt-4 sm:pt-0">
         <div className="flex justify-center sm:justify-start items-center gap-2">
-          <span className="font-semibold text-base">{submission.sender}</span>
+          <span className="font-medium text-base">{submission.sender}</span>
           {statusDisplay(submission.status)}
         </div>
       </div>
@@ -152,7 +152,7 @@ const Body = ({
         {segments.map((seg, index) => {
           return (
             <div key={index} className="flex flex-col gap-1">
-              <h1 className="font-semibold text-xs">{seg.question}</h1>
+              <h1 className="font-medium text-xs">{seg.question}</h1>
               {seg.answer !== "".trim() ? (
                 <p className="text-xs text-foreground/60">{seg.answer}</p>
               ) : (
@@ -166,7 +166,7 @@ const Body = ({
           );
         })}
       </div>
-      <div className="flex sm:justify-end justify-center items-center gap-4 flex-col-reverse sm:flex-row">
+      <div className="flex sm:justify-between justify-center items-center gap-4 flex-col-reverse sm:flex-row">
         <Button
           onClick={() => setState(false)}
           variant={"outline"}
@@ -174,13 +174,22 @@ const Body = ({
           className="w-full sm:w-fit">
           Close
         </Button>
-        <Button
-          onClick={() => setState(false)}
-          variant={"default"}
-          size={"sm"}
-          className="w-full sm:w-fit">
-          Mark as Reviewed
-        </Button>
+        <div className="flex justify-center items-center gap-4 w-full sm:w-fit">
+          <Button
+            onClick={() => setState(false)}
+            variant={"secondary"}
+            size={"sm"}
+            className="w-full sm:w-fit">
+            Mark as Ignored
+          </Button>
+          <Button
+            onClick={() => setState(false)}
+            variant={"default"}
+            size={"sm"}
+            className="w-full sm:w-fit">
+            Mark as Reviewed
+          </Button>
+        </div>
       </div>
     </div>
   );

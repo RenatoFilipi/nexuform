@@ -132,7 +132,7 @@ const Editor = () => {
           <div className="flex justify-center items-center w-full py-2">
             <span className="border rounded p-2 flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
               <Brand type="logo" className="fill-foreground w-4 h-4" />
-              <span className="text-foreground/80 text-sm font-semibold ">
+              <span className="text-foreground/80 text-sm font-medium">
                 Powered by Nebulaform
               </span>
             </span>
@@ -170,7 +170,7 @@ const Editor = () => {
           </Button>
           {appState === "loading" && <GenericLoader className="w-4 h-4" />}
           {appState === "idle" && (
-            <span className="text-foreground/80 text-sm font-semibold">
+            <span className="text-foreground/80 text-sm font-medium">
               {name}
             </span>
           )}
@@ -286,7 +286,7 @@ const Editor = () => {
                 <div className="flex justify-center items-center">
                   <span className="border rounded p-2 flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
                     <Brand type="logo" className="fill-foreground w-4 h-4" />
-                    <span className="text-foreground/80 text-sm font-semibold ">
+                    <span className="text-foreground/80 text-sm font-medium">
                       Powered by Nebulaform
                     </span>
                   </span>

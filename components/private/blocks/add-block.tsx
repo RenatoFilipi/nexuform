@@ -233,7 +233,7 @@ const Body = ({
                                 {block.icon}
                               </div>
                               <div className="flex flex-col gap-1">
-                                <span className="font-semibold">
+                                <span className="font-medium">
                                   {block.name}
                                 </span>
                                 <p className="text-xs text-foreground/60">

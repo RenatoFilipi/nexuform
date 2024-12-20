@@ -93,7 +93,7 @@ const FormSubmissionGroup = ({
         return (
           <Card key={sub.id} className="p-3 flex flex-col gap-3">
             <div className="flex justify-between items-center">
-              <span className="font-semibold text-lg">{sub.sender}</span>
+              <span className="font-medium text-lg">{sub.sender}</span>
               {statusDisplay(sub.status)}
             </div>
             <div className="flex justify-between items-center">

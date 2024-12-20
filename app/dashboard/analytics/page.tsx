@@ -7,7 +7,7 @@ import { mockAnalytics, mockForms } from "@/helpers/mocks";
 import { FormProps } from "@/helpers/modules";
 import { appState } from "@/helpers/types";
 import { useQuery } from "@tanstack/react-query";
-import { BookCheckIcon, FileIcon, ViewIcon } from "lucide-react";
+import { BookCheckIcon, BookMarkedIcon, ViewIcon } from "lucide-react";
 import { useState } from "react";
 
 const Analytics = () => {
@@ -38,11 +38,11 @@ const Analytics = () => {
       )}
       {appState === "idle" && (
         <div className="flex flex-col gap-4">
-          <h1 className="text-xl font-semibold">Analytics</h1>
+          <h1 className="text-xl font-medium">Analytics</h1>
           <div className="flex flex-col gap-4">
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               <AnalyticsCard
-                icon={<FileIcon />}
+                icon={<BookMarkedIcon />}
                 label="Forms"
                 value={totalForms.toString()}
               />

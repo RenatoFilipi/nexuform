@@ -15,15 +15,15 @@ import { FormProps } from "@/helpers/modules";
 import { formStatus, setState } from "@/helpers/types";
 import { useQuery } from "@tanstack/react-query";
 import {
+  BookMarkedIcon,
+  ChartPieIcon,
   ChevronsUpDownIcon,
-  FileIcon,
   LogOutIcon,
   Menu,
   MenuIcon,
   MonitorIcon,
   MoonIcon,
   SunIcon,
-  TrendingUpDownIcon,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
@@ -48,13 +48,13 @@ const navLinks = [
     id: 1,
     name: "Forms",
     path: "/dashboard/forms",
-    icon: <FileIcon className="w-4 h-4 mr-2" />,
+    icon: <BookMarkedIcon className="w-4 h-4 mr-2" />,
   },
   {
     id: 2,
     name: "Analytics",
     path: "/dashboard/analytics",
-    icon: <TrendingUpDownIcon className="w-4 h-4 mr-2" />,
+    icon: <ChartPieIcon className="w-4 h-4 mr-2" />,
   },
 ];
 const Nav = () => {
@@ -167,7 +167,7 @@ const Nav = () => {
                 isActive(link.path) && ""
               } text-sm h-full flex justify-center items-center px-3 hover:bg-foreground/5 relative`}>
               {isActive(link.path) && (
-                <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>
+                <div className="bg-foreground/80 bottom-0 w-full h-1 absolute"></div>
               )}
               {link.icon}
               {link.name}
@@ -418,7 +418,7 @@ const SelectFormBody = ({ setState }: { setState: setState<boolean> }) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-center sm:justify-start items-center mt-8 sm:mt-0">
-        <h1 className="text-xl font-semibold">Your forms</h1>
+        <h1 className="text-xl font-medium">Your forms</h1>
       </div>
       <div className="flex flex-col gap-0">
         {forms.map((form) => (

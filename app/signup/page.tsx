@@ -72,7 +72,7 @@ const Signup = () => {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="w-full sm:max-w-96 flex flex-col gap-10 justify-center items-center sm:p-0 px-12">
                 <div className="flex justify-start w-full flex-col gap-2">
-                  <h1 className="text-xl font-semibold">Sign up</h1>
+                  <h1 className="text-xl font-medium">Sign up</h1>
                   <span className="text-sm text-foreground/80">
                     Already have an account?{" "}
                     <Link
@@ -161,7 +161,7 @@ const Signup = () => {
         {appStage === "stage02" && (
           <div className="w-full flex justify-center items-center">
             <div className="flex justify-center items-center gap-4 flex-col sm:max-w-96 sm:p-0 px-12">
-              <h1 className="text-2xl font-semibold">Confirm your email</h1>
+              <h1 className="text-2xl font-medium">Confirm your email</h1>
               <div className="flex flex-col gap-4">
                 <p className="text-sm text-foreground/80">
                   We&apos;ve sent you a confirmation email. Please check your

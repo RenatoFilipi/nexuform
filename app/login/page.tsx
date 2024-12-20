@@ -72,7 +72,7 @@ const Login = () => {
               onSubmit={form.handleSubmit(onSubmit)}
               className="w-full sm:max-w-96 flex flex-col gap-10 justify-center items-center sm:p-0 px-12">
               <div className="flex justify-start w-full flex-col gap-2">
-                <h1 className="text-xl font-semibold">Login</h1>
+                <h1 className="text-xl font-medium">Login</h1>
                 <span className="text-sm text-foreground/80">
                   Don&apos;t have an account?{" "}
                   <Link

@@ -80,7 +80,7 @@ const S = () => {
           <FormGroupRelease />
           <span className="border rounded p-2 w-fit flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
             <Brand type="logo" className="fill-foreground w-4 h-4" />
-            <span className="text-foreground/80 text-sm font-semibold ">
+            <span className="text-foreground/80 text-sm font-medium">
               Powered by Nebulaform
             </span>
           </span>

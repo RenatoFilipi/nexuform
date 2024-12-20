@@ -47,7 +47,7 @@ const Terms = () => {
         </div>
         {topics.map((topic, index) => (
           <div key={index} className="mb-6">
-            <h2 className="text-xl font-semibold">{topic.title}</h2>
+            <h2 className="text-xl font-medium">{topic.title}</h2>
             <p className="mt-2 text-foreground/80">{topic.description}</p>
           </div>
         ))}

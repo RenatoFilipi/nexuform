@@ -64,9 +64,7 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="h-[600px] flex flex-col">
           <DialogHeader>
-            <DialogTitle className="text-xl font-semibold">
-              Settings
-            </DialogTitle>
+            <DialogTitle className="text-xl font-medium">Settings</DialogTitle>
             <DialogDescription>
               Configure your form preferences and update settings as needed.
             </DialogDescription>
@@ -82,7 +80,7 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3 flex flex-col">
         <DrawerHeader>
-          <DrawerTitle className="text-xl font-semibold">Settings</DrawerTitle>
+          <DrawerTitle className="text-xl font-medium">Settings</DrawerTitle>
           <DrawerDescription>
             Configure your form preferences and update settings as needed.
           </DrawerDescription>
@@ -131,7 +129,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
                     } border rounded hover:bg-foreground/10 p-2 flex flex-col gap-2`}>
                     <div className="flex justify-center w-full items-center gap-2 flex-col">
                       {status.icon}
-                      <span className="text-sm font-semibold">
+                      <span className="text-sm font-medium">
                         {status.label}
                       </span>
                     </div>
