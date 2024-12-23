@@ -50,18 +50,21 @@ const navLinks = [
     name: "Forms",
     path: "/dashboard/forms",
     icon: <BookMarkedIcon className="w-4 h-4 mr-2" />,
+    enabled: true,
   },
   {
     id: 2,
     name: "Analytics",
     path: "/dashboard/analytics",
     icon: <ChartPieIcon className="w-4 h-4 mr-2" />,
+    enabled: true,
   },
   {
     id: 3,
     name: "Settings",
     path: "/dashboard/settings",
     icon: <Settings2Icon className="w-4 h-4 mr-2" />,
+    enabled: false,
   },
 ];
 const Nav = () => {
@@ -125,20 +128,23 @@ const Nav = () => {
             )}
           </div>
           <div className="hidden sm:flex justify-center items-center gap-0 h-full">
-            {navLinks.map((link) => (
-              <Link
-                key={link.id}
-                href={link.path}
-                className={`${
-                  isActive(link.path) && ""
-                } text-sm h-full flex justify-center items-center px-3 hover:bg-foreground/5 relative`}>
-                {isActive(link.path) && (
-                  <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>
-                )}
-                {link.icon}
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              if (link.enabled)
+                return (
+                  <Link
+                    key={link.id}
+                    href={link.path}
+                    className={`${
+                      isActive(link.path) && ""
+                    } text-sm h-full flex justify-center items-center px-3 hover:bg-foreground/5 relative`}>
+                    {isActive(link.path) && (
+                      <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>
+                    )}
+                    {link.icon}
+                    {link.name}
+                  </Link>
+                );
+            })}
           </div>
         </div>
         <div className="hidden sm:flex justify-center items-center">
@@ -166,20 +172,23 @@ const Nav = () => {
           </Button>
         </div>
         <div className="hidden sm:flex justify-center items-center gap-0 h-full">
-          {navLinks.map((link) => (
-            <Link
-              key={link.id}
-              href={link.path}
-              className={`${
-                isActive(link.path) && ""
-              } text-sm h-full flex justify-center items-center px-3 hover:bg-foreground/5 relative`}>
-              {isActive(link.path) && (
-                <div className="bg-foreground/80 bottom-0 w-full h-1 absolute"></div>
-              )}
-              {link.icon}
-              {link.name}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            if (link.enabled)
+              return (
+                <Link
+                  key={link.id}
+                  href={link.path}
+                  className={`${
+                    isActive(link.path) && ""
+                  } text-sm h-full flex justify-center items-center px-3 hover:bg-foreground/5 relative`}>
+                  {isActive(link.path) && (
+                    <div className="bg-foreground/80 bottom-0 w-full h-1 absolute"></div>
+                  )}
+                  {link.icon}
+                  {link.name}
+                </Link>
+              );
+          })}
         </div>
       </div>
       <div className="hidden sm:flex justify-center items-center">
@@ -207,18 +216,22 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent className="w-screen flex flex-col gap-4">
         <div className="flex flex-col">
-          {navLinks.map((link) => (
-            <Link
-              onClick={() => setOpen(false)}
-              key={link.id}
-              href={link.path}
-              className={`${
-                isActive(link.path) && "bg-primary text-white hover:bg-primary"
-              } p-2 border hover:bg-foreground/5 text-sm flex justify-start items-center`}>
-              {link.icon}
-              {link.name}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            if (link.enabled)
+              return (
+                <Link
+                  onClick={() => setOpen(false)}
+                  key={link.id}
+                  href={link.path}
+                  className={`${
+                    isActive(link.path) &&
+                    "bg-primary text-white hover:bg-primary"
+                  } p-2 border hover:bg-foreground/5 text-sm flex justify-start items-center`}>
+                  {link.icon}
+                  {link.name}
+                </Link>
+              );
+          })}
         </div>
         <div className="flex flex-col w-full gap-2">
           <div className="flex justify-between items-center px-2">
