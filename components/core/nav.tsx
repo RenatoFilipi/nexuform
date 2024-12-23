@@ -23,6 +23,7 @@ import {
   MenuIcon,
   MonitorIcon,
   MoonIcon,
+  Settings2Icon,
   SunIcon,
 } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -55,6 +56,12 @@ const navLinks = [
     name: "Analytics",
     path: "/dashboard/analytics",
     icon: <ChartPieIcon className="w-4 h-4 mr-2" />,
+  },
+  {
+    id: 3,
+    name: "Settings",
+    path: "/dashboard/settings",
+    icon: <Settings2Icon className="w-4 h-4 mr-2" />,
   },
 ];
 const Nav = () => {
