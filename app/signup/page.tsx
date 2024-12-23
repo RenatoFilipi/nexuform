@@ -58,7 +58,7 @@ const Signup = () => {
           <Brand type="logo" className="h-8 fill-foreground" />
         </Link>
         <div className="fixed top-3 left-3 hidden sm:flex gap-2">
-          <Button variant={"outline"} size={"sm"} asChild>
+          <Button variant={"ghost"} size={"sm"} asChild>
             <Link href={"/"}>
               <ChevronLeftIcon className="w-4 h-4 mr-2" />
               Go back

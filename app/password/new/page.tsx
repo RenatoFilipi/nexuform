@@ -13,7 +13,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { appState } from "@/helpers/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronLeftIcon, LoaderIcon } from "lucide-react";
+import {
+  ChevronLeftIcon,
+  EyeClosedIcon,
+  EyeIcon,
+  LoaderIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -21,12 +26,15 @@ import { z } from "zod";
 
 const New = () => {
   const [appState, setAppState] = useState<appState>("idle");
+  const [showPassword, setShowPassword] = useState(false);
 
-  const formSchema = z.object({ email: z.string().email() });
+  const formSchema = z.object({
+    password: z.string().min(8, { message: "Must be atleast 8 characters." }),
+  });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      password: "",
     },
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -40,7 +48,7 @@ const New = () => {
           <Brand type="logo" className="h-8 fill-foreground" />
         </Link>
         <div className="fixed top-3 left-3 hidden sm:flex gap-2 justify-between items-center">
-          <Button variant={"outline"} size={"sm"} asChild>
+          <Button variant={"ghost"} size={"sm"} asChild>
             <Link href={"/"}>
               <ChevronLeftIcon className="w-4 h-4 mr-2" />
               Go back
@@ -53,22 +61,39 @@ const New = () => {
               onSubmit={form.handleSubmit(onSubmit)}
               className="w-full sm:max-w-96 flex flex-col gap-10 justify-center items-center sm:p-0 px-12">
               <div className="flex justify-start w-full flex-col gap-2">
-                <h1 className="text-xl font-medium">Reset your password</h1>
+                <h1 className="text-xl font-medium">Create new password</h1>
                 <p className="text-sm text-foreground/80">
-                  To reset your password, enter the email address you use to log
-                  in.
+                  Create a password with at least 8 characters, including
+                  letters, numbers, and special characters.
                 </p>
               </div>
               <div className="flex flex-col justify-center items-center w-full gap-4">
                 <div className="flex flex-col gap-3 w-full">
                   <FormField
                     control={form.control}
-                    name="email"
+                    name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel htmlFor="email">Email</FormLabel>
+                        <FormLabel htmlFor="password">Password</FormLabel>
                         <FormControl>
-                          <Input id="email" type="email" {...field} />
+                          <div className="flex justify-center items-center gap-2">
+                            <Input
+                              id="password"
+                              type={showPassword ? "text" : "password"}
+                              {...field}
+                            />
+                            <Button
+                              type="button"
+                              variant={"ghost"}
+                              size={"icon"}
+                              onClick={() => setShowPassword(!showPassword)}>
+                              {showPassword ? (
+                                <EyeIcon className="w-5 h-5" />
+                              ) : (
+                                <EyeClosedIcon className="w-5 h-5" />
+                              )}
+                            </Button>
+                          </div>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -85,7 +110,7 @@ const New = () => {
                     {appState === "loading" && (
                       <LoaderIcon className="animate-spin w-4 h-4" />
                     )}
-                    {appState === "idle" && "Reset Password"}
+                    {appState === "idle" && "Create new password"}
                   </Button>
                 </div>
               </div>

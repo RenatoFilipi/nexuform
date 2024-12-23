@@ -59,9 +59,9 @@ const Login = () => {
           <Brand type="logo" className="h-8 fill-foreground" />
         </Link>
         <div className="fixed top-3 left-3 hidden sm:flex gap-2 justify-between items-center">
-          <Button variant={"outline"} size={"sm"} asChild>
+          <Button variant={"ghost"} size={"sm"} asChild>
             <Link href={"/"}>
-              <ChevronLeftIcon className="w-4 h-4 mr-2" />
+              <ChevronLeftIcon className="w-4 h-4 mr-" />
               Go back
             </Link>
           </Button>
@@ -130,7 +130,7 @@ const Login = () => {
                 </div>
                 <div className="flex flex-col w-full gap-4">
                   <Link
-                    href={"/password/new"}
+                    href={"/password/reset"}
                     className="text-sm hover:underline text-foreground/80 hover:text-info dark:hover:text-blue-500 w-fit">
                     Forgot password?
                   </Link>
