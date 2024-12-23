@@ -48,7 +48,7 @@ const Forms = () => {
         <div className="flex justify-center items-center h-full flex-1">
           <div className="flex flex-col justify-center items-center gap-3">
             <div className="flex flex-col justify-center items-center gap-4">
-              <div className="flex justify-center items-center p-3 border rounded bg-primary/15">
+              <div className="flex justify-center items-center p-3 rounded bg-primary/15">
                 <BookMarkedIcon className="text-primary" />
               </div>
               <div className="flex flex-col justify-center items-center gap-1">

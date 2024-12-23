@@ -41,26 +41,25 @@ const Analytics = () => {
           <h1 className="text-xl font-medium">Analytics</h1>
           <div className="flex flex-col gap-4">
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              <div className="col-span-2 sm:col-span-1">
+                <AnalyticsCard
+                  icon={<BookMarkedIcon className="text-primary" />}
+                  label="Forms"
+                  value={totalForms.toString()}
+                />
+              </div>
               <AnalyticsCard
-                icon={<BookMarkedIcon />}
-                label="Forms"
-                value={totalForms.toString()}
-              />
-              <AnalyticsCard
-                icon={<ViewIcon />}
+                icon={<ViewIcon className="text-primary" />}
                 label="Views"
                 value={totalViews.toString()}
               />
-              <div className="col-span-2 sm:col-span-1">
-                <AnalyticsCard
-                  icon={<BookCheckIcon />}
-                  label="Submissions"
-                  value={totalSubmissions.toString()}
-                />
-              </div>
+              <AnalyticsCard
+                icon={<BookCheckIcon className="text-primary" />}
+                label="Submissions"
+                value={totalSubmissions.toString()}
+              />
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
-              {/* <AnalyticsChart /> */}
               <AnalyticsProgress forms={forms} />
             </div>
           </div>

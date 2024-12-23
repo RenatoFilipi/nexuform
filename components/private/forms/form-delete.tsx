@@ -40,8 +40,9 @@ const FormDelete = ({
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete this
-              form and remove the data from our servers.
+              Permanently removes the selected form, including all associated
+              responses and settings. This action cannot be undone. Ensure you
+              have exported any necessary data before proceeding.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <Body formId={formId} setState={setOpen} />
@@ -57,8 +58,9 @@ const FormDelete = ({
         <DrawerHeader>
           <DrawerTitle>Are you absolutely sure?</DrawerTitle>
           <DrawerDescription>
-            This action cannot be undone. This will permanently delete this form
-            and remove the data from our servers.
+            Permanently removes the selected form, including all associated
+            responses and settings. This action cannot be undone. Ensure you
+            have exported any necessary data before proceeding.
           </DrawerDescription>
         </DrawerHeader>
         <Body formId={formId} setState={setOpen} />

@@ -6,6 +6,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { minWidth640 } from "@/helpers/constants";
 import { uuid } from "@/helpers/functions";
@@ -76,7 +77,9 @@ const FormCreate = ({ children }: { children: React.ReactNode }) => {
 
 const Body = ({ setState }: { setState: setState<boolean> }) => {
   const router = useRouter();
-  const formSchema = z.object({ name: z.string() });
+  const formSchema = z.object({
+    name: z.string().min(3, "Name must contain at least 3 letters."),
+  });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -103,6 +106,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
                 <FormControl>
                   <Input type="text" {...field} />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />

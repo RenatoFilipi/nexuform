@@ -146,13 +146,6 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
         </div>
       </div>
       <div className="flex justify-between items-center gap-2 flex-col sm:flex-row">
-        <Button
-          onClick={() => setState(false)}
-          variant={"outline"}
-          size={"sm"}
-          className="w-full sm:w-fit">
-          Close
-        </Button>
         <FormDelete formId={store.id}>
           <Button
             variant={"destructive_outline"}
@@ -161,6 +154,13 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
             Delete Form
           </Button>
         </FormDelete>
+        <Button
+          onClick={() => setState(false)}
+          variant={"outline"}
+          size={"sm"}
+          className="w-full sm:w-fit">
+          Close
+        </Button>
       </div>
     </div>
   );
