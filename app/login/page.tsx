@@ -54,10 +54,10 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex">
-      <div className="flex-1 sm:flex hidden w-full relative bg-primary">
+      <div className="flex-1 sm:flex hidden w-full relative bg-gradient-to-b from-black to-primary">
         <Brand
           type="logo_text"
-          className="h-8 fill-black absolute top-6 left-6"
+          className="h-8 fill-white absolute top-6 left-6"
         />
       </div>
       <div className="flex-1 flex justify-center items-center w-full relative">
