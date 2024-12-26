@@ -7,19 +7,21 @@ const AnalyticsProgress = ({ forms }: { forms: FormProps[] }) => {
 
   if (forms.length <= 0) {
     return (
-      <Card className="flex justify-center items-center py-6">
-        <span className="text-foreground/80 text-sm">No data to show.</span>
+      <Card className="flex justify-center items-center py-8 w-full">
+        <span className="text-foreground/80 text-xs uppercase">
+          No data to show
+        </span>
       </Card>
     );
   }
 
   return (
-    <Card className="flex flex-col gap-6 p-4">
+    <Card className="flex flex-col gap-6 p-3 w-full">
       {forms.map((form) => (
         <div key={form.id} className="space-y-2">
           <div className="flex justify-between items-center">
             <span className="font-medium">{form.name}</span>
-            <span className="text-sm text-foreground/80">
+            <span className="text-xs text-foreground/80">
               {form.submissions} / {total} submissions
             </span>
           </div>

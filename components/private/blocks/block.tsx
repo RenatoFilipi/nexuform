@@ -36,7 +36,7 @@ const Block = (block: BlockModel) => {
           {icons[block.type]}
         </div>
         <div className="flex">
-          <span className="text-xs relative p-2">
+          <span className="text-xs relative p-2 font-medium">
             {block.name}
             {block.required && (
               <span className="text-red-500 absolute ml-1">*</span>

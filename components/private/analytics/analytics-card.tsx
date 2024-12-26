@@ -3,13 +3,11 @@ import { AnalyticsProps } from "@/helpers/modules";
 
 const AnalyticsCard = ({ icon, label, value }: AnalyticsProps) => {
   return (
-    <Card className="p-4 h-20">
-      <div className="flex justify-between items-center h-full">
-        <div className="bg-primary/15 p-3 rounded">{icon}</div>
-        <div className="flex justify-between items-end flex-col h-full">
-          <span className="text-sm text-foreground/80">{label}</span>
-          <span className="font-medium text-2xl">{value}</span>
-        </div>
+    <Card className="p-3 w-full h-32 flex flex-col justify-between">
+      <div className="">{icon}</div>
+      <div className="flex flex-col">
+        <span className="text-xs text-foreground/80">{label}</span>
+        <span className="font-medium text-xl">{value}</span>
       </div>
     </Card>
   );

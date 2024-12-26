@@ -9,6 +9,7 @@ import { mockForms, mockSubmissions } from "@/helpers/mocks";
 import { FormProps, SubmissionProps } from "@/helpers/modules";
 import { appState } from "@/helpers/types";
 import { useQuery } from "@tanstack/react-query";
+import { ExternalLinkIcon, ForwardIcon, Settings2Icon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -45,17 +46,30 @@ const Form = () => {
           <GenericLoader className="hidden sm:flex w-5 h-5" />
         ) : (
           <div className="hidden sm:flex">
-            <h1 className="text-xl font-medium">{form.name}</h1>
+            <h1 className="text-xl font-medium">Submissions</h1>
           </div>
         )}
         <div className="flex justify-center items-center sm:gap-4 gap-2 w-full sm:w-fit">
           <FormShare formId={formId}>
             <Button variant={"outline"} size={"sm"} className="w-full">
+              <ForwardIcon className="w-4 h-4 mr-2" />
               Share
             </Button>
           </FormShare>
+          {form?.status === "published" && (
+            <Button variant={"outline"} size={"sm"} className="w-full sm:w-fit">
+              <Link
+                href={`/s/${form?.id}`}
+                className="flex justify-center items-center">
+                <ExternalLinkIcon className="w-4 h-4 mr-2" />
+                Go to Form
+              </Link>
+            </Button>
+          )}
           <Button variant={"default"} size={"sm"} className="w-full" asChild>
-            <Link href={`/dashboard/editor/${formId}`}>Edit</Link>
+            <Link href={`/dashboard/editor/${formId}`}>
+              <Settings2Icon className="w-4 h-4 mr-2" /> Editor
+            </Link>
           </Button>
         </div>
       </div>
@@ -67,7 +81,9 @@ const Form = () => {
         )}
         {appState === "idle" && submissions.length <= 0 && (
           <div className="flex justify-center items-center h-full flex-1 border rounded">
-            <span className="text-foreground/80">No submissions to show.</span>
+            <span className="text-foreground/80 uppercase text-xs">
+              No submission to show
+            </span>
           </div>
         )}
         {appState === "idle" && submissions.length >= 1 && (

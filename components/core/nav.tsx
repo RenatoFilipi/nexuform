@@ -104,7 +104,7 @@ const Nav = () => {
     };
 
     return (
-      <div className="border-b h-14 flex items-center px-2 sm:px-6 justify-between z-10 bg-background fixed w-full">
+      <div className="border-y border-t-foreground/5 h-14 flex items-center px-2 sm:px-6 justify-between z-10 bg-background fixed w-full">
         <div className="flex justify-center items-center gap-1 h-full">
           <div className="flex justify-center items-center gap-1">
             <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
@@ -162,7 +162,7 @@ const Nav = () => {
   }
   // app
   return (
-    <div className="border-b h-14 flex items-center px-2 sm:px-6 justify-between z-10 bg-background fixed w-full">
+    <div className="border-y border-t-foreground/5 h-14 flex items-center px-2 sm:px-6 justify-between z-10 bg-background fixed w-full">
       <div className="flex justify-center items-center gap-3 h-full">
         <div className="flex justify-center items-center gap-4">
           <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>

@@ -31,7 +31,7 @@ import {
   TextIcon,
 } from "lucide-react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useMediaQuery } from "react-responsive";
 import { z } from "zod";
 import {
@@ -172,6 +172,9 @@ const Body = ({
       block: "",
     },
   });
+
+  const blockWatch = useWatch({ control: form.control });
+
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const blockType = values.block as block;
 
@@ -207,48 +210,50 @@ const Body = ({
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-6 h-full">
-          <FormField
-            control={form.control}
-            name="block"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <RadioGroup
-                    className="flex flex-col h-[300px] overflow-y-auto sm:pr-2"
-                    value={field.value}
-                    onValueChange={field.onChange}>
-                    {blockList.map((block, index) => {
-                      if (block.enabled)
-                        return (
-                          <div key={index}>
-                            <RadioGroupItem
-                              value={block.type}
-                              id={block.type}
-                              className="peer sr-only"
-                            />
-                            <Label
-                              htmlFor={block.type}
-                              className="text-sm cursor-pointer flex items-center justify-start gap-2 rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 [&:has([data-state=checked])]:border-primary">
-                              <div className="p-2 flex justify-center items-center bg-primary/15 rounded">
-                                {block.icon}
-                              </div>
-                              <div className="flex flex-col gap-1">
-                                <span className="font-medium">
-                                  {block.name}
-                                </span>
-                                <p className="text-xs text-foreground/60">
-                                  {block.description}
-                                </p>
-                              </div>
-                            </Label>
-                          </div>
-                        );
-                    })}
-                  </RadioGroup>
-                </FormControl>
-              </FormItem>
-            )}
-          />
+          <div className="flex flex-col gap-4">
+            <FormField
+              control={form.control}
+              name="block"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <RadioGroup
+                      className="flex flex-col h-[400px] overflow-y-auto sm:pr-2"
+                      value={field.value}
+                      onValueChange={field.onChange}>
+                      {blockList.map((block, index) => {
+                        if (block.enabled)
+                          return (
+                            <div key={index}>
+                              <RadioGroupItem
+                                value={block.type}
+                                id={block.type}
+                                className="peer sr-only"
+                              />
+                              <Label
+                                htmlFor={block.type}
+                                className="text-sm cursor-pointer flex items-center justify-start gap-2 rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 [&:has([data-state=checked])]:border-primary">
+                                <div className="p-2 flex justify-center items-center bg-primary/10 rounded">
+                                  {block.icon}
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                  <span className="font-medium">
+                                    {block.name}
+                                  </span>
+                                  <p className="text-xs text-foreground/60 hidden">
+                                    {block.description}
+                                  </p>
+                                </div>
+                              </Label>
+                            </div>
+                          );
+                      })}
+                    </RadioGroup>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
           <div className="flex justify-end items-center gap-4 sm:flex-row flex-col-reverse">
             <Button
               onClick={() => setState(false)}

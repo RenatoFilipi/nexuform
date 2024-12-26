@@ -1,3 +1,5 @@
+"use client";
+
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,8 +8,8 @@ import { mockForms } from "@/helpers/mocks";
 import { FormProps } from "@/helpers/modules";
 import { setState } from "@/helpers/types";
 import { useQuery } from "@tanstack/react-query";
-import { ExternalLinkIcon, Link2Icon } from "lucide-react";
-import Link from "next/link";
+import { CopyIcon } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { toast } from "sonner";
@@ -22,9 +24,7 @@ import {
 import {
   Drawer,
   DrawerContent,
-  DrawerDescription,
   DrawerHeader,
-  DrawerTitle,
   DrawerTrigger,
 } from "../../ui/drawer";
 
@@ -44,9 +44,9 @@ const FormShare = ({
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="flex flex-col">
           <DialogHeader>
-            <DialogTitle>Form Share</DialogTitle>
+            <DialogTitle>Share Your Form</DialogTitle>
             <DialogDescription>
-              Share this form with others using the provided link.
+              Easily share your form with others using a link or a QR code.
             </DialogDescription>
           </DialogHeader>
           <Body setState={setOpen} formId={formId} />
@@ -60,10 +60,10 @@ const FormShare = ({
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3 flex flex-col">
         <DrawerHeader>
-          <DrawerTitle>Form Share</DrawerTitle>
-          <DrawerDescription>
-            Share this form with others using the provided link.
-          </DrawerDescription>
+          <DialogTitle>Share Your Form</DialogTitle>
+          <DialogDescription>
+            Easily share your form with others using a link or a QR code.
+          </DialogDescription>
         </DrawerHeader>
         <Body setState={setOpen} formId={formId} />
       </DrawerContent>
@@ -105,31 +105,9 @@ const Body = ({
         )}
       </div>
       {form?.status === "published" && (
-        <div className="flex justify-center items-center gap-4 flex-col sm:flex-row">
-          <Input value={url} className="text-foreground/60" readOnly />
-        </div>
-      )}
-      {form?.status === "published" ? (
-        <div className="flex w-full justify-between items-center gap-4 flex-col-reverse sm:flex-row">
-          <Button
-            className="w-full sm:w-fit"
-            variant={"outline"}
-            size={"sm"}
-            onClick={() => setState(false)}>
-            Close
-          </Button>
-          <div className="flex justify-center items-center gap-3 w-full sm:w-fit">
-            <Button
-              variant={"secondary"}
-              size={"sm"}
-              className="w-full sm:w-fit">
-              <Link
-                href={`/s/${form?.id}`}
-                className="flex justify-center items-center">
-                <ExternalLinkIcon className="w-4 h-4 mr-2" />
-                Go to Form
-              </Link>
-            </Button>
+        <div className="flex flex-col justify-center items-center gap-6">
+          <div className="flex justify-center items-center w-full gap-4">
+            <Input value={url} className="text-foreground/60 w-full" readOnly />
             <Button
               onClick={() => {
                 navigator.clipboard.writeText(url);
@@ -137,23 +115,30 @@ const Body = ({
               }}
               variant={"default"}
               size={"sm"}
-              className="w-full sm:w-fit">
-              <Link2Icon className="w-4 h-4 mr-2" />
-              Copy Link
+              className="w-fit">
+              <CopyIcon className="w-4 h-4" />
             </Button>
           </div>
-        </div>
-      ) : (
-        <div className="flex justify-end items-center">
-          <Button
-            className="w-full sm:w-fit"
-            variant={"outline"}
-            size={"sm"}
-            onClick={() => setState(false)}>
-            Close
-          </Button>
+          <div className="flex justify-center items-center rounded gap-6">
+            <div className="bg-white p-2">
+              <QRCodeSVG value={url} />
+            </div>
+            <p className="text-sm text-foreground/80">
+              Scan the QR code or copy the link to share your form with others
+              quickly and effortlessly.
+            </p>
+          </div>
         </div>
       )}
+      <div className="flex justify-end items-center">
+        <Button
+          className="w-full sm:w-fit"
+          variant={"outline"}
+          size={"sm"}
+          onClick={() => setState(false)}>
+          Close
+        </Button>
+      </div>
     </div>
   );
 };

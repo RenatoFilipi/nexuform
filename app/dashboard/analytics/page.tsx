@@ -39,28 +39,38 @@ const Analytics = () => {
       {appState === "idle" && (
         <div className="flex flex-col gap-4">
           <h1 className="text-xl font-medium">Analytics</h1>
-          <div className="flex flex-col gap-4">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              <div className="col-span-2 sm:col-span-1">
-                <AnalyticsCard
-                  icon={<BookMarkedIcon className="text-primary" />}
-                  label="Forms"
-                  value={totalForms.toString()}
-                />
-              </div>
+          <div className="flex flex-col sm:flex-row w-full justify-center items-start gap-4">
+            <div className="grid grid-cols-3 w-full gap-4">
               <AnalyticsCard
-                icon={<ViewIcon className="text-primary" />}
+                icon={
+                  <div className="flex justify-center items-center p-2 w-fit bg-blue-500/15 rounded">
+                    <BookMarkedIcon className="text-blue-600 w-5 h-5" />
+                  </div>
+                }
+                label="Forms"
+                value={totalForms.toString()}
+              />
+              <AnalyticsCard
+                icon={
+                  <div className="flex justify-center items-center p-2 w-fit bg-yellow-500/15 rounded">
+                    <ViewIcon className="text-yellow-600 w-5 h-5" />
+                  </div>
+                }
                 label="Views"
                 value={totalViews.toString()}
               />
               <AnalyticsCard
-                icon={<BookCheckIcon className="text-primary" />}
+                icon={
+                  <div className="flex justify-center items-center p-2 w-fit bg-green-500/15 rounded">
+                    <BookCheckIcon className="text-green-600 w-5 h-5" />
+                  </div>
+                }
                 label="Submissions"
                 value={totalSubmissions.toString()}
               />
             </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <AnalyticsProgress forms={forms} />
+            <div className="flex w-full">
+              <AnalyticsProgress forms={[]} />
             </div>
           </div>
         </div>

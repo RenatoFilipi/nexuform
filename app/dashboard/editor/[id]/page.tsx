@@ -161,7 +161,7 @@ const Editor = () => {
 
   return (
     <div className="flex flex-col h-screen flex-1 gap-4">
-      <div className="fixed h-14 flex justify-between items-center w-full top-0 bg-background border-b sm:px-6 px-2 z-20">
+      <div className="fixed h-14 flex justify-between items-center w-full top-0 bg-background border-y border-t-foreground/5 sm:px-6 px-2 z-20">
         <div className="flex justify-center items-center gap-3">
           <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
             <Link href={"/dashboard/forms"}>
@@ -280,8 +280,8 @@ const Editor = () => {
             </div>
           )}
           {blocks.length >= 1 && (
-            <div className="hidden sm:flex flex-1 bg-stone-100 dark:bg-black/30 justify-center items-start ml-[360px] pt-14">
-              <div className="bg-background w-full rounded mx-8 my-8 flex flex-col p-6 gap-6 sm:w-[600px]">
+            <div className="hidden sm:flex flex-1 bg-neutral-50  dark:bg-black/30 justify-center items-start ml-[360px] pt-14 relative">
+              <div className="bg-background w-full rounded mx-8 my-8 flex flex-col p-6 gap-6 sm:w-[600px] z-10 border">
                 <FormGroupPreview />
                 <div className="flex justify-center items-center">
                   <span className="border rounded p-2 flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
