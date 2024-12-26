@@ -1,5 +1,6 @@
 "use client";
 
+import AnimatedShinyText from "@/components/magicui/animated-shiny-text";
 import ShineBorder from "@/components/magicui/shine-border";
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon } from "lucide-react";
@@ -8,9 +9,13 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <>
+    <div className="flex flex-col gap-14">
       <div className="flex justify-center items-center flex-col gap-6 w-full">
         <div className="flex flex-col justify-center items-center w-full text-center gap-6">
+          <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
+            <span>✨ Introducing Magic UI</span>
+            <ArrowRightIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
+          </AnimatedShinyText>
           <h1 className="font-bold text-2xl sm:text-5xl max-w-[43.5rem]">
             Streamline Feedback With{" "}
             <span className="text-primary">Intuitive Forms.</span>
@@ -29,20 +34,18 @@ const Hero = () => {
           </Button>
         </div>
       </div>
-      <div className="mb-20">
-        <ShineBorder
-          className="relative rounded-lg border"
-          color={["#7C3AED", "#7C3AED", "#7C3AED"]}>
-          <Image
-            alt="hero preview feature"
-            src={`/mail.webp`}
-            width={1000}
-            height={500}
-            priority
-          />
-        </ShineBorder>
-      </div>
-    </>
+      <ShineBorder
+        className="relative rounded-lg border"
+        color={["#7C3AED", "#7C3AED", "#7C3AED"]}>
+        <Image
+          alt="hero preview feature"
+          src={`/mail.webp`}
+          width={1000}
+          height={500}
+          priority
+        />
+      </ShineBorder>
+    </div>
   );
 };
 

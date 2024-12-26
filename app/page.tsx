@@ -1,10 +1,19 @@
 import Brand from "@/components/core/brand";
 import ModeToggle2 from "@/components/core/mode-toggle2";
-import Hero from "@/components/public/hero";
+import Faq from "@/components/public/landing/faq";
+import Features from "@/components/public/landing/features";
+import Hero from "@/components/public/landing/hero";
+import HowItWorks from "@/components/public/landing/how-it-works";
+import Pricing from "@/components/public/landing/pricing";
 import Nav from "@/components/public/nav";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import Link from "next/link";
+
+const urls = [
+  { name: "Features", url: "features" },
+  { name: "Pricing", url: "pricing" },
+];
 
 const Home = () => {
   return (
@@ -13,6 +22,18 @@ const Home = () => {
         <Link href={"/"} className="flex justify-center items-center">
           <Brand type="logo_text" className="h-7 fill-foreground" />
         </Link>
+        <div className="flex justify-center items-center gap-6">
+          {urls.map((url) => {
+            return (
+              <Link
+                key={url.url}
+                href={`#${url.url}`}
+                className="text-sm text-foreground/80">
+                {url.name}
+              </Link>
+            );
+          })}
+        </div>
         <div className="hidden sm:flex justify-center items-center gap-4">
           <Button variant={"outline"} size={"sm"} asChild>
             <Link href={"/login"}>Login</Link>
@@ -31,8 +52,12 @@ const Home = () => {
       </div>
       <div className="sm:mt-36 mt-20 relative flex flex-col justify-center items-center px-4 sm:px-0 flex-1 gap-14">
         <Hero />
+        <Features />
+        <HowItWorks />
+        <Pricing />
+        <Faq />
       </div>
-      <footer className="flex justify-center items-center w-full h-12 absolute bottom-0 border-t">
+      <footer className="flex justify-center items-center w-full h-12  border-t">
         <div className="absolute left-4 hidden sm:flex justify-center items-center gap-2">
           <Link
             href={"/legal/privacy"}
