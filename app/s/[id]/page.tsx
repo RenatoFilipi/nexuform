@@ -3,12 +3,15 @@
 import Brand from "@/components/core/brand";
 import GenericLoader from "@/components/core/generic-loader";
 import FormGroupRelease from "@/components/private/forms/form-group-release";
+import { Button } from "@/components/ui/button";
 import { nanoid, uuid } from "@/helpers/functions";
 import { mockBlocks, mockForms } from "@/helpers/mocks";
 import { AnswerModel } from "@/helpers/models";
 import { appState, colorLabel } from "@/helpers/types";
 import useSubmissionStore from "@/stores/submission";
 import { useQuery } from "@tanstack/react-query";
+import { ArrowRightIcon } from "lucide-react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
@@ -57,6 +60,10 @@ const S = () => {
       setBlocks(blocks);
       setSubmissionId(nnid);
       setAnswers(answers);
+      if (form.status !== "published") {
+        setAppState("error");
+        return null;
+      }
       setAppState("idle");
       return null;
     },
@@ -66,9 +73,11 @@ const S = () => {
   if (appState === "loading") {
     return (
       <div className="flex justify-center items-center h-screen">
-        <div className="flex justify-center items-center flex-col gap-1">
+        <div className="flex justify-center items-center flex-col gap-2">
           <GenericLoader />
-          <span className="text-sm text-foreground/80">Loading Form</span>
+          <span className="text-sm text-foreground/80">
+            Loading Environment
+          </span>
         </div>
       </div>
     );
@@ -90,7 +99,28 @@ const S = () => {
   }
   if (appState === "error") {
     return (
-      <div className="flex justify-center items-center h-screen">error</div>
+      <div className="flex justify-center items-center h-screen">
+        <div className="flex flex-col gap-10">
+          <div className="flex flex-col justify-center items-center gap-6">
+            <div className="flex justify-center items-center p-4 rounded bg-foreground/5 border">
+              <Brand type="logo" className="fill-foreground w-10 h-10" />
+            </div>
+            <span className="text-foreground/80">
+              This form is not accessible or does not exist.
+            </span>
+          </div>
+          <div className="flex justify-center items-center gap-4 sm:flex-row flex-col">
+            <Button variant={"outline"} asChild>
+              <Link href={"/signup"}>Sign Up for an Account</Link>
+            </Button>
+            <Button asChild>
+              <Link href={"/login"}>
+                Create a New Form <ArrowRightIcon className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </div>
     );
   }
 };
