@@ -53,14 +53,20 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen flex">
+      <div className="flex-1 sm:flex hidden w-full relative bg-primary">
+        <Brand
+          type="logo_text"
+          className="h-10 fill-black absolute top-6 left-6"
+        />
+      </div>
       <div className="flex-1 flex justify-center items-center w-full relative">
         <Link href={"/"} className="fixed top-6 flex sm:hidden">
           <Brand type="logo" className="h-8 fill-foreground" />
         </Link>
-        <div className="fixed top-3 left-3 hidden sm:flex gap-2">
+        <div className="absolute top-3 left-3 hidden sm:flex gap-2 justify-between items-center">
           <Button variant={"ghost"} size={"sm"} asChild>
             <Link href={"/"}>
-              <ChevronLeftIcon className="w-4 h-4 mr-2" />
+              <ChevronLeftIcon className="w-4 h-4 mr-" />
               Go back
             </Link>
           </Button>
@@ -178,9 +184,6 @@ const Signup = () => {
             </div>
           </div>
         )}
-      </div>
-      <div className="flex-1 sm:flex hidden justify-center items-center w-full relative bg-primary">
-        <Brand type="logo_text" className="h-20 fill-black" />
       </div>
     </div>
   );

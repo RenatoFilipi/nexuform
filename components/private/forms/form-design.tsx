@@ -206,17 +206,16 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
           <div className="flex justify-start items-center gap-2">
             <Label>Theme</Label>
           </div>
-          <div className="grid sm:grid-cols-10 grid-cols-8 gap-2 overflow-y-auto ">
+          <div className="grid sm:grid-cols-10 grid-cols-8 gap-1 overflow-y-auto ">
             {availableColors.map((color, index) => {
               return (
                 <button
                   onClick={() => setTheme(color.label)}
                   key={index}
                   className={`${
-                    color.label === theme && "bg-foreground/20"
+                    color.label === theme && "bg-foreground/15"
                   } flex justify-center items-center rounded hover:bg-foreground/10 w-9 h-9`}>
-                  <div
-                    className={`${color.tw_class} w-6 h-6 rounded-full`}></div>
+                  <div className={`${color.tw_class} w-6 h-6 rounded`}></div>
                 </button>
               );
             })}
