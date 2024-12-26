@@ -57,7 +57,7 @@ const Login = () => {
       <div className="flex-1 sm:flex hidden w-full relative bg-primary">
         <Brand
           type="logo_text"
-          className="h-10 fill-black absolute top-6 left-6"
+          className="h-8 fill-black absolute top-6 left-6"
         />
       </div>
       <div className="flex-1 flex justify-center items-center w-full relative">
