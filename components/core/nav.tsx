@@ -106,7 +106,7 @@ const Nav = () => {
     return (
       <div className="border-y border-t-foreground/5 h-14 flex items-center px-2 sm:px-6 justify-between z-10 bg-background fixed w-full">
         <div className="flex justify-center items-center gap-1 h-full">
-          <div className="flex justify-center items-center gap-1">
+          <div className="flex justify-center items-center gap-3">
             <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
               <Link href={"/dashboard/forms"}>
                 <Brand type="logo" className="h-7 fill-foreground" />
@@ -464,11 +464,11 @@ const SelectFormBody = ({ setState }: { setState: setState<boolean> }) => {
           variant={"outline"}
           size={"sm"}
           className="w-full sm:w-fit">
-          Cancel
+          Close
         </Button>
         <FormCreate>
           <Button variant={"default"} size={"sm"} className="w-full sm:w-fit">
-            New Form
+            Create Form
           </Button>
         </FormCreate>
       </div>

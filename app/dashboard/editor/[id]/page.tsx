@@ -16,7 +16,7 @@ import useEditorStore from "@/stores/editor";
 import { useQuery } from "@tanstack/react-query";
 import {
   BlocksIcon,
-  ListIcon,
+  ListOrderedIcon,
   PaintbrushIcon,
   PlusIcon,
   Settings2Icon,
@@ -56,7 +56,7 @@ const tips = [
     desc: "Rearrange the blocks in your form to adjust the flow and structure. Drag and drop to reorder them as needed",
     icon: (
       <div className="flex justify-center items-center p-3 rounded bg-purple-500/15 text-purple-600">
-        <ListIcon />
+        <ListOrderedIcon />
       </div>
     ),
   },
@@ -168,9 +168,11 @@ const Editor = () => {
               <Brand type="logo" className="h-7 fill-foreground" />
             </Link>
           </Button>
-          {appState === "loading" && <GenericLoader className="w-4 h-4" />}
+          {appState === "loading" && (
+            <GenericLoader className="w-4 h-4 hidden sm:flex" />
+          )}
           {appState === "idle" && (
-            <span className="text-foreground/80 text-sm font-medium">
+            <span className="text-foreground/80 text-sm font-medium hidden sm:flex">
               {name}
             </span>
           )}
@@ -189,12 +191,14 @@ const Editor = () => {
           </Button>
         </div>
         <div className="flex sm:hidden justify-center items-center gap-2">
-          <Button
-            onClick={() => setIsPreview(true)}
-            variant={"outline"}
-            size={"sm"}>
-            Preview
-          </Button>
+          {blocks.length >= 1 && (
+            <Button
+              onClick={() => setIsPreview(true)}
+              variant={"outline"}
+              size={"sm"}>
+              Preview
+            </Button>
+          )}
           <Button
             onClick={onSave}
             variant={"default"}
@@ -240,15 +244,20 @@ const Editor = () => {
                 </FormSettings>
                 <FormReorder>
                   <Button variant={"outline"} size={"sm"} className="flex-1">
-                    <ListIcon className="w-4 h-4 mr-2" />
+                    <ListOrderedIcon className="w-4 h-4 mr-2" />
                     Reorder
                   </Button>
                 </FormReorder>
               </div>
             </div>
             {blocks.length <= 0 && (
-              <div className="flex flex-1 justify-center items-center">
-                <span className="text-foreground/80 text-sm">No block.</span>
+              <div className="flex flex-1 justify-center items-center sm:hidden">
+                <div className="flex flex-col justify-center items-center">
+                  <span className="text-lg font-medium">No block to show</span>
+                  <span className="text-foreground/80 text-sm text-center">
+                    Add new blocks to enrich your form
+                  </span>
+                </div>
               </div>
             )}
             {blocks.length >= 1 && (

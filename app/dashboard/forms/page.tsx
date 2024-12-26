@@ -52,7 +52,7 @@ const Forms = () => {
                 <BookMarkedIcon className="text-primary" />
               </div>
               <div className="flex flex-col justify-center items-center gap-1">
-                <span className="text-lg font-medium">No form to show.</span>
+                <span className="text-lg font-medium">No form to show</span>
                 <span className="text-foreground/80 text-sm text-center">
                   Create your very first form and start collecting responses
                   effortlessly.

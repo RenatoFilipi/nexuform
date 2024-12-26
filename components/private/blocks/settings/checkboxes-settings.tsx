@@ -82,7 +82,7 @@ const CheckboxesSettings = ({
         </div>
         <div className="grid gap-3 overflow-y-auto">
           <Label htmlFor="options">Options</Label>
-          <div>
+          <div className="flex flex-col overflow-y-auto">
             <TagInput
               tags={localTags}
               setTags={handleSetTags}
@@ -93,7 +93,7 @@ const CheckboxesSettings = ({
               activeTagIndex={activeTagIndex}
               setActiveTagIndex={setActiveTagIndex}
               inlineTags={false}
-              direction="column"
+              direction="row"
               customTagRenderer={(tag) => (
                 <div
                   key={tag.id}
