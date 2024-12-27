@@ -25,13 +25,13 @@ const Home = () => {
         <Link href={"/"} className="flex justify-center items-center">
           <Brand type="logo_text" className="h-7 fill-foreground" />
         </Link>
-        <div className="flex justify-center items-center gap-6">
+        <div className="hidden sm:flex justify-center items-center gap-6">
           {urls.map((url) => {
             return (
               <Link
                 key={url.url}
                 href={`#${url.url}`}
-                className="text-sm text-foreground/80">
+                className="text-sm text-foreground/60 hover:text-foreground">
                 {url.name}
               </Link>
             );

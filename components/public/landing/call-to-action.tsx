@@ -7,15 +7,16 @@ const CallToAction = () => {
     <section className="py-40 bg-gradient-to-b from-[#181C1F] to-primary text-white w-full">
       <div className="px-4 mx-auto max-w-7xl text-center">
         <h2 className="text-3xl font-bold sm:text-4xl">
-          Ready to get started?
+          Ready to Improve Your Products and Services?
         </h2>
         <p className="mt-4 text-lg">
-          Unlock all features and grow your business today.
+          Collect valuable feedback and insights with custom forms to enhance
+          your offerings.
         </p>
         <div className="mt-8 flex justify-center gap-4">
-          <Button size={"sm"}>Learn More</Button>
+          <Button size={"sm"}>See How It Works</Button>
           <Button size={"sm"} variant={"secondary"}>
-            Get Started
+            Start Receiving Responses
           </Button>
         </div>
       </div>

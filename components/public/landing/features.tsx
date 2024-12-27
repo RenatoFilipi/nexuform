@@ -34,7 +34,7 @@ const features = [
     iconColor: "#ECD294",
   },
   {
-    title: "Analytics",
+    title: "Advanced Analytics",
     description:
       "Gain valuable insights into form performance with our built-in analytics tools.",
     icon: (
