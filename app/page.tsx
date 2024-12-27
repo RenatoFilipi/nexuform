@@ -12,6 +12,7 @@ import Link from "next/link";
 
 const urls = [
   { name: "Features", url: "features" },
+  { name: "How It Works", url: "how-it-works" },
   { name: "Pricing", url: "pricing" },
 ];
 

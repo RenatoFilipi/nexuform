@@ -3,6 +3,7 @@
 import AnimatedShinyText from "@/components/magicui/animated-shiny-text";
 import ShineBorder from "@/components/magicui/shine-border";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { ArrowRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,11 +12,16 @@ const Hero = () => {
   return (
     <div className="flex flex-col gap-14">
       <div className="flex justify-center items-center flex-col gap-6 w-full">
-        <div className="flex flex-col justify-center items-center w-full text-center gap-6">
-          <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
-            <span>✨ Introducing Magic UI</span>
-            <ArrowRightIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
-          </AnimatedShinyText>
+        <div className="flex flex-col justify-center items-center w-full text-center gap-8">
+          <div
+            className={cn(
+              "group rounded-full border border-black/5 bg-neutral-100 text-base text-white transition-all ease-in hover:cursor-pointer hover:bg-neutral-200 dark:border-white/5 dark:bg-neutral-900 dark:hover:bg-neutral-800"
+            )}>
+            <AnimatedShinyText className="text-xs inline-flex items-center justify-center px-4 py-1 transition ease-out text-foreground">
+              <span>🚧 Under Development</span>
+              <ArrowRightIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
+            </AnimatedShinyText>
+          </div>
           <h1 className="font-bold text-2xl sm:text-5xl max-w-[43.5rem]">
             Streamline Feedback With{" "}
             <span className="text-primary">Intuitive Forms.</span>
