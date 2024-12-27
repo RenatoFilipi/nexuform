@@ -1,5 +1,6 @@
 import Brand from "@/components/core/brand";
 import ModeToggle2 from "@/components/core/mode-toggle2";
+import CallToAction from "@/components/public/landing/call-to-action";
 import Faq from "@/components/public/landing/faq";
 import Features from "@/components/public/landing/features";
 import Hero from "@/components/public/landing/hero";
@@ -14,6 +15,7 @@ const urls = [
   { name: "Features", url: "features" },
   { name: "How It Works", url: "how-it-works" },
   { name: "Pricing", url: "pricing" },
+  { name: "Faq", url: "faq" },
 ];
 
 const Home = () => {
@@ -57,6 +59,7 @@ const Home = () => {
         <HowItWorks />
         <Pricing />
         <Faq />
+        <CallToAction />
       </div>
       <footer className="flex justify-center items-center w-full h-12  border-t">
         <div className="absolute left-4 hidden sm:flex justify-center items-center gap-2">

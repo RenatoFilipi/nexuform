@@ -177,10 +177,17 @@ const Body = ({
         <div className="flex justify-center items-center gap-4 w-full sm:w-fit">
           <Button
             onClick={() => setState(false)}
-            variant={"default"}
+            variant={"secondary"}
             size={"sm"}
             className="w-full sm:w-fit">
             Mark as Reviewed
+          </Button>
+          <Button
+            onClick={() => setState(false)}
+            variant={"default"}
+            size={"sm"}
+            className="w-full sm:w-fit">
+            Export to CSV
           </Button>
         </div>
       </div>

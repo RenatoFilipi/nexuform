@@ -159,13 +159,13 @@ const HowItWorks = () => {
   return (
     <section
       id="how-it-works"
-      className="py-12 sm:py-16 lg:py-20 bg-foreground/10 w-full">
+      className="py-12 sm:py-16 lg:py-20 bg-neutral-700 w-full">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-foreground leading-tight sm:text-4xl xl:text-5xl">
+          <h2 className="text-3xl font-bold text-white leading-tight sm:text-4xl xl:text-5xl">
             How It Works
           </h2>
-          <p className="mt-4 text-base leading-7 sm:mt-4 text-foreground/60">
+          <p className="mt-4 text-base leading-7 sm:mt-4 text-neutral-50/80">
             Follow these simple steps to create, share, and analyze forms.
           </p>
         </div>
@@ -173,12 +173,12 @@ const HowItWorks = () => {
           {steps.map((step, index) => (
             <div
               key={index}
-              className="flex flex-col items-center p-6 transition-shadow bg-foreground/5 border border-background/20 rounded-lg shadow-sm hover:shadow-md">
+              className="flex flex-col items-center p-6 transition-shadow bg-neutral-800 border border-background/20 rounded-lg shadow-sm hover:shadow-md">
               {step.icon}
-              <h3 className="mt-6 text-xl font-bold text-foreground">
+              <h3 className="mt-6 text-xl font-bold text-white">
                 {step.title}
               </h3>
-              <p className="mt-4 text-base text-center text-foreground/60">
+              <p className="mt-4 text-base text-center text-neutral-50/80">
                 {step.description}
               </p>
             </div>
