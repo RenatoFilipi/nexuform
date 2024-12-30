@@ -13,10 +13,10 @@ const CallToAction = () => {
           Collect valuable feedback and insights with custom forms to enhance
           your offerings.
         </p>
-        <div className="mt-8 flex justify-center gap-4">
+        <div className="mt-8 flex justify-center gap-4 flex-col sm:flex-row">
           <Button size={"sm"}>See How It Works</Button>
           <Button size={"sm"} variant={"secondary"}>
-            Start Receiving Responses
+            Get Started
           </Button>
         </div>
       </div>
