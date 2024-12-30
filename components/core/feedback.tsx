@@ -50,7 +50,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
           <Link
             href={"/"}
             className="hover:underline text-info dark:text-blue-500">
-            Support Form.
+            support form.
           </Link>
         </p>
       </div>

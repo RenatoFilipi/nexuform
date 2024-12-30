@@ -143,10 +143,10 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
                     className={`${
                       statusItem.status === status &&
                       "bg-primary/10 border-primary hover:bg-primary/10"
-                    } border rounded hover:bg-foreground/10 p-2 flex flex-col gap-2`}>
+                    } border rounded hover:bg-foreground/10 flex flex-col gap-2 py-4`}>
                     <div className="flex justify-center w-full items-center gap-2 flex-col">
                       {statusItem.icon}
-                      <span className="text-sm font-medium">
+                      <span className="text-sm font-medium text-foreground/80">
                         {statusItem.label}
                       </span>
                     </div>
