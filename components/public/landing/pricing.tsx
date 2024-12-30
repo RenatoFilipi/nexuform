@@ -12,7 +12,7 @@ const plans = [
     available: true,
     features: [
       "Full access to all Pro plan features for 14 days",
-      "Create up to 100 forms during the trial period",
+      "Create up to 50 forms during the trial period",
       "5,000 submissions included during the trial",
       "Advanced analytics with charts and trend insights",
       "Seamless integration with Google Sheets",
@@ -42,7 +42,7 @@ const plans = [
     label: "Get Started",
     available: true,
     features: [
-      "Create up to 100 forms",
+      "Create up to 50 forms",
       "5,000 submissions per month included",
       "Access all customizable form blocks",
       "Advanced analytics with charts and trend insights",
@@ -61,7 +61,6 @@ const plans = [
     available: true,
     features: [
       "All Pro plan features included",
-      "Unlimited form submissions tailored to your needs",
       "Advanced analytics for in-depth insights",
       "Priority support with a 6-hour response time (SLA)",
     ],
