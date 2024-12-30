@@ -20,7 +20,7 @@ const plans = [
   },
   {
     name: "Basic",
-    priceMonthly: 10, // Ajuste para R$ 10
+    priceMonthly: 10,
     label: "Get Started",
     available: true,
     features: [
@@ -34,7 +34,7 @@ const plans = [
   },
   {
     name: "Pro",
-    priceMonthly: 22, // Ajuste para R$ 22
+    priceMonthly: 22,
     label: "Get Started",
     available: true,
     features: [

@@ -9,7 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { minWidth640 } from "@/helpers/constants";
@@ -178,30 +177,11 @@ const FormDesign = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Body = ({ setState }: { setState: setState<boolean> }) => {
-  const {
-    theme,
-    setTheme,
-    setSubmitLabel,
-    submitLabel,
-    numericBlocks,
-    setNumericBlock,
-  } = useEditorStore();
+  const { theme, setTheme, numericBlocks, setNumericBlock } = useEditorStore();
 
   return (
     <div className="flex flex-col gap-6 h-full overflow-y-auto w-full">
       <div className="flex-1 overflow-y-auto flex flex-col gap-4 w-full">
-        <div className="grid gap-3 w-full">
-          <Label>Button</Label>
-          <Input
-            type="text"
-            value={submitLabel}
-            onChange={(e) => setSubmitLabel(e.target.value)}
-          />
-        </div>
-        <div className="flex justify-between items-center w-full">
-          <Label>Show numeric blocks</Label>
-          <Switch checked={numericBlocks} onCheckedChange={setNumericBlock} />
-        </div>
         <div className="grid gap-3 overflow-y-auto">
           <div className="flex justify-start items-center gap-2">
             <Label>Theme</Label>
@@ -220,6 +200,10 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
               );
             })}
           </div>
+        </div>
+        <div className="flex justify-between items-center w-full">
+          <Label>Show numeric blocks</Label>
+          <Switch checked={numericBlocks} onCheckedChange={setNumericBlock} />
         </div>
       </div>
       <div className="flex justify-end items-center w-full">

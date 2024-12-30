@@ -31,7 +31,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import FormCreate from "../private/forms/form-create";
+import { default as Brand } from "../core/brand";
+import Feedback from "../core/feedback";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
@@ -42,7 +43,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { default as Brand } from "./brand";
+import FormCreate from "./forms/form-create";
 
 const navLinks = [
   {
@@ -147,7 +148,12 @@ const Nav = () => {
             })}
           </div>
         </div>
-        <div className="hidden sm:flex justify-center items-center">
+        <div className="hidden sm:flex justify-center items-center gap-4">
+          <Feedback>
+            <Button variant={"outline"} size={"sm"}>
+              Feedback
+            </Button>
+          </Feedback>
           <AvatarMenu />
         </div>
         <div className="flex sm:hidden">
@@ -191,7 +197,12 @@ const Nav = () => {
           })}
         </div>
       </div>
-      <div className="hidden sm:flex justify-center items-center">
+      <div className="hidden sm:flex justify-center items-center gap-4">
+        <Feedback>
+          <Button variant={"outline"} size={"sm"}>
+            Feedback
+          </Button>
+        </Feedback>
         <AvatarMenu />
       </div>
       <div className="flex sm:hidden">

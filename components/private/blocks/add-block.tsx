@@ -31,7 +31,7 @@ import {
   TextIcon,
 } from "lucide-react";
 import { useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useMediaQuery } from "react-responsive";
 import { z } from "zod";
 import {
@@ -172,8 +172,6 @@ const Body = ({
       block: "",
     },
   });
-
-  const blockWatch = useWatch({ control: form.control });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const blockType = values.block as block;

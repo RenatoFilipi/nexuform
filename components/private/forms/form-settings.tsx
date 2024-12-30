@@ -1,6 +1,5 @@
 "use client";
 
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -62,7 +61,7 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="h-[600px] flex flex-col">
+        <DialogContent className="flex flex-col ">
           <DialogHeader>
             <DialogTitle className="text-xl font-medium">Settings</DialogTitle>
             <DialogDescription>
@@ -92,25 +91,43 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Body = ({ setState }: { setState: setState<boolean> }) => {
-  const store = useEditorStore();
+  const {
+    name,
+    setName,
+    submitLabel,
+    setSubmitLabel,
+    description,
+    setDescription,
+    id,
+    status,
+    setStatus,
+  } = useEditorStore();
 
   return (
     <div className="flex flex-col gap-6 h-full overflow-y-auto pt-4 sm:pt-0">
-      <div className="flex flex-1 overflow-y-auto gap-6 px-1 flex-col">
+      <div className="flex flex-1 overflow-y-auto gap-6 px-1 flex-col sm:pr-2">
         <div className="flex flex-col gap-4 flex-1">
           <div className="grid gap-3">
             <Label>Name</Label>
             <Input
               type="text"
-              value={store.name}
-              onChange={(e) => store.setName(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="grid gap-3">
             <Label>Description (Optional)</Label>
             <Textarea
-              value={store.description ?? ""}
-              onChange={(e) => store.setDescription(e.target.value)}
+              value={description ?? ""}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+          <div className="grid gap-3">
+            <Label>Submit Button</Label>
+            <Input
+              type="text"
+              value={submitLabel}
+              onChange={(e) => setSubmitLabel(e.target.value)}
             />
           </div>
         </div>
@@ -118,35 +135,30 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
           <Label>Status</Label>
           <div className="flex flex-col gap-4">
             <div className="grid gap-3 overflow-y-auto grid-cols-3">
-              {statusList.map((status, index) => {
+              {statusList.map((statusItem, index) => {
                 return (
                   <button
-                    onClick={() => store.setStatus(status.status)}
+                    onClick={() => setStatus(statusItem.status)}
                     key={index}
                     className={`${
-                      status.status === store.status &&
+                      statusItem.status === status &&
                       "bg-primary/10 border-primary hover:bg-primary/10"
                     } border rounded hover:bg-foreground/10 p-2 flex flex-col gap-2`}>
                     <div className="flex justify-center w-full items-center gap-2 flex-col">
-                      {status.icon}
+                      {statusItem.icon}
                       <span className="text-sm font-medium">
-                        {status.label}
+                        {statusItem.label}
                       </span>
                     </div>
                   </button>
                 );
               })}
             </div>
-            <Alert variant={"info"}>
-              <AlertDescription>
-                {statusList.find((x) => x.status === store.status)?.description}
-              </AlertDescription>
-            </Alert>
           </div>
         </div>
       </div>
       <div className="flex justify-between items-center gap-2 flex-col sm:flex-row">
-        <FormDelete formId={store.id}>
+        <FormDelete formId={id}>
           <Button
             variant={"destructive_outline"}
             size={"sm"}

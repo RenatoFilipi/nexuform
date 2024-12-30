@@ -1,4 +1,4 @@
-import Nav from "@/components/core/nav";
+import Nav from "@/components/private/nav";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
