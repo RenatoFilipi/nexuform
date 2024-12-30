@@ -3,10 +3,10 @@
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { minWidth640 } from "@/helpers/constants";
-import { mockForms } from "@/helpers/mocks";
-import { FormProps } from "@/helpers/modules";
-import { setState } from "@/helpers/types";
+import { minWidth640 } from "@/utils/constants";
+import { mockForms } from "@/utils/mocks";
+import { FormProps } from "@/utils/modules";
+import { setState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { CopyIcon } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";

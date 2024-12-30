@@ -3,9 +3,9 @@
 import GenericLoader from "@/components/core/generic-loader";
 import AnalyticsCard from "@/components/private/analytics/analytics-card";
 import AnalyticsProgress from "@/components/private/analytics/analytics-progress";
-import { mockAnalytics, mockForms } from "@/helpers/mocks";
-import { FormProps } from "@/helpers/modules";
-import { appState } from "@/helpers/types";
+import { mockAnalytics, mockForms } from "@/utils/mocks";
+import { FormProps } from "@/utils/modules";
+import { appState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { BookCheckIcon, BookMarkedIcon, ViewIcon } from "lucide-react";
 import { useState } from "react";

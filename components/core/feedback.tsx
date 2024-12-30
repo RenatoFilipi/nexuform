@@ -3,7 +3,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { appState, setState } from "@/helpers/types";
+import { appState, setState } from "@/utils/types";
 import Link from "next/link";
 import { ReactNode, useState } from "react";
 import { Button } from "../ui/button";
@@ -42,7 +42,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
             Cancel
           </Button>
           <Button size={"sm"} variant={"secondary"}>
-            Send
+            Send Feedback
           </Button>
         </div>
         <p className="text-xs text-foreground/80">

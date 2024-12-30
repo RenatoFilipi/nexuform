@@ -14,9 +14,9 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { minWidth640 } from "@/helpers/constants";
-import { BlockModel } from "@/helpers/models";
-import { setState } from "@/helpers/types";
+import { minWidth640 } from "@/utils/constants";
+import { BlockModel } from "@/utils/models";
+import { setState } from "@/utils/types";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import CheckboxesSettings from "./settings/checkboxes-settings";

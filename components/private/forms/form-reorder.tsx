@@ -7,10 +7,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { minWidth640 } from "@/helpers/constants";
-import { BlockModel } from "@/helpers/models";
-import { block, setState } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
+import { minWidth640 } from "@/utils/constants";
+import { BlockModel } from "@/utils/models";
+import { block, setState } from "@/utils/types";
 import { Reorder } from "framer-motion";
 import {
   CheckCircleIcon,

@@ -10,11 +10,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { minWidth640 } from "@/helpers/constants";
-import { mockAnswers, mockBlocks, mockSubmissions } from "@/helpers/mocks";
-import { SubmissionModel } from "@/helpers/models";
-import { SubmissionSegmentProps } from "@/helpers/modules";
-import { appState, setState, submissionStatus } from "@/helpers/types";
+import { minWidth640 } from "@/utils/constants";
+import { mockAnswers, mockBlocks, mockSubmissions } from "@/utils/mocks";
+import { SubmissionModel } from "@/utils/models";
+import { SubmissionSegmentProps } from "@/utils/modules";
+import { appState, setState, submissionStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";

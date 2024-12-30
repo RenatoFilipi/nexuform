@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { AnalyticsProps } from "@/helpers/modules";
+import { AnalyticsProps } from "@/utils/modules";
 
 const AnalyticsCard = ({ icon, label, value }: AnalyticsProps) => {
   return (

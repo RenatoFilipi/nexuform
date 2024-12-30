@@ -1,7 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { ColorProps } from "@/helpers/interfaces";
-import { BlockModel } from "@/helpers/models";
+import { ColorProps } from "@/utils/interfaces";
+import { BlockModel } from "@/utils/models";
 import { twMerge } from "tailwind-merge";
 
 const design: ColorProps[] = [

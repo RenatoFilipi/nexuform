@@ -1,5 +1,5 @@
-import { BlockModel } from "@/helpers/models";
-import { colorLabel, formStatus } from "@/helpers/types";
+import { BlockModel } from "@/utils/models";
+import { colorLabel, formStatus } from "@/utils/types";
 import { create } from "zustand";
 
 interface EditorProps {

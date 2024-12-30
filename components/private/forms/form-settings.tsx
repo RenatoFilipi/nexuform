@@ -11,10 +11,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { minWidth640 } from "@/helpers/constants";
-import { FormSettingsStatusProps } from "@/helpers/interfaces";
-import { setState } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
+import { minWidth640 } from "@/utils/constants";
+import { FormSettingsStatusProps } from "@/utils/interfaces";
+import { setState } from "@/utils/types";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { BookDashedIcon, GlobeIcon, PencilOffIcon } from "lucide-react";
 import { useState } from "react";

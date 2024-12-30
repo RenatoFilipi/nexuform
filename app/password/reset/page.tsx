@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { appState } from "@/helpers/types";
+import { appState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronLeftIcon, LoaderIcon } from "lucide-react";
 import Link from "next/link";

@@ -1,6 +1,6 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import { ColorProps } from "@/helpers/interfaces";
-import { BlockModel } from "@/helpers/models";
+import { ColorProps } from "@/utils/interfaces";
+import { BlockModel } from "@/utils/models";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";

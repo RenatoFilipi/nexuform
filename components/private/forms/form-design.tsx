@@ -11,10 +11,10 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { minWidth640 } from "@/helpers/constants";
-import { ColorProps } from "@/helpers/interfaces";
-import { setState } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
+import { minWidth640 } from "@/utils/constants";
+import { ColorProps } from "@/utils/interfaces";
+import { setState } from "@/utils/types";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import {

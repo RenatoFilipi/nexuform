@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { FormProps } from "@/helpers/modules";
+import { FormProps } from "@/utils/modules";
 
 const AnalyticsProgress = ({ forms }: { forms: FormProps[] }) => {
   const total = forms.reduce((sum, prog) => sum + prog.submissions, 0);

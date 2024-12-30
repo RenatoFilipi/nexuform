@@ -6,9 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { BlockModel } from "@/helpers/models";
-import { setState } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
+import { BlockModel } from "@/utils/models";
+import { setState } from "@/utils/types";
 
 const ShortTextSettings = ({
   block,

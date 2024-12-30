@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { ColorProps } from "@/helpers/interfaces";
-import { AnswerModel } from "@/helpers/models";
 import useSubmissionStore from "@/stores/submission";
+import { ColorProps } from "@/utils/interfaces";
+import { AnswerModel } from "@/utils/models";
 import { twMerge } from "tailwind-merge";
 import CheckBoxesDesign from "../blocks/design/checkboxes-design";
 import CustomScaleDesign from "../blocks/design/custom-scale-design";

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { ColorProps } from "@/helpers/interfaces";
 import useEditorStore from "@/stores/editor";
+import { ColorProps } from "@/utils/interfaces";
 import { twMerge } from "tailwind-merge";
 import CheckBoxesDesign from "../blocks/design/checkboxes-design";
 import CustomScaleDesign from "../blocks/design/custom-scale-design";

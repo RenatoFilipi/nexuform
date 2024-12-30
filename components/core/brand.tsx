@@ -1,4 +1,4 @@
-import { BrandProps } from "@/helpers/interfaces";
+import { BrandProps } from "@/utils/interfaces";
 import { twMerge } from "tailwind-merge";
 
 const Brand = ({ className, type }: BrandProps) => {

@@ -1,5 +1,5 @@
-import { AnswerModel, BlockModel } from "@/helpers/models";
-import { colorLabel, formStatus } from "@/helpers/types";
+import { AnswerModel, BlockModel } from "@/utils/models";
+import { colorLabel, formStatus } from "@/utils/types";
 import { create } from "zustand";
 
 interface SubmissionProps {

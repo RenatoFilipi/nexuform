@@ -11,10 +11,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { minWidth640 } from "@/helpers/constants";
-import { formatDateRelativeToNow } from "@/helpers/functions";
-import { SubmissionProps } from "@/helpers/modules";
-import { submissionStatus } from "@/helpers/types";
+import { minWidth640 } from "@/utils/constants";
+import { formatDateRelativeToNow } from "@/utils/functions";
+import { SubmissionProps } from "@/utils/modules";
+import { submissionStatus } from "@/utils/types";
 import { useMediaQuery } from "react-responsive";
 import FormSubmissionView from "./form-submission-view";
 

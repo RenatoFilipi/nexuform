@@ -10,9 +10,9 @@ import FormGroupPreview from "@/components/private/forms/form-group-preview";
 import FormReorder from "@/components/private/forms/form-reorder";
 import FormSettings from "@/components/private/forms/form-settings";
 import { Button } from "@/components/ui/button";
-import { mockBlocks, mockForms } from "@/helpers/mocks";
-import { appState, colorLabel } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
+import { mockBlocks, mockForms } from "@/utils/mocks";
+import { appState, colorLabel } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import {
   BlocksIcon,

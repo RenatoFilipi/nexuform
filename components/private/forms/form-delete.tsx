@@ -9,8 +9,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { minWidth640 } from "@/helpers/constants";
-import { setState } from "@/helpers/types";
+import { minWidth640 } from "@/utils/constants";
+import { setState } from "@/utils/types";
 import { ReactNode, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import {

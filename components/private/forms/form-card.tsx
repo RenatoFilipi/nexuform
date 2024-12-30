@@ -1,8 +1,8 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { FormProps } from "@/helpers/modules";
-import { formStatus } from "@/helpers/types";
+import { FormProps } from "@/utils/modules";
+import { formStatus } from "@/utils/types";
 import { ExternalLinkIcon, Layers2Icon, Settings2Icon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../../ui/button";

@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
-import { ColorProps } from "@/helpers/interfaces";
-import { BlockModel } from "@/helpers/models";
+import { ColorProps } from "@/utils/interfaces";
+import { BlockModel } from "@/utils/models";
 import { useState } from "react";
 
 const design: ColorProps[] = [

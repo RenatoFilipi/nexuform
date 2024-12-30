@@ -1,4 +1,4 @@
-import { block, formStatus, submissionStatus } from "@/helpers/types";
+import { block, formStatus, submissionStatus } from "@/utils/types";
 
 export interface FormModel {
   id: string;

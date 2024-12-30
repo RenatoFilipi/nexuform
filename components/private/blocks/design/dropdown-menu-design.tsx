@@ -5,8 +5,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ColorProps } from "@/helpers/interfaces";
-import { BlockModel } from "@/helpers/models";
+import { ColorProps } from "@/utils/interfaces";
+import { BlockModel } from "@/utils/models";
 import { useState } from "react";
 
 const design: ColorProps[] = [

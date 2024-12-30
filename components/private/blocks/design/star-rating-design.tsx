@@ -1,5 +1,5 @@
 import Rating from "@/components/ui/rating";
-import { BlockModel } from "@/helpers/models";
+import { BlockModel } from "@/utils/models";
 
 const StarRatingDesign = ({
   block,

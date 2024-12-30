@@ -12,12 +12,12 @@ import {
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { minWidth640 } from "@/helpers/constants";
-import { uuid } from "@/helpers/functions";
-import { addBlockProps } from "@/helpers/interfaces";
-import { BlockModel } from "@/helpers/models";
-import { block, setState } from "@/helpers/types";
 import useEditorStore from "@/stores/editor";
+import { minWidth640 } from "@/utils/constants";
+import { uuid } from "@/utils/functions";
+import { addBlockProps } from "@/utils/interfaces";
+import { BlockModel } from "@/utils/models";
+import { block, setState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   CheckCircleIcon,

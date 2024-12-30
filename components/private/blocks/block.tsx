@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { BlockModel } from "@/helpers/models";
-import { block } from "@/helpers/types";
+import { BlockModel } from "@/utils/models";
+import { block } from "@/utils/types";
 import {
   CheckCircleIcon,
   CheckSquareIcon,
