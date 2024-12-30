@@ -18,23 +18,23 @@ const Hero = () => {
               "group rounded-full border border-black/5 bg-neutral-100 text-base text-white transition-all ease-in hover:cursor-pointer hover:bg-neutral-200 dark:border-white/5 dark:bg-neutral-900 dark:hover:bg-neutral-800"
             )}>
             <AnimatedShinyText className="text-xs inline-flex items-center justify-center px-4 py-1 transition ease-out text-foreground">
-              <span>🔔 V1 Launch soon!</span>
+              <span>🔔 Exciting News: V1 Launching Soon!</span>
               <ArrowRightIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
             </AnimatedShinyText>
           </div>
           <h1 className="font-bold text-2xl sm:text-5xl max-w-[43.5rem]">
-            Streamline Feedback With{" "}
-            <span className="text-primary">Intuitive Forms.</span>
+            Simplify Feedback Collection with{" "}
+            <span className="text-primary">Powerful Forms.</span>
           </h1>
           <p className="max-w-xl text-base font-normal text-foreground/80">
-            Transform Your Business Landscape through Strategic Decision-Making
-            with Data Insights.
+            Drive smarter decisions with actionable insights. Elevate your
+            business processes by transforming feedback into meaningful data.
           </p>
         </div>
         <div className="flex justify-center items-center gap-4 flex-col sm:flex-row w-full">
           <Button asChild variant={"secondary"} className="w-full sm:w-fit">
             <Link href={"/dashboard/forms"}>
-              Start Free Trial
+              Get Started for Free
               <ArrowRightIcon className="w-4 h-4 ml-2" />
             </Link>
           </Button>

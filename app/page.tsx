@@ -53,7 +53,7 @@ const Home = () => {
           </Nav>
         </div>
       </div>
-      <div className="sm:mt-36 mt-20 relative flex flex-col justify-center items-center px-4 sm:px-0 flex-1 gap-14">
+      <div className="sm:mt-28 mt-20 relative flex flex-col justify-center items-center px-4 sm:px-0 flex-1 gap-14">
         <Hero />
         <Features />
         <HowItWorks />
