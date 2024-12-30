@@ -11,61 +11,74 @@ const plans = [
     label: "Start Free Trial",
     available: true,
     features: [
-      "Full access to Basic plan features for 14 days",
-      "Create up to 10 forms during the trial period",
-      "100 monthly submissions included",
-      "Basic analytics: track form views and submissions",
-      "Email support with a 48-hour response time (SLA)",
+      "Full access to all Pro plan features for 14 days",
+      "Create up to 100 forms during the trial period",
+      "5,000 submissions included during the trial",
+      "Advanced analytics with charts and trend insights",
+      "Seamless integration with Google Sheets",
+      "Export submission data as CSV files",
+      "Remove Nebulaform branding from your forms",
+      "Share forms effortlessly via link or QR code",
+      "Priority email support with a 24-hour response time (SLA)",
     ],
   },
   {
     name: "Basic",
-    priceMonthly: 10,
+    priceMonthly: 8,
     label: "Get Started",
     available: true,
     features: [
       "Create up to 10 forms",
-      "1,000 monthly submissions included",
-      "Access all customizable blocks",
-      "Basic analytics: monitor views, submissions, and responses",
-      "Easily share forms via link or QR code",
+      "1,000 submissions per month included",
+      "Access all customizable form blocks",
+      "Basic analytics: track views, submissions, and responses",
+      "Share forms easily via link or QR code",
       "Email support with a 48-hour response time (SLA)",
     ],
   },
   {
     name: "Pro",
-    priceMonthly: 22,
+    priceMonthly: 18,
     label: "Get Started",
     available: true,
     features: [
       "Create up to 100 forms",
-      "5,000 monthly submissions included",
-      "Access all customizable blocks",
-      "Advanced analytics: gain insights with charts and trends",
-      "Integrate seamlessly with Google Sheets",
+      "5,000 submissions per month included",
+      "Access all customizable form blocks",
+      "Advanced analytics with charts and trend insights",
+      "Seamless integration with Google Sheets",
       "Export submission data as CSV files",
-      "Enhanced customization: advanced themes and button styles",
-      "Remove branding from forms",
-      "Easily share forms via link or QR code",
+      "Remove Nebulaform branding from your forms",
+      "Share forms effortlessly via link or QR code",
       "Priority email support with a 24-hour response time (SLA)",
     ],
     isFeatured: true,
   },
   {
     name: "Enterprise",
-    priceMonthly: "Let's talk",
+    priceMonthly: "Let's Talk",
     label: "Contact Sales",
     available: true,
     features: [
-      "Includes all Pro plan features",
-      "Unlimited submissions to meet your needs",
-      "Advanced analytics for deeper insights",
+      "All Pro plan features included",
+      "Unlimited form submissions tailored to your needs",
+      "Advanced analytics for in-depth insights",
       "Priority support with a 6-hour response time (SLA)",
     ],
   },
 ];
 
 const Pricing = () => {
+  const renderPrice = (price: string | number) =>
+    typeof price === "string" ? (
+      price
+    ) : (
+      <span>
+        $ {price.toFixed(2)}{" "}
+        <span className="text-sm text-foreground/80 font-normal">/month</span>
+      </span>
+    );
+
   return (
     <section id="pricing" className="py-12 sm:py-16 lg:py-20 bg-background">
       <div className="px-4 mx-auto sm:px-6 lg:px-8">
@@ -79,7 +92,7 @@ const Pricing = () => {
         </div>
         <div className="grid grid-cols-1 mt-10 gap-6 sm:mt-16 sm:grid-cols-2 lg:grid-cols-4">
           {plans
-            .filter((x) => x.available)
+            .filter((plan) => plan.available)
             .map((plan, index) => (
               <div
                 key={index}
@@ -87,31 +100,28 @@ const Pricing = () => {
                   plan.isFeatured
                     ? "border-primary border-2 scale-105"
                     : "border-foreground/20"
-                }`}>
+                }`}
+                aria-label={`Plan: ${plan.name}`}>
                 <div className="flex items-center space-x-3">
                   <h3 className="text-2xl font-bold">{plan.name}</h3>
+                  {plan.name === "Free Trial" && (
+                    <Badge variant="green" className="py-1 px-2 text-sm">
+                      Pro
+                    </Badge>
+                  )}
                   {plan.isFeatured && (
-                    <Badge variant={"green"} className="py-1 px-2 text-sm">
+                    <Badge variant="green" className="py-1 px-2 text-sm">
                       Most Popular
                     </Badge>
                   )}
                 </div>
                 <p className="mt-4 text-3xl font-extrabold text-primary">
-                  {plan.priceMonthly === "Let's talk" ? (
-                    plan.priceMonthly
-                  ) : (
-                    <span>
-                      $ {(plan.priceMonthly as number).toFixed(2)}{" "}
-                      <span className="text-sm text-foreground/80 font-normal">
-                        /month
-                      </span>
-                    </span>
-                  )}
+                  {renderPrice(plan.priceMonthly)}
                 </p>
                 <div className="w-full mt-4">
                   <Button
                     className="w-full"
-                    size={"sm"}
+                    size="sm"
                     variant={plan.isFeatured ? "default" : "secondary"}>
                     {plan.label}
                   </Button>
@@ -128,7 +138,8 @@ const Pricing = () => {
                         width="20"
                         height="20"
                         viewBox="0 0 24 24"
-                        fill="none">
+                        fill="none"
+                        aria-hidden="true">
                         <path
                           d="M9 11l3 3 7-7"
                           stroke="currentColor"

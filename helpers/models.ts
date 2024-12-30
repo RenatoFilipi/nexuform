@@ -13,6 +13,9 @@ export interface FormModel {
   status: formStatus;
   views: number;
   submissions: number;
+  //uppercase_input_labels: boolean;
+  //width: "centered" | "full";
+  //remove_branding: boolean;
 }
 export interface BlockModel {
   id: string;

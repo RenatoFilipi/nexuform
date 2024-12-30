@@ -43,3 +43,4 @@ export type colorLabel =
   | "Fuchsia"
   | "Pink"
   | "Rose";
+export type plan = "free_trial" | "basic" | "pro" | "enterprise";
