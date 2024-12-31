@@ -30,7 +30,7 @@ const Analytics = () => {
   });
 
   return (
-    <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-14">
+    <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
       {appState === "loading" && (
         <div className="flex justify-center items-center flex-1">
           <GenericLoader />

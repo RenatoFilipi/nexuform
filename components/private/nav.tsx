@@ -3,11 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { minWidth640 } from "@/utils/constants";
 import { mockForms } from "@/utils/mocks";
@@ -18,6 +14,7 @@ import {
   BookMarkedIcon,
   ChartPieIcon,
   ChevronsUpDownIcon,
+  HouseIcon,
   LogOutIcon,
   Menu,
   MenuIcon,
@@ -48,9 +45,9 @@ import FormCreate from "./forms/form-create";
 const navLinks = [
   {
     id: 1,
-    name: "Forms",
+    name: "Home",
     path: "/dashboard/forms",
-    icon: <BookMarkedIcon className="w-4 h-4 mr-2" />,
+    icon: <HouseIcon className="w-4 h-4 mr-2" />,
     enabled: true,
   },
   {
@@ -115,10 +112,7 @@ const Nav = () => {
             </Button>
             {currentForm !== undefined && (
               <SelectForm>
-                <Button
-                  variant={"ghost"}
-                  size={"sm"}
-                  className="flex justify-center items-center gap-2">
+                <Button variant={"ghost"} size={"sm"} className="flex justify-center items-center gap-2">
                   <div className="flex justify-center items-center gap-2">
                     <span className="text-sm">{currentForm.name}</span>
                     {BadgeColor(currentForm.status)}
@@ -138,9 +132,7 @@ const Nav = () => {
                     className={`${
                       isActive(link.path) && ""
                     } text-sm h-full flex justify-center items-center px-3 hover:bg-foreground/5 relative`}>
-                    {isActive(link.path) && (
-                      <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>
-                    )}
+                    {isActive(link.path) && <div className="bg-foreground bottom-0 w-full h-1 absolute"></div>}
                     {link.icon}
                     {link.name}
                   </Link>
@@ -187,9 +179,7 @@ const Nav = () => {
                   className={`${
                     isActive(link.path) && ""
                   } text-sm h-full flex justify-center items-center px-3 hover:bg-foreground/5 relative`}>
-                  {isActive(link.path) && (
-                    <div className="bg-foreground/80 bottom-0 w-full h-1 absolute"></div>
-                  )}
+                  {isActive(link.path) && <div className="bg-foreground/80 bottom-0 w-full h-1 absolute"></div>}
                   {link.icon}
                   {link.name}
                 </Link>
@@ -235,8 +225,7 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
                   key={link.id}
                   href={link.path}
                   className={`${
-                    isActive(link.path) &&
-                    "bg-primary text-white hover:bg-primary"
+                    isActive(link.path) && "bg-primary text-white hover:bg-primary"
                   } p-2 border hover:bg-foreground/5 text-sm flex justify-start items-center`}>
                   {link.icon}
                   {link.name}
@@ -246,19 +235,10 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
         </div>
         <div className="flex flex-col w-full gap-2">
           <div className="flex justify-between items-center px-2">
-            <span className="text-sm flex items-center justify-center">
-              Theme
-            </span>
-            <RadioGroup
-              value={theme}
-              onValueChange={setTheme}
-              className="flex gap-1">
+            <span className="text-sm flex items-center justify-center">Theme</span>
+            <RadioGroup value={theme} onValueChange={setTheme} className="flex gap-1">
               <div>
-                <RadioGroupItem
-                  value="system"
-                  id="system"
-                  className="peer sr-only"
-                />
+                <RadioGroupItem value="system" id="system" className="peer sr-only" />
                 <Label
                   htmlFor="system"
                   className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
@@ -266,11 +246,7 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
                 </Label>
               </div>
               <div>
-                <RadioGroupItem
-                  value="light"
-                  id="light"
-                  className="peer sr-only"
-                />
+                <RadioGroupItem value="light" id="light" className="peer sr-only" />
                 <Label
                   htmlFor="light"
                   className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
@@ -278,11 +254,7 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
                 </Label>
               </div>
               <div>
-                <RadioGroupItem
-                  value="dark"
-                  id="dark"
-                  className="peer sr-only"
-                />
+                <RadioGroupItem value="dark" id="dark" className="peer sr-only" />
                 <Label
                   htmlFor="dark"
                   className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
@@ -291,11 +263,7 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
               </div>
             </RadioGroup>
           </div>
-          <Button
-            variant={"ghost"}
-            size={"sm"}
-            className="flex justify-between"
-            asChild>
+          <Button variant={"ghost"} size={"sm"} className="flex justify-between" asChild>
             <Link href={"/"}>
               Log out
               <LogOutIcon className="w-4 h-4" />
@@ -303,14 +271,10 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
           </Button>
         </div>
         <div className="flex justify-end items-center gap-2 p-2">
-          <Link
-            href={"/legal/privacy"}
-            className="text-xs text-foreground/80 hover:underline">
+          <Link href={"/legal/privacy"} className="text-xs text-foreground/80 hover:underline">
             Privacy
           </Link>
-          <Link
-            href={"/legal/terms"}
-            className="text-xs text-foreground/80 hover:underline">
+          <Link href={"/legal/terms"} className="text-xs text-foreground/80 hover:underline">
             Terms
           </Link>
         </div>
@@ -325,27 +289,16 @@ const AvatarMenu = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer">
-          <AvatarFallback className="text-sm bg-foreground/10 text-foreground font-bold">
-            RF
-          </AvatarFallback>
+          <AvatarFallback className="text-sm bg-foreground/10 text-foreground font-bold">RF</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-6 min-w-52 text-foreground/80">
-        <DropdownMenuLabel className="text-foreground">
-          My Account
-        </DropdownMenuLabel>
+        <DropdownMenuLabel className="text-foreground">My Account</DropdownMenuLabel>
         <DropdownMenuItem className="flex flex-row justify-between items-center">
           Theme
-          <RadioGroup
-            value={theme}
-            onValueChange={setTheme}
-            className="flex gap-1">
+          <RadioGroup value={theme} onValueChange={setTheme} className="flex gap-1">
             <div>
-              <RadioGroupItem
-                value="system"
-                id="system"
-                className="peer sr-only"
-              />
+              <RadioGroupItem value="system" id="system" className="peer sr-only" />
               <Label
                 htmlFor="system"
                 className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
@@ -353,11 +306,7 @@ const AvatarMenu = () => {
               </Label>
             </div>
             <div>
-              <RadioGroupItem
-                value="light"
-                id="light"
-                className="peer sr-only"
-              />
+              <RadioGroupItem value="light" id="light" className="peer sr-only" />
               <Label
                 htmlFor="light"
                 className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
@@ -458,8 +407,7 @@ const SelectFormBody = ({ setState }: { setState: setState<boolean> }) => {
             href={`${form.id}`}
             key={form.id}
             className={`${
-              currentForm === form.id &&
-              "bg-foreground/5 hover:bg-foreground/10"
+              currentForm === form.id && "bg-foreground/5 hover:bg-foreground/10"
             } flex justify-between hover:bg-foreground/5 px-2 cursor-pointer items-center h-9`}>
             <div className="flex justify-center items-center gap-2">
               <span className="text-xs">{form.name}</span>

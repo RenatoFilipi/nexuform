@@ -25,9 +25,7 @@ const Form = () => {
     queryKey: ["formPageData"],
     queryFn: () => {
       const currentForm = mockForms.find((x) => x.id === formId);
-      const currentSubmissions = mockSubmissions.filter(
-        (x) => x.form_id === formId
-      );
+      const currentSubmissions = mockSubmissions.filter((x) => x.form_id === formId);
       if (!currentForm || !currentSubmissions) {
         setAppState("idle");
         return;
@@ -40,7 +38,7 @@ const Form = () => {
   });
 
   return (
-    <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-14">
+    <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
       <div className="flex justify-between items-center">
         {!form || form.name === "".trim() ? (
           <GenericLoader className="hidden sm:flex w-5 h-5" />
@@ -58,9 +56,7 @@ const Form = () => {
           </FormShare>
           {form?.status === "published" && (
             <Button variant={"outline"} size={"sm"} className="w-full sm:w-fit">
-              <Link
-                href={`/s/${form?.id}`}
-                className="flex justify-center items-center">
+              <Link href={`/s/${form?.id}`} className="flex justify-center items-center">
                 <ExternalLinkIcon className="w-4 h-4 mr-2" />
                 Go to Form
               </Link>
@@ -81,9 +77,7 @@ const Form = () => {
         )}
         {appState === "idle" && submissions.length <= 0 && (
           <div className="flex justify-center items-center h-full flex-1 border rounded">
-            <span className="text-foreground/80 uppercase text-xs">
-              No submission to show
-            </span>
+            <span className="text-foreground/80 uppercase text-xs">No submission to show</span>
           </div>
         )}
         {appState === "idle" && submissions.length >= 1 && (
