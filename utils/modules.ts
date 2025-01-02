@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { formStatus, submissionStatus } from "./types";
 
 export interface FormProps {

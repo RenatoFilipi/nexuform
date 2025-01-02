@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import BlockSettings from "./block-settings";
 
+import type { JSX } from "react";
+
 const icons: { [key in block]: JSX.Element } = {
   short_text: <EqualIcon className="w-5 h-5 text-background" />,
   paragraph_text: <TextIcon className="w-5 h-5 text-background" />,
