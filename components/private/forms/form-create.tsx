@@ -46,7 +46,7 @@ const FormCreate = ({ children }: { children: React.ReactNode }) => {
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="flex flex-col">
           <DialogHeader>
-            <DialogTitle>Create Form</DialogTitle>
+            <DialogTitle>Create New Form</DialogTitle>
             <DialogDescription>
               Fill in the details below to create a new form. You can customize
               the settings as needed.
@@ -63,7 +63,7 @@ const FormCreate = ({ children }: { children: React.ReactNode }) => {
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3 flex flex-col">
         <DrawerHeader>
-          <DrawerTitle>Create Form</DrawerTitle>
+          <DrawerTitle>Create New Form</DrawerTitle>
           <DrawerDescription>
             Fill in the details below to create a new form. You can customize
             the settings as needed.
@@ -124,7 +124,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
               variant={"default"}
               size={"sm"}
               className="w-full sm:w-fit">
-              Create Form
+              Create New Form
             </Button>
           </div>
         </form>
