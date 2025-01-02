@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { createClient } from "@/utils/supabase/client";
 import { appStage, appState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -22,15 +23,18 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [appState, setAppState] = useState<appState>("idle");
   const [appStage, setAppStage] = useState<appStage>("stage01");
+  const [confirmEmail, setConfirmEmail] = useState("");
+  const supabase = createClient();
 
   const formSchema = z.object({
-    email: z.string().email(),
+    email: z.string().email({ message: "Must be a valid email" }),
     password: z
       .string()
       .min(8, { message: "Password needs to be atleast 8 characters long" }),
@@ -43,12 +47,37 @@ const Signup = () => {
     },
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
     setAppState("loading");
-    setTimeout(() => {
+    const { email, password } = values;
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${window.location.href}/signup/confirm-email`,
+      },
+    });
+
+    if (error) {
       setAppState("idle");
-      setAppStage("stage02");
-    }, 2000);
+      toast.error(error.message);
+      return;
+    }
+    setConfirmEmail(email);
+    setAppStage("stage02");
+  };
+  const onConfirmEmail = async () => {
+    setAppState("loading");
+    const { error } = await supabase.auth.resend({
+      type: "signup",
+      email: confirmEmail,
+    });
+
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    setAppState("idle");
+    toast.success("Confirm email sent, check your inbox.");
   };
 
   return (
@@ -178,8 +207,15 @@ const Signup = () => {
                   request a new confirmation email.
                 </p>
               </div>
-              <Button variant={"secondary"} size={"sm"} className="w-full">
-                Resend confirmation email
+              <Button
+                onClick={onConfirmEmail}
+                variant={"secondary"}
+                size={"sm"}
+                className="w-full">
+                {appState === "loading" && (
+                  <LoaderIcon className="animate-spin w-4 h-4" />
+                )}
+                {appState === "idle" && "Resend confirmation email"}
               </Button>
             </div>
           </div>
