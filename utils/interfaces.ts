@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { block, brand, colorLabel, formStatus } from "./types";
 
 export interface ColorProps {

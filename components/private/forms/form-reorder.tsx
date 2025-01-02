@@ -24,7 +24,7 @@ import {
   StarIcon,
   TextIcon,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, type JSX } from "react";
 import { useMediaQuery } from "react-responsive";
 import AddBlock from "../blocks/add-block";
 
