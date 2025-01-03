@@ -6,6 +6,22 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { toast } from "sonner";
 
+export const signInAction = async (formData: FormData) => {
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) {
+    return encodedRedirect("error", "/login", error.message);
+  }
+
+  return redirect("/dashboard/forms");
+};
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
@@ -39,22 +55,6 @@ export const signUpAction = async (formData: FormData) => {
       "Thanks for signing up! Please check your email for a verification link."
     );
   }
-};
-export const signInAction = async (formData: FormData) => {
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-  const supabase = await createClient();
-
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-
-  if (error) {
-    return encodedRedirect("error", "/login", error.message);
-  }
-
-  return redirect("/dashboard/forms");
 };
 export const signOutAction = async () => {
   const supabase = await createClient();

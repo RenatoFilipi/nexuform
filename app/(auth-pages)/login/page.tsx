@@ -1,5 +1,6 @@
 "use client";
 
+import { signInAction } from "@/app/actions"; // Ajuste o caminho conforme necessário
 import Brand from "@/components/core/brand";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,8 +12,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { createClient } from "@/utils/supabase/client";
-import { appState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ChevronLeftIcon,
@@ -21,17 +20,13 @@ import {
   LoaderIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
 
 const Login = () => {
-  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [appState, setAppState] = useState<appState>("idle");
-  const supabase = createClient();
+  const [isPending, startTransition] = useTransition();
 
   const formSchema = z.object({
     email: z.string().email(),
@@ -39,6 +34,7 @@ const Login = () => {
       .string()
       .min(8, { message: "Password needs to be atleast 8 characters long" }),
   });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -46,22 +42,14 @@ const Login = () => {
       password: "",
     },
   });
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const { email, password } = values;
-    setAppState("loading");
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    startTransition(async () => {
+      const formData = new FormData();
+      formData.append("email", values.email);
+      formData.append("password", values.password);
+      await signInAction(formData);
     });
-    if (error) {
-      toast.error(error.message);
-      setAppState("idle");
-      return;
-    }
-    if (data.user) {
-      router.push("/dashboard/forms");
-    }
-    setAppState("idle");
   };
 
   return (
@@ -153,15 +141,16 @@ const Login = () => {
                     Forgot password?
                   </Link>
                   <Button
-                    disabled={appState === "loading"}
+                    disabled={isPending}
                     variant={"secondary"}
                     type="submit"
                     size={"sm"}
                     className="w-full">
-                    {appState === "loading" && (
+                    {isPending ? (
                       <LoaderIcon className="animate-spin w-4 h-4" />
+                    ) : (
+                      "Login"
                     )}
-                    {appState === "idle" && "Login"}
                   </Button>
                 </div>
               </div>

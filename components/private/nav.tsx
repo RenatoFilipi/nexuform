@@ -1,5 +1,6 @@
 "use client";
 
+import { signOutAction } from "@/app/actions";
 import { Badge } from "@/components/ui/badge";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Label } from "@/components/ui/label";
@@ -376,10 +377,14 @@ const AvatarMenu = () => {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href={"/"} className="flex justify-between w-full items-center">
+          <Button
+            onClick={signOutAction}
+            variant={"ghost"}
+            size={"sm"}
+            className="flex justify-between w-full items-center p-0">
             Log out
             <LogOutIcon className="w-4 h-4" />
-          </Link>
+          </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
