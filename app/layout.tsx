@@ -2,10 +2,11 @@ import { ThemeProvider } from "@/components/core/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import QueryProvider from "@/lib/query-provider";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Figtree, Inter } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
+const figtree = Figtree({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Nebulaform",
@@ -24,7 +25,7 @@ export default function RootLayout({
           src="https://unpkg.com/react-scan/dist/auto.global.js"
           defer></script>
       </head> */}
-      <body className={inter.className}>
+      <body className={figtree.className}>
         <QueryProvider>
           <ThemeProvider
             attribute="class"
