@@ -40,12 +40,29 @@ export const updateSession = async (request: NextRequest) => {
     const user = await supabase.auth.getUser();
 
     // protected routes
-    if (request.nextUrl.pathname.startsWith("/dashboard") && user.error) {
+    if (request.nextUrl.pathname.startsWith("/dashboard/forms") && user.error) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
 
+    // landing
     if (request.nextUrl.pathname === "/" && !user.error) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
+      return NextResponse.redirect(new URL("/dashboard/forms", request.url));
+    }
+    // login
+    if (request.nextUrl.pathname === "/login" && !user.error) {
+      return NextResponse.redirect(new URL("/dashboard/forms", request.url));
+    }
+    // signup
+    if (request.nextUrl.pathname === "/signup" && !user.error) {
+      return NextResponse.redirect(new URL("/dashboard/forms", request.url));
+    }
+    // password new
+    if (request.nextUrl.pathname === "/password/new" && !user.error) {
+      return NextResponse.redirect(new URL("/dashboard/forms", request.url));
+    }
+    // password reset
+    if (request.nextUrl.pathname === "/password/reset" && !user.error) {
+      return NextResponse.redirect(new URL("/dashboard/forms", request.url));
     }
 
     return response;

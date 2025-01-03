@@ -111,7 +111,7 @@ const Signup = () => {
                     <Link
                       href={"/login"}
                       className="hover:underline text-info dark:text-blue-500">
-                      Log In
+                      Log in
                     </Link>
                   </span>
                 </div>

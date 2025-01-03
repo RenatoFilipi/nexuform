@@ -1,57 +1,10 @@
-"use client";
-
-import { signInAction } from "@/app/actions"; // Ajuste o caminho conforme necessário
 import Brand from "@/components/core/brand";
+import LoginForm from "@/components/public/auth/login-form";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  ChevronLeftIcon,
-  EyeClosedIcon,
-  EyeIcon,
-  LoaderIcon,
-} from "lucide-react";
+import { ChevronLeftIcon } from "lucide-react";
 import Link from "next/link";
-import { useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 const Login = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [isPending, startTransition] = useTransition();
-
-  const formSchema = z.object({
-    email: z.string().email(),
-    password: z
-      .string()
-      .min(8, { message: "Password needs to be atleast 8 characters long" }),
-  });
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    startTransition(async () => {
-      const formData = new FormData();
-      formData.append("email", values.email);
-      formData.append("password", values.password);
-      await signInAction(formData);
-    });
-  };
-
   return (
     <div className="min-h-screen flex">
       <div className="flex-1 sm:flex hidden w-full relative bg-gradient-to-b from-black to-primary">
@@ -73,89 +26,20 @@ const Login = () => {
           </Button>
         </div>
         <div className="w-full flex justify-center items-center">
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="w-full sm:max-w-96 flex flex-col gap-10 justify-center items-center sm:p-0 px-12">
-              <div className="flex justify-start w-full flex-col gap-2">
-                <h1 className="text-xl font-medium">Login</h1>
-                <span className="text-sm text-foreground/80">
-                  Don&apos;t have an account?{" "}
-                  <Link
-                    href={"/signup"}
-                    className="hover:underline text-info dark:text-blue-500">
-                    Sign Up
-                  </Link>
-                </span>
-              </div>
-              <div className="flex flex-col justify-center items-center w-full gap-4">
-                <div className="flex flex-col gap-3 w-full">
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel htmlFor="email">Email</FormLabel>
-                        <FormControl>
-                          <Input id="email" type="email" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel htmlFor="password">Password</FormLabel>
-                        <FormControl>
-                          <div className="flex justify-center items-center gap-2">
-                            <Input
-                              id="password"
-                              type={showPassword ? "text" : "password"}
-                              {...field}
-                            />
-                            <Button
-                              type="button"
-                              variant={"ghost"}
-                              size={"icon"}
-                              onClick={() => setShowPassword(!showPassword)}>
-                              {showPassword ? (
-                                <EyeIcon className="w-5 h-5" />
-                              ) : (
-                                <EyeClosedIcon className="w-5 h-5" />
-                              )}
-                            </Button>
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div className="flex flex-col w-full gap-4">
-                  <Link
-                    href={"/password/reset"}
-                    className="text-sm hover:underline text-foreground/80 hover:text-info dark:hover:text-blue-500 w-fit">
-                    Forgot password?
-                  </Link>
-                  <Button
-                    disabled={isPending}
-                    variant={"secondary"}
-                    type="submit"
-                    size={"sm"}
-                    className="w-full">
-                    {isPending ? (
-                      <LoaderIcon className="animate-spin w-4 h-4" />
-                    ) : (
-                      "Login"
-                    )}
-                  </Button>
-                </div>
-              </div>
-            </form>
-          </Form>
+          <div className="flex flex-col items-center justify-center w-full sm:max-w-96 gap-6 sm:p-0 px-12">
+            <div className="flex justify-start w-full flex-col gap-1">
+              <h1 className="text-xl font-medium">Login</h1>
+              <span className="text-sm text-foreground/80">
+                Don&apos;t have an account?{" "}
+                <Link
+                  href={"/signup"}
+                  className="hover:underline text-info dark:text-blue-500">
+                  Sign up
+                </Link>
+              </span>
+            </div>
+            <LoginForm />
+          </div>
         </div>
       </div>
     </div>
