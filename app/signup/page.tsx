@@ -2,12 +2,24 @@
 
 import { default as Brand } from "@/components/core/brand";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { createClient } from "@/utils/supabase/client";
 import { appStage, appState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronLeftIcon, EyeClosedIcon, EyeIcon, LoaderIcon } from "lucide-react";
+import {
+  ChevronLeftIcon,
+  EyeClosedIcon,
+  EyeIcon,
+  LoaderIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -23,7 +35,9 @@ const Signup = () => {
 
   const formSchema = z.object({
     email: z.string().email({ message: "Must be a valid email" }),
-    password: z.string().min(8, { message: "Password needs to be atleast 8 characters long" }),
+    password: z
+      .string()
+      .min(8, { message: "Password needs to be atleast 8 characters long" }),
   });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -67,7 +81,10 @@ const Signup = () => {
   return (
     <div className="min-h-screen flex">
       <div className="flex-1 sm:flex hidden w-full relative bg-gradient-to-b from-black to-primary">
-        <Brand type="logo_text" className="h-8 fill-white absolute top-6 left-6" />
+        <Brand
+          type="logo_text"
+          className="h-8 fill-white absolute top-6 left-6"
+        />
       </div>
       <div className="flex-1 flex justify-center items-center w-full relative">
         <Link href={"/"} className="fixed top-6 flex sm:hidden">
@@ -91,7 +108,9 @@ const Signup = () => {
                   <h1 className="text-xl font-medium">Sign up</h1>
                   <span className="text-sm text-foreground/80">
                     Already have an account?{" "}
-                    <Link href={"/login"} className="hover:underline text-info dark:text-blue-500">
+                    <Link
+                      href={"/login"}
+                      className="hover:underline text-info dark:text-blue-500">
                       Log In
                     </Link>
                   </span>
@@ -119,13 +138,20 @@ const Signup = () => {
                           <FormLabel>Password</FormLabel>
                           <FormControl>
                             <div className="flex justify-center items-center gap-2">
-                              <Input type={showPassword ? "text" : "password"} {...field} />
+                              <Input
+                                type={showPassword ? "text" : "password"}
+                                {...field}
+                              />
                               <Button
                                 type="button"
                                 variant={"ghost"}
                                 size={"icon"}
                                 onClick={() => setShowPassword(!showPassword)}>
-                                {showPassword ? <EyeIcon className="w-5 h-5" /> : <EyeClosedIcon className="w-5 h-5" />}
+                                {showPassword ? (
+                                  <EyeIcon className="w-5 h-5" />
+                                ) : (
+                                  <EyeClosedIcon className="w-5 h-5" />
+                                )}
                               </Button>
                             </div>
                           </FormControl>
@@ -137,16 +163,26 @@ const Signup = () => {
                   <div className="flex flex-col w-full gap-6">
                     <p className="text-xs text-foreground/80">
                       By signing up for an account, you agree to all{" "}
-                      <Link href={"/legal/terms"} className="text-info hover:underline dark:text-blue-500">
+                      <Link
+                        href={"/legal/terms"}
+                        className="text-info hover:underline dark:text-blue-500">
                         terms of service
                       </Link>{" "}
                       and{" "}
-                      <Link href={"/legal/privacy"} className="text-info hover:underline dark:text-blue-500">
+                      <Link
+                        href={"/legal/privacy"}
+                        className="text-info hover:underline dark:text-blue-500">
                         privacy policy.
                       </Link>
                     </p>
-                    <Button variant={"secondary"} type="submit" size={"sm"} className="w-full">
-                      {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4" />}
+                    <Button
+                      variant={"secondary"}
+                      type="submit"
+                      size={"sm"}
+                      className="w-full">
+                      {appState === "loading" && (
+                        <LoaderIcon className="animate-spin w-4 h-4" />
+                      )}
                       {appState === "idle" && "Sign up"}
                     </Button>
                   </div>
@@ -161,15 +197,22 @@ const Signup = () => {
               <h1 className="text-2xl font-medium">Confirm your email</h1>
               <div className="flex flex-col gap-4">
                 <p className="text-sm text-foreground/80">
-                  We&apos;ve sent you a confirmation email. Please check your inbox and click the link to verify your
-                  account.
+                  We&apos;ve sent you a confirmation email. Please check your
+                  inbox and click the link to verify your account.
                 </p>
                 <p className="text-xs text-foreground/60">
-                  If you don&apos;t see the email, check your spam folder or request a new confirmation email.
+                  If you don&apos;t see the email, check your spam folder or
+                  request a new confirmation email.
                 </p>
               </div>
-              <Button onClick={onConfirmEmail} variant={"secondary"} size={"sm"} className="w-full">
-                {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4" />}
+              <Button
+                onClick={onConfirmEmail}
+                variant={"secondary"}
+                size={"sm"}
+                className="w-full">
+                {appState === "loading" && (
+                  <LoaderIcon className="animate-spin w-4 h-4" />
+                )}
                 {appState === "idle" && "Resend confirmation email"}
               </Button>
             </div>

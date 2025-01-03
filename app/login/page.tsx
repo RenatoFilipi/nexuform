@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { createClient } from "@/utils/supabase/client";
 import { appState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -23,12 +24,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const Login = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [appState, setAppState] = useState<appState>("idle");
+  const supabase = createClient();
 
   const formSchema = z.object({
     email: z.string().email(),
@@ -44,12 +47,21 @@ const Login = () => {
     },
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    const { email, password } = values;
     setAppState("loading");
-    setTimeout(() => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) {
+      toast.error(error.message);
       setAppState("idle");
+      return;
+    }
+    if (data.user) {
       router.push("/dashboard/forms");
-    }, 2000);
+    }
+    setAppState("idle");
   };
 
   return (

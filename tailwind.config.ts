@@ -118,6 +118,27 @@ const config = {
   				'30%, 60%': {
   					'background-position': 'calc(100% + var(--shiny-width)) 0'
   				}
+  			},
+  			meteor: {
+  				'0%': {
+  					transform: 'rotate(215deg) translateX(0)',
+  					opacity: '1'
+  				},
+  				'70%': {
+  					opacity: '1'
+  				},
+  				'100%': {
+  					transform: 'rotate(215deg) translateX(-500px)',
+  					opacity: '0'
+  				}
+  			},
+  			grid: {
+  				'0%': {
+  					transform: 'translateY(-50%)'
+  				},
+  				'100%': {
+  					transform: 'translateY(0)'
+  				}
   			}
   		},
   		animation: {
@@ -125,7 +146,9 @@ const config = {
   			'accordion-up': 'accordion-up 0.2s ease-out',
   			shimmer: 'shimmer 8s infinite',
   			'border-beam': 'border-beam calc(var(--duration)*1s) infinite linear',
-  			'shiny-text': 'shiny-text 8s infinite'
+  			'shiny-text': 'shiny-text 8s infinite',
+  			meteor: 'meteor 5s linear infinite',
+  			grid: 'grid 15s linear infinite'
   		},
   		width: {
   			fill: 'fill-available',

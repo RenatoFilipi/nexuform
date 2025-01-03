@@ -33,7 +33,7 @@ const Hero = () => {
         </div>
         <div className="flex justify-center items-center gap-4 flex-col sm:flex-row w-full">
           <Button asChild variant={"secondary"} className="w-full sm:w-fit">
-            <Link href={"/dashboard/forms"}>
+            <Link href={"/signup"}>
               Get Started for Free
               <ArrowRightIcon className="w-4 h-4 ml-2" />
             </Link>

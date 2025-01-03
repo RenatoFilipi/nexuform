@@ -2,10 +2,9 @@ import { ThemeProvider } from "@/components/core/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import QueryProvider from "@/lib/query-provider";
 import type { Metadata } from "next";
-import { Figtree, Inter } from "next/font/google";
+import { Figtree } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
 const figtree = Figtree({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -13,7 +12,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Renato Filipi" }],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
