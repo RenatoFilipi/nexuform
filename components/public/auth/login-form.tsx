@@ -39,11 +39,12 @@ const LoginForm = () => {
       password: "",
     },
   });
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const { email, password } = values;
     startTransition(async () => {
       const formData = new FormData();
-      formData.append("email", values.email);
-      formData.append("password", values.password);
+      formData.append("email", email);
+      formData.append("password", password);
       await signInAction(formData);
     });
   };
