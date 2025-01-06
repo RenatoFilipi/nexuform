@@ -9,6 +9,48 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      answers: {
+        Row: {
+          block_id: string
+          created_at: string
+          id: string
+          submission_id: string
+          updated_at: string
+          value: string
+        }
+        Insert: {
+          block_id: string
+          created_at?: string
+          id?: string
+          submission_id: string
+          updated_at?: string
+          value?: string
+        }
+        Update: {
+          block_id?: string
+          created_at?: string
+          id?: string
+          submission_id?: string
+          updated_at?: string
+          value?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "answers_block_id_fkey"
+            columns: ["block_id"]
+            isOneToOne: false
+            referencedRelation: "blocks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "answers_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       blocks: {
         Row: {
           created_at: string
@@ -141,6 +183,41 @@ export type Database = {
           website?: string | null
         }
         Relationships: []
+      }
+      submissions: {
+        Row: {
+          created_at: string
+          form_id: string
+          id: string
+          sent_by: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          form_id: string
+          id?: string
+          sent_by?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          form_id?: string
+          id?: string
+          sent_by?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "submissions_form_id_fkey"
+            columns: ["form_id"]
+            isOneToOne: false
+            referencedRelation: "forms"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       themes: {
         Row: {
