@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { useState } from "react";
-import ModeToggle2 from "../core/mode-toggle2";
+import ModeToggle2 from "../../core/mode-toggle2";
 
 const navLinks = [
   { name: "Home", path: "/" },

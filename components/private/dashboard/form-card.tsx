@@ -6,7 +6,7 @@ import { ChevronRightIcon } from "lucide-react";
 import Link from "next/link";
 
 const FormCard = ({ form }: { form: EForm }) => {
-  const { id, name, status, updated_at } = form;
+  const { id, name, status } = form;
   const BadgeVariant = (status: formStatus) => {
     switch (status) {
       case "published":

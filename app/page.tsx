@@ -1,12 +1,12 @@
 import Brand from "@/components/core/brand";
 import ModeToggle2 from "@/components/core/mode-toggle2";
+import Nav from "@/components/public/core/nav";
 import CallToAction from "@/components/public/landing/call-to-action";
 import Faq from "@/components/public/landing/faq";
 import Features from "@/components/public/landing/features";
 import Hero from "@/components/public/landing/hero";
 import HowItWorks from "@/components/public/landing/how-it-works";
 import Pricing from "@/components/public/landing/pricing";
-import Nav from "@/components/public/nav";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import Link from "next/link";
