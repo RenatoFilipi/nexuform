@@ -7,7 +7,7 @@ const FormList = ({ forms }: { forms: EForm[] }) => {
   if (forms.length === 0) {
     return (
       <div className="flex justify-center items-center h-full flex-1">
-        <div className="flex flex-col justify-center items-center gap-3">
+        <div className="flex flex-col justify-center items-center gap-2">
           <span className="text-lg font-medium">No form to show</span>
           <span className="text-sm text-center">
             Create your very first form and start collecting responses

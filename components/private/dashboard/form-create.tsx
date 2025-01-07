@@ -1,5 +1,6 @@
 "use client";
 
+import { createFormAction } from "@/app/actions";
 import {
   Form,
   FormControl,
@@ -9,13 +10,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { minWidth640 } from "@/utils/constants";
-import { uuid } from "@/utils/functions";
 import { setState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Loader2Icon } from "lucide-react";
+import { useQueryState } from "nuqs";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { useMediaQuery } from "react-responsive";
+import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "../../ui/button";
 import {
@@ -36,9 +39,27 @@ import {
 } from "../../ui/drawer";
 import { Input } from "../../ui/input";
 
-const FormCreate = ({ children }: { children: React.ReactNode }) => {
+const FormCreate = ({
+  children,
+  userId,
+}: {
+  children: React.ReactNode;
+  userId: string;
+}) => {
+  const [error] = useQueryState("error");
   const isDesktop = useMediaQuery({ query: minWidth640 });
   const [open, setOpen] = useState(false);
+
+  useQuery({
+    queryKey: [error],
+    queryFn: () => {
+      if (error !== null) {
+        toast.error(error);
+      }
+      return null;
+    },
+    refetchOnWindowFocus: false,
+  });
 
   if (isDesktop) {
     return (
@@ -52,7 +73,7 @@ const FormCreate = ({ children }: { children: React.ReactNode }) => {
               the settings as needed.
             </DialogDescription>
           </DialogHeader>
-          <Body setState={setOpen} />
+          <Body setState={setOpen} userId={userId} />
         </DialogContent>
       </Dialog>
     );
@@ -69,14 +90,21 @@ const FormCreate = ({ children }: { children: React.ReactNode }) => {
             the settings as needed.
           </DrawerDescription>
         </DrawerHeader>
-        <Body setState={setOpen} />
+        <Body setState={setOpen} userId={userId} />
       </DrawerContent>
     </Drawer>
   );
 };
 
-const Body = ({ setState }: { setState: setState<boolean> }) => {
-  const router = useRouter();
+const Body = ({
+  setState,
+  userId,
+}: {
+  setState: setState<boolean>;
+  userId: string;
+}) => {
+  const [isPending, startTransition] = useTransition();
+
   const formSchema = z.object({
     name: z.string().min(3, "Name must contain at least 3 letters."),
   });
@@ -87,8 +115,13 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
     },
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    router.push(`/dashboard/editor/${uuid()}`);
+    const { name } = values;
+    startTransition(async () => {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("userId", userId);
+      await createFormAction(formData);
+    });
   };
 
   return (
@@ -124,7 +157,11 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
               variant={"default"}
               size={"sm"}
               className="w-full sm:w-fit">
-              Create New Form
+              {isPending ? (
+                <Loader2Icon className="animate-spin w-4 h-4" />
+              ) : (
+                "Create New Form"
+              )}
             </Button>
           </div>
         </form>

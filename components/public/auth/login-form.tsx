@@ -57,6 +57,7 @@ const LoginForm = () => {
       }
       return null;
     },
+    refetchOnWindowFocus: false,
   });
 
   return (

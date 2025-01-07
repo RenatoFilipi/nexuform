@@ -1,5 +1,5 @@
+import FormCreate from "@/components/private/dashboard/form-create";
 import FormList from "@/components/private/dashboard/form-list";
-import FormCreate from "@/components/private/forms/form-create";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
@@ -20,7 +20,7 @@ const Forms = async () => {
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-medium">Forms</h1>
         <div className="flex justify-center items-center gap-4">
-          <FormCreate>
+          <FormCreate userId={data.user.id}>
             <Button size={"sm"} variant={"default"}>
               New Form
             </Button>

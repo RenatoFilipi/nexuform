@@ -3,31 +3,15 @@
 import GenericLoader from "@/components/core/generic-loader";
 import AnalyticsCard from "@/components/private/analytics/analytics-card";
 import AnalyticsProgress from "@/components/private/analytics/analytics-progress";
-import { mockAnalytics, mockForms } from "@/utils/mocks";
-import { FormProps } from "@/utils/modules";
 import { appState } from "@/utils/types";
-import { useQuery } from "@tanstack/react-query";
 import { BookCheckIcon, BookMarkedIcon, ViewIcon } from "lucide-react";
 import { useState } from "react";
 
 const Analytics = () => {
-  const [appState, setAppState] = useState<appState>("loading");
+  const [appState, setAppState] = useState<appState>("idle");
   const [totalForms, setTotalForms] = useState(0);
   const [totalSubmissions, setTotalSubmissions] = useState(0);
   const [totalViews, setTotalViews] = useState(0);
-  const [forms, setForms] = useState<FormProps[]>([]);
-
-  useQuery({
-    queryKey: ["analyticsData"],
-    queryFn: () => {
-      setTotalForms(mockAnalytics.total_forms);
-      setTotalSubmissions(mockAnalytics.total_submissions);
-      setTotalViews(mockAnalytics.total_views);
-      setForms(mockForms);
-      setAppState("idle");
-      return null;
-    },
-  });
 
   return (
     <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
