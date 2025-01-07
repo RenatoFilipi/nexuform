@@ -1,14 +1,12 @@
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { EForm } from "@/utils/entities";
-import { formatDateRelativeToNow } from "@/utils/functions";
 import { formStatus } from "@/utils/types";
 import { ChevronRightIcon } from "lucide-react";
 import Link from "next/link";
 
 const FormCard = ({ form }: { form: EForm }) => {
   const { id, name, status, updated_at } = form;
-  console.log(updated_at);
   const BadgeVariant = (status: formStatus) => {
     switch (status) {
       case "published":
