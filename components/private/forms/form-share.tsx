@@ -4,10 +4,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { minWidth640 } from "@/utils/constants";
-import { mockForms } from "@/utils/mocks";
-import { FormProps } from "@/utils/modules";
-import { setState } from "@/utils/types";
-import { useQuery } from "@tanstack/react-query";
+import { formStatus, setState } from "@/utils/types";
 import { CopyIcon } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
@@ -31,9 +28,11 @@ import {
 const FormShare = ({
   children,
   formId,
+  status,
 }: {
   children: React.ReactNode;
   formId: string;
+  status: formStatus;
 }) => {
   const isDesktop = useMediaQuery({ query: minWidth640 });
   const [open, setOpen] = useState(false);
@@ -49,7 +48,7 @@ const FormShare = ({
               Easily share your form with others using a link or a QR code.
             </DialogDescription>
           </DialogHeader>
-          <Body setState={setOpen} formId={formId} />
+          <Body setState={setOpen} formId={formId} status={status} />
         </DialogContent>
       </Dialog>
     );
@@ -65,7 +64,7 @@ const FormShare = ({
             Easily share your form with others using a link or a QR code.
           </DialogDescription>
         </DrawerHeader>
-        <Body setState={setOpen} formId={formId} />
+        <Body setState={setOpen} formId={formId} status={status} />
       </DrawerContent>
     </Drawer>
   );
@@ -74,28 +73,18 @@ const FormShare = ({
 const Body = ({
   setState,
   formId,
+  status,
 }: {
   setState: setState<boolean>;
   formId: string;
+  status: formStatus;
 }) => {
-  const [url, setUrl] = useState("");
-  const [form, setForm] = useState<FormProps | null>(null);
-
-  useQuery({
-    queryKey: ["formShareData"],
-    queryFn: () => {
-      const currentForm = mockForms.find((x) => x.id === formId);
-      if (!currentForm) return;
-      setForm(currentForm);
-      setUrl(`${window.location.host}/s/${currentForm.id}`);
-      return null;
-    },
-  });
+  const [url] = useState(`${window.location.host}/s/${formId}`);
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1 justify-center items-start">
-        {form?.status !== "published" && (
+        {status !== "published" && (
           <Alert variant={"destructive"}>
             <AlertDescription>
               This form is not currently public, change the status in the editor
@@ -104,7 +93,7 @@ const Body = ({
           </Alert>
         )}
       </div>
-      {form?.status === "published" && (
+      {status === "published" && (
         <div className="flex flex-col justify-center items-center gap-6">
           <div className="flex justify-center items-center w-full gap-4">
             <Input value={url} className="text-foreground/60 w-full" readOnly />

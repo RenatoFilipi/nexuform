@@ -62,7 +62,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
           {BadgeVariant(form.status as formStatus)}
         </div>
         <div className="flex justify-center items-center sm:gap-4 gap-2 w-full sm:w-fit">
-          <FormShare formId={slug}>
+          <FormShare formId={slug} status={form.status as formStatus}>
             <Button variant={"outline"} size={"sm"} className="w-full">
               <ForwardIcon className="w-4 h-4 mr-2" />
               Share
