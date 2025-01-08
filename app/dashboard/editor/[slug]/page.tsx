@@ -11,9 +11,7 @@ import FormReorder from "@/components/private/forms/form-reorder";
 import FormSettings from "@/components/private/forms/form-settings";
 import { Button } from "@/components/ui/button";
 import useEditorStore from "@/stores/editor";
-import { mockBlocks, mockForms } from "@/utils/mocks";
-import { appState, colorLabel } from "@/utils/types";
-import { useQuery } from "@tanstack/react-query";
+import { appState } from "@/utils/types";
 import {
   BlocksIcon,
   ListOrderedIcon,
@@ -90,31 +88,6 @@ const Editor = () => {
   const [isPreview, setIsPreview] = useState(false);
   const [appState, setAppState] = useState<appState>("loading");
   const [saveState, setSaveState] = useState<appState>("idle");
-
-  useQuery({
-    queryKey: ["editorPageData"],
-    queryFn: () => {
-      reset();
-      const form = mockForms.find((x) => x.id === formId);
-      const blocks = mockBlocks.filter((x) => x.form_id === formId);
-      if (!form) {
-        setAppState("idle");
-        return null;
-      }
-      setId(form.id);
-      setName(form.name);
-      setDescription(form.description);
-      setOwnerId(form.owner_id);
-      setNumericBlock(form.numeric_blocks);
-      setTheme(form.theme as colorLabel);
-      setStatus(form.status);
-      setSubmitLabel(form.submit_label);
-      setBlocks(blocks);
-      setAppState("idle");
-      return null;
-    },
-    refetchOnWindowFocus: false,
-  });
 
   if (isPreview) {
     return (

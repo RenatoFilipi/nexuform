@@ -54,13 +54,13 @@ export const createFormAction = async (formData: FormData) => {
   const name = formData.get("name") as string;
   const userId = formData.get("userId") as string;
   const supabase = await createClient();
-  const { data, error } = await supabase
+  const form = await supabase
     .from("forms")
     .insert([{ name, owner_id: userId }])
     .select()
     .single();
 
-  if (error) {
+  if (form.error) {
     return encodedRedirect(
       "error",
       "/dashboard/forms",
@@ -68,7 +68,19 @@ export const createFormAction = async (formData: FormData) => {
     );
   }
 
-  return redirect(`/dashboard/editor/${data.id}`);
+  const { id } = form.data;
+  const theme = await supabase.from("themes").insert([{ form_id: id }]);
+
+  if (theme.error) {
+    await supabase.from("forms").delete().eq("id", id);
+    return encodedRedirect(
+      "error",
+      "/dashboard/forms",
+      "An unexpected error occurred while creating the form. Please try again later."
+    );
+  }
+
+  return redirect(`/dashboard/editor/${id}`);
 };
 
 // to fix this actions
