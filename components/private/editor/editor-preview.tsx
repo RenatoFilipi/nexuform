@@ -1,7 +1,7 @@
 "use client";
 
 const EditorPreview = () => {
-  return <></>;
+  return <div>preview</div>;
 };
 
 export default EditorPreview;

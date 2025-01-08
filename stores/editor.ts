@@ -1,73 +1,76 @@
-import { BlockModel } from "@/utils/models";
-import { colorLabel, formStatus } from "@/utils/types";
+import { EBlock, EForm, ETheme } from "@/utils/entities";
 import { create } from "zustand";
 
-interface EditorProps {
-  id: string;
-  ownerId: string;
-  name: string;
-  description: string | null;
-  theme: string;
-  submitLabel: string;
-  blocks: BlockModel[];
-  status: formStatus;
-  numericBlocks: boolean;
-  setId: (value: string) => void;
-  setOwnerId: (value: string) => void;
-  setName: (value: string) => void;
-  setDescription: (value: string | null) => void;
-  setTheme: (value: colorLabel) => void;
-  setSubmitLabel: (value: string) => void;
-  setBlocks: (value: BlockModel[]) => void;
-  addBlock: (value: BlockModel) => void;
-  updateBlock: (id: string, value: BlockModel) => void;
+interface editor {
+  form: EForm;
+  theme: ETheme;
+  blocks: EBlock[];
+  setForm: (payload: EForm) => void;
+  setTheme: (payload: ETheme) => void;
+  setBlocks: (payload: EBlock[]) => void;
+  addBlock: (Payload: EBlock) => void;
+  updateBlock: (id: string, payload: EBlock) => void;
   removeBlock: (id: string) => void;
-  setStatus: (value: formStatus) => void;
-  setNumericBlock: (value: boolean) => void;
   reset: () => void;
 }
 
-const useEditorStore = create<EditorProps>((set) => ({
-  id: "",
-  ownerId: "",
-  name: "",
-  description: null,
-  theme: "Slate",
-  submitLabel: "Submit",
+const useEditorStore = create<editor>((set) => ({
+  form: {
+    id: "",
+    created_at: "",
+    updated_at: "",
+    name: "",
+    description: null,
+    owner_id: "",
+    status: "",
+  },
+  theme: {
+    id: "",
+    created_at: "",
+    updated_at: "",
+    form_id: "",
+    numeric_blocks: false,
+    primary_color: "slate",
+    submit_text: "Submit",
+  },
   blocks: [],
-  status: "draft",
-  numericBlocks: false,
-  setId: (value) => set({ id: value }),
-  setOwnerId: (value) => set({ ownerId: value }),
-  setName: (value) => set({ name: value }),
-  setDescription: (value) => set({ description: value }),
-  setTheme: (value) => set({ theme: value }),
-  setSubmitLabel: (value) => set({ submitLabel: value }),
-  setBlocks: (newBlocks) => set(() => ({ blocks: newBlocks })),
-  addBlock: (block) => set((state) => ({ blocks: [...state.blocks, block] })),
-  updateBlock: (id, updatedBlock) =>
+  setForm: (payload) => set({ form: payload }),
+  setTheme: (payload) => set({ theme: payload }),
+  setBlocks: (payload) => set({ blocks: payload }),
+  addBlock: (payload) => {
+    set((state) => ({ blocks: [...state.blocks, payload] }));
+  },
+  updateBlock: (id, payload) => {
     set((state) => ({
-      blocks: state.blocks.map((block) =>
-        block.id === id ? updatedBlock : block
-      ),
-    })),
-  removeBlock: (id) =>
+      blocks: state.blocks.map((block) => (block.id === id ? payload : block)),
+    }));
+  },
+  removeBlock: (id) => {
     set((state) => ({
       blocks: state.blocks.filter((block) => block.id !== id),
-    })),
-  setStatus: (value) => set({ status: value }),
-  setNumericBlock: (value) => set({ numericBlocks: value }),
+    }));
+  },
   reset: () =>
     set({
-      id: "",
-      ownerId: "",
-      name: "",
-      description: null,
-      theme: "Slate",
-      submitLabel: "Submit",
+      form: {
+        id: "",
+        created_at: "",
+        updated_at: "",
+        name: "",
+        description: null,
+        owner_id: "",
+        status: "",
+      },
+      theme: {
+        id: "",
+        created_at: "",
+        updated_at: "",
+        form_id: "",
+        numeric_blocks: false,
+        primary_color: "slate",
+        submit_text: "Submit",
+      },
       blocks: [],
-      status: "draft",
-      numericBlocks: false,
     }),
 }));
 

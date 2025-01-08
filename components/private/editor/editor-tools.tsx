@@ -1,5 +1,5 @@
 const EditorTools = () => {
-  return <></>;
+  return <div>tools</div>;
 };
 
 export default EditorTools;
