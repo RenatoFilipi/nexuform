@@ -194,7 +194,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
           <div className="flex justify-start items-center gap-2">
             <Label>Primary color</Label>
           </div>
-          <div className="grid grid-cols-7 gap-3">
+          <div className="grid grid-cols-8 gap-3">
             {colors.map((color, index) => {
               return (
                 <button

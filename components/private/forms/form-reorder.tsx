@@ -117,7 +117,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
           axis="y"
           onReorder={(e) => onReorderedBlocks(e)}
           values={blocks}
-          className="flex flex-col gap-2 overflow-y-auto max-h-[300px]">
+          className="flex flex-col gap-2 overflow-y-auto h-full">
           {blocks.map((block) => {
             return <Item key={block.id} block={block} />;
           })}
@@ -141,8 +141,8 @@ const Item = ({ block }: { block: EBlock }) => {
     <Reorder.Item
       value={block}
       id={block.id}
-      className="flex border cursor-grab bg-background">
-      <div className="flex justify-center items-center bg-foreground/80 relative p-2 h-full">
+      className="flex border cursor-grab bg-background rounded p-2">
+      <div className="flex justify-center items-center bg-foreground/80 rounded relative p-2 h-full">
         {icons[block.type as block]}
       </div>
       <div className="flex flex-col p-2">
