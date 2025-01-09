@@ -127,6 +127,7 @@ export type Database = {
           name: string
           owner_id: string
           status: string
+          submit_text: string
           updated_at: string
         }
         Insert: {
@@ -136,6 +137,7 @@ export type Database = {
           name?: string
           owner_id?: string
           status?: string
+          submit_text?: string
           updated_at?: string
         }
         Update: {
@@ -145,6 +147,7 @@ export type Database = {
           name?: string
           owner_id?: string
           status?: string
+          submit_text?: string
           updated_at?: string
         }
         Relationships: [
@@ -226,7 +229,6 @@ export type Database = {
           id: string
           numeric_blocks: boolean
           primary_color: string
-          submit_text: string
           updated_at: string
         }
         Insert: {
@@ -235,7 +237,6 @@ export type Database = {
           id?: string
           numeric_blocks?: boolean
           primary_color?: string
-          submit_text?: string
           updated_at?: string
         }
         Update: {
@@ -244,7 +245,6 @@ export type Database = {
           id?: string
           numeric_blocks?: boolean
           primary_color?: string
-          submit_text?: string
           updated_at?: string
         }
         Relationships: [

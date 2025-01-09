@@ -1,22 +1,22 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import useEditorStore from "@/stores/editor";
 import { minWidth640 } from "@/utils/constants";
+import { EBlock } from "@/utils/entities";
 import { uuid } from "@/utils/functions";
 import { addBlockProps } from "@/utils/interfaces";
-import { BlockModel } from "@/utils/models";
 import { block, setState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -121,19 +121,19 @@ const AddBlock = ({
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col">
-          <DialogHeader>
-            <DialogTitle>Blocks</DialogTitle>
-            <DialogDescription>
-              Select and add new blocks to your form. Customize each block to
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>{children}</SheetTrigger>
+        <SheetContent className="flex flex-col">
+          <SheetHeader>
+            <SheetTitle>Blocks</SheetTitle>
+            <SheetDescription>
+              Select and add new block to your form. Customize each block to
               suit your needs and enhance the user experience.
-            </DialogDescription>
-          </DialogHeader>
+            </SheetDescription>
+          </SheetHeader>
           <Body setState={setOpen} formId={formId} />
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
     );
   }
 
@@ -144,7 +144,7 @@ const AddBlock = ({
         <DrawerHeader>
           <DrawerTitle>Blocks</DrawerTitle>
           <DrawerDescription>
-            Select and add new blocks to your form. Customize each block to suit
+            Select and add new block to your form. Customize each block to suit
             your needs and enhance the user experience.
           </DrawerDescription>
         </DrawerHeader>
@@ -172,14 +172,13 @@ const Body = ({
       block: "",
     },
   });
-
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const blockType = values.block as block;
 
     const targetBlock = blockList.find((x) => x.type === blockType);
     if (targetBlock === undefined) return;
 
-    const block: BlockModel = {
+    const block: EBlock = {
       id: uuid(),
       form_id: formId,
       created_at: "",
@@ -203,12 +202,12 @@ const Body = ({
   };
 
   return (
-    <div className="flex flex-col gap-6 h-full">
+    <div className="flex flex-col h-screen flex-1 overflow-y-auto">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-6 h-full">
-          <div className="flex flex-col gap-4">
+          className="flex flex-col gap-6 h-full overflow-y-auto">
+          <div className="flex flex-col gap-4 overflow-y-auto h-full sm:pr-2">
             <FormField
               control={form.control}
               name="block"
@@ -216,7 +215,7 @@ const Body = ({
                 <FormItem className="w-full">
                   <FormControl>
                     <RadioGroup
-                      className="flex flex-col h-[400px] overflow-y-auto sm:pr-2"
+                      className="flex flex-col overflow-y-auto"
                       value={field.value}
                       onValueChange={field.onChange}>
                       {blockList.map((block, index) => {
@@ -266,7 +265,7 @@ const Body = ({
               variant={"default"}
               size={"sm"}
               className="w-full sm:w-fit">
-              Add Block
+              Add New Block
             </Button>
           </div>
         </form>

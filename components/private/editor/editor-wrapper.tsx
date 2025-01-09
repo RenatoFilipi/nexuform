@@ -31,7 +31,7 @@ const EditorWrapper = ({
   return (
     <div className="flex flex-col h-screen flex-1 gap-4">
       <EditorNav />
-      <div>
+      <div className="mt-14 flex flex-1 relative">
         <EditorTools />
         <EditorPreview />
       </div>

@@ -23,6 +23,7 @@ const useEditorStore = create<editor>((set) => ({
     description: null,
     owner_id: "",
     status: "",
+    submit_text: "Submit",
   },
   theme: {
     id: "",
@@ -31,7 +32,6 @@ const useEditorStore = create<editor>((set) => ({
     form_id: "",
     numeric_blocks: false,
     primary_color: "slate",
-    submit_text: "Submit",
   },
   blocks: [],
   setForm: (payload) => set({ form: payload }),
@@ -60,6 +60,7 @@ const useEditorStore = create<editor>((set) => ({
         description: null,
         owner_id: "",
         status: "",
+        submit_text: "Submit",
       },
       theme: {
         id: "",
@@ -68,7 +69,6 @@ const useEditorStore = create<editor>((set) => ({
         form_id: "",
         numeric_blocks: false,
         primary_color: "slate",
-        submit_text: "Submit",
       },
       blocks: [],
     }),

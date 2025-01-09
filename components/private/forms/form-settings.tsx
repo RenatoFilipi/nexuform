@@ -1,21 +1,21 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
 import useEditorStore from "@/stores/editor";
 import { minWidth640 } from "@/utils/constants";
 import { FormSettingsStatusProps } from "@/utils/interfaces";
 import { setState } from "@/utils/types";
-import { DialogTitle } from "@radix-ui/react-dialog";
 import { BookDashedIcon, GlobeIcon, PencilOffIcon } from "lucide-react";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -59,18 +59,18 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col ">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-medium">Settings</DialogTitle>
-            <DialogDescription>
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>{children}</SheetTrigger>
+        <SheetContent className="flex flex-col ">
+          <SheetHeader>
+            <SheetTitle className="text-xl font-medium">Settings</SheetTitle>
+            <SheetDescription>
               Configure your form preferences and update settings as needed.
-            </DialogDescription>
-          </DialogHeader>
+            </SheetDescription>
+          </SheetHeader>
           <Body setState={setOpen} />
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
     );
   }
 
@@ -91,17 +91,20 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Body = ({ setState }: { setState: setState<boolean> }) => {
-  const {
-    name,
-    setName,
-    submitLabel,
-    setSubmitLabel,
-    description,
-    setDescription,
-    id,
-    status,
-    setStatus,
-  } = useEditorStore();
+  const { form, setForm } = useEditorStore();
+
+  const onSetName = (value: string) => {
+    setForm({ ...form, name: value });
+  };
+  const onSetDescription = (value: string) => {
+    setForm({ ...form, description: value });
+  };
+  const onSetSubmitText = (value: string) => {
+    setForm({ ...form, submit_text: value });
+  };
+  const onSetStatus = (value: string) => {
+    setForm({ ...form, status: value });
+  };
 
   return (
     <div className="flex flex-col gap-6 h-full overflow-y-auto pt-4 sm:pt-0">
@@ -111,23 +114,23 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
             <Label>Name</Label>
             <Input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={form.name}
+              onChange={(e) => onSetName(e.target.value)}
             />
           </div>
           <div className="grid gap-3">
             <Label>Description (Optional)</Label>
             <Textarea
-              value={description ?? ""}
-              onChange={(e) => setDescription(e.target.value)}
+              value={form.description ?? ""}
+              onChange={(e) => onSetDescription(e.target.value)}
             />
           </div>
           <div className="grid gap-3">
             <Label>Submit Button</Label>
             <Input
               type="text"
-              value={submitLabel}
-              onChange={(e) => setSubmitLabel(e.target.value)}
+              value={form.submit_text}
+              onChange={(e) => onSetSubmitText(e.target.value)}
             />
           </div>
         </div>
@@ -138,10 +141,10 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
               {statusList.map((statusItem, index) => {
                 return (
                   <button
-                    onClick={() => setStatus(statusItem.status)}
+                    onClick={() => onSetStatus(statusItem.status)}
                     key={index}
                     className={`${
-                      statusItem.status === status &&
+                      statusItem.status === form.status &&
                       "bg-primary/10 border-primary hover:bg-primary/10"
                     } border rounded hover:bg-foreground/10 flex flex-col gap-2 py-4`}>
                     <div className="flex justify-center w-full items-center gap-2 flex-col">
@@ -158,7 +161,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
         </div>
       </div>
       <div className="flex justify-between items-center gap-2 flex-col sm:flex-row">
-        <FormDelete formId={id}>
+        <FormDelete formId={form.id}>
           <Button
             variant={"destructive_outline"}
             size={"sm"}
