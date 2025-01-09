@@ -1,6 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { BlockModel } from "@/utils/models";
 import { block } from "@/utils/types";
 import {
   CheckCircleIcon,
@@ -14,28 +12,28 @@ import {
   StarIcon,
   TextIcon,
 } from "lucide-react";
-import BlockSettings from "./block-settings";
 
+import { EBlock } from "@/utils/entities";
 import type { JSX } from "react";
 
 const icons: { [key in block]: JSX.Element } = {
-  short_text: <EqualIcon className="w-5 h-5 text-background" />,
-  paragraph_text: <TextIcon className="w-5 h-5 text-background" />,
-  checkboxes: <CheckSquareIcon className="w-5 h-5 text-background" />,
-  multiple_choice: <CheckCircleIcon className="w-5 h-5 text-background" />,
-  dropdown_menu: <ChevronDownIcon className="w-5 h-5 text-background" />,
-  number_input: <HashIcon className="w-5 h-5 text-background" />,
-  email_address: <MailIcon className="w-5 h-5 text-background" />,
-  star_rating: <StarIcon className="w-5 h-5 text-background" />,
-  custom_scale: <ScaleIcon className="w-5 h-5 text-background" />,
+  short_text: <EqualIcon className="w-4 h-4" />,
+  paragraph_text: <TextIcon className="w-4 h-4" />,
+  checkboxes: <CheckSquareIcon className="w-4 h-4" />,
+  multiple_choice: <CheckCircleIcon className="w-4 h-4" />,
+  dropdown_menu: <ChevronDownIcon className="w-4 h-4" />,
+  number_input: <HashIcon className="w-4 h-4" />,
+  email_address: <MailIcon className="w-4 h-4" />,
+  star_rating: <StarIcon className="w-4 h-4" />,
+  custom_scale: <ScaleIcon className="w-4 h-4" />,
 };
 
-const Block = (block: BlockModel) => {
+const Block = ({ block }: { block: EBlock }) => {
   return (
-    <Card className="flex justify-between items-center shadow-none rounded-none w-full">
+    <div className="flex border rounded justify-between items-center shadow-none w-full p-2">
       <div className="flex gap-1 w-full items-center h-full">
-        <div className="flex justify-center items-center bg-foreground/80 relative p-2 h-full">
-          {icons[block.type]}
+        <div className="flex justify-center items-center bg-primary/10 relative p-2 h-full rounded">
+          {icons[block.type as block]}
         </div>
         <div className="flex">
           <span className="text-xs relative p-2 font-medium">
@@ -47,16 +45,14 @@ const Block = (block: BlockModel) => {
         </div>
       </div>
       <div className="flex justify-center items-center gap-0 h-full">
-        <BlockSettings block={block}>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="flex justify-center items-center gap-2 h-full rounded-none">
-            <Settings2Icon className="w-4 h-4" />
-          </Button>
-        </BlockSettings>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="flex justify-center items-center gap-2 h-full rounded-none">
+          <Settings2Icon className="w-4 h-4" />
+        </Button>
       </div>
-    </Card>
+    </div>
   );
 };
 

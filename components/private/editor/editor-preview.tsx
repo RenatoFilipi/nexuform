@@ -4,7 +4,7 @@ import EditorTips from "./editor-tips";
 
 const EditorPreview = () => {
   return (
-    <div className="flex justify-center items-center ml-[360px] w-full">
+    <div className="flex justify-center items-center w-full">
       <EditorTips />
     </div>
   );

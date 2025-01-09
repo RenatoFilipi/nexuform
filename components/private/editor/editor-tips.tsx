@@ -1,7 +1,9 @@
 import {
   BlocksIcon,
+  GlobeIcon,
   ListOrderedIcon,
   PaintbrushIcon,
+  SaveIcon,
   Settings2Icon,
 } from "lucide-react";
 
@@ -34,11 +36,25 @@ const tips = [
     bgColor: "bg-purple-500/20",
     textColor: "text-purple-600",
   },
+  {
+    title: "Save and Publish",
+    desc: "Save your progress and publish your form.",
+    icon: SaveIcon,
+    bgColor: "bg-orange-500/20",
+    textColor: "text-orange-600",
+  },
+  {
+    title: "Share",
+    desc: "Share the form with others using a link or embed code.",
+    icon: GlobeIcon,
+    bgColor: "bg-pink-500/20",
+    textColor: "text-pink-600",
+  },
 ];
 
 const EditorTips = () => {
   return (
-    <ul className="grid grid-cols-1 gap-8">
+    <ul className="grid grid-cols-2 gap-8">
       {tips.map((tip, index) => (
         <li key={index} className="flex items-start gap-4">
           <div

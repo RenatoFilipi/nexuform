@@ -29,11 +29,13 @@ const EditorWrapper = ({
   });
 
   return (
-    <div className="flex flex-col h-screen flex-1 gap-4">
+    <div className="h-screen flex flex-col relative w-full overflow-y-auto">
       <EditorNav />
-      <div className="mt-14 flex flex-1 relative">
+      <div className="flex flex-1 relative gap-4 overflow-y-auto">
         <EditorTools />
-        <EditorPreview />
+        <div className="flex flex-1 overflow-y-auto justify-center items-center">
+          <EditorPreview />
+        </div>
       </div>
     </div>
   );

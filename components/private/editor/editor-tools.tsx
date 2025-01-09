@@ -7,15 +7,16 @@ import {
   Settings2Icon,
 } from "lucide-react";
 import AddBlock from "../blocks/add-block";
+import Block from "../blocks/block";
 import FormDesign from "../forms/form-design";
 import FormReorder from "../forms/form-reorder";
 import FormSettings from "../forms/form-settings";
 
 const EditorTools = () => {
-  const { form } = useEditorStore();
+  const { form, blocks } = useEditorStore();
 
   return (
-    <div className="flex justify-center items-start fixed border-r h-full sm:w-[360px] p-4 gap-6">
+    <div className="flex justify-start flex-col items-center static border-r h-full sm:w-[360px] p-4 gap-3">
       <div className="w-full flex flex-col gap-3">
         <AddBlock formId={form.id}>
           <Button size={"sm"} className=" w-full">
@@ -42,6 +43,13 @@ const EditorTools = () => {
               Reorder
             </Button>
           </FormReorder>
+        </div>
+      </div>
+      <div className="flex w-full h-full justify-center items-start overflow-y-auto">
+        <div className="w-full flex flex-col gap-2 overflow-y-auto">
+          {blocks.map((block, index) => {
+            return <Block key={index} block={block} />;
+          })}
         </div>
       </div>
     </div>
