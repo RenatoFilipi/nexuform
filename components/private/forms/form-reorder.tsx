@@ -7,9 +7,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import useEditorStore from "@/stores/editor";
 import { minWidth640 } from "@/utils/constants";
-import { BlockModel } from "@/utils/models";
+import { EBlock } from "@/utils/entities";
 import { block, setState } from "@/utils/types";
 import { Reorder } from "framer-motion";
 import {
@@ -46,19 +54,19 @@ const FormReorder = ({ children }: { children: React.ReactNode }) => {
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col">
-          <DialogHeader>
-            <DialogTitle>Reorder Blocks</DialogTitle>
-            <DialogDescription>
-              Rearrange the blocks in your form to adjust the flow and
-              structure. Drag and drop to reorder them as needed.
-            </DialogDescription>
-          </DialogHeader>
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>{children}</SheetTrigger>
+        <SheetContent className="flex flex-col min-w-[450px]">
+          <SheetHeader>
+            <SheetTitle>Reorder Blocks</SheetTitle>
+            <SheetDescription>
+              Reorder the blocks in your form to adjust the flow and structure.
+              Drag and drop to reorder them as needed.
+            </SheetDescription>
+          </SheetHeader>
           <Body setState={setOpen} />
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
     );
   }
 
@@ -69,7 +77,7 @@ const FormReorder = ({ children }: { children: React.ReactNode }) => {
         <DialogHeader>
           <DialogTitle>Reorder Blocks</DialogTitle>
           <DialogDescription>
-            Rearrange the blocks in your form to adjust the flow and structure.
+            Reorder the blocks in your form to adjust the flow and structure.
             Drag and drop to reorder them as needed.
           </DialogDescription>
         </DialogHeader>
@@ -80,9 +88,9 @@ const FormReorder = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Body = ({ setState }: { setState: setState<boolean> }) => {
-  const { blocks, setBlocks, id } = useEditorStore();
+  const { blocks, setBlocks, form } = useEditorStore();
 
-  const onReorderedBlocks = (payload: BlockModel[]) => {
+  const onReorderedBlocks = (payload: EBlock[]) => {
     const newPositionBlocks = payload.map((pay, index) => {
       return { ...pay, position: index + 1 };
     });
@@ -90,13 +98,13 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
   };
 
   return (
-    <div className="flex flex-col gap-6 overflow-y-auto pt-4 sm:pt-0">
+    <div className="flex flex-col gap-6 overflow-y-auto pt-4 sm:pt-0 flex-1 h-full">
       {blocks.length <= 0 && (
-        <div className="flex justify-center items-center py-14 border border-dashed gap-4 flex-col">
+        <div className="flex justify-center items-center py-14 border border-dashed gap-4 flex-col h-full">
           <span className="text-sm text-foreground/80">
             No blocks to reorder.
           </span>
-          <AddBlock formId={id}>
+          <AddBlock formId={form.id}>
             <Button variant={"default"} size={"sm"}>
               <PlusIcon className="w-4 h-4 mr-2" />
               Add New Block
@@ -128,14 +136,14 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
   );
 };
 
-const Item = ({ block }: { block: BlockModel }) => {
+const Item = ({ block }: { block: EBlock }) => {
   return (
     <Reorder.Item
       value={block}
       id={block.id}
       className="flex border cursor-grab bg-background">
       <div className="flex justify-center items-center bg-foreground/80 relative p-2 h-full">
-        {icons[block.type]}
+        {icons[block.type as block]}
       </div>
       <div className="flex flex-col p-2">
         <span className="text-sm text-foreground/80">{block.name}</span>

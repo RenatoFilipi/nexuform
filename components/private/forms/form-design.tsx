@@ -148,7 +148,7 @@ const FormDesign = ({ children }: { children: React.ReactNode }) => {
     return (
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>{children}</SheetTrigger>
-        <SheetContent className="flex flex-col">
+        <SheetContent className="flex flex-col min-w-[450px]">
           <SheetHeader>
             <SheetTitle>Design</SheetTitle>
             <SheetDescription>

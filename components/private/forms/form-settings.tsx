@@ -35,21 +35,21 @@ const statusList: FormSettingsStatusProps[] = [
     label: "Draft",
     description:
       "The form is currently being created or edited and is not yet available for users to fill out.",
-    icon: <BookDashedIcon className="w-5 h-5" />,
+    icon: <BookDashedIcon className="w-4 h-4" />,
   },
   {
     status: "published",
     label: "Published",
     description:
       "The form is live and available for users to fill out and submit.",
-    icon: <GlobeIcon className="w-5 h-5" />,
+    icon: <GlobeIcon className="w-4 h-4" />,
   },
   {
     status: "inactive",
     label: "Inactive",
     description:
       "The form is no longer active and cannot be filled out or submitted by users.",
-    icon: <PencilOffIcon className="w-5 h-5" />,
+    icon: <PencilOffIcon className="w-4 h-4" />,
   },
 ];
 
@@ -61,7 +61,7 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
     return (
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>{children}</SheetTrigger>
-        <SheetContent className="flex flex-col ">
+        <SheetContent className="flex flex-col min-w-[450px]">
           <SheetHeader>
             <SheetTitle className="text-xl font-medium">Settings</SheetTitle>
             <SheetDescription>
@@ -126,36 +126,34 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
             />
           </div>
           <div className="grid gap-3">
-            <Label>Submit Button</Label>
+            <Label>Submit text</Label>
             <Input
               type="text"
               value={form.submit_text}
               onChange={(e) => onSetSubmitText(e.target.value)}
             />
           </div>
-        </div>
-        <div className="flex-1 flex flex-col gap-3">
-          <Label>Status</Label>
-          <div className="flex flex-col gap-4">
-            <div className="grid gap-3 overflow-y-auto grid-cols-3">
-              {statusList.map((statusItem, index) => {
-                return (
-                  <button
-                    onClick={() => onSetStatus(statusItem.status)}
-                    key={index}
-                    className={`${
-                      statusItem.status === form.status &&
-                      "bg-primary/10 border-primary hover:bg-primary/10"
-                    } border rounded hover:bg-foreground/10 flex flex-col gap-2 py-4`}>
-                    <div className="flex justify-center w-full items-center gap-2 flex-col">
-                      {statusItem.icon}
-                      <span className="text-sm font-medium text-foreground/80">
-                        {statusItem.label}
-                      </span>
-                    </div>
-                  </button>
-                );
-              })}
+          <div className="grid gap-3">
+            <Label>Status</Label>
+            <div className="flex flex-col gap-4">
+              <div className="grid gap-3 overflow-y-auto grid-cols-3">
+                {statusList.map((statusItem, index) => {
+                  return (
+                    <button
+                      onClick={() => onSetStatus(statusItem.status)}
+                      key={index}
+                      className={`${
+                        statusItem.status === form.status &&
+                        "bg-primary/20 border-primary/20 hover:bg-primary/10"
+                      } border rounded hover:bg-foreground/5 flex flex-col gap-2 h-20 py-3 px-2`}>
+                      <div className="flex flex-col justify-between h-full">
+                        {statusItem.icon}
+                        <span className="text-sm">{statusItem.label}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

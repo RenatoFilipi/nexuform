@@ -14,7 +14,9 @@ const EditorNav = () => {
             <Brand type="logo" className="h-5 fill-foreground" />
           </Link>
         </Button>
-        <span className="text-sm font-medium">{form.name}</span>
+        <div className="flex justify-center items-center gap-2">
+          <span className="text-sm font-medium">{form.name}</span>
+        </div>
       </div>
       <div className="flex justify-center items-center gap-2">
         <Button size={"sm"} variant={"default"}>
