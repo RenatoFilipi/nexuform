@@ -15,7 +15,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { minWidth640 } from "@/utils/constants";
-import { BlockModel } from "@/utils/models";
+import { EBlock } from "@/utils/entities";
 import { setState } from "@/utils/types";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -34,7 +34,7 @@ const BlockSettings = ({
   block,
 }: {
   children: React.ReactNode;
-  block: BlockModel;
+  block: EBlock;
 }) => {
   const isDesktop = useMediaQuery({ query: minWidth640 });
   const [open, setOpen] = useState(false);
@@ -78,7 +78,7 @@ const Body = ({
   block,
   setState,
 }: {
-  block: BlockModel;
+  block: EBlock;
   setState: setState<boolean>;
 }) => {
   switch (block.type) {

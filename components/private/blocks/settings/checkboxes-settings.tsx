@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import useEditorStore from "@/stores/editor";
-import { BlockModel } from "@/utils/models";
+import { EBlock } from "@/utils/entities";
 import { setState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { Tag, TagInput } from "emblor";
@@ -18,7 +18,7 @@ const CheckboxesSettings = ({
   block,
   setState,
 }: {
-  block: BlockModel;
+  block: EBlock;
   setState: setState<boolean>;
 }) => {
   const { id } = block;

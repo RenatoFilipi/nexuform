@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { block } from "@/utils/types";
 import {
   CheckCircleIcon,
@@ -15,6 +14,7 @@ import {
 
 import { EBlock } from "@/utils/entities";
 import type { JSX } from "react";
+import BlockSettings from "./block-settings";
 
 const icons: { [key in block]: JSX.Element } = {
   short_text: <EqualIcon className="w-4 h-4" />,
@@ -30,9 +30,9 @@ const icons: { [key in block]: JSX.Element } = {
 
 const Block = ({ block }: { block: EBlock }) => {
   return (
-    <div className="flex border rounded justify-between items-center shadow-none w-full p-2">
+    <div className="flex border rounded justify-between items-center shadow-none w-full px-2 min-h-14">
       <div className="flex gap-1 w-full items-center h-full">
-        <div className="flex justify-center items-center bg-primary/10 relative p-2 h-full rounded">
+        <div className="flex justify-center items-center bg-primary/10 relative p-2 rounded w-9 h-9">
           {icons[block.type as block]}
         </div>
         <div className="flex">
@@ -45,12 +45,11 @@ const Block = ({ block }: { block: EBlock }) => {
         </div>
       </div>
       <div className="flex justify-center items-center gap-0 h-full">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="flex justify-center items-center gap-2 h-full rounded-none">
-          <Settings2Icon className="w-4 h-4" />
-        </Button>
+        <BlockSettings block={block}>
+          <button className="flex justify-center items-center border w-9 h-9 rounded hover:bg-foreground/10">
+            <Settings2Icon className="w-4 h-4" />
+          </button>
+        </BlockSettings>
       </div>
     </div>
   );
