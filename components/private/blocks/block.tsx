@@ -7,11 +7,11 @@ import {
   HashIcon,
   MailIcon,
   ScaleIcon,
-  Settings2Icon,
   StarIcon,
   TextIcon,
 } from "lucide-react";
 
+import { Badge } from "@/components/ui/badge";
 import { EBlock } from "@/utils/entities";
 import type { JSX } from "react";
 import BlockSettings from "./block-settings";
@@ -30,28 +30,21 @@ const icons: { [key in block]: JSX.Element } = {
 
 const Block = ({ block }: { block: EBlock }) => {
   return (
-    <div className="flex border rounded justify-between items-center shadow-none w-full px-2 min-h-14">
-      <div className="flex gap-1 w-full items-center h-full">
-        <div className="flex justify-center items-center bg-primary/10 relative p-2 rounded w-9 h-9">
-          {icons[block.type as block]}
+    <BlockSettings block={block}>
+      <div className="flex flex-col gap-2 border rounded p-3 cursor-pointer hover:bg-foreground/5 group">
+        <div className="flex justify-between items-center gap-2">
+          <div className="flex justify-center items-center p-2 bg-primary/10 rounded">
+            {icons[block.type as block]}
+          </div>
+          {block.required && <Badge variant={"destructive"}>Required</Badge>}
         </div>
-        <div className="flex">
-          <span className="text-xs relative p-2 font-medium">
+        <div className="flex justify-start items-center overflow-y-auto">
+          <p className="text-sm font-medium text-foreground/80 truncate max-w-xs">
             {block.name}
-            {block.required && (
-              <span className="text-red-500 absolute ml-1">*</span>
-            )}
-          </span>
+          </p>
         </div>
       </div>
-      <div className="flex justify-center items-center gap-0 h-full">
-        <BlockSettings block={block}>
-          <button className="flex justify-center items-center border w-9 h-9 rounded hover:bg-foreground/10">
-            <Settings2Icon className="w-4 h-4" />
-          </button>
-        </BlockSettings>
-      </div>
-    </div>
+    </BlockSettings>
   );
 };
 

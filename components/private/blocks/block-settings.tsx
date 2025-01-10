@@ -1,12 +1,4 @@
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
   Drawer,
   DrawerContent,
   DrawerDescription,
@@ -14,6 +6,14 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { minWidth640 } from "@/utils/constants";
 import { EBlock } from "@/utils/entities";
 import { setState } from "@/utils/types";
@@ -41,19 +41,19 @@ const BlockSettings = ({
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col">
-          <DialogHeader>
-            <DialogTitle>Block Settings</DialogTitle>
-            <DialogDescription>
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>{children}</SheetTrigger>
+        <SheetContent className="flex flex-col min-w-[450px]">
+          <SheetHeader>
+            <SheetTitle>Block Settings</SheetTitle>
+            <SheetDescription>
               Customize the settings for this form block. Adjust its properties
               to match your desired design and functionality.
-            </DialogDescription>
-          </DialogHeader>
+            </SheetDescription>
+          </SheetHeader>
           <Body block={block} setState={setOpen} />
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
     );
   }
 

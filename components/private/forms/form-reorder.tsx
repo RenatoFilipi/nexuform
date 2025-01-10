@@ -141,12 +141,14 @@ const Item = ({ block }: { block: EBlock }) => {
     <Reorder.Item
       value={block}
       id={block.id}
-      className="flex border cursor-grab bg-background rounded p-2">
+      className="flex border cursor-grab bg-background rounded p-2 gap-2">
       <div className="flex justify-center items-center bg-foreground/80 rounded relative p-2 h-full">
         {icons[block.type as block]}
       </div>
-      <div className="flex flex-col p-2">
-        <span className="text-sm text-foreground/80">{block.name}</span>
+      <div className="flex justify-start items-center overflow-y-auto">
+        <p className="text-sm font-medium text-foreground/80 truncate max-w-xs">
+          {block.name}
+        </p>
       </div>
     </Reorder.Item>
   );
