@@ -10,10 +10,11 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 const EditorNav = () => {
-  const { form, theme } = useEditorStore();
+  const { form, theme, blocks } = useEditorStore();
   const supabase = createClient();
   const router = useRouter();
   const [appState, setAppState] = useState<appState>("idle");
+  console.log(blocks);
 
   const onSaveForm = async () => {
     setAppState("loading");
@@ -46,8 +47,16 @@ const EditorNav = () => {
       return;
     }
 
+    const blocksResult = await supabase.from("blocks").upsert(blocks);
+
+    if (blocksResult.error) {
+      toast.error("Error on updating the blocks.");
+      console.log(blocksResult.error);
+      setAppState("idle");
+      return;
+    }
+
     toast.success("Form Updated.");
-    setAppState("idle");
     router.push(`/dashboard/forms/${form.id}`);
   };
 

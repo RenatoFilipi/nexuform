@@ -33,11 +33,13 @@ const FormCard = ({ form }: { form: EForm }) => {
   return (
     <Link href={`/dashboard/forms/${id}`}>
       <Card className="flex h-44 p-4 hover:border-foreground/20 items-start flex-col justify-between shadow-none relative group hover:bg-foreground/5 transition-all">
-        <div className="flex justify-between items-start w-full flex-col gap-2">
-          <span className="text-sm">{name}</span>
-          {BadgeVariant(status as formStatus)}
+        <div>
+          <div className="flex justify-between items-start w-full flex-col gap-2">
+            <span className="text-sm">{name}</span>
+            {BadgeVariant(status as formStatus)}
+          </div>
+          <ChevronRightIcon className="absolute right-4 top-4 text-foreground-lighter transition-all duration-200 group-hover:right-3 group-hover:text-foreground " />
         </div>
-        <ChevronRightIcon className="absolute right-4 top-4 text-foreground-lighter transition-all duration-200 group-hover:right-3 group-hover:text-foreground " />
       </Card>
     </Link>
   );

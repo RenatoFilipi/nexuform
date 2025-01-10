@@ -181,8 +181,8 @@ const Body = ({
     const block: EBlock = {
       id: uuid(),
       form_id: formId,
-      created_at: "",
-      updated_at: "",
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
       name: targetBlock.name,
       description: "",
       options: null,
