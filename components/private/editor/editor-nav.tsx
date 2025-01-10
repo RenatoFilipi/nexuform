@@ -1,10 +1,55 @@
 import Brand from "@/components/core/brand";
 import { Button } from "@/components/ui/button";
 import useEditorStore from "@/stores/editor";
+import { createClient } from "@/utils/supabase/client";
+import { appState } from "@/utils/types";
+import { LoaderIcon } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const EditorNav = () => {
-  const { form } = useEditorStore();
+  const { form, theme } = useEditorStore();
+  const supabase = createClient();
+  const router = useRouter();
+  const [appState, setAppState] = useState<appState>("idle");
+
+  const onSaveForm = async () => {
+    setAppState("loading");
+    const formResult = await supabase
+      .from("forms")
+      .update({
+        name: form.name,
+        description: form.description,
+        status: form.status,
+        submit_text: form.submit_text,
+      })
+      .eq("id", form.id);
+
+    if (formResult.error) {
+      toast.error("Error on updating the form.");
+      setAppState("idle");
+      return;
+    }
+    const themeResult = await supabase
+      .from("themes")
+      .update({
+        primary_color: theme.primary_color,
+        numeric_blocks: theme.numeric_blocks,
+      })
+      .eq("id", theme.id);
+
+    if (themeResult.error) {
+      toast.error("Error on updating the theme.");
+      setAppState("idle");
+      return;
+    }
+
+    toast.success("Form Updated.");
+    setAppState("idle");
+    router.push(`/dashboard/forms/${form.id}`);
+  };
 
   return (
     <div className="static h-14 flex justify-between items-center w-full top-0 bg-background border-y border-t-foreground/5 sm:px-6 px-2 z-20">
@@ -19,8 +64,16 @@ const EditorNav = () => {
         </div>
       </div>
       <div className="flex justify-center items-center gap-2">
-        <Button size={"sm"} variant={"default"}>
-          Save Form
+        <Button
+          size={"sm"}
+          variant={"default"}
+          onClick={onSaveForm}
+          disabled={appState === "loading"}>
+          {appState === "loading" ? (
+            <LoaderIcon className="animate-spin w-4 h-4" />
+          ) : (
+            "Save Form"
+          )}
         </Button>
       </div>
     </div>
