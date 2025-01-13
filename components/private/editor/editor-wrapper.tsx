@@ -41,7 +41,7 @@ const EditorWrapper = ({
 
   return (
     <div className="h-screen flex flex-col relative w-full overflow-y-auto">
-      <EditorNav />
+      <EditorNav initialBlocks={blocks} />
       <div className="flex flex-1 relative overflow-y-auto">
         <EditorTools />
         <div className="flex flex-1 overflow-y-auto justify-center items-center">

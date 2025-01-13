@@ -1,6 +1,7 @@
 import Brand from "@/components/core/brand";
 import { Button } from "@/components/ui/button";
 import useEditorStore from "@/stores/editor";
+import { EBlock } from "@/utils/entities";
 import { createClient } from "@/utils/supabase/client";
 import { appState } from "@/utils/types";
 import { LoaderIcon } from "lucide-react";
@@ -9,55 +10,132 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
-const EditorNav = () => {
+const EditorNav = ({ initialBlocks }: { initialBlocks: EBlock[] }) => {
   const { form, theme, blocks } = useEditorStore();
   const supabase = createClient();
   const router = useRouter();
   const [appState, setAppState] = useState<appState>("idle");
-  console.log(blocks);
 
+  const onSave = async () => {
+    try {
+      setAppState("loading");
+
+      await onSaveForm();
+      await onSaveTheme();
+      await onSaveBlocks();
+
+      toast.success("Form Updated.");
+      router.push(`/dashboard/forms/${form.id}`);
+    } catch (error) {
+      toast.error((error as Error).message || "Something went wrong.");
+    } finally {
+      setAppState("idle");
+    }
+  };
   const onSaveForm = async () => {
-    setAppState("loading");
-    const formResult = await supabase
-      .from("forms")
-      .update({
-        name: form.name,
-        description: form.description,
-        status: form.status,
-        submit_text: form.submit_text,
-      })
-      .eq("id", form.id);
+    try {
+      const { error } = await supabase
+        .from("forms")
+        .update({
+          name: form.name,
+          description: form.description,
+          status: form.status,
+          submit_text: form.submit_text,
+        })
+        .eq("id", form.id);
 
-    if (formResult.error) {
-      toast.error("Error on updating the form.");
-      setAppState("idle");
-      return;
+      if (error) {
+        console.error("Error updating form:", error);
+        throw new Error("Failed to update form.");
+      }
+    } catch (error) {
+      console.error("Unexpected error in onSaveForm:", error);
+      throw error;
     }
-    const themeResult = await supabase
-      .from("themes")
-      .update({
-        primary_color: theme.primary_color,
-        numeric_blocks: theme.numeric_blocks,
-      })
-      .eq("id", theme.id);
+  };
+  const onSaveTheme = async () => {
+    try {
+      const { error } = await supabase
+        .from("themes")
+        .update({
+          primary_color: theme.primary_color,
+          numeric_blocks: theme.numeric_blocks,
+        })
+        .eq("id", theme.id);
 
-    if (themeResult.error) {
-      toast.error("Error on updating the theme.");
-      setAppState("idle");
-      return;
+      if (error) {
+        console.error("Error updating theme:", error);
+        throw new Error("Failed to update theme.");
+      }
+    } catch (error) {
+      console.error("Unexpected error in onSaveTheme:", error);
+      throw error;
     }
+  };
+  const onSaveBlocks = async () => {
+    try {
+      const elementsBefore = initialBlocks;
+      const elementsAfter = blocks;
+      let inBoth = [];
+      let inEither = [];
+      let newElements = [];
+      let removedElements = [];
+      let elementsToUpsert = [];
+      let elementsToDelete = [];
 
-    const blocksResult = await supabase.from("blocks").upsert(blocks);
+      const beforeIds = new Set(elementsBefore.map((x) => x.id));
+      const afterIds = new Set(elementsAfter.map((x) => x.id));
 
-    if (blocksResult.error) {
-      toast.error("Error on updating the blocks.");
-      console.log(blocksResult.error);
-      setAppState("idle");
-      return;
+      inBoth = [
+        ...elementsBefore.filter((x) => afterIds.has(x.id)),
+        ...elementsAfter.filter((x) => beforeIds.has(x.id)),
+      ];
+
+      inEither = [
+        ...elementsBefore.filter((x) => !afterIds.has(x.id)),
+        ...elementsAfter.filter((x) => !beforeIds.has(x.id)),
+      ];
+
+      inBoth = inBoth.filter(
+        (item, index, self) => self.findIndex((x) => x.id === item.id) === index
+      );
+
+      inEither = inEither.filter(
+        (item, index, self) => self.findIndex((x) => x.id === item.id) === index
+      );
+
+      newElements = inEither.filter((x) => afterIds.has(x.id));
+      removedElements = inEither.filter((x) => beforeIds.has(x.id));
+
+      elementsToUpsert = [...inBoth, ...newElements];
+      elementsToDelete = [...removedElements];
+
+      const { error: upsertError } = await supabase
+        .from("blocks")
+        .upsert(elementsToUpsert);
+      if (upsertError) {
+        console.error("Error upserting blocks:", upsertError);
+        throw new Error("Failed to upsert blocks.");
+      }
+
+      const deletePromises = elementsToDelete.map(
+        async (x) => await supabase.from("blocks").delete().eq("id", x.id)
+      );
+      const deleteResults = await Promise.all(deletePromises);
+
+      deleteResults.forEach(({ error }, index) => {
+        if (error) {
+          console.error(
+            `Error deleting block with id ${elementsToDelete[index].id}:`,
+            error
+          );
+          throw new Error("Failed to delete blocks.");
+        }
+      });
+    } catch (error) {
+      console.error("Unexpected error in onSaveBlocks:", error);
+      throw error;
     }
-
-    toast.success("Form Updated.");
-    router.push(`/dashboard/forms/${form.id}`);
   };
 
   return (
@@ -76,7 +154,7 @@ const EditorNav = () => {
         <Button
           size={"sm"}
           variant={"default"}
-          onClick={onSaveForm}
+          onClick={onSave}
           disabled={appState === "loading"}>
           {appState === "loading" ? (
             <LoaderIcon className="animate-spin w-4 h-4" />

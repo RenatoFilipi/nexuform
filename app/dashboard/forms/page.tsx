@@ -13,7 +13,8 @@ const Forms = async () => {
   const { data: forms } = await supabase
     .from("forms")
     .select("*")
-    .eq("owner_id", data.user.id);
+    .eq("owner_id", data.user.id)
+    .order("created_at", { ascending: true });
 
   return (
     <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
