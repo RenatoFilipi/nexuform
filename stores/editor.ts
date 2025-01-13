@@ -5,9 +5,11 @@ interface editor {
   form: EForm;
   theme: ETheme;
   blocks: EBlock[];
+  blocksReadyOnly: EBlock[];
   setForm: (payload: EForm) => void;
   setTheme: (payload: ETheme) => void;
   setBlocks: (payload: EBlock[]) => void;
+  setBlocksReadyOnly: (payload: EBlock[]) => void;
   addBlock: (Payload: EBlock) => void;
   updateBlock: (id: string, payload: EBlock) => void;
   removeBlock: (id: string) => void;
@@ -34,9 +36,11 @@ const useEditorStore = create<editor>((set) => ({
     primary_color: "slate",
   },
   blocks: [],
+  blocksReadyOnly: [],
   setForm: (payload) => set({ form: payload }),
   setTheme: (payload) => set({ theme: payload }),
   setBlocks: (payload) => set({ blocks: payload }),
+  setBlocksReadyOnly: (payload) => set({ blocksReadyOnly: payload }),
   addBlock: (payload) => {
     set((state) => ({ blocks: [...state.blocks, payload] }));
   },
@@ -71,6 +75,7 @@ const useEditorStore = create<editor>((set) => ({
         primary_color: "slate",
       },
       blocks: [],
+      blocksReadyOnly: [],
     }),
 }));
 

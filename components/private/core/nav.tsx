@@ -3,9 +3,13 @@
 import { signOutAction } from "@/app/actions";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import useEditorStore from "@/stores/editor";
+import { createClient } from "@/utils/supabase/client";
+import { appState } from "@/utils/types";
 import {
   ChartPieIcon,
   HouseIcon,
+  LoaderIcon,
   LogOutIcon,
   Menu,
   MonitorIcon,
@@ -15,8 +19,9 @@ import {
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 import { default as Brand } from "../../core/brand";
 import Feedback from "../../core/feedback";
 import { Avatar, AvatarFallback } from "../../ui/avatar";
@@ -55,63 +60,11 @@ const links = [
 ];
 const Nav = () => {
   const pathname = usePathname();
-  const isActive = (path: string) => path === pathname;
 
-  // editor
-  if (pathname.includes("dashboard/editor/")) {
-    return null;
-  }
-
-  // app
-  return (
-    <div className="border-y border-t-foreground/5 h-14 flex items-center px-2 sm:px-6 justify-between z-10 bg-background fixed w-full">
-      <div className="flex justify-center items-center gap-3 h-full">
-        <div className="flex justify-center items-center gap-4">
-          <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
-            <Link href={"/dashboard/forms"}>
-              <Brand type="logo" className="h-7 fill-foreground" />
-            </Link>
-          </Button>
-        </div>
-        <div className="hidden sm:flex justify-center items-center gap-0 h-full">
-          {links.map((link) => {
-            if (link.enabled)
-              return (
-                <Link
-                  key={link.id}
-                  href={link.path}
-                  className={`${
-                    isActive(link.path) && ""
-                  } text-sm h-full flex justify-center items-center px-3 hover:bg-foreground/5 relative`}>
-                  {isActive(link.path) && (
-                    <div className="bg-foreground/80 bottom-0 w-full h-1 absolute"></div>
-                  )}
-                  {link.icon}
-                  {link.name}
-                </Link>
-              );
-          })}
-        </div>
-      </div>
-      <div className="hidden sm:flex justify-center items-center gap-4">
-        <Feedback>
-          <Button variant={"outline"} size={"sm"}>
-            Feedback
-          </Button>
-        </Feedback>
-        <AvatarMenu />
-      </div>
-      <div className="flex sm:hidden">
-        <NavMobile>
-          <Button variant={"ghost"} size={"icon"}>
-            <Menu className="w-6 h-6" />
-          </Button>
-        </NavMobile>
-      </div>
-    </div>
-  );
+  if (pathname.includes("dashboard/editor/")) return <NavEditor />;
+  return <NavApp />;
 };
-const NavMobile = ({ children }: { children: React.ReactNode }) => {
+const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const isActive = (path: string) => path === pathname;
@@ -214,7 +167,7 @@ const NavMobile = ({ children }: { children: React.ReactNode }) => {
     </DropdownMenu>
   );
 };
-const AvatarMenu = () => {
+const AvatarAppMenu = () => {
   const { setTheme, theme } = useTheme();
 
   return (
@@ -283,6 +236,221 @@ const AvatarMenu = () => {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+};
+const NavApp = () => {
+  const pathname = usePathname();
+  const isActive = (path: string) => path === pathname;
+
+  return (
+    <div className="border-y border-t-foreground/5 h-14 flex items-center px-2 sm:px-6 justify-between z-10 bg-background fixed w-full">
+      <div className="flex justify-center items-center gap-3 h-full">
+        <div className="flex justify-center items-center gap-4">
+          <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
+            <Link href={"/dashboard/forms"}>
+              <Brand type="logo" className="h-7 fill-foreground" />
+            </Link>
+          </Button>
+        </div>
+        <div className="hidden sm:flex justify-center items-center gap-0 h-full">
+          {links.map((link) => {
+            if (link.enabled)
+              return (
+                <Link
+                  key={link.id}
+                  href={link.path}
+                  className={`${
+                    isActive(link.path) && ""
+                  } text-sm h-full flex justify-center items-center px-3 hover:bg-foreground/5 relative`}>
+                  {isActive(link.path) && (
+                    <div className="bg-foreground/80 bottom-0 w-full h-1 absolute"></div>
+                  )}
+                  {link.icon}
+                  {link.name}
+                </Link>
+              );
+          })}
+        </div>
+      </div>
+      <div className="hidden sm:flex justify-center items-center gap-4">
+        <Feedback>
+          <Button variant={"outline"} size={"sm"}>
+            Feedback
+          </Button>
+        </Feedback>
+        <AvatarAppMenu />
+      </div>
+      <div className="flex sm:hidden">
+        <NavAppMobile>
+          <Button variant={"ghost"} size={"icon"}>
+            <Menu className="w-6 h-6" />
+          </Button>
+        </NavAppMobile>
+      </div>
+    </div>
+  );
+};
+const NavEditor = () => {
+  const { form, theme, blocks, blocksReadyOnly } = useEditorStore();
+  const supabase = createClient();
+  const router = useRouter();
+  const [appState, setAppState] = useState<appState>("idle");
+
+  const onSave = async () => {
+    try {
+      setAppState("loading");
+
+      await onSaveForm();
+      await onSaveTheme();
+      await onSaveBlocks();
+
+      toast.success("Form Updated.");
+      router.push(`/dashboard/forms/${form.id}`);
+    } catch (error) {
+      toast.error((error as Error).message || "Something went wrong.");
+    } finally {
+      setAppState("idle");
+    }
+  };
+  const onSaveForm = async () => {
+    try {
+      const { error } = await supabase
+        .from("forms")
+        .update({
+          name: form.name,
+          description: form.description,
+          status: form.status,
+          submit_text: form.submit_text,
+        })
+        .eq("id", form.id);
+
+      if (error) {
+        console.error("Error updating form:", error);
+        throw new Error("Failed to update form.");
+      }
+    } catch (error) {
+      console.error("Unexpected error in onSaveForm:", error);
+      throw error;
+    }
+  };
+  const onSaveTheme = async () => {
+    try {
+      const { error } = await supabase
+        .from("themes")
+        .update({
+          primary_color: theme.primary_color,
+          numeric_blocks: theme.numeric_blocks,
+        })
+        .eq("id", theme.id);
+
+      if (error) {
+        console.error("Error updating theme:", error);
+        throw new Error("Failed to update theme.");
+      }
+    } catch (error) {
+      console.error("Unexpected error in onSaveTheme:", error);
+      throw error;
+    }
+  };
+  const onSaveBlocks = async () => {
+    try {
+      const elementsBefore = blocksReadyOnly;
+      const elementsAfter = blocks;
+      let inBoth = [];
+      let inEither = [];
+      let newElements = [];
+      let removedElements = [];
+      let elementsToUpsert = [];
+      let elementsToDelete = [];
+
+      const beforeIds = new Set(elementsBefore.map((x) => x.id));
+      const afterIds = new Set(elementsAfter.map((x) => x.id));
+
+      inBoth = [
+        ...elementsBefore.filter((x) => afterIds.has(x.id)),
+        ...elementsAfter.filter((x) => beforeIds.has(x.id)),
+      ];
+      inEither = [
+        ...elementsBefore.filter((x) => !afterIds.has(x.id)),
+        ...elementsAfter.filter((x) => !beforeIds.has(x.id)),
+      ];
+
+      inBoth = inBoth.filter(
+        (item, index, self) => self.findIndex((x) => x.id === item.id) === index
+      );
+      inEither = inEither.filter(
+        (item, index, self) => self.findIndex((x) => x.id === item.id) === index
+      );
+
+      newElements = inEither.filter((x) => afterIds.has(x.id));
+      removedElements = inEither.filter((x) => beforeIds.has(x.id));
+
+      elementsToUpsert = inBoth.map((before) => {
+        const after = elementsAfter.find((x) => x.id === before.id);
+        if (after && JSON.stringify(before) !== JSON.stringify(after)) {
+          return { ...before, ...after };
+        }
+        return before;
+      });
+
+      elementsToUpsert = [...elementsToUpsert, ...newElements];
+
+      elementsToDelete = [...removedElements];
+
+      const { error: upsertError } = await supabase
+        .from("blocks")
+        .upsert(elementsToUpsert);
+      if (upsertError) {
+        console.error("Error upserting blocks:", upsertError);
+        throw new Error("Failed to upsert blocks.");
+      }
+
+      const deletePromises = elementsToDelete.map(
+        async (x) => await supabase.from("blocks").delete().eq("id", x.id)
+      );
+      const deleteResults = await Promise.all(deletePromises);
+
+      deleteResults.forEach(({ error }, index) => {
+        if (error) {
+          console.error(
+            `Error deleting block with id ${elementsToDelete[index].id}:`,
+            error
+          );
+          throw new Error("Failed to delete blocks.");
+        }
+      });
+    } catch (error) {
+      console.error("Unexpected error in onSaveBlocks:", error);
+      throw error;
+    }
+  };
+
+  return (
+    <div className="h-14 flex justify-between items-center w-full bg-background border-y border-t-foreground/5 sm:px-6 px-2 z-20">
+      <div className="flex justify-center items-center gap-2">
+        <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
+          <Link href={"/dashboard/forms"}>
+            <Brand type="logo" className="h-5 fill-foreground" />
+          </Link>
+        </Button>
+        <div className="flex justify-center items-center gap-2">
+          <span className="text-sm font-medium">{form.name}</span>
+        </div>
+      </div>
+      <div className="flex justify-center items-center gap-2">
+        <Button
+          size={"sm"}
+          variant={"default"}
+          onClick={onSave}
+          disabled={appState === "loading"}>
+          {appState === "loading" ? (
+            <LoaderIcon className="animate-spin w-4 h-4" />
+          ) : (
+            "Save Form"
+          )}
+        </Button>
+      </div>
+    </div>
   );
 };
 
