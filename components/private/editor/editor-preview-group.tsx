@@ -109,7 +109,7 @@ const EditorPreviewGroup = () => {
     design.find((x) => x.label === theme.primary_color) ?? design[0];
 
   return (
-    <div className="flex flex-col gap-6 w-full border rounded m-8 p-6 sm:w-[650px] bg-background  relative">
+    <div className="flex flex-col gap-6 w-full border rounded m-8 p-6 sm:w-[650px] bg-background relative">
       <div
         className={`h-1 absolute top-0 w-full left-0 ${currentColor.tw_class}`}></div>
       <div className="flex flex-col gap-1">

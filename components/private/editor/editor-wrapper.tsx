@@ -41,12 +41,12 @@ const EditorWrapper = ({
   });
 
   return (
-    <div className="flex flex-col relative w-full overflow-y-auto min-h-screen h-full">
-      <div className="flex flex-1 relative overflow-y-auto">
-        <div>
+    <div className="flex flex-col relative w-full overflow-y-auto h-full flex-1 mt-14">
+      <div className="flex flex-1 overflow-y-auto">
+        <div className="sm:w-[380px] fixed top-0 h-screen pt-14">
           <EditorTools />
         </div>
-        <div className="flex flex-1 overflow-y-auto justify-center items-center">
+        <div className="flex flex-1 overflow-y-auto justify-center items-center ml-[380px]">
           {!isPending && localBlocks.length <= 0 && (
             <div className="flex justify-center items-center">
               <EditorTips />
