@@ -16,7 +16,7 @@ const EditorTools = () => {
   const { form, blocks } = useEditorStore();
 
   return (
-    <div className="flex justify-start flex-col items-center static border-r h-full sm:w-[360px] p-4 gap-3">
+    <div className="flex justify-start flex-col items-center h-full border-r sm:w-[360px] p-4 gap-3">
       <div className="w-full flex flex-col gap-3">
         <AddBlock formId={form.id}>
           <Button size={"sm"} className=" w-full">

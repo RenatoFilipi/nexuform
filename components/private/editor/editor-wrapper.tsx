@@ -40,10 +40,14 @@ const EditorWrapper = ({
   });
 
   return (
-    <div className="h-screen flex flex-col relative w-full overflow-y-auto">
-      <EditorNav initialBlocks={blocks} />
+    <div className="flex flex-col relative w-full overflow-y-auto min-h-screen h-full">
+      <div className="border-2 border-red-500">
+        <EditorNav initialBlocks={blocks} />
+      </div>
       <div className="flex flex-1 relative overflow-y-auto">
-        <EditorTools />
+        <div>
+          <EditorTools />
+        </div>
         <div className="flex flex-1 overflow-y-auto justify-center items-center">
           {!isPending && localBlocks.length <= 0 && (
             <div className="flex justify-center items-center">
