@@ -103,7 +103,6 @@ const design: ColorProps[] = [
 
 const EditorPreviewGroup = () => {
   const { blocks, form, theme } = useEditorStore();
-  const color = design.find((x) => x.label === theme.primary_color) ?? "slate";
 
   return (
     <div className="flex flex-col gap-6 w-full border rounded m-8 p-6">
@@ -129,7 +128,6 @@ const EditorPreviewGroup = () => {
                   key={block.id}
                   block={block}
                   theme={theme}
-                  numericBlocks={numericBlocks}
                   onValueChange={() => {}}
                 />
               );
@@ -139,7 +137,6 @@ const EditorPreviewGroup = () => {
                   key={block.id}
                   block={block}
                   theme={theme}
-                  numericBlocks={numericBlocks}
                   onValueChange={() => {}}
                 />
               );
@@ -149,7 +146,6 @@ const EditorPreviewGroup = () => {
                   key={block.id}
                   block={block}
                   theme={theme}
-                  numericBlocks={numericBlocks}
                   onValueChange={() => {}}
                 />
               );
@@ -159,7 +155,6 @@ const EditorPreviewGroup = () => {
                   key={block.id}
                   block={block}
                   theme={theme}
-                  numericBlocks={numericBlocks}
                   onValueChange={() => {}}
                 />
               );
@@ -169,7 +164,6 @@ const EditorPreviewGroup = () => {
                   key={block.id}
                   block={block}
                   theme={theme}
-                  numericBlocks={numericBlocks}
                   onValueChange={() => {}}
                 />
               );
@@ -179,7 +173,6 @@ const EditorPreviewGroup = () => {
                   key={block.id}
                   block={block}
                   theme={theme}
-                  numericBlocks={numericBlocks}
                   onValueChange={() => {}}
                 />
               );
@@ -188,7 +181,7 @@ const EditorPreviewGroup = () => {
                 <StarRatingDesign
                   key={block.id}
                   block={block}
-                  numericBlocks={numericBlocks}
+                  theme={theme}
                   onValueChange={() => {}}
                 />
               );
@@ -198,7 +191,6 @@ const EditorPreviewGroup = () => {
                   key={block.id}
                   block={block}
                   theme={theme}
-                  numericBlocks={numericBlocks}
                   onValueChange={() => {}}
                 />
               );

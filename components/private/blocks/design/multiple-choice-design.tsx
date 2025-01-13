@@ -1,99 +1,100 @@
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { EBlock, ETheme } from "@/utils/entities";
 import { ColorProps } from "@/utils/interfaces";
-import { BlockModel } from "@/utils/models";
+import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 const design: ColorProps[] = [
   {
-    label: "Slate",
+    label: "slate",
     tw_class: "border-slate-500 text-slate-500 focus-visible:ring-slate-500",
   },
   {
-    label: "Gray",
+    label: "gray",
     tw_class: "border-gray-500 text-gray-500 focus-visible:ring-gray-500",
   },
   {
-    label: "Zinc",
+    label: "zinc",
     tw_class: "border-zinc-500 text-zinc-500 focus-visible:ring-zinc-500",
   },
   {
-    label: "Neutral",
+    label: "neutral",
     tw_class:
       "border-neutral-500 text-neutral-500 focus-visible:ring-neutral-500",
   },
   {
-    label: "Stone",
+    label: "stone",
     tw_class: "border-stone-500 text-stone-500 focus-visible:ring-stone-500",
   },
   {
-    label: "Red",
+    label: "red",
     tw_class: "border-red-500 text-red-500 focus-visible:ring-red-500",
   },
   {
-    label: "Orange",
+    label: "orange",
     tw_class: "border-orange-500 text-orange-500 focus-visible:ring-orange-500",
   },
   {
-    label: "Amber",
+    label: "amber",
     tw_class: "border-amber-500 text-amber-500 focus-visible:ring-amber-500",
   },
   {
-    label: "Yellow",
+    label: "yellow",
     tw_class: "border-yellow-500 text-yellow-500 focus-visible:ring-yellow-500",
   },
   {
-    label: "Lime",
+    label: "lime",
     tw_class: "border-lime-500 text-lime-500 focus-visible:ring-lime-500",
   },
   {
-    label: "Green",
+    label: "green",
     tw_class: "border-green-500 text-green-500 focus-visible:ring-green-500",
   },
   {
-    label: "Emerald",
+    label: "emerald",
     tw_class:
       "border-emerald-500 text-emerald-500 focus-visible:ring-emerald-500",
   },
   {
-    label: "Teal",
+    label: "teal",
     tw_class: "border-teal-500 text-teal-500 focus-visible:ring-teal-500",
   },
   {
-    label: "Cyan",
+    label: "cyan",
     tw_class: "border-cyan-500 text-cyan-500 focus-visible:ring-cyan-500",
   },
   {
-    label: "Sky",
+    label: "sky",
     tw_class: "border-sky-500 text-sky-500 focus-visible:ring-sky-500",
   },
   {
-    label: "Blue",
+    label: "blue",
     tw_class: "border-blue-500 text-blue-500 focus-visible:ring-blue-500",
   },
   {
-    label: "Indigo",
+    label: "indigo",
     tw_class: "border-indigo-500 text-indigo-500 focus-visible:ring-indigo-500",
   },
   {
-    label: "Violet",
+    label: "violet",
     tw_class: "border-violet-500 text-violet-500 focus-visible:ring-violet-500",
   },
   {
-    label: "Purple",
+    label: "purple",
     tw_class: "border-purple-500 text-purple-500 focus-visible:ring-purple-500",
   },
   {
-    label: "Fuchsia",
+    label: "fuchsia",
     tw_class:
       "border-fuchsia-500 text-fuchsia-500 focus-visible:ring-fuchsia-500",
   },
   {
-    label: "Pink",
+    label: "pink",
     tw_class: "border-pink-500 text-pink-500 focus-visible:ring-pink-500",
   },
   {
-    label: "Rose",
+    label: "rose",
     tw_class: "border-rose-500 text-rose-500 focus-visible:ring-rose-500",
   },
 ];
@@ -101,22 +102,22 @@ const design: ColorProps[] = [
 const MultipleChoiceDesign = ({
   block,
   theme,
-  numericBlocks,
   onValueChange,
 }: {
-  block: BlockModel;
-  theme: string;
-  numericBlocks: boolean;
+  block: EBlock;
+  theme: ETheme;
   onValueChange: (value: string, blockId: string) => void;
 }) => {
   const { name, description, required, options, id, position } = block;
-  const currentColor = design.find((x) => x.label === theme) ?? design[0];
+  const currentColor =
+    design.find((x) => x.label === theme.primary_color) ?? design[0];
+  const [value, setValue] = useState("");
 
   return (
     <div className="flex flex-col gap-4 w-full">
       <div className="grid gap-1">
         <div className="flex gap-2">
-          {numericBlocks && (
+          {theme.numeric_blocks && (
             <span className="bg-foreground/5 px-2 rounded h-fit">
               {position}
             </span>
@@ -130,16 +131,16 @@ const MultipleChoiceDesign = ({
       {options && options.length >= 1 && (
         <RadioGroup className="flex flex-col gap-1">
           {options.map((opt) => {
-            const optionId = `${id}_${opt.id}`;
+            const optionId = `${id}_${opt}`;
             return (
-              <div key={opt.id} className="flex items-center space-x-2">
+              <div key={opt} className="flex items-center space-x-2">
                 <RadioGroupItem
                   className={twMerge(currentColor.tw_class)}
-                  value={opt.text}
+                  value={opt}
                   id={optionId}
                 />
                 <Label htmlFor={optionId} className="text-sm">
-                  {opt.text}
+                  {opt}
                 </Label>
               </div>
             );

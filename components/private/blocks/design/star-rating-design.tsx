@@ -1,13 +1,13 @@
 import Rating from "@/components/ui/rating";
-import { BlockModel } from "@/utils/models";
+import { EBlock, ETheme } from "@/utils/entities";
 
 const StarRatingDesign = ({
   block,
-  numericBlocks,
+  theme,
   onValueChange,
 }: {
-  block: BlockModel;
-  numericBlocks: boolean;
+  block: EBlock;
+  theme: ETheme;
   onValueChange: (value: string, blockId: string) => void;
 }) => {
   const { name, description, required, rating, position } = block;
@@ -16,7 +16,7 @@ const StarRatingDesign = ({
     <div className="flex flex-col gap-4 w-full">
       <div className="grid gap-1">
         <div className="flex gap-2">
-          {numericBlocks && (
+          {theme.numeric_blocks && (
             <span className="bg-foreground/5 px-2 rounded h-fit">
               {position}
             </span>
