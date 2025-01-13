@@ -86,16 +86,19 @@ const EditorNav = ({ initialBlocks }: { initialBlocks: EBlock[] }) => {
       const beforeIds = new Set(elementsBefore.map((x) => x.id));
       const afterIds = new Set(elementsAfter.map((x) => x.id));
 
+      // Encontrando os elementos que estão em ambos os arrays (antes e depois)
       inBoth = [
         ...elementsBefore.filter((x) => afterIds.has(x.id)),
         ...elementsAfter.filter((x) => beforeIds.has(x.id)),
       ];
 
+      // Encontrando os elementos que estão em um dos arrays, mas não no outro
       inEither = [
         ...elementsBefore.filter((x) => !afterIds.has(x.id)),
         ...elementsAfter.filter((x) => !beforeIds.has(x.id)),
       ];
 
+      // Removendo duplicatas dos arrays inBoth e inEither
       inBoth = inBoth.filter(
         (item, index, self) => self.findIndex((x) => x.id === item.id) === index
       );
@@ -104,10 +107,23 @@ const EditorNav = ({ initialBlocks }: { initialBlocks: EBlock[] }) => {
         (item, index, self) => self.findIndex((x) => x.id === item.id) === index
       );
 
+      // Identificando elementos novos e removidos
       newElements = inEither.filter((x) => afterIds.has(x.id));
       removedElements = inEither.filter((x) => beforeIds.has(x.id));
 
-      elementsToUpsert = [...inBoth, ...newElements];
+      // Atualizando ou inserindo novos elementos
+      elementsToUpsert = inBoth.map((before) => {
+        const after = elementsAfter.find((x) => x.id === before.id);
+        if (after && JSON.stringify(before) !== JSON.stringify(after)) {
+          // Se os elementos foram alterados, atualizamos
+          return { ...before, ...after }; // Merge das alterações
+        }
+        return before; // Se não houve alteração, mantemos o original
+      });
+
+      elementsToUpsert = [...elementsToUpsert, ...newElements]; // Adiciona os novos elementos
+
+      // Identificando os elementos a serem deletados
       elementsToDelete = [...removedElements];
 
       const { error: upsertError } = await supabase
