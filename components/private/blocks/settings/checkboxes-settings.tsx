@@ -8,10 +8,9 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import useEditorStore from "@/stores/editor";
 import { EBlock } from "@/utils/entities";
-import { uuid } from "@/utils/functions";
 import { setState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { XIcon } from "lucide-react";
+import { PlusIcon, XIcon } from "lucide-react";
 import { useState } from "react";
 
 const CheckboxesSettings = ({
@@ -24,7 +23,7 @@ const CheckboxesSettings = ({
   const { id } = block;
   const { updateBlock, removeBlock } = useEditorStore();
   const [options, setOptions] = useState<string[]>(block.options ?? []);
-  const [optionValue, setOptionValue] = useState("");
+  const [input, setInput] = useState("");
 
   useQuery({
     queryKey: [options],
@@ -35,12 +34,19 @@ const CheckboxesSettings = ({
   });
 
   const onAddOption = () => {
-    const id = uuid();
-    const option = `${id}---${optionValue}`;
-    const optionsCollection = [...options, option];
-    setOptions(optionsCollection);
+    if (input === "".trim()) return;
+    const check = options.find((x) => x.toLowerCase() === input.toLowerCase());
+    if (check) return;
+    const newOptions = [...options, input];
+    setOptions(newOptions);
+    updateBlock(id, { ...block, options: newOptions });
+    setInput("");
   };
-  const onDeleteOption = (value: string) => {};
+  const onDeleteOption = (value: string) => {
+    const newOptions = options.filter((opt) => opt !== value);
+    setOptions(newOptions);
+    updateBlock(id, { ...block, options: newOptions });
+  };
 
   return (
     <div className="h-full flex flex-col gap-8 overflow-y-auto">
@@ -73,34 +79,20 @@ const CheckboxesSettings = ({
         </div>
         <div className="grid gap-3 overflow-y-auto">
           <Label htmlFor="options">Options</Label>
-          <div className="flex flex-col overflow-y-auto gap-3">
-            <div className="flex justify-center items-center gap-4">
-              <Input
-                value={optionValue}
-                onChange={(e) => {
-                  setOptionValue(e.target.value);
-                }}
-              />
-              <Button
-                variant={"secondary"}
-                size={"sm"}
-                onClick={() => {
-                  onAddOption();
-                  setOptionValue("");
-                }}>
-                Add Option
+          <div className="flex flex-col gap-2 overflow-y-auto">
+            <div className="flex justify-center items-center gap-2">
+              <Input value={input} onChange={(e) => setInput(e.target.value)} />
+              <Button variant={"secondary"} onClick={onAddOption}>
+                <PlusIcon />
               </Button>
             </div>
-            <div className="flex flex-col gap-2 w-full overflow-y-auto">
-              {options.map((opt) => {
-                const section = opt.split("---");
-                const id = section[0];
-                const value = section[1];
+            <div className="flex flex-col gap-2 overflow-y-auto">
+              {options.map((opt, index) => {
                 return (
                   <div
-                    key={id}
-                    className="flex justify-between items-center bg-foreground/5 rounded px-2 py-1">
-                    <span className="text-xs">{value}</span>
+                    key={index}
+                    className="bg-foreground/5 p-1 flex justify-between items-center px-2">
+                    <span className="text-xs">{opt}</span>
                     <button
                       onClick={() => {
                         onDeleteOption(opt);
