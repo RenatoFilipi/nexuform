@@ -1,9 +1,9 @@
-import Brand from "@/components/core/brand";
+import { LoaderIcon } from "lucide-react";
 
 const Loading = () => {
   return (
     <div className="flex justify-center items-center w-full h-screen">
-      <Brand type="logo" className="w-10 animate-pulse fill-foreground" />
+      <LoaderIcon className="w-10 h-10 animate-spin fill-foreground" />
     </div>
   );
 };

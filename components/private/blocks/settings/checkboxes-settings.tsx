@@ -8,11 +8,11 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import useEditorStore from "@/stores/editor";
 import { EBlock } from "@/utils/entities";
+import { uuid } from "@/utils/functions";
 import { setState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { Tag, TagInput } from "emblor";
 import { XIcon } from "lucide-react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 
 const CheckboxesSettings = ({
   block,
@@ -23,33 +23,24 @@ const CheckboxesSettings = ({
 }) => {
   const { id } = block;
   const { updateBlock, removeBlock } = useEditorStore();
-  const [localTags, setLocalTags] = useState<Tag[]>(block.options ?? []);
-  const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null);
+  const [options, setOptions] = useState<string[]>(block.options ?? []);
+  const [optionValue, setOptionValue] = useState("");
 
   useQuery({
-    queryKey: [localTags],
+    queryKey: [options],
     queryFn: () => {
-      updateBlock(id, { ...block, options: localTags });
+      updateBlock(id, { ...block, options });
       return null;
     },
   });
 
-  const removeTag = (id: string) => {
-    console.log(id);
-    const updatedTags = localTags.filter((tag) => tag.id !== id);
-    setLocalTags(updatedTags);
+  const onAddOption = () => {
+    const id = uuid();
+    const option = `${id}---${optionValue}`;
+    const optionsCollection = [...options, option];
+    setOptions(optionsCollection);
   };
-
-  const handleSetTags: Dispatch<SetStateAction<Tag[]>> = (newTagsOrFn) => {
-    setLocalTags((prevTags) => {
-      const newTags =
-        typeof newTagsOrFn === "function" ? newTagsOrFn(prevTags) : newTagsOrFn;
-      return newTags.map((tag) => ({
-        id: tag.text,
-        text: tag.text,
-      }));
-    });
-  };
+  const onDeleteOption = (value: string) => {};
 
   return (
     <div className="h-full flex flex-col gap-8 overflow-y-auto">
@@ -82,29 +73,44 @@ const CheckboxesSettings = ({
         </div>
         <div className="grid gap-3 overflow-y-auto">
           <Label htmlFor="options">Options</Label>
-          <div className="flex flex-col overflow-y-auto">
-            <TagInput
-              tags={localTags}
-              setTags={handleSetTags}
-              placeholder="Add an option"
-              styleClasses={{
-                input: "w-full",
-              }}
-              activeTagIndex={activeTagIndex}
-              setActiveTagIndex={setActiveTagIndex}
-              inlineTags={false}
-              direction="row"
-              customTagRenderer={(tag) => (
-                <div
-                  key={tag.id}
-                  className="rounded p-1 px-2 flex justify-between items-center border bg-foreground/5">
-                  <span className="text-xs">{tag.text}</span>
-                  <button onClick={() => removeTag(tag.id)}>
-                    <XIcon className="w-3 h-3" />
-                  </button>
-                </div>
-              )}
-            />
+          <div className="flex flex-col overflow-y-auto gap-3">
+            <div className="flex justify-center items-center gap-4">
+              <Input
+                value={optionValue}
+                onChange={(e) => {
+                  setOptionValue(e.target.value);
+                }}
+              />
+              <Button
+                variant={"secondary"}
+                size={"sm"}
+                onClick={() => {
+                  onAddOption();
+                  setOptionValue("");
+                }}>
+                Add Option
+              </Button>
+            </div>
+            <div className="flex flex-col gap-2 w-full overflow-y-auto">
+              {options.map((opt) => {
+                const section = opt.split("---");
+                const id = section[0];
+                const value = section[1];
+                return (
+                  <div
+                    key={id}
+                    className="flex justify-between items-center bg-foreground/5 rounded px-2 py-1">
+                    <span className="text-xs">{value}</span>
+                    <button
+                      onClick={() => {
+                        onDeleteOption(opt);
+                      }}>
+                      <XIcon className="w-4 h-4" />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
         <div className="flex justify-between items-center">

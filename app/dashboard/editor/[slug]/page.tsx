@@ -29,7 +29,8 @@ const Editor = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { data: blocks } = await supabase
     .from("blocks")
     .select("*")
-    .eq("form_id", slug);
+    .eq("form_id", slug)
+    .order("position", { ascending: true });
 
   return <EditorWrapper form={form} theme={theme} blocks={blocks ?? []} />;
 };
