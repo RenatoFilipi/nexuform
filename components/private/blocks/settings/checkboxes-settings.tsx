@@ -13,13 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { PlusIcon, XIcon } from "lucide-react";
 import { useState } from "react";
 
-const CheckboxesSettings = ({
-  block,
-  setState,
-}: {
-  block: EBlock;
-  setState: setState<boolean>;
-}) => {
+const CheckboxesSettings = ({ block, setState }: { block: EBlock; setState: setState<boolean> }) => {
   const { id } = block;
   const { updateBlock, removeBlock } = useEditorStore();
   const [options, setOptions] = useState<string[]>(block.options ?? []);
@@ -82,16 +76,14 @@ const CheckboxesSettings = ({
           <div className="flex flex-col gap-2 overflow-y-auto">
             <div className="flex justify-center items-center gap-2">
               <Input value={input} onChange={(e) => setInput(e.target.value)} />
-              <Button variant={"secondary"} onClick={onAddOption}>
+              <Button size={"icon"} variant={"secondary"} onClick={onAddOption}>
                 <PlusIcon />
               </Button>
             </div>
             <div className="flex flex-col gap-2 overflow-y-auto">
               {options.map((opt, index) => {
                 return (
-                  <div
-                    key={index}
-                    className="bg-foreground/5 p-1 flex justify-between items-center px-2">
+                  <div key={index} className="bg-foreground/5 p-1 flex justify-between items-center px-2">
                     <span className="text-xs">{opt}</span>
                     <button
                       onClick={() => {
@@ -127,11 +119,7 @@ const CheckboxesSettings = ({
           className="w-full sm:w-fit">
           Remove Block
         </Button>
-        <Button
-          onClick={() => setState(false)}
-          variant={"outline"}
-          size={"sm"}
-          className="w-full sm:w-fit">
+        <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
           Close
         </Button>
       </div>
