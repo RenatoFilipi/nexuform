@@ -11,7 +11,7 @@ const plans = [
     label: "Start Free Trial",
     available: true,
     features: [
-      "Full access to all Pro plan features for 14 days",
+      "Full access to all Premium plan features for 14 days",
       "Create up to 50 forms during the trial period",
       "5,000 submissions included during the trial",
       "Advanced analytics with charts and trend insights",
@@ -37,7 +37,7 @@ const plans = [
     ],
   },
   {
-    name: "Pro",
+    name: "Premium",
     priceMonthly: 18,
     label: "Get Started",
     available: true,
@@ -58,9 +58,9 @@ const plans = [
     name: "Enterprise",
     priceMonthly: "Let's Talk",
     label: "Contact Sales",
-    available: true,
+    available: false,
     features: [
-      "All Pro plan features included",
+      "All Premium plan features included",
       "Advanced analytics for in-depth insights",
       "Priority support with a 6-hour response time (SLA)",
     ],
@@ -89,7 +89,7 @@ const Pricing = () => {
             Choose the plan that best suits your needs.
           </p>
         </div>
-        <div className="grid grid-cols-1 mt-10 gap-6 sm:mt-16 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 mt-10 gap-6 sm:mt-16 sm:grid-cols-2 lg:grid-cols-3">
           {plans
             .filter((plan) => plan.available)
             .map((plan, index) => (
@@ -105,7 +105,7 @@ const Pricing = () => {
                   <h3 className="text-2xl font-bold">{plan.name}</h3>
                   {plan.name === "Free Trial" && (
                     <Badge variant="green" className="py-1 px-2 text-sm">
-                      Pro
+                      Premium
                     </Badge>
                   )}
                   {plan.isFeatured && (

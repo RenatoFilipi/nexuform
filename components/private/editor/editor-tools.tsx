@@ -19,7 +19,7 @@ const EditorTools = () => {
     <div className="flex justify-start flex-col items-center h-full border-r p-4 gap-3 bg-background">
       <div className="w-full flex flex-col gap-3">
         <AddBlock formId={form.id}>
-          <Button size={"sm"} className=" w-full">
+          <Button size={"sm"} className="w-full" variant={"secondary"}>
             <PlusIcon className="w-4 h-4 mr-2" />
             Add New Block
           </Button>

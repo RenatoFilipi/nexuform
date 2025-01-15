@@ -33,10 +33,10 @@ const Block = ({ block }: { block: EBlock }) => {
     <BlockSettings block={block}>
       <div className="flex flex-col gap-2 border rounded p-3 cursor-pointer hover:bg-foreground/5 group">
         <div className="flex justify-between items-center gap-2">
-          <div className="flex justify-center items-center p-2 bg-primary/10 rounded">
+          <div className="flex justify-center items-center gap-2">
             {icons[block.type as block]}
           </div>
-          {block.required && <Badge variant={"destructive"}>Required</Badge>}
+          {block.required && <Badge variant={"gray"}>Required</Badge>}
         </div>
         <div className="flex justify-start items-center overflow-y-auto">
           <p className="text-sm font-medium text-foreground/80 truncate max-w-xs">

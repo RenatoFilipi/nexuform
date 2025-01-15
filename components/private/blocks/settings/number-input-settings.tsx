@@ -53,7 +53,7 @@ const NumberInputSettings = ({
           <div className="grid gap-3">
             <Label htmlFor="min-character-limit">Min</Label>
             <Input
-              type="number_input"
+              type="number"
               id="min-character-limit"
               value={block.min_char ?? 1}
               onChange={(e) => {
@@ -67,7 +67,7 @@ const NumberInputSettings = ({
           <div className="grid gap-3">
             <Label htmlFor="max-character-limit">Max</Label>
             <Input
-              type="number_input"
+              type="number"
               id="max-character-limit"
               value={block.max_char ?? 1}
               onChange={(e) => {

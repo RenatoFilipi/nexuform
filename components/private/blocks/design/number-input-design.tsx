@@ -67,7 +67,7 @@ const NumberInputDesign = ({
           }}
           id={id}
           className={`${currentColor.tw_class}`}
-          type="number_input"
+          type="number"
           min={min_char ?? 1}
           max={max_char ?? 256}
         />

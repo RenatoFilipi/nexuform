@@ -2,9 +2,9 @@
 
 const features = [
   {
-    title: "Form Building",
+    title: "Effortless Form Creation",
     description:
-      "Design custom forms seamlessly with our user-friendly editor tailored to any scenario.",
+      "Craft personalized forms effortlessly with our intuitive, scenario-based editor.",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -20,9 +20,9 @@ const features = [
     iconColor: "#ECD294",
   },
   {
-    title: "Powerful Insights",
+    title: "Actionable Analytics",
     description:
-      "Unlock detailed analytics to track and optimize the success of your forms.",
+      "Gain powerful insights to monitor performance and refine your forms for success.",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -36,9 +36,9 @@ const features = [
     iconColor: "#7ACD98",
   },
   {
-    title: "Data Export",
+    title: "Seamless Data Management",
     description:
-      "Easily download form submissions and analytics to analyze offline anytime.",
+      "Export submissions and analytics with ease, empowering offline decision-making anytime.",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -63,10 +63,11 @@ const Features = () => {
             Features
           </div>
           <h2 className="text-3xl font-bold leading-tight sm:text-4xl xl:text-5xl">
-            Powerful Tools for Form Building
+            Tools to Empower Your Form Building
           </h2>
           <p className="mt-4 text-base leading-7 sm:mt-8 text-foreground/60">
-            Build smarter with a flexible editor and actionable analytics.
+            Elevate your form-building experience with innovative tools and
+            insightful analytics.
           </p>
         </div>
         <div className="grid grid-cols-1 mt-10 gap-6 sm:grid-cols-3 sm:mt-16 xl:mt-12">

@@ -27,9 +27,9 @@ export const blockName = (type: block) => {
     case "email_address":
       return "Email Address";
     case "star_rating":
-      return "star_rating";
+      return "Star Rating";
     case "custom_scale":
-      return "custom_scale";
+      return "Custom Scale";
   }
 };
 export const formatDateRelativeToNow = (isoDate: string) => {
