@@ -4,7 +4,7 @@ import AnimatedShinyText from "@/components/magicui/animated-shiny-text";
 import ShineBorder from "@/components/magicui/shine-border";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowRightIcon, ChevronRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -18,8 +18,8 @@ const Hero = () => {
               "group rounded-full border border-black/5 bg-neutral-100 text-base text-white transition-all ease-in hover:cursor-pointer hover:bg-neutral-200 dark:border-white/5 dark:bg-neutral-900 dark:hover:bg-neutral-800"
             )}>
             <AnimatedShinyText className="text-xs inline-flex items-center justify-center px-4 py-1 transition ease-out text-foreground">
-              <span>🔔 Exciting News: V1 Launching Soon!</span>
-              <ArrowRightIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
+              <span>✨ V1 Launching Soon!</span>
+              <ChevronRightIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
             </AnimatedShinyText>
           </div>
           <h1 className="font-bold text-2xl sm:text-5xl max-w-[43.5rem]">
@@ -45,7 +45,7 @@ const Hero = () => {
         color={["#7C3AED", "#7C3AED", "#7C3AED"]}>
         <Image
           alt="hero preview feature"
-          src={`/mail.webp`}
+          src={`/hero.png`}
           width={1000}
           height={500}
           priority

@@ -13,7 +13,13 @@ import { useQuery } from "@tanstack/react-query";
 import { PlusIcon, XIcon } from "lucide-react";
 import { useState } from "react";
 
-const CheckboxesSettings = ({ block, setState }: { block: EBlock; setState: setState<boolean> }) => {
+const CheckboxesSettings = ({
+  block,
+  setState,
+}: {
+  block: EBlock;
+  setState: setState<boolean>;
+}) => {
   const { id } = block;
   const { updateBlock, removeBlock } = useEditorStore();
   const [options, setOptions] = useState<string[]>(block.options ?? []);
@@ -83,13 +89,15 @@ const CheckboxesSettings = ({ block, setState }: { block: EBlock; setState: setS
             <div className="flex flex-col gap-2 overflow-y-auto">
               {options.map((opt, index) => {
                 return (
-                  <div key={index} className="bg-foreground/5 p-1 flex justify-between items-center px-2">
+                  <div
+                    key={index}
+                    className="bg-foreground/5 p-1 flex justify-between items-center px-2">
                     <span className="text-xs">{opt}</span>
                     <button
                       onClick={() => {
                         onDeleteOption(opt);
                       }}>
-                      <XIcon className="w-4 h-4" />
+                      <XIcon className="w-3 h-3" />
                     </button>
                   </div>
                 );
@@ -110,6 +118,13 @@ const CheckboxesSettings = ({ block, setState }: { block: EBlock; setState: setS
       </div>
       <div className="flex justify-between gap-4 items-center flex-col sm:flex-row">
         <Button
+          onClick={() => setState(false)}
+          variant={"outline"}
+          size={"sm"}
+          className="w-full sm:w-fit">
+          Close
+        </Button>
+        <Button
           onClick={() => {
             removeBlock(block.id);
             setState(false);
@@ -118,9 +133,6 @@ const CheckboxesSettings = ({ block, setState }: { block: EBlock; setState: setS
           size={"sm"}
           className="w-full sm:w-fit">
           Remove Block
-        </Button>
-        <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
-          Close
         </Button>
       </div>
     </div>
