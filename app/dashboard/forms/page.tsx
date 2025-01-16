@@ -3,6 +3,7 @@ import FormList from "@/components/private/dashboard/form-list";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 const Forms = async () => {
   const supabase = await createClient();
@@ -21,11 +22,13 @@ const Forms = async () => {
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-medium">Forms</h1>
         <div className="flex justify-center items-center gap-4">
-          <FormCreate userId={data.user.id}>
-            <Button size={"sm"} variant={"default"}>
-              New Form
-            </Button>
-          </FormCreate>
+          <Suspense>
+            <FormCreate userId={data.user.id}>
+              <Button size={"sm"} variant={"default"}>
+                New Form
+              </Button>
+            </FormCreate>
+          </Suspense>
         </div>
       </div>
       <FormList forms={forms ?? []} />

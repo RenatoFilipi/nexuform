@@ -32,7 +32,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useMediaQuery } from "react-responsive";
+import { useMedia } from "react-use";
 import { z } from "zod";
 import {
   Drawer,
@@ -116,7 +116,7 @@ const AddBlock = ({
   children: React.ReactNode;
   formId: string;
 }) => {
-  const isDesktop = useMediaQuery({ query: minWidth640 });
+  const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
   if (isDesktop) {

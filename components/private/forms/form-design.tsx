@@ -17,7 +17,7 @@ import { ColorProps } from "@/utils/interfaces";
 import { setState } from "@/utils/types";
 import { CheckIcon } from "lucide-react";
 import { useState } from "react";
-import { useMediaQuery } from "react-responsive";
+import { useMedia } from "react-use";
 import {
   Drawer,
   DrawerContent,
@@ -141,7 +141,7 @@ const colors: ColorProps[] = [
 ];
 
 const FormDesign = ({ children }: { children: React.ReactNode }) => {
-  const isDesktop = useMediaQuery({ query: minWidth640 });
+  const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
   if (isDesktop) {

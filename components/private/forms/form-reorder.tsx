@@ -33,7 +33,7 @@ import {
   TextIcon,
 } from "lucide-react";
 import { useState, type JSX } from "react";
-import { useMediaQuery } from "react-responsive";
+import { useMedia } from "react-use";
 import AddBlock from "../blocks/add-block";
 
 const icons: { [key in block]: JSX.Element } = {
@@ -49,7 +49,7 @@ const icons: { [key in block]: JSX.Element } = {
 };
 
 const FormReorder = ({ children }: { children: React.ReactNode }) => {
-  const isDesktop = useMediaQuery({ query: minWidth640 });
+  const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
   if (isDesktop) {

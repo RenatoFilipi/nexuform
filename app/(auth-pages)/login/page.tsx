@@ -3,6 +3,7 @@ import LoginForm from "@/components/public/auth/login-form";
 import { Button } from "@/components/ui/button";
 import { ChevronLeftIcon } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 
 const Login = () => {
   return (
@@ -38,7 +39,9 @@ const Login = () => {
                 </Link>
               </span>
             </div>
-            <LoginForm />
+            <Suspense>
+              <LoginForm />
+            </Suspense>
           </div>
         </div>
       </div>

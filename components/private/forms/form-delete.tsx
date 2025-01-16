@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { minWidth640 } from "@/utils/constants";
 import { setState } from "@/utils/types";
 import { ReactNode, useState } from "react";
-import { useMediaQuery } from "react-responsive";
+import { useMedia } from "react-use";
 import {
   Drawer,
   DrawerContent,
@@ -29,7 +29,7 @@ const FormDelete = ({
   children: ReactNode;
   formId: string;
 }) => {
-  const isDesktop = useMediaQuery({ query: minWidth640 });
+  const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
   if (isDesktop) {

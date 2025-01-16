@@ -18,7 +18,7 @@ import { FormSettingsStatusProps } from "@/utils/interfaces";
 import { setState } from "@/utils/types";
 import { BookDashedIcon, GlobeIcon, PencilOffIcon } from "lucide-react";
 import { useState } from "react";
-import { useMediaQuery } from "react-responsive";
+import { useMedia } from "react-use";
 import {
   Drawer,
   DrawerContent,
@@ -54,7 +54,7 @@ const statusList: FormSettingsStatusProps[] = [
 ];
 
 const FormSettings = ({ children }: { children: React.ReactNode }) => {
-  const isDesktop = useMediaQuery({ query: minWidth640 });
+  const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
   if (isDesktop) {

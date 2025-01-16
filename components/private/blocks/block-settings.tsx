@@ -18,7 +18,7 @@ import { minWidth640 } from "@/utils/constants";
 import { EBlock } from "@/utils/entities";
 import { setState } from "@/utils/types";
 import { useState } from "react";
-import { useMediaQuery } from "react-responsive";
+import { useMedia } from "react-use";
 import CheckboxesSettings from "./settings/checkboxes-settings";
 import CustomScaleSettings from "./settings/custom-scale-settings";
 import DropdownMenuSettings from "./settings/dropdown-menu-settings";
@@ -36,7 +36,7 @@ const BlockSettings = ({
   children: React.ReactNode;
   block: EBlock;
 }) => {
-  const isDesktop = useMediaQuery({ query: minWidth640 });
+  const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
   if (isDesktop) {

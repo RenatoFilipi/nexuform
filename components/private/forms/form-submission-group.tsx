@@ -15,7 +15,7 @@ import { minWidth640 } from "@/utils/constants";
 import { formatDateRelativeToNow } from "@/utils/functions";
 import { SubmissionProps } from "@/utils/modules";
 import { submissionStatus } from "@/utils/types";
-import { useMediaQuery } from "react-responsive";
+import { useMedia } from "react-use";
 import FormSubmissionView from "./form-submission-view";
 
 const FormSubmissionGroup = ({
@@ -25,7 +25,7 @@ const FormSubmissionGroup = ({
   submissions: SubmissionProps[];
   formId: string;
 }) => {
-  const isDesktop = useMediaQuery({ query: minWidth640 });
+  const isDesktop = useMedia(minWidth640);
 
   const statusDisplay = (value: submissionStatus) => {
     switch (value) {

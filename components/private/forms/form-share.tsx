@@ -8,7 +8,7 @@ import { formStatus, setState } from "@/utils/types";
 import { CopyIcon } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
-import { useMediaQuery } from "react-responsive";
+import { useMedia } from "react-use";
 import { toast } from "sonner";
 import {
   Dialog,
@@ -34,7 +34,7 @@ const FormShare = ({
   formId: string;
   status: formStatus;
 }) => {
-  const isDesktop = useMediaQuery({ query: minWidth640 });
+  const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
   if (isDesktop) {

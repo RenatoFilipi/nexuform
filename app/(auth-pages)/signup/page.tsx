@@ -3,6 +3,7 @@ import SignupForm from "@/components/public/auth/signup-form";
 import { Button } from "@/components/ui/button";
 import { ChevronLeftIcon } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 
 const Signup = () => {
   return (
@@ -26,7 +27,9 @@ const Signup = () => {
           </Button>
         </div>
         <div className="w-full flex justify-center items-center sm:max-w-96 sm:p-0 px-12">
-          <SignupForm />
+          <Suspense>
+            <SignupForm />
+          </Suspense>
         </div>
       </div>
     </div>

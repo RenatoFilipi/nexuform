@@ -17,7 +17,7 @@ import { Loader2Icon } from "lucide-react";
 import { useQueryState } from "nuqs";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { useMediaQuery } from "react-responsive";
+import { useMedia } from "react-use";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "../../ui/button";
@@ -47,7 +47,7 @@ const FormCreate = ({
   userId: string;
 }) => {
   const [error] = useQueryState("error");
-  const isDesktop = useMediaQuery({ query: minWidth640 });
+  const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
   useQuery({

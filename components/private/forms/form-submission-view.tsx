@@ -17,7 +17,7 @@ import { SubmissionSegmentProps } from "@/utils/modules";
 import { appState, setState, submissionStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { useMediaQuery } from "react-responsive";
+import { useMedia } from "react-use";
 import {
   Drawer,
   DrawerContent,
@@ -36,7 +36,7 @@ const FormSubmissionView = ({
   subId: string;
   formId: string;
 }) => {
-  const isDesktop = useMediaQuery({ query: minWidth640 });
+  const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
   if (isDesktop) {
