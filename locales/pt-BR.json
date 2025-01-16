@@ -1,9 +1,33 @@
 {
   "shared": {},
   "landing": {
+    "general": {
+      "features": "Recursos",
+      "how_it_works": "Como Funciona",
+      "pricing": "Preços",
+      "faq": "Perguntas Frequentes",
+      "login": "Entrar",
+      "get_started": "Começar",
+      "privacy": "Privacidade",
+      "terms": "Termos",
+      "rights": "Todos os Direitos Reservados."
+    },
     "hero": {
       "headline_pt1": "Simplifique a Coleta de Feedback com",
-      "headline_pt2": "Formulários Poderosos."
+      "headline_pt2": "Formulários Poderosos.",
+      "sub_headline": "Tome decisões mais inteligentes com insights acionáveis. Melhore seus processos de negócios transformando feedback em dados significativos.",
+      "call_to_action": "Comece Gratuitamente",
+      "highlight": "Lançamento Beta em Breve!"
+    },
+    "features": {
+      "headline": "Ferramentas para Potencializar a Criação de Formulários",
+      "sub_headline": "Eleve sua experiência de criação de formulários com ferramentas inovadoras e análises perspicazes.",
+      "feat_editor_title": "Criação de Formulários Sem Esforço",
+      "feat_editor_description": "Crie formulários personalizados com facilidade usando nosso editor intuitivo e baseado em cenários.",
+      "feat_analytics_title": "Análises Acionáveis",
+      "feat_analytics_description": "Obtenha insights poderosos para monitorar o desempenho e aprimorar seus formulários para o sucesso.",
+      "feat_export_title": "Gestão de Dados Simplificada",
+      "feat_export_description": "Exporte envios e análises com facilidade, permitindo decisões offline a qualquer momento."
     }
   }
 }

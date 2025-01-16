@@ -9,16 +9,19 @@ import HowItWorks from "@/components/public/landing/how-it-works";
 import Pricing from "@/components/public/landing/pricing";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
-const urls = [
-  { name: "Features", url: "features" },
-  { name: "How It Works", url: "how-it-works" },
-  { name: "Pricing", url: "pricing" },
-  { name: "Faq", url: "faq" },
-];
-
 const Home = () => {
+  const t = useTranslations("landing");
+
+  const urls = [
+    { name: t("general.features"), url: "features" },
+    { name: t("general.how_it_works"), url: "how-it-works" },
+    { name: t("general.pricing"), url: "pricing" },
+    { name: t("general.faq"), url: "faq" },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col relative">
       <div className="flex fixed top-0 w-full justify-between sm:px-5 px-3 h-16 bg-background/80 z-10 backdrop-blur-md items-center">
@@ -39,10 +42,10 @@ const Home = () => {
         </div>
         <div className="hidden sm:flex justify-center items-center gap-4">
           <Button variant={"outline"} size={"sm"} asChild>
-            <Link href={"/login"}>Login</Link>
+            <Link href={"/login"}>{t("general.login")}</Link>
           </Button>
           <Button variant={"default"} size={"sm"} asChild>
-            <Link href={"/signup"}>Get Started</Link>
+            <Link href={"/signup"}>{t("general.get_started")}</Link>
           </Button>
         </div>
         <div className="flex sm:hidden">
@@ -66,20 +69,20 @@ const Home = () => {
           <Link
             href={"/legal/privacy"}
             className="text-xs text-foreground/80 hover:underline">
-            Privacy
+            {t("general.privacy")}
           </Link>
           <Link
             href={"/legal/terms"}
             className="text-xs text-foreground/80 hover:underline">
-            Terms
+            {t("general.terms")}
           </Link>
         </div>
         <span className="text-xs text-foreground/80 sm:text-center">
-          © 2024{" "}
+          © 2025{" "}
           <Link href="/" className="hover:underline">
             Nebulaform
           </Link>
-          . All Rights Reserved.
+          . {t("general.rights")}
         </span>
         <div className="absolute right-4 hidden sm:flex">
           <ModeToggle2 />

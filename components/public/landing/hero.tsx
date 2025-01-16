@@ -21,7 +21,7 @@ const Hero = () => {
               "group rounded-full border border-black/5 bg-neutral-100 text-base text-white transition-all ease-in hover:cursor-pointer hover:bg-neutral-200 dark:border-white/5 dark:bg-neutral-900 dark:hover:bg-neutral-800"
             )}>
             <AnimatedShinyText className="text-xs inline-flex items-center justify-center px-4 py-1 transition ease-out text-foreground">
-              <span>✨ V1 Launching Soon!</span>
+              <span>✨ {t("hero.highlight")}</span>
               <ChevronRightIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
             </AnimatedShinyText>
           </div>
@@ -30,14 +30,13 @@ const Hero = () => {
             <span className="text-primary">{t("hero.headline_pt2")}</span>
           </h1>
           <p className="max-w-xl text-base font-normal text-foreground/80">
-            Drive smarter decisions with actionable insights. Elevate your
-            business processes by transforming feedback into meaningful data.
+            {t("hero.sub_headline")}
           </p>
         </div>
         <div className="flex justify-center items-center gap-4 flex-col sm:flex-row w-full">
           <Button asChild variant={"secondary"} className="w-full sm:w-fit">
             <Link href={"/signup"}>
-              Get Started for Free
+              {t("hero.call_to_action")}
               <ArrowRightIcon className="w-4 h-4 ml-2" />
             </Link>
           </Button>

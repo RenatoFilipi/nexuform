@@ -1,9 +1,33 @@
 {
   "shared": {},
   "landing": {
+    "general": {
+      "features": "Features",
+      "how_it_works": "How It Works",
+      "pricing": "Pricing",
+      "faq": "Faq",
+      "login": "Login",
+      "get_started": "Get Started",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "rights": "All Rights Reserved."
+    },
     "hero": {
       "headline_pt1": "Simplify Feedback Collection with",
-      "headline_pt2": "Powerful Forms."
+      "headline_pt2": "Powerful Forms.",
+      "sub_headline": "Drive smarter decisions with actionable insights. Elevate your business processes by transforming feedback into meaningful data.",
+      "call_to_action": "Get Started for Free",
+      "highlight": "Beta Launching Soon!"
+    },
+    "features": {
+      "headline": "Tools to Empower Your Form Building",
+      "sub_headline": "Elevate your form-building experience with innovative tools and insightful analytics.",
+      "feat_editor_title": "Effortless Form Creation",
+      "feat_editor_description": "Craft personalized forms effortlessly with our intuitive, scenario-based editor.",
+      "feat_analytics_title": "Actionable Analytics",
+      "feat_analytics_description": "Gain powerful insights to monitor performance and refine your forms for success.",
+      "feat_export_title": "Seamless Data Management",
+      "feat_export_description": "Export submissions and analytics with ease, empowering offline decision-making anytime."
     }
   }
 }
