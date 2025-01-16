@@ -36,7 +36,7 @@ const Hero = () => {
         <div className="flex justify-center items-center gap-4 flex-col sm:flex-row w-full">
           <Button asChild variant={"secondary"} className="w-full sm:w-fit">
             <Link href={"/signup"}>
-              {t("hero.call_to_action")}
+              {t("hero.cta")}
               <ArrowRightIcon className="w-4 h-4 ml-2" />
             </Link>
           </Button>

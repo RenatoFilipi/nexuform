@@ -43,4 +43,10 @@ export type colorLabel =
   | "fuchsia"
   | "pink"
   | "rose";
-export type plan = "free_trial" | "basic" | "pro" | "enterprise";
+export type plan = {
+  name: string;
+  price: number;
+  features: string[];
+  highlighted: boolean;
+  type: "free_trial" | "basic" | "pro";
+};

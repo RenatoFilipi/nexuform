@@ -16,18 +16,37 @@
       "headline_pt1": "Simplify Feedback Collection with",
       "headline_pt2": "Powerful Forms.",
       "sub_headline": "Drive smarter decisions with actionable insights. Elevate your business processes by transforming feedback into meaningful data.",
-      "call_to_action": "Get Started for Free",
+      "cta": "Get Started for Free",
       "highlight": "Beta Launching Soon!"
     },
     "features": {
       "headline": "Tools to Empower Your Form Building",
       "sub_headline": "Elevate your form-building experience with innovative tools and insightful analytics.",
-      "feat_editor_title": "Effortless Form Creation",
-      "feat_editor_description": "Craft personalized forms effortlessly with our intuitive, scenario-based editor.",
-      "feat_analytics_title": "Actionable Analytics",
-      "feat_analytics_description": "Gain powerful insights to monitor performance and refine your forms for success.",
-      "feat_export_title": "Seamless Data Management",
-      "feat_export_description": "Export submissions and analytics with ease, empowering offline decision-making anytime."
-    }
+      "editor_title": "Effortless Form Creation",
+      "editor_description": "Craft personalized forms effortlessly with our intuitive, scenario-based editor.",
+      "analytics_title": "Actionable Analytics",
+      "analytics_description": "Gain powerful insights to monitor performance and refine your forms for success.",
+      "export_title": "Seamless Data Management",
+      "export_description": "Export submissions and analytics with ease, empowering offline decision-making anytime."
+    },
+    "hiw": {
+      "headline": "How It Works",
+      "sub_headline": "Easily create, customize, and manage forms in a few simple steps.",
+      "step1_title": "Design Your Form",
+      "step1_description": "Effortlessly create a form tailored to your specific needs.",
+      "step2_title": "Customize and Publish",
+      "step2_description": "Personalize your form and publish it with just a few clicks.",
+      "step3_title": "Share Instantly",
+      "step3_description": "Distribute your form easily via link or QR code.",
+      "step4_title": "Manage Responses",
+      "step4_description": "Track and organize submissions from a central dashboard.",
+      "step5_title": "Unlock Insights",
+      "step5_description": "Analyze form performance using our powerful analytics tools.",
+      "step6_title": "Export with Ease",
+      "step6_description": "Download submissions and analytics for offline review."
+    },
+    "pricing": {},
+    "faq": {},
+    "cta": {}
   }
 }

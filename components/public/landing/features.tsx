@@ -7,8 +7,8 @@ const Features = () => {
 
   const features = [
     {
-      title: t("features.feat_editor_title"),
-      description: t("features.feat_editor_description"),
+      title: t("features.editor_title"),
+      description: t("features.editor_description"),
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -24,8 +24,8 @@ const Features = () => {
       iconColor: "#ECD294",
     },
     {
-      title: t("features.feat_analytics_title"),
-      description: t("features.feat_analytics_description"),
+      title: t("features.analytics_title"),
+      description: t("features.analytics_description"),
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -39,8 +39,8 @@ const Features = () => {
       iconColor: "#7ACD98",
     },
     {
-      title: t("features.feat_export_title"),
-      description: t("features.feat_export_description"),
+      title: t("features.export_title"),
+      description: t("features.export_description"),
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"

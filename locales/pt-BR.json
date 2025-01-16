@@ -16,18 +16,37 @@
       "headline_pt1": "Simplifique a Coleta de Feedback com",
       "headline_pt2": "Formulários Poderosos.",
       "sub_headline": "Tome decisões mais inteligentes com insights acionáveis. Melhore seus processos de negócios transformando feedback em dados significativos.",
-      "call_to_action": "Comece Gratuitamente",
-      "highlight": "Lançamento Beta em Breve!"
+      "cta": "Comece Gratuitamente",
+      "highlight": "Beta Lançando em Breve!"
     },
     "features": {
-      "headline": "Ferramentas para Potencializar a Criação de Formulários",
+      "headline": "Ferramentas para Potencializar sua Criação de Formulários",
       "sub_headline": "Eleve sua experiência de criação de formulários com ferramentas inovadoras e análises perspicazes.",
-      "feat_editor_title": "Criação de Formulários Sem Esforço",
-      "feat_editor_description": "Crie formulários personalizados com facilidade usando nosso editor intuitivo e baseado em cenários.",
-      "feat_analytics_title": "Análises Acionáveis",
-      "feat_analytics_description": "Obtenha insights poderosos para monitorar o desempenho e aprimorar seus formulários para o sucesso.",
-      "feat_export_title": "Gestão de Dados Simplificada",
-      "feat_export_description": "Exporte envios e análises com facilidade, permitindo decisões offline a qualquer momento."
-    }
+      "editor_title": "Criação de Formulários Sem Esforço",
+      "editor_description": "Crie formulários personalizados com facilidade usando nosso editor intuitivo e baseado em cenários.",
+      "analytics_title": "Análises Acionáveis",
+      "analytics_description": "Obtenha insights poderosos para monitorar o desempenho e aprimorar seus formulários para o sucesso.",
+      "export_title": "Gestão de Dados Simplificada",
+      "export_description": "Exporte submissões e análises com facilidade, capacitando a tomada de decisões offline a qualquer momento."
+    },
+    "hiw": {
+      "headline": "Como Funciona",
+      "sub_headline": "Crie, personalize e gerencie formulários facilmente em poucos passos.",
+      "step1_title": "Desenhe Seu Formulário",
+      "step1_description": "Crie um formulário adaptado às suas necessidades específicas com facilidade.",
+      "step2_title": "Personalize e Publique",
+      "step2_description": "Personalize seu formulário e publique-o com apenas alguns cliques.",
+      "step3_title": "Compartilhe Instantaneamente",
+      "step3_description": "Distribua seu formulário facilmente por link ou código QR.",
+      "step4_title": "Gerencie Respostas",
+      "step4_description": "Acompanhe e organize as submissões em um painel centralizado.",
+      "step5_title": "Desbloqueie Insights",
+      "step5_description": "Analise o desempenho do formulário usando nossas ferramentas analíticas poderosas.",
+      "step6_title": "Exporte com Facilidade",
+      "step6_description": "Baixe submissões e análises para revisão offline."
+    },
+    "pricing": {},
+    "faq": {},
+    "cta": {}
   }
 }
