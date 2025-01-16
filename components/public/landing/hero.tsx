@@ -5,10 +5,13 @@ import ShineBorder from "@/components/magicui/shine-border";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ArrowRightIcon, ChevronRightIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 
 const Hero = () => {
+  const t = useTranslations("landing");
+
   return (
     <div className="flex flex-col gap-14">
       <div className="flex justify-center items-center flex-col gap-6 w-full">
@@ -23,8 +26,8 @@ const Hero = () => {
             </AnimatedShinyText>
           </div>
           <h1 className="font-bold text-2xl sm:text-5xl max-w-[43.5rem]">
-            Simplify Feedback Collection with{" "}
-            <span className="text-primary">Powerful Forms.</span>
+            {t("hero.headline_pt1")}{" "}
+            <span className="text-primary">{t("hero.headline_pt2")}</span>
           </h1>
           <p className="max-w-xl text-base font-normal text-foreground/80">
             Drive smarter decisions with actionable insights. Elevate your
