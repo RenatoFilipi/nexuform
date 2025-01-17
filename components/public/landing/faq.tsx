@@ -1,40 +1,38 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
-const faqData = [
-  {
-    question: "What is the Free Trial?",
-    answer:
-      "The Free Trial allows you to use the platform with limited features for 14 days without any cost.",
-  },
-  {
-    question: "What happens after the Free Trial ends?",
-    answer:
-      "Once the Free Trial ends, you will need to choose a paid plan to continue accessing the platform.",
-  },
-  {
-    question: "Can I cancel my subscription anytime?",
-    answer:
-      "Yes, you can cancel your subscription at any time from your account settings.",
-  },
-  {
-    question: "Do you offer support?",
-    answer:
-      "Yes, we offer email support for the Free Trial and priority or premium support for paid plans.",
-  },
-];
-
 const Faq = () => {
+  const t = useTranslations("landing");
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const toggleFaq = (index: number) =>
     setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
 
+  const faqData = [
+    {
+      question: t("faq.questions.0.question"),
+      answer: t("faq.questions.0.answer"),
+    },
+    {
+      question: t("faq.questions.1.question"),
+      answer: t("faq.questions.1.answer"),
+    },
+    {
+      question: t("faq.questions.2.question"),
+      answer: t("faq.questions.2.answer"),
+    },
+    {
+      question: t("faq.questions.3.question"),
+      answer: t("faq.questions.3.answer"),
+    },
+  ];
+
   return (
     <div id="faq" className="px-4 pb-12 w-full max-w-2xl">
       <h2 className="text-3xl font-bold text-center sm:text-4xl">
-        Frequently Asked Questions
+        {t("faq.title")}
       </h2>
       <div className="mt-8 space-y-4">
         {faqData.map((faq, index) => (

@@ -30,7 +30,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
@@ -180,9 +179,7 @@ const AvatarAppMenu = () => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-6 min-w-52 text-foreground/80">
-        <DropdownMenuLabel className="text-foreground">
-          Nebulaform
-        </DropdownMenuLabel>
+        <DropdownMenuItem>Settings</DropdownMenuItem>
         <DropdownMenuItem className="flex flex-row justify-between items-center">
           Theme
           <RadioGroup

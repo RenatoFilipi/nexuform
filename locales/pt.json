@@ -1,0 +1,122 @@
+{
+  "shared": {},
+  "landing": {
+    "general": {
+      "features": "Recursos",
+      "how_it_works": "Como Funciona",
+      "pricing": "Preços",
+      "faq": "Perguntas Frequentes",
+      "login": "Entrar",
+      "get_started": "Começar",
+      "privacy": "Privacidade",
+      "terms": "Termos",
+      "rights": "Todos os Direitos Reservados."
+    },
+    "hero": {
+      "headline_pt1": "Simplifique a Coleta de Feedback com",
+      "headline_pt2": "Formulários Poderosos.",
+      "sub_headline": "Tome decisões mais inteligentes com insights acionáveis. Eleve seus processos de negócios transformando feedback em dados significativos.",
+      "cta": "Comece Gratuitamente",
+      "highlight": "Lançamento Beta em Breve!"
+    },
+    "features": {
+      "headline": "Ferramentas para Potencializar a Criação de Formulários",
+      "sub_headline": "Eleve sua experiência de criação de formulários com ferramentas inovadoras e análises detalhadas.",
+      "editor_title": "Criação de Formulários sem Esforço",
+      "editor_description": "Crie formulários personalizados facilmente com nosso editor intuitivo baseado em cenários.",
+      "analytics_title": "Análises Acionáveis",
+      "analytics_description": "Obtenha insights poderosos para monitorar desempenho e aprimorar seus formulários para o sucesso.",
+      "export_title": "Gestão de Dados Simplificada",
+      "export_description": "Exporte submissões e análises com facilidade, permitindo decisões offline a qualquer momento."
+    },
+    "hiw": {
+      "headline": "Como Funciona",
+      "sub_headline": "Crie, personalize e gerencie formulários de maneira simples.",
+      "step1_title": "Desenhe Seu Formulário",
+      "step1_description": "Crie facilmente um formulário adaptado às suas necessidades específicas.",
+      "step2_title": "Personalize e Publique",
+      "step2_description": "Personalize seu formulário e publique-o com apenas alguns cliques.",
+      "step3_title": "Compartilhe Instantaneamente",
+      "step3_description": "Distribua seu formulário facilmente por link ou código QR.",
+      "step4_title": "Gerencie Respostas",
+      "step4_description": "Acompanhe e organize submissões a partir de um painel central.",
+      "step5_title": "Desbloqueie Insights",
+      "step5_description": "Analise o desempenho do formulário com nossas ferramentas analíticas avançadas.",
+      "step6_title": "Exporte com Facilidade",
+      "step6_description": "Baixe submissões e análises para revisão offline."
+    },
+    "pricing": {
+      "title": "Planos de Preços",
+      "subtitle": "Escolha o plano que melhor atende às suas necessidades.",
+      "per_month": "/mês",
+      "free": "Gratuito",
+      "badge": {
+        "most_popular": "Mais Popular"
+      },
+      "cta": {
+        "start_free_trial": "Iniciar Teste Gratuito",
+        "subscribe": "Assinar"
+      },
+      "plans": {
+        "free_trial": {
+          "name": "Teste Gratuito",
+          "features": [
+            "Tudo do Plano Básico por 14 dias",
+            "1 formulário",
+            "100 submissões",
+            "Suporte por email"
+          ]
+        },
+        "basic": {
+          "name": "Básico",
+          "features": [
+            "10 formulários",
+            "1.000 submissões",
+            "Suporte por email",
+            "Integrações (em breve)",
+            "Análises básicas"
+          ]
+        },
+        "pro": {
+          "name": "Pro",
+          "features": [
+            "100 formulários",
+            "10.000 submissões",
+            "Suporte por email",
+            "Integrações avançadas (em breve)",
+            "Análises avançadas",
+            "Suporte prioritário",
+            "Exportação de dados"
+          ]
+        }
+      }
+    },
+    "faq": {
+      "title": "Perguntas Frequentes",
+      "questions": [
+        {
+          "question": "O que é o Teste Gratuito?",
+          "answer": "O Teste Gratuito permite que você use a plataforma com recursos limitados por 14 dias sem nenhum custo."
+        },
+        {
+          "question": "O que acontece após o término do Teste Gratuito?",
+          "answer": "Após o término do Teste Gratuito, você precisará escolher um plano pago para continuar acessando a plataforma."
+        },
+        {
+          "question": "Posso cancelar minha assinatura a qualquer momento?",
+          "answer": "Sim, você pode cancelar sua assinatura a qualquer momento nas configurações da sua conta."
+        },
+        {
+          "question": "Vocês oferecem suporte?",
+          "answer": "Sim, oferecemos suporte por e-mail durante o Teste Gratuito e suporte prioritário ou premium para planos pagos."
+        }
+      ]
+    },
+    "cta": {
+      "headline": "Pronto para Melhorar Seus Produtos e Serviços?",
+      "sub_headline": "Colete feedback valioso e insights com formulários personalizados para aprimorar suas ofertas.",
+      "action_1": "Veja Como Funciona",
+      "action_2": "Comece Agora"
+    }
+  }
+}

@@ -4,23 +4,22 @@ import Negotiator from "negotiator";
 import { type NextRequest } from "next/server";
 
 type AvailableLocales = {
-  es: "es-ES";
-  pt: "pt-BR";
-  en: "en-US";
+  es: "es";
+  pt: "pt";
+  en: "en";
 };
 
 export async function middleware(request: NextRequest) {
   let headers = {
-    "accept-language":
-      request.headers.get("accept-language") || "en-US,en;q=0.5",
+    "accept-language": request.headers.get("accept-language") || "en;q=0.5",
   };
   let negotiator = new Negotiator({ headers });
   let languages = negotiator.languages();
 
   const availableLocales: AvailableLocales = {
-    es: "es-ES",
-    pt: "pt-BR",
-    en: "en-US",
+    es: "es",
+    pt: "pt",
+    en: "en",
   };
 
   let defaultLocale: keyof AvailableLocales = "en";
@@ -31,10 +30,10 @@ export async function middleware(request: NextRequest) {
   );
 
   let baseLang = matchedLocale.split("-")[0] as keyof AvailableLocales;
-  matchedLocale = availableLocales[baseLang] || "en-US";
+  matchedLocale = availableLocales[baseLang] || "en";
 
   const response = await updateSession(request);
-  response.cookies.set("locale", matchedLocale);
+  response.cookies.set("locale", matchedLocale.slice(0, 2));
   return response;
 }
 
