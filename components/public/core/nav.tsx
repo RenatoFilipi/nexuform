@@ -10,7 +10,7 @@ import { useState } from "react";
 import ModeToggle2 from "../../core/mode-toggle2";
 
 const navLinks = [
-  { name: "Home", path: "/" },
+  { name: "Dashboard", path: "/" },
   { name: "Log In", path: "/login" },
   { name: "Sign Up", path: "/signup" },
   { name: "Features", path: "#features" },

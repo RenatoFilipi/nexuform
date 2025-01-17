@@ -8,7 +8,7 @@ import { createClient } from "@/utils/supabase/client";
 import { appState } from "@/utils/types";
 import {
   ChartPieIcon,
-  HouseIcon,
+  Layers2Icon,
   LoaderIcon,
   LogOutIcon,
   Menu,
@@ -37,9 +37,9 @@ import {
 const links = [
   {
     id: 1,
-    name: "Home",
+    name: "Dashboard",
     path: "/dashboard/forms",
-    icon: <HouseIcon className="w-4 h-4 mr-2" />,
+    icon: <Layers2Icon className="w-4 h-4 mr-2" />,
     enabled: true,
   },
   {
