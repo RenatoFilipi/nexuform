@@ -1,4 +1,19 @@
+import useSubmissionStore from "@/stores/submission";
 import { ColorProps } from "@/utils/interfaces";
+import { appState } from "@/utils/types";
+import { LoaderIcon } from "lucide-react";
+import { useState } from "react";
+import Brand from "../core/brand";
+import CheckBoxesDesign from "../private/blocks/design/checkboxes-design";
+import CustomScaleDesign from "../private/blocks/design/custom-scale-design";
+import DropdownMenuDesign from "../private/blocks/design/dropdown-menu-design";
+import EmailAddressDesign from "../private/blocks/design/email-address-design";
+import MultipleChoiceDesign from "../private/blocks/design/multiple-choice-design";
+import NumberInputDesign from "../private/blocks/design/number-input-design";
+import ParagraphTextDesign from "../private/blocks/design/paragraph-text-design";
+import ShortTextDesign from "../private/blocks/design/short-text-design";
+import StarRatingDesign from "../private/blocks/design/star-rating-design";
+import { Button } from "../ui/button";
 
 const design: ColorProps[] = [
   {
@@ -92,7 +107,131 @@ const design: ColorProps[] = [
 ];
 
 const SubmissionGroup = () => {
-  return <></>;
+  const { form, theme, blocks, submission, answers } = useSubmissionStore();
+  const [appState, setAppState] = useState<appState>("idle");
+  const currentColor =
+    design.find((x) => x.label === theme.primary_color) ?? design[0];
+
+  const onSubmit = () => {
+    console.log(submission);
+    console.log(answers);
+  };
+
+  return (
+    <div className="flex flex-col gap-6 w-full border rounded m-8 p-6 sm:w-[650px] bg-background relative">
+      <div
+        className={`h-1 absolute top-0 w-full left-0 ${currentColor.tw_class}`}></div>
+      <div className="flex flex-col gap-1">
+        <h1 className="text-2xl font-bold">{form.name}</h1>
+        <p className="text-sm text-foreground/80">{form.description}</p>
+      </div>
+      <div className="flex flex-col justify-center items-center gap-8 w-full">
+        {blocks.map((block) => {
+          switch (block.type) {
+            case "short_text":
+              return (
+                <ShortTextDesign
+                  key={block.id}
+                  block={block}
+                  theme={theme}
+                  onValueChange={() => {}}
+                />
+              );
+            case "paragraph_text":
+              return (
+                <ParagraphTextDesign
+                  key={block.id}
+                  block={block}
+                  theme={theme}
+                  onValueChange={() => {}}
+                />
+              );
+            case "multiple_choice":
+              return (
+                <MultipleChoiceDesign
+                  key={block.id}
+                  block={block}
+                  theme={theme}
+                  onValueChange={() => {}}
+                />
+              );
+            case "checkboxes":
+              return (
+                <CheckBoxesDesign
+                  key={block.id}
+                  block={block}
+                  theme={theme}
+                  onValueChange={() => {}}
+                />
+              );
+            case "dropdown_menu":
+              return (
+                <DropdownMenuDesign
+                  key={block.id}
+                  block={block}
+                  theme={theme}
+                  onValueChange={() => {}}
+                />
+              );
+            case "number_input":
+              return (
+                <NumberInputDesign
+                  key={block.id}
+                  block={block}
+                  theme={theme}
+                  onValueChange={() => {}}
+                />
+              );
+            case "email_address":
+              return (
+                <EmailAddressDesign
+                  key={block.id}
+                  block={block}
+                  theme={theme}
+                  onValueChange={() => {}}
+                />
+              );
+            case "star_rating":
+              return (
+                <StarRatingDesign
+                  key={block.id}
+                  block={block}
+                  theme={theme}
+                  onValueChange={() => {}}
+                />
+              );
+            case "custom_scale":
+              return (
+                <CustomScaleDesign
+                  key={block.id}
+                  block={block}
+                  theme={theme}
+                  onValueChange={() => {}}
+                />
+              );
+          }
+        })}
+      </div>
+      <div className="flex flex-col gap-4">
+        <div className="flex justify-end items-center w-full">
+          <Button
+            onClick={onSubmit}
+            size={"sm"}
+            className={`${currentColor.tw_class}`}>
+            {appState === "loading" ? <LoaderIcon /> : `${form.submit_text}`}
+          </Button>
+        </div>
+        <div className="flex justify-center items-center w-full">
+          <span className="border rounded p-2 w-fit flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
+            <Brand type="logo" className="fill-foreground w-4 h-4" />
+            <span className="text-foreground/80 text-sm font-semibold">
+              Powered by Nebulaform
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default SubmissionGroup;

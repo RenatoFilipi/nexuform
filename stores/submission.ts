@@ -1,13 +1,17 @@
-import { EBlock, EForm, ETheme } from "@/utils/entities";
+import { EAnswer, EBlock, EForm, ESubmission, ETheme } from "@/utils/entities";
 import { create } from "zustand";
 
 interface submission {
   form: EForm;
   theme: ETheme;
   blocks: EBlock[];
+  submission: ESubmission;
+  answers: EAnswer[];
   setForm: (payload: EForm) => void;
   setTheme: (payload: ETheme) => void;
   setBlocks: (payload: EBlock[]) => void;
+  setSubmission: (payload: ESubmission) => void;
+  setAnswers: (payload: EAnswer[]) => void;
   reset: () => void;
 }
 
@@ -30,10 +34,21 @@ const useSubmissionStore = create<submission>((set) => ({
     numeric_blocks: false,
     primary_color: "slate",
   },
+  submission: {
+    id: "",
+    created_at: "",
+    updated_at: "",
+    form_id: "",
+    sent_by: "",
+    status: "not_reviewed",
+  },
+  answers: [],
   blocks: [],
   setForm: (payload) => set({ form: payload }),
   setTheme: (payload) => set({ theme: payload }),
   setBlocks: (payload) => set({ blocks: payload }),
+  setSubmission: (payload) => set({ submission: payload }),
+  setAnswers: (payload) => set({ answers: payload }),
   reset: () =>
     set({
       form: {

@@ -75,12 +75,14 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
               size={"sm"}
               className="w-full sm:w-fit"
               asChild>
-              <Link
+              <a
+                target="_blank"
                 href={`/s/${slug}`}
+                rel="noopener noreferrer"
                 className="flex justify-center items-center">
                 <ExternalLinkIcon className="w-4 h-4 mr-2" />
                 Go to Form
-              </Link>
+              </a>
             </Button>
             <Button variant={"default"} size={"sm"} className="w-full" asChild>
               <Link href={`/dashboard/editor/${slug}`}>
