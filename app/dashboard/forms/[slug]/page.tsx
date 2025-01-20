@@ -70,23 +70,26 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
                 Share
               </Button>
             </FormShare>
-            <Button
-              variant={"outline"}
-              size={"sm"}
-              className="w-full sm:w-fit"
-              asChild>
-              <a
-                target="_blank"
-                href={`/s/${slug}`}
-                rel="noopener noreferrer"
-                className="flex justify-center items-center">
-                <ExternalLinkIcon className="w-4 h-4 mr-2" />
-                Go to Form
-              </a>
-            </Button>
+            {form.status === "published" && (
+              <Button
+                variant={"outline"}
+                size={"sm"}
+                className="w-full sm:w-fit"
+                asChild>
+                <a
+                  target="_blank"
+                  href={`/s/${slug}`}
+                  rel="noopener noreferrer"
+                  className="flex justify-center items-center">
+                  <ExternalLinkIcon className="w-4 h-4 mr-2" />
+                  Go to Form
+                </a>
+              </Button>
+            )}
             <Button variant={"default"} size={"sm"} className="w-full" asChild>
               <Link href={`/dashboard/editor/${slug}`}>
-                <Settings2Icon className="w-4 h-4 mr-2" /> Editor
+                <Settings2Icon className="w-4 h-4 mr-2" />
+                Editor
               </Link>
             </Button>
           </div>
