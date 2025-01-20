@@ -49,6 +49,16 @@ const NumberInputSettings = ({
             }}
           />
         </div>
+        <div className="grid gap-3">
+          <Label htmlFor="placeholder">Placeholder</Label>
+          <Input
+            id="placeholder"
+            value={block.placeholder ?? ""}
+            onChange={(e) => {
+              updateBlock(id, { ...block, placeholder: e.target.value });
+            }}
+          />
+        </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="grid gap-3">
             <Label htmlFor="min-character-limit">Min</Label>

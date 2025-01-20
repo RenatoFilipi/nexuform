@@ -50,6 +50,16 @@ const ParagraphTextSettings = ({
           />
         </div>
         <div className="grid gap-3">
+          <Label htmlFor="description">Placeholder</Label>
+          <Input
+            id="placeholder"
+            value={block.placeholder ?? ""}
+            onChange={(e) => {
+              updateBlock(id, { ...block, placeholder: e.target.value });
+            }}
+          />
+        </div>
+        <div className="grid gap-3">
           <Label htmlFor="max-character-limit">Max character limit</Label>
           <Input
             type="number_input"

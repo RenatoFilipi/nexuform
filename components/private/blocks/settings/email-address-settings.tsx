@@ -49,6 +49,16 @@ const EmailAddressSettings = ({
             }}
           />
         </div>
+        <div className="grid gap-3">
+          <Label htmlFor="placeholder">Placeholder</Label>
+          <Input
+            id="placeholder"
+            value={block.placeholder ?? ""}
+            onChange={(e) => {
+              updateBlock(id, { ...block, placeholder: e.target.value });
+            }}
+          />
+        </div>
         <div className="flex justify-between items-center">
           <Label htmlFor="required">Required</Label>
           <Switch

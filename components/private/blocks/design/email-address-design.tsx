@@ -37,7 +37,7 @@ const EmailAddressDesign = ({
   theme: ETheme;
   onValueChange: (value: string, blockId: string) => void;
 }) => {
-  const { name, description, required, id, position } = block;
+  const { name, description, required, id, position, placeholder } = block;
   const currentColor =
     design.find((x) => x.label === theme.primary_color) ?? design[0];
   const [value, setValue] = useState("");
@@ -59,6 +59,7 @@ const EmailAddressDesign = ({
       </div>
       <Input
         value={value}
+        placeholder={placeholder ?? ""}
         onChange={(e) => {
           setValue(e.target.value);
           onValueChange(e.target.value, block.id);

@@ -46,6 +46,7 @@ const ParagraphTextDesign = ({
     id,
     position,
     min_char,
+    placeholder,
   } = block;
   const currentColor =
     design.find((x) => x.label === theme.primary_color) ?? design[0];
@@ -69,6 +70,7 @@ const ParagraphTextDesign = ({
       <div className="">
         <Textarea
           value={value}
+          placeholder={placeholder ?? ""}
           onChange={(e) => {
             setValue(e.target.value);
             onValueChange(e.target.value, block.id);

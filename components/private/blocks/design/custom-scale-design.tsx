@@ -165,7 +165,7 @@ const CustomScaleDesign = ({
               />
               <Label
                 htmlFor={scaleId}
-                className={`${currentColor.tw_class} text-sm cursor-pointer flex items-center justify-center gap-2 rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground`}>
+                className={`${currentColor.tw_class} text-sm cursor-pointer flex items-center justify-center gap-2 rounded-md border-2 border-muted bg-popover h-14 hover:bg-accent hover:text-accent-foreground`}>
                 {scale}
               </Label>
             </div>

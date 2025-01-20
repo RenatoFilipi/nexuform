@@ -50,9 +50,20 @@ const ShortTextSettings = ({
           />
         </div>
         <div className="grid gap-3">
+          <Label htmlFor="description">Placeholder</Label>
+          <Input
+            type="text"
+            id="placeholder"
+            value={block.placeholder ?? ""}
+            onChange={(e) => {
+              updateBlock(id, { ...block, placeholder: e.target.value });
+            }}
+          />
+        </div>
+        <div className="grid gap-3">
           <Label htmlFor="max-character-limit">Max character limit</Label>
           <Input
-            type="number_input"
+            type="number"
             id="max-character-limit"
             value={block.max_char ?? 100}
             onChange={(e) =>
