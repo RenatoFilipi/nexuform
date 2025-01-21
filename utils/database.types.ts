@@ -119,6 +119,44 @@ export type Database = {
           },
         ]
       }
+      feedbacks: {
+        Row: {
+          created_at: string
+          id: string
+          mood: string | null
+          path: string | null
+          user_agent: string | null
+          user_id: string
+          value: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          mood?: string | null
+          path?: string | null
+          user_agent?: string | null
+          user_id: string
+          value?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          mood?: string | null
+          path?: string | null
+          user_agent?: string | null
+          user_id?: string
+          value?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feedbacks_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       forms: {
         Row: {
           created_at: string

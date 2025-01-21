@@ -5,7 +5,6 @@ import Link from "next/link";
 
 const S = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
-  console.log(slug);
   const supabase = await createClient();
   const form = await supabase.from("forms").select("*").eq("id", slug).single();
   const theme = await supabase
@@ -19,7 +18,12 @@ const S = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("form_id", slug)
     .order("position", { ascending: true });
 
-  if (form.error || theme.error || blocks.error) {
+  if (
+    form.error ||
+    theme.error ||
+    blocks.error ||
+    form.data.status !== "published"
+  ) {
     return (
       <div className="flex justify-center items-center h-screen">
         <div className="flex flex-col justify-center items-center gap-4">

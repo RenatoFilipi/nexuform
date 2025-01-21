@@ -6,3 +6,4 @@ export type EProfile = Tables<"profiles">;
 export type ETheme = Tables<"themes">;
 export type ESubmission = Tables<"submissions">;
 export type EAnswer = Tables<"answers">;
+export type EFeedback = Tables<"feedbacks">;
