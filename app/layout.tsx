@@ -25,6 +25,9 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
+      {/* <head>
+        <script src="https://unpkg.com/react-scan/dist/auto.global.js" async />
+      </head> */}
       <body className={figtree.className}>
         <NextIntlClientProvider messages={messages}>
           <QueryProvider>

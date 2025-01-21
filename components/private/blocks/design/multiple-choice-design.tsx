@@ -2,7 +2,6 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { EBlock, ETheme } from "@/utils/entities";
 import { ColorProps } from "@/utils/interfaces";
-import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 const design: ColorProps[] = [
@@ -111,7 +110,6 @@ const MultipleChoiceDesign = ({
   const { name, description, required, options, id, position } = block;
   const currentColor =
     design.find((x) => x.label === theme.primary_color) ?? design[0];
-  const [value, setValue] = useState("");
 
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -129,7 +127,11 @@ const MultipleChoiceDesign = ({
         <span className="text-xs text-foreground/80">{description}</span>
       </div>
       {options && options.length >= 1 && (
-        <RadioGroup className="flex flex-col gap-1">
+        <RadioGroup
+          className="flex flex-col gap-1"
+          onValueChange={(e) => {
+            onValueChange(e, block.id);
+          }}>
           {options.map((opt) => {
             const optionId = `${id}_${opt}`;
             return (

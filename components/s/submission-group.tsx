@@ -107,7 +107,8 @@ const design: ColorProps[] = [
 ];
 
 const SubmissionGroup = () => {
-  const { form, theme, blocks, submission, answers } = useSubmissionStore();
+  const { form, theme, blocks, submission, answers, setAnswers } =
+    useSubmissionStore();
   const [appState, setAppState] = useState<appState>("idle");
   const currentColor =
     design.find((x) => x.label === theme.primary_color) ?? design[0];
@@ -115,6 +116,17 @@ const SubmissionGroup = () => {
   const onSubmit = () => {
     console.log(submission);
     console.log(answers);
+  };
+
+  const onValueChange = (value: string, blockId: string) => {
+    const currentAnswer = answers.find((answer) => answer.block_id === blockId);
+    if (!currentAnswer) return;
+    currentAnswer.value = value;
+    const updatedAnswer = answers.map((answer) => {
+      if (answer.id === currentAnswer.id) return currentAnswer;
+      return answer;
+    });
+    setAnswers(updatedAnswer);
   };
 
   return (
@@ -134,7 +146,7 @@ const SubmissionGroup = () => {
                   key={block.id}
                   block={block}
                   theme={theme}
-                  onValueChange={() => {}}
+                  onValueChange={onValueChange}
                 />
               );
             case "paragraph_text":
@@ -143,16 +155,7 @@ const SubmissionGroup = () => {
                   key={block.id}
                   block={block}
                   theme={theme}
-                  onValueChange={() => {}}
-                />
-              );
-            case "multiple_choice":
-              return (
-                <MultipleChoiceDesign
-                  key={block.id}
-                  block={block}
-                  theme={theme}
-                  onValueChange={() => {}}
+                  onValueChange={onValueChange}
                 />
               );
             case "checkboxes":
@@ -161,7 +164,16 @@ const SubmissionGroup = () => {
                   key={block.id}
                   block={block}
                   theme={theme}
-                  onValueChange={() => {}}
+                  onValueChange={onValueChange}
+                />
+              );
+            case "multiple_choice":
+              return (
+                <MultipleChoiceDesign
+                  key={block.id}
+                  block={block}
+                  theme={theme}
+                  onValueChange={onValueChange}
                 />
               );
             case "dropdown_menu":
@@ -170,7 +182,7 @@ const SubmissionGroup = () => {
                   key={block.id}
                   block={block}
                   theme={theme}
-                  onValueChange={() => {}}
+                  onValueChange={onValueChange}
                 />
               );
             case "number_input":
@@ -179,7 +191,7 @@ const SubmissionGroup = () => {
                   key={block.id}
                   block={block}
                   theme={theme}
-                  onValueChange={() => {}}
+                  onValueChange={onValueChange}
                 />
               );
             case "email_address":
@@ -188,7 +200,7 @@ const SubmissionGroup = () => {
                   key={block.id}
                   block={block}
                   theme={theme}
-                  onValueChange={() => {}}
+                  onValueChange={onValueChange}
                 />
               );
             case "star_rating":
@@ -197,7 +209,7 @@ const SubmissionGroup = () => {
                   key={block.id}
                   block={block}
                   theme={theme}
-                  onValueChange={() => {}}
+                  onValueChange={onValueChange}
                 />
               );
             case "custom_scale":
@@ -206,7 +218,7 @@ const SubmissionGroup = () => {
                   key={block.id}
                   block={block}
                   theme={theme}
-                  onValueChange={() => {}}
+                  onValueChange={onValueChange}
                 />
               );
           }
