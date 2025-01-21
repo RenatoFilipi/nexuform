@@ -10,9 +10,13 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { minWidth640 } from "@/utils/constants";
+import { createClient } from "@/utils/supabase/client";
 import { setState } from "@/utils/types";
-import { ReactNode, useState } from "react";
+import { LoaderIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ReactNode, useState, useTransition } from "react";
 import { useMedia } from "react-use";
+import { toast } from "sonner";
 import {
   Drawer,
   DrawerContent,
@@ -76,6 +80,22 @@ const Body = ({
   setState: setState<boolean>;
   formId: string;
 }) => {
+  const [isPending, startTransition] = useTransition();
+  const supabase = createClient();
+  const router = useRouter();
+
+  const onDeleteForm = () => {
+    startTransition(async () => {
+      const { error } = await supabase.from("forms").delete().eq("id", formId);
+      if (error) {
+        toast.error("Error on deleting form.");
+        console.log(error);
+        return;
+      }
+      router.push("/dashboard/forms");
+    });
+  };
+
   return (
     <div className="flex flex-col gap-6 h-full overflow-y-auto pt-4 sm:pt-0">
       <div className="flex justify-end flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
@@ -87,11 +107,15 @@ const Body = ({
           Cancel
         </Button>
         <Button
-          onClick={() => setState(false)}
+          onClick={onDeleteForm}
           variant={"destructive"}
           size={"sm"}
           className="w-full sm:w-fit">
-          Delete Form
+          {isPending ? (
+            <LoaderIcon className="animate-spin w-4 h-4" />
+          ) : (
+            "Delete Form"
+          )}
         </Button>
       </div>
     </div>

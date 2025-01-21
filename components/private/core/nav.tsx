@@ -288,7 +288,8 @@ const NavApp = () => {
   );
 };
 const NavEditor = () => {
-  const { form, theme, blocks, blocksReadyOnly } = useEditorStore();
+  const { form, theme, blocks, blocksReadyOnly, preview, setPreview } =
+    useEditorStore();
   const supabase = createClient();
   const router = useRouter();
   const [appState, setAppState] = useState<appState>("idle");
@@ -435,6 +436,13 @@ const NavEditor = () => {
         </div>
       </div>
       <div className="flex justify-center items-center gap-2">
+        <Button
+          variant={"outline"}
+          size={"sm"}
+          className="flex sm:hidden"
+          onClick={() => setPreview(!preview)}>
+          Preview
+        </Button>
         <Button
           size={"sm"}
           variant={"default"}

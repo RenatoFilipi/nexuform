@@ -118,7 +118,7 @@ const SubmissionGroup = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 w-full border rounded m-8 p-6 sm:w-[650px] bg-background relative">
+    <div className="flex flex-col gap-6 w-full border rounded m-4 sm:m-8 p-6 sm:w-[650px] bg-background relative">
       <div
         className={`h-1 absolute top-0 w-full left-0 ${currentColor.tw_class}`}></div>
       <div className="flex flex-col gap-1">
@@ -217,7 +217,7 @@ const SubmissionGroup = () => {
           <Button
             onClick={onSubmit}
             size={"sm"}
-            className={`${currentColor.tw_class}`}>
+            className={`${currentColor.tw_class} w-full sm:w-fit`}>
             {appState === "loading" ? <LoaderIcon /> : `${form.submit_text}`}
           </Button>
         </div>

@@ -54,7 +54,7 @@ const tips = [
 
 const EditorTips = () => {
   return (
-    <ul className="grid grid-cols-2 gap-8">
+    <ul className="grid sm:grid-cols-2 gap-8">
       {tips.map((tip, index) => (
         <li key={index} className="flex items-start gap-4">
           <div

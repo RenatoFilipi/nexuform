@@ -109,7 +109,7 @@ const EditorPreviewGroup = () => {
     design.find((x) => x.label === theme.primary_color) ?? design[0];
 
   return (
-    <div className="flex flex-col gap-6 w-full border rounded m-8 p-6 sm:w-[650px] bg-background relative">
+    <div className="flex flex-col gap-6 w-full border rounded m-4 sm:m-8 p-6 sm:w-[650px] bg-background relative">
       <div
         className={`h-1 absolute top-0 w-full left-0 ${currentColor.tw_class}`}></div>
       <div className="flex flex-col gap-1">
@@ -205,7 +205,9 @@ const EditorPreviewGroup = () => {
       </div>
       <div className="flex flex-col gap-4">
         <div className="flex justify-end items-center w-full">
-          <Button size={"sm"} className={`${currentColor.tw_class}`}>
+          <Button
+            size={"sm"}
+            className={`${currentColor.tw_class} w-full sm:w-fit`}>
             {form.submit_text}
           </Button>
         </div>

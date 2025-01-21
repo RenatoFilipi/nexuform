@@ -6,6 +6,7 @@ interface editor {
   theme: ETheme;
   blocks: EBlock[];
   blocksReadyOnly: EBlock[];
+  preview: boolean;
   setForm: (payload: EForm) => void;
   setTheme: (payload: ETheme) => void;
   setBlocks: (payload: EBlock[]) => void;
@@ -13,6 +14,7 @@ interface editor {
   addBlock: (Payload: EBlock) => void;
   updateBlock: (id: string, payload: EBlock) => void;
   removeBlock: (id: string) => void;
+  setPreview: (value: boolean) => void;
   reset: () => void;
 }
 
@@ -37,6 +39,7 @@ const useEditorStore = create<editor>((set) => ({
   },
   blocks: [],
   blocksReadyOnly: [],
+  preview: false,
   setForm: (payload) => set({ form: payload }),
   setTheme: (payload) => set({ theme: payload }),
   setBlocks: (payload) => set({ blocks: payload }),
@@ -54,6 +57,7 @@ const useEditorStore = create<editor>((set) => ({
       blocks: state.blocks.filter((block) => block.id !== id),
     }));
   },
+  setPreview: (value) => set({ preview: value }),
   reset: () =>
     set({
       form: {
