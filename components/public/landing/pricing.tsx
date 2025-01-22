@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { plan } from "@/utils/types";
+import { TPlan } from "@/utils/types";
 import { useTranslations } from "next-intl";
 
 const Pricing = () => {
@@ -17,7 +17,7 @@ const Pricing = () => {
 
   const renderOnlyPrice = (price: number) => <span>${price.toFixed(0)}</span>;
 
-  const plans: plan[] = [
+  const plans: TPlan[] = [
     {
       name: t("pricing.plans.free_trial.name"),
       price: 0,

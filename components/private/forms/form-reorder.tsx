@@ -18,7 +18,7 @@ import {
 import useEditorStore from "@/stores/editor";
 import { minWidth640 } from "@/utils/constants";
 import { EBlock } from "@/utils/entities";
-import { block, setState } from "@/utils/types";
+import { TBlock, TSetState } from "@/utils/types";
 import { Reorder } from "framer-motion";
 import {
   CheckCircleIcon,
@@ -36,7 +36,7 @@ import { useState, type JSX } from "react";
 import { useMedia } from "react-use";
 import AddBlock from "../blocks/add-block";
 
-const icons: { [key in block]: JSX.Element } = {
+const icons: { [key in TBlock]: JSX.Element } = {
   short_text: <EqualIcon className="w-5 h-5 text-background" />,
   paragraph_text: <TextIcon className="w-5 h-5 text-background" />,
   checkboxes: <CheckSquareIcon className="w-5 h-5 text-background" />,
@@ -87,7 +87,7 @@ const FormReorder = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const Body = ({ setState }: { setState: setState<boolean> }) => {
+const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const { blocks, setBlocks, form } = useEditorStore();
 
   const onReorderedBlocks = (payload: EBlock[]) => {
@@ -143,7 +143,7 @@ const Item = ({ block }: { block: EBlock }) => {
       id={block.id}
       className="flex border cursor-grab bg-background rounded p-2 gap-2">
       <div className="flex justify-center items-center bg-foreground/80 rounded relative p-2 h-full">
-        {icons[block.type as block]}
+        {icons[block.type as TBlock]}
       </div>
       <div className="flex justify-start items-center overflow-y-auto">
         <p className="text-sm font-medium text-foreground/80 truncate max-w-xs">

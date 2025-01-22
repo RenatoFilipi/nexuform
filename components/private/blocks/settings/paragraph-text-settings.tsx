@@ -8,14 +8,14 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import useEditorStore from "@/stores/editor";
 import { EBlock } from "@/utils/entities";
-import { setState } from "@/utils/types";
+import { TSetState } from "@/utils/types";
 
 const ParagraphTextSettings = ({
   block,
   setState,
 }: {
   block: EBlock;
-  setState: setState<boolean>;
+  setState: TSetState<boolean>;
 }) => {
   const { id } = block;
   const { updateBlock, removeBlock } = useEditorStore();

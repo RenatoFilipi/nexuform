@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { minWidth640 } from "@/utils/constants";
-import { setState } from "@/utils/types";
+import { TSetState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2Icon } from "lucide-react";
@@ -100,7 +100,7 @@ const Body = ({
   setState,
   userId,
 }: {
-  setState: setState<boolean>;
+  setState: TSetState<boolean>;
   userId: string;
 }) => {
   const [isPending, startTransition] = useTransition();

@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { minWidth640 } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/client";
-import { setState } from "@/utils/types";
+import { TSetState } from "@/utils/types";
 import { AlertCircleIcon, LoaderIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ReactNode, useState, useTransition } from "react";
@@ -80,7 +80,7 @@ const Body = ({
   formId,
   formName,
 }: {
-  setState: setState<boolean>;
+  setState: TSetState<boolean>;
   formId: string;
   formName: string;
 }) => {

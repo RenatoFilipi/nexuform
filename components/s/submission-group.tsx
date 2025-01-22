@@ -1,6 +1,6 @@
 import useSubmissionStore from "@/stores/submission";
-import { ColorProps } from "@/utils/interfaces";
-import { appState } from "@/utils/types";
+import { IDesign } from "@/utils/interfaces";
+import { TAppState } from "@/utils/types";
 import { LoaderIcon } from "lucide-react";
 import { useState } from "react";
 import Brand from "../core/brand";
@@ -15,7 +15,7 @@ import ShortTextDesign from "../private/blocks/design/short-text-design";
 import StarRatingDesign from "../private/blocks/design/star-rating-design";
 import { Button } from "../ui/button";
 
-const design: ColorProps[] = [
+const design: IDesign[] = [
   {
     label: "slate",
     tw_class: "bg-slate-500 hover:bg-slate-600 text-white",
@@ -109,7 +109,7 @@ const design: ColorProps[] = [
 const SubmissionGroup = () => {
   const { form, theme, blocks, submission, answers, setAnswers } =
     useSubmissionStore();
-  const [appState, setAppState] = useState<appState>("idle");
+  const [appState, setAppState] = useState<TAppState>("idle");
   const currentColor =
     design.find((x) => x.label === theme.primary_color) ?? design[0];
 

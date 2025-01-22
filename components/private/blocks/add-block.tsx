@@ -16,8 +16,8 @@ import useEditorStore from "@/stores/editor";
 import { minWidth640 } from "@/utils/constants";
 import { EBlock } from "@/utils/entities";
 import { uuid } from "@/utils/functions";
-import { addBlockProps } from "@/utils/interfaces";
-import { block, setState } from "@/utils/types";
+import { IBlockData } from "@/utils/interfaces";
+import { TBlock, TSetState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   CheckCircleIcon,
@@ -43,7 +43,7 @@ import {
   DrawerTrigger,
 } from "../../ui/drawer";
 
-const blockList: addBlockProps[] = [
+const blockList: IBlockData[] = [
   {
     type: "short_text",
     name: "Short Text",
@@ -158,7 +158,7 @@ const Body = ({
   setState,
   formId,
 }: {
-  setState: setState<boolean>;
+  setState: TSetState<boolean>;
   formId: string;
 }) => {
   const { addBlock, blocks } = useEditorStore();
@@ -173,7 +173,7 @@ const Body = ({
     },
   });
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    const blockType = values.block as block;
+    const blockType = values.block as TBlock;
 
     const targetBlock = blockList.find((x) => x.type === blockType);
     if (targetBlock === undefined) return;

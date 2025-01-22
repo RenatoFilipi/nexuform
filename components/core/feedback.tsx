@@ -4,7 +4,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { createClient } from "@/utils/supabase/client";
-import { appState, setState } from "@/utils/types";
+import { TAppState, TSetState } from "@/utils/types";
 import {
   CheckIcon,
   FrownIcon,
@@ -34,9 +34,9 @@ const moods = [
   { icon: <FrownIcon className="w-4 h-4" />, value: "bad" },
 ];
 
-const Body = ({ setState }: { setState: setState<boolean> }) => {
+const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const supabase = createClient();
-  const [appState, setAppState] = useState<appState>("idle");
+  const [appState, setAppState] = useState<TAppState>("idle");
   const [localMood, setMood] = useState("");
   const [value, setValue] = useState("");
 

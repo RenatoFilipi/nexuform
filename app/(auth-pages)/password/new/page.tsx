@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { appState } from "@/utils/types";
+import { TAppState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ChevronLeftIcon,
@@ -25,7 +25,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const New = () => {
-  const [appState, setAppState] = useState<appState>("idle");
+  const [appState, setAppState] = useState<TAppState>("idle");
   const [showPassword, setShowPassword] = useState(false);
 
   const formSchema = z.object({

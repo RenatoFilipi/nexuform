@@ -1,10 +1,10 @@
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { EBlock, ETheme } from "@/utils/entities";
-import { ColorProps } from "@/utils/interfaces";
+import { IDesign } from "@/utils/interfaces";
 import { twMerge } from "tailwind-merge";
 
-const design: ColorProps[] = [
+const design: IDesign[] = [
   {
     label: "slate",
     tw_class: "border-slate-500 text-slate-500 focus-visible:ring-slate-500",

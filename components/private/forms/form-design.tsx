@@ -13,8 +13,8 @@ import {
 import { Switch } from "@/components/ui/switch";
 import useEditorStore from "@/stores/editor";
 import { minWidth640 } from "@/utils/constants";
-import { ColorProps } from "@/utils/interfaces";
-import { setState } from "@/utils/types";
+import { IDesign } from "@/utils/interfaces";
+import { TSetState } from "@/utils/types";
 import { CheckIcon } from "lucide-react";
 import { useState } from "react";
 import { useMedia } from "react-use";
@@ -27,7 +27,7 @@ import {
   DrawerTrigger,
 } from "../../ui/drawer";
 
-const colors: ColorProps[] = [
+const colors: IDesign[] = [
   {
     tw_class:
       "bg-slate-500 hover:bg-slate-600 text-white dark:bg-slate-800 dark:hover:bg-slate-900",
@@ -177,7 +177,7 @@ const FormDesign = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const Body = ({ setState }: { setState: setState<boolean> }) => {
+const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const { theme, setTheme } = useEditorStore();
 
   const onSetPrimaryColor = (value: string) => {

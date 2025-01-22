@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { appState } from "@/utils/types";
+import { TAppState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronLeftIcon, LoaderIcon } from "lucide-react";
 import Link from "next/link";
@@ -20,7 +20,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const Reset = () => {
-  const [appState, setAppState] = useState<appState>("idle");
+  const [appState, setAppState] = useState<TAppState>("idle");
 
   const formSchema = z.object({ email: z.string().email() });
   const form = useForm<z.infer<typeof formSchema>>({

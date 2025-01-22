@@ -1,13 +1,13 @@
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { EForm } from "@/utils/entities";
-import { formStatus } from "@/utils/types";
+import { TFormStatus } from "@/utils/types";
 import { ChevronRightIcon } from "lucide-react";
 import Link from "next/link";
 
 const FormCard = ({ form }: { form: EForm }) => {
   const { id, name, status } = form;
-  const BadgeVariant = (status: formStatus) => {
+  const BadgeVariant = (status: TFormStatus) => {
     switch (status) {
       case "published":
         return (
@@ -36,7 +36,7 @@ const FormCard = ({ form }: { form: EForm }) => {
         <div>
           <div className="flex justify-between items-start w-full flex-col gap-2">
             <span className="text-sm">{name}</span>
-            {BadgeVariant(status as formStatus)}
+            {BadgeVariant(status as TFormStatus)}
           </div>
           <ChevronRightIcon className="absolute right-4 top-4 text-foreground-lighter transition-all duration-200 group-hover:right-3 group-hover:text-foreground " />
         </div>

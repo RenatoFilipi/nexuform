@@ -1,7 +1,7 @@
-import { BrandProps } from "@/utils/interfaces";
+import { IBrand } from "@/utils/interfaces";
 import { twMerge } from "tailwind-merge";
 
-const Brand = ({ className, type }: BrandProps) => {
+const Brand = ({ className, type }: IBrand) => {
   switch (type) {
     case "logo": {
       return (

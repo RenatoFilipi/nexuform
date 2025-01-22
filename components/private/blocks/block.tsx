@@ -1,4 +1,4 @@
-import { block } from "@/utils/types";
+import { TBlock } from "@/utils/types";
 import {
   CheckCircleIcon,
   CheckSquareIcon,
@@ -16,7 +16,7 @@ import { EBlock } from "@/utils/entities";
 import type { JSX } from "react";
 import BlockSettings from "./block-settings";
 
-const icons: { [key in block]: JSX.Element } = {
+const icons: { [key in TBlock]: JSX.Element } = {
   short_text: <EqualIcon className="w-4 h-4" />,
   paragraph_text: <TextIcon className="w-4 h-4" />,
   checkboxes: <CheckSquareIcon className="w-4 h-4" />,
@@ -34,7 +34,7 @@ const Block = ({ block }: { block: EBlock }) => {
       <div className="flex flex-col gap-2 border rounded p-3 cursor-pointer hover:bg-foreground/5 group">
         <div className="flex justify-between items-center gap-2">
           <div className="flex justify-center items-center gap-2">
-            {icons[block.type as block]}
+            {icons[block.type as TBlock]}
           </div>
           {block.required && <Badge variant={"gray"}>Required</Badge>}
         </div>

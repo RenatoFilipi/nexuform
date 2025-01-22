@@ -1,7 +1,7 @@
 import Brand from "@/components/core/brand";
 import { Button } from "@/components/ui/button";
 import useEditorStore from "@/stores/editor";
-import { ColorProps } from "@/utils/interfaces";
+import { IDesign } from "@/utils/interfaces";
 import CheckBoxesDesign from "../blocks/design/checkboxes-design";
 import CustomScaleDesign from "../blocks/design/custom-scale-design";
 import DropdownMenuDesign from "../blocks/design/dropdown-menu-design";
@@ -12,7 +12,7 @@ import ParagraphTextDesign from "../blocks/design/paragraph-text-design";
 import ShortTextDesign from "../blocks/design/short-text-design";
 import StarRatingDesign from "../blocks/design/star-rating-design";
 
-const design: ColorProps[] = [
+const design: IDesign[] = [
   {
     label: "slate",
     tw_class: "bg-slate-500 hover:bg-slate-600 text-white",

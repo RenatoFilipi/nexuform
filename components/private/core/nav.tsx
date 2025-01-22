@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import useEditorStore from "@/stores/editor";
 import { createClient } from "@/utils/supabase/client";
-import { appState } from "@/utils/types";
+import { TAppState } from "@/utils/types";
 import {
   ChartPieIcon,
   Layers2Icon,
@@ -292,7 +292,7 @@ const NavEditor = () => {
     useEditorStore();
   const supabase = createClient();
   const router = useRouter();
-  const [appState, setAppState] = useState<appState>("idle");
+  const [appState, setAppState] = useState<TAppState>("idle");
 
   const onSave = async () => {
     try {

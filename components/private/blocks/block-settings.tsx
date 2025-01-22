@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/sheet";
 import { minWidth640 } from "@/utils/constants";
 import { EBlock } from "@/utils/entities";
-import { setState } from "@/utils/types";
+import { TSetState } from "@/utils/types";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import CheckboxesSettings from "./settings/checkboxes-settings";
@@ -79,7 +79,7 @@ const Body = ({
   setState,
 }: {
   block: EBlock;
-  setState: setState<boolean>;
+  setState: TSetState<boolean>;
 }) => {
   switch (block.type) {
     case "short_text": {

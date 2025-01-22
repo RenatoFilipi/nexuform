@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatDateRelativeToNow } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
-import { formStatus } from "@/utils/types";
+import { TFormStatus } from "@/utils/types";
 import { ExternalLinkIcon, ForwardIcon, Settings2Icon } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -32,7 +32,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .select("*")
     .eq("form_id", slug);
 
-  const BadgeVariant = (status: formStatus) => {
+  const BadgeVariant = (status: TFormStatus) => {
     switch (status) {
       case "published":
         return (
@@ -61,10 +61,10 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
         <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
           <div className="flex justify-start items-center gap-3 w-full sm:w-fit">
             <h1 className="text-xl font-semibold">{form.name}</h1>
-            {BadgeVariant(form.status as formStatus)}
+            {BadgeVariant(form.status as TFormStatus)}
           </div>
           <div className="flex justify-center items-center sm:gap-4 gap-2 w-full sm:w-fit">
-            <FormShare formId={slug} status={form.status as formStatus}>
+            <FormShare formId={slug} status={form.status as TFormStatus}>
               <Button variant={"outline"} size={"sm"} className="w-full">
                 <ForwardIcon className="w-4 h-4 mr-2" />
                 Share

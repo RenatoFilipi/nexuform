@@ -6,10 +6,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { EBlock, ETheme } from "@/utils/entities";
-import { ColorProps } from "@/utils/interfaces";
+import { IDesign } from "@/utils/interfaces";
 import { useState } from "react";
 
-const design: ColorProps[] = [
+const design: IDesign[] = [
   { label: "slate", tw_class: "focus-visible:ring-slate-500" },
   { label: "gray", tw_class: "focus-visible:ring-gray-500" },
   { label: "zinc", tw_class: "focus-visible:ring-zinc-500" },

@@ -4,7 +4,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { minWidth640 } from "@/utils/constants";
-import { formStatus, setState } from "@/utils/types";
+import { TFormStatus, TSetState } from "@/utils/types";
 import { CopyIcon } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
@@ -32,7 +32,7 @@ const FormShare = ({
 }: {
   children: React.ReactNode;
   formId: string;
-  status: formStatus;
+  status: TFormStatus;
 }) => {
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
@@ -75,9 +75,9 @@ const Body = ({
   formId,
   status,
 }: {
-  setState: setState<boolean>;
+  setState: TSetState<boolean>;
   formId: string;
-  status: formStatus;
+  status: TFormStatus;
 }) => {
   const [url] = useState(`${window.location.host}/s/${formId}`);
 

@@ -1,11 +1,11 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { EBlock, ETheme } from "@/utils/entities";
-import { ColorProps } from "@/utils/interfaces";
+import { IDesign } from "@/utils/interfaces";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-const design: ColorProps[] = [
+const design: IDesign[] = [
   {
     label: "slate",
     tw_class:

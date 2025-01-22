@@ -14,8 +14,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import useEditorStore from "@/stores/editor";
 import { minWidth640 } from "@/utils/constants";
-import { FormSettingsStatusProps } from "@/utils/interfaces";
-import { setState } from "@/utils/types";
+import { IFormStatus } from "@/utils/interfaces";
+import { TSetState } from "@/utils/types";
 import { BookDashedIcon, GlobeIcon, PencilOffIcon } from "lucide-react";
 import { useState } from "react";
 import { useMedia } from "react-use";
@@ -29,7 +29,7 @@ import {
 } from "../../ui/drawer";
 import FormDelete from "./form-delete";
 
-const statusList: FormSettingsStatusProps[] = [
+const statusList: IFormStatus[] = [
   {
     status: "draft",
     label: "Draft",
@@ -90,7 +90,7 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const Body = ({ setState }: { setState: setState<boolean> }) => {
+const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const { form, setForm } = useEditorStore();
 
   const onSetName = (value: string) => {

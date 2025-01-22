@@ -1,7 +1,7 @@
 import { formatDistance } from "date-fns";
 import { customAlphabet } from "nanoid";
 import { redirect } from "next/navigation";
-import { block } from "./types";
+import { TBlock } from "./types";
 
 export const uuid = () => {
   const uuid = self.crypto.randomUUID();
@@ -11,7 +11,7 @@ export const nanoid = (length: number = 12) => {
   const nnid = customAlphabet("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ", length);
   return nnid();
 };
-export const blockName = (type: block) => {
+export const blockName = (type: TBlock) => {
   switch (type) {
     case "short_text":
       return "Short Text";
