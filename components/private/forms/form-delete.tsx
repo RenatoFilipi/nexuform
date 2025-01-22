@@ -105,8 +105,8 @@ const Body = ({
     <div className="flex flex-col gap-3 h-full overflow-y-auto pt-4 sm:pt-0">
       <div className="grid gap-3">
         <Label htmlFor="form_name">
-          Type <span className="text-destructive">"{formName}"</span> to delete
-          this form.
+          Type <span className="text-destructive">&quot{formName}&quot</span> to
+          delete this form.
         </Label>
         <Input
           type="text"

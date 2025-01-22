@@ -1,5 +1,6 @@
 import { formatDistance } from "date-fns";
 import { customAlphabet } from "nanoid";
+import { redirect } from "next/navigation";
 import { block } from "./types";
 
 export const uuid = () => {
@@ -37,4 +38,11 @@ export const formatDateRelativeToNow = (isoDate: string) => {
   return formatDistance(date, new Date(), {
     addSuffix: true,
   });
+};
+export const encodedRedirect = (
+  type: "error" | "success",
+  path: string,
+  message: string
+): never => {
+  return redirect(`${path}?${type}=${encodeURIComponent(message)}`);
 };

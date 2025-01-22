@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface auth {
+interface user {
   id: string;
   email: string;
   setId: (id: string) => void;
@@ -8,7 +8,7 @@ interface auth {
   reset: () => void;
 }
 
-const useAuthStore = create<auth>((set) => ({
+const useUserStore = create<user>((set) => ({
   id: "",
   email: "",
   setId: (id) => set({ id }),
@@ -16,4 +16,4 @@ const useAuthStore = create<auth>((set) => ({
   reset: () => set({ id: "", email: "" }),
 }));
 
-export default useAuthStore;
+export default useUserStore;

@@ -198,6 +198,54 @@ export type Database = {
           },
         ]
       }
+      forms_analytics: {
+        Row: {
+          avg_completion_time: number | null
+          created_at: string
+          form_id: string
+          id: string
+          profile_id: string
+          total_responses: number
+          total_views: number
+          updated_at: string
+        }
+        Insert: {
+          avg_completion_time?: number | null
+          created_at?: string
+          form_id: string
+          id?: string
+          profile_id: string
+          total_responses?: number
+          total_views?: number
+          updated_at?: string
+        }
+        Update: {
+          avg_completion_time?: number | null
+          created_at?: string
+          form_id?: string
+          id?: string
+          profile_id?: string
+          total_responses?: number
+          total_views?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forms_analytics_form_id_fkey"
+            columns: ["form_id"]
+            isOneToOne: false
+            referencedRelation: "forms"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forms_analytics_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -225,8 +273,50 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles_analytics: {
+        Row: {
+          avg_completion_rate: number | null
+          created_at: string
+          id: string
+          profile_id: string
+          total_forms_created: number
+          total_forms_responses: number
+          total_forms_views: number
+          updated_at: string
+        }
+        Insert: {
+          avg_completion_rate?: number | null
+          created_at?: string
+          id?: string
+          profile_id: string
+          total_forms_created?: number
+          total_forms_responses?: number
+          total_forms_views?: number
+          updated_at?: string
+        }
+        Update: {
+          avg_completion_rate?: number | null
+          created_at?: string
+          id?: string
+          profile_id?: string
+          total_forms_created?: number
+          total_forms_responses?: number
+          total_forms_views?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profile_analytics_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       submissions: {
         Row: {
+          completion_time: number | null
           created_at: string
           form_id: string
           id: string
@@ -235,6 +325,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          completion_time?: number | null
           created_at?: string
           form_id: string
           id?: string
@@ -243,6 +334,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          completion_time?: number | null
           created_at?: string
           form_id?: string
           id?: string

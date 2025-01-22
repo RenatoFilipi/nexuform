@@ -1,6 +1,6 @@
 export const minWidth640 = "(min-width: 640px)";
 
-const colorPalette = {
+export const colorsPalettes = {
   Slate: {
     50: "#f8fafc",
     100: "#f1f5f9",

@@ -41,6 +41,7 @@ const SubmissionWrapper = ({
           form_id: form.id,
           sent_by: nanoid(),
           status: "not_reviewed",
+          completion_time: null,
         };
         const answers: EAnswer[] = blocks.map((blo) => {
           return {
