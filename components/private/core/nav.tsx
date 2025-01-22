@@ -288,7 +288,7 @@ const NavApp = () => {
   );
 };
 const NavEditor = () => {
-  const { form, theme, blocks, blocksReadyOnly, preview, setPreview } =
+  const { form, theme, blocks, blocksReadyOnly, preview, setPreview, reset } =
     useEditorStore();
   const supabase = createClient();
   const router = useRouter();
@@ -426,13 +426,20 @@ const NavEditor = () => {
   return (
     <div className="h-14 flex justify-between items-center w-full bg-background border-y border-t-foreground/5 sm:px-6 px-2 z-20 fixed">
       <div className="flex justify-center items-center gap-2">
-        <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
+        <Button
+          variant={"ghost"}
+          size={"icon"}
+          className="h-9 w-9"
+          asChild
+          onClick={reset}>
           <Link href={"/dashboard/forms"}>
             <Brand type="logo" className="h-5 fill-foreground" />
           </Link>
         </Button>
         <div className="flex justify-center items-center gap-2">
-          <span className="text-sm font-medium">{form.name}</span>
+          <span className="text-sm font-medium truncate max-w-[280px]">
+            {form.name}
+          </span>
         </div>
       </div>
       <div className="flex justify-center items-center gap-2">

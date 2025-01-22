@@ -59,8 +59,10 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
       <div className="flex flex-col">
         <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
-          <div className="flex justify-start items-center gap-3 w-full sm:w-fit">
-            <h1 className="text-xl font-semibold">{form.name}</h1>
+          <div className="flex justify-between sm:justify-start items-center gap-3 w-full sm:w-fit">
+            <h1 className="text-xl font-semibold truncate max-w-[280px]">
+              {form.name}
+            </h1>
             {BadgeVariant(form.status as TFormStatus)}
           </div>
           <div className="flex justify-center items-center sm:gap-4 gap-2 w-full sm:w-fit">

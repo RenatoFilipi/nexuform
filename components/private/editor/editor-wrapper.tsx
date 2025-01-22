@@ -25,6 +25,7 @@ const EditorWrapper = ({
     setBlocksReadyOnly,
     blocks: localBlocks,
     preview,
+    reset,
   } = useEditorStore();
   const [isPending, startTransition] = useTransition();
 
