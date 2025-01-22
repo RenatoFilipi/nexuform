@@ -73,7 +73,7 @@ const FormReorder = ({ children }: { children: React.ReactNode }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="p-3 flex flex-col pt-10">
+      <DialogContent className="p-3 flex flex-col pt-10 max-h-[600px]">
         <DialogHeader>
           <DialogTitle>Reorder Blocks</DialogTitle>
           <DialogDescription>
