@@ -54,13 +54,14 @@ export const createFormAction = async (formData: FormData) => {
   const name = formData.get("name") as string;
   const userId = formData.get("userId") as string;
   const supabase = await createClient();
-  const form = await supabase
+
+  const { data: form, error: formError } = await supabase
     .from("forms")
     .insert([{ name, owner_id: userId }])
     .select()
     .single();
 
-  if (form.error) {
+  if (formError) {
     return encodedRedirect(
       "error",
       "/dashboard/forms",
@@ -68,11 +69,14 @@ export const createFormAction = async (formData: FormData) => {
     );
   }
 
-  const { id } = form.data;
-  const theme = await supabase.from("themes").insert([{ form_id: id }]);
+  const { data: theme, error: themeError } = await supabase
+    .from("themes")
+    .insert([{ form_id: form.id }])
+    .select()
+    .single();
 
-  if (theme.error) {
-    await supabase.from("forms").delete().eq("id", id);
+  if (themeError) {
+    await supabase.from("forms").delete().eq("id", form.id);
     return encodedRedirect(
       "error",
       "/dashboard/forms",
@@ -80,7 +84,21 @@ export const createFormAction = async (formData: FormData) => {
     );
   }
 
-  return redirect(`/dashboard/editor/${id}`);
+  const { error: analyticsError } = await supabase
+    .from("forms_analytics")
+    .insert([{ form_id: form.id, profile_id: userId }]);
+
+  if (analyticsError) {
+    await supabase.from("forms").delete().eq("id", form.id);
+    await supabase.from("themes").delete().eq("id", theme.id);
+    return encodedRedirect(
+      "error",
+      "/dashboard/forms",
+      "An unexpected error occurred while creating the form. Please try again later."
+    );
+  }
+
+  return redirect(`/dashboard/editor/${form.id}`);
 };
 
 // to fix this actions
