@@ -102,7 +102,7 @@ const Body = ({
                 navigator.clipboard.writeText(url);
                 toast.success("Link Copied");
               }}
-              variant={"default"}
+              variant={"outline"}
               size={"sm"}
               className="w-fit">
               <CopyIcon className="w-4 h-4" />

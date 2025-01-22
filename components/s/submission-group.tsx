@@ -1,8 +1,12 @@
 import useSubmissionStore from "@/stores/submission";
+import { EAnswer, EBlock } from "@/utils/entities";
+import { isValidEmail } from "@/utils/functions";
 import { IDesign } from "@/utils/interfaces";
 import { TAppState } from "@/utils/types";
+import { useQuery } from "@tanstack/react-query";
 import { LoaderIcon } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { toast } from "sonner";
 import Brand from "../core/brand";
 import CheckBoxesDesign from "../private/blocks/design/checkboxes-design";
 import CustomScaleDesign from "../private/blocks/design/custom-scale-design";
@@ -107,17 +111,52 @@ const design: IDesign[] = [
 ];
 
 const SubmissionGroup = () => {
-  const { form, theme, blocks, submission, answers, setAnswers } =
-    useSubmissionStore();
+  const {
+    form,
+    theme,
+    blocks,
+    submission,
+    answers,
+    setAnswers,
+    setSubmission,
+  } = useSubmissionStore();
   const [appState, setAppState] = useState<TAppState>("idle");
   const currentColor =
     design.find((x) => x.label === theme.primary_color) ?? design[0];
+  const [time, setTime] = useState(0);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const onSubmit = () => {
-    console.log(submission);
-    console.log(answers);
+  useQuery({
+    queryKey: ["submissionGroup"],
+    queryFn: () => {
+      startTimer();
+      return null;
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  const startTimer = () => {
+    if (!timerRef.current) {
+      timerRef.current = setInterval(() => {
+        setTime((prevTime) => prevTime + 10);
+      }, 10);
+    }
   };
-
+  const stopTimer = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  };
+  const resetTimer = () => {
+    stopTimer();
+    setTime(0);
+  };
+  const formatTime = (time: number) => {
+    const seconds = Math.floor(time / 1000);
+    const milliseconds = time % 1000;
+    return `${seconds}.${milliseconds.toString().padStart(3, "0")}s`;
+  };
   const onValueChange = (value: string, blockId: string) => {
     const currentAnswer = answers.find((answer) => answer.block_id === blockId);
     if (!currentAnswer) return;
@@ -128,9 +167,36 @@ const SubmissionGroup = () => {
     });
     setAnswers(updatedAnswer);
   };
+  const onSubmit = () => {
+    stopTimer();
+    for (const answer of answers) {
+      const block = blocks.find((x) => x.id === answer.block_id);
+      if (!block) return;
+      const isValidResponse = responseCheck(answer, block);
+      if (!isValidResponse) {
+        toast.error("Answer all required questions.");
+        startTimer();
+        return;
+      }
+    }
+    stopTimer();
+    console.log(answers);
+  };
+
+  const responseCheck = (answer: EAnswer, block: EBlock): boolean => {
+    if (!block.required) return true;
+    if (answer.value.trim() === "") return false;
+    if (block.type === "email_address" && !isValidEmail(answer.value))
+      return false;
+    return true;
+  };
 
   return (
     <div className="flex flex-col gap-6 w-full border rounded m-4 sm:m-8 p-6 sm:w-[650px] bg-background relative">
+      <div className="fixed top-4 left-4 flex flex-col">
+        <span className="">{formatTime(time)}</span>
+        <span>{time}</span>
+      </div>
       <div
         className={`h-1 absolute top-0 w-full left-0 ${currentColor.tw_class}`}></div>
       <div className="flex flex-col gap-1">
