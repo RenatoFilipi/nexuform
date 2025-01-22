@@ -153,6 +153,7 @@ const Body = ({
               Cancel
             </Button>
             <Button
+              disabled={isPending}
               type="submit"
               variant={"default"}
               size={"sm"}

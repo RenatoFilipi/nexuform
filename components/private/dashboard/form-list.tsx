@@ -1,18 +1,33 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { EForm } from "@/utils/entities";
+import { BookIcon } from "lucide-react";
 import FormCard from "./form-card";
+import FormCreate from "./form-create";
 
-const FormList = ({ forms }: { forms: EForm[] }) => {
+const FormList = ({ forms, userId }: { forms: EForm[]; userId: string }) => {
   if (forms.length === 0) {
     return (
-      <div className="flex justify-center items-center h-full flex-1">
-        <div className="flex flex-col justify-center items-center gap-2">
-          <span className="text-lg font-medium">No form to show</span>
-          <span className="text-sm text-center">
-            Create your very first form and start collecting responses
-            effortlessly.
-          </span>
+      <div className="flex justify-center items-center h-full flex-1 flex-col gap-4">
+        <div className="border p-20 flex flex-col justify-center items-center gap-6 border-none">
+          <div className="flex flex-col justify-center items-center gap-4">
+            <div className="flex justify-center items-center p-3 bg-foreground/5 rounded">
+              <BookIcon className="w-7 h-7 text-primary" />
+            </div>
+            <div className="flex justify-center items-center flex-col">
+              <span className="text-lg font-medium">No forms available</span>
+              <span className="text-sm text-center text-foreground/80">
+                Create your very first form and start collecting responses
+                effortlessly.
+              </span>
+            </div>
+          </div>
+          <FormCreate userId={userId}>
+            <Button variant={"default"} size={"sm"}>
+              Create New Form
+            </Button>
+          </FormCreate>
         </div>
       </div>
     );

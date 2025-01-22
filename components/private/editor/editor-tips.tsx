@@ -45,7 +45,7 @@ const tips = [
   },
   {
     title: "Share",
-    desc: "Share the form with others using a link or embed code.",
+    desc: "Share the form with others using a link or QR code.",
     icon: GlobeIcon,
     bgColor: "bg-pink-500/20",
     textColor: "text-pink-600",

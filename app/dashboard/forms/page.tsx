@@ -25,13 +25,13 @@ const Forms = async () => {
           <Suspense>
             <FormCreate userId={data.user.id}>
               <Button size={"sm"} variant={"default"}>
-                New Form
+                Create New Form
               </Button>
             </FormCreate>
           </Suspense>
         </div>
       </div>
-      <FormList forms={forms ?? []} />
+      <FormList forms={forms ?? []} userId={data.user.id} />
     </div>
   );
 };
