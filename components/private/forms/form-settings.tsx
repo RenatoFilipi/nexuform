@@ -166,7 +166,7 @@ const Body = ({ setState }: { setState: setState<boolean> }) => {
           className="w-full sm:w-fit">
           Close
         </Button>
-        <FormDelete formId={form.id}>
+        <FormDelete formId={form.id} formName={form.name}>
           <Button
             variant={"destructive_outline"}
             size={"sm"}
