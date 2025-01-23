@@ -50,3 +50,8 @@ export const isValidEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
+export const formatTime = (time: number) => {
+  const seconds = Math.floor(time / 1000);
+  const milliseconds = time % 1000;
+  return `${seconds}.${milliseconds.toString().padStart(3, "0")}s`;
+};

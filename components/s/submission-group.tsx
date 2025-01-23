@@ -165,11 +165,6 @@ const SubmissionGroup = () => {
     stopTimer();
     setTime(0);
   };
-  const formatTime = (time: number) => {
-    const seconds = Math.floor(time / 1000);
-    const milliseconds = time % 1000;
-    return `${seconds}.${milliseconds.toString().padStart(3, "0")}s`;
-  };
   const onValueChange = (value: string, blockId: string) => {
     const currentAnswer = answers.find((answer) => answer.block_id === blockId);
     if (!currentAnswer) return;

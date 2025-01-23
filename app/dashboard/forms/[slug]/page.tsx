@@ -102,7 +102,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
           </span>
         </div>
       </div>
-      <div className="flex justify-center items-center flex-1 h-full">
+      <div className="flex justify-center flex-1 h-full">
         <SubmissionList submissions={submissions ?? []} />
       </div>
     </div>
