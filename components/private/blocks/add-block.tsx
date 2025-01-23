@@ -196,6 +196,7 @@ const Body = ({
       rating: null,
       max_scale: null,
       min_scale: null,
+      is_identifier: false,
     };
     addBlock(block);
     setState(false);

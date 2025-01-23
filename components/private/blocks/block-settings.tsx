@@ -46,7 +46,7 @@ const BlockSettings = ({
         <SheetContent className="flex flex-col min-w-[450px]">
           <SheetHeader>
             <SheetTitle>Block Settings</SheetTitle>
-            <SheetDescription>
+            <SheetDescription className="">
               Customize the settings for this form block. Adjust its properties
               to match your desired design and functionality.
             </SheetDescription>
@@ -63,7 +63,7 @@ const BlockSettings = ({
       <DrawerContent className="p-3 h-[90%] flex flex-col">
         <DrawerHeader>
           <DrawerTitle>Block Settings</DrawerTitle>
-          <DrawerDescription>
+          <DrawerDescription className="">
             Customize the settings for this form block. Adjust its properties to
             match your desired design and functionality.
           </DrawerDescription>

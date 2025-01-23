@@ -51,7 +51,9 @@ const SubmissionList = ({ submissions }: { submissions: ESubmission[] }) => {
           {submissions.map((sub, index) => {
             return (
               <TableRow key={index}>
-                <TableCell className="p-0 pl-4 py-2">{sub.sent_by}</TableCell>
+                <TableCell className="p-0 pl-4 py-2">
+                  {sub.identifier}
+                </TableCell>
                 <TableCell className="py-2">
                   {formatDateRelativeToNow(sub.created_at)}
                 </TableCell>

@@ -36,7 +36,10 @@ const Block = ({ block }: { block: EBlock }) => {
           <div className="flex justify-center items-center gap-2">
             {icons[block.type as TBlock]}
           </div>
-          {block.required && <Badge variant={"gray"}>Required</Badge>}
+          <div className="flex justify-center items-center gap-2">
+            {block.is_identifier && <Badge variant={"green"}>Identifier</Badge>}
+            {block.required && <Badge variant={"orange"}>Required</Badge>}
+          </div>
         </div>
         <div className="flex justify-start items-center overflow-y-auto">
           <p className="text-sm font-medium text-foreground/80 truncate max-w-xs">

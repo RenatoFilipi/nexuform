@@ -187,7 +187,20 @@ const SubmissionGroup = () => {
         return;
       }
     }
-    const updatedSubmission = { ...submission, completion_time: time };
+    let updatedSubmission = { ...submission, completion_time: time };
+
+    const identifierValue = blocks.find((e) => e.is_identifier === true);
+    if (identifierValue) {
+      const answerValue = answers.find(
+        (e) => e.block_id === identifierValue.id
+      );
+      if (answerValue) {
+        updatedSubmission = {
+          ...updatedSubmission,
+          identifier: answerValue.value,
+        };
+      }
+    }
 
     const { error: submissionError } = await supabase
       .from("submissions")

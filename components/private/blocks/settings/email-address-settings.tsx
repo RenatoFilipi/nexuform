@@ -6,9 +6,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import useEditorStore from "@/stores/editor";
 import { EBlock } from "@/utils/entities";
 import { TSetState } from "@/utils/types";
+import { CircleHelpIcon } from "lucide-react";
+import { useState } from "react";
 
 const EmailAddressSettings = ({
   block,
@@ -18,7 +26,10 @@ const EmailAddressSettings = ({
   setState: TSetState<boolean>;
 }) => {
   const { id } = block;
-  const { updateBlock, removeBlock } = useEditorStore();
+  const { updateBlock, removeBlock, blocks } = useEditorStore();
+  const [isIdentifierAvailable] = useState(
+    blocks.some((e) => e.is_identifier === true && e.id !== id)
+  );
 
   return (
     <div className="h-full flex flex-col gap-8 overflow-y-auto">
@@ -69,8 +80,42 @@ const EmailAddressSettings = ({
             }}
           />
         </div>
+        {!isIdentifierAvailable && (
+          <div className="flex justify-between items-center">
+            <div className="flex justify-center items-center gap-2">
+              <Label htmlFor="identifier">Mark as Identifier</Label>
+              <TooltipProvider delayDuration={0}>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <CircleHelpIcon className="w-4 h-4 text-foreground/80" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="text-xs">
+                      When enabled, this block will be used as an identifier{" "}
+                      <br /> for specific actions or configurations.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+            <Switch
+              id="identifier"
+              checked={block.is_identifier}
+              onCheckedChange={(checked: boolean) => {
+                updateBlock(id, { ...block, is_identifier: checked });
+              }}
+            />
+          </div>
+        )}
       </div>
       <div className="flex justify-between gap-4 items-center flex-col sm:flex-row">
+        <Button
+          onClick={() => setState(false)}
+          variant={"outline"}
+          size={"sm"}
+          className="w-full sm:w-fit">
+          Close
+        </Button>
         <Button
           onClick={() => {
             removeBlock(block.id);
@@ -80,13 +125,6 @@ const EmailAddressSettings = ({
           size={"sm"}
           className="w-full sm:w-fit">
           Remove Block
-        </Button>
-        <Button
-          onClick={() => setState(false)}
-          variant={"outline"}
-          size={"sm"}
-          className="w-full sm:w-fit">
-          Close
         </Button>
       </div>
     </div>

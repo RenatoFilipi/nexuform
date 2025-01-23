@@ -39,7 +39,7 @@ const SubmissionWrapper = ({
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
           form_id: form.id,
-          sent_by: nanoid(),
+          identifier: nanoid(),
           status: "not_reviewed",
           completion_time: null,
         };
@@ -70,7 +70,7 @@ const SubmissionWrapper = ({
   }
 
   return (
-    <div className="flex justify-center items-start min-h-screen flex-1 border-t-foreground/5 border-t">
+    <div className="flex justify-center items-start min-h-screen flex-1 border-t-foreground/5 border-t bg-foreground/5">
       {b.length > 0 && <SubmissionGroup />}
     </div>
   );

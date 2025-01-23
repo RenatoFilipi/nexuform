@@ -57,6 +57,7 @@ export type Database = {
           description: string | null
           form_id: string
           id: string
+          is_identifier: boolean
           max_char: number | null
           max_scale: number | null
           min_char: number | null
@@ -76,6 +77,7 @@ export type Database = {
           description?: string | null
           form_id: string
           id?: string
+          is_identifier?: boolean
           max_char?: number | null
           max_scale?: number | null
           min_char?: number | null
@@ -95,6 +97,7 @@ export type Database = {
           description?: string | null
           form_id?: string
           id?: string
+          is_identifier?: boolean
           max_char?: number | null
           max_scale?: number | null
           min_char?: number | null
@@ -320,7 +323,7 @@ export type Database = {
           created_at: string
           form_id: string
           id: string
-          sent_by: string
+          identifier: string
           status: string
           updated_at: string
         }
@@ -329,7 +332,7 @@ export type Database = {
           created_at?: string
           form_id: string
           id?: string
-          sent_by?: string
+          identifier?: string
           status?: string
           updated_at?: string
         }
@@ -338,7 +341,7 @@ export type Database = {
           created_at?: string
           form_id?: string
           id?: string
-          sent_by?: string
+          identifier?: string
           status?: string
           updated_at?: string
         }
