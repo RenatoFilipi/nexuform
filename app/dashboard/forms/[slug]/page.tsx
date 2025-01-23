@@ -5,7 +5,12 @@ import { Button } from "@/components/ui/button";
 import { formatDateRelativeToNow } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { TFormStatus } from "@/utils/types";
-import { ExternalLinkIcon, ForwardIcon, Settings2Icon } from "lucide-react";
+import {
+  BookIcon,
+  ExternalLinkIcon,
+  ForwardIcon,
+  Settings2Icon,
+} from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -35,23 +40,11 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const BadgeVariant = (status: TFormStatus) => {
     switch (status) {
       case "published":
-        return (
-          <Badge variant={"success"} uppercase>
-            {status}
-          </Badge>
-        );
+        return <Badge variant={"success"}>{status}</Badge>;
       case "draft":
-        return (
-          <Badge variant={"warning"} uppercase>
-            {status}
-          </Badge>
-        );
+        return <Badge variant={"warning"}>{status}</Badge>;
       case "inactive":
-        return (
-          <Badge variant={"default"} uppercase>
-            {status}
-          </Badge>
-        );
+        return <Badge variant={"default"}>{status}</Badge>;
     }
   };
 
@@ -60,9 +53,12 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
       <div className="flex flex-col">
         <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
           <div className="flex justify-between sm:justify-start items-center gap-3 w-full sm:w-fit">
-            <h1 className="text-xl font-semibold truncate max-w-[280px]">
-              {form.name}
-            </h1>
+            <div className="flex justify-center items-center gap-2">
+              <BookIcon className="w-4 h-4" />
+              <h1 className="font-medium truncate max-w-[240px]">
+                {form.name}
+              </h1>
+            </div>
             {BadgeVariant(form.status as TFormStatus)}
           </div>
           <div className="flex justify-center items-center sm:gap-4 gap-2 w-full sm:w-fit">

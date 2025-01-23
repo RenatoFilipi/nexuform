@@ -1,6 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -44,7 +45,8 @@ const SubmissionList = ({ submissions }: { submissions: ESubmission[] }) => {
             <TableHead>Identifier</TableHead>
             <TableHead>Sent in</TableHead>
             <TableHead>Completion time</TableHead>
-            <TableHead className="text-right">Status</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -60,8 +62,13 @@ const SubmissionList = ({ submissions }: { submissions: ESubmission[] }) => {
                 <TableCell className="py-2">
                   {formatTime(sub.completion_time ?? 0)}
                 </TableCell>
-                <TableCell className="text-right py-2 pr-4">
+                <TableCell className="py-2 pr-4">
                   {BadgeVariation(sub.status as TsubmissionStatus)}
+                </TableCell>
+                <TableCell className="text-right py-2 pr-4">
+                  <Button variant={"outline"} size={"xs"}>
+                    View Details
+                  </Button>
                 </TableCell>
               </TableRow>
             );
