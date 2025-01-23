@@ -230,8 +230,8 @@ const SubmissionGroup = () => {
 
   if (appState === "success")
     return (
-      <div className="flex justify-center items-center w-full mt-24 relative">
-        <Card className="w-full max-w-md">
+      <div className="flex justify-center items-center w-full relative mt-20">
+        <Card className="w-full max-w-md shadow-lg">
           <CardHeader>
             <div className="flex items-center space-x-3">
               <CheckCircleIcon className="w-8 h-8 text-success" />
@@ -248,7 +248,7 @@ const SubmissionGroup = () => {
           </CardContent>
           <CardFooter className="flex flex-col items-stretch space-y-4">
             <span>Want to create a form like this?</span>
-            <Button asChild className={`w-full`}>
+            <Button asChild className="w-full">
               <Link
                 href="/dashboard/forms"
                 className="flex items-center justify-center">
@@ -257,12 +257,12 @@ const SubmissionGroup = () => {
             </Button>
           </CardFooter>
         </Card>
-        <div className="fixed bottom-4 ">
+        <div className="fixed bottom-4 w-full flex justify-center">
           <Link
-            href={"/"}
-            className="text-sm text-foreground/80 hover:underline hover:text-foreground flex justify-center items-center gap-2">
-            <Brand type="logo" className="w-4 h-4 fill-foreground" />
-            <span className="text-sm font-semibold">Powered by Nebulaform</span>
+            href="/"
+            className="text-sm text-gray-500 hover:underline flex items-center gap-2">
+            <Brand type="logo" className="w-4 h-4 fill-current" />
+            <span className="text-sm font-medium">Powered by Nebulaform</span>
           </Link>
         </div>
       </div>
