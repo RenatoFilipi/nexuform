@@ -2,9 +2,11 @@ import useSubmissionStore from "@/stores/submission";
 import { EAnswer, EBlock } from "@/utils/entities";
 import { isValidEmail } from "@/utils/functions";
 import { IDesign } from "@/utils/interfaces";
+import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { LoaderIcon } from "lucide-react";
+import { CheckCircleIcon, LoaderIcon } from "lucide-react";
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import Brand from "../core/brand";
@@ -18,6 +20,17 @@ import ParagraphTextDesign from "../private/blocks/design/paragraph-text-design"
 import ShortTextDesign from "../private/blocks/design/short-text-design";
 import StarRatingDesign from "../private/blocks/design/star-rating-design";
 import { Button } from "../ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+
+interface ILocalDesign extends IDesign {
+  success_tw_class: string;
+}
 
 const design: IDesign[] = [
   {
@@ -120,6 +133,7 @@ const SubmissionGroup = () => {
     setAnswers,
     setSubmission,
   } = useSubmissionStore();
+  const supabase = createClient();
   const [appState, setAppState] = useState<TAppState>("idle");
   const currentColor =
     design.find((x) => x.label === theme.primary_color) ?? design[0];
@@ -134,7 +148,6 @@ const SubmissionGroup = () => {
     },
     refetchOnWindowFocus: false,
   });
-
   const startTimer = () => {
     if (!timerRef.current) {
       timerRef.current = setInterval(() => {
@@ -167,7 +180,7 @@ const SubmissionGroup = () => {
     });
     setAnswers(updatedAnswer);
   };
-  const onSubmit = () => {
+  const onSubmit = async () => {
     stopTimer();
     for (const answer of answers) {
       const block = blocks.find((x) => x.id === answer.block_id);
@@ -179,10 +192,34 @@ const SubmissionGroup = () => {
         return;
       }
     }
-    stopTimer();
-    console.log(answers);
-  };
+    const updatedSubmission = { ...submission, completion_time: time };
 
+    const { error: submissionError } = await supabase
+      .from("submissions")
+      .insert(updatedSubmission);
+
+    if (submissionError) {
+      console.log(submissionError);
+      toast.error("Error on submission, please try again.");
+      return;
+    }
+
+    const { error: answersError } = await supabase
+      .from("answers")
+      .insert(answers);
+
+    if (answersError) {
+      console.log(answersError);
+      await supabase
+        .from("submissions")
+        .delete()
+        .eq("id", updatedSubmission.id);
+      toast.error("Error on submission, please try again.");
+      return;
+    }
+
+    setAppState("success");
+  };
   const responseCheck = (answer: EAnswer, block: EBlock): boolean => {
     if (!block.required) return true;
     if (answer.value.trim() === "") return false;
@@ -190,6 +227,46 @@ const SubmissionGroup = () => {
       return false;
     return true;
   };
+
+  if (appState === "success")
+    return (
+      <div className="flex justify-center items-center w-full mt-24 relative">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <div className="flex items-center space-x-3">
+              <CheckCircleIcon className="w-8 h-8 text-success" />
+              <CardTitle className="text-2xl font-bold">
+                Form Submitted Successfully!
+              </CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-4 text-foreground/80">
+              Thank you for submitting your form. We have received your
+              information.
+            </p>
+          </CardContent>
+          <CardFooter className="flex flex-col items-stretch space-y-4">
+            <span>Want to create a form like this?</span>
+            <Button asChild className={`w-full`}>
+              <Link
+                href="/dashboard/forms"
+                className="flex items-center justify-center">
+                ⚡️ Access Nebulaform
+              </Link>
+            </Button>
+          </CardFooter>
+        </Card>
+        <div className="fixed bottom-4 ">
+          <Link
+            href={"/"}
+            className="text-sm text-foreground/80 hover:underline hover:text-foreground flex justify-center items-center gap-2">
+            <Brand type="logo" className="w-4 h-4 fill-foreground" />
+            <span className="text-sm font-semibold">Powered by Nebulaform</span>
+          </Link>
+        </div>
+      </div>
+    );
 
   return (
     <div className="flex flex-col gap-6 w-full border rounded m-4 sm:m-8 p-6 sm:w-[650px] bg-background relative">

@@ -6,6 +6,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import useEditorStore from "@/stores/editor";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
+import { useQuery } from "@tanstack/react-query";
 import {
   ChartPieIcon,
   Layers2Icon,
@@ -236,8 +237,17 @@ const AvatarAppMenu = () => {
   );
 };
 const NavApp = () => {
+  const { reset } = useEditorStore();
   const pathname = usePathname();
   const isActive = (path: string) => path === pathname;
+
+  useQuery({
+    queryKey: [],
+    queryFn: () => {
+      reset();
+      return null;
+    },
+  });
 
   return (
     <div className="border-y border-t-foreground/5 h-14 flex items-center px-2 sm:px-6 justify-between z-10 bg-background fixed w-full">
@@ -288,7 +298,7 @@ const NavApp = () => {
   );
 };
 const NavEditor = () => {
-  const { form, theme, blocks, blocksReadyOnly, preview, setPreview, reset } =
+  const { form, theme, blocks, blocksReadyOnly, preview, setPreview } =
     useEditorStore();
   const supabase = createClient();
   const router = useRouter();
@@ -426,12 +436,7 @@ const NavEditor = () => {
   return (
     <div className="h-14 flex justify-between items-center w-full bg-background border-y border-t-foreground/5 sm:px-6 px-2 z-20 fixed">
       <div className="flex justify-center items-center gap-2">
-        <Button
-          variant={"ghost"}
-          size={"icon"}
-          className="h-9 w-9"
-          asChild
-          onClick={reset}>
+        <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
           <Link href={"/dashboard/forms"}>
             <Brand type="logo" className="h-5 fill-foreground" />
           </Link>

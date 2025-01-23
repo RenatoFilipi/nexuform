@@ -70,7 +70,7 @@ const SubmissionWrapper = ({
   }
 
   return (
-    <div className="flex justify-center items-start h-full border-t-foreground/5 border-t">
+    <div className="flex justify-center items-start min-h-screen flex-1 border-t-foreground/5 border-t">
       {b.length > 0 && <SubmissionGroup />}
     </div>
   );
