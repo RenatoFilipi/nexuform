@@ -21,7 +21,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
   if (!data.user) {
     return redirect("login");
   }
-  const { data: form } = await supabase
+  const { data: form, error: formError } = await supabase
     .from("forms")
     .select("name, status, updated_at")
     .eq("owner_id", data.user.id)
@@ -32,7 +32,13 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     return redirect("/dashboard/forms");
   }
 
-  const { data: submissions } = await supabase
+  const { data: blocks, error: blocksError } = await supabase
+    .from("blocks")
+    .select("*")
+    .eq("form_id", slug)
+    .order("position", { ascending: true });
+
+  const { data: submissions, error: submissionsError } = await supabase
     .from("submissions")
     .select("*")
     .eq("form_id", slug);
@@ -47,6 +53,16 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
         return <Badge variant={"default"}>{status}</Badge>;
     }
   };
+
+  if (formError || submissionsError || blocksError) {
+    return (
+      <div className="flex flex-col justify-center items-center h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
+        <div className="flex flex-col justify-center items-center gap-2">
+          <span className="">Something went wrong</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
@@ -99,7 +115,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
         </div>
       </div>
       <div className="flex justify-center flex-1 h-full">
-        <SubmissionList submissions={submissions ?? []} />
+        <SubmissionList submissions={submissions} blocks={blocks} />
       </div>
     </div>
   );

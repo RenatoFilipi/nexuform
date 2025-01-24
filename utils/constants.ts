@@ -1,5 +1,5 @@
 export const minWidth640 = "(min-width: 640px)";
-
+export const minute = 1000 * 60;
 export const colorsPalettes = {
   Slate: {
     50: "#f8fafc",

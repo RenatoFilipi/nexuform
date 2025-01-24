@@ -1,6 +1,6 @@
 import useSubmissionStore from "@/stores/submission";
 import { EAnswer, EBlock } from "@/utils/entities";
-import { isValidEmail } from "@/utils/functions";
+import { formatTime, isValidEmail } from "@/utils/functions";
 import { IDesign } from "@/utils/interfaces";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
@@ -278,6 +278,7 @@ const SubmissionGroup = () => {
 
   return (
     <div className="flex flex-col gap-6 w-full border rounded m-4 sm:m-8 p-6 sm:w-[650px] bg-background relative">
+      <span>{formatTime(time)}</span>
       <div
         className={`h-1 absolute top-0 w-full left-0 ${currentColor.tw_class}`}></div>
       <div className="flex flex-col gap-1">

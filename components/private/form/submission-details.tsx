@@ -1,5 +1,166 @@
-const SubmissionDetails = () => {
-  return <></>;
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { minWidth640, minute } from "@/utils/constants";
+import { EBlock, ESubmission } from "@/utils/entities";
+import { formatDateRelativeToNow, formatTime } from "@/utils/functions";
+import { createClient } from "@/utils/supabase/client";
+import { TSetState, TsubmissionStatus } from "@/utils/types";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { useMedia } from "react-use";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../../ui/drawer";
+
+const SubmissionDetails = ({
+  children,
+  submission,
+  blocks,
+}: {
+  children: React.ReactNode;
+  submission: ESubmission;
+  blocks: EBlock[];
+}) => {
+  const isDesktop = useMedia(minWidth640);
+  const [open, setOpen] = useState(false);
+
+  const BadgeVariation = (value: TsubmissionStatus) => {
+    switch (value) {
+      case "not_reviewed":
+        return <Badge variant={"warning"}>Not Reviewed</Badge>;
+      case "reviewed":
+        return <Badge variant={"success"}>Reviewed</Badge>;
+      case "ignored":
+        return <Badge variant={"default"}>Not Reviewed</Badge>;
+    }
+  };
+
+  if (isDesktop) {
+    return (
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>{children}</SheetTrigger>
+        <SheetContent className="flex flex-col min-w-[550px]">
+          <SheetHeader>
+            <SheetTitle className="flex justify-start items-center gap-2">
+              {submission.identifier}{" "}
+              {BadgeVariation(submission.status as TsubmissionStatus)}
+            </SheetTitle>
+            <SheetDescription className="hidden"></SheetDescription>
+            <div className="flex justify-start items-center gap-2">
+              <span className="text-xs text-foreground/80">
+                {formatTime(submission.completion_time ?? 0, 2)}
+              </span>
+              <span className="text-xs text-foreground/80">
+                {formatDateRelativeToNow(submission.created_at)}
+              </span>
+            </div>
+          </SheetHeader>
+          <Body setState={setOpen} submission={submission} blocks={blocks} />
+        </SheetContent>
+      </Sheet>
+    );
+  }
+
+  return (
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>{children}</DrawerTrigger>
+      <DrawerContent className="p-3 h-[90%]">
+        <DrawerHeader>
+          <DrawerTitle>Details</DrawerTitle>
+          <DrawerDescription className="hidden"></DrawerDescription>
+        </DrawerHeader>
+        <Body setState={setOpen} submission={submission} blocks={blocks} />
+      </DrawerContent>
+    </Drawer>
+  );
+};
+
+const Body = ({
+  setState,
+  submission,
+  blocks,
+}: {
+  setState: TSetState<boolean>;
+  submission: ESubmission;
+  blocks: EBlock[];
+}) => {
+  const supabase = createClient();
+
+  const query = useQuery({
+    queryKey: [`submissionData`, submission.id],
+    queryFn: async () => {
+      console.log("submission details" + submission.id);
+      const { data, error } = await supabase
+        .from("answers")
+        .select("*")
+        .eq("submission_id", submission.id);
+
+      if (error) {
+        throw new Error(`Error fetching answers: ${error.message}`);
+      }
+
+      if (!data) {
+        throw new Error("No data returned for submission.");
+      }
+
+      const collections = blocks.map((block) => {
+        const targetAnswer = data.find((x) => x.block_id === block.id);
+        if (!targetAnswer) return { name: block.name, answer: "" };
+        return { name: block.name, answer: targetAnswer.value };
+      });
+
+      return { collections };
+    },
+    staleTime: 10 * minute,
+    gcTime: 10 * minute,
+    refetchOnWindowFocus: false,
+  });
+
+  return (
+    <div className="h-full overflow-y-auto flex flex-col gap-1">
+      <div className="flex-1 flex flex-col overflow-y-auto gap-3 mt-4">
+        {query.data?.collections.map((coll, i) => {
+          return (
+            <div key={i} className="flex flex-col">
+              <span className="font-semibold text-sm">{coll.name}</span>
+              {coll.answer.trim() !== "" ? (
+                <span className="text-xs text-foreground/80">
+                  {coll.answer}
+                </span>
+              ) : (
+                <div className="flex justify-center items-center py-2 mt-2 border border-dashed">
+                  <span className="text-xs text-foreground/80">
+                    No answer to this question
+                  </span>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <div className="flex justify-between items-center">
+        <Button variant={"outline"} size={"sm"} onClick={() => setState(false)}>
+          Cancel
+        </Button>
+        <Button variant={"default"} size={"sm"}>
+          Mask as Reviewed
+        </Button>
+      </div>
+    </div>
+  );
 };
 
 export default SubmissionDetails;

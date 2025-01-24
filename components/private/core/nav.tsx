@@ -6,7 +6,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import useEditorStore from "@/stores/editor";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ChartPieIcon,
   Layers2Icon,
@@ -300,6 +300,7 @@ const NavApp = () => {
 const NavEditor = () => {
   const { form, theme, blocks, blocksReadyOnly, preview, setPreview } =
     useEditorStore();
+  const queryClient = useQueryClient();
   const supabase = createClient();
   const router = useRouter();
   const [appState, setAppState] = useState<TAppState>("idle");
@@ -313,6 +314,7 @@ const NavEditor = () => {
       await onSaveBlocks();
 
       toast.success("Form Updated.");
+      queryClient.invalidateQueries({ queryKey: ["submissionData"] });
       router.push(`/dashboard/forms/${form.id}`);
     } catch (error) {
       toast.error((error as Error).message || "Something went wrong.");

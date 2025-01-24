@@ -10,11 +10,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ESubmission } from "@/utils/entities";
+import { EBlock, ESubmission } from "@/utils/entities";
 import { formatDateRelativeToNow, formatTime } from "@/utils/functions";
 import { TsubmissionStatus } from "@/utils/types";
+import SubmissionDetails from "./submission-details";
 
-const SubmissionList = ({ submissions }: { submissions: ESubmission[] }) => {
+const SubmissionList = ({
+  submissions,
+  blocks,
+}: {
+  submissions: ESubmission[];
+  blocks: EBlock[];
+}) => {
   const BadgeVariation = (value: TsubmissionStatus) => {
     switch (value) {
       case "not_reviewed":
@@ -50,25 +57,27 @@ const SubmissionList = ({ submissions }: { submissions: ESubmission[] }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {submissions.map((sub, index) => {
+          {submissions.map((submission, index) => {
             return (
               <TableRow key={index}>
                 <TableCell className="p-0 pl-4 py-2">
-                  {sub.identifier}
+                  {submission.identifier}
                 </TableCell>
                 <TableCell className="py-2">
-                  {formatDateRelativeToNow(sub.created_at)}
+                  {formatDateRelativeToNow(submission.created_at)}
                 </TableCell>
                 <TableCell className="py-2">
-                  {formatTime(sub.completion_time ?? 0)}
+                  {formatTime(submission.completion_time ?? 0, 2)}
                 </TableCell>
                 <TableCell className="py-2 pr-4">
-                  {BadgeVariation(sub.status as TsubmissionStatus)}
+                  {BadgeVariation(submission.status as TsubmissionStatus)}
                 </TableCell>
                 <TableCell className="text-right py-2 pr-4">
-                  <Button variant={"outline"} size={"xs"}>
-                    View Details
-                  </Button>
+                  <SubmissionDetails blocks={blocks} submission={submission}>
+                    <Button variant={"outline"} size={"xs"}>
+                      View Details
+                    </Button>
+                  </SubmissionDetails>
                 </TableCell>
               </TableRow>
             );
