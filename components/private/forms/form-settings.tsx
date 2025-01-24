@@ -61,7 +61,7 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
     return (
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>{children}</SheetTrigger>
-        <SheetContent className="flex flex-col min-w-[450px]">
+        <SheetContent className="flex flex-col min-w-[550px]">
           <SheetHeader>
             <SheetTitle className="text-xl font-medium">Settings</SheetTitle>
             <SheetDescription>
