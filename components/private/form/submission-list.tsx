@@ -10,18 +10,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { EBlock, ESubmission } from "@/utils/entities";
+import useFormStore from "@/stores/form";
 import { formatDateRelativeToNow, formatTime } from "@/utils/functions";
 import { TsubmissionStatus } from "@/utils/types";
 import SubmissionDetails from "./submission-details";
 
-const SubmissionList = ({
-  submissions,
-  blocks,
-}: {
-  submissions: ESubmission[];
-  blocks: EBlock[];
-}) => {
+const SubmissionList = () => {
+  const { submissions, blocks } = useFormStore();
+
   const BadgeVariation = (value: TsubmissionStatus) => {
     switch (value) {
       case "not_reviewed":
