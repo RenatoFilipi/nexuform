@@ -46,11 +46,23 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const BadgeVariant = (status: TFormStatus) => {
     switch (status) {
       case "published":
-        return <Badge variant={"success"}>{status}</Badge>;
+        return (
+          <Badge variant={"success"} uppercase>
+            {status}
+          </Badge>
+        );
       case "draft":
-        return <Badge variant={"warning"}>{status}</Badge>;
+        return (
+          <Badge variant={"warning"} uppercase>
+            {status}
+          </Badge>
+        );
       case "inactive":
-        return <Badge variant={"default"}>{status}</Badge>;
+        return (
+          <Badge variant={"default"} uppercase>
+            {status}
+          </Badge>
+        );
     }
   };
 

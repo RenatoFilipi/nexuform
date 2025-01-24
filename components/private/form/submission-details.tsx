@@ -37,35 +37,17 @@ const SubmissionDetails = ({
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
-  const BadgeVariation = (value: TsubmissionStatus) => {
-    switch (value) {
-      case "not_reviewed":
-        return <Badge variant={"warning"}>Not Reviewed</Badge>;
-      case "reviewed":
-        return <Badge variant={"success"}>Reviewed</Badge>;
-      case "ignored":
-        return <Badge variant={"default"}>Not Reviewed</Badge>;
-    }
-  };
-
   if (isDesktop) {
     return (
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>{children}</SheetTrigger>
-        <SheetContent className="flex flex-col min-w-[550px]">
+        <SheetContent className="flex flex-col min-w-[550px] gap-3">
           <SheetHeader>
-            <SheetTitle className="flex justify-start items-center gap-2">
-              {submission.identifier}{" "}
-              {BadgeVariation(submission.status as TsubmissionStatus)}
-            </SheetTitle>
-            <SheetDescription className="hidden"></SheetDescription>
-            <div className="flex justify-start items-center gap-2">
-              <span className="text-xs text-foreground/80">
-                {formatTime(submission.completion_time ?? 0, 2)}
-              </span>
-              <span className="text-xs text-foreground/80">
-                {formatDateRelativeToNow(submission.created_at)}
-              </span>
+            <div>
+              <SheetTitle>Submission Details</SheetTitle>
+              <SheetDescription>
+                Review the questions and your responses from this submission.
+              </SheetDescription>
             </div>
           </SheetHeader>
           <Body setState={setOpen} submission={submission} blocks={blocks} />
@@ -80,7 +62,9 @@ const SubmissionDetails = ({
       <DrawerContent className="p-3 h-[90%]">
         <DrawerHeader>
           <DrawerTitle>Details</DrawerTitle>
-          <DrawerDescription className="hidden"></DrawerDescription>
+          <DrawerDescription>
+            Review the questions and your responses from this submission.
+          </DrawerDescription>
         </DrawerHeader>
         <Body setState={setOpen} submission={submission} blocks={blocks} />
       </DrawerContent>
@@ -98,7 +82,6 @@ const Body = ({
   blocks: EBlock[];
 }) => {
   const supabase = createClient();
-
   const query = useQuery({
     queryKey: [`submissionData`, submission.id],
     queryFn: async () => {
@@ -128,36 +111,65 @@ const Body = ({
     gcTime: 10 * minute,
     refetchOnWindowFocus: false,
   });
+  const BadgeVariation = (value: TsubmissionStatus) => {
+    switch (value) {
+      case "not_reviewed":
+        return <Badge variant={"warning"}>Not Reviewed</Badge>;
+      case "reviewed":
+        return <Badge variant={"success"}>Reviewed</Badge>;
+      case "ignored":
+        return <Badge variant={"default"}>Not Reviewed</Badge>;
+    }
+  };
 
   return (
-    <div className="h-full overflow-y-auto flex flex-col gap-1">
-      <div className="flex-1 flex flex-col overflow-y-auto gap-3 mt-4">
-        {query.data?.collections.map((coll, i) => {
-          return (
-            <div key={i} className="flex flex-col">
-              <span className="font-semibold text-sm">{coll.name}</span>
-              {coll.answer.trim() !== "" ? (
-                <span className="text-xs text-foreground/80">
-                  {coll.answer}
-                </span>
-              ) : (
-                <div className="flex justify-center items-center py-2 mt-2 border border-dashed">
+    <div className="h-full overflow-y-auto flex flex-col gap-4">
+      <div className="flex flex-col overflow-y-auto flex-1 gap-8">
+        <div className="flex flex-col gap-2">
+          <span className="text-sm">{submission.identifier}</span>
+          <div className="flex justify-start items-center gap-3">
+            {BadgeVariation(submission.status as TsubmissionStatus)}
+            <Badge variant={"info"}>
+              {formatDateRelativeToNow(submission.created_at)}
+            </Badge>
+            <Badge variant={"info"}>
+              {formatTime(submission.completion_time ?? 0, 2)}
+            </Badge>
+          </div>
+        </div>
+        <div className="flex-1 flex flex-col overflow-y-auto gap-4">
+          {query.data?.collections.map((coll, i) => {
+            return (
+              <div key={i} className="flex flex-col">
+                <span className="font-semibold text-sm">{coll.name}</span>
+                {coll.answer.trim() !== "" ? (
                   <span className="text-xs text-foreground/80">
-                    No answer to this question
+                    {coll.answer}
                   </span>
-                </div>
-              )}
-            </div>
-          );
-        })}
+                ) : (
+                  <div className="flex justify-center items-center py-2 mt-2 border border-dashed">
+                    <span className="text-xs text-foreground/80">
+                      No answer to this question
+                    </span>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
       <div className="flex justify-between items-center">
         <Button variant={"outline"} size={"sm"} onClick={() => setState(false)}>
           Cancel
         </Button>
-        <Button variant={"default"} size={"sm"}>
-          Mask as Reviewed
-        </Button>
+        <div className="flex justify-center items-center gap-3">
+          <Button variant={"secondary"} size={"sm"}>
+            Export as CSV
+          </Button>
+          <Button variant={"default"} size={"sm"}>
+            Mask as Reviewed
+          </Button>
+        </div>
       </div>
     </div>
   );

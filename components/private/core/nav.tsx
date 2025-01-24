@@ -450,6 +450,11 @@ const NavEditor = () => {
         </div>
       </div>
       <div className="flex justify-center items-center gap-2">
+        {form.updated_at !== "" && (
+          <span className="text-sm text-foreground/80 mr-5 hidden sm:flex">
+            Last updated at {new Date(form.updated_at).toLocaleString()}
+          </span>
+        )}
         <Button
           variant={"outline"}
           size={"sm"}

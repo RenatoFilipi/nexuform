@@ -59,15 +59,20 @@ const SubmissionList = ({
         <TableBody>
           {submissions.map((submission, index) => {
             return (
-              <TableRow key={index}>
-                <TableCell className="p-0 pl-4 py-2">
+              <TableRow key={index} className="text-xs text-foreground/80">
+                <TableCell className="p-0 pl-4 py-2 font-semibold">
                   {submission.identifier}
                 </TableCell>
                 <TableCell className="py-2">
-                  {formatDateRelativeToNow(submission.created_at)}
+                  <span className="">
+                    {new Date(submission.created_at).toLocaleString()}
+                  </span>
+                  <span className="ml-2">
+                    ({formatDateRelativeToNow(submission.created_at)})
+                  </span>
                 </TableCell>
                 <TableCell className="py-2">
-                  {formatTime(submission.completion_time ?? 0, 2)}
+                  ({formatTime(submission.completion_time ?? 0, 2)})
                 </TableCell>
                 <TableCell className="py-2 pr-4">
                   {BadgeVariation(submission.status as TsubmissionStatus)}
