@@ -29,7 +29,8 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { data: submissions, error: submissionsError } = await supabase
     .from("submissions")
     .select("*")
-    .eq("form_id", slug);
+    .eq("form_id", slug)
+    .order("created_at", { ascending: true });
 
   if (formError || submissionsError || blocksError) {
     return (

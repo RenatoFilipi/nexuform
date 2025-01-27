@@ -94,7 +94,6 @@ const Body = ({
       const { error } = await supabase.from("forms").delete().eq("id", formId);
       if (error) {
         toast.error("Error on deleting form.");
-        console.log(error);
         return;
       }
       router.push("/dashboard/forms");

@@ -25,7 +25,7 @@ const SubmissionList = () => {
       case "reviewed":
         return <Badge variant={"success"}>Reviewed</Badge>;
       case "ignored":
-        return <Badge variant={"default"}>Not Reviewed</Badge>;
+        return <Badge variant={"default"}>Ignored</Badge>;
     }
   };
 

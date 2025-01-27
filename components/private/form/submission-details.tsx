@@ -24,6 +24,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "../../ui/drawer";
+import SubmissionStatus from "./submission-status";
 
 const SubmissionDetails = ({
   children,
@@ -85,7 +86,6 @@ const Body = ({
   const query = useQuery({
     queryKey: [`submissionData`, submission.id],
     queryFn: async () => {
-      console.log("submission details" + submission.id);
       const { data, error } = await supabase
         .from("answers")
         .select("*")
@@ -118,7 +118,7 @@ const Body = ({
       case "reviewed":
         return <Badge variant={"success"}>Reviewed</Badge>;
       case "ignored":
-        return <Badge variant={"default"}>Not Reviewed</Badge>;
+        return <Badge variant={"default"}>Ignored</Badge>;
     }
   };
 
@@ -129,6 +129,9 @@ const Body = ({
           <span className="text-sm">{submission.identifier}</span>
           <div className="flex justify-start items-center gap-3">
             {BadgeVariation(submission.status as TsubmissionStatus)}
+            <Badge variant={"info"}>
+              {new Date(submission.created_at).toLocaleString()}
+            </Badge>
             <Badge variant={"info"}>
               {formatDateRelativeToNow(submission.created_at)}
             </Badge>
@@ -163,12 +166,10 @@ const Body = ({
           Cancel
         </Button>
         <div className="flex justify-center items-center gap-3">
-          <Button variant={"secondary"} size={"sm"}>
+          <Button variant={"secondary"} size={"sm"} className="hidden">
             Export as CSV
           </Button>
-          <Button variant={"default"} size={"sm"}>
-            Mask as Reviewed
-          </Button>
+          <SubmissionStatus submission={submission} setState={setState} />
         </div>
       </div>
     </div>
