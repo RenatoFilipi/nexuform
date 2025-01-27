@@ -8,7 +8,7 @@ import { TAppState, TSetState } from "@/utils/types";
 import {
   CheckIcon,
   FrownIcon,
-  LoaderIcon,
+  Loader2Icon,
   SmileIcon,
   XIcon,
 } from "lucide-react";
@@ -121,11 +121,10 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
             variant={"secondary"}
             onClick={onSendFeedback}
             disabled={appState === "loading"}>
-            {appState === "loading" ? (
-              <LoaderIcon className="w-4 h-4 animate-spin" />
-            ) : (
-              "Send Feedback"
+            {appState === "loading" && (
+              <Loader2Icon className="animate-spin w-4 h-4 mr-2" />
             )}
+            Send Feedback
           </Button>
         </div>
       </div>

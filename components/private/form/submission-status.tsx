@@ -67,8 +67,9 @@ const SubmissionStatus = ({
   );
 
   const onSubmissionStatusSubmit = async () => {
-    setAppState("loading");
     const status = options[Number(selectedIndex)].value;
+    if (status === submission.status) return;
+    setAppState("loading");
     const { data, error } = await supabase
       .from("submissions")
       .update({ status })

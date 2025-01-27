@@ -469,11 +469,10 @@ const NavEditor = () => {
           variant={"default"}
           onClick={onSave}
           disabled={appState === "loading"}>
-          {appState === "loading" ? (
-            <LoaderIcon className="animate-spin w-4 h-4" />
-          ) : (
-            "Save Form"
+          {appState === "loading" && (
+            <LoaderIcon className="animate-spin w-4 h-4 mr-2" />
           )}
+          Save Form
         </Button>
       </div>
     </div>

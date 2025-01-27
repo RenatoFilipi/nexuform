@@ -376,7 +376,10 @@ const SubmissionGroup = () => {
             onClick={onSubmit}
             size={"sm"}
             className={`${currentColor.tw_class} w-full sm:w-fit`}>
-            {appState === "loading" ? <LoaderIcon /> : `${form.submit_text}`}
+            {appState === "loading" && (
+              <LoaderIcon className="animate-spin w-4 h-4 mr-2" />
+            )}{" "}
+            {form.submit_text}
           </Button>
         </div>
         <div className="flex justify-center items-center w-full">

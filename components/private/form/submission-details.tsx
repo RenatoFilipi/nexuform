@@ -118,7 +118,7 @@ const Body = ({
       case "reviewed":
         return <Badge variant={"success"}>Reviewed</Badge>;
       case "ignored":
-        return <Badge variant={"default"}>Ignored</Badge>;
+        return <Badge variant={"gray"}>Ignored</Badge>;
     }
   };
 

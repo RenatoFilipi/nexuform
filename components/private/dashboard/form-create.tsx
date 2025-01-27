@@ -145,6 +145,7 @@ const Body = ({
           />
           <div className="flex justify-end flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
             <Button
+              disabled={isPending}
               onClick={() => setState(false)}
               type="button"
               variant={"outline"}
@@ -158,11 +159,10 @@ const Body = ({
               variant={"default"}
               size={"sm"}
               className="w-full sm:w-fit">
-              {isPending ? (
-                <Loader2Icon className="animate-spin w-4 h-4" />
-              ) : (
-                "Create New Form"
+              {isPending && (
+                <Loader2Icon className="animate-spin w-4 h-4 mr-2" />
               )}
+              Create New Form
             </Button>
           </div>
         </form>
