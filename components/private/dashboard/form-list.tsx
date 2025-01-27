@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { EForm } from "@/utils/entities";
-import { BookIcon } from "lucide-react";
+import { BookIcon, PlusIcon } from "lucide-react";
 import FormCard from "./form-card";
 import FormCreate from "./form-create";
 
@@ -25,6 +25,7 @@ const FormList = ({ forms, userId }: { forms: EForm[]; userId: string }) => {
           </div>
           <FormCreate userId={userId}>
             <Button variant={"default"} size={"sm"}>
+              <PlusIcon className="w-4 h-4 mr-2" />
               Create New Form
             </Button>
           </FormCreate>

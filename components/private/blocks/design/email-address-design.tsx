@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { EBlock, ETheme } from "@/utils/entities";
 import { IDesign } from "@/utils/interfaces";
+import { MailIcon } from "lucide-react";
 import { useState } from "react";
 
 const design: IDesign[] = [
@@ -57,17 +58,22 @@ const EmailAddressDesign = ({
         </div>
         <span className="text-xs text-foreground/80">{description}</span>
       </div>
-      <Input
-        value={value}
-        placeholder={placeholder ?? ""}
-        onChange={(e) => {
-          setValue(e.target.value);
-          onValueChange(e.target.value, block.id);
-        }}
-        id={id}
-        type="email"
-        className={`${currentColor.tw_class}`}
-      />
+      <div className="relative">
+        <Input
+          value={value}
+          placeholder={placeholder ?? ""}
+          onChange={(e) => {
+            setValue(e.target.value);
+            onValueChange(e.target.value, block.id);
+          }}
+          id={id}
+          type="email"
+          className={`${currentColor.tw_class}`}
+        />
+        <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-muted-foreground/80 peer-disabled:opacity-50">
+          <MailIcon size={16} strokeWidth={2} aria-hidden="true" />
+        </div>
+      </div>
     </div>
   );
 };

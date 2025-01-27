@@ -167,6 +167,7 @@ export type Database = {
           id: string
           name: string
           owner_id: string
+          public_url: string
           status: string
           submit_text: string
           updated_at: string
@@ -177,6 +178,7 @@ export type Database = {
           id?: string
           name?: string
           owner_id?: string
+          public_url?: string
           status?: string
           submit_text?: string
           updated_at?: string
@@ -187,6 +189,7 @@ export type Database = {
           id?: string
           name?: string
           owner_id?: string
+          public_url?: string
           status?: string
           submit_text?: string
           updated_at?: string

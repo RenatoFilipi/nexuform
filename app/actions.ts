@@ -1,6 +1,6 @@
 "use server";
 
-import { encodedRedirect } from "@/utils/functions";
+import { encodedRedirect, nanoid } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -57,7 +57,7 @@ export const createFormAction = async (formData: FormData) => {
 
   const { data: form, error: formError } = await supabase
     .from("forms")
-    .insert([{ name, owner_id: userId }])
+    .insert([{ name, owner_id: userId, public_url: nanoid(20, true, true) }])
     .select()
     .single();
 

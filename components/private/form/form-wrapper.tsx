@@ -75,7 +75,9 @@ const FormWrapper = ({
             {BadgeVariant(form.status as TFormStatus)}
           </div>
           <div className="flex justify-center items-center sm:gap-4 gap-2 w-full sm:w-fit">
-            <FormShare formId={form.id} status={form.status as TFormStatus}>
+            <FormShare
+              publicUrl={form.public_url}
+              status={form.status as TFormStatus}>
               <Button variant={"outline"} size={"sm"} className="w-full">
                 <ForwardIcon className="w-4 h-4 mr-2" />
                 Share
@@ -89,7 +91,7 @@ const FormWrapper = ({
                 asChild>
                 <a
                   target="_blank"
-                  href={`/s/${form.id}`}
+                  href={`/s/${form.public_url}`}
                   rel="noopener noreferrer"
                   className="flex justify-center items-center">
                   <ExternalLinkIcon className="w-4 h-4 mr-2" />

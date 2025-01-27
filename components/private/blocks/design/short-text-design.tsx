@@ -51,6 +51,7 @@ const ShortTextDesign = ({
   const currentColor =
     design.find((x) => x.label === theme.primary_color) ?? design[0];
   const [value, setValue] = useState("");
+  const [charCount, setCharCount] = useState(0);
 
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -72,6 +73,7 @@ const ShortTextDesign = ({
           value={value}
           placeholder={placeholder ?? ""}
           onChange={(e) => {
+            setCharCount(e.target.value.length);
             setValue(e.target.value);
             onValueChange(e.target.value, block.id);
           }}
@@ -83,7 +85,9 @@ const ShortTextDesign = ({
         />
         {show_char && (
           <div className="w-full flex justify-end mt-1">
-            <span className="text-xs">{max_char}</span>
+            <span className="text-xs">
+              {charCount}/{max_char}
+            </span>
           </div>
         )}
       </div>

@@ -98,6 +98,7 @@ const SubmissionStatus = ({
     <div className="inline-flex -space-x-px divide-x divide-primary-foreground/30 rounded-lg shadow-sm shadow-black/5 rtl:space-x-reverse">
       <Button
         disabled={appState === "loading"}
+        size={"sm"}
         onClick={onSubmissionStatusSubmit}
         className="rounded-none shadow-none first:rounded-s-lg last:rounded-e-lg focus-visible:z-10">
         {appState === "loading" && (
@@ -109,7 +110,7 @@ const SubmissionStatus = ({
         <DropdownMenuTrigger asChild disabled={appState === "loading"}>
           <Button
             className="rounded-none shadow-none first:rounded-s-lg last:rounded-e-lg focus-visible:z-10"
-            size="icon"
+            size="sm"
             aria-label="Options">
             <ChevronDown size={16} strokeWidth={2} aria-hidden="true" />
           </Button>

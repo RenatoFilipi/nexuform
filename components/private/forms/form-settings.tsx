@@ -1,5 +1,6 @@
 "use client";
 
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,7 +17,7 @@ import useEditorStore from "@/stores/editor";
 import { minWidth640 } from "@/utils/constants";
 import { IFormStatus } from "@/utils/interfaces";
 import { TSetState } from "@/utils/types";
-import { BookDashedIcon, GlobeIcon, PencilOffIcon } from "lucide-react";
+import { CheckCircleIcon, FileEditIcon, XCircleIcon } from "lucide-react";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import {
@@ -34,22 +35,22 @@ const statusList: IFormStatus[] = [
     status: "draft",
     label: "Draft",
     description:
-      "The form is currently being created or edited and is not yet available for users to fill out.",
-    icon: <BookDashedIcon className="w-4 h-4" />,
+      "The form is being created or edited. It’s not available for users to access yet.",
+    icon: <FileEditIcon className="w-5 h-5 text-blue-500" />,
   },
   {
     status: "published",
     label: "Published",
     description:
-      "The form is live and available for users to fill out and submit.",
-    icon: <GlobeIcon className="w-4 h-4" />,
+      "The form is live and can be accessed, filled out, and submitted by users.",
+    icon: <CheckCircleIcon className="w-5 h-5 text-green-500" />,
   },
   {
     status: "inactive",
     label: "Inactive",
     description:
-      "The form is no longer active and cannot be filled out or submitted by users.",
-    icon: <PencilOffIcon className="w-4 h-4" />,
+      "The form is no longer available for users to fill out or submit.",
+    icon: <XCircleIcon className="w-5 h-5 text-red-500" />,
   },
 ];
 
@@ -93,6 +94,10 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const { form, setForm } = useEditorStore();
 
+  const description = statusList.find(
+    (x) => x.status === form.status
+  )?.description;
+
   const onSetName = (value: string) => {
     setForm({ ...form, name: value });
   };
@@ -133,27 +138,35 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
               onChange={(e) => onSetSubmitText(e.target.value)}
             />
           </div>
-          <div className="grid gap-3">
-            <Label>Status</Label>
+          <div className="grid gap-4">
+            <Label className="text-sm font-medium text-foreground">
+              Status
+            </Label>
             <div className="flex flex-col gap-4">
-              <div className="grid gap-3 overflow-y-auto grid-cols-3">
-                {statusList.map((statusItem, index) => {
-                  return (
-                    <button
-                      onClick={() => onSetStatus(statusItem.status)}
-                      key={index}
-                      className={`${
-                        statusItem.status === form.status &&
-                        "bg-primary/20 border-primary/20 hover:bg-primary/10"
-                      } border rounded hover:bg-foreground/5 flex flex-col gap-2 h-20 py-3 px-2`}>
-                      <div className="flex flex-col justify-between h-full">
-                        {statusItem.icon}
-                        <span className="text-sm">{statusItem.label}</span>
-                      </div>
-                    </button>
-                  );
-                })}
+              <div className="grid gap-4 overflow-y-auto grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                {statusList.map((statusItem, index) => (
+                  <button
+                    key={index}
+                    onClick={() => onSetStatus(statusItem.status)}
+                    className={`border rounded-lg p-4 flex flex-col gap-2 items-center justify-between hover:bg-foreground/10 ${
+                      statusItem.status === form.status
+                        ? "bg-primary/5 border-primary text-primary"
+                        : "border-muted text-foreground/80"
+                    }`}>
+                    <div className="flex items-center justify-center p-2 rounded-full bg-muted/20 text-primary">
+                      {statusItem.icon}
+                    </div>
+                    <span className="text-sm font-medium">
+                      {statusItem.label}
+                    </span>
+                  </button>
+                ))}
               </div>
+              <Alert variant="info" className="mt-2">
+                <AlertDescription className="text-sm text-foreground/70 text-center">
+                  {description}
+                </AlertDescription>
+              </Alert>
             </div>
           </div>
         </div>

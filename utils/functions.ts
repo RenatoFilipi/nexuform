@@ -7,8 +7,22 @@ export const uuid = () => {
   const uuid = self.crypto.randomUUID();
   return uuid;
 };
-export const nanoid = (length: number = 12) => {
-  const nnid = customAlphabet("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ", length);
+export const nanoid = (
+  length: number = 12,
+  onlyLetters: boolean = false,
+  onlyLowercase: boolean = false
+): string => {
+  let alphabet =
+    "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  if (onlyLetters) {
+    alphabet = onlyLowercase
+      ? "abcdefghijklmnopqrstuvwxyz"
+      : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  } else if (onlyLowercase) {
+    alphabet = "1234567890abcdefghijklmnopqrstuvwxyz";
+  }
+  alphabet = alphabet.replace(/[^a-zA-Z0-9]/g, "");
+  const nnid = customAlphabet(alphabet, length);
   return nnid();
 };
 export const blockName = (type: TBlock) => {

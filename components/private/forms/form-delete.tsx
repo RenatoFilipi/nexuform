@@ -103,14 +103,13 @@ const Body = ({
   return (
     <div className="flex flex-col gap-3 h-full overflow-y-auto pt-4 sm:pt-0">
       <div className="grid gap-3">
-        <Label htmlFor="form_name" className="overflow-x-auto">
+        <Label htmlFor="form_name" className="">
           Type <span className="text-destructive">&quot;{formName}&quot;</span>{" "}
           to delete this form.
         </Label>
         <Input
           type="text"
           id="form_name"
-          placeholder=""
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
@@ -121,6 +120,7 @@ const Body = ({
       </div>
       <div className="flex justify-end flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
         <Button
+          disabled={isPending}
           onClick={() => setState(false)}
           variant={"outline"}
           size={"sm"}
@@ -133,11 +133,8 @@ const Body = ({
           variant={"destructive"}
           size={"sm"}
           className="w-full sm:w-fit">
-          {isPending ? (
-            <LoaderIcon className="animate-spin w-4 h-4" />
-          ) : (
-            "Delete Form"
-          )}
+          {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
+          Delete Form
         </Button>
       </div>
     </div>
