@@ -25,6 +25,7 @@ const useSubmissionStore = create<submission>((set) => ({
     owner_id: "",
     status: "",
     submit_text: "Submit",
+    public_url: "",
   },
   theme: {
     id: "",
@@ -61,6 +62,7 @@ const useSubmissionStore = create<submission>((set) => ({
         owner_id: "",
         status: "",
         submit_text: "Submit",
+        public_url: "",
       },
       theme: {
         id: "",

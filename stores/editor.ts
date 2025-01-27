@@ -28,6 +28,7 @@ const useEditorStore = create<editor>((set) => ({
     owner_id: "",
     status: "",
     submit_text: "Submit",
+    public_url: "",
   },
   theme: {
     id: "",
@@ -69,6 +70,7 @@ const useEditorStore = create<editor>((set) => ({
         owner_id: "",
         status: "",
         submit_text: "Submit",
+        public_url: "",
       },
       theme: {
         id: "",
