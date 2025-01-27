@@ -28,17 +28,6 @@ const Login = () => {
         </div>
         <div className="w-full flex justify-center items-center">
           <div className="flex flex-col items-center justify-center w-full sm:max-w-96 gap-6 sm:p-0 px-12">
-            <div className="flex justify-start w-full flex-col gap-1">
-              <h1 className="text-xl font-medium">Login</h1>
-              <span className="text-sm text-foreground/80">
-                Don&apos;t have an account?{" "}
-                <Link
-                  href={"/signup"}
-                  className="hover:underline text-info dark:text-blue-500">
-                  Sign up
-                </Link>
-              </span>
-            </div>
             <Suspense>
               <LoginForm />
             </Suspense>

@@ -2,6 +2,7 @@ import FormCreate from "@/components/private/dashboard/form-create";
 import FormList from "@/components/private/dashboard/form-list";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/server";
+import { PlusIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
@@ -25,6 +26,7 @@ const Forms = async () => {
           <Suspense>
             <FormCreate userId={data.user.id}>
               <Button size={"sm"} variant={"default"}>
+                <PlusIcon className="w-4 h-4 mr-2" />
                 Create New Form
               </Button>
             </FormCreate>
