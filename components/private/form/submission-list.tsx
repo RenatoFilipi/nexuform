@@ -2,6 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -11,12 +12,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import useFormStore from "@/stores/form";
+import { minWidth640 } from "@/utils/constants";
 import { formatDateRelativeToNow, formatTime } from "@/utils/functions";
 import { TsubmissionStatus } from "@/utils/types";
+import { useMedia } from "react-use";
 import SubmissionDetails from "./submission-details";
 
 const SubmissionList = () => {
   const { submissions, blocks } = useFormStore();
+  const isDesktop = useMedia(minWidth640);
 
   const BadgeVariation = (value: TsubmissionStatus) => {
     switch (value) {
@@ -39,6 +43,43 @@ const SubmissionList = () => {
         </div>
       </div>
     );
+
+  if (!isDesktop) {
+    return (
+      <div className="flex flex-col w-full gap-2">
+        {submissions.map((submission, index) => {
+          return (
+            <SubmissionDetails
+              key={index}
+              submission={submission}
+              blocks={blocks}>
+              <Card className="border p-2 cursor-pointer h-20 flex flex-col justify-between hover:bg-foreground/5">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-semibold">
+                    {submission.identifier}
+                  </span>
+                  <div className="flex justify-center items-center gap-2">
+                    <Badge variant={"gray"}>
+                      ({formatTime(submission.completion_time ?? 0, 2)})
+                    </Badge>
+                    {BadgeVariation(submission.status as TsubmissionStatus)}
+                  </div>
+                </div>
+                <div className="flex justify-start items-center text-xs gap-2">
+                  <span className="">
+                    {new Date(submission.created_at).toLocaleString()}
+                  </span>
+                  <span className="">
+                    ({formatDateRelativeToNow(submission.created_at)})
+                  </span>
+                </div>
+              </Card>
+            </SubmissionDetails>
+          );
+        })}
+      </div>
+    );
+  }
 
   return (
     <div className="flex w-full h-full flex-1 justify-start items-start">
