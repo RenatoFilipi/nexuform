@@ -86,6 +86,7 @@ const Body = ({
   const query = useQuery({
     queryKey: [`submissionData`, submission.id],
     queryFn: async () => {
+      console.log("submission-" + submission.id);
       const { data, error } = await supabase
         .from("answers")
         .select("*")

@@ -8,14 +8,50 @@ import { formatDateRelativeToNow } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import {
+  BookDownIcon,
   BookIcon,
   ExternalLinkIcon,
   ForwardIcon,
+  Laptop2Icon,
   Settings2Icon,
+  UnplugIcon,
 } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 import FormShare from "../forms/form-share";
+import FormIntegrations from "./form-integrations";
+import FormOverview from "./form-overview";
+import FormSettings from "./form-settings";
 import FormSubmissions from "./form-submissions";
+
+type TView = "overview" | "submissions" | "integrations" | "settings";
+interface IView {
+  label: string;
+  icon: React.JSX.Element;
+  view: TView;
+}
+const views: IView[] = [
+  {
+    label: "Overview",
+    icon: <Laptop2Icon className="w-4 h-4" />,
+    view: "overview",
+  },
+  {
+    label: "Submissions",
+    icon: <BookDownIcon className="w-4 h-4" />,
+    view: "submissions",
+  },
+  {
+    label: "Integrations",
+    icon: <UnplugIcon className="w-4 h-4" />,
+    view: "integrations",
+  },
+  {
+    label: "Settings",
+    icon: <Settings2Icon className="w-4 h-4" />,
+    view: "settings",
+  },
+];
 
 const FormWrapper = ({
   submissions,
@@ -27,6 +63,7 @@ const FormWrapper = ({
   form: EForm;
 }) => {
   const { setForm, setBlocks, setSubmissions } = useFormStore();
+  const [view, setView] = useState<TView>("overview");
 
   useQuery({
     queryKey: ["formData"],
@@ -89,8 +126,29 @@ const FormWrapper = ({
           </span>
         </div>
       </div>
-      <div className="flex justify-center flex-1 h-full">
-        <FormSubmissions />
+      <div className="flex flex-col flex-1 h-full gap-4">
+        <div className="flex sm:w-fit sm:gap-3 gap-1 overflow-x-auto">
+          {views.map((v, i) => {
+            return (
+              <button
+                key={i}
+                onClick={() => setView(v.view)}
+                className={`${
+                  v.view === view &&
+                  "border border-foreground/25 text-foreground"
+                }  border border-transparent p-2 flex justify-center items-center gap-2 text-sm hover:bg-foreground/5 rounded text-foreground/80`}>
+                {v.icon}
+                {v.label}
+              </button>
+            );
+          })}
+        </div>
+        <div className="flex justify-center flex-1 h-full">
+          {view === "overview" && <FormOverview />}
+          {view === "submissions" && <FormSubmissions />}
+          {view === "integrations" && <FormIntegrations />}
+          {view === "settings" && <FormSettings />}
+        </div>
       </div>
     </div>
   );
