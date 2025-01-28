@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
+import FormStatusBadge from "@/components/shared/form-status-badge";
 import { Button } from "@/components/ui/button";
 import useFormStore from "@/stores/form";
 import { EBlock, EForm, ESubmission } from "@/utils/entities";
@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import FormShare from "../forms/form-share";
-import SubmissionList from "./submission-list";
+import FormSubmissions from "./form-submissions";
 
 const FormWrapper = ({
   submissions,
@@ -26,28 +26,6 @@ const FormWrapper = ({
   blocks: EBlock[];
   form: EForm;
 }) => {
-  const BadgeVariant = (status: TFormStatus) => {
-    switch (status) {
-      case "published":
-        return (
-          <Badge variant={"success"} uppercase>
-            {status}
-          </Badge>
-        );
-      case "draft":
-        return (
-          <Badge variant={"warning"} uppercase>
-            {status}
-          </Badge>
-        );
-      case "inactive":
-        return (
-          <Badge variant={"default"} uppercase>
-            {status}
-          </Badge>
-        );
-    }
-  };
   const { setForm, setBlocks, setSubmissions } = useFormStore();
 
   useQuery({
@@ -72,7 +50,7 @@ const FormWrapper = ({
                 {form.name}
               </h1>
             </div>
-            {BadgeVariant(form.status as TFormStatus)}
+            <FormStatusBadge status={form.status as TFormStatus} uppercase />
           </div>
           <div className="flex justify-center items-center sm:gap-4 gap-2 w-full sm:w-fit">
             <FormShare form={form}>
@@ -112,7 +90,7 @@ const FormWrapper = ({
         </div>
       </div>
       <div className="flex justify-center flex-1 h-full">
-        <SubmissionList />
+        <FormSubmissions />
       </div>
     </div>
   );

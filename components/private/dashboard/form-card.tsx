@@ -1,4 +1,4 @@
-import { Badge } from "@/components/ui/badge";
+import FormStatusBadge from "@/components/shared/form-status-badge";
 import { Card } from "@/components/ui/card";
 import { EForm } from "@/utils/entities";
 import { TFormStatus } from "@/utils/types";
@@ -7,28 +7,6 @@ import Link from "next/link";
 
 const FormCard = ({ form }: { form: EForm }) => {
   const { id, name, status } = form;
-  const BadgeVariant = (status: TFormStatus) => {
-    switch (status) {
-      case "published":
-        return (
-          <Badge variant={"success"} uppercase>
-            {status}
-          </Badge>
-        );
-      case "draft":
-        return (
-          <Badge variant={"warning"} uppercase>
-            {status}
-          </Badge>
-        );
-      case "inactive":
-        return (
-          <Badge variant={"default"} uppercase>
-            {status}
-          </Badge>
-        );
-    }
-  };
 
   return (
     <Link href={`/dashboard/forms/${id}`}>
@@ -36,7 +14,7 @@ const FormCard = ({ form }: { form: EForm }) => {
         <div>
           <div className="flex justify-between items-start w-full flex-col gap-2">
             <span className="text-sm truncate max-w-[240px]">{name}</span>
-            {BadgeVariant(status as TFormStatus)}
+            <FormStatusBadge status={status as TFormStatus} uppercase />
           </div>
           <ChevronRightIcon className="absolute right-4 top-4 text-foreground-lighter transition-all duration-200 group-hover:right-3 group-hover:text-foreground " />
         </div>

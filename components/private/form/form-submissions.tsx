@@ -18,7 +18,7 @@ import { TsubmissionStatus } from "@/utils/types";
 import { useMedia } from "react-use";
 import SubmissionDetails from "./submission-details";
 
-const SubmissionList = () => {
+const FormSubmissions = () => {
   const { submissions, blocks } = useFormStore();
   const isDesktop = useMedia(minWidth640);
 
@@ -130,4 +130,4 @@ const SubmissionList = () => {
   );
 };
 
-export default SubmissionList;
+export default FormSubmissions;

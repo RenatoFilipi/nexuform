@@ -69,35 +69,6 @@ export const createFormAction = async (formData: FormData) => {
     );
   }
 
-  const { data: theme, error: themeError } = await supabase
-    .from("themes")
-    .insert([{ form_id: form.id }])
-    .select()
-    .single();
-
-  if (themeError) {
-    await supabase.from("forms").delete().eq("id", form.id);
-    return encodedRedirect(
-      "error",
-      "/dashboard/forms",
-      "An unexpected error occurred while creating the form. Please try again later."
-    );
-  }
-
-  const { error: analyticsError } = await supabase
-    .from("forms_analytics")
-    .insert([{ form_id: form.id, profile_id: userId }]);
-
-  if (analyticsError) {
-    await supabase.from("forms").delete().eq("id", form.id);
-    await supabase.from("themes").delete().eq("id", theme.id);
-    return encodedRedirect(
-      "error",
-      "/dashboard/forms",
-      "An unexpected error occurred while creating the form. Please try again later."
-    );
-  }
-
   return redirect(`/dashboard/editor/${form.id}`);
 };
 
