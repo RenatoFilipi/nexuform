@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { minWidth640 } from "@/utils/constants";
-import { TFormStatus, TSetState } from "@/utils/types";
+import { EForm } from "@/utils/entities";
+import { TSetState } from "@/utils/types";
 import { AlertCircleIcon, ArrowRightIcon, CopyIcon } from "lucide-react";
 import Link from "next/link";
 import { QRCodeSVG } from "qrcode.react";
@@ -28,12 +29,10 @@ import {
 
 const FormShare = ({
   children,
-  publicUrl,
-  status,
+  form,
 }: {
   children: React.ReactNode;
-  publicUrl: string;
-  status: TFormStatus;
+  form: EForm;
 }) => {
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
@@ -49,7 +48,7 @@ const FormShare = ({
               Easily share your form with others using a link or a QR code.
             </DialogDescription>
           </DialogHeader>
-          <Body setState={setOpen} publicUrl={publicUrl} status={status} />
+          <Body setState={setOpen} form={form} />
         </DialogContent>
       </Dialog>
     );
@@ -65,7 +64,7 @@ const FormShare = ({
             Easily share your form with others using a link or a QR code.
           </DialogDescription>
         </DrawerHeader>
-        <Body setState={setOpen} publicUrl={publicUrl} status={status} />
+        <Body setState={setOpen} form={form} />
       </DrawerContent>
     </Drawer>
   );
@@ -73,18 +72,16 @@ const FormShare = ({
 
 const Body = ({
   setState,
-  publicUrl,
-  status,
+  form,
 }: {
   setState: TSetState<boolean>;
-  publicUrl: string;
-  status: TFormStatus;
+  form: EForm;
 }) => {
-  const [url] = useState(`${window.location.host}/s/${publicUrl}`);
+  const [url] = useState(`${window.location.host}/s/${form.public_url}`);
 
   return (
     <div className="flex flex-col gap-6">
-      {status !== "published" && (
+      {form.status !== "published" && (
         <div className="flex items-start gap-4 p-4 border rounded-lg bg-info/10 border-info/20">
           <AlertCircleIcon className="w-6 h-6 text-info" />
           <div className="flex flex-col gap-2">
@@ -95,16 +92,14 @@ const Body = ({
             </p>
             <div className="flex justify-end items-center">
               <Button variant="outline" size="sm" className="w-fit">
-                <Link href={`/dashboard/editor/${publicUrl}`}>
-                  Go to Editor
-                </Link>
+                <Link href={`/dashboard/editor/${form.id}`}>Go to Editor</Link>
                 <ArrowRightIcon className="w-4 h-4 ml-2" />
               </Button>
             </div>
           </div>
         </div>
       )}
-      {status === "published" && (
+      {form.status === "published" && (
         <div className="flex flex-col items-center gap-8">
           <div className="flex w-full gap-4 items-center">
             <Input

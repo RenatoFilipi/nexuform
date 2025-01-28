@@ -96,51 +96,59 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel htmlFor="password">Password</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <Input
-                      id="password"
-                      type={isVisible ? "text" : "password"}
-                      {...field}
-                    />
-                    <button
-                      className="absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-lg text-muted-foreground/80 outline-offset-2 transition-colors hover:text-foreground focus:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring/70 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
-                      type="button"
-                      onClick={toggleVisibility}
-                      aria-label={isVisible ? "Hide password" : "Show password"}
-                      aria-pressed={isVisible}
-                      aria-controls="password">
-                      {isVisible ? (
-                        <EyeOffIcon
-                          size={16}
-                          strokeWidth={2}
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        <EyeIcon size={16} strokeWidth={2} aria-hidden="true" />
-                      )}
-                    </button>
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="flex flex-col gap-2">
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="password">Password</FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <Input
+                        id="password"
+                        type={isVisible ? "text" : "password"}
+                        {...field}
+                      />
+                      <button
+                        className="absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-lg text-muted-foreground/80 outline-offset-2 transition-colors hover:text-foreground focus:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring/70 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+                        type="button"
+                        onClick={toggleVisibility}
+                        aria-label={
+                          isVisible ? "Hide password" : "Show password"
+                        }
+                        aria-pressed={isVisible}
+                        aria-controls="password">
+                        {isVisible ? (
+                          <EyeOffIcon
+                            size={16}
+                            strokeWidth={2}
+                            aria-hidden="true"
+                          />
+                        ) : (
+                          <EyeIcon
+                            size={16}
+                            strokeWidth={2}
+                            aria-hidden="true"
+                          />
+                        )}
+                      </button>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex justify-start items-center w-full">
+              <Link
+                href={"/password/reset"}
+                className="text-sm hover:underline text-foreground/80">
+                Forgot my password
+              </Link>
+            </div>
+          </div>
         </div>
         <div className="flex flex-col w-full gap-4">
-          <div className="flex justify-start items-center w-full">
-            <Link
-              href={"/password/reset"}
-              className="text-sm hover:underline text-foreground/80">
-              Forgot password?
-            </Link>
-          </div>
           <Button
             disabled={isPending}
             variant="secondary"

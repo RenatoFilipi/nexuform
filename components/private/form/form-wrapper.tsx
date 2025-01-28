@@ -75,9 +75,7 @@ const FormWrapper = ({
             {BadgeVariant(form.status as TFormStatus)}
           </div>
           <div className="flex justify-center items-center sm:gap-4 gap-2 w-full sm:w-fit">
-            <FormShare
-              publicUrl={form.public_url}
-              status={form.status as TFormStatus}>
+            <FormShare form={form}>
               <Button variant={"outline"} size={"sm"} className="w-full">
                 <ForwardIcon className="w-4 h-4 mr-2" />
                 Share
