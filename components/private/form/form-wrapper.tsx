@@ -65,6 +65,7 @@ const FormWrapper = ({
 }) => {
   const { setForm, setBlocks, setSubmissions, form: f } = useFormStore();
   const [view, setView] = useState<TView>("overview");
+  const enabledViews = views.filter((x) => x.enabled);
 
   useQuery({
     queryKey: ["formData"],
@@ -131,21 +132,17 @@ const FormWrapper = ({
       </div>
       <div className="flex flex-col flex-1 h-full gap-4">
         <div className="flex sm:w-fit sm:gap-3 gap-1 overflow-x-auto">
-          {views
-            .filter((x) => x.enabled)
-            .map((v) => (
-              <button
-                key={v.view}
-                onClick={() => setView(v.view as TView)}
-                className={`${
-                  v.view === view
-                    ? "border-foreground/30"
-                    : "border-transparent"
-                } border p-2 flex items-center justify-center gap-2 text-sm hover:bg-foreground/5 rounded flex-1`}>
-                <v.icon className="w-4 h-4" />
-                {v.label}
-              </button>
-            ))}
+          {enabledViews.map((v) => (
+            <button
+              key={v.view}
+              onClick={() => setView(v.view as TView)}
+              className={`${
+                v.view === view ? "border-foreground/30" : "border-transparent"
+              } border p-2 flex items-center justify-center gap-2 text-sm hover:bg-foreground/5 rounded flex-1`}>
+              <v.icon className="w-4 h-4" />
+              {v.label}
+            </button>
+          ))}
         </div>
         <div className="flex justify-center flex-1 h-full">
           {view === "overview" && <FormOverview />}

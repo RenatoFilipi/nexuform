@@ -53,7 +53,7 @@ const FormSubmissions = () => {
               key={index}
               submission={submission}
               blocks={blocks}>
-              <Card className="border p-2 cursor-pointer h-20 flex flex-col justify-between hover:bg-foreground/5">
+              <Card className="border rounded p-2 cursor-pointer h-20 flex flex-col justify-between hover:bg-foreground/5">
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-semibold">
                     {submission.identifier}
