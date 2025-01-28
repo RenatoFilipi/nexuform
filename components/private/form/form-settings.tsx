@@ -32,7 +32,7 @@ const statusList: IFormStatus[] = [
     status: "draft",
     label: "Draft",
     description:
-      "The form is being created or edited. It’s not available for users to access yet.",
+      "The form is currently being created or edited and is not yet available for users to access.",
     icon: <FileEditIcon className="w-5 h-5 text-blue-500" />,
   },
   {
@@ -171,7 +171,7 @@ const FormSettings = () => {
                         Submit Text
                       </FormLabel>
                       <p className="text-sm text-muted-foreground">
-                        Customize the text displayed on the form's submit
+                        Customize the text displayed on the form&apos;s submit
                         button.
                       </p>
                     </div>
