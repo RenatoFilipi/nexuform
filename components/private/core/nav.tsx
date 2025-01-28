@@ -4,7 +4,6 @@ import { signOutAction } from "@/app/actions";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import useEditorStore from "@/stores/editor";
-import useFormStore from "@/stores/form";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -239,7 +238,6 @@ const AvatarAppMenu = () => {
 };
 const NavApp = () => {
   const editorStore = useEditorStore();
-  const formStore = useFormStore();
   const pathname = usePathname();
   const isActive = (path: string) => path === pathname;
 

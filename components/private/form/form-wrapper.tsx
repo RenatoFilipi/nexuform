@@ -13,6 +13,7 @@ import {
   ExternalLinkIcon,
   ForwardIcon,
   Laptop2Icon,
+  LoaderIcon,
   Settings2Icon,
   UnplugIcon,
 } from "lucide-react";
@@ -25,31 +26,31 @@ import FormSettings from "./form-settings";
 import FormSubmissions from "./form-submissions";
 
 type TView = "overview" | "submissions" | "integrations" | "settings";
-interface IView {
-  label: string;
-  icon: React.JSX.Element;
-  view: TView;
-}
-const views: IView[] = [
+
+const views = [
   {
     label: "Overview",
-    icon: <Laptop2Icon className="w-4 h-4" />,
+    icon: Laptop2Icon,
     view: "overview",
+    enabled: true,
   },
   {
     label: "Submissions",
-    icon: <BookDownIcon className="w-4 h-4" />,
+    icon: BookDownIcon,
     view: "submissions",
-  },
-  {
-    label: "Integrations",
-    icon: <UnplugIcon className="w-4 h-4" />,
-    view: "integrations",
+    enabled: true,
   },
   {
     label: "Settings",
-    icon: <Settings2Icon className="w-4 h-4" />,
+    icon: Settings2Icon,
     view: "settings",
+    enabled: true,
+  },
+  {
+    label: "Integrations",
+    icon: UnplugIcon,
+    view: "integrations",
+    enabled: false,
   },
 ];
 
@@ -62,7 +63,7 @@ const FormWrapper = ({
   blocks: EBlock[];
   form: EForm;
 }) => {
-  const { setForm, setBlocks, setSubmissions } = useFormStore();
+  const { setForm, setBlocks, setSubmissions, form: f } = useFormStore();
   const [view, setView] = useState<TView>("overview");
 
   useQuery({
@@ -81,67 +82,70 @@ const FormWrapper = ({
       <div className="flex flex-col">
         <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
           <div className="flex justify-between sm:justify-start items-center gap-3 w-full sm:w-fit">
-            <div className="flex justify-center items-center gap-2">
+            <div className="flex items-center gap-2">
               <BookIcon className="w-4 h-4" />
-              <h1 className="font-medium truncate max-w-[240px]">
-                {form.name}
-              </h1>
+              <h1 className="font-medium truncate max-w-[240px]">{f.name}</h1>
             </div>
-            <FormStatusBadge status={form.status as TFormStatus} uppercase />
+            <FormStatusBadge status={f.status as TFormStatus} uppercase />
           </div>
-          <div className="flex justify-center items-center sm:gap-4 gap-2 w-full sm:w-fit">
-            <FormShare form={form}>
-              <Button variant={"outline"} size={"sm"} className="w-full">
+          <div className="flex items-center sm:gap-4 gap-2 w-full sm:w-fit">
+            <FormShare form={f}>
+              <Button variant="outline" size="sm" className="w-full">
                 <ForwardIcon className="w-4 h-4 mr-2" />
                 Share
               </Button>
             </FormShare>
-            {form.status === "published" && (
-              <Button
-                variant={"outline"}
-                size={"sm"}
-                className="w-full sm:w-fit"
-                asChild>
-                <a
-                  target="_blank"
-                  href={`/s/${form.public_url}`}
-                  rel="noopener noreferrer"
-                  className="flex justify-center items-center">
+            {f.status === "published" && (
+              <a
+                href={`/s/${f.public_url}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-fit">
+                <Button variant="outline" size="sm">
                   <ExternalLinkIcon className="w-4 h-4 mr-2" />
                   Go to Form
-                </a>
-              </Button>
+                </Button>
+              </a>
             )}
-            <Button variant={"default"} size={"sm"} className="w-full" asChild>
-              <Link href={`/dashboard/editor/${form.id}`}>
+            <Button variant="default" size="sm" asChild>
+              <Link
+                href={`/dashboard/editor/${f.id}`}
+                className="w-full sm:w-fit">
                 <Settings2Icon className="w-4 h-4 mr-2" />
                 Editor
               </Link>
             </Button>
           </div>
         </div>
-        <div className="hidden sm:flex">
-          <span className="text-sm text-foreground/80">
-            Form last updated {formatDateRelativeToNow(form.updated_at)}
-          </span>
-        </div>
+        {f.updated_at !== "".trim() ? (
+          <div className="hidden sm:flex">
+            <span className="text-sm text-muted-foreground">
+              Form last updated {formatDateRelativeToNow(f.updated_at)}
+            </span>
+          </div>
+        ) : (
+          <div>
+            <LoaderIcon className="w-4 h-4 animate-spin" />
+          </div>
+        )}
       </div>
       <div className="flex flex-col flex-1 h-full gap-4">
         <div className="flex sm:w-fit sm:gap-3 gap-1 overflow-x-auto">
-          {views.map((v, i) => {
-            return (
+          {views
+            .filter((x) => x.enabled)
+            .map((v) => (
               <button
-                key={i}
-                onClick={() => setView(v.view)}
+                key={v.view}
+                onClick={() => setView(v.view as TView)}
                 className={`${
-                  v.view === view &&
-                  "border border-foreground/25 text-foreground"
-                }  border border-transparent p-2 flex justify-center items-center gap-2 text-sm hover:bg-foreground/5 rounded text-foreground/80`}>
-                {v.icon}
+                  v.view === view
+                    ? "border-foreground/30"
+                    : "border-transparent"
+                } border p-2 flex items-center justify-center gap-2 text-sm hover:bg-foreground/5 rounded flex-1`}>
+                <v.icon className="w-4 h-4" />
                 {v.label}
               </button>
-            );
-          })}
+            ))}
         </div>
         <div className="flex justify-center flex-1 h-full">
           {view === "overview" && <FormOverview />}
