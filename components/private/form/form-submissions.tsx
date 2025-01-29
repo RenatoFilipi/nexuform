@@ -16,6 +16,7 @@ import useFormStore from "@/stores/form";
 import { minWidth640 } from "@/utils/constants";
 import { formatDateRelativeToNow, formatTime } from "@/utils/functions";
 import { TsubmissionStatus } from "@/utils/types";
+import { SendIcon } from "lucide-react";
 import { useMedia } from "react-use";
 import SubmissionDetails from "./submission-details";
 
@@ -26,10 +27,15 @@ const FormSubmissions = () => {
   if (submissions.length <= 0)
     return (
       <div className="flex justify-center items-center w-full flex-1">
-        <div className="flex justify-center items-center h-full flex-1">
-          <span className="text-foreground/80 uppercase text-xs">
-            No submission to show
-          </span>
+        <div className="flex justify-center items-center h-full flex-1 border rounded">
+          <div className="flex flex-col justify-center items-center gap-3">
+            <div className="flex justify-center items-center p-2 rounded bg-primary/10">
+              <SendIcon className="w-5 h-5 text-primary" />
+            </div>
+            <span className="text-foreground/80 uppercase text-xs">
+              No submission to show
+            </span>
+          </div>
         </div>
       </div>
     );

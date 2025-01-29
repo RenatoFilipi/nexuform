@@ -8,12 +8,12 @@ import { formatDateRelativeToNow } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import {
-  BookDownIcon,
   BookIcon,
   ExternalLinkIcon,
   ForwardIcon,
   Laptop2Icon,
   LoaderIcon,
+  SendIcon,
   Settings2Icon,
   UnplugIcon,
 } from "lucide-react";
@@ -36,7 +36,7 @@ const views = [
   },
   {
     label: "Submissions",
-    icon: BookDownIcon,
+    icon: SendIcon,
     view: "submissions",
     enabled: true,
   },
