@@ -114,7 +114,7 @@ const FormSettings = () => {
                 control={formHandler.control}
                 name="name"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col border p-4 rounded">
+                  <FormItem className="flex flex-col">
                     <div className="grid gap-2">
                       <FormLabel className="font-semibold">Name</FormLabel>
                       <p className="text-sm text-muted-foreground">
@@ -138,7 +138,7 @@ const FormSettings = () => {
                 control={formHandler.control}
                 name="description"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col border p-4 rounded">
+                  <FormItem className="flex flex-col">
                     <div className="grid gap-2">
                       <FormLabel className="font-semibold">
                         Description
@@ -158,14 +158,11 @@ const FormSettings = () => {
                   </FormItem>
                 )}
               />
-            </div>
-            {/* Right Section: Status */}
-            <div className="flex flex-col gap-6">
               <FormField
                 control={formHandler.control}
                 name="submitText"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col border p-4 rounded">
+                  <FormItem className="flex flex-col">
                     <div className="grid gap-2">
                       <FormLabel className="font-semibold">
                         Submit Text
@@ -186,7 +183,10 @@ const FormSettings = () => {
                   </FormItem>
                 )}
               />
-              <div className="flex flex-col gap-4 border p-4">
+            </div>
+            {/* Right Section: Status */}
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-4">
                 <div className="grid gap-2">
                   <FormLabel className="font-semibold">Status</FormLabel>
                   <p className="text-sm text-muted-foreground">
