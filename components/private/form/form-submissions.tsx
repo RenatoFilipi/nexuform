@@ -1,5 +1,6 @@
 "use client";
 
+import SubmissionStatusBadge from "@/components/shared/submission-status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -21,17 +22,6 @@ import SubmissionDetails from "./submission-details";
 const FormSubmissions = () => {
   const { submissions, blocks } = useFormStore();
   const isDesktop = useMedia(minWidth640);
-
-  const BadgeVariation = (value: TsubmissionStatus) => {
-    switch (value) {
-      case "not_reviewed":
-        return <Badge variant={"warning"}>Not Reviewed</Badge>;
-      case "reviewed":
-        return <Badge variant={"success"}>Reviewed</Badge>;
-      case "ignored":
-        return <Badge variant={"gray"}>Ignored</Badge>;
-    }
-  };
 
   if (submissions.length <= 0)
     return (
@@ -62,7 +52,9 @@ const FormSubmissions = () => {
                     <Badge variant={"gray"}>
                       ({formatTime(submission.completion_time ?? 0, 2)})
                     </Badge>
-                    {BadgeVariation(submission.status as TsubmissionStatus)}
+                    <SubmissionStatusBadge
+                      status={submission.status as TsubmissionStatus}
+                    />
                   </div>
                 </div>
                 <div className="flex justify-start items-center text-xs gap-2">
@@ -112,7 +104,9 @@ const FormSubmissions = () => {
                   ({formatTime(submission.completion_time ?? 0, 2)})
                 </TableCell>
                 <TableCell className="py-2 pr-4">
-                  {BadgeVariation(submission.status as TsubmissionStatus)}
+                  <SubmissionStatusBadge
+                    status={submission.status as TsubmissionStatus}
+                  />
                 </TableCell>
                 <TableCell className="text-right py-2 pr-4">
                   <SubmissionDetails blocks={blocks} submission={submission}>

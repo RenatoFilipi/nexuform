@@ -1,3 +1,4 @@
+import SubmissionStatusBadge from "@/components/shared/submission-status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -112,16 +113,6 @@ const Body = ({
     gcTime: 10 * minute,
     refetchOnWindowFocus: false,
   });
-  const BadgeVariation = (value: TsubmissionStatus) => {
-    switch (value) {
-      case "not_reviewed":
-        return <Badge variant={"warning"}>Not Reviewed</Badge>;
-      case "reviewed":
-        return <Badge variant={"success"}>Reviewed</Badge>;
-      case "ignored":
-        return <Badge variant={"gray"}>Ignored</Badge>;
-    }
-  };
 
   return (
     <div className="h-full overflow-y-auto flex flex-col gap-4">
@@ -129,15 +120,17 @@ const Body = ({
         <div className="flex flex-col gap-2">
           <span className="text-sm">{submission.identifier}</span>
           <div className="flex justify-start items-center gap-3">
-            {BadgeVariation(submission.status as TsubmissionStatus)}
+            <SubmissionStatusBadge
+              status={submission.status as TsubmissionStatus}
+            />
+            <Badge variant={"info"}>
+              {formatTime(submission.completion_time ?? 0, 2)}
+            </Badge>
             <Badge variant={"info"}>
               {new Date(submission.created_at).toLocaleString()}
             </Badge>
             <Badge variant={"info"}>
               {formatDateRelativeToNow(submission.created_at)}
-            </Badge>
-            <Badge variant={"info"}>
-              {formatTime(submission.completion_time ?? 0, 2)}
             </Badge>
           </div>
         </div>
