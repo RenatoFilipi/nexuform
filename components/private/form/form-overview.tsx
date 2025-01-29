@@ -21,7 +21,7 @@ const FormOverview = () => {
         </Card>
         <Card className="px-4 py-3 flex flex-col flex-1 sm:h-24 justify-between gap-2">
           <div className="flex items-center gap-2">
-            <CheckCircleIcon className="w-5 h-5 text-purple-500" />
+            <CheckCircleIcon className="w-5 h-5 text-yellow-500" />
             <span className="text-sm">Completion Rate</span>
           </div>
           <span className="text-sm">--</span>

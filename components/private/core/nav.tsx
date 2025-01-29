@@ -40,21 +40,21 @@ const links = [
     id: 1,
     name: "Dashboard",
     path: "/dashboard/forms",
-    icon: <Layers2Icon className="w-4 h-4 mr-2" />,
+    icon: Layers2Icon,
     enabled: true,
   },
   {
     id: 2,
     name: "Analytics",
     path: "/dashboard/analytics",
-    icon: <ChartPieIcon className="w-4 h-4 mr-2" />,
+    icon: ChartPieIcon,
     enabled: true,
   },
   {
     id: 3,
     name: "Settings",
     path: "/dashboard/settings",
-    icon: <Settings2Icon className="w-4 h-4 mr-2" />,
+    icon: Settings2Icon,
     enabled: false,
   },
 ];
@@ -87,7 +87,7 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
                     isActive(link.path) &&
                     "bg-primary text-white hover:bg-primary"
                   } p-2 border hover:bg-foreground/5 text-sm flex justify-start items-center`}>
-                  {link.icon}
+                  <link.icon className="w-4 h-4 mr-2" />
                   {link.name}
                 </Link>
               );
@@ -272,7 +272,11 @@ const NavApp = () => {
                   {isActive(link.path) && (
                     <div className="bg-foreground/80 bottom-0 w-full h-1 absolute"></div>
                   )}
-                  {link.icon}
+                  <link.icon
+                    className={`${
+                      isActive(link.path) && "text-primary"
+                    } w-4 h-4 mr-2`}
+                  />
                   {link.name}
                 </Link>
               );
