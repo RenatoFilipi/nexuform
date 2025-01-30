@@ -71,9 +71,13 @@ const FormWrapper = ({
     setSubmissions,
     form: localForm,
     setFormAnalytics,
+    submissions: localSubmissions,
   } = useFormStore();
   const [view, setView] = useState<TView>("overview");
   const enabledViews = views.filter((x) => x.enabled);
+  const notReviewedSubmissions = localSubmissions.filter(
+    (x) => x.status === "not_reviewed"
+  ).length;
 
   useQuery({
     queryKey: ["formData"],
@@ -159,6 +163,11 @@ const FormWrapper = ({
                 } w-4 h-4`}
               />
               {v.label}
+              {v.view === "submissions" && notReviewedSubmissions > 0 && (
+                <span className="inline-flex items-center justify-center w-4 h-4 text-xs font-semibold text-primary bg-primary/20 rounded-full">
+                  {notReviewedSubmissions}
+                </span>
+              )}
             </button>
           ))}
         </div>
