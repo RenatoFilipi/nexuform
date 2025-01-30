@@ -2,18 +2,16 @@ import { Card } from "@/components/ui/card";
 import useFormStore from "@/stores/form";
 import { formatDecimal, formatTime } from "@/utils/functions";
 import { CheckCircleIcon, EyeIcon, SendIcon, TimerIcon } from "lucide-react";
+import { ViewsVsSubmissionsChart } from "./views-vs-submissions-chart";
 
 const FormOverview = () => {
-  const { formAnalytics, submissions } = useFormStore();
+  const { formAnalytics } = useFormStore();
   const {
     total_submissions,
     total_views,
     avg_completion_rate,
     avg_completion_time,
   } = formAnalytics;
-  const submissionsCompletionTimes = submissions.map(
-    (x) => x.completion_time ?? 0
-  );
 
   const totalViews = total_views === 0 ? "--" : total_views.toString();
 
@@ -62,8 +60,11 @@ const FormOverview = () => {
           <span className="text-sm">{averageCompletionTime}</span>
         </Card>
       </div>
-      <div className="flex justify-center items-center flex-1 border rounded">
-        Chart
+      <div className="flex justify-center items-center gap-6 h-full">
+        <ViewsVsSubmissionsChart />
+        <div className="flex border rounded w-full h-full justify-center items-center">
+          Submissions by date chart
+        </div>
       </div>
     </div>
   );
