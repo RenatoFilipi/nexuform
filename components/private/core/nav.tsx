@@ -48,7 +48,7 @@ const links = [
     name: "Analytics",
     path: "/dashboard/analytics",
     icon: ChartPieIcon,
-    enabled: true,
+    enabled: false,
   },
   {
     id: 3,
@@ -474,7 +474,7 @@ const NavEditor = () => {
           {appState === "loading" && (
             <LoaderIcon className="animate-spin w-4 h-4 mr-2" />
           )}
-          Save Form
+          Update Form
         </Button>
       </div>
     </div>

@@ -32,7 +32,13 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("form_id", slug)
     .order("created_at", { ascending: true });
 
-  if (formError || submissionsError || blocksError) {
+  const { data: formAnalytics, error: formAnalyticsError } = await supabase
+    .from("forms_analytics")
+    .select("*")
+    .eq("form_id", form.id)
+    .single();
+
+  if (formError || submissionsError || blocksError || formAnalyticsError) {
     return (
       <div className="flex flex-col justify-center items-center h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
         <div className="flex flex-col justify-center items-center gap-2">
@@ -42,7 +48,14 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     );
   }
 
-  return <FormWrapper form={form} blocks={blocks} submissions={submissions} />;
+  return (
+    <FormWrapper
+      form={form}
+      blocks={blocks}
+      submissions={submissions}
+      formAnalytics={formAnalytics}
+    />
+  );
 };
 
 export default Form;

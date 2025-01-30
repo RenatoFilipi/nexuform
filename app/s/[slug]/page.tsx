@@ -13,10 +13,29 @@ const S = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .single();
 
   if (form.error) {
-    console.log("aqui form");
     return <NoFormAvailable />;
   }
   if (form.data.status !== "published") return <NoFormAvailable />;
+
+  const formAnalytics = await supabase
+    .from("forms_analytics")
+    .select("id, total_views, total_submissions")
+    .eq("form_id", form.data.id)
+    .single();
+
+  if (!formAnalytics.error) {
+    const updatedTotalViews = formAnalytics.data.total_views + 1;
+    const updatedCompletionRate =
+      (formAnalytics.data.total_submissions / updatedTotalViews) * 100;
+
+    await supabase
+      .from("forms_analytics")
+      .update({
+        total_views: updatedTotalViews,
+        avg_completion_rate: updatedCompletionRate,
+      })
+      .eq("id", formAnalytics.data.id);
+  }
 
   const theme = await supabase
     .from("themes")

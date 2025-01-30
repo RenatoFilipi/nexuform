@@ -3,7 +3,7 @@
 import FormStatusBadge from "@/components/shared/form-status-badge";
 import { Button } from "@/components/ui/button";
 import useFormStore from "@/stores/form";
-import { EBlock, EForm, ESubmission } from "@/utils/entities";
+import { EBlock, EForm, EFormAnalytics, ESubmission } from "@/utils/entities";
 import { formatDateRelativeToNow } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
@@ -58,12 +58,20 @@ const FormWrapper = ({
   submissions,
   blocks,
   form,
+  formAnalytics,
 }: {
   submissions: ESubmission[];
   blocks: EBlock[];
   form: EForm;
+  formAnalytics: EFormAnalytics;
 }) => {
-  const { setForm, setBlocks, setSubmissions, form: f } = useFormStore();
+  const {
+    setForm,
+    setBlocks,
+    setSubmissions,
+    form: localForm,
+    setFormAnalytics,
+  } = useFormStore();
   const [view, setView] = useState<TView>("overview");
   const enabledViews = views.filter((x) => x.enabled);
 
@@ -73,6 +81,7 @@ const FormWrapper = ({
       setForm(form);
       setBlocks(blocks);
       setSubmissions(submissions);
+      setFormAnalytics(formAnalytics);
       return null;
     },
     refetchOnWindowFocus: false,
@@ -85,20 +94,25 @@ const FormWrapper = ({
           <div className="flex justify-between sm:justify-start items-center gap-3 w-full sm:w-fit">
             <div className="flex items-center gap-2">
               <BookIcon className="w-4 h-4" />
-              <h1 className="font-medium truncate max-w-[240px]">{f.name}</h1>
+              <h1 className="font-medium truncate max-w-[240px]">
+                {localForm.name}
+              </h1>
             </div>
-            <FormStatusBadge status={f.status as TFormStatus} uppercase />
+            <FormStatusBadge
+              status={localForm.status as TFormStatus}
+              uppercase
+            />
           </div>
           <div className="flex items-center sm:gap-4 gap-2 w-full sm:w-fit">
-            <FormShare form={f}>
+            <FormShare form={localForm}>
               <Button variant="outline" size="sm" className="w-full">
                 <ForwardIcon className="w-4 h-4 mr-2" />
                 Share
               </Button>
             </FormShare>
-            {f.status === "published" && (
+            {localForm.status === "published" && (
               <a
-                href={`/s/${f.public_url}`}
+                href={`/s/${localForm.public_url}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-fit">
@@ -110,7 +124,7 @@ const FormWrapper = ({
             )}
             <Button variant="default" size="sm" asChild>
               <Link
-                href={`/dashboard/editor/${f.id}`}
+                href={`/dashboard/editor/${localForm.id}`}
                 className="w-full sm:w-fit">
                 <Settings2Icon className="w-4 h-4 mr-2" />
                 Editor
@@ -118,10 +132,10 @@ const FormWrapper = ({
             </Button>
           </div>
         </div>
-        {f.updated_at !== "".trim() ? (
+        {localForm.updated_at !== "".trim() ? (
           <div className="hidden sm:flex">
             <span className="text-sm text-muted-foreground">
-              Form last updated {formatDateRelativeToNow(f.updated_at)}
+              Form last updated {formatDateRelativeToNow(localForm.updated_at)}
             </span>
           </div>
         ) : (

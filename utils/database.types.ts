@@ -206,32 +206,35 @@ export type Database = {
       }
       forms_analytics: {
         Row: {
+          avg_completion_rate: number | null
           avg_completion_time: number | null
           created_at: string
           form_id: string
           id: string
           profile_id: string
-          total_responses: number
+          total_submissions: number
           total_views: number
           updated_at: string
         }
         Insert: {
+          avg_completion_rate?: number | null
           avg_completion_time?: number | null
           created_at?: string
           form_id: string
           id?: string
           profile_id: string
-          total_responses?: number
+          total_submissions?: number
           total_views?: number
           updated_at?: string
         }
         Update: {
+          avg_completion_rate?: number | null
           avg_completion_time?: number | null
           created_at?: string
           form_id?: string
           id?: string
           profile_id?: string
-          total_responses?: number
+          total_submissions?: number
           total_views?: number
           updated_at?: string
         }

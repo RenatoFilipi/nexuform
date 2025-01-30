@@ -207,6 +207,8 @@ const SubmissionGroup = () => {
       .insert(updatedSubmission);
 
     if (submissionError) {
+      console.log("erro na submissao");
+      console.log(submissionError);
       toast.error("Error on submission, please try again.");
       return;
     }
@@ -216,6 +218,8 @@ const SubmissionGroup = () => {
       .insert(answers);
 
     if (answersError) {
+      console.log("erro nas respostas");
+      console.log(answersError);
       await supabase
         .from("submissions")
         .delete()

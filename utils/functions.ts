@@ -1,7 +1,7 @@
 import { formatDistance } from "date-fns";
 import { customAlphabet } from "nanoid";
 import { redirect } from "next/navigation";
-import { TBlock, TFormStatus } from "./types";
+import { TBlock } from "./types";
 
 export const uuid = () => {
   const uuid = self.crypto.randomUUID();
@@ -79,4 +79,13 @@ export const formatTime = (time: number, decimalPlaces: number = 3) => {
 
   return `${totalSeconds}.${formattedMilliseconds}s`;
 };
-export const FormStatusBadgeVariation = (status: TFormStatus) => {};
+export const formatDecimal = (num: number, decimals: number = 1): string => {
+  if (num % 1 === 0 || decimals === 0) {
+    return num.toString();
+  }
+  return num.toFixed(decimals);
+};
+export const calculateAverageCompletionTime = (times: number[]): number => {
+  const total = times.reduce((sum, time) => sum + time, 0);
+  return total / times.length;
+};
