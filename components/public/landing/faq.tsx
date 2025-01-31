@@ -30,7 +30,7 @@ const Faq = () => {
   ];
 
   return (
-    <div id="faq" className="px-4 pb-12 w-full max-w-2xl">
+    <div id="faq" className="px-4 my-10 w-full max-w-2xl">
       <h2 className="text-3xl font-bold text-center sm:text-4xl">
         {t("faq.title")}
       </h2>
@@ -38,11 +38,11 @@ const Faq = () => {
         {faqData.map((faq, index) => (
           <div
             key={index}
-            className="border rounded-lg p-4 shadow-md transition-shadow hover:shadow-lg">
+            className="border rounded-lg p-3 shadow-md transition-shadow hover:shadow-lg">
             <button
               className="flex items-center justify-between w-full text-left text-lg font-semibold"
               onClick={() => toggleFaq(index)}>
-              <span>{faq.question}</span>
+              <span className="text-base">{faq.question}</span>
               <svg
                 className={`w-5 h-5 transition-transform ${
                   activeIndex === index ? "rotate-180" : ""
@@ -60,7 +60,7 @@ const Faq = () => {
               </svg>
             </button>
             {activeIndex === index && (
-              <p className="mt-3 text-foreground/60">{faq.answer}</p>
+              <p className="mt-3 text-foreground/60 text-base">{faq.answer}</p>
             )}
           </div>
         ))}

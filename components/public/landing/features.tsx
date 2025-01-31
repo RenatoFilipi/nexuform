@@ -1,5 +1,6 @@
 "use client";
 
+import { BarChart3Icon, FileTextIcon, LayoutDashboardIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 const Features = () => {
@@ -10,63 +11,42 @@ const Features = () => {
       title: t("features.editor_title"),
       description: t("features.editor_description"),
       icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="60"
-          height="60"
-          fill="#ECD294"
-          viewBox="0 0 24 24">
-          <rect x="3" y="6" width="18" height="2" rx="1" />
-          <rect x="3" y="11" width="14" height="2" rx="1" />
-          <rect x="3" y="16" width="10" height="2" rx="1" />
-        </svg>
+        <div className="flex justify-center items-center p-3 bg-green-100 rounded dark:bg-green-950">
+          <LayoutDashboardIcon size={40} className="text-green-600" />
+        </div>
       ),
-      iconColor: "#ECD294",
     },
     {
       title: t("features.analytics_title"),
       description: t("features.analytics_description"),
       icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="60"
-          height="60"
-          fill="#7ACD98"
-          viewBox="0 0 24 24">
-          <path d="M4 12h4v8H4zM10 6h4v14h-4zM16 9h4v11h-4z" />
-        </svg>
+        <div className="flex justify-center items-center p-3 bg-blue-100 rounded dark:bg-blue-950">
+          <BarChart3Icon size={40} className="text-blue-600" />
+        </div>
       ),
-      iconColor: "#7ACD98",
     },
     {
       title: t("features.export_title"),
       description: t("features.export_description"),
       icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="60"
-          height="60"
-          fill="#FB7185"
-          viewBox="0 0 24 24">
-          <path d="M12 3v12m0 0l-4-4m4 4l4-4" />
-          <rect x="4" y="18" width="16" height="2" rx="1" />
-        </svg>
+        <div className="flex justify-center items-center p-3 bg-orange-100 rounded dark:bg-orange-950">
+          <FileTextIcon size={40} className="text-orange-600" />
+        </div>
       ),
-      iconColor: "#FB7185",
     },
   ];
 
   return (
-    <section id="features" className="py-12 sm:py-16 lg:py-40">
+    <section id="features" className="py-12 sm:py-16 lg:py-20">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="text-center">
-          <div className="inline-block px-4 py-1 mb-6 text-xs font-medium text-background uppercase bg-foreground/80 rounded-full">
+          <div className="inline-block px-4 py-1 mb-6 text-xs font-semibold uppercase rounded-full border bg-primary/10 border-primary/40 text-primary">
             Features
           </div>
           <h2 className="text-3xl font-bold leading-tight sm:text-4xl xl:text-5xl">
             {t("features.headline")}
           </h2>
-          <p className="mt-4 text-base leading-7 sm:mt-8 text-foreground/60">
+          <p className="mt-4 text-base leading-7 sm:mt-8 text-foreground/70">
             {t("features.sub_headline")}
           </p>
         </div>
@@ -74,14 +54,12 @@ const Features = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="flex flex-col items-center p-8 transition-shadow bg-background border rounded-lg shadow-sm hover:shadow-md hover:border-foreground/70">
-              <div className="" style={{ color: feature.iconColor }}>
-                {feature.icon}
-              </div>
+              className="flex flex-col items-center p-8 transition-shadow bg-background border rounded-lg shadow-sm hover:shadow-md hover:border-primary">
+              <div className="">{feature.icon}</div>
               <h3 className="mt-8 text-xl font-bold text-center">
                 {feature.title}
               </h3>
-              <p className="mt-4 text-base text-foreground/60 text-center">
+              <p className="mt-4 text-base text-foreground/70 text-center">
                 {feature.description}
               </p>
             </div>
