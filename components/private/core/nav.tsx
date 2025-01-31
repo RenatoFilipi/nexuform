@@ -474,7 +474,7 @@ const NavEditor = () => {
           {appState === "loading" && (
             <LoaderIcon className="animate-spin w-4 h-4 mr-2" />
           )}
-          Update Form
+          Save Form
         </Button>
       </div>
     </div>

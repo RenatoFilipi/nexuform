@@ -11,7 +11,6 @@ import {
   BookIcon,
   ExternalLinkIcon,
   ForwardIcon,
-  Laptop2Icon,
   LoaderIcon,
   SendIcon,
   Settings2Icon,
@@ -21,7 +20,6 @@ import Link from "next/link";
 import { useState } from "react";
 import FormShare from "../forms/form-share";
 import FormIntegrations from "./form-integrations";
-import FormOverview from "./form-overview";
 import FormSettings from "./form-settings";
 import FormSubmissions from "./form-submissions";
 
@@ -29,21 +27,9 @@ type TView = "overview" | "submissions" | "integrations" | "settings";
 
 const views = [
   {
-    label: "Overview",
-    icon: Laptop2Icon,
-    view: "overview",
-    enabled: true,
-  },
-  {
     label: "Submissions",
     icon: SendIcon,
     view: "submissions",
-    enabled: true,
-  },
-  {
-    label: "Settings",
-    icon: Settings2Icon,
-    view: "settings",
     enabled: true,
   },
   {
@@ -51,6 +37,12 @@ const views = [
     icon: UnplugIcon,
     view: "integrations",
     enabled: false,
+  },
+  {
+    label: "Settings",
+    icon: Settings2Icon,
+    view: "settings",
+    enabled: true,
   },
 ];
 
@@ -73,7 +65,7 @@ const FormWrapper = ({
     setFormAnalytics,
     submissions: localSubmissions,
   } = useFormStore();
-  const [view, setView] = useState<TView>("overview");
+  const [view, setView] = useState<TView>("submissions");
   const enabledViews = views.filter((x) => x.enabled);
   const notReviewedSubmissions = localSubmissions.filter(
     (x) => x.status === "not_reviewed"
@@ -171,8 +163,7 @@ const FormWrapper = ({
             </button>
           ))}
         </div>
-        <div className="flex justify-center flex-1 h-full">
-          {view === "overview" && <FormOverview />}
+        <div className="flex justify-center flex-1 h-full items-start">
           {view === "submissions" && <FormSubmissions />}
           {view === "integrations" && <FormIntegrations />}
           {view === "settings" && <FormSettings />}
