@@ -354,6 +354,9 @@ const NavEditor = () => {
         .update({
           primary_color: theme.primary_color,
           numeric_blocks: theme.numeric_blocks,
+          nebulaform_branding: theme.nebulaform_branding,
+          uppercase_block_name: theme.uppercase_block_name,
+          width: theme.width,
         })
         .eq("id", theme.id);
 

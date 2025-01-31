@@ -28,10 +28,6 @@ import {
   CardTitle,
 } from "../ui/card";
 
-interface ILocalDesign extends IDesign {
-  success_tw_class: string;
-}
-
 const design: IDesign[] = [
   {
     label: "slate",
@@ -124,15 +120,8 @@ const design: IDesign[] = [
 ];
 
 const SubmissionGroup = () => {
-  const {
-    form,
-    theme,
-    blocks,
-    submission,
-    answers,
-    setAnswers,
-    setSubmission,
-  } = useSubmissionStore();
+  const { form, theme, blocks, submission, answers, setAnswers } =
+    useSubmissionStore();
   const supabase = createClient();
   const [appState, setAppState] = useState<TAppState>("idle");
   const currentColor =
@@ -272,17 +261,18 @@ const SubmissionGroup = () => {
             href="/"
             className="text-sm text-gray-500 hover:underline flex items-center gap-2">
             <Brand type="logo" className="w-4 h-4 fill-current" />
-            <span className="text-sm font-medium">Powered by Nebulaform</span>
+            <span className="text-xs font-medium">Powered by Nebulaform</span>
           </Link>
         </div>
       </div>
     );
 
   return (
-    <div className="flex flex-col gap-6 w-full border rounded m-4 sm:m-8 p-6 sm:w-[650px] bg-background relative">
+    <div
+      className={`${
+        theme.width === "centered" ? "sm:w-[650px]" : "w-full"
+      }  flex flex-col gap-6 w-full border rounded m-4 sm:m-8 p-6 bg-background relative`}>
       <span className="hidden">{formatTime(time)}</span>
-      <div
-        className={`h-1 absolute top-0 w-full left-0 ${currentColor.tw_class}`}></div>
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-bold">{form.name}</h1>
         <p className="text-sm text-foreground/80">{form.description}</p>
@@ -386,14 +376,16 @@ const SubmissionGroup = () => {
             {form.submit_text}
           </Button>
         </div>
-        <div className="flex justify-center items-center w-full">
-          <span className="border rounded p-2 w-fit flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
-            <Brand type="logo" className="fill-foreground w-4 h-4" />
-            <span className="text-foreground/80 text-sm font-semibold">
-              Powered by Nebulaform
+        {theme.nebulaform_branding && (
+          <div className="flex justify-center items-center w-full">
+            <span className="border rounded p-2 w-fit flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
+              <Brand type="logo" className="fill-foreground w-4 h-4" />
+              <span className="text-foreground/80 text-xs font-semibold">
+                Powered by Nebulaform
+              </span>
             </span>
-          </span>
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

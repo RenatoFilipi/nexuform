@@ -43,3 +43,4 @@ export type TPlan = {
   highlighted: boolean;
   type: "free_trial" | "basic" | "pro";
 };
+export type TWidth = "centered" | "full";

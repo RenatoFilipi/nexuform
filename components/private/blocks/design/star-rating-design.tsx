@@ -21,7 +21,10 @@ const StarRatingDesign = ({
               {position}
             </span>
           )}
-          <h1 className="text-base font-medium">
+          <h1
+            className={`${
+              theme.uppercase_block_name && "uppercase"
+            } text-base font-medium`}>
             {name} {required && <span className="text-red-500">*</span>}
           </h1>
         </div>

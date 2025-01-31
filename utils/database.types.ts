@@ -366,25 +366,34 @@ export type Database = {
           created_at: string
           form_id: string
           id: string
+          nebulaform_branding: boolean
           numeric_blocks: boolean
           primary_color: string
           updated_at: string
+          uppercase_block_name: boolean
+          width: string
         }
         Insert: {
           created_at?: string
           form_id: string
           id?: string
+          nebulaform_branding?: boolean
           numeric_blocks?: boolean
           primary_color?: string
           updated_at?: string
+          uppercase_block_name?: boolean
+          width?: string
         }
         Update: {
           created_at?: string
           form_id?: string
           id?: string
+          nebulaform_branding?: boolean
           numeric_blocks?: boolean
           primary_color?: string
           updated_at?: string
+          uppercase_block_name?: boolean
+          width?: string
         }
         Relationships: [
           {

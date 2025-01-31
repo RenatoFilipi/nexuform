@@ -116,7 +116,12 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       <div className="flex flex-1 overflow-y-auto gap-6 px-1 flex-col sm:pr-2">
         <div className="flex flex-col gap-4 flex-1">
           <div className="grid gap-3">
-            <Label>Name</Label>
+            <div className="grid gap-2">
+              <Label>Name</Label>
+              <p className="text-sm text-muted-foreground">
+                Provide a unique name for your form to identify it easily.
+              </p>
+            </div>
             <Input
               type="text"
               value={form.name}
@@ -124,24 +129,41 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
             />
           </div>
           <div className="grid gap-3">
-            <Label>Description (Optional)</Label>
+            <div className="grid gap-3">
+              <Label>Description (Optional)</Label>
+              <p className="text-sm text-muted-foreground">
+                Add a brief description to inform users about the purpose of
+                this form.
+              </p>
+            </div>
             <Textarea
               value={form.description ?? ""}
               onChange={(e) => onSetDescription(e.target.value)}
             />
           </div>
           <div className="grid gap-3">
-            <Label>Submit text</Label>
+            <div className="grid gap-3">
+              <Label>Submit text</Label>
+              <p className="text-sm text-muted-foreground">
+                Customize the text displayed on the form&apos;s submit button.
+              </p>
+            </div>
             <Input
               type="text"
               value={form.submit_text}
               onChange={(e) => onSetSubmitText(e.target.value)}
             />
           </div>
-          <div className="grid gap-4">
-            <Label className="text-sm font-medium text-foreground">
-              Status
-            </Label>
+          <div className="grid gap-3">
+            <div className="grid gap-3">
+              <Label className="text-sm font-medium text-foreground">
+                Status
+              </Label>
+              <p className="text-sm text-muted-foreground">
+                Choose the current status of the form. This determines its
+                availability and visibility.
+              </p>
+            </div>
             <div className="flex flex-col gap-4">
               <div className="grid gap-4 overflow-y-auto grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                 {statusList.map((statusItem, index) => (
@@ -153,7 +175,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
                         ? "bg-primary/5 border-primary text-primary"
                         : "border-muted text-foreground/80"
                     }`}>
-                    <div className="flex items-center justify-center p-2 rounded-full bg-muted/20 text-primary">
+                    <div className="flex items-center justify-center">
                       {statusItem.icon}
                     </div>
                     <span className="text-sm font-medium">
@@ -163,15 +185,34 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
                 ))}
               </div>
               <Alert variant="info" className="mt-2">
-                <AlertDescription className="text-sm text-foreground/70 text-center">
+                <AlertDescription className="text-sm text-center">
                   {description}
                 </AlertDescription>
               </Alert>
             </div>
           </div>
+          <div className="grid gap-3 p-4 border rounded border-destructive mt-6">
+            <div className="grid gap-3">
+              <Label className="">Delete Form</Label>
+              <p className="text-sm text-foreground/80">
+                Permanently delete this form and all its associated data from
+                our servers. This action cannot be undone.
+              </p>
+            </div>
+            <div className="flex justify-end items-center">
+              <FormDelete formId={form.id} formName={form.name}>
+                <Button
+                  variant={"destructive_outline"}
+                  size={"sm"}
+                  className="w-full sm:w-fit">
+                  Delete Form
+                </Button>
+              </FormDelete>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="flex justify-between items-center gap-2 flex-col sm:flex-row">
+      <div className="flex justify-end items-center gap-2 flex-col sm:flex-row">
         <Button
           onClick={() => setState(false)}
           variant={"outline"}
@@ -179,14 +220,6 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
           className="w-full sm:w-fit">
           Close
         </Button>
-        <FormDelete formId={form.id} formName={form.name}>
-          <Button
-            variant={"destructive_outline"}
-            size={"sm"}
-            className="w-full sm:w-fit">
-            Delete Form
-          </Button>
-        </FormDelete>
       </div>
     </div>
   );

@@ -18,9 +18,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import FormShare from "../forms/form-share";
 import FormIntegrations from "./form-integrations";
 import FormSettings from "./form-settings";
+import FormShare from "./form-share";
 import FormSubmissions from "./form-submissions";
 
 type TView = "overview" | "submissions" | "integrations" | "settings";

@@ -3,6 +3,14 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import {
   Sheet,
   SheetContent,
   SheetDescription,
@@ -148,7 +156,7 @@ const FormDesign = ({ children }: { children: React.ReactNode }) => {
     return (
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>{children}</SheetTrigger>
-        <SheetContent className="flex flex-col min-w-[450px]">
+        <SheetContent className="flex flex-col min-w-[550px]">
           <SheetHeader>
             <SheetTitle>Design</SheetTitle>
             <SheetDescription>
@@ -186,15 +194,27 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const onSetNumericBlocks = (value: boolean) => {
     setTheme({ ...theme, numeric_blocks: value });
   };
+  const onSetNebulaformBranding = (value: boolean) => {
+    setTheme({ ...theme, nebulaform_branding: value });
+  };
+  const onSetUppercaseBlockName = (value: boolean) => {
+    setTheme({ ...theme, uppercase_block_name: value });
+  };
+  const onSetWidth = (value: string) => {
+    console.log(value);
+    setTheme({ ...theme, width: value });
+  };
 
   return (
     <div className="flex flex-col gap-6 h-full overflow-y-auto w-full">
       <div className="flex-1 overflow-y-auto flex flex-col gap-4 w-full">
         <div className="grid gap-3 overflow-y-auto">
           <div className="flex justify-start items-center gap-2">
-            <Label>Primary color</Label>
+            <div className="grid gap-3">
+              <Label>Primary color</Label>
+            </div>
           </div>
-          <div className="grid grid-cols-8 gap-3">
+          <div className="grid grid-cols-10 gap-3">
             {colors.map((color, index) => {
               return (
                 <button
@@ -209,12 +229,47 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
             })}
           </div>
         </div>
+        <Separator />
         <div className="flex justify-between items-center w-full">
-          <Label>Show numeric blocks</Label>
+          <div className="grid gap-3">
+            <Label>Show numeric blocks</Label>
+          </div>
           <Switch
             checked={theme.numeric_blocks}
             onCheckedChange={onSetNumericBlocks}
           />
+        </div>
+        <div className="flex justify-between items-center w-full">
+          <div className="flex justify-center items-center gap-2">
+            <Label>Nebulaform branding</Label>
+          </div>
+          <Switch
+            checked={theme.nebulaform_branding}
+            onCheckedChange={onSetNebulaformBranding}
+          />
+        </div>
+        <div className="flex justify-between items-center w-full">
+          <div className="flex justify-center items-center gap-2">
+            <Label>Uppercase Block Name</Label>
+          </div>
+          <Switch
+            checked={theme.uppercase_block_name}
+            onCheckedChange={onSetUppercaseBlockName}
+          />
+        </div>
+        <div className="flex justify-between items-center w-full">
+          <div className="flex justify-center items-center gap-2">
+            <Label>Form Width</Label>
+          </div>
+          <Select onValueChange={onSetWidth} defaultValue={theme.width}>
+            <SelectTrigger className="w-[160px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="centered">Centered</SelectItem>
+              <SelectItem value="full">Full Width</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
       <div className="flex justify-end items-center w-full">

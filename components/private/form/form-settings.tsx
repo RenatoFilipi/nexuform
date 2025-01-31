@@ -122,7 +122,6 @@ const FormSettings = () => {
                         easily.
                       </p>
                     </div>
-
                     <FormControl>
                       <Input
                         type="text"

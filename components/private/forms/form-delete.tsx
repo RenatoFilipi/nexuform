@@ -48,8 +48,8 @@ const FormDelete = ({
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action permanently removes the selected form, including all
-              associated responses and settings.
+              This action will permanently delete the selected form, along with
+              all associated submissions and settings.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <Body formId={formId} formName={formName} setState={setOpen} />
@@ -65,8 +65,8 @@ const FormDelete = ({
         <DrawerHeader>
           <DrawerTitle>Are you absolutely sure?</DrawerTitle>
           <DrawerDescription>
-            This action permanently removes the selected form, including all
-            associated responses and settings. This action cannot be undone.
+            This action will permanently delete the selected form, along with
+            all associated submissions and settings.
           </DrawerDescription>
         </DrawerHeader>
         <Body formId={formId} formName={formName} setState={setOpen} />

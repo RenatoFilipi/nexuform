@@ -4,11 +4,12 @@ import QueryProvider from "@/lib/query-provider";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
-import { Figtree } from "next/font/google";
+import { Inter } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
 
-const figtree = Figtree({ subsets: ["latin"] });
+//const figtree = Figtree({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Nebulaform",
@@ -28,7 +29,7 @@ export default async function RootLayout({
       {/* <head>
         <script src="https://unpkg.com/react-scan/dist/auto.global.js" async />
       </head> */}
-      <body className={figtree.className}>
+      <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
           <QueryProvider>
             <NuqsAdapter>
