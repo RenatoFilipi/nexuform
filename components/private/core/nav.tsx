@@ -9,7 +9,7 @@ import { TAppState } from "@/utils/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ChartPieIcon,
-  Layers2Icon,
+  InboxIcon,
   LoaderIcon,
   LogOutIcon,
   Menu,
@@ -40,7 +40,7 @@ const links = [
     id: 1,
     name: "Dashboard",
     path: "/dashboard/forms",
-    icon: Layers2Icon,
+    icon: InboxIcon,
     enabled: true,
   },
   {
