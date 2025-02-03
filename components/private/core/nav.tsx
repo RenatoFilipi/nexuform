@@ -48,14 +48,14 @@ const links = [
     name: "Analytics",
     path: "/dashboard/analytics",
     icon: ChartPieIcon,
-    enabled: false,
+    enabled: true,
   },
   {
     id: 3,
     name: "Settings",
     path: "/dashboard/settings",
     icon: Settings2Icon,
-    enabled: false,
+    enabled: true,
   },
 ];
 const Nav = () => {

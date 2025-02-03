@@ -36,7 +36,7 @@ const views = [
     label: "Integrations",
     icon: UnplugIcon,
     view: "integrations",
-    enabled: false,
+    enabled: true,
   },
   {
     label: "Settings",
