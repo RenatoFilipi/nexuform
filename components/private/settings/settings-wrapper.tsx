@@ -1,5 +1,8 @@
 "use client";
 
+import useSettingsStore from "@/stores/settings";
+import { EProfile } from "@/utils/entities";
+import { useQuery } from "@tanstack/react-query";
 import { CreditCardIcon, Layers2Icon } from "lucide-react";
 import { useState } from "react";
 import SettingsBilling from "./settings-billing";
@@ -12,9 +15,19 @@ const views = [
   { label: "Billing", icon: CreditCardIcon, view: "billing", enabled: true },
 ];
 
-const SettingsWrapper = () => {
+const SettingsWrapper = ({ profile }: { profile: EProfile }) => {
   const [view, setView] = useState<TView>("general");
   const enabledViews = views.filter((x) => x.enabled);
+  const { setProfile } = useSettingsStore();
+
+  useQuery({
+    queryKey: ["settingsData"],
+    queryFn: () => {
+      setProfile(profile);
+      return null;
+    },
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <div className="flex w-full h-full flex-1 relative">

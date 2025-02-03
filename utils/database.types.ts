@@ -261,6 +261,7 @@ export type Database = {
           id: string
           name: string
           owner_id: string
+          personal: boolean | null
           updated_at: string
         }
         Insert: {
@@ -268,6 +269,7 @@ export type Database = {
           id?: string
           name?: string
           owner_id?: string
+          personal?: boolean | null
           updated_at?: string
         }
         Update: {
@@ -275,6 +277,7 @@ export type Database = {
           id?: string
           name?: string
           owner_id?: string
+          personal?: boolean | null
           updated_at?: string
         }
         Relationships: [
@@ -290,24 +293,27 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
-          full_name: string | null
+          first_name: string | null
           id: string
+          last_name: string | null
           updated_at: string | null
           username: string | null
           website: string | null
         }
         Insert: {
           avatar_url?: string | null
-          full_name?: string | null
+          first_name?: string | null
           id: string
+          last_name?: string | null
           updated_at?: string | null
           username?: string | null
           website?: string | null
         }
         Update: {
           avatar_url?: string | null
-          full_name?: string | null
+          first_name?: string | null
           id?: string
+          last_name?: string | null
           updated_at?: string | null
           username?: string | null
           website?: string | null
