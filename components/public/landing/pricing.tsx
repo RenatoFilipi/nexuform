@@ -32,7 +32,7 @@ const Pricing = () => {
     },
     {
       name: t("pricing.plans.basic.name"),
-      price: 12,
+      price: 5,
       features: [
         t("pricing.plans.basic.features.0"),
         t("pricing.plans.basic.features.1"),
@@ -45,7 +45,7 @@ const Pricing = () => {
     },
     {
       name: t("pricing.plans.pro.name"),
-      price: 29,
+      price: 15,
       features: [
         t("pricing.plans.pro.features.0"),
         t("pricing.plans.pro.features.1"),
