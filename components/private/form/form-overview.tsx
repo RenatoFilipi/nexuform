@@ -1,13 +1,14 @@
 "use client";
 
-import { ConstructionIcon } from "lucide-react";
+import CompletionRateChart from "./completion-rate-chart";
+import SubmissionsActivityChart from "./submissions-activity-chart";
 
 const FormOverview = () => {
   return (
-    <div className="flex justify-center items-center w-full flex-1 py-28">
-      <div className="flex flex-col justify-center items-center gap-3">
-        <ConstructionIcon />
-        <span className="text-sm text-foreground/80">Under Development</span>
+    <div className="rounded w-full h-full flex-1">
+      <div className="grid sm:grid-cols-2 gap-4">
+        <CompletionRateChart />
+        <SubmissionsActivityChart />
       </div>
     </div>
   );

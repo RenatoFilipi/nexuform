@@ -84,9 +84,14 @@ const FormSubmissions = () => {
             <div className="flex justify-center items-center p-2 rounded bg-primary/10">
               <SendIcon className="w-5 h-5 text-primary" />
             </div>
-            <span className="text-foreground/80 uppercase text-xs">
-              No submission to show
-            </span>
+            <div className="flex flex-col justify-center items-center">
+              <span className="text-foreground font-semibold">
+                No submission to show
+              </span>
+              <p className="text-sm text-muted-foreground">
+                Your form hasn’t received any submissions yet.
+              </p>
+            </div>
           </div>
         </div>
       )}
