@@ -112,7 +112,7 @@ const CompletionRateChart = () => {
                             x={viewBox.cx}
                             y={(viewBox.cy || 0) + 24}
                             className="fill-muted-foreground">
-                            Response Rate
+                            Completion Rate
                           </tspan>
                         </text>
                       );

@@ -2,6 +2,7 @@
 
 import { encodedRedirect, nanoid } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
+import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -70,6 +71,9 @@ export const createFormAction = async (formData: FormData) => {
   }
 
   return redirect(`/dashboard/editor/${form.id}`);
+};
+export const refreshFormSlugPageAction = async (slug: string) => {
+  revalidatePath("/dashboard/forms/" + slug);
 };
 
 // to fix this actions

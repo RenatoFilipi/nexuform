@@ -1,15 +1,17 @@
 "use client";
 
+import { refreshFormSlugPageAction } from "@/app/actions";
 import FormStatusBadge from "@/components/shared/form-status-badge";
 import { Button } from "@/components/ui/button";
 import useFormStore from "@/stores/form";
 import { EBlock, EForm, EFormAnalytics, ESubmission } from "@/utils/entities";
 import { formatDateRelativeToNow } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   BookIcon,
   ExternalLinkIcon,
+  FilterIcon,
   ForwardIcon,
   LoaderIcon,
   SendIcon,
@@ -18,6 +20,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import FormFilters from "./form-filters";
 import FormIntegrations from "./form-integrations";
 import FormOverview from "./form-overview";
 import FormSettings from "./form-settings";
@@ -43,7 +46,7 @@ const views = [
     label: "Integrations",
     icon: UnplugIcon,
     view: "integrations",
-    enabled: false,
+    enabled: true,
   },
   {
     label: "Settings",
@@ -72,8 +75,11 @@ const FormWrapper = ({
     setFormAnalytics,
     submissions: localSubmissions,
   } = useFormStore();
+  const queryClient = useQueryClient();
   const [view, setView] = useState<TView>("overview");
   const enabledViews = views.filter((x) => x.enabled);
+  const enabledFilters =
+    view.includes("overview") || view.includes("submissions");
   const notReviewedSubmissions = localSubmissions.filter(
     (x) => x.status === "not_reviewed"
   ).length;
@@ -85,6 +91,7 @@ const FormWrapper = ({
       setBlocks(blocks);
       setSubmissions(submissions);
       setFormAnalytics(formAnalytics);
+      console.log(formAnalytics);
       return null;
     },
     refetchOnWindowFocus: false,
@@ -150,27 +157,49 @@ const FormWrapper = ({
         )}
       </div>
       <div className="flex flex-col flex-1 h-full gap-4">
-        <div className="flex sm:w-fit sm:gap-3 gap-1 overflow-x-auto">
-          {enabledViews.map((v) => (
-            <button
-              key={v.view}
-              onClick={() => setView(v.view as TView)}
-              className={`${
-                v.view === view ? "border-foreground/30" : "border-transparent"
-              } border p-2 flex items-center justify-center gap-2 text-sm hover:bg-foreground/5 rounded flex-1`}>
-              <v.icon
+        <div className="flex justify-between items-center">
+          <div className="flex sm:w-fit sm:gap-3 gap-1 overflow-x-auto">
+            {enabledViews.map((v) => (
+              <button
+                key={v.view}
+                onClick={() => setView(v.view as TView)}
                 className={`${
-                  v.view === view ? "text-primary" : "text-foreground"
-                } w-4 h-4`}
-              />
-              {v.label}
-              {v.view === "submissions" && notReviewedSubmissions > 0 && (
-                <span className="inline-flex items-center justify-center w-4 h-4 text-xs font-semibold text-primary bg-primary/20 rounded-full">
-                  {notReviewedSubmissions}
-                </span>
-              )}
-            </button>
-          ))}
+                  v.view === view
+                    ? "border-foreground/30"
+                    : "border-transparent"
+                } border p-2 flex items-center justify-center gap-2 text-sm hover:bg-foreground/5 rounded flex-1`}>
+                <v.icon
+                  className={`${
+                    v.view === view ? "text-primary" : "text-foreground"
+                  } w-4 h-4`}
+                />
+                {v.label}
+                {v.view === "submissions" && notReviewedSubmissions > 0 && (
+                  <span className="inline-flex items-center justify-center w-4 h-4 text-xs font-semibold text-primary bg-primary/20 rounded-full">
+                    {notReviewedSubmissions}
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+          {enabledFilters && (
+            <div className="flex justify-center items-center gap-2">
+              <Button
+                variant={"outline"}
+                size={"sm"}
+                onClick={async () => {
+                  queryClient.invalidateQueries({ queryKey: ["formData"] });
+                  refreshFormSlugPageAction(form.id);
+                }}>
+                Refresh page
+              </Button>
+              <FormFilters>
+                <Button variant={"outline"} size={"sm"}>
+                  <FilterIcon className="w-4 h-4 mr-2" /> Filters
+                </Button>
+              </FormFilters>
+            </div>
+          )}
         </div>
         <div className="flex justify-center flex-1 h-full items-start">
           {view === "overview" && <FormOverview />}
