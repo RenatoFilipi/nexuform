@@ -34,13 +34,15 @@ const SettingsGeneral = () => {
         <GeneralProfile />
         <GeneralPassword />
         <div className="flex flex-col border p-4 gap-2 rounded">
-          <div className="text-lg font-semibold">Delete account</div>
-          <p className="text-sm text-foreground/80">
+          <div className="flex justify-start items-center gap-4">
+            <h2 className="text-base font-semibold">Delete account</h2>
+            <Badge variant={"red"}>Danger Zone</Badge>
+          </div>
+          <p className="text-xs text-foreground/80">
             Delete your account and all its associated data. This action is not
             reversible, so please continue with caution.
           </p>
-          <div className="flex justify-between items-center">
-            <Badge variant={"red"}>Danger Zone</Badge>
+          <div className="flex justify-end items-center">
             <AccountDelete>
               <Button variant={"destructive_outline"} size={"sm"}>
                 Delete Account
@@ -95,8 +97,8 @@ const GeneralProfile = () => {
         onSubmit={profileHandler.handleSubmit(onProfileSubmit)}
         className="flex flex-col border rounded p-4 gap-4">
         <div className="flex flex-col">
-          <h2 className="text-lg font-semibold">Profile Information</h2>
-          <p className="text-sm text-foreground/80">
+          <h2 className="text-base font-semibold">Profile Information</h2>
+          <p className="text-xs text-foreground/80">
             Manage and update your personal details.
           </p>
         </div>
@@ -163,8 +165,8 @@ const GeneralPassword = () => {
         onSubmit={passwordHandler.handleSubmit(onPasswordSubmit)}
         className="flex flex-col border rounded p-4 gap-4">
         <div className="flex flex-col">
-          <h2 className="text-lg font-semibold">Password Update</h2>
-          <p className="text-sm text-foreground/80">
+          <h2 className="text-base font-semibold">Password Update</h2>
+          <p className="text-xs text-foreground/80">
             Update your password to enhance security. Choose a strong password
             that includes letters, numbers, and special characters.
           </p>

@@ -8,6 +8,7 @@ export type TBlock =
   | "email_address"
   | "star_rating"
   | "custom_scale";
+
 export type TSetState<T> = React.Dispatch<React.SetStateAction<T>>;
 export type TFormStatus = "inactive" | "draft" | "published";
 export type TAppState = "loading" | "idle" | "success" | "error";
@@ -44,3 +45,18 @@ export type TPlan = {
   type: "free_trial" | "basic" | "pro";
 };
 export type TWidth = "centered" | "full";
+export type TRoles =
+  | "admin"
+  | "moderator"
+  | "editor"
+  | "contributor"
+  | "member"
+  | "guest"
+  | "none";
+export type TSubscriptionStatus =
+  | "active"
+  | "past_due"
+  | "canceled"
+  | "trialing";
+export type TBillingInterval = "monthly" | "yearly";
+export type TInvoiceStatus = "paid" | "pending" | "failed";

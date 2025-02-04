@@ -255,6 +255,63 @@ export type Database = {
           },
         ]
       }
+      invoices: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          due_date: string | null
+          id: string
+          invoice_date: string
+          payment_method: string | null
+          status: string
+          subscription_id: string
+          transaction_id: string | null
+          user_id: string
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          due_date?: string | null
+          id?: string
+          invoice_date?: string
+          payment_method?: string | null
+          status?: string
+          subscription_id: string
+          transaction_id?: string | null
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          due_date?: string | null
+          id?: string
+          invoice_date?: string
+          payment_method?: string | null
+          status?: string
+          subscription_id?: string
+          transaction_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoices_subscription_id_fkey"
+            columns: ["subscription_id"]
+            isOneToOne: false
+            referencedRelation: "subscriptions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "invoices_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       organizations: {
         Row: {
           created_at: string
@@ -296,6 +353,7 @@ export type Database = {
           first_name: string
           id: string
           last_name: string
+          role: string
           updated_at: string | null
           username: string | null
           website: string
@@ -305,6 +363,7 @@ export type Database = {
           first_name?: string
           id: string
           last_name?: string
+          role?: string
           updated_at?: string | null
           username?: string | null
           website?: string
@@ -314,6 +373,7 @@ export type Database = {
           first_name?: string
           id?: string
           last_name?: string
+          role?: string
           updated_at?: string | null
           username?: string | null
           website?: string
@@ -395,6 +455,50 @@ export type Database = {
             columns: ["form_id"]
             isOneToOne: false
             referencedRelation: "forms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subscriptions: {
+        Row: {
+          billing_interval: string
+          created_at: string
+          id: string
+          next_billing_date: string | null
+          plan: string
+          start_date: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          billing_interval?: string
+          created_at?: string
+          id?: string
+          next_billing_date?: string | null
+          plan?: string
+          start_date?: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          billing_interval?: string
+          created_at?: string
+          id?: string
+          next_billing_date?: string | null
+          plan?: string
+          start_date?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
