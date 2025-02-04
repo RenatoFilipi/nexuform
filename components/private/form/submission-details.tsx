@@ -13,7 +13,7 @@ import { minWidth640, minute } from "@/utils/constants";
 import { EBlock, ESubmission } from "@/utils/entities";
 import { formatDateRelativeToNow, formatTime } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
-import { TSetState, TsubmissionStatus } from "@/utils/types";
+import { TSetState, TSubmissionStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useMedia } from "react-use";
@@ -121,7 +121,7 @@ const Body = ({
           <span className="text-sm">{submission.identifier}</span>
           <div className="flex justify-start items-center gap-3">
             <SubmissionStatusBadge
-              status={submission.status as TsubmissionStatus}
+              status={submission.status as TSubmissionStatus}
             />
             <Badge variant={"info"}>
               {formatTime(submission.completion_time ?? 0, 2)}

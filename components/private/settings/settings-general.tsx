@@ -38,11 +38,11 @@ const SettingsGeneral = () => {
             <h2 className="text-base font-semibold">Delete account</h2>
             <Badge variant={"red"}>Danger Zone</Badge>
           </div>
-          <p className="text-xs text-foreground/80">
-            Delete your account and all its associated data. This action is not
-            reversible, so please continue with caution.
-          </p>
-          <div className="flex justify-end items-center">
+          <div className="flex justify-between items-center">
+            <p className="text-xs text-foreground/80">
+              Delete your account and all its associated data. This action is
+              not reversible, so please continue with caution.
+            </p>
             <AccountDelete>
               <Button variant={"destructive_outline"} size={"sm"}>
                 Delete Account

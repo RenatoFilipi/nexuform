@@ -48,7 +48,7 @@ const links = [
     name: "Analytics",
     path: "/dashboard/analytics",
     icon: ChartPieIcon,
-    enabled: true,
+    enabled: false,
   },
   {
     id: 3,
@@ -180,7 +180,6 @@ const AvatarAppMenu = () => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-6 min-w-52 text-foreground/80">
-        <DropdownMenuItem>Settings</DropdownMenuItem>
         <DropdownMenuItem className="flex flex-row justify-between items-center">
           Theme
           <RadioGroup
@@ -222,7 +221,7 @@ const AvatarAppMenu = () => {
           </RadioGroup>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem className="py-0">
           <Button
             onClick={signOutAction}
             variant={"ghost"}

@@ -19,13 +19,20 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import FormIntegrations from "./form-integrations";
+import FormOverview from "./form-overview";
 import FormSettings from "./form-settings";
 import FormShare from "./form-share";
 import FormSubmissions from "./form-submissions";
 
-type TView = "submissions" | "integrations" | "settings";
+type TView = "overview" | "submissions" | "integrations" | "settings";
 
 const views = [
+  {
+    label: "Overview",
+    icon: SendIcon,
+    view: "overview",
+    enabled: true,
+  },
   {
     label: "Submissions",
     icon: SendIcon,
@@ -65,7 +72,7 @@ const FormWrapper = ({
     setFormAnalytics,
     submissions: localSubmissions,
   } = useFormStore();
-  const [view, setView] = useState<TView>("submissions");
+  const [view, setView] = useState<TView>("overview");
   const enabledViews = views.filter((x) => x.enabled);
   const notReviewedSubmissions = localSubmissions.filter(
     (x) => x.status === "not_reviewed"
@@ -166,6 +173,7 @@ const FormWrapper = ({
           ))}
         </div>
         <div className="flex justify-center flex-1 h-full items-start">
+          {view === "overview" && <FormOverview />}
           {view === "submissions" && <FormSubmissions />}
           {view === "integrations" && <FormIntegrations />}
           {view === "settings" && <FormSettings />}

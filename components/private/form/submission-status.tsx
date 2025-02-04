@@ -11,7 +11,7 @@ import {
 import useFormStore from "@/stores/form";
 import { ESubmission } from "@/utils/entities";
 import { createClient } from "@/utils/supabase/client";
-import { TAppState, TSetState, TsubmissionStatus } from "@/utils/types";
+import { TAppState, TSetState, TSubmissionStatus } from "@/utils/types";
 import { ChevronDown, LoaderIcon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -51,7 +51,7 @@ const SubmissionStatus = ({
   const [appState, setAppState] = useState<TAppState>("idle");
   const { submissions, setSubmissions } = useFormStore();
 
-  const getDefaultIndex = (status: TsubmissionStatus) => {
+  const getDefaultIndex = (status: TSubmissionStatus) => {
     switch (status) {
       case "reviewed":
         return options.findIndex((x) => x.value === "not_reviewed").toString();
@@ -63,7 +63,7 @@ const SubmissionStatus = ({
   };
 
   const [selectedIndex, setSelectedIndex] = useState(
-    getDefaultIndex(submission.status as TsubmissionStatus)
+    getDefaultIndex(submission.status as TSubmissionStatus)
   );
 
   const onSubmissionStatusSubmit = async () => {

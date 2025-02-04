@@ -17,7 +17,7 @@ import {
   formatDecimal,
   formatTime,
 } from "@/utils/functions";
-import { TsubmissionStatus } from "@/utils/types";
+import { TSubmissionStatus } from "@/utils/types";
 import { CheckCircleIcon, EyeIcon, SendIcon, TimerIcon } from "lucide-react";
 import SubmissionDetails from "./submission-details";
 
@@ -121,7 +121,7 @@ const FormSubmissions = () => {
                   </TableCell>
                   <TableCell className="py-2 pr-4">
                     <SubmissionStatusBadge
-                      status={submission.status as TsubmissionStatus}
+                      status={submission.status as TSubmissionStatus}
                     />
                   </TableCell>
                   <TableCell className="text-right py-2 pr-4">

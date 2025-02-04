@@ -1,8 +1,8 @@
 import type { JSX } from "react";
-import { TBlock, TBrand, TColors, TFormStatus } from "./types";
+import { TBlock, TBrand, TColor, TFormStatus } from "./types";
 
 export interface IDesign {
-  label: TColors;
+  label: TColor;
   tw_class: string;
 }
 export interface IBrand {
