@@ -52,11 +52,11 @@ const SettingsGeneral = () => {
     </div>
   );
 };
-
 const GeneralProfile = () => {
   const supabase = createClient();
   const [appState, setAppState] = useState<TAppState>("idle");
   const { profile, setProfile } = useSettingsStore();
+
   const profileSchema = z.object({
     firstName: z.string(),
     lastName: z.string(),
@@ -64,8 +64,8 @@ const GeneralProfile = () => {
   const profileHandler = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      firstName: profile.first_name ?? "",
-      lastName: profile.last_name ?? "",
+      firstName: profile.first_name,
+      lastName: profile.last_name,
     },
   });
   const onProfileSubmit = async (values: z.infer<typeof profileSchema>) => {

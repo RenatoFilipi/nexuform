@@ -23,7 +23,7 @@ import FormSettings from "./form-settings";
 import FormShare from "./form-share";
 import FormSubmissions from "./form-submissions";
 
-type TView = "overview" | "submissions" | "integrations" | "settings";
+type TView = "submissions" | "integrations" | "settings";
 
 const views = [
   {
@@ -71,7 +71,7 @@ const FormWrapper = ({
     (x) => x.status === "not_reviewed"
   ).length;
 
-  useQuery({
+  const query = useQuery({
     queryKey: ["formData"],
     queryFn: () => {
       setForm(form);
@@ -82,6 +82,8 @@ const FormWrapper = ({
     },
     refetchOnWindowFocus: false,
   });
+
+  if (query.isPending) return null;
 
   return (
     <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">

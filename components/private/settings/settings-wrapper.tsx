@@ -20,7 +20,7 @@ const SettingsWrapper = ({ profile }: { profile: EProfile }) => {
   const enabledViews = views.filter((x) => x.enabled);
   const { setProfile } = useSettingsStore();
 
-  useQuery({
+  const query = useQuery({
     queryKey: ["settingsData"],
     queryFn: () => {
       setProfile(profile);
@@ -28,6 +28,8 @@ const SettingsWrapper = ({ profile }: { profile: EProfile }) => {
     },
     refetchOnWindowFocus: false,
   });
+
+  if (query.isPending) return null;
 
   return (
     <div className="flex w-full h-full flex-1 relative">

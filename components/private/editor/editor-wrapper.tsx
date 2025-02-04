@@ -28,7 +28,7 @@ const EditorWrapper = ({
   } = useEditorStore();
   const [isPending, startTransition] = useTransition();
 
-  useQuery({
+  const query = useQuery({
     queryKey: ["EditorData"],
     queryFn: () => {
       startTransition(() => {
@@ -41,6 +41,8 @@ const EditorWrapper = ({
     },
     refetchOnWindowFocus: false,
   });
+
+  if (query.isPending) return null;
 
   if (preview)
     return (

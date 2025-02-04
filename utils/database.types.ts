@@ -292,31 +292,31 @@ export type Database = {
       }
       profiles: {
         Row: {
-          avatar_url: string | null
-          first_name: string | null
+          avatar_url: string
+          first_name: string
           id: string
-          last_name: string | null
+          last_name: string
           updated_at: string | null
           username: string | null
-          website: string | null
+          website: string
         }
         Insert: {
-          avatar_url?: string | null
-          first_name?: string | null
+          avatar_url?: string
+          first_name?: string
           id: string
-          last_name?: string | null
+          last_name?: string
           updated_at?: string | null
           username?: string | null
-          website?: string | null
+          website?: string
         }
         Update: {
-          avatar_url?: string | null
-          first_name?: string | null
+          avatar_url?: string
+          first_name?: string
           id?: string
-          last_name?: string | null
+          last_name?: string
           updated_at?: string | null
           username?: string | null
-          website?: string | null
+          website?: string
         }
         Relationships: []
       }
