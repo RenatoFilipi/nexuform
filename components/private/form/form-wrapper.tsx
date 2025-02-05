@@ -184,7 +184,7 @@ const FormWrapper = ({
                 />
                 {v.label}
                 {v.view === "submissions" && notReviewedSubmissions > 0 && (
-                  <span className="inline-flex items-center justify-center w-4 h-4 text-xs font-semibold text-primary bg-primary/20 rounded-full">
+                  <span className="inline-flex items-center justify-center w-4 h-4 text-xs font-semibold text-yellow-600 bg-yellow-600/20 rounded-full">
                     {notReviewedSubmissions}
                   </span>
                 )}
