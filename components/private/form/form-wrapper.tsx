@@ -75,14 +75,10 @@ const FormWrapper = ({
     setFormAnalytics,
     submissions: localSubmissions,
   } = useFormStore();
-  const queryClient = useQueryClient();
   const [view, setView] = useState<TView>("overview");
   const enabledViews = views.filter((x) => x.enabled);
-  const enabledFilters =
-    view.includes("overview") || view.includes("submissions");
-  const notReviewedSubmissions = localSubmissions.filter(
-    (x) => x.status === "not_reviewed"
-  ).length;
+  const enabledFilters = view.includes("overview") || view.includes("submissions");
+  const notReviewedSubmissions = localSubmissions.filter((x) => x.status === "not_reviewed").length;
 
   const query = useQuery({
     queryKey: ["formData"],
@@ -106,14 +102,9 @@ const FormWrapper = ({
           <div className="flex justify-between sm:justify-start items-center gap-3 w-full sm:w-fit">
             <div className="flex items-center gap-2">
               <BookIcon className="w-4 h-4" />
-              <h1 className="font-medium truncate max-w-[240px]">
-                {localForm.name}
-              </h1>
+              <h1 className="font-medium truncate max-w-[240px]">{localForm.name}</h1>
             </div>
-            <FormStatusBadge
-              status={localForm.status as TFormStatus}
-              uppercase
-            />
+            <FormStatusBadge status={localForm.status as TFormStatus} uppercase />
           </div>
           <div className="flex items-center sm:gap-4 gap-2 w-full sm:w-fit">
             <FormShare form={localForm}>
@@ -135,9 +126,7 @@ const FormWrapper = ({
               </a>
             )}
             <Button variant="default" size="sm" asChild>
-              <Link
-                href={`/dashboard/editor/${localForm.id}`}
-                className="w-full sm:w-fit">
+              <Link href={`/dashboard/editor/${localForm.id}`} className="w-full sm:w-fit">
                 <Settings2Icon className="w-4 h-4 mr-2" />
                 Editor
               </Link>
@@ -164,15 +153,9 @@ const FormWrapper = ({
                 key={v.view}
                 onClick={() => setView(v.view as TView)}
                 className={`${
-                  v.view === view
-                    ? "border-foreground/30"
-                    : "border-transparent"
+                  v.view === view ? "border-foreground/30" : "border-transparent"
                 } border p-2 flex items-center justify-center gap-2 text-sm hover:bg-foreground/5 rounded flex-1`}>
-                <v.icon
-                  className={`${
-                    v.view === view ? "text-primary" : "text-foreground"
-                  } w-4 h-4`}
-                />
+                <v.icon className={`${v.view === view ? "text-primary" : "text-foreground"} w-4 h-4`} />
                 {v.label}
                 {v.view === "submissions" && notReviewedSubmissions > 0 && (
                   <span className="inline-flex items-center justify-center w-4 h-4 text-xs font-semibold text-primary bg-primary/20 rounded-full">
@@ -184,15 +167,6 @@ const FormWrapper = ({
           </div>
           {enabledFilters && (
             <div className="flex justify-center items-center gap-2">
-              <Button
-                variant={"outline"}
-                size={"sm"}
-                onClick={async () => {
-                  queryClient.invalidateQueries({ queryKey: ["formData"] });
-                  refreshFormSlugPageAction(form.id);
-                }}>
-                Refresh page
-              </Button>
               <FormFilters>
                 <Button variant={"outline"} size={"sm"}>
                   <FilterIcon className="w-4 h-4 mr-2" /> Filters
