@@ -1,7 +1,6 @@
 "use client";
 
 import FormStatusBadge from "@/components/shared/form-status-badge";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import useFormStore from "@/stores/form";
 import { EBlock, EForm, EFormAnalytics, ESubmission } from "@/utils/entities";
@@ -13,6 +12,7 @@ import {
   ExternalLinkIcon,
   FilterIcon,
   ForwardIcon,
+  Layers2Icon,
   LoaderIcon,
   SendIcon,
   Settings2Icon,
@@ -32,7 +32,7 @@ type TView = "overview" | "submissions" | "integrations" | "settings";
 const views = [
   {
     label: "Overview",
-    icon: SendIcon,
+    icon: Layers2Icon,
     view: "overview",
     enabled: true,
   },
@@ -82,16 +82,6 @@ const FormWrapper = ({
   const notReviewedSubmissions = localSubmissions.filter(
     (x) => x.status === "not_reviewed"
   ).length;
-  const totalSubmissions =
-    submissions.length === 1
-      ? `1 Submission`
-      : `${submissions.length} Submissions`;
-  const reviewedSubmissions = submissions.filter(
-    (x) => x.status === "reviewed"
-  ).length;
-  const ignoredSubmissions = submissions.filter(
-    (x) => x.status === "ignored"
-  ).length;
 
   const query = useQuery({
     queryKey: ["formData"],
@@ -123,6 +113,18 @@ const FormWrapper = ({
               status={localForm.status as TFormStatus}
               uppercase
             />
+            {localForm.updated_at !== "".trim() ? (
+              <div className="hidden sm:flex">
+                <span className="text-xs text-foreground/60">
+                  Form last updated{" "}
+                  {formatDateRelativeToNow(localForm.updated_at)}
+                </span>
+              </div>
+            ) : (
+              <div>
+                <LoaderIcon className="w-4 h-4 animate-spin" />
+              </div>
+            )}
           </div>
           <div className="flex items-center sm:gap-4 gap-2 w-full sm:w-fit">
             <FormShare form={localForm}>
@@ -153,59 +155,44 @@ const FormWrapper = ({
             </Button>
           </div>
         </div>
-        {localForm.updated_at !== "".trim() ? (
-          <div className="hidden sm:flex">
-            <span className="text-sm text-muted-foreground">
-              Form last updated {formatDateRelativeToNow(localForm.updated_at)}
-            </span>
-          </div>
-        ) : (
-          <div>
-            <LoaderIcon className="w-4 h-4 animate-spin" />
-          </div>
-        )}
       </div>
       <div className="flex flex-col flex-1 h-full gap-4">
-        <div className="flex justify-between items-center flex-col sm:flex-row">
-          <div className="flex sm:w-fit sm:gap-3 gap-1 overflow-x-auto">
-            {enabledViews.map((v) => (
-              <button
-                key={v.view}
-                onClick={() => setView(v.view as TView)}
-                className={`${
-                  v.view === view
-                    ? "border-foreground/30"
-                    : "border-transparent"
-                } border p-2 flex items-center justify-center gap-2 text-sm hover:bg-foreground/5 rounded flex-1`}>
-                <v.icon
+        <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
+          <div className="w-full overflow-x-auto">
+            <div className="flex sm:w-fit sm:gap-3 gap-1">
+              {enabledViews.map((v) => (
+                <button
+                  key={v.view}
+                  onClick={() => setView(v.view as TView)}
                   className={`${
-                    v.view === view ? "text-primary" : "text-foreground"
-                  } w-4 h-4`}
-                />
-                {v.label}
-                {v.view === "submissions" && notReviewedSubmissions > 0 && (
-                  <span className="inline-flex items-center justify-center w-4 h-4 text-xs font-semibold text-yellow-600 bg-yellow-600/20 rounded-full">
-                    {notReviewedSubmissions}
-                  </span>
-                )}
-              </button>
-            ))}
+                    v.view === view
+                      ? "border-foreground/30"
+                      : "border-transparent"
+                  } border p-2 flex items-center justify-center gap-2 text-sm hover:bg-foreground/5 rounded flex-1`}>
+                  <v.icon
+                    className={`${
+                      v.view === view ? "text-primary" : "text-foreground"
+                    } w-4 h-4`}
+                  />
+                  {v.label}
+                  {v.view === "submissions" && notReviewedSubmissions > 0 && (
+                    <span className="inline-flex items-center justify-center w-4 h-4 text-xs font-semibold text-yellow-600 bg-yellow-600/20 rounded-full">
+                      {notReviewedSubmissions}
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
           </div>
           {enabledFilters && (
-            <div className="flex justify-center items-center gap-2">
-              <div className="hidden justify-start items-center gap-4">
-                <Badge variant={"info"}>{totalSubmissions}</Badge>
-                <Badge variant={"success"}>
-                  Reviewed: {reviewedSubmissions}
-                </Badge>
-                <Badge variant={"warning"}>
-                  Not reviewed: {notReviewedSubmissions}
-                </Badge>
-                <Badge variant={"gray"}>Ignored: {ignoredSubmissions}</Badge>
-              </div>
+            <div className="flex justify-center items-center gap-2 w-full sm:w-fit">
               <FormFilters>
-                <Button variant={"outline"} size={"sm"}>
-                  <FilterIcon className="w-4 h-4 mr-2" /> Filters
+                <Button
+                  variant={"outline"}
+                  size={"sm"}
+                  className="w-full sm:w-fit">
+                  <FilterIcon className="w-4 h-4 mr-2" />
+                  Filters
                 </Button>
               </FormFilters>
             </div>

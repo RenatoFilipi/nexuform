@@ -15,6 +15,7 @@ const useSettingsStore = create<settings>((set) => ({
     updated_at: "",
     username: "",
     website: "",
+    role: "member",
   },
   setProfile: (payload) => set({ profile: payload }),
   reset: () =>
@@ -27,6 +28,7 @@ const useSettingsStore = create<settings>((set) => ({
         updated_at: "",
         username: "",
         website: "",
+        role: "member",
       },
     }),
 }));

@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   ChartConfig,
@@ -8,117 +9,126 @@ import {
 import useFormStore from "@/stores/form";
 import { useQuery } from "@tanstack/react-query";
 import { format, parseISO, subDays } from "date-fns";
-import { BirdIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useMemo, useReducer, useState } from "react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
-const options = [
-  { label: "24 hours", value: 1 },
+interface IChartData {
+  day: string;
+  submission: number;
+}
+
+const OPTIONS = [
   { label: "7 days", value: 7 },
   { label: "30 days", value: 30 },
-];
+] as const;
 
-const SubmissionsActivityChart = () => {
+const CHART_CONFIG: ChartConfig = {
+  submission: {
+    label: "Submission",
+    color: "#7C3AED",
+  },
+} as ChartConfig;
+
+type HasDataAction = { type: "CHECK_DATA"; payload: IChartData[] };
+
+const hasDataReducer = (state: boolean, action: HasDataAction): boolean => {
+  switch (action.type) {
+    case "CHECK_DATA":
+      return action.payload.some((item) => item.submission > 0);
+    default:
+      return state;
+  }
+};
+
+const SubmissionsActivityChart: React.FC = () => {
   const { overviewSubmissions } = useFormStore();
-  const [days, setDays] = useState(7);
-  const hasData = overviewSubmissions.length > 0;
-  const [chartData, setChartData] = useState<
-    { day: string; submission: number }[]
-  >([]);
+  const [days, setDays] = useState<number>(7);
+  const [chartData, setChartData] = useState<IChartData[]>([]);
+  const [hasData, dispatch] = useReducer(hasDataReducer, false);
 
-  useQuery({
-    queryKey: ["formOverviewChartData"],
-    queryFn: () => {
-      const lastNDays = Array.from({ length: days }, (_, i) => ({
+  const barSize = days === 7 ? 20 : 10;
+
+  const lastNDays = useMemo<IChartData[]>(
+    () =>
+      Array.from({ length: days }, (_, i) => ({
         day: format(subDays(new Date(), i), "dd/MM"),
         submission: 0,
-      })).reverse();
-      const submissionCount: Record<string, number> = {};
-      overviewSubmissions.forEach((submission) => {
-        const day = format(parseISO(submission.created_at), "dd/MM");
-        submissionCount[day] = (submissionCount[day] || 0) + 1;
-      });
-      const updatedChartData = lastNDays.map((data) => ({
-        ...data,
-        submission: submissionCount[data.day] || 0,
-      }));
-      setChartData(updatedChartData);
+      })).reverse(),
+    [days]
+  );
 
-      return null;
-    },
+  const { data: submissions, isPending } = useQuery({
+    queryKey: ["formOverviewChartData", overviewSubmissions, days],
+    queryFn: () => overviewSubmissions || [],
     refetchOnWindowFocus: false,
   });
 
-  const chartConfig = {
-    submission: {
-      label: "Submission",
-      color: "#7C3AED",
-    },
-  } satisfies ChartConfig;
+  useEffect(() => {
+    if (!submissions) return;
+
+    const submissionCount: Record<string, number> = {};
+    submissions.forEach((submission) => {
+      if (!submission?.created_at) return;
+      const day = format(parseISO(submission.created_at), "dd/MM");
+      submissionCount[day] = (submissionCount[day] || 0) + 1;
+    });
+
+    const updatedChartData = lastNDays.map((data) => ({
+      ...data,
+      submission: submissionCount[data.day] || 0,
+    }));
+
+    setChartData(updatedChartData);
+    dispatch({ type: "CHECK_DATA", payload: updatedChartData });
+  }, [submissions, lastNDays]);
+
+  if (isPending) return null;
 
   return (
-    <div className="flex flex-col border py-3 px-4 rounded gap-3">
+    <div className="flex flex-col border py-3 px-4 rounded gap-3 relative">
       <div className="flex flex-col justify-center items-center sm:items-start">
         <div className="flex justify-between items-center gap-4 w-full">
           <div className="flex justify-center items-center gap-3">
-            {options.map((opt, i) => {
-              return (
-                <Button
-                  key={i}
-                  onClick={() => {
-                    if (days !== opt.value) setDays(opt.value);
-                  }}
-                  variant={"outline"}
-                  size={"xs"}
-                  className={`${days === opt.value && "bg-foreground/5"}`}>
-                  {opt.label}
-                </Button>
-              );
-            })}
+            {OPTIONS.map((opt) => (
+              <Button
+                key={opt.value}
+                onClick={() => setDays(opt.value)}
+                variant="outline"
+                size="xs"
+                className={days === opt.value ? "bg-foreground/5" : ""}>
+                {opt.label}
+              </Button>
+            ))}
           </div>
+          {!hasData && (
+            <Badge variant="warning" uppercase>
+              No data available
+            </Badge>
+          )}
         </div>
       </div>
-      {!hasData && (
-        <div className="flex flex-col items-center text-center text-muted-foreground gap-3 py-10">
-          <div className="flex justify-center items-center p-2 rounded bg-warning/10">
-            <BirdIcon className="w-8 h-8 text-yellow-500" />
-          </div>
-          <div className="flex flex-col justify-center items-center">
-            <p className="text-lg font-semibold text-foreground">
-              No data available
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Your form has no submission to show.
-            </p>
-          </div>
-        </div>
-      )}
-      {hasData && (
-        <div>
-          <ChartContainer config={chartConfig}>
-            <BarChart accessibilityLayer data={chartData}>
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey="day"
-                tickLine={false}
-                tickMargin={10}
-                axisLine={false}
-                tickFormatter={(value) => value.slice(0, 5)}
-              />
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent hideLabel />}
-              />
-              <Bar
-                barSize={20}
-                dataKey="submission"
-                fill="var(--color-submission)"
-                radius={8}
-              />
-            </BarChart>
-          </ChartContainer>
-        </div>
-      )}
+      <ChartContainer config={CHART_CONFIG}>
+        <BarChart accessibilityLayer data={chartData}>
+          <CartesianGrid vertical={false} />
+          <XAxis
+            dataKey="day"
+            tickLine={false}
+            tickMargin={10}
+            axisLine={false}
+            tickFormatter={(value) => value.slice(0, 5)}
+          />
+          <ChartTooltip
+            cursor={false}
+            content={<ChartTooltipContent hideLabel />}
+          />
+          <Bar
+            barSize={barSize}
+            dataKey="submission"
+            fill="var(--color-submission)"
+            radius={8}
+          />
+        </BarChart>
+      </ChartContainer>
     </div>
   );
 };

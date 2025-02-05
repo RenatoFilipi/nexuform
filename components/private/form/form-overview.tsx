@@ -32,8 +32,8 @@ const FormOverview = () => {
 
   return (
     <div className="rounded w-full h-full flex-1 flex flex-col gap-2">
-      <div className="grid sm:grid-cols-2 gap-6">
-        <div className="grid grid-cols-2 grid-rows-4 gap-6">
+      <div className="gap-6 grid sm:grid-cols-2">
+        <div className="grid grid-cols-2 sm:grid-rows-4 gap-6">
           <CardTemplate
             name="Views"
             value={totalViews}
@@ -84,7 +84,7 @@ const CardTemplate = ({
           <span className="text-sm">{name}</span>
         </div>
       </div>
-      <span className="text-sm">{value}</span>
+      <span className="text-sm font-semibold">{value}</span>
     </Card>
   );
 };
