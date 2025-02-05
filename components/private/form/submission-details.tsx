@@ -160,7 +160,7 @@ const Body = ({
           Cancel
         </Button>
         <div className="flex justify-center items-center gap-3">
-          <Button variant={"secondary"} size={"sm"} className="hidden">
+          <Button variant={"secondary"} size={"sm"}>
             Export as CSV
           </Button>
           <SubmissionStatus submission={submission} setState={setState} />

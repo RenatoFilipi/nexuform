@@ -16,15 +16,15 @@ const Home = () => {
   const t = useTranslations("landing");
 
   const urls = [
-    { name: t("general.features"), url: "features" },
-    { name: t("general.how_it_works"), url: "how-it-works" },
-    { name: t("general.pricing"), url: "pricing" },
-    { name: t("general.faq"), url: "faq" },
+    { name: "Features", url: "features" },
+    { name: "How it Works", url: "how-it-works" },
+    { name: "Pricing", url: "pricing" },
+    { name: "Faq", url: "faq" },
   ];
 
   return (
     <div className="min-h-screen flex flex-col relative">
-      <div className="flex fixed top-0 w-full justify-between sm:px-5 px-3 h-16 bg-background/80 z-10 backdrop-blur-md items-center">
+      <div className="flex fixed top-0 w-full justify-between sm:px-5 px-3 h-16 bg-background/80 z-10 backdrop-blur-lg items-center">
         <Link href={"/"} className="flex justify-center items-center">
           <Brand type="logo_text" className="h-7 fill-foreground" />
         </Link>
@@ -42,10 +42,10 @@ const Home = () => {
         </div>
         <div className="hidden sm:flex justify-center items-center gap-4">
           <Button variant={"outline"} size={"sm"} asChild>
-            <Link href={"/login"}>{t("general.login")}</Link>
+            <Link href={"/login"}>Login</Link>
           </Button>
           <Button variant={"default"} size={"sm"} asChild>
-            <Link href={"/signup"}>{t("general.get_started")}</Link>
+            <Link href={"/signup"}>Get Started</Link>
           </Button>
         </div>
         <div className="flex sm:hidden">
@@ -56,7 +56,7 @@ const Home = () => {
           </Nav>
         </div>
       </div>
-      <div className="sm:mt-28 mt-20 relative flex flex-col justify-center items-center px-4 sm:px-0 flex-1 gap-14">
+      <div className="relative flex flex-col justify-center items-center px-4 sm:px-0 flex-1 gap-14">
         <Hero />
         <Features />
         <HowItWorks />
@@ -69,12 +69,12 @@ const Home = () => {
           <Link
             href={"/legal/privacy"}
             className="text-xs text-foreground/80 hover:underline">
-            {t("general.privacy")}
+            Privacy
           </Link>
           <Link
             href={"/legal/terms"}
             className="text-xs text-foreground/80 hover:underline">
-            {t("general.terms")}
+            Terms
           </Link>
         </div>
         <span className="text-xs text-foreground/80 sm:text-center">
@@ -82,7 +82,7 @@ const Home = () => {
           <Link href="/" className="hover:underline">
             Nebulaform
           </Link>
-          . {t("general.rights")}
+          . All Rights Reserved.
         </span>
         <div className="absolute right-4 hidden sm:flex">
           <ModeToggle2 />

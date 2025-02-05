@@ -8,8 +8,9 @@ const Features = () => {
 
   const features = [
     {
-      title: t("features.editor_title"),
-      description: t("features.editor_description"),
+      title: "Effortless Form Creation",
+      description:
+        "Craft personalized forms effortlessly with our intuitive, scenario-based editor.",
       icon: (
         <div className="flex justify-center items-center p-3 bg-green-100 rounded dark:bg-green-950">
           <LayoutDashboardIcon size={40} className="text-green-600" />
@@ -17,8 +18,9 @@ const Features = () => {
       ),
     },
     {
-      title: t("features.analytics_title"),
-      description: t("features.analytics_description"),
+      title: "Actionable Analytics",
+      description:
+        "Gain powerful insights to monitor performance and refine your forms for success.",
       icon: (
         <div className="flex justify-center items-center p-3 bg-blue-100 rounded dark:bg-blue-950">
           <BarChart3Icon size={40} className="text-blue-600" />
@@ -26,8 +28,9 @@ const Features = () => {
       ),
     },
     {
-      title: t("features.export_title"),
-      description: t("features.export_description"),
+      title: "Seamless Data Management",
+      description:
+        "Export submissions and analytics with ease, empowering offline decision-making anytime.",
       icon: (
         <div className="flex justify-center items-center p-3 bg-orange-100 rounded dark:bg-orange-950">
           <FileTextIcon size={40} className="text-orange-600" />
@@ -44,10 +47,11 @@ const Features = () => {
             Features
           </div>
           <h2 className="text-3xl font-bold leading-tight sm:text-4xl xl:text-5xl">
-            {t("features.headline")}
+            Tools to Empower Your Form Building
           </h2>
           <p className="mt-4 text-base leading-7 sm:mt-8 text-foreground/70">
-            {t("features.sub_headline")}
+            Elevate your form-building experience with innovative tools and
+            insightful analytics.
           </p>
         </div>
         <div className="grid grid-cols-1 mt-10 gap-6 sm:grid-cols-3 sm:mt-16 xl:mt-12">

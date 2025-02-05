@@ -14,33 +14,36 @@ const HowItWorks = () => {
 
   const steps = [
     {
-      title: t("hiw.step1_title"),
-      description: t("hiw.step1_description"),
+      title: "Design Your Form",
+      description:
+        "Effortlessly create a form tailored to your specific needs.",
       icon: <FilePlusIcon size={40} className="text-primary" />,
     },
     {
-      title: t("hiw.step2_title"),
-      description: t("hiw.step2_description"),
+      title: "Customize and Publish",
+      description:
+        "Personalize your form and publish it with just a few clicks.",
       icon: <ClipboardCheckIcon size={40} className="text-primary" />,
     },
     {
-      title: t("hiw.step3_title"),
-      description: t("hiw.step3_description"),
+      title: "Share Instantly",
+      description: "Distribute your form easily via link or QR code.",
       icon: <SettingsIcon size={40} className="text-primary" />,
     },
     {
-      title: t("hiw.step4_title"),
-      description: t("hiw.step4_description"),
+      title: "Manage Submissions",
+      description: "Track and organize submissions from a central dashboard.",
       icon: <LayoutGridIcon size={40} className="text-primary" />,
     },
     {
-      title: t("hiw.step5_title"),
-      description: t("hiw.step5_description"),
+      title: "Unlock Insights",
+      description:
+        "Analyze form performance using our powerful analytics tools.",
       icon: <BarChart3Icon size={40} className="text-primary" />,
     },
     {
-      title: t("hiw.step6_title"),
-      description: t("hiw.step6_description"),
+      title: "Export with Ease",
+      description: "Download submissions and analytics for offline review.",
       icon: <SendIcon size={40} className="text-primary" />,
     },
   ];
@@ -50,10 +53,10 @@ const HowItWorks = () => {
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold leading-tight sm:text-4xl xl:text-5xl">
-            {t("hiw.headline")}
+            How It Works
           </h2>
           <p className="mt-4 text-base leading-7 sm:mt-4 text-foreground/70">
-            {t("hiw.sub_headline")}
+            Easily create, customize, and manage forms in a few simple steps.
           </p>
         </div>
         <div className="grid grid-cols-1 mt-10 gap-6 sm:grid-cols-2 lg:grid-cols-3">
