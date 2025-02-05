@@ -1,13 +1,13 @@
 "use client";
 
-import { refreshFormSlugPageAction } from "@/app/actions";
 import FormStatusBadge from "@/components/shared/form-status-badge";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import useFormStore from "@/stores/form";
 import { EBlock, EForm, EFormAnalytics, ESubmission } from "@/utils/entities";
 import { formatDateRelativeToNow } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import {
   BookIcon,
   ExternalLinkIcon,
@@ -74,11 +74,24 @@ const FormWrapper = ({
     form: localForm,
     setFormAnalytics,
     submissions: localSubmissions,
+    setOverviewSubmissions,
   } = useFormStore();
   const [view, setView] = useState<TView>("overview");
   const enabledViews = views.filter((x) => x.enabled);
-  const enabledFilters = view.includes("overview") || view.includes("submissions");
-  const notReviewedSubmissions = localSubmissions.filter((x) => x.status === "not_reviewed").length;
+  const enabledFilters = view.includes("submissions");
+  const notReviewedSubmissions = localSubmissions.filter(
+    (x) => x.status === "not_reviewed"
+  ).length;
+  const totalSubmissions =
+    submissions.length === 1
+      ? `1 Submission`
+      : `${submissions.length} Submissions`;
+  const reviewedSubmissions = submissions.filter(
+    (x) => x.status === "reviewed"
+  ).length;
+  const ignoredSubmissions = submissions.filter(
+    (x) => x.status === "ignored"
+  ).length;
 
   const query = useQuery({
     queryKey: ["formData"],
@@ -86,8 +99,8 @@ const FormWrapper = ({
       setForm(form);
       setBlocks(blocks);
       setSubmissions(submissions);
+      setOverviewSubmissions(submissions);
       setFormAnalytics(formAnalytics);
-      console.log(formAnalytics);
       return null;
     },
     refetchOnWindowFocus: false,
@@ -102,9 +115,14 @@ const FormWrapper = ({
           <div className="flex justify-between sm:justify-start items-center gap-3 w-full sm:w-fit">
             <div className="flex items-center gap-2">
               <BookIcon className="w-4 h-4" />
-              <h1 className="font-medium truncate max-w-[240px]">{localForm.name}</h1>
+              <h1 className="font-medium truncate max-w-[240px]">
+                {localForm.name}
+              </h1>
             </div>
-            <FormStatusBadge status={localForm.status as TFormStatus} uppercase />
+            <FormStatusBadge
+              status={localForm.status as TFormStatus}
+              uppercase
+            />
           </div>
           <div className="flex items-center sm:gap-4 gap-2 w-full sm:w-fit">
             <FormShare form={localForm}>
@@ -126,7 +144,9 @@ const FormWrapper = ({
               </a>
             )}
             <Button variant="default" size="sm" asChild>
-              <Link href={`/dashboard/editor/${localForm.id}`} className="w-full sm:w-fit">
+              <Link
+                href={`/dashboard/editor/${localForm.id}`}
+                className="w-full sm:w-fit">
                 <Settings2Icon className="w-4 h-4 mr-2" />
                 Editor
               </Link>
@@ -146,16 +166,22 @@ const FormWrapper = ({
         )}
       </div>
       <div className="flex flex-col flex-1 h-full gap-4">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center flex-col sm:flex-row">
           <div className="flex sm:w-fit sm:gap-3 gap-1 overflow-x-auto">
             {enabledViews.map((v) => (
               <button
                 key={v.view}
                 onClick={() => setView(v.view as TView)}
                 className={`${
-                  v.view === view ? "border-foreground/30" : "border-transparent"
+                  v.view === view
+                    ? "border-foreground/30"
+                    : "border-transparent"
                 } border p-2 flex items-center justify-center gap-2 text-sm hover:bg-foreground/5 rounded flex-1`}>
-                <v.icon className={`${v.view === view ? "text-primary" : "text-foreground"} w-4 h-4`} />
+                <v.icon
+                  className={`${
+                    v.view === view ? "text-primary" : "text-foreground"
+                  } w-4 h-4`}
+                />
                 {v.label}
                 {v.view === "submissions" && notReviewedSubmissions > 0 && (
                   <span className="inline-flex items-center justify-center w-4 h-4 text-xs font-semibold text-primary bg-primary/20 rounded-full">
@@ -167,6 +193,16 @@ const FormWrapper = ({
           </div>
           {enabledFilters && (
             <div className="flex justify-center items-center gap-2">
+              <div className="hidden justify-start items-center gap-4">
+                <Badge variant={"info"}>{totalSubmissions}</Badge>
+                <Badge variant={"success"}>
+                  Reviewed: {reviewedSubmissions}
+                </Badge>
+                <Badge variant={"warning"}>
+                  Not reviewed: {notReviewedSubmissions}
+                </Badge>
+                <Badge variant={"gray"}>Ignored: {ignoredSubmissions}</Badge>
+              </div>
               <FormFilters>
                 <Button variant={"outline"} size={"sm"}>
                   <FilterIcon className="w-4 h-4 mr-2" /> Filters

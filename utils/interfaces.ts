@@ -1,5 +1,12 @@
 import type { JSX } from "react";
-import { TBlock, TBrand, TColor, TFormStatus } from "./types";
+import {
+  TBlock,
+  TBrand,
+  TColor,
+  TFilterSort,
+  TFormStatus,
+  TFormStatusExtended,
+} from "./types";
 
 export interface IDesign {
   label: TColor;
@@ -21,4 +28,11 @@ export interface IFormStatus {
   label: string;
   description: string;
   icon: JSX.Element | null;
+}
+
+export interface IFormFilters {
+  from: string;
+  to: string;
+  status: TFormStatusExtended;
+  sort: TFilterSort;
 }

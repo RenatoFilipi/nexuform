@@ -1,11 +1,11 @@
-import { TsubmissionStatus } from "@/utils/types";
+import { TSubmissionStatus } from "@/utils/types";
 import { Badge } from "../ui/badge";
 
 const SubmissionStatusBadge = ({
   status,
   uppercase = false,
 }: {
-  status: TsubmissionStatus;
+  status: TSubmissionStatus;
   uppercase?: boolean;
 }) => {
   switch (status) {

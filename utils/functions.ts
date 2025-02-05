@@ -89,3 +89,10 @@ export const calculateAverageCompletionTime = (times: number[]): number => {
   const total = times.reduce((sum, time) => sum + time, 0);
   return total / times.length;
 };
+export const getDateRange = (days: number) => {
+  const now = new Date().toISOString();
+  return {
+    from: new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString(),
+    to: now,
+  };
+};
