@@ -1,6 +1,5 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import useFormStore from "@/stores/form";
 import { formatDecimal, formatTime } from "@/utils/functions";
@@ -34,7 +33,7 @@ const FormOverview = () => {
   return (
     <div className="rounded w-full h-full flex-1 flex flex-col gap-2">
       <div className="grid sm:grid-cols-2 gap-6">
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 grid-rows-4 gap-6">
           <CardTemplate
             name="Views"
             value={totalViews}
@@ -78,13 +77,12 @@ const CardTemplate = ({
   badge: string;
 }) => {
   return (
-    <Card className="px-4 py-3 flex flex-col flex-1 sm:min-h-32 justify-between gap-2">
+    <Card className="px-4 py-3 flex flex-col flex-1 justify-between gap-2 items-start">
       <div className="flex justify-between">
         <div className="flex items-center gap-2">
           {icon}
           <span className="text-sm">{name}</span>
         </div>
-        <Badge variant={"gray"}>{badge}</Badge>
       </div>
       <span className="text-sm">{value}</span>
     </Card>
