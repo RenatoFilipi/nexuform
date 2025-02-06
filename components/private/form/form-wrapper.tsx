@@ -44,7 +44,7 @@ const views = [
     label: "Integrations",
     icon: UnplugIcon,
     view: "integrations",
-    enabled: true,
+    enabled: false,
   },
   {
     label: "Settings",
@@ -76,7 +76,6 @@ const FormWrapper = ({
   } = useFormStore();
   const [view, setView] = useState<TView>("overview");
   const enabledViews = views.filter((x) => x.enabled);
-  const enabledFilters = view.includes("submissions");
   const notReviewedSubmissions = localSubmissions.filter(
     (x) => x.status === "not_reviewed"
   ).length;
