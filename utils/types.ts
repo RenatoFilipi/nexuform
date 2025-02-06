@@ -41,7 +41,7 @@ export type TPlan = {
   price: number;
   features: string[];
   highlighted: boolean;
-  type: "free_trial" | "basic" | "pro";
+  type: "free_trial" | "basic" | "pro" | "business";
 };
 export type TWidth = "centered" | "full";
 export type TRole =

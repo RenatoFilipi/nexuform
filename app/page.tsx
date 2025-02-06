@@ -1,7 +1,7 @@
 import Brand from "@/components/core/brand";
 import ModeToggle2 from "@/components/core/mode-toggle2";
 import Nav from "@/components/public/core/nav";
-import CallToAction from "@/components/public/landing/call-to-action";
+import Cta from "@/components/public/landing/cta";
 import Faq from "@/components/public/landing/faq";
 import Features from "@/components/public/landing/features";
 import Hero from "@/components/public/landing/hero";
@@ -62,7 +62,7 @@ const Home = () => {
         <HowItWorks />
         <Pricing />
         <Faq />
-        <CallToAction />
+        <Cta />
       </div>
       <footer className="flex justify-center items-center w-full h-12  border-t">
         <div className="absolute left-4 hidden sm:flex justify-center items-center gap-2">
