@@ -1,4 +1,5 @@
 import { default as Brand } from "@/components/core/brand";
+import { Particles } from "@/components/magicui/particles";
 import SignupForm from "@/components/public/auth/signup-form";
 import { Button } from "@/components/ui/button";
 import { ChevronLeftIcon } from "lucide-react";
@@ -8,13 +9,20 @@ import { Suspense } from "react";
 const Signup = () => {
   return (
     <div className="min-h-screen flex">
-      <div className="flex-1 sm:flex hidden w-full relative bg-gradient-to-b from-black to-primary">
+      <div className="flex-1 sm:flex hidden w-full relative bg-gradient-to-b from-[#181C1F] to-primary">
         <Link href={"/"}>
           <Brand
             type="logo_text"
             className="h-8 fill-white absolute top-6 left-6"
           />
         </Link>
+        <Particles
+          className="absolute inset-0 z-0"
+          quantity={100}
+          ease={80}
+          color="#ffffff"
+          refresh
+        />
       </div>
       <div className="flex-1 flex justify-center items-center w-full relative">
         <Link href={"/"} className="fixed top-6 flex sm:hidden">
