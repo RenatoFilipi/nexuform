@@ -32,7 +32,7 @@ const SettingsWrapper = ({ profile }: { profile: EProfile }) => {
   if (query.isPending) return null;
 
   return (
-    <div className="flex w-full h-full flex-1 relative">
+    <div className="flex w-full h-full flex-1 relative sm:pl-36">
       <div className="flex flex-col h-fit sm:w-60 gap-1 fixed">
         {enabledViews.map((v) => (
           <button
@@ -50,7 +50,7 @@ const SettingsWrapper = ({ profile }: { profile: EProfile }) => {
           </button>
         ))}
       </div>
-      <div className="flex w-full ml-72">
+      <div className="flex w-full sm:ml-72 sm:pr-40">
         {view === "general" && <SettingsGeneral />}
         {view === "billing" && <SettingsBilling />}
       </div>
