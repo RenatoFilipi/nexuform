@@ -95,12 +95,12 @@ const SubmissionStatus = ({
   };
 
   return (
-    <div className="inline-flex -space-x-px divide-x divide-primary-foreground/30 rounded-lg shadow-sm shadow-black/5 rtl:space-x-reverse">
+    <div className="inline-flex -space-x-px divide-x divide-primary-foreground/30 shadow-sm shadow-black/5 rtl:space-x-reverse">
       <Button
         disabled={appState === "loading"}
         size={"sm"}
         onClick={onSubmissionStatusSubmit}
-        className="rounded-none shadow-none first:rounded-s-lg last:rounded-e-lg focus-visible:z-10">
+        className="rounded-none shadow-none first:rounded-s-md last:rounded-e-md focus-visible:z-10">
         {appState === "loading" && (
           <LoaderIcon className="w-4 h-4 animate-spin mr-2" />
         )}
@@ -109,7 +109,7 @@ const SubmissionStatus = ({
       <DropdownMenu>
         <DropdownMenuTrigger asChild disabled={appState === "loading"}>
           <Button
-            className="rounded-none shadow-none first:rounded-s-lg last:rounded-e-lg focus-visible:z-10"
+            className="rounded-none shadow-none first:rounded-s-md last:rounded-e-md focus-visible:z-10"
             size="sm"
             aria-label="Options">
             <ChevronDown size={16} strokeWidth={2} aria-hidden="true" />

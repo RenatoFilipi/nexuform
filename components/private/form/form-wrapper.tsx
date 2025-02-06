@@ -10,7 +10,6 @@ import { useQuery } from "@tanstack/react-query";
 import {
   BookIcon,
   ExternalLinkIcon,
-  FilterIcon,
   ForwardIcon,
   Layers2Icon,
   LoaderIcon,
@@ -20,7 +19,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import FormFilters from "./form-filters";
 import FormIntegrations from "./form-integrations";
 import FormOverview from "./form-overview";
 import FormSettings from "./form-settings";
@@ -184,19 +182,6 @@ const FormWrapper = ({
               ))}
             </div>
           </div>
-          {enabledFilters && (
-            <div className="flex justify-center items-center gap-2 w-full sm:w-fit">
-              <FormFilters>
-                <Button
-                  variant={"outline"}
-                  size={"sm"}
-                  className="w-full sm:w-fit">
-                  <FilterIcon className="w-4 h-4 mr-2" />
-                  Filters
-                </Button>
-              </FormFilters>
-            </div>
-          )}
         </div>
         <div className="flex justify-center flex-1 h-full items-start">
           {view === "overview" && <FormOverview />}

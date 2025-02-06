@@ -24,7 +24,7 @@ const OPTIONS = [
 
 const CHART_CONFIG: ChartConfig = {
   submission: {
-    label: "Submission",
+    label: "Submissions",
     color: "#7C3AED",
   },
 } as ChartConfig;
@@ -119,7 +119,7 @@ const SubmissionsActivityChart: React.FC = () => {
           />
           <ChartTooltip
             cursor={false}
-            content={<ChartTooltipContent hideLabel />}
+            content={<ChartTooltipContent indicator="dot" />}
           />
           <Bar
             barSize={barSize}

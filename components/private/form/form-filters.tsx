@@ -22,7 +22,7 @@ const FormFilters = ({ children }: { children: React.ReactNode }) => {
   return (
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent className="mr-12 w-96">
+      <PopoverContent className="sm:mr-12 w-96">
         <Body />
       </PopoverContent>
     </Popover>
