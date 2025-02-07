@@ -12,7 +12,12 @@ type TView = "general" | "billing";
 
 const views = [
   { label: "General", icon: Layers2Icon, view: "general", enabled: true },
-  { label: "Billing", icon: CreditCardIcon, view: "billing", enabled: true },
+  {
+    label: "Billing & usage",
+    icon: CreditCardIcon,
+    view: "billing",
+    enabled: true,
+  },
 ];
 
 const SettingsWrapper = ({ profile }: { profile: EProfile }) => {
