@@ -9,7 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import useSettingsStore from "@/stores/settings";
+import useUserStore from "@/stores/user";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -57,7 +57,7 @@ const SettingsGeneral = () => {
 const GeneralProfile = () => {
   const supabase = createClient();
   const [appState, setAppState] = useState<TAppState>("idle");
-  const { profile, setProfile } = useSettingsStore();
+  const { profile, setProfile } = useUserStore();
 
   const profileSchema = z.object({
     firstName: z.string(),

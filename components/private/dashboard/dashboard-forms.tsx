@@ -1,12 +1,14 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
-import { EForm } from "@/utils/entities";
+import useFormsStore from "@/stores/forms";
+import useUserStore from "@/stores/user";
 import { BookIcon, PlusIcon } from "lucide-react";
 import FormCard from "./form-card";
 import FormCreate from "./form-create";
 
-const FormList = ({ forms, userId }: { forms: EForm[]; userId: string }) => {
+const DashboardForms = () => {
+  const { forms } = useFormsStore();
+  const { profile } = useUserStore();
+
   if (forms.length === 0) {
     return (
       <div className="flex justify-center items-center h-full flex-1 flex-col gap-4">
@@ -23,7 +25,7 @@ const FormList = ({ forms, userId }: { forms: EForm[]; userId: string }) => {
               </span>
             </div>
           </div>
-          <FormCreate userId={userId}>
+          <FormCreate userId={profile.id}>
             <Button variant={"default"} size={"sm"}>
               <PlusIcon className="w-4 h-4 mr-2" />
               Create New Form
@@ -42,4 +44,4 @@ const FormList = ({ forms, userId }: { forms: EForm[]; userId: string }) => {
   );
 };
 
-export default FormList;
+export default DashboardForms;

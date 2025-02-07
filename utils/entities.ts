@@ -9,3 +9,5 @@ export type EAnswer = Tables<"answers">;
 export type EFeedback = Tables<"feedbacks">;
 export type EFormAnalytics = Tables<"forms_analytics">;
 export type EProfileAnalytics = Tables<"profiles_analytics">;
+export type ESubscription = Tables<"subscriptions">;
+export type EInvoice = Tables<"invoices">;

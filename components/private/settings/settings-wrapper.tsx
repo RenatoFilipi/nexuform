@@ -1,6 +1,6 @@
 "use client";
 
-import useSettingsStore from "@/stores/settings";
+import useUserStore from "@/stores/user";
 import { EProfile } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { CreditCardIcon, Layers2Icon } from "lucide-react";
@@ -23,7 +23,7 @@ const views = [
 const SettingsWrapper = ({ profile }: { profile: EProfile }) => {
   const [view, setView] = useState<TView>("general");
   const enabledViews = views.filter((x) => x.enabled);
-  const { setProfile } = useSettingsStore();
+  const { setProfile } = useUserStore();
 
   const query = useQuery({
     queryKey: ["settingsData"],
