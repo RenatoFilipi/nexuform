@@ -6,6 +6,7 @@ import useUserStore from "@/stores/user";
 import { EForm, EProfile, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { PlusIcon } from "lucide-react";
+import UpgradePlans from "../core/upgrade-plans";
 import DashboardForms from "./dashboard-forms";
 import FormCreate from "./form-create";
 
@@ -18,15 +19,24 @@ const DashboardWrapper = ({
   profile: EProfile;
   subscription: ESubscription;
 }) => {
-  const { setProfile, setSubscription } = useUserStore();
+  const {
+    setProfile,
+    setSubscription,
+    setFormsQty,
+    formsQty,
+    subscription: { plan },
+  } = useUserStore();
   const { setForms } = useFormsStore();
+  const mustUpgrade =
+    (formsQty >= 2 && plan === "free_trial") ||
+    (formsQty >= 10 && plan === "basic") ||
+    (formsQty >= 50 && plan === "pro");
 
   const query = useQuery({
     queryKey: ["dashboardData"],
     queryFn: () => {
-      console.log(profile);
-      console.log(subscription);
       setForms(forms);
+      setFormsQty(forms.length);
       setProfile(profile);
       setSubscription(subscription);
       return null;
@@ -41,12 +51,21 @@ const DashboardWrapper = ({
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-medium">Forms</h1>
         <div className="flex justify-center items-center gap-4">
-          <FormCreate userId={profile.id}>
-            <Button size={"sm"} variant={"default"}>
-              <PlusIcon className="w-4 h-4 mr-2" />
-              Create New Form
-            </Button>
-          </FormCreate>
+          {mustUpgrade ? (
+            <UpgradePlans>
+              <Button size={"sm"} variant={"default"}>
+                <PlusIcon className="w-4 h-4 mr-2" />
+                Create New Form
+              </Button>
+            </UpgradePlans>
+          ) : (
+            <FormCreate userId={profile.id}>
+              <Button size={"sm"} variant={"default"}>
+                <PlusIcon className="w-4 h-4 mr-2" />
+                Create New Form
+              </Button>
+            </FormCreate>
+          )}
         </div>
       </div>
       <DashboardForms />

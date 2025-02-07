@@ -1,3 +1,5 @@
+import { IPlanDesign } from "./interfaces";
+
 export const minWidth640 = "(min-width: 640px)";
 export const minute = 1000 * 60;
 export const colorsPalettes = {
@@ -288,3 +290,42 @@ export const colorsPalettes = {
     950: "#4c0519",
   },
 };
+export const plans: IPlanDesign[] = [
+  {
+    name: "Free Trial",
+    price: 0,
+    features: ["2 forms", "100 submissions", "Email support"],
+    highlighted: false,
+    type: "free_trial",
+    buttonLabel: "Start Free Trial",
+  },
+  {
+    name: "Basic",
+    price: 10,
+    features: [
+      "10 forms",
+      "2,000 submissions",
+      "Priority email support",
+      "Basic integrations",
+      "Basic analytics",
+    ],
+    highlighted: false,
+    type: "basic",
+    buttonLabel: "Upgrade to Basic",
+  },
+  {
+    name: "Pro",
+    price: 20,
+    features: [
+      "50 forms",
+      "10,000 submissions",
+      "Priority support",
+      "Advanced integrations",
+      "Advanced analytics",
+      "Data export",
+    ],
+    highlighted: true,
+    type: "pro",
+    buttonLabel: "Upgrade to Pro",
+  },
+];

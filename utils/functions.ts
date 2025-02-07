@@ -1,6 +1,7 @@
 import { formatDistance } from "date-fns";
 import { customAlphabet } from "nanoid";
 import { redirect } from "next/navigation";
+import { ESubscription } from "./entities";
 import { TBlock } from "./types";
 
 export const uuid = () => {
@@ -96,3 +97,4 @@ export const getDateRange = (days: number) => {
     to: now,
   };
 };
+export const mustUpgrade = (subscription: ESubscription) => {};

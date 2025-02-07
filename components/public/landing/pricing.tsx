@@ -2,46 +2,10 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { TPlan } from "@/utils/types";
+import { plans } from "@/utils/constants";
+import { IPlanDesign } from "@/utils/interfaces";
 
 const Pricing = () => {
-  const plans: TPlan[] = [
-    {
-      name: "Free Trial",
-      price: 0,
-      features: ["2 forms", "100 submissions", "Email support"],
-      highlighted: false,
-      type: "free_trial",
-    },
-    {
-      name: "Basic",
-      price: 10,
-      features: [
-        "10 forms",
-        "2,000 submissions",
-        "Priority email support",
-        "Basic integrations",
-        "Basic analytics",
-      ],
-      highlighted: false,
-      type: "basic",
-    },
-    {
-      name: "Pro",
-      price: 20,
-      features: [
-        "50 forms",
-        "10,000 submissions",
-        "Priority support",
-        "Advanced integrations",
-        "Advanced analytics",
-        "Data export",
-      ],
-      highlighted: true,
-      type: "pro",
-    },
-  ];
-
   return (
     <section id="pricing" className="py-12 sm:py-16 lg:py-20 bg-background">
       <div className="px-4 mx-auto sm:px-6 lg:px-8">
@@ -63,7 +27,7 @@ const Pricing = () => {
   );
 };
 
-const CardTemplate = ({ plan }: { plan: TPlan }) => {
+const CardTemplate = ({ plan }: { plan: IPlanDesign }) => {
   return (
     <div
       className={`relative flex flex-col items-center sm:w-80 w-full p-8 bg-background border rounded-lg shadow-lg transition-transform hover:scale-105 hover:shadow-xl ${

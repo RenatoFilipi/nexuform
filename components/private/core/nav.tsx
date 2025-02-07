@@ -1,11 +1,13 @@
 "use client";
 
 import { signOutAction } from "@/app/actions";
+import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import useEditorStore from "@/stores/editor";
+import useUserStore from "@/stores/user";
 import { createClient } from "@/utils/supabase/client";
-import { TAppState } from "@/utils/types";
+import { TAppState, TPlan } from "@/utils/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ChartPieIcon,
@@ -34,6 +36,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
+import UpgradePlans from "./upgrade-plans";
 
 const links = [
   {
@@ -237,6 +240,7 @@ const AvatarAppMenu = () => {
 };
 const NavApp = () => {
   const editorStore = useEditorStore();
+  const userStore = useUserStore();
   const pathname = usePathname();
   const isActive = (path: string) => path === pathname;
 
@@ -257,6 +261,9 @@ const NavApp = () => {
               <Brand type="logo" className="h-7 fill-foreground" />
             </Link>
           </Button>
+          {userStore.subscription.plan === "" ? null : (
+            <PlanBadge plan={userStore.subscription.plan as TPlan} />
+          )}
         </div>
         <div className="hidden sm:flex justify-center items-center gap-0 h-full">
           {links.map((link) => {
@@ -283,11 +290,20 @@ const NavApp = () => {
         </div>
       </div>
       <div className="hidden sm:flex justify-center items-center gap-4">
-        <Feedback>
-          <Button variant={"outline"} size={"sm"}>
-            Feedback
-          </Button>
-        </Feedback>
+        <div className="flex justify-center items-center gap-3">
+          {userStore.subscription.plan !== "pro" && (
+            <UpgradePlans>
+              <Button variant={"outline"} size={"sm"}>
+                Upgrade
+              </Button>
+            </UpgradePlans>
+          )}
+          <Feedback>
+            <Button variant={"outline"} size={"sm"}>
+              Feedback
+            </Button>
+          </Feedback>
+        </div>
         <AvatarAppMenu />
       </div>
       <div className="flex sm:hidden">
@@ -480,6 +496,22 @@ const NavEditor = () => {
         </Button>
       </div>
     </div>
+  );
+};
+
+const PlanBadge = ({ plan }: { plan: TPlan }) => {
+  const planLabels: Record<TPlan, string> = {
+    free_trial: "Free Trial",
+    basic: "Basic",
+    pro: "Pro",
+    business: "Business",
+    custom: "Custom",
+  };
+
+  return (
+    <Badge variant="success" uppercase className="rounded-lg">
+      {planLabels[plan] || "Custom"}
+    </Badge>
   );
 };
 

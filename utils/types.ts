@@ -36,13 +36,7 @@ export type TColor =
   | "fuchsia"
   | "pink"
   | "rose";
-export type TPlan = {
-  name: string;
-  price: number;
-  features: string[];
-  highlighted: boolean;
-  type: "free_trial" | "basic" | "pro" | "business";
-};
+export type TPlan = "free_trial" | "basic" | "pro" | "business" | "custom";
 export type TWidth = "centered" | "full";
 export type TRole =
   | "admin"

@@ -23,10 +23,13 @@ const Forms = async () => {
   const { data: subscription, error: subscriptionError } = await supabase
     .from("subscriptions")
     .select("*")
-    .eq("user_id", data.user.id)
+    .eq("profile_id", data.user.id)
     .single();
 
   if (formsError || profileError || subscriptionError) {
+    console.log(formsError);
+    console.log(profileError);
+    console.log(subscriptionError);
     return (
       <div className="flex flex-col justify-center items-center h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
         <div className="flex flex-col justify-center items-center gap-2">

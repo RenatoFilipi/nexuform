@@ -10,6 +10,8 @@ const badgeVariants = cva(
       variant: {
         default:
           "inline-flex items-center rounded-md bg-foreground/5 px-2 py-1 text-xs font-medium text-foreground/80 dark:bg-foreground/20 dark:text-foreground",
+        primary:
+          "inline-flex items-center rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary dark:bg-primary/20",
         success:
           "inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-500",
         warning:
@@ -32,6 +34,11 @@ const badgeVariants = cva(
         orange:
           "inline-flex items-center rounded-md bg-orange-50 px-2 py-1 text-xs font-medium text-orange-700 dark:bg-orange-900/50 dark:text-orange-500",
         lime: "inline-flex items-center rounded-md bg-lime-50 px-2 py-1 text-xs font-medium text-lime-700 dark:bg-lime-900/50 dark:text-lime-500",
+        gold: "inline-flex items-center rounded-md bg-yellow-400/20 px-2 py-1 text-xs font-medium text-yellow-600 dark:bg-yellow-600/30 dark:text-yellow-300",
+        silver:
+          "inline-flex items-center rounded-md bg-gray-300/20 px-2 py-1 text-xs font-medium text-gray-500 dark:bg-gray-500/30 dark:text-gray-200",
+        bronze:
+          "inline-flex items-center rounded-md bg-orange-600/20 px-2 py-1 text-xs font-medium text-orange-700 dark:bg-orange-700/30 dark:text-orange-300",
       },
       uppercase: {
         true: "uppercase",

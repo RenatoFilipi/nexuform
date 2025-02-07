@@ -6,6 +6,7 @@ import {
   TFilterSort,
   TFormStatus,
   TFormStatusExtended,
+  TPlan,
 } from "./types";
 
 export interface IDesign {
@@ -29,10 +30,19 @@ export interface IFormStatus {
   description: string;
   icon: JSX.Element | null;
 }
-
 export interface IFormFilters {
   from: string;
   to: string;
   status: TFormStatusExtended;
   sort: TFilterSort;
+}
+export interface IPlan {
+  name: string;
+  price: number;
+  type: TPlan;
+}
+export interface IPlanDesign extends IPlan {
+  features: string[];
+  highlighted: boolean;
+  buttonLabel: string;
 }

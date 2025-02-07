@@ -4,8 +4,12 @@ import { create } from "zustand";
 interface user {
   profile: EProfile;
   subscription: ESubscription;
+  formsQty: number;
+  submissionsQty: number;
   setProfile: (payload: EProfile) => void;
   setSubscription: (payload: ESubscription) => void;
+  setFormsQty: (payload: number) => void;
+  setSubmissionsQty: (payload: number) => void;
 }
 
 const useUserStore = create<user>((set) => ({
@@ -18,6 +22,7 @@ const useUserStore = create<user>((set) => ({
     username: "",
     website: "",
     role: "member",
+    full_name: "",
   },
   subscription: {
     id: "",
@@ -28,10 +33,14 @@ const useUserStore = create<user>((set) => ({
     plan: "",
     start_date: "",
     status: "",
-    user_id: "",
+    profile_id: "",
   },
+  formsQty: 0,
+  submissionsQty: 0,
   setProfile: (payload) => set({ profile: payload }),
   setSubscription: (payload) => set({ subscription: payload }),
+  setFormsQty: (payload) => set({ formsQty: payload }),
+  setSubmissionsQty: (payload) => set({ submissionsQty: payload }),
   reset: () =>
     set({
       profile: {
@@ -43,6 +52,7 @@ const useUserStore = create<user>((set) => ({
         username: "",
         website: "",
         role: "member",
+        full_name: "",
       },
       subscription: {
         id: "",
@@ -53,7 +63,7 @@ const useUserStore = create<user>((set) => ({
         plan: "",
         start_date: "",
         status: "",
-        user_id: "",
+        profile_id: "",
       },
     }),
 }));

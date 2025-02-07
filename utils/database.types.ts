@@ -349,34 +349,37 @@ export type Database = {
       }
       profiles: {
         Row: {
-          avatar_url: string
+          avatar_url: string | null
           first_name: string
+          full_name: string | null
           id: string
           last_name: string
           role: string
           updated_at: string | null
           username: string | null
-          website: string
+          website: string | null
         }
         Insert: {
-          avatar_url?: string
+          avatar_url?: string | null
           first_name?: string
+          full_name?: string | null
           id: string
           last_name?: string
           role?: string
           updated_at?: string | null
           username?: string | null
-          website?: string
+          website?: string | null
         }
         Update: {
-          avatar_url?: string
+          avatar_url?: string | null
           first_name?: string
+          full_name?: string | null
           id?: string
           last_name?: string
           role?: string
           updated_at?: string | null
           username?: string | null
-          website?: string
+          website?: string | null
         }
         Relationships: []
       }
@@ -466,10 +469,10 @@ export type Database = {
           id: string
           next_billing_date: string | null
           plan: string
+          profile_id: string
           start_date: string
           status: string
           updated_at: string
-          user_id: string
         }
         Insert: {
           billing_interval?: string
@@ -477,10 +480,10 @@ export type Database = {
           id?: string
           next_billing_date?: string | null
           plan?: string
+          profile_id: string
           start_date?: string
           status?: string
           updated_at?: string
-          user_id: string
         }
         Update: {
           billing_interval?: string
@@ -488,15 +491,15 @@ export type Database = {
           id?: string
           next_billing_date?: string | null
           plan?: string
+          profile_id?: string
           start_date?: string
           status?: string
           updated_at?: string
-          user_id?: string
         }
         Relationships: [
           {
             foreignKeyName: "subscriptions_user_id_fkey"
-            columns: ["user_id"]
+            columns: ["profile_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
