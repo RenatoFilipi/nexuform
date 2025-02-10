@@ -3,7 +3,15 @@
 import FormStatusBadge from "@/components/shared/form-status-badge";
 import { Button } from "@/components/ui/button";
 import useFormStore from "@/stores/form";
-import { EBlock, EForm, EFormAnalytics, ESubmission } from "@/utils/entities";
+import useUserStore from "@/stores/user";
+import {
+  EBlock,
+  EForm,
+  EFormAnalytics,
+  EProfile,
+  ESubmission,
+  ESubscription,
+} from "@/utils/entities";
 import { formatDateRelativeToNow } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
@@ -44,7 +52,7 @@ const views = [
     label: "Integrations",
     icon: UnplugIcon,
     view: "integrations",
-    enabled: false,
+    enabled: true,
   },
   {
     label: "Settings",
@@ -59,35 +67,34 @@ const FormWrapper = ({
   blocks,
   form,
   formAnalytics,
+  profile,
+  subscription,
 }: {
   submissions: ESubmission[];
   blocks: EBlock[];
   form: EForm;
   formAnalytics: EFormAnalytics;
+  profile: EProfile;
+  subscription: ESubscription;
 }) => {
-  const {
-    setForm,
-    setBlocks,
-    setSubmissions,
-    form: localForm,
-    setFormAnalytics,
-    submissions: localSubmissions,
-    setOverviewSubmissions,
-  } = useFormStore();
+  const formStore = useFormStore();
+  const userStore = useUserStore();
   const [view, setView] = useState<TView>("overview");
   const enabledViews = views.filter((x) => x.enabled);
-  const notReviewedSubmissions = localSubmissions.filter(
+  const notReviewedSubmissions = formStore.submissions.filter(
     (x) => x.status === "not_reviewed"
   ).length;
 
   const query = useQuery({
     queryKey: ["formData"],
     queryFn: () => {
-      setForm(form);
-      setBlocks(blocks);
-      setSubmissions(submissions);
-      setOverviewSubmissions(submissions);
-      setFormAnalytics(formAnalytics);
+      formStore.setForm(form);
+      formStore.setBlocks(blocks);
+      formStore.setSubmissions(submissions);
+      formStore.setOverviewSubmissions(submissions);
+      formStore.setFormAnalytics(formAnalytics);
+      userStore.setProfile(profile);
+      userStore.setSubscription(subscription);
       return null;
     },
     refetchOnWindowFocus: false,
@@ -103,18 +110,18 @@ const FormWrapper = ({
             <div className="flex items-center gap-2">
               <BookIcon className="w-4 h-4" />
               <h1 className="font-medium truncate max-w-[240px]">
-                {localForm.name}
+                {formStore.form.name}
               </h1>
             </div>
             <FormStatusBadge
-              status={localForm.status as TFormStatus}
+              status={formStore.form.status as TFormStatus}
               uppercase
             />
-            {localForm.updated_at !== "".trim() ? (
+            {formStore.form.updated_at !== "".trim() ? (
               <div className="hidden sm:flex">
                 <span className="text-xs text-foreground/60">
                   Form last updated{" "}
-                  {formatDateRelativeToNow(localForm.updated_at)}
+                  {formatDateRelativeToNow(formStore.form.updated_at)}
                 </span>
               </div>
             ) : (
@@ -124,15 +131,15 @@ const FormWrapper = ({
             )}
           </div>
           <div className="flex items-center sm:gap-4 gap-2 w-full sm:w-fit">
-            <FormShare form={localForm}>
+            <FormShare form={formStore.form}>
               <Button variant="outline" size="sm" className="w-full">
                 <ForwardIcon className="w-4 h-4 mr-2" />
                 Share
               </Button>
             </FormShare>
-            {localForm.status === "published" && (
+            {formStore.form.status === "published" && (
               <a
-                href={`/s/${localForm.public_url}`}
+                href={`/s/${formStore.form.public_url}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-fit">
@@ -144,7 +151,7 @@ const FormWrapper = ({
             )}
             <Button variant="default" size="sm" asChild>
               <Link
-                href={`/dashboard/editor/${localForm.id}`}
+                href={`/dashboard/editor/${formStore.form.id}`}
                 className="w-full sm:w-fit">
                 <Settings2Icon className="w-4 h-4 mr-2" />
                 Editor

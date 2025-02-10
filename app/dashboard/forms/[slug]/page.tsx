@@ -9,6 +9,27 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
   if (!data.user) {
     return redirect("login");
   }
+
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", data.user.id)
+    .single();
+
+  if (profileError) {
+    return <ErrorUI />;
+  }
+
+  const { data: subscription, error: subscriptionError } = await supabase
+    .from("subscriptions")
+    .select("*")
+    .eq("profile_id", data.user.id)
+    .single();
+
+  if (subscriptionError) {
+    return <ErrorUI />;
+  }
+
   const { data: form, error: formError } = await supabase
     .from("forms")
     .select("*")
@@ -16,7 +37,9 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("id", slug)
     .single();
 
-  if (form === null) {
+  if (formError) return <ErrorUI />;
+
+  if (form.owner_id !== data.user.id) {
     return redirect("/dashboard/forms");
   }
 
@@ -26,11 +49,15 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("form_id", slug)
     .order("position", { ascending: true });
 
+  if (blocksError) return <ErrorUI />;
+
   const { data: submissions, error: submissionsError } = await supabase
     .from("submissions")
     .select("*")
     .eq("form_id", slug)
     .order("created_at", { ascending: true });
+
+  if (submissionsError) return <ErrorUI />;
 
   const { data: formAnalytics, error: formAnalyticsError } = await supabase
     .from("forms_analytics")
@@ -38,15 +65,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("form_id", form.id)
     .single();
 
-  if (formError || submissionsError || blocksError || formAnalyticsError) {
-    return (
-      <div className="flex flex-col justify-center items-center h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
-        <div className="flex flex-col justify-center items-center gap-2">
-          <span className="">Something went wrong</span>
-        </div>
-      </div>
-    );
-  }
+  if (formAnalyticsError) return <ErrorUI />;
 
   return (
     <FormWrapper
@@ -54,7 +73,19 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
       blocks={blocks}
       submissions={submissions}
       formAnalytics={formAnalytics}
+      profile={profile}
+      subscription={subscription}
     />
+  );
+};
+
+const ErrorUI = () => {
+  return (
+    <div className="flex flex-col justify-center items-center h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
+      <div className="flex flex-col justify-center items-center gap-2">
+        <span className="">Something went wrong</span>
+      </div>
+    </div>
   );
 };
 
