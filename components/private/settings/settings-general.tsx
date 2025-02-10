@@ -24,7 +24,7 @@ const SettingsGeneral = () => {
   return (
     <div className="flex flex-col gap-8 w-full">
       <div className="flex flex-col">
-        <h1 className="font-semibold text-xl">User Preferences</h1>
+        <h1 className="font-semibold text-lg">User Preferences</h1>
         <p className="text-sm text-foreground/80">
           Customize your profile, account settings, and preferences to tailor
           your Nebulaform experience.
