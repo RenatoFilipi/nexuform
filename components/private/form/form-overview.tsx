@@ -35,13 +35,13 @@ const FormOverview = () => {
       <div className="gap-6 grid sm:grid-cols-2">
         <div className="grid grid-cols-2 sm:grid-rows-4 gap-6">
           <CardTemplate
-            name="Views"
+            name="Total Views"
             value={totalViews}
             icon={<EyeIcon className="w-5 h-5 text-blue-500" />}
             badge="All time"
           />
           <CardTemplate
-            name="Submissions"
+            name="Total Submissions"
             value={totalSubmissions}
             icon={<SendIcon className="w-5 h-5 text-green-500" />}
             badge="All time"
@@ -84,7 +84,7 @@ const CardTemplate = ({
           <span className="text-sm">{name}</span>
         </div>
       </div>
-      <span className="text-sm font-semibold">{value}</span>
+      <span className="text-base font-semibold">{value}</span>
     </Card>
   );
 };

@@ -84,7 +84,7 @@ const CardTemplate = ({ plan }: { plan: IPlanDesign }) => {
       className={`relative flex flex-col items-center sm:w-80 w-full p-4 bg-background border rounded-lg`}>
       <div className="flex flex-col w-full gap-3">
         <div className="flex justify-start items-center gap-2">
-          <h3 className="text-primary">{plan.name}</h3>
+          <h3 className="text-primary font-semibold">{plan.name}</h3>
           {plan.highlighted && (
             <Badge variant="green" className="">
               Most Popular

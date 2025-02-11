@@ -17,7 +17,7 @@ const FormIntegrations = () => {
         </span>
         <ChangePlans>
           <Button variant={"default"} size={"sm"}>
-            Upgrade Subscription
+            Upgrade Now
           </Button>
         </ChangePlans>
       </div>

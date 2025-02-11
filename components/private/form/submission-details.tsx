@@ -9,12 +9,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import useUserStore from "@/stores/user";
 import { minWidth640, minute } from "@/utils/constants";
 import { EBlock, ESubmission } from "@/utils/entities";
 import { formatDateRelativeToNow, formatTime } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState, TSubmissionStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
+import { saveAs } from "file-saver";
+import Papa from "papaparse";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import {
@@ -25,6 +28,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "../../ui/drawer";
+import ChangePlans from "../core/change-plans";
 import SubmissionStatus from "./submission-status";
 
 const SubmissionDetails = ({
@@ -84,6 +88,8 @@ const Body = ({
   blocks: EBlock[];
 }) => {
   const supabase = createClient();
+  const { subscription } = useUserStore();
+  const isAllowedToExport = subscription.plan === "pro";
   const query = useQuery({
     queryKey: [`submissionData`, submission.id],
     queryFn: async () => {
@@ -103,8 +109,8 @@ const Body = ({
 
       const collections = blocks.map((block) => {
         const targetAnswer = data.find((x) => x.block_id === block.id);
-        if (!targetAnswer) return { name: block.name, answer: "" };
-        return { name: block.name, answer: targetAnswer.value };
+        if (!targetAnswer) return { question: block.name, answer: "" };
+        return { question: block.name, answer: targetAnswer.value };
       });
 
       return { collections };
@@ -113,6 +119,21 @@ const Body = ({
     gcTime: 10 * minute,
     refetchOnWindowFocus: false,
   });
+
+  const exportOneSubmissionToCSV = (
+    submission: ESubmission,
+    collection: { question: string; answer: string }[]
+  ) => {
+    const csvData = [
+      { question: "Identifier", answer: submission.identifier },
+      ...collection,
+    ];
+    const csv = Papa.unparse(csvData);
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const date = new Date().toISOString().replace(/[:T]/g, "-").split(".")[0];
+    const fileName = `sub_${date}.csv`;
+    saveAs(blob, fileName);
+  };
 
   return (
     <div className="h-full overflow-y-auto flex flex-col gap-4">
@@ -138,7 +159,7 @@ const Body = ({
           {query.data?.collections.map((coll, i) => {
             return (
               <div key={i} className="flex flex-col">
-                <span className="font-semibold text-sm">{coll.name}</span>
+                <span className="font-semibold text-sm">{coll.question}</span>
                 {coll.answer.trim() !== "" ? (
                   <span className="text-xs text-foreground/80">
                     {coll.answer}
@@ -160,9 +181,26 @@ const Body = ({
           Cancel
         </Button>
         <div className="flex justify-center items-center gap-3">
-          <Button variant={"secondary"} size={"sm"}>
-            Export as CSV
-          </Button>
+          {isAllowedToExport && (
+            <Button
+              onClick={() => {
+                exportOneSubmissionToCSV(
+                  submission,
+                  query.data?.collections ?? []
+                );
+              }}
+              variant={"secondary"}
+              size={"sm"}>
+              Export as CSV
+            </Button>
+          )}
+          {!isAllowedToExport && (
+            <ChangePlans>
+              <Button variant={"secondary"} size={"sm"}>
+                Export as CSV
+              </Button>
+            </ChangePlans>
+          )}
           <SubmissionStatus submission={submission} setState={setState} />
         </div>
       </div>
