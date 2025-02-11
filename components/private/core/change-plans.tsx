@@ -26,7 +26,7 @@ import { CheckIcon } from "lucide-react";
 import { useState } from "react";
 import { useMedia } from "react-use";
 
-const UpgradePlans = ({ children }: { children: React.ReactNode }) => {
+const ChangePlans = ({ children }: { children: React.ReactNode }) => {
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
@@ -118,4 +118,4 @@ const CardTemplate = ({ plan }: { plan: IPlanDesign }) => {
     </div>
   );
 };
-export default UpgradePlans;
+export default ChangePlans;

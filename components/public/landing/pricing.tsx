@@ -30,7 +30,7 @@ const Pricing = () => {
 const CardTemplate = ({ plan }: { plan: IPlanDesign }) => {
   return (
     <div
-      className={`relative flex flex-col items-center sm:w-80 w-full p-8 bg-background border rounded-lg shadow-lg transition-transform hover:scale-105 hover:shadow-xl ${
+      className={`relative flex flex-col items-center sm:w-[340px] w-full p-8 bg-background border rounded-lg shadow-lg transition-transform hover:scale-105 hover:shadow-xl ${
         plan.highlighted ? "border-primary border-2" : "border-foreground/20"
       }`}>
       <div className="flex flex-col w-full">

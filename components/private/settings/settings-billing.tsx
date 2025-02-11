@@ -1,13 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import useUserStore from "@/stores/user";
+import { getDaysDifference } from "@/utils/functions";
 import { CalendarIcon, ZapIcon } from "lucide-react";
-import UpgradePlans from "../core/upgrade-plans";
+import ChangePlans from "../core/change-plans";
 
 const SettingsBilling = () => {
   const userStore = useUserStore();
-  const turnouverDate = userStore.subscription.start_date;
-  console.log(turnouverDate);
+  const nextBillingDate = userStore.subscription.next_billing_date;
+  const pendingDays = getDaysDifference(
+    new Date(),
+    new Date(userStore.subscription.next_billing_date)
+  );
+  const pendingDaysStr =
+    pendingDays === 1 ? `1 day remaining` : `${pendingDays} days remaining`;
 
   const planName = (plan: string) =>
     ({
@@ -50,24 +56,24 @@ const SettingsBilling = () => {
                 <CalendarIcon className="w-8 h-8 text-primary" />
                 <div className="flex flex-col justify-start">
                   <span className="text-lg font-semibold">
-                    {new Date(turnouverDate).toLocaleDateString()}
+                    {new Date(nextBillingDate).toLocaleDateString()}
                   </span>
                   <div className="flex justify-start">
                     <span className="text-xs text-foreground/80">
-                      turnover Date
+                      {pendingDaysStr}
                     </span>
                   </div>
                 </div>
               </div>
             </div>
-            <UpgradePlans>
+            <ChangePlans>
               <Button
                 variant={"secondary"}
                 size={"sm"}
                 className="w-full sm:w-fit">
-                Upgrade Subscription Plan
+                Change Subscription Plan
               </Button>
-            </UpgradePlans>
+            </ChangePlans>
           </div>
         </Card>
         <Card className="p-4 flex flex-col gap-4 h-full">

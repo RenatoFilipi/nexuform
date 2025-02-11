@@ -8,6 +8,7 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import useFormStore from "@/stores/form";
@@ -65,6 +66,7 @@ const FormSettings = () => {
       .string()
       .min(3, "Submit text must contain at least 3 letters."),
     status: z.string(),
+    newSubmissionNotification: z.boolean(),
   });
   const formHandler = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -73,14 +75,22 @@ const FormSettings = () => {
       description: form.description ?? "",
       submitText: form.submit_text,
       status: form.status,
+      newSubmissionNotification: form.new_submission_notification,
     },
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const { name, description, status, submitText } = values;
+    const { name, description, status, submitText, newSubmissionNotification } =
+      values;
     setSettingsState("loading");
     const { data, error } = await supabase
       .from("forms")
-      .update({ name, description, status, submit_text: submitText })
+      .update({
+        name,
+        description,
+        status,
+        submit_text: submitText,
+        new_submission_notification: newSubmissionNotification,
+      })
       .eq("id", form.id)
       .select("*")
       .single();
@@ -210,11 +220,28 @@ const FormSettings = () => {
                     </div>
                   ))}
                 </div>
-                <Alert variant="info">
-                  <AlertDescription className="text-sm text-center">
+                <Alert variant="default">
+                  <AlertDescription className="text-sm text-start">
                     {statusDescription}
                   </AlertDescription>
                 </Alert>
+              </div>
+              <div>
+                <FormField
+                  control={formHandler.control}
+                  name="newSubmissionNotification"
+                  render={({ field }) => (
+                    <FormItem className="flex justify-between items-center">
+                      <FormLabel>New submission notification</FormLabel>
+                      <FormControl>
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
               </div>
             </div>
           </div>

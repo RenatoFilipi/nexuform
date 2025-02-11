@@ -290,24 +290,69 @@ export const colorsPalettes = {
     950: "#4c0519",
   },
 };
+export const freeTrialPeriod = Number(
+  process.env.NEXT_PUBLIC_PLAN_FREE_TRIAL_PERIOD
+);
+export const freeTrialPricing = Number(
+  process.env.NEXT_PUBLIC_PLAN_FREE_TRIAL_PRICING
+);
+export const freeTrialForms = Number(
+  process.env.NEXT_PUBLIC_PLAN_FREE_TRIAL_FORMS
+);
+export const freeTrialSubmissions = Number(
+  process.env.NEXT_PUBLIC_PLAN_FREE_TRIAL_SUBMISSIONS
+);
+export const basicPricing = Number(process.env.NEXT_PUBLIC_PLAN_BASIC_PRICING);
+export const basicForms = Number(process.env.NEXT_PUBLIC_PLAN_BASIC_PRICING);
+export const basicSubmissions = Number(
+  process.env.NEXT_PUBLIC_PLAN_BASIC_SUBMISSIONS
+);
+export const proPricing = Number(process.env.NEXT_PUBLIC_PLAN_PRO_PRICING);
+export const proForms = Number(process.env.NEXT_PUBLIC_PLAN_PRO_FORMS);
+export const proSubmissions = Number(
+  process.env.NEXT_PUBLIC_PLAN_PRO_SUBMISSIONS
+);
+export const planSettings = {
+  freeTrial: {
+    period: freeTrialPeriod ?? 14,
+    pricing: freeTrialPricing ?? 0,
+    forms: freeTrialForms ?? 3,
+    submissions: freeTrialSubmissions ?? 250,
+  },
+  basic: {
+    pricing: basicPricing ?? 5,
+    forms: basicForms ?? 10,
+    submissions: basicSubmissions ?? 2000,
+  },
+  pro: {
+    pricing: proPricing ?? 20,
+    forms: proForms ?? 25,
+    submissions: proSubmissions ?? 10000,
+  },
+};
 export const plans: IPlanDesign[] = [
   {
     name: "Free Trial",
-    price: 0,
-    features: ["2 forms", "100 submissions", "Email support"],
+    price: freeTrialPricing,
+    features: [
+      `${freeTrialForms} forms`,
+      `${freeTrialSubmissions} submissions`,
+      "Basic analytics",
+      "Email notifications",
+    ],
     highlighted: false,
     type: "free_trial",
     buttonLabel: "Start Free Trial",
   },
   {
     name: "Basic",
-    price: 10,
+    price: basicPricing,
     features: [
-      "10 forms",
-      "2,000 submissions",
-      "Priority email support",
-      "Basic integrations",
-      "Basic analytics",
+      `${basicForms} forms`,
+      `${basicSubmissions} submissions`,
+      "Basic support (24h response time)",
+      "Basic analytics (Views & Submissions tracking)",
+      "Email notifications",
     ],
     highlighted: false,
     type: "basic",
@@ -315,14 +360,16 @@ export const plans: IPlanDesign[] = [
   },
   {
     name: "Pro",
-    price: 20,
+    price: proPricing,
     features: [
-      "50 forms",
-      "10,000 submissions",
-      "Priority support",
-      "Advanced integrations",
-      "Advanced analytics",
-      "Data export",
+      `${proForms} forms`,
+      `${proSubmissions} submissions`,
+      "Priority support (6h response time)",
+      "Premium integrations",
+      "Premium analytics",
+      "Remove Nebulaform branding",
+      "Email notifications",
+      "Data export (CSV)",
     ],
     highlighted: true,
     type: "pro",

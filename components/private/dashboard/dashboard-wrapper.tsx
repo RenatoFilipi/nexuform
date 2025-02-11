@@ -3,10 +3,11 @@
 import { Button } from "@/components/ui/button";
 import useFormsStore from "@/stores/forms";
 import useUserStore from "@/stores/user";
+import { planSettings } from "@/utils/constants";
 import { EForm, EProfile, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { PlusIcon } from "lucide-react";
-import UpgradePlans from "../core/upgrade-plans";
+import ChangePlans from "../core/change-plans";
 import DashboardForms from "./dashboard-forms";
 import FormCreate from "./form-create";
 
@@ -28,9 +29,9 @@ const DashboardWrapper = ({
   } = useUserStore();
   const { setForms } = useFormsStore();
   const mustUpgrade =
-    (formsQty >= 2 && plan === "free_trial") ||
-    (formsQty >= 10 && plan === "basic") ||
-    (formsQty >= 50 && plan === "pro");
+    (formsQty >= planSettings.freeTrial.forms && plan === "free_trial") ||
+    (formsQty >= planSettings.basic.forms && plan === "basic") ||
+    (formsQty >= planSettings.pro.forms && plan === "pro");
 
   const query = useQuery({
     queryKey: ["dashboardData"],
@@ -52,12 +53,12 @@ const DashboardWrapper = ({
         <h1 className="text-xl font-medium">Forms</h1>
         <div className="flex justify-center items-center gap-4">
           {mustUpgrade ? (
-            <UpgradePlans>
+            <ChangePlans>
               <Button size={"sm"} variant={"default"}>
                 <PlusIcon className="w-4 h-4 mr-2" />
                 Create New Form
               </Button>
-            </UpgradePlans>
+            </ChangePlans>
           ) : (
             <FormCreate userId={profile.id}>
               <Button size={"sm"} variant={"default"}>

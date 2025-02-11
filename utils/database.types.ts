@@ -166,6 +166,7 @@ export type Database = {
           description: string | null
           id: string
           name: string
+          new_submission_notification: boolean
           owner_id: string
           public_url: string
           status: string
@@ -177,6 +178,7 @@ export type Database = {
           description?: string | null
           id?: string
           name?: string
+          new_submission_notification?: boolean
           owner_id?: string
           public_url?: string
           status?: string
@@ -188,6 +190,7 @@ export type Database = {
           description?: string | null
           id?: string
           name?: string
+          new_submission_notification?: boolean
           owner_id?: string
           public_url?: string
           status?: string
@@ -467,7 +470,7 @@ export type Database = {
           billing_interval: string
           created_at: string
           id: string
-          next_billing_date: string | null
+          next_billing_date: string
           plan: string
           profile_id: string
           start_date: string
@@ -478,7 +481,7 @@ export type Database = {
           billing_interval?: string
           created_at?: string
           id?: string
-          next_billing_date?: string | null
+          next_billing_date?: string
           plan?: string
           profile_id: string
           start_date?: string
@@ -489,7 +492,7 @@ export type Database = {
           billing_interval?: string
           created_at?: string
           id?: string
-          next_billing_date?: string | null
+          next_billing_date?: string
           plan?: string
           profile_id?: string
           start_date?: string

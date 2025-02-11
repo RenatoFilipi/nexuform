@@ -36,7 +36,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
-import UpgradePlans from "./upgrade-plans";
+import ChangePlans from "./change-plans";
 
 const links = [
   {
@@ -292,11 +292,11 @@ const NavApp = () => {
       <div className="hidden sm:flex justify-center items-center gap-4">
         <div className="flex justify-center items-center gap-3">
           {userStore.subscription.plan !== "pro" && (
-            <UpgradePlans>
+            <ChangePlans>
               <Button variant={"outline"} size={"sm"}>
                 Upgrade
               </Button>
-            </UpgradePlans>
+            </ChangePlans>
           )}
           <Feedback>
             <Button variant={"outline"} size={"sm"}>

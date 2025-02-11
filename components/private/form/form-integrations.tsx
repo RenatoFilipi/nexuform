@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import useUserStore from "@/stores/user";
 import { ConstructionIcon, UnplugIcon } from "lucide-react";
-import UpgradePlans from "../core/upgrade-plans";
+import ChangePlans from "../core/change-plans";
 
 const FormIntegrations = () => {
   const { subscription } = useUserStore();
@@ -15,11 +15,11 @@ const FormIntegrations = () => {
         <span className="text-sm text-foreground/80">
           Upgrade your subscription to access integrations.
         </span>
-        <UpgradePlans>
+        <ChangePlans>
           <Button variant={"default"} size={"sm"}>
             Upgrade Subscription
           </Button>
-        </UpgradePlans>
+        </ChangePlans>
       </div>
     );
 
