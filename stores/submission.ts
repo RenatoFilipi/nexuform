@@ -26,6 +26,7 @@ const useSubmissionStore = create<submission>((set) => ({
     status: "",
     submit_text: "Submit",
     public_url: "",
+    new_submission_notification: false,
   },
   theme: {
     id: "",
@@ -66,6 +67,7 @@ const useSubmissionStore = create<submission>((set) => ({
         status: "",
         submit_text: "Submit",
         public_url: "",
+        new_submission_notification: false,
       },
       theme: {
         id: "",
