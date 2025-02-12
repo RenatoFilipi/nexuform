@@ -64,7 +64,6 @@ const ChangePlans = ({ children }: { children: React.ReactNode }) => {
     </Drawer>
   );
 };
-
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   return (
     <div className="flex gap-4">
@@ -74,7 +73,6 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     </div>
   );
 };
-
 const CardTemplate = ({ plan }: { plan: IPlanDesign }) => {
   const { subscription } = useUserStore();
   const currentPlan = plan.type === subscription.plan;

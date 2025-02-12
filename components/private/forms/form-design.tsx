@@ -1,5 +1,6 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -20,6 +21,7 @@ import {
 } from "@/components/ui/sheet";
 import { Switch } from "@/components/ui/switch";
 import useEditorStore from "@/stores/editor";
+import useUserStore from "@/stores/user";
 import { minWidth640 } from "@/utils/constants";
 import { IDesign } from "@/utils/interfaces";
 import { TSetState } from "@/utils/types";
@@ -187,6 +189,7 @@ const FormDesign = ({ children }: { children: React.ReactNode }) => {
 
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const { theme, setTheme } = useEditorStore();
+  const user = useUserStore();
 
   const onSetPrimaryColor = (value: string) => {
     setTheme({ ...theme, primary_color: value });
@@ -195,6 +198,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     setTheme({ ...theme, numeric_blocks: value });
   };
   const onSetNebulaformBranding = (value: boolean) => {
+    if (user.subscription.plan !== "pro") return;
     setTheme({ ...theme, nebulaform_branding: value });
   };
   const onSetUppercaseBlockName = (value: boolean) => {
@@ -242,6 +246,9 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
         <div className="flex justify-between items-center w-full">
           <div className="flex justify-center items-center gap-2">
             <Label>Nebulaform branding</Label>
+            {user.subscription.plan !== "pro" && (
+              <Badge variant={"pink"}>Pro</Badge>
+            )}
           </div>
           <Switch
             checked={theme.nebulaform_branding}

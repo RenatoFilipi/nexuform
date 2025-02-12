@@ -43,6 +43,9 @@ const EditorWrapper = ({
         editorStore.setBlocksReadyOnly(blocks);
         userStore.setProfile(profile);
         userStore.setSubscription(subscription);
+        if (subscription.plan !== "pro") {
+          editorStore.setTheme({ ...theme, nebulaform_branding: true });
+        }
       });
       return null;
     },

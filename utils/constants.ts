@@ -303,7 +303,7 @@ export const freeTrialSubmissions = Number(
   process.env.NEXT_PUBLIC_PLAN_FREE_TRIAL_SUBMISSIONS
 );
 export const basicPricing = Number(process.env.NEXT_PUBLIC_PLAN_BASIC_PRICING);
-export const basicForms = Number(process.env.NEXT_PUBLIC_PLAN_BASIC_PRICING);
+export const basicForms = Number(process.env.NEXT_PUBLIC_PLAN_BASIC_FORMS);
 export const basicSubmissions = Number(
   process.env.NEXT_PUBLIC_PLAN_BASIC_SUBMISSIONS
 );
@@ -335,9 +335,10 @@ export const plans: IPlanDesign[] = [
     name: "Free Trial",
     price: freeTrialPricing,
     features: [
+      "14 days trial",
       `${freeTrialForms} forms`,
       `${freeTrialSubmissions} submissions`,
-      "Basic analytics",
+      "Basic analytics (Submissions tracking)",
       "Email notifications",
     ],
     highlighted: false,
@@ -351,7 +352,7 @@ export const plans: IPlanDesign[] = [
       `${basicForms} forms`,
       `${basicSubmissions} submissions`,
       "Basic support (24h response time)",
-      "Basic analytics (Views & Submissions tracking)",
+      "Basic analytics (Submissions tracking)",
       "Email notifications",
     ],
     highlighted: false,
@@ -365,10 +366,10 @@ export const plans: IPlanDesign[] = [
       `${proForms} forms`,
       `${proSubmissions} submissions`,
       "Priority support (6h response time)",
-      "Premium integrations",
       "Premium analytics",
       "Remove Nebulaform branding",
       "Email notifications",
+      "Integrations",
       "Data export (CSV)",
     ],
     highlighted: true,

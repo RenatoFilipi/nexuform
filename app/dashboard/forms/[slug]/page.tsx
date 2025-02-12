@@ -75,6 +75,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
       formAnalytics={formAnalytics}
       profile={profile}
       subscription={subscription}
+      email={data.user.email ?? ""}
     />
   );
 };

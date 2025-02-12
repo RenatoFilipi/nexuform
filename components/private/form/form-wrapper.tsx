@@ -69,6 +69,7 @@ const FormWrapper = ({
   formAnalytics,
   profile,
   subscription,
+  email,
 }: {
   submissions: ESubmission[];
   blocks: EBlock[];
@@ -76,6 +77,7 @@ const FormWrapper = ({
   formAnalytics: EFormAnalytics;
   profile: EProfile;
   subscription: ESubscription;
+  email: string;
 }) => {
   const formStore = useFormStore();
   const userStore = useUserStore();
@@ -95,6 +97,7 @@ const FormWrapper = ({
       formStore.setFormAnalytics(formAnalytics);
       userStore.setProfile(profile);
       userStore.setSubscription(subscription);
+      userStore.setEmail(email);
       return null;
     },
     refetchOnWindowFocus: false,

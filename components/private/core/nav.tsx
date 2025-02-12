@@ -276,13 +276,17 @@ const NavApp = () => {
                   key={link.id}
                   href={link.path}
                   className={`${
-                    isActive(link.path) && "text-foreground/100"
-                  } text-sm h-full flex text-foreground/70 justify-center items-center px-3 hover:bg-foreground/5 relative`}>
+                    isActive(link.path)
+                      ? "text-foreground/100"
+                      : "text-foreground/70"
+                  } text-sm h-full flex  justify-center items-center px-3 hover:bg-foreground/5 relative`}>
                   {isActive(link.path) && (
                     <div className="bg-foreground/80 bottom-0 w-full h-0.5 absolute"></div>
                   )}
                   <link.icon
-                    className={`${isActive(link.path) && ""} w-4 h-4 mr-2`}
+                    className={`${
+                      isActive(link.path) && "text-primary"
+                    } w-4 h-4 mr-2`}
                   />
                   {link.name}
                 </Link>
