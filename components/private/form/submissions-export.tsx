@@ -15,9 +15,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import useFormStore from "@/stores/form";
 import useUserStore from "@/stores/user";
 import { minWidth640 } from "@/utils/constants";
 import { TSetState } from "@/utils/types";
+import { useQuery } from "@tanstack/react-query";
 import { ConstructionIcon, DownloadIcon } from "lucide-react";
 import { useState } from "react";
 import { useMedia } from "react-use";
@@ -62,20 +64,22 @@ const SubmissionsExport = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
+  const formStore = useFormStore();
   const { subscription } = useUserStore();
   const isAllowedToExport = subscription.plan === "pro";
+
+  const query = useQuery({
+    queryKey: [],
+    queryFn: () => {
+      return null;
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  if (query.isPending) return null;
+
   return (
-    <div className="flex flex-col justify-center items-center h-full">
-      {isAllowedToExport && (
-        <div className="flex justify-center items-center flex-1">
-          <div className="flex flex-col justify-center items-center gap-3">
-            <ConstructionIcon />
-            <span className="text-sm text-foreground/80">
-              Under Development
-            </span>
-          </div>
-        </div>
-      )}
+    <div className="flex flex-col justify-center items-center h-full gap-4">
       {!isAllowedToExport && (
         <div className="flex flex-1 items-center justify-center">
           <div className="flex flex-col items-center justify-center gap-4 text-center">
@@ -94,10 +98,27 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
           </div>
         </div>
       )}
-      <div className="flex w-full justify-end items-center">
+      {isAllowedToExport && (
+        <div className="flex flex-1 justify-center items-center w-full">
+          <div className="flex flex-col justify-center items-center gap-3">
+            <div className="flex justify-center items-center flex-col">
+              <ConstructionIcon />
+              <span className="text-sm text-foreground/80">
+                Under Development
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+      <div className="flex w-full justify-between items-center">
         <Button onClick={() => setState(false)} variant={"outline"} size={"sm"}>
           Close
         </Button>
+        {isAllowedToExport && (
+          <Button variant={"default"} size={"sm"}>
+            Export Submissions
+          </Button>
+        )}
       </div>
     </div>
   );

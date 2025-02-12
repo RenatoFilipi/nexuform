@@ -15,9 +15,7 @@ const Settings = async () => {
     .eq("id", data.user.id)
     .single();
 
-  if (profileError) {
-    return <ErrorUI />;
-  }
+  if (profileError) return <ErrorUI />;
 
   const { data: subscription, error: subscriptionError } = await supabase
     .from("subscriptions")
@@ -25,11 +23,36 @@ const Settings = async () => {
     .eq("profile_id", data.user.id)
     .single();
 
-  if (subscriptionError) {
-    return <ErrorUI />;
-  }
+  if (subscriptionError) return <ErrorUI />;
 
-  return <SettingsWrapper profile={profile} subscription={subscription} />;
+  const { data: formsData, error: formsError } = await supabase
+    .from("forms")
+    .select("id")
+    .eq("owner_id", data.user.id);
+
+  if (formsError) return <ErrorUI />;
+
+  const idsArray = formsData.map((x) => x.id);
+  const startDate = subscription.start_date;
+  const dueDate = subscription.next_billing_date;
+
+  const { count: submissionsCount, error: submissionsError } = await supabase
+    .from("submissions")
+    .select("*", { count: "exact", head: true })
+    .in("form_id", idsArray)
+    .gte("created_at", startDate)
+    .lte("created_at", dueDate);
+
+  if (submissionsError) return <ErrorUI />;
+
+  return (
+    <SettingsWrapper
+      profile={profile}
+      subscription={subscription}
+      formsCount={formsData.length}
+      submissionsCount={submissionsCount ?? 0}
+    />
+  );
 };
 
 const ErrorUI = () => {

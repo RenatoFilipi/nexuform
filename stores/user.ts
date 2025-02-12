@@ -4,12 +4,12 @@ import { create } from "zustand";
 interface user {
   profile: EProfile;
   subscription: ESubscription;
-  formsQty: number;
-  submissionsQty: number;
+  formsCount: number;
+  submissionsCount: number;
   setProfile: (payload: EProfile) => void;
   setSubscription: (payload: ESubscription) => void;
-  setFormsQty: (payload: number) => void;
-  setSubmissionsQty: (payload: number) => void;
+  setFormsCount: (payload: number) => void;
+  setSubmissionsCount: (payload: number) => void;
 }
 
 const useUserStore = create<user>((set) => ({
@@ -35,12 +35,12 @@ const useUserStore = create<user>((set) => ({
     status: "",
     profile_id: "",
   },
-  formsQty: 0,
-  submissionsQty: 0,
+  formsCount: 0,
+  submissionsCount: 0,
   setProfile: (payload) => set({ profile: payload }),
   setSubscription: (payload) => set({ subscription: payload }),
-  setFormsQty: (payload) => set({ formsQty: payload }),
-  setSubmissionsQty: (payload) => set({ submissionsQty: payload }),
+  setFormsCount: (payload) => set({ formsCount: payload }),
+  setSubmissionsCount: (payload) => set({ submissionsCount: payload }),
   reset: () =>
     set({
       profile: {

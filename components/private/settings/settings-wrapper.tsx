@@ -13,7 +13,7 @@ type TView = "general" | "billing";
 const views = [
   { label: "General", icon: Layers2Icon, view: "general", enabled: true },
   {
-    label: "Billing",
+    label: "Billing & Usage",
     icon: CreditCardIcon,
     view: "billing",
     enabled: true,
@@ -23,19 +23,26 @@ const views = [
 const SettingsWrapper = ({
   profile,
   subscription,
+  formsCount,
+  submissionsCount,
 }: {
   profile: EProfile;
   subscription: ESubscription;
+  formsCount: number;
+  submissionsCount: number;
 }) => {
   const [view, setView] = useState<TView>("general");
   const enabledViews = views.filter((x) => x.enabled);
-  const { setProfile, setSubscription } = useUserStore();
+  const { setProfile, setSubscription, setFormsCount, setSubmissionsCount } =
+    useUserStore();
 
   const query = useQuery({
     queryKey: ["settingsData"],
     queryFn: () => {
       setProfile(profile);
       setSubscription(subscription);
+      setFormsCount(formsCount);
+      setSubmissionsCount(submissionsCount);
       return null;
     },
     refetchOnWindowFocus: false,

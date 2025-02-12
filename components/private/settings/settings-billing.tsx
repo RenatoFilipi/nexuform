@@ -1,13 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import useUserStore from "@/stores/user";
-import { getDaysDifference } from "@/utils/functions";
+import { getCurrentPlan, getDaysDifference } from "@/utils/functions";
+import { TPlan } from "@/utils/types";
 import { CalendarIcon, ZapIcon } from "lucide-react";
 import ChangePlans from "../core/change-plans";
 
 const SettingsBilling = () => {
   const userStore = useUserStore();
   const nextBillingDate = userStore.subscription.next_billing_date;
+  const currentPlan = getCurrentPlan(userStore.subscription.plan as TPlan);
   const pendingDays = getDaysDifference(
     new Date(),
     new Date(userStore.subscription.next_billing_date)
@@ -38,7 +40,7 @@ const SettingsBilling = () => {
           <div>
             <h1 className="text-base font-semibold">Plan Summary</h1>
             <p className="text-xs text-foreground/80">
-              Your current plana and usage across this billing cycle.
+              Your current plan across this billing cycle.
             </p>
           </div>
           <div className="flex justify-between items-center flex-col sm:flex-row">
@@ -74,6 +76,38 @@ const SettingsBilling = () => {
                 Change Subscription Plan
               </Button>
             </ChangePlans>
+          </div>
+        </Card>
+        <Card className="p-4 flex flex-col gap-4">
+          <div>
+            <h1 className="text-base font-semibold">Usage</h1>
+            <p className="text-xs text-foreground/80">
+              Your current usage across this billing cycle.
+            </p>
+          </div>
+          <div className="flex w-full gap-4">
+            <Card className="flex flex-col p-4 gap-2 w-full">
+              <h2 className="text-foreground/80 text-sm">Forms</h2>
+              <div className="flex justify-start items-center gap-2">
+                <span className="font-semibold">
+                  {userStore.formsCount} / {currentPlan?.forms}
+                </span>
+              </div>
+              <p className="text-foreground/80 text-xs">
+                {currentPlan?.forms} forms included.
+              </p>
+            </Card>
+            <Card className="flex flex-col p-4 gap-2 w-full">
+              <h2 className="text-foreground/80 text-sm">Submissions</h2>
+              <div className="flex justify-start items-center gap-2">
+                <span className="font-semibold">
+                  {userStore.submissionsCount} / {currentPlan?.submissions}
+                </span>
+              </div>
+              <p className="text-foreground/80 text-xs">
+                {currentPlan?.submissions} submissions included.
+              </p>
+            </Card>
           </div>
         </Card>
         <Card className="p-4 flex flex-col gap-4 h-full">

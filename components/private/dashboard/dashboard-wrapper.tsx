@@ -23,21 +23,21 @@ const DashboardWrapper = ({
   const {
     setProfile,
     setSubscription,
-    setFormsQty,
-    formsQty,
+    formsCount,
+    setFormsCount,
     subscription: { plan },
   } = useUserStore();
   const { setForms } = useFormsStore();
   const mustUpgrade =
-    (formsQty >= planSettings.freeTrial.forms && plan === "free_trial") ||
-    (formsQty >= planSettings.basic.forms && plan === "basic") ||
-    (formsQty >= planSettings.pro.forms && plan === "pro");
+    (formsCount >= planSettings.freeTrial.forms && plan === "free_trial") ||
+    (formsCount >= planSettings.basic.forms && plan === "basic") ||
+    (formsCount >= planSettings.pro.forms && plan === "pro");
 
   const query = useQuery({
     queryKey: ["dashboardData"],
     queryFn: () => {
       setForms(forms);
-      setFormsQty(forms.length);
+      setFormsCount(forms.length);
       setProfile(profile);
       setSubscription(subscription);
       return null;

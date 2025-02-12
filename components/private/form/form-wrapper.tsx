@@ -17,7 +17,6 @@ import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import {
   BookIcon,
-  DownloadIcon,
   ExternalLinkIcon,
   ForwardIcon,
   Layers2Icon,
@@ -33,7 +32,6 @@ import FormOverview from "./form-overview";
 import FormSettings from "./form-settings";
 import FormShare from "./form-share";
 import FormSubmissions from "./form-submissions";
-import SubmissionsExport from "./submissions-export";
 
 type TView = "overview" | "submissions" | "integrations" | "settings";
 
@@ -190,7 +188,7 @@ const FormWrapper = ({
               ))}
             </div>
           </div>
-          {view === "submissions" && (
+          {/* {view === "submissions" && formStore.submissions.length > 0 && (
             <div>
               <SubmissionsExport>
                 <Button variant={"outline"} size={"sm"}>
@@ -199,7 +197,7 @@ const FormWrapper = ({
                 </Button>
               </SubmissionsExport>
             </div>
-          )}
+          )} */}
         </div>
         <div className="flex justify-center flex-1 h-full items-start">
           {view === "overview" && <FormOverview />}

@@ -1,7 +1,8 @@
 import { differenceInDays, formatDistance } from "date-fns";
 import { customAlphabet } from "nanoid";
 import { redirect } from "next/navigation";
-import { TBlock } from "./types";
+import { planSettings } from "./constants";
+import { TBlock, TPlan } from "./types";
 
 export const uuid = () => {
   const uuid = self.crypto.randomUUID();
@@ -98,4 +99,19 @@ export const getDateRange = (days: number) => {
 };
 export const getDaysDifference = (startDate: Date, endDate: Date) => {
   return differenceInDays(endDate, startDate);
+};
+export const getCurrentPlan = (plan: TPlan) => {
+  switch (plan) {
+    case "free_trial": {
+      return planSettings.freeTrial;
+    }
+    case "basic": {
+      return planSettings.basic;
+    }
+    case "pro": {
+      return planSettings.pro;
+    }
+    default:
+      return null;
+  }
 };
