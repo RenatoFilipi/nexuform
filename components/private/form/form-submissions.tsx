@@ -65,7 +65,7 @@ const FormSubmissions = () => {
                     </span>
                   </TableCell>
                   <TableCell className="py-2">
-                    ({formatTime(submission.completion_time ?? 0, 2)})
+                    {formatTime(submission.completion_time ?? 0, 2)}
                   </TableCell>
                   <TableCell className="py-2 pr-4">
                     <SubmissionStatusBadge

@@ -3,8 +3,9 @@
 import { Button } from "@/components/ui/button";
 import useFormsStore from "@/stores/forms";
 import useUserStore from "@/stores/user";
-import { planSettings } from "@/utils/constants";
 import { EForm, EProfile, ESubscription } from "@/utils/entities";
+import { getCurrentPlan } from "@/utils/functions";
+import { TPlan } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { PlusIcon } from "lucide-react";
 import ChangePlans from "../core/change-plans";
@@ -15,31 +16,26 @@ const DashboardWrapper = ({
   forms,
   profile,
   subscription,
+  email,
 }: {
   forms: EForm[];
   profile: EProfile;
   subscription: ESubscription;
+  email: string;
 }) => {
-  const {
-    setProfile,
-    setSubscription,
-    formsCount,
-    setFormsCount,
-    subscription: { plan },
-  } = useUserStore();
+  const user = useUserStore();
   const { setForms } = useFormsStore();
-  const mustUpgrade =
-    (formsCount >= planSettings.freeTrial.forms && plan === "free_trial") ||
-    (formsCount >= planSettings.basic.forms && plan === "basic") ||
-    (formsCount >= planSettings.pro.forms && plan === "pro");
+  const currentPlan = getCurrentPlan(subscription.plan as TPlan);
+  const mustUpgrade = user.formsCount >= currentPlan.forms;
 
   const query = useQuery({
     queryKey: ["dashboardData"],
     queryFn: () => {
       setForms(forms);
-      setFormsCount(forms.length);
-      setProfile(profile);
-      setSubscription(subscription);
+      user.setFormsCount(forms.length);
+      user.setProfile(profile);
+      user.setSubscription(subscription);
+      user.setEmail(email);
       return null;
     },
     refetchOnWindowFocus: false,

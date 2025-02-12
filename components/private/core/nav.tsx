@@ -15,6 +15,7 @@ import {
   LoaderIcon,
   LogOutIcon,
   Menu,
+  MessageSquareCodeIcon,
   MonitorIcon,
   MoonIcon,
   Settings2Icon,
@@ -171,14 +172,16 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
   );
 };
 const AvatarAppMenu = () => {
+  const user = useUserStore();
   const { setTheme, theme } = useTheme();
+  const avatarName = user.email.charAt(0);
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Avatar className="cursor-pointer">
-          <AvatarFallback className="text-sm bg-foreground/10 text-foreground font-bold">
-            RF
+        <Avatar className="cursor-pointer w-8 h-8">
+          <AvatarFallback className="text-sm bg-foreground/5 text-foreground uppercase">
+            {avatarName}
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
@@ -273,15 +276,13 @@ const NavApp = () => {
                   key={link.id}
                   href={link.path}
                   className={`${
-                    isActive(link.path) && ""
-                  } text-sm h-full flex justify-center items-center px-3 hover:bg-foreground/5 relative`}>
+                    isActive(link.path) && "text-foreground/100"
+                  } text-sm h-full flex text-foreground/70 justify-center items-center px-3 hover:bg-foreground/5 relative`}>
                   {isActive(link.path) && (
-                    <div className="bg-foreground/80 bottom-0 w-full h-1 absolute"></div>
+                    <div className="bg-foreground/80 bottom-0 w-full h-0.5 absolute"></div>
                   )}
                   <link.icon
-                    className={`${
-                      isActive(link.path) && "text-primary"
-                    } w-4 h-4 mr-2`}
+                    className={`${isActive(link.path) && ""} w-4 h-4 mr-2`}
                   />
                   {link.name}
                 </Link>
@@ -291,18 +292,19 @@ const NavApp = () => {
       </div>
       <div className="hidden sm:flex justify-center items-center gap-4">
         <div className="flex justify-center items-center gap-3">
+          <Feedback>
+            <Button variant={"outline"} size={"xs"}>
+              <MessageSquareCodeIcon className="w-4 h-4 mr-2" />
+              Feedback
+            </Button>
+          </Feedback>
           {userStore.subscription.plan !== "pro" && (
             <ChangePlans>
-              <Button variant={"outline"} size={"sm"}>
+              <Button variant={"outline"} size={"xs"}>
                 Upgrade
               </Button>
             </ChangePlans>
           )}
-          <Feedback>
-            <Button variant={"outline"} size={"sm"}>
-              Feedback
-            </Button>
-          </Feedback>
         </div>
         <AvatarAppMenu />
       </div>
@@ -471,9 +473,9 @@ const NavEditor = () => {
           </span>
         </div>
       </div>
-      <div className="flex justify-center items-center gap-2">
+      <div className="flex justify-center items-center gap-1">
         {form.updated_at !== "" && (
-          <span className="text-sm text-foreground/80 mr-5 hidden sm:flex">
+          <span className="text-xs font-semibold text-foreground/80 mr-5 hidden sm:flex">
             Last updated at {new Date(form.updated_at).toLocaleString()}
           </span>
         )}
@@ -486,7 +488,7 @@ const NavEditor = () => {
         </Button>
         <Button
           size={"sm"}
-          variant={"default"}
+          variant={"secondary"}
           onClick={onSave}
           disabled={appState === "loading"}>
           {appState === "loading" && (
@@ -498,7 +500,6 @@ const NavEditor = () => {
     </div>
   );
 };
-
 const PlanBadge = ({ plan }: { plan: TPlan }) => {
   const planLabels: Record<TPlan, string> = {
     free_trial: "Free Trial",

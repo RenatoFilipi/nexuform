@@ -51,6 +51,7 @@ const Settings = async () => {
       subscription={subscription}
       formsCount={formsData.length}
       submissionsCount={submissionsCount ?? 0}
+      email={data.user.email ?? ""}
     />
   );
 };

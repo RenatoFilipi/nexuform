@@ -170,12 +170,12 @@ const FormWrapper = ({
                   onClick={() => setView(v.view as TView)}
                   className={`${
                     v.view === view
-                      ? "border-foreground/30"
-                      : "border-transparent"
+                      ? "border-foreground/30 text-foreground/100"
+                      : "border-transparent text-foreground/70"
                   } border p-2 flex items-center justify-center gap-2 text-sm hover:bg-foreground/5 rounded flex-1`}>
                   <v.icon
                     className={`${
-                      v.view === view ? "text-primary" : "text-foreground"
+                      v.view === view ? "text-primary" : "text-foreground/70"
                     } w-4 h-4`}
                   />
                   {v.label}
@@ -188,16 +188,6 @@ const FormWrapper = ({
               ))}
             </div>
           </div>
-          {/* {view === "submissions" && formStore.submissions.length > 0 && (
-            <div>
-              <SubmissionsExport>
-                <Button variant={"outline"} size={"sm"}>
-                  <DownloadIcon className="w-4 h-4 mr-2" />
-                  Export
-                </Button>
-              </SubmissionsExport>
-            </div>
-          )} */}
         </div>
         <div className="flex justify-center flex-1 h-full items-start">
           {view === "overview" && <FormOverview />}

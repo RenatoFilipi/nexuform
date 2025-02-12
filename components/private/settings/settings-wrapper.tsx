@@ -25,24 +25,26 @@ const SettingsWrapper = ({
   subscription,
   formsCount,
   submissionsCount,
+  email,
 }: {
   profile: EProfile;
   subscription: ESubscription;
   formsCount: number;
   submissionsCount: number;
+  email: string;
 }) => {
   const [view, setView] = useState<TView>("general");
   const enabledViews = views.filter((x) => x.enabled);
-  const { setProfile, setSubscription, setFormsCount, setSubmissionsCount } =
-    useUserStore();
+  const user = useUserStore();
 
   const query = useQuery({
     queryKey: ["settingsData"],
     queryFn: () => {
-      setProfile(profile);
-      setSubscription(subscription);
-      setFormsCount(formsCount);
-      setSubmissionsCount(submissionsCount);
+      user.setProfile(profile);
+      user.setSubscription(subscription);
+      user.setFormsCount(formsCount);
+      user.setSubmissionsCount(submissionsCount);
+      user.setEmail(email);
       return null;
     },
     refetchOnWindowFocus: false,
@@ -59,11 +61,13 @@ const SettingsWrapper = ({
               key={v.view}
               onClick={() => setView(v.view as TView)}
               className={`${
-                v.view === view ? "border-foreground/30" : "border-transparent"
+                v.view === view
+                  ? "border-foreground/30"
+                  : "border-transparent text-foreground/70"
               } border p-2 flex items-center justify-start gap-2 text-sm hover:bg-foreground/5 rounded flex-1`}>
               <v.icon
                 className={`${
-                  v.view === view ? "text-primary" : "text-foreground"
+                  v.view === view ? "text-primary" : "text-foreground/70"
                 } w-4 h-4`}
               />
               {v.label}

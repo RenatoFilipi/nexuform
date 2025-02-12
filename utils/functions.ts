@@ -112,6 +112,6 @@ export const getCurrentPlan = (plan: TPlan) => {
       return planSettings.pro;
     }
     default:
-      return null;
+      return planSettings.freeTrial;
   }
 };

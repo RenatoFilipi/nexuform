@@ -6,10 +6,12 @@ interface user {
   subscription: ESubscription;
   formsCount: number;
   submissionsCount: number;
+  email: string;
   setProfile: (payload: EProfile) => void;
   setSubscription: (payload: ESubscription) => void;
   setFormsCount: (payload: number) => void;
   setSubmissionsCount: (payload: number) => void;
+  setEmail: (payload: string) => void;
 }
 
 const useUserStore = create<user>((set) => ({
@@ -37,10 +39,12 @@ const useUserStore = create<user>((set) => ({
   },
   formsCount: 0,
   submissionsCount: 0,
+  email: "",
   setProfile: (payload) => set({ profile: payload }),
   setSubscription: (payload) => set({ subscription: payload }),
   setFormsCount: (payload) => set({ formsCount: payload }),
   setSubmissionsCount: (payload) => set({ submissionsCount: payload }),
+  setEmail: (payload) => set({ email: payload }),
   reset: () =>
     set({
       profile: {
@@ -65,6 +69,9 @@ const useUserStore = create<user>((set) => ({
         status: "",
         profile_id: "",
       },
+      formsCount: 0,
+      submissionsCount: 0,
+      email: "",
     }),
 }));
 

@@ -22,7 +22,7 @@ const Feedback = ({ children }: { children: ReactNode }) => {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent className="mr-20 w-80">
+      <PopoverContent className="mr-40 w-80">
         <Body setState={setOpen} />
       </PopoverContent>
     </Popover>

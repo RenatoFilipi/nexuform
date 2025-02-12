@@ -14,7 +14,9 @@ const FormCard = ({ form }: { form: EForm }) => {
       <Card className="flex h-44 p-4 hover:border-foreground/20 items-start flex-col justify-between shadow-none relative group hover:bg-foreground/5 transition-all">
         <div>
           <div className="flex justify-between items-start w-full flex-col gap-2">
-            <span className="text-sm truncate max-w-[240px]">{name}</span>
+            <span className="text-sm truncate max-w-[240px] font-semibold">
+              {name}
+            </span>
             <span className="text-xs text-foreground/80">
               Last updated {formatDateRelativeToNow(updated_at)}
             </span>

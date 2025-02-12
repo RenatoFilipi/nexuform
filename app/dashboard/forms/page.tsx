@@ -5,9 +5,7 @@ import { redirect } from "next/navigation";
 const Forms = async () => {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
-  if (!data.user) {
-    return redirect("login");
-  }
+  if (!data.user) return redirect("login");
 
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
@@ -42,6 +40,7 @@ const Forms = async () => {
       forms={form}
       profile={profile}
       subscription={subscription}
+      email={data.user.email ?? ""}
     />
   );
 };
