@@ -15,7 +15,11 @@ const Settings = async () => {
     .eq("id", data.user.id)
     .single();
 
-  if (profileError) return <ErrorUI />;
+  if (profileError) {
+    console.log("profile");
+    console.log(profileError);
+    return <ErrorUI />;
+  }
 
   const { data: subscription, error: subscriptionError } = await supabase
     .from("subscriptions")
@@ -23,18 +27,23 @@ const Settings = async () => {
     .eq("profile_id", data.user.id)
     .single();
 
-  if (subscriptionError) return <ErrorUI />;
+  if (subscriptionError) {
+    console.log("subscription");
+    console.log(subscriptionError);
+    return <ErrorUI />;
+  }
 
-  const { data: formsData, error: formsError } = await supabase
-    .from("forms")
-    .select("id")
-    .eq("owner_id", data.user.id);
+  const { data: formsData, error: formsError } = await supabase.from("forms").select("id").eq("owner_id", data.user.id);
 
-  if (formsError) return <ErrorUI />;
+  if (formsError) {
+    console.log("forms");
+    console.log(formsError);
+    return <ErrorUI />;
+  }
 
   const idsArray = formsData.map((x) => x.id);
   const startDate = subscription.start_date;
-  const dueDate = subscription.next_billing_date;
+  const dueDate = subscription.due_date;
 
   const { count: submissionsCount, error: submissionsError } = await supabase
     .from("submissions")
@@ -43,7 +52,11 @@ const Settings = async () => {
     .gte("created_at", startDate)
     .lte("created_at", dueDate);
 
-  if (submissionsError) return <ErrorUI />;
+  if (submissionsError) {
+    console.log("submissions");
+    console.log(submissionsError);
+    return <ErrorUI />;
+  }
 
   return (
     <SettingsWrapper
@@ -60,9 +73,7 @@ const ErrorUI = () => {
   return (
     <div className="flex justify-center items-center pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
       <div className="flex flex-col justify-center items-center gap-4">
-        <span className="text-sm text-foreground/80">
-          Error on loading settings
-        </span>
+        <span className="text-sm text-foreground/80">Error on loading settings</span>
         <Button variant={"outline"} size={"xs"} asChild>
           <Link href={"/dashboard"}>Go back</Link>
         </Button>

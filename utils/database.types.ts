@@ -354,6 +354,7 @@ export type Database = {
         Row: {
           avatar_url: string | null
           first_name: string
+          free_trial_due_date: string | null
           full_name: string | null
           id: string
           last_name: string
@@ -365,6 +366,7 @@ export type Database = {
         Insert: {
           avatar_url?: string | null
           first_name?: string
+          free_trial_due_date?: string | null
           full_name?: string | null
           id: string
           last_name?: string
@@ -376,6 +378,7 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           first_name?: string
+          free_trial_due_date?: string | null
           full_name?: string | null
           id?: string
           last_name?: string
@@ -469,8 +472,8 @@ export type Database = {
         Row: {
           billing_interval: string
           created_at: string
+          due_date: string
           id: string
-          next_billing_date: string
           plan: string
           profile_id: string
           start_date: string
@@ -480,8 +483,8 @@ export type Database = {
         Insert: {
           billing_interval?: string
           created_at?: string
+          due_date?: string
           id?: string
-          next_billing_date?: string
           plan?: string
           profile_id: string
           start_date?: string
@@ -491,8 +494,8 @@ export type Database = {
         Update: {
           billing_interval?: string
           created_at?: string
+          due_date?: string
           id?: string
-          next_billing_date?: string
           plan?: string
           profile_id?: string
           start_date?: string
