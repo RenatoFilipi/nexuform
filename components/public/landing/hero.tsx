@@ -3,13 +3,10 @@
 import ShineBorder from "@/components/magicui/shine-border";
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 
 const Hero = () => {
-  const t = useTranslations("landing");
-
   return (
     <div className="relative flex flex-col justify-center items-center gap-14 sm:pt-36 pt-20 w-full">
       <div className="absolute inset-0 -z-10 overflow-hidden">

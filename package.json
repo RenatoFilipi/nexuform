@@ -64,6 +64,7 @@
     "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.50.1",
     "@tanstack/eslint-plugin-query": "^5.58.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",

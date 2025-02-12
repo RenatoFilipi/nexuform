@@ -7,11 +7,8 @@ import {
   SendIcon,
   SettingsIcon,
 } from "lucide-react";
-import { useTranslations } from "next-intl";
 
 const HowItWorks = () => {
-  const t = useTranslations("landing");
-
   const steps = [
     {
       title: "Design Your Form",

@@ -1,10 +1,8 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 const Faq = () => {
-  const t = useTranslations("landing");
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const toggleFaq = (index: number) =>

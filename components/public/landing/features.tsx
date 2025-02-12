@@ -1,11 +1,8 @@
 "use client";
 
 import { BarChart3Icon, FileTextIcon, LayoutDashboardIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
 
 const Features = () => {
-  const t = useTranslations("landing");
-
   const features = [
     {
       title: "Effortless Form Creation",
