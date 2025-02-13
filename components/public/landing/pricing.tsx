@@ -3,16 +3,14 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { plans } from "@/utils/constants";
-import { IPlanDesign } from "@/utils/interfaces";
+import { IPlanLanding } from "@/utils/interfaces";
 
 const Pricing = () => {
   return (
     <section id="pricing" className="py-12 sm:py-16 lg:py-20 bg-background">
       <div className="px-4 mx-auto sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold leading-tight sm:text-4xl xl:text-5xl">
-            Simple & Flexible Pricing
-          </h2>
+          <h2 className="text-3xl font-bold leading-tight sm:text-4xl xl:text-5xl">Simple & Flexible Pricing</h2>
           <p className="mt-4 text-base leading-7 sm:mt-2 text-foreground/60">
             Pick the perfect plan to match your growth—upgrade anytime.
           </p>
@@ -27,7 +25,7 @@ const Pricing = () => {
   );
 };
 
-const CardTemplate = ({ plan }: { plan: IPlanDesign }) => {
+const CardTemplate = ({ plan }: { plan: IPlanLanding }) => {
   return (
     <div
       className={`relative flex flex-col items-center sm:w-[340px] w-full p-8 bg-background border rounded-lg shadow-lg transition-transform hover:scale-105 hover:shadow-xl ${
@@ -42,16 +40,11 @@ const CardTemplate = ({ plan }: { plan: IPlanDesign }) => {
             </Badge>
           )}
         </div>
-        <p className="mt-3 text-4xl font-extrabold text-primary">
-          ${plan.price}
-        </p>
+        <p className="mt-3 text-4xl font-extrabold text-primary">${plan.price}</p>
         <p className="text-sm text-foreground/60">per month</p>
       </div>
       <div className="w-full">
-        <Button
-          className="w-full mt-6"
-          size="lg"
-          variant={plan.highlighted ? "default" : "secondary"}>
+        <Button className="w-full mt-6" size="lg" variant={plan.highlighted ? "default" : "secondary"}>
           {plan.type === "free_trial" ? "Start Free Trial" : "Get Started"}
         </Button>
       </div>

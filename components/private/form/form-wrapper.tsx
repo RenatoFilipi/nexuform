@@ -163,7 +163,7 @@ const FormWrapper = ({
           </div>
         </div>
       </div>
-      <div className="flex flex-col flex-1 h-full gap-4">
+      <div className="flex flex-col flex-1 h-full gap-4 overflow-y-auto">
         <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
           <div className="w-full overflow-x-auto">
             <div className="flex sm:w-fit sm:gap-3 gap-1">
@@ -192,7 +192,7 @@ const FormWrapper = ({
             </div>
           </div>
         </div>
-        <div className="flex justify-center flex-1 h-full items-start">
+        <div className="flex justify-center flex-1 h-full items-start overflow-y-auto">
           {view === "overview" && <FormOverview />}
           {view === "submissions" && <FormSubmissions />}
           {view === "integrations" && <FormIntegrations />}

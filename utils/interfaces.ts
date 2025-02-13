@@ -1,13 +1,5 @@
 import type { JSX } from "react";
-import {
-  TBlock,
-  TBrand,
-  TColor,
-  TFilterSort,
-  TFormStatus,
-  TFormStatusExtended,
-  TPlan,
-} from "./types";
+import { TBlock, TBrand, TColor, TFilterSort, TFormStatus, TFormStatusExtended, TPlan } from "./types";
 
 export interface IDesign {
   label: TColor;
@@ -41,7 +33,7 @@ export interface IPlan {
   price: number;
   type: TPlan;
 }
-export interface IPlanDesign extends IPlan {
+export interface IPlanLanding extends IPlan {
   features: string[];
   highlighted: boolean;
   buttonLabel: string;

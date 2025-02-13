@@ -20,7 +20,7 @@ const FormSubmissions = () => {
   const { submissions, blocks } = useFormStore();
 
   return (
-    <div className="flex flex-col w-full gap-4">
+    <div className="flex flex-col w-full gap-4 overflow-y-auto">
       {submissions.length <= 0 && (
         <div className="w-full h-full flex-1 py-24">
           <div className="flex flex-col justify-center items-center gap-3">

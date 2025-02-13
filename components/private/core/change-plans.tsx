@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/drawer";
 import useUserStore from "@/stores/user";
 import { minWidth640, plans } from "@/utils/constants";
-import { IPlanDesign } from "@/utils/interfaces";
+import { IPlanLanding } from "@/utils/interfaces";
 import { TSetState } from "@/utils/types";
 import { CheckIcon } from "lucide-react";
 import { useState } from "react";
@@ -34,12 +34,11 @@ const ChangePlans = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col w-full sm:min-w-[950px]">
+        <DialogContent className="flex flex-col w-full min-w-[700px]">
           <DialogHeader>
             <DialogTitle>Change Subscription Plan</DialogTitle>
             <DialogDescription>
-              Select a new plan that fits your needs. Your current subscription
-              will be updated accordingly.
+              Select a new plan that fits your needs. Your current subscription will be updated accordingly.
             </DialogDescription>
           </DialogHeader>
           <Body setState={setOpen} />
@@ -55,8 +54,7 @@ const ChangePlans = ({ children }: { children: React.ReactNode }) => {
         <DrawerHeader>
           <DrawerTitle>Change Subscription Plan</DrawerTitle>
           <DrawerDescription>
-            Select a new plan that fits your needs. Your current subscription
-            will be updated accordingly.
+            Select a new plan that fits your needs. Your current subscription will be updated accordingly.
           </DrawerDescription>
         </DrawerHeader>
         <Body setState={setOpen} />
@@ -65,21 +63,22 @@ const ChangePlans = ({ children }: { children: React.ReactNode }) => {
   );
 };
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
+  const filteredPlans = plans.filter((x) => x.type !== "free_trial");
+
   return (
-    <div className="flex gap-4">
-      {plans.map((plan) => (
+    <div className="grid sm:grid-cols-2 gap-4">
+      {filteredPlans.map((plan) => (
         <CardTemplate key={plan.type} plan={plan} />
       ))}
     </div>
   );
 };
-const CardTemplate = ({ plan }: { plan: IPlanDesign }) => {
+const CardTemplate = ({ plan }: { plan: IPlanLanding }) => {
   const { subscription } = useUserStore();
   const currentPlan = plan.type === subscription.plan;
 
   return (
-    <div
-      className={`relative flex flex-col items-center sm:w-80 w-full p-4 bg-background border rounded-lg`}>
+    <div className="relative flex flex-col items-center p-4 bg-background border rounded-lg">
       <div className="flex flex-col w-full gap-3">
         <div className="flex justify-start items-center gap-2">
           <h3 className="text-primary font-semibold">{plan.name}</h3>
@@ -91,10 +90,7 @@ const CardTemplate = ({ plan }: { plan: IPlanDesign }) => {
         </div>
         <div className="flex w-full">
           <span className="text-sm text-foreground/80">
-            <span className="text-foreground font-semibold text-base">
-              ${plan.price}{" "}
-            </span>
-            / per month
+            <span className="text-foreground font-semibold text-base">${plan.price} </span>/ per month
           </span>
         </div>
         <div className="w-full">

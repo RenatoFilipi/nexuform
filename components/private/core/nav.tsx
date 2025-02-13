@@ -88,8 +88,7 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
                   key={link.id}
                   href={link.path}
                   className={`${
-                    isActive(link.path) &&
-                    "bg-primary text-white hover:bg-primary"
+                    isActive(link.path) && "bg-primary text-white hover:bg-primary"
                   } p-2 border hover:bg-foreground/5 text-sm flex justify-start items-center`}>
                   <link.icon className="w-4 h-4 mr-2" />
                   {link.name}
@@ -99,19 +98,10 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
         </div>
         <div className="flex flex-col w-full gap-2">
           <div className="flex justify-between items-center px-2">
-            <span className="text-sm flex items-center justify-center">
-              Theme
-            </span>
-            <RadioGroup
-              value={theme}
-              onValueChange={setTheme}
-              className="flex gap-1">
+            <span className="text-sm flex items-center justify-center">Theme</span>
+            <RadioGroup value={theme} onValueChange={setTheme} className="flex gap-1">
               <div>
-                <RadioGroupItem
-                  value="system"
-                  id="system"
-                  className="peer sr-only"
-                />
+                <RadioGroupItem value="system" id="system" className="peer sr-only" />
                 <Label
                   htmlFor="system"
                   className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
@@ -119,11 +109,7 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
                 </Label>
               </div>
               <div>
-                <RadioGroupItem
-                  value="light"
-                  id="light"
-                  className="peer sr-only"
-                />
+                <RadioGroupItem value="light" id="light" className="peer sr-only" />
                 <Label
                   htmlFor="light"
                   className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
@@ -131,11 +117,7 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
                 </Label>
               </div>
               <div>
-                <RadioGroupItem
-                  value="dark"
-                  id="dark"
-                  className="peer sr-only"
-                />
+                <RadioGroupItem value="dark" id="dark" className="peer sr-only" />
                 <Label
                   htmlFor="dark"
                   className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
@@ -144,11 +126,7 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
               </div>
             </RadioGroup>
           </div>
-          <Button
-            variant={"ghost"}
-            size={"sm"}
-            className="flex justify-between"
-            asChild>
+          <Button variant={"ghost"} size={"sm"} className="flex justify-between" asChild>
             <Link href={"/"}>
               Log out
               <LogOutIcon className="w-4 h-4" />
@@ -156,14 +134,10 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
           </Button>
         </div>
         <div className="flex justify-end items-center gap-2 p-2">
-          <Link
-            href={"/legal/privacy"}
-            className="text-xs text-foreground/80 hover:underline">
+          <Link href={"/legal/privacy"} className="text-xs text-foreground/80 hover:underline">
             Privacy
           </Link>
-          <Link
-            href={"/legal/terms"}
-            className="text-xs text-foreground/80 hover:underline">
+          <Link href={"/legal/terms"} className="text-xs text-foreground/80 hover:underline">
             Terms
           </Link>
         </div>
@@ -180,24 +154,15 @@ const AvatarAppMenu = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer w-8 h-8">
-          <AvatarFallback className="text-sm bg-foreground/5 text-foreground uppercase">
-            {avatarName}
-          </AvatarFallback>
+          <AvatarFallback className="text-sm bg-foreground/5 text-foreground uppercase">{avatarName}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-6 min-w-52 text-foreground/80">
         <DropdownMenuItem className="flex flex-row justify-between items-center">
           Theme
-          <RadioGroup
-            value={theme}
-            onValueChange={setTheme}
-            className="flex gap-1">
+          <RadioGroup value={theme} onValueChange={setTheme} className="flex gap-1">
             <div>
-              <RadioGroupItem
-                value="system"
-                id="system"
-                className="peer sr-only"
-              />
+              <RadioGroupItem value="system" id="system" className="peer sr-only" />
               <Label
                 htmlFor="system"
                 className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
@@ -205,11 +170,7 @@ const AvatarAppMenu = () => {
               </Label>
             </div>
             <div>
-              <RadioGroupItem
-                value="light"
-                id="light"
-                className="peer sr-only"
-              />
+              <RadioGroupItem value="light" id="light" className="peer sr-only" />
               <Label
                 htmlFor="light"
                 className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
@@ -264,9 +225,7 @@ const NavApp = () => {
               <Brand type="logo" className="h-7 fill-foreground" />
             </Link>
           </Button>
-          {userStore.subscription.plan === "" ? null : (
-            <PlanBadge plan={userStore.subscription.plan as TPlan} />
-          )}
+          {userStore.subscription.plan === "" ? null : <PlanBadge plan={userStore.subscription.plan as TPlan} />}
         </div>
         <div className="hidden sm:flex justify-center items-center gap-0 h-full">
           {links.map((link) => {
@@ -276,18 +235,10 @@ const NavApp = () => {
                   key={link.id}
                   href={link.path}
                   className={`${
-                    isActive(link.path)
-                      ? "text-foreground/100"
-                      : "text-foreground/70"
+                    isActive(link.path) ? "text-foreground/100" : "text-foreground/70"
                   } text-sm h-full flex  justify-center items-center px-3 hover:bg-foreground/5 relative`}>
-                  {isActive(link.path) && (
-                    <div className="bg-foreground/80 bottom-0 w-full h-0.5 absolute"></div>
-                  )}
-                  <link.icon
-                    className={`${
-                      isActive(link.path) && "text-primary"
-                    } w-4 h-4 mr-2`}
-                  />
+                  {isActive(link.path) && <div className="bg-foreground/80 bottom-0 w-full h-0.5 absolute"></div>}
+                  <link.icon className={`${isActive(link.path) && "text-primary"} w-4 h-4 mr-2`} />
                   {link.name}
                 </Link>
               );
@@ -304,7 +255,7 @@ const NavApp = () => {
           </Feedback>
           {userStore.subscription.plan !== "pro" && (
             <ChangePlans>
-              <Button variant={"outline"} size={"xs"}>
+              <Button variant={"secondary"} size={"xs"}>
                 Upgrade
               </Button>
             </ChangePlans>
@@ -323,8 +274,7 @@ const NavApp = () => {
   );
 };
 const NavEditor = () => {
-  const { form, theme, blocks, blocksReadyOnly, preview, setPreview } =
-    useEditorStore();
+  const { form, theme, blocks, blocksReadyOnly, preview, setPreview } = useEditorStore();
   const queryClient = useQueryClient();
   const supabase = createClient();
   const router = useRouter();
@@ -413,12 +363,8 @@ const NavEditor = () => {
         ...elementsAfter.filter((x) => !beforeIds.has(x.id)),
       ];
 
-      inBoth = inBoth.filter(
-        (item, index, self) => self.findIndex((x) => x.id === item.id) === index
-      );
-      inEither = inEither.filter(
-        (item, index, self) => self.findIndex((x) => x.id === item.id) === index
-      );
+      inBoth = inBoth.filter((item, index, self) => self.findIndex((x) => x.id === item.id) === index);
+      inEither = inEither.filter((item, index, self) => self.findIndex((x) => x.id === item.id) === index);
 
       newElements = inEither.filter((x) => afterIds.has(x.id));
       removedElements = inEither.filter((x) => beforeIds.has(x.id));
@@ -435,25 +381,18 @@ const NavEditor = () => {
 
       elementsToDelete = [...removedElements];
 
-      const { error: upsertError } = await supabase
-        .from("blocks")
-        .upsert(elementsToUpsert);
+      const { error: upsertError } = await supabase.from("blocks").upsert(elementsToUpsert);
       if (upsertError) {
         console.error("Error upserting blocks:", upsertError);
         throw new Error("Failed to upsert blocks.");
       }
 
-      const deletePromises = elementsToDelete.map(
-        async (x) => await supabase.from("blocks").delete().eq("id", x.id)
-      );
+      const deletePromises = elementsToDelete.map(async (x) => await supabase.from("blocks").delete().eq("id", x.id));
       const deleteResults = await Promise.all(deletePromises);
 
       deleteResults.forEach(({ error }, index) => {
         if (error) {
-          console.error(
-            `Error deleting block with id ${elementsToDelete[index].id}:`,
-            error
-          );
+          console.error(`Error deleting block with id ${elementsToDelete[index].id}:`, error);
           throw new Error("Failed to delete blocks.");
         }
       });
@@ -472,9 +411,7 @@ const NavEditor = () => {
           </Link>
         </Button>
         <div className="flex justify-center items-center gap-2">
-          <span className="text-sm font-medium truncate max-w-[280px]">
-            {form.name}
-          </span>
+          <span className="text-sm font-medium truncate max-w-[280px]">{form.name}</span>
         </div>
       </div>
       <div className="flex justify-center items-center gap-1">
@@ -483,21 +420,11 @@ const NavEditor = () => {
             Last updated at {new Date(form.updated_at).toLocaleString()}
           </span>
         )}
-        <Button
-          variant={"outline"}
-          size={"sm"}
-          className="flex sm:hidden"
-          onClick={() => setPreview(!preview)}>
+        <Button variant={"outline"} size={"sm"} className="flex sm:hidden" onClick={() => setPreview(!preview)}>
           Preview
         </Button>
-        <Button
-          size={"sm"}
-          variant={"secondary"}
-          onClick={onSave}
-          disabled={appState === "loading"}>
-          {appState === "loading" && (
-            <LoaderIcon className="animate-spin w-4 h-4 mr-2" />
-          )}
+        <Button size={"sm"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
+          {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
           Save Form
         </Button>
       </div>
