@@ -1,17 +1,7 @@
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState, TSetState } from "@/utils/types";
-import {
-  CheckIcon,
-  FrownIcon,
-  Loader2Icon,
-  SmileIcon,
-  XIcon,
-} from "lucide-react";
+import { CheckIcon, FrownIcon, Loader2Icon, SmileIcon, XIcon } from "lucide-react";
 import { ReactNode, useState } from "react";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
@@ -22,7 +12,7 @@ const Feedback = ({ children }: { children: ReactNode }) => {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent className="mr-40 w-80">
+      <PopoverContent className="w-80 p-3">
         <Body setState={setOpen} />
       </PopoverContent>
     </Popover>
@@ -90,8 +80,8 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     );
 
   return (
-    <div className="min-h-32 flex flex-col justify-between">
-      <div className="flex flex-col gap-2">
+    <div className=" flex flex-col justify-between gap-3">
+      <div className="flex flex-col">
         <Textarea
           value={value}
           onChange={(e) => setValue(e.target.value)}
@@ -107,23 +97,15 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
                   onClick={() => setMood(mood.value)}
                   key={i}
                   variant={"outline"}
-                  size={"sm"}
-                  className={`${
-                    localMood === mood.value && "bg-primary/10 text-primary"
-                  } `}>
+                  size={"xs"}
+                  className={`${localMood === mood.value && "bg-primary/10 text-primary"} `}>
                   {mood.icon}
                 </Button>
               );
             })}
           </div>
-          <Button
-            size={"sm"}
-            variant={"secondary"}
-            onClick={onSendFeedback}
-            disabled={appState === "loading"}>
-            {appState === "loading" && (
-              <Loader2Icon className="animate-spin w-4 h-4 mr-2" />
-            )}
+          <Button size={"xs"} variant={"secondary"} onClick={onSendFeedback} disabled={appState === "loading"}>
+            {appState === "loading" && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
             Send Feedback
           </Button>
         </div>

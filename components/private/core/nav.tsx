@@ -217,12 +217,12 @@ const NavApp = () => {
   });
 
   return (
-    <div className="border-y border-t-foreground/5 h-14 flex items-center px-2 sm:px-6 justify-between z-10 bg-background fixed w-full">
-      <div className="flex justify-center items-center gap-3 h-full">
-        <div className="flex justify-center items-center gap-4">
+    <div className="border-y border-t-foreground/5 h-12 flex items-center px-2 sm:px-4 justify-between z-10 bg-background fixed w-full">
+      <div className="flex justify-center items-center gap-4 h-full">
+        <div className="flex justify-center items-center gap-2">
           <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
             <Link href={"/dashboard/forms"}>
-              <Brand type="logo" className="h-7 fill-foreground" />
+              <Brand type="logo" className="h-5 fill-foreground" />
             </Link>
           </Button>
           {userStore.subscription.plan === "" ? null : <PlanBadge plan={userStore.subscription.plan as TPlan} />}
@@ -235,10 +235,12 @@ const NavApp = () => {
                   key={link.id}
                   href={link.path}
                   className={`${
-                    isActive(link.path) ? "text-foreground/100" : "text-foreground/70"
-                  } text-sm h-full flex  justify-center items-center px-3 hover:bg-foreground/5 relative`}>
-                  {isActive(link.path) && <div className="bg-foreground/80 bottom-0 w-full h-0.5 absolute"></div>}
-                  <link.icon className={`${isActive(link.path) && "text-primary"} w-4 h-4 mr-2`} />
+                    isActive(link.path) ? "text-foreground/100 font-medium" : "text-foreground/70"
+                  } text-xs h-full flex justify-center items-center px-2 hover:bg-foreground/5 relative`}>
+                  {isActive(link.path) && <div className="bg-foreground/70 bottom-0 w-full h-0.5 absolute"></div>}
+                  <link.icon
+                    className={`${isActive(link.path) ? "text-primary" : "text-foreground/70"} w-4 h-4 mr-2`}
+                  />
                   {link.name}
                 </Link>
               );
@@ -403,7 +405,7 @@ const NavEditor = () => {
   };
 
   return (
-    <div className="h-14 flex justify-between items-center w-full bg-background border-y border-t-foreground/5 sm:px-6 px-2 z-20 fixed">
+    <div className="h-12 flex justify-between items-center w-full bg-background border-y border-t-foreground/5 sm:px-4 px-2 z-20 fixed">
       <div className="flex justify-center items-center gap-2">
         <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
           <Link href={"/dashboard/forms"}>
@@ -416,14 +418,14 @@ const NavEditor = () => {
       </div>
       <div className="flex justify-center items-center gap-1">
         {form.updated_at !== "" && (
-          <span className="text-xs font-semibold text-foreground/80 mr-5 hidden sm:flex">
+          <span className="text-xs font-medium text-foreground/80 mr-5 hidden sm:flex">
             Last updated at {new Date(form.updated_at).toLocaleString()}
           </span>
         )}
-        <Button variant={"outline"} size={"sm"} className="flex sm:hidden" onClick={() => setPreview(!preview)}>
+        <Button size={"xs"} variant={"outline"} className="flex sm:hidden" onClick={() => setPreview(!preview)}>
           Preview
         </Button>
-        <Button size={"sm"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
+        <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
           {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
           Save Form
         </Button>
@@ -441,7 +443,7 @@ const PlanBadge = ({ plan }: { plan: TPlan }) => {
   };
 
   return (
-    <Badge variant="success" uppercase className="rounded-lg">
+    <Badge variant="plan" uppercase className="">
       {planLabels[plan] || "Custom"}
     </Badge>
   );

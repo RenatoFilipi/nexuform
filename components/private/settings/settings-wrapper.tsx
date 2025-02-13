@@ -53,23 +53,17 @@ const SettingsWrapper = ({
   if (query.isPending) return null;
 
   return (
-    <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
-      <div className="flex w-full h-full flex-1 relative sm:pl-36 flex-col sm:flex-row gap-4 sm:gap-0">
+    <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-6 flex-1 mt-14">
+      <div className="flex w-full h-full flex-1 relative  flex-col sm:flex-row gap-4 sm:gap-0">
         <div className="flex sm:flex-col h-fit sm:w-60 gap-1 sm:fixed">
           {enabledViews.map((v) => (
             <button
               key={v.view}
               onClick={() => setView(v.view as TView)}
               className={`${
-                v.view === view
-                  ? "border-foreground/30"
-                  : "border-transparent text-foreground/70"
+                v.view === view ? "border-foreground/30" : "border-transparent text-foreground/70"
               } border p-2 flex items-center justify-start gap-2 text-sm hover:bg-foreground/5 rounded flex-1`}>
-              <v.icon
-                className={`${
-                  v.view === view ? "text-primary" : "text-foreground/70"
-                } w-4 h-4`}
-              />
+              <v.icon className={`${v.view === view ? "text-primary" : "text-foreground/70"} w-4 h-4`} />
               {v.label}
             </button>
           ))}

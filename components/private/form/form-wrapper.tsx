@@ -4,14 +4,7 @@ import FormStatusBadge from "@/components/shared/form-status-badge";
 import { Button } from "@/components/ui/button";
 import useFormStore from "@/stores/form";
 import useUserStore from "@/stores/user";
-import {
-  EBlock,
-  EForm,
-  EFormAnalytics,
-  EProfile,
-  ESubmission,
-  ESubscription,
-} from "@/utils/entities";
+import { EBlock, EForm, EFormAnalytics, EProfile, ESubmission, ESubscription } from "@/utils/entities";
 import { formatDateRelativeToNow } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
@@ -83,9 +76,7 @@ const FormWrapper = ({
   const userStore = useUserStore();
   const [view, setView] = useState<TView>("overview");
   const enabledViews = views.filter((x) => x.enabled);
-  const notReviewedSubmissions = formStore.submissions.filter(
-    (x) => x.status === "not_reviewed"
-  ).length;
+  const notReviewedSubmissions = formStore.submissions.filter((x) => x.status === "not_reviewed").length;
 
   const query = useQuery({
     queryKey: ["formData"],
@@ -106,25 +97,19 @@ const FormWrapper = ({
   if (query.isPending) return null;
 
   return (
-    <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
+    <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-6 flex-1 mt-14">
       <div className="flex flex-col">
         <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
           <div className="flex justify-between sm:justify-start items-center gap-3 w-full sm:w-fit">
             <div className="flex items-center gap-2">
               <BookIcon className="w-4 h-4" />
-              <h1 className="font-medium truncate max-w-[240px]">
-                {formStore.form.name}
-              </h1>
+              <h1 className="font-medium truncate max-w-[240px]">{formStore.form.name}</h1>
             </div>
-            <FormStatusBadge
-              status={formStore.form.status as TFormStatus}
-              uppercase
-            />
+            <FormStatusBadge status={formStore.form.status as TFormStatus} uppercase />
             {formStore.form.updated_at !== "".trim() ? (
               <div className="hidden sm:flex">
                 <span className="text-xs text-foreground/60">
-                  Form last updated{" "}
-                  {formatDateRelativeToNow(formStore.form.updated_at)}
+                  Form last updated {formatDateRelativeToNow(formStore.form.updated_at)}
                 </span>
               </div>
             ) : (
@@ -153,9 +138,7 @@ const FormWrapper = ({
               </a>
             )}
             <Button variant="default" size="sm" asChild>
-              <Link
-                href={`/dashboard/editor/${formStore.form.id}`}
-                className="w-full sm:w-fit">
+              <Link href={`/dashboard/editor/${formStore.form.id}`} className="w-full sm:w-fit">
                 <Settings2Icon className="w-4 h-4 mr-2" />
                 Editor
               </Link>
@@ -166,7 +149,7 @@ const FormWrapper = ({
       <div className="flex flex-col flex-1 h-full gap-4 overflow-y-auto">
         <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
           <div className="w-full overflow-x-auto">
-            <div className="flex sm:w-fit sm:gap-3 gap-1">
+            <div className="flex sm:w-fit sm:gap-2 gap-1">
               {enabledViews.map((v) => (
                 <button
                   key={v.view}
@@ -176,11 +159,7 @@ const FormWrapper = ({
                       ? "border-foreground/30 text-foreground/100"
                       : "border-transparent text-foreground/70"
                   } border p-2 flex items-center justify-center gap-2 text-sm hover:bg-foreground/5 rounded flex-1`}>
-                  <v.icon
-                    className={`${
-                      v.view === view ? "text-primary" : "text-foreground/70"
-                    } w-4 h-4`}
-                  />
+                  <v.icon className={`${v.view === view ? "text-primary" : "text-foreground/70"} w-4 h-4`} />
                   {v.label}
                   {v.view === "submissions" && notReviewedSubmissions > 0 && (
                     <span className="inline-flex items-center justify-center w-4 h-4 text-xs font-semibold text-yellow-600 bg-yellow-600/20 rounded-full">

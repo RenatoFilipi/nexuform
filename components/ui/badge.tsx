@@ -39,6 +39,7 @@ const badgeVariants = cva(
           "inline-flex items-center rounded-md bg-gray-300/20 px-2 py-1 text-xs font-medium text-gray-500 dark:bg-gray-500/30 dark:text-gray-200",
         bronze:
           "inline-flex items-center rounded-md bg-orange-600/20 px-2 py-1 text-xs font-medium text-orange-700 dark:bg-orange-700/30 dark:text-orange-300",
+        plan: "px-2 border-primary/40 text-xs text-primary bg-primary/10",
       },
       uppercase: {
         true: "uppercase",
@@ -52,19 +53,12 @@ const badgeVariants = cva(
   }
 );
 
-export interface BadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {
+export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {
   uppercase?: boolean;
 }
 
 function Badge({ className, variant, uppercase, ...props }: BadgeProps) {
-  return (
-    <div
-      className={cn(badgeVariants({ variant, uppercase }), className)}
-      {...props}
-    />
-  );
+  return <div className={cn(badgeVariants({ variant, uppercase }), className)} {...props} />;
 }
 
 export { Badge, badgeVariants };
