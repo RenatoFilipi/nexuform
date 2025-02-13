@@ -150,7 +150,7 @@ const FormWrapper = ({
                   onClick={() => setView(v.view as TView)}
                   className={`${
                     v.view === view
-                      ? "border-foreground/30 text-foreground/100"
+                      ? "border-foreground/30 text-foreground/100 font-medium"
                       : "border-transparent text-foreground/70"
                   } border p-2 flex items-center justify-center gap-2 text-sm hover:bg-foreground/5 rounded flex-1`}>
                   <v.icon className={`${v.view === view ? "text-primary" : "text-foreground/70"} w-4 h-4`} />

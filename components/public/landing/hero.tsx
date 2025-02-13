@@ -2,7 +2,6 @@
 
 import ShineBorder from "@/components/magicui/shine-border";
 import { Button } from "@/components/ui/button";
-import { ArrowRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -18,34 +17,20 @@ const Hero = () => {
       <div className="flex justify-center items-center flex-col gap-10 w-full">
         <div className="flex flex-col justify-center items-center w-full text-center gap-6">
           <h1 className="font-bold text-2xl sm:text-5xl max-w-[43.5rem]">
-            Elevate Feedback Collection with{" "}
-            <span className="text-primary">Powerful Forms.</span>
+            Elevate Feedback Collection with <span className="text-primary">Powerful Forms.</span>
           </h1>
-          <p className="max-w-xl text-base font-normal text-foreground/60">
-            Gain actionable insights and transform feedback into meaningful data
-            to drive smarter business decisions.
+          <p className="max-w-xl text-base font-normal text-foreground/70">
+            Gain actionable insights and transform feedback into meaningful data to drive smarter business decisions.
           </p>
         </div>
         <div className="flex justify-center items-center gap-4 flex-col sm:flex-row w-full">
-          <Button asChild variant={"secondary"} className="w-full sm:w-fit">
-            <Link href={"/signup"}>
-              Get Started for Free
-              <ArrowRightIcon className="w-4 h-4 ml-2" />
-            </Link>
+          <Button asChild variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
+            <Link href={"/signup"}>Get started for free</Link>
           </Button>
         </div>
       </div>
-      <ShineBorder
-        className="relative rounded-lg"
-        color={["#7C3AED", "#7C3AED", "#7C3AED"]}>
-        <Image
-          className=""
-          alt="hero preview feature"
-          src={`/hero.png`}
-          width={1000}
-          height={500}
-          priority
-        />
+      <ShineBorder className="relative rounded-lg" color={["#7C3AED", "#7C3AED", "#7C3AED"]}>
+        <Image className="" alt="hero preview feature" src={`/hero.png`} width={1000} height={500} priority />
       </ShineBorder>
     </div>
   );

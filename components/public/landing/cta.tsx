@@ -2,7 +2,6 @@
 
 import Brand from "@/components/core/brand";
 import { Button } from "@/components/ui/button";
-import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
 
 const Cta = () => {
@@ -16,16 +15,11 @@ const Cta = () => {
         <div className="flex justify-center items-center mb-5">
           <Brand type="logo" className="w-14 h-14 fill-foreground" />
         </div>
-        <h2 className="text-base text-primary font-semibold">
-          Ready to improve your business?
-        </h2>
+        <h2 className="text-base text-primary font-semibold">Ready to improve your business?</h2>
         <p className="mt-2 text-5xl font-bold">Start your free trial today.</p>
         <div className="mt-8 flex justify-center gap-4 flex-col sm:flex-row">
-          <Button asChild variant={"secondary"}>
-            <Link href={"/signup"}>
-              Get Started for Free
-              <ArrowRightIcon className="w-4 h-4 ml-2" />
-            </Link>
+          <Button asChild variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
+            <Link href={"/signup"}>Get started for free</Link>
           </Button>
         </div>
       </div>

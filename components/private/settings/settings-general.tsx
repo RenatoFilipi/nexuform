@@ -1,13 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import useUserStore from "@/stores/user";
 import { createClient } from "@/utils/supabase/client";
@@ -22,34 +15,17 @@ import AccountDelete from "./account-delete";
 
 const SettingsGeneral = () => {
   return (
-    <div className="flex flex-col gap-8 w-full">
+    <div className="flex flex-col gap-6 w-full">
       <div className="flex flex-col">
-        <h1 className="font-semibold text-lg">User Preferences</h1>
-        <p className="text-sm text-foreground/80">
-          Customize your profile, account settings, and preferences to tailor
-          your Nebulaform experience.
+        <h1 className="font-semibold text-base">User Preferences</h1>
+        <p className="text-xs text-foreground/70">
+          Customize your profile, account settings, and preferences to tailor your Nebulaform experience.
         </p>
       </div>
       <div className="flex flex-col gap-6">
         <GeneralProfile />
         <GeneralPassword />
-        <div className="flex flex-col border p-4 gap-2 rounded">
-          <div className="flex justify-start items-center gap-4">
-            <h2 className="text-base font-semibold">Delete account</h2>
-            <Badge variant={"red"}>Danger Zone</Badge>
-          </div>
-          <div className="flex justify-between items-center">
-            <p className="text-xs text-foreground/80">
-              Delete your account and all its associated data. This action is
-              not reversible, so please continue with caution.
-            </p>
-            <AccountDelete>
-              <Button variant={"destructive_outline"} size={"sm"}>
-                Delete Account
-              </Button>
-            </AccountDelete>
-          </div>
-        </div>
+        <GeneralDeleteAccount />
       </div>
     </div>
   );
@@ -93,14 +69,10 @@ const GeneralProfile = () => {
 
   return (
     <Form {...profileHandler}>
-      <form
-        onSubmit={profileHandler.handleSubmit(onProfileSubmit)}
-        className="flex flex-col border rounded p-4 gap-4">
+      <form onSubmit={profileHandler.handleSubmit(onProfileSubmit)} className="flex flex-col border rounded p-4 gap-4">
         <div className="flex flex-col">
           <h2 className="text-base font-semibold">Profile Information</h2>
-          <p className="text-xs text-foreground/80">
-            Manage and update your personal details.
-          </p>
+          <p className="text-xs text-foreground/70">Manage and update your personal details.</p>
         </div>
         <div className="flex gap-4">
           <FormField
@@ -131,15 +103,9 @@ const GeneralProfile = () => {
           />
         </div>
         <div className="flex justify-end items-center">
-          <Button
-            disabled={appState === "loading"}
-            variant={"secondary"}
-            type="submit"
-            size={"sm"}>
-            {appState === "loading" && (
-              <LoaderIcon className="w-4 h-4 animate-spin mr-2" />
-            )}
-            Save
+          <Button disabled={appState === "loading"} variant={"secondary"} type="submit" size={"sm"}>
+            {appState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
+            Save Profile
           </Button>
         </div>
       </form>
@@ -191,9 +157,9 @@ const GeneralPassword = () => {
         className="flex flex-col border rounded p-4 gap-4">
         <div className="flex flex-col">
           <h2 className="text-base font-semibold">Password Update</h2>
-          <p className="text-xs text-foreground/80">
-            Update your password to enhance security. Choose a strong password
-            that includes letters, numbers, and special characters.
+          <p className="text-xs text-foreground/70">
+            Update your password to enhance security. Choose a strong password that includes letters, numbers, and
+            special characters.
           </p>
         </div>
         <div className="flex flex-col gap-4">
@@ -205,11 +171,7 @@ const GeneralPassword = () => {
                 <FormLabel>New password</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <Input
-                      id={id}
-                      type={isVisible ? "text" : "password"}
-                      {...field}
-                    />
+                    <Input id={id} type={isVisible ? "text" : "password"} {...field} />
                     <button
                       className="absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-lg text-muted-foreground/80 outline-offset-2 transition-colors hover:text-foreground focus:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring/70 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
                       type="button"
@@ -217,11 +179,7 @@ const GeneralPassword = () => {
                       aria-label={isVisible ? "Hide password" : "Show password"}
                       aria-pressed={isVisible}>
                       {isVisible ? (
-                        <EyeOffIcon
-                          size={16}
-                          strokeWidth={2}
-                          aria-hidden="true"
-                        />
+                        <EyeOffIcon size={16} strokeWidth={2} aria-hidden="true" />
                       ) : (
                         <EyeIcon size={16} strokeWidth={2} aria-hidden="true" />
                       )}
@@ -235,14 +193,33 @@ const GeneralPassword = () => {
         </div>
         <div className="flex justify-end items-center">
           <Button type="submit" size="sm" variant="secondary">
-            {appState === "loading" && (
-              <LoaderIcon className="w-4 h-4 animate-spin mr-2" />
-            )}
-            Save
+            {appState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
+            Update Password
           </Button>
         </div>
       </form>
     </Form>
+  );
+};
+const GeneralDeleteAccount = () => {
+  return (
+    <div className="flex flex-col border p-4 gap-2 rounded">
+      <div className="flex justify-start items-center gap-4">
+        <h2 className="text-base font-semibold">Delete account</h2>
+        <Badge variant={"red"}>Danger Zone</Badge>
+      </div>
+      <div className="flex justify-between items-center">
+        <p className="text-xs text-foreground/80">
+          Delete your account and all its associated data. This action is not reversible, so please continue with
+          caution.
+        </p>
+        <AccountDelete>
+          <Button variant={"destructive_outline"} size={"sm"}>
+            Delete Account
+          </Button>
+        </AccountDelete>
+      </div>
+    </div>
   );
 };
 
