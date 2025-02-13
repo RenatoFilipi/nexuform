@@ -2,13 +2,7 @@
 
 import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
-import {
-  EBlock,
-  EForm,
-  EProfile,
-  ESubscription,
-  ETheme,
-} from "@/utils/entities";
+import { EBlock, EForm, EProfile, ESubscription, ETheme } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { useTransition } from "react";
 import EditorPreview from "./editor-preview";
@@ -56,7 +50,7 @@ const EditorWrapper = ({
 
   if (editorStore.preview)
     return (
-      <div className="flex flex-col relative w-full overflow-y-auto h-full flex-1 mt-14">
+      <div className="flex flex-col relative w-full overflow-y-auto h-full flex-1 mt-12">
         <div className="flex w-full h-full justify-center items-start bg-foreground/5">
           <EditorPreviewGroup />
         </div>
@@ -64,9 +58,9 @@ const EditorWrapper = ({
     );
 
   return (
-    <div className="flex flex-col relative w-full overflow-y-auto h-full flex-1 mt-14">
+    <div className="flex flex-col relative w-full overflow-y-auto h-full flex-1 mt-12">
       <div className="flex flex-1 overflow-y-auto">
-        <div className="sm:w-[380px] fixed top-0 h-screen pt-14 w-full">
+        <div className="sm:w-[380px] fixed top-0 h-screen pt-12 w-full">
           <EditorTools />
         </div>
         <div className="hidden sm:flex flex-1 overflow-y-auto justify-center items-center ml-[380px]">

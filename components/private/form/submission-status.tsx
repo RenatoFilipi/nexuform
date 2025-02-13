@@ -21,32 +21,23 @@ const options = [
     button: "Mark as Reviewed",
     label: "Reviewed",
     value: "reviewed",
-    description:
-      "This indicates that the submission has already been reviewed and processed.",
+    description: "This indicates that the submission has already been reviewed and processed.",
   },
   {
     button: "Mark as Not Reviewed",
     label: "Not Reviewed",
     value: "not_reviewed",
-    description:
-      "This indicates that the submission is pending review and requires attention.",
+    description: "This indicates that the submission is pending review and requires attention.",
   },
   {
     button: "Mark as Ignored",
     label: "Ignored",
     value: "ignored",
-    description:
-      "This indicates that the submission has been intentionally disregarded and marked as ignored.",
+    description: "This indicates that the submission has been intentionally disregarded and marked as ignored.",
   },
 ];
 
-const SubmissionStatus = ({
-  submission,
-  setState,
-}: {
-  submission: ESubmission;
-  setState: TSetState<boolean>;
-}) => {
+const SubmissionStatus = ({ submission, setState }: { submission: ESubmission; setState: TSetState<boolean> }) => {
   const supabase = createClient();
   const [appState, setAppState] = useState<TAppState>("idle");
   const { submissions, setSubmissions } = useFormStore();
@@ -62,19 +53,13 @@ const SubmissionStatus = ({
     }
   };
 
-  const [selectedIndex, setSelectedIndex] = useState(
-    getDefaultIndex(submission.status as TSubmissionStatus)
-  );
+  const [selectedIndex, setSelectedIndex] = useState(getDefaultIndex(submission.status as TSubmissionStatus));
 
   const onSubmissionStatusSubmit = async () => {
     const status = options[Number(selectedIndex)].value;
     if (status === submission.status) return;
     setAppState("loading");
-    const { data, error } = await supabase
-      .from("submissions")
-      .update({ status })
-      .eq("id", submission.id)
-      .select();
+    const { data, error } = await supabase.from("submissions").update({ status }).eq("id", submission.id).select();
 
     if (error || !data) {
       toast.error("Failed to update submission status.");
@@ -84,9 +69,7 @@ const SubmissionStatus = ({
 
     const updatedSubmission = { ...submission, status };
     const updatedSubmissions = submissions.map((oldSubmission) =>
-      oldSubmission.id === updatedSubmission.id
-        ? updatedSubmission
-        : oldSubmission
+      oldSubmission.id === updatedSubmission.id ? updatedSubmission : oldSubmission
     );
     setSubmissions(updatedSubmissions);
     toast.success("Submission status updated.");
@@ -97,42 +80,31 @@ const SubmissionStatus = ({
   return (
     <div className="inline-flex -space-x-px divide-x divide-primary-foreground/30 shadow-sm shadow-black/5 rtl:space-x-reverse">
       <Button
+        variant={"secondary"}
         disabled={appState === "loading"}
         size={"sm"}
         onClick={onSubmissionStatusSubmit}
         className="rounded-none shadow-none first:rounded-s-md last:rounded-e-md focus-visible:z-10">
-        {appState === "loading" && (
-          <LoaderIcon className="w-4 h-4 animate-spin mr-2" />
-        )}
+        {appState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
         {options[Number(selectedIndex)].button}
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild disabled={appState === "loading"}>
           <Button
+            variant={"secondary"}
             className="rounded-none shadow-none first:rounded-s-md last:rounded-e-md focus-visible:z-10"
             size="sm"
             aria-label="Options">
             <ChevronDown size={16} strokeWidth={2} aria-hidden="true" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent
-          className="max-w-64 md:max-w-xs"
-          side="bottom"
-          sideOffset={4}
-          align="end">
-          <DropdownMenuRadioGroup
-            value={selectedIndex}
-            onValueChange={setSelectedIndex}>
+        <DropdownMenuContent className="max-w-64 md:max-w-xs" side="bottom" sideOffset={4} align="end">
+          <DropdownMenuRadioGroup value={selectedIndex} onValueChange={setSelectedIndex}>
             {options.map((option, index) => (
-              <DropdownMenuRadioItem
-                key={option.label}
-                value={String(index)}
-                className="items-start [&>span]:pt-1.5">
+              <DropdownMenuRadioItem key={option.label} value={String(index)} className="items-start [&>span]:pt-1.5">
                 <div className="flex flex-col gap-1">
                   <span className="text-sm font-medium">{option.label}</span>
-                  <span className="text-xs text-muted-foreground">
-                    {option.description}
-                  </span>
+                  <span className="text-xs text-muted-foreground">{option.description}</span>
                 </div>
               </DropdownMenuRadioItem>
             ))}

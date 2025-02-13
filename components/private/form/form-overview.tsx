@@ -8,32 +8,16 @@ import SubmissionsActivityChart from "./submissions-activity-chart";
 
 const FormOverview = () => {
   const { formAnalytics } = useFormStore();
-
-  const {
-    total_submissions,
-    total_views,
-    avg_completion_rate,
-    avg_completion_time,
-  } = formAnalytics;
-
+  const { total_submissions, total_views, avg_completion_rate, avg_completion_time } = formAnalytics;
   const totalViews = total_views === 0 ? "--" : total_views.toString();
-  const totalSubmissions =
-    total_submissions === 0 ? "--" : total_submissions.toString();
-
-  const averageCompletionRate =
-    avg_completion_rate !== null
-      ? `${formatDecimal(avg_completion_rate)}%`
-      : "--";
-
-  const averageCompletionTime =
-    avg_completion_time !== null
-      ? `${formatTime(avg_completion_time, 2)}`
-      : "--";
+  const totalSubmissions = total_submissions === 0 ? "--" : total_submissions.toString();
+  const averageCompletionRate = avg_completion_rate !== null ? `${formatDecimal(avg_completion_rate)}%` : "--";
+  const averageCompletionTime = avg_completion_time !== null ? `${formatTime(avg_completion_time, 2)}` : "--";
 
   return (
     <div className="rounded w-full h-full flex-1 flex flex-col gap-2">
       <div className="gap-6 grid sm:grid-cols-2">
-        <div className="grid grid-cols-2 sm:grid-rows-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-rows-4 sm:grid-cols-2 gap-2 sm:gap-6">
           <CardTemplate
             name="Total Views"
             value={totalViews}
@@ -77,14 +61,14 @@ const CardTemplate = ({
   badge: string;
 }) => {
   return (
-    <Card className="px-4 py-3 flex flex-col flex-1 justify-between gap-2 items-start">
+    <Card className="px-4 py-3 flex sm:flex-col flex-1 justify-between gap-2 items-start">
       <div className="flex justify-between">
         <div className="flex items-center gap-2">
-          {icon}
-          <span className="text-sm">{name}</span>
+          <div className="flex justify-center items-center">{icon}</div>
+          <span className="text-xs sm:text-sm text-foreground/70">{name}</span>
         </div>
       </div>
-      <span className="text-base font-semibold">{value}</span>
+      <span className="text-base font-medium">{value}</span>
     </Card>
   );
 };

@@ -9,7 +9,6 @@ import { formatDateRelativeToNow } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import {
-  BookIcon,
   ExternalLinkIcon,
   ForwardIcon,
   Layers2Icon,
@@ -102,7 +101,6 @@ const FormWrapper = ({
         <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
           <div className="flex justify-between sm:justify-start items-center gap-3 w-full sm:w-fit">
             <div className="flex items-center gap-2">
-              <BookIcon className="w-4 h-4" />
               <h1 className="font-medium truncate max-w-[240px]">{formStore.form.name}</h1>
             </div>
             <FormStatusBadge status={formStore.form.status as TFormStatus} uppercase />
@@ -126,11 +124,7 @@ const FormWrapper = ({
               </Button>
             </FormShare>
             {formStore.form.status === "published" && (
-              <a
-                href={`/s/${formStore.form.public_url}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-fit">
+              <a href={`/s/${formStore.form.public_url}`} target="_blank" rel="noopener noreferrer" className="">
                 <Button variant="outline" size="sm">
                   <ExternalLinkIcon className="w-4 h-4 mr-2" />
                   Go to Form
