@@ -1,11 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import useFormStore from "@/stores/form";
 import { useQuery } from "@tanstack/react-query";
 import { format, parseISO, subDays } from "date-fns";
@@ -46,7 +41,7 @@ const SubmissionsActivityChart: React.FC = () => {
   const [chartData, setChartData] = useState<IChartData[]>([]);
   const [hasData, dispatch] = useReducer(hasDataReducer, false);
 
-  const barSize = days === 7 ? 20 : 10;
+  const barSize = days === 7 ? 14 : 10;
 
   const lastNDays = useMemo<IChartData[]>(
     () =>
@@ -117,16 +112,8 @@ const SubmissionsActivityChart: React.FC = () => {
             axisLine={false}
             tickFormatter={(value) => value.slice(0, 5)}
           />
-          <ChartTooltip
-            cursor={false}
-            content={<ChartTooltipContent indicator="dot" />}
-          />
-          <Bar
-            barSize={barSize}
-            dataKey="submission"
-            fill="var(--color-submission)"
-            radius={8}
-          />
+          <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
+          <Bar barSize={barSize} dataKey="submission" fill="var(--color-submission)" radius={0} />
         </BarChart>
       </ChartContainer>
     </div>

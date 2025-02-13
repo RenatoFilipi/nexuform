@@ -93,7 +93,7 @@ const SettingsBilling = () => {
             </Card>
           </div>
         </Card>
-        <Card className="p-4 flex flex-col gap-4 h-full">
+        {/* <Card className="p-4 flex flex-col gap-4 h-full">
           <div>
             <h1 className="text-base font-semibold">Payment History</h1>
             <p className="text-xs text-foreground/80">View your past transactions and invoices.</p>
@@ -101,7 +101,7 @@ const SettingsBilling = () => {
           <div className="flex justify-center items-center">
             <span className="text-sm text-foreground/80 py-10">No payment history to show</span>
           </div>
-        </Card>
+        </Card> */}
       </div>
     </div>
   );
