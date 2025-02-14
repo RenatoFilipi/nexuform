@@ -14,6 +14,8 @@ const SettingsBilling = () => {
   const currentPlan = getCurrentPlan(userStore.subscription.plan as TPlan);
   const pendingDays = getDaysDifference(new Date(), new Date(userStore.subscription.due_date));
   const pendingDaysStr = pendingDays === 1 ? `1 day remaining` : `${pendingDays} days remaining`;
+  const formsUsage = (100 * userStore.formsCount) / currentPlan.forms;
+  const submissionsUsage = (100 * userStore.submissionsCount) / currentPlan.submissions;
 
   const planName = (plan: string) =>
     ({
@@ -70,8 +72,12 @@ const SettingsBilling = () => {
                 {userStore.formsCount >= currentPlan.forms && <Badge variant={"warning"}>Limit reached</Badge>}
               </div>
               <div className="flex flex-col gap-2">
-                <div className="flex justify-start items-center gap-3">
-                  <Progress value={(100 * userStore.formsCount) / currentPlan.forms} />
+                <div className="flex justify-start items-center gap-1 flex-col">
+                  <div className="flex justify-between items-center w-full">
+                    <span className="text-xs text-foreground/80">Monthly usage</span>
+                    <span className="text-xs text-foreground/80">{userStore.formsCount}</span>
+                  </div>
+                  <Progress value={formsUsage} />
                 </div>
                 <p className="text-foreground/80 text-xs">{currentPlan?.forms} forms included.</p>
               </div>
@@ -84,8 +90,12 @@ const SettingsBilling = () => {
                 )}
               </div>
               <div className="flex flex-col gap-2">
-                <div className="flex justify-start items-center gap-3">
-                  <Progress value={(100 * userStore.submissionsCount) / currentPlan.submissions} />
+                <div className="flex justify-start items-center gap-1 flex-col">
+                  <div className="flex justify-between items-center w-full">
+                    <span className="text-xs text-foreground/80">Monthly usage</span>
+                    <span className="text-xs text-foreground/80">{userStore.submissionsCount}</span>
+                  </div>
+                  <Progress value={submissionsUsage} />
                 </div>
                 <p className="text-foreground/80 text-xs">{currentPlan?.submissions} submissions included.</p>
               </div>
