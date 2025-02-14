@@ -10,26 +10,23 @@ import useEditorStore from "@/stores/editor";
 import { EBlock } from "@/utils/entities";
 import { TSetState } from "@/utils/types";
 
-const CustomScaleSettings = ({
-  block,
-  setState,
-}: {
-  block: EBlock;
-  setState: TSetState<boolean>;
-}) => {
+const CustomScaleSettings = ({ block, setState }: { block: EBlock; setState: TSetState<boolean> }) => {
   const { id } = block;
   const { updateBlock, removeBlock } = useEditorStore();
 
   return (
-    <div className="h-full flex flex-col gap-8 overflow-y-auto">
+    <div className="h-full flex flex-col gap-6 overflow-y-auto">
       <div className="flex justify-center sm:justify-start items-center gap-3">
-        <Badge variant={"indigo"} uppercase>
+        <Badge variant={"primary"} uppercase>
           Custom Scale
         </Badge>
       </div>
-      <div className="h-full flex flex-col gap-4 overflow-y-auto">
+      <div className="h-full flex flex-col gap-8 overflow-y-auto pr-4">
         <div className="grid gap-3">
-          <Label htmlFor="name">Name</Label>
+          <div className="grid gap-1">
+            <Label htmlFor="name">Name</Label>
+            <span className="text-xs text-foreground/60">The label displayed above the input field.</span>
+          </div>
           <Input
             type="text"
             id="name"
@@ -40,7 +37,12 @@ const CustomScaleSettings = ({
           />
         </div>
         <div className="grid gap-3">
-          <Label htmlFor="description">Description</Label>
+          <div className="grid gap-1">
+            <Label htmlFor="description">Description</Label>
+            <span className="text-xs text-foreground/60">
+              Additional information displayed below the input to guide the user.
+            </span>
+          </div>
           <Textarea
             id="description"
             value={block.description ?? ""}
@@ -50,7 +52,12 @@ const CustomScaleSettings = ({
           />
         </div>
         <div className="grid gap-3">
-          <Label htmlFor="max-scaling">Max scale</Label>
+          <div className="grid gap-1">
+            <Label htmlFor="max-scaling">Max scale</Label>
+            <span className="text-xs text-foreground/60">
+              Define the highest value in the scale for user selection.
+            </span>
+          </div>
           <Input
             type="number_input"
             id="max-scale"
@@ -63,8 +70,11 @@ const CustomScaleSettings = ({
             }}
           />
         </div>
-        <div className="flex justify-between items-center">
-          <Label htmlFor="required">Required</Label>
+        <div className="flex justify-between items-center w-full">
+          <div className="grid gap-1">
+            <Label htmlFor="required">Required</Label>
+            <p className="text-xs text-foreground/60">If enabled, users must fill out this field before submitting.</p>
+          </div>
           <Switch
             id="required"
             checked={block.required}
@@ -75,22 +85,18 @@ const CustomScaleSettings = ({
         </div>
       </div>
       <div className="flex justify-between gap-4 items-center flex-col sm:flex-row">
+        <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
+          Close
+        </Button>
         <Button
           onClick={() => {
             removeBlock(block.id);
             setState(false);
           }}
-          variant={"destructive_outline"}
+          variant={"destructive"}
           size={"sm"}
           className="w-full sm:w-fit">
           Remove Block
-        </Button>
-        <Button
-          onClick={() => setState(false)}
-          variant={"outline"}
-          size={"sm"}
-          className="w-full sm:w-fit">
-          Close
         </Button>
       </div>
     </div>

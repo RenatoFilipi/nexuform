@@ -13,13 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { PlusIcon, XIcon } from "lucide-react";
 import { useState } from "react";
 
-const CheckboxesSettings = ({
-  block,
-  setState,
-}: {
-  block: EBlock;
-  setState: TSetState<boolean>;
-}) => {
+const CheckboxesSettings = ({ block, setState }: { block: EBlock; setState: TSetState<boolean> }) => {
   const { id } = block;
   const { updateBlock, removeBlock } = useEditorStore();
   const [options, setOptions] = useState<string[]>(block.options ?? []);
@@ -49,15 +43,18 @@ const CheckboxesSettings = ({
   };
 
   return (
-    <div className="h-full flex flex-col gap-8 overflow-y-auto">
+    <div className="h-full flex flex-col gap-6 overflow-y-auto">
       <div className="flex justify-center sm:justify-start items-center gap-3">
-        <Badge variant={"indigo"} uppercase>
+        <Badge variant={"primary"} uppercase>
           Checkboxes
         </Badge>
       </div>
-      <div className="h-full flex flex-col gap-4 overflow-y-auto">
+      <div className="h-full flex flex-col gap-8 overflow-y-auto pr-4">
         <div className="grid gap-3">
-          <Label htmlFor="name">Name</Label>
+          <div className="grid gap-1">
+            <Label htmlFor="name">Name</Label>
+            <span className="text-xs text-foreground/60">The label displayed above the input field.</span>
+          </div>
           <Input
             type="text"
             id="name"
@@ -68,7 +65,12 @@ const CheckboxesSettings = ({
           />
         </div>
         <div className="grid gap-3">
-          <Label htmlFor="description">Description</Label>
+          <div className="grid gap-1">
+            <Label htmlFor="description">Description</Label>
+            <span className="text-xs text-foreground/60">
+              Additional information displayed below the input to guide the user.
+            </span>
+          </div>
           <Textarea
             id="description"
             value={block.description ?? ""}
@@ -77,8 +79,11 @@ const CheckboxesSettings = ({
             }}
           />
         </div>
-        <div className="grid gap-3 overflow-y-auto">
-          <Label htmlFor="options">Options</Label>
+        <div className="grid gap-3">
+          <div className="grid gap-1">
+            <Label htmlFor="options">Options</Label>
+            <span className="text-xs text-foreground/60">Add multiple options for users to select from.</span>
+          </div>
           <div className="flex flex-col gap-2 overflow-y-auto">
             <div className="flex justify-center items-center gap-2">
               <Input value={input} onChange={(e) => setInput(e.target.value)} />
@@ -89,9 +94,7 @@ const CheckboxesSettings = ({
             <div className="flex flex-col gap-2 overflow-y-auto">
               {options.map((opt, index) => {
                 return (
-                  <div
-                    key={index}
-                    className="bg-foreground/5 p-1 flex justify-between items-center px-2">
+                  <div key={index} className="bg-foreground/5 p-1 flex justify-between items-center px-2">
                     <span className="text-xs">{opt}</span>
                     <button
                       onClick={() => {
@@ -105,8 +108,11 @@ const CheckboxesSettings = ({
             </div>
           </div>
         </div>
-        <div className="flex justify-between items-center">
-          <Label htmlFor="required">Required</Label>
+        <div className="flex justify-between items-center w-full">
+          <div className="grid gap-1">
+            <Label htmlFor="required">Required</Label>
+            <p className="text-xs text-foreground/60">If enabled, users must fill out this field before submitting.</p>
+          </div>
           <Switch
             id="required"
             checked={block.required}
@@ -117,11 +123,7 @@ const CheckboxesSettings = ({
         </div>
       </div>
       <div className="flex justify-between gap-4 items-center flex-col sm:flex-row">
-        <Button
-          onClick={() => setState(false)}
-          variant={"outline"}
-          size={"sm"}
-          className="w-full sm:w-fit">
+        <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
           Close
         </Button>
         <Button
@@ -129,7 +131,7 @@ const CheckboxesSettings = ({
             removeBlock(block.id);
             setState(false);
           }}
-          variant={"destructive_outline"}
+          variant={"destructive"}
           size={"sm"}
           className="w-full sm:w-fit">
           Remove Block
