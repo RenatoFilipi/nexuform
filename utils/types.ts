@@ -13,19 +13,13 @@ export type TBlock =
   | "email_address"
   | "star_rating"
   | "custom_scale";
+export type TIntegrations = "google_sheets" | "zapier" | "slack";
 
 // submission
 export type TSubmissionStatus = "reviewed" | "not_reviewed" | "ignored";
 
 // user
-export type TRole =
-  | "admin"
-  | "moderator"
-  | "editor"
-  | "contributor"
-  | "member"
-  | "guest"
-  | "none";
+export type TRole = "admin" | "moderator" | "editor" | "contributor" | "member" | "guest" | "none";
 
 // subscriptions
 export type TPlan = "free_trial" | "basic" | "pro" | "business" | "custom";

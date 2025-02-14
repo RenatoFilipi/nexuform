@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import { TBlock, TBrand, TColor, TFilterSort, TFormStatus, TFormStatusExtended, TPlan } from "./types";
+import { TBlock, TBrand, TColor, TFilterSort, TFormStatus, TFormStatusExtended, TIntegrations, TPlan } from "./types";
 
 export interface IDesign {
   label: TColor;
@@ -37,4 +37,11 @@ export interface IPlanLanding extends IPlan {
   features: string[];
   highlighted: boolean;
   buttonLabel: string;
+}
+export interface IFormIntegration {
+  name: string;
+  description: string;
+  type: TIntegrations;
+  icon: React.ReactNode;
+  enabled: boolean;
 }
