@@ -7,16 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import useEditorStore from "@/stores/editor";
-import { minWidth640 } from "@/utils/constants";
 import { EBlock } from "@/utils/entities";
 import { TBlock, TSetState } from "@/utils/types";
 import { Reorder } from "framer-motion";
@@ -33,7 +24,6 @@ import {
   TextIcon,
 } from "lucide-react";
 import { useState, type JSX } from "react";
-import { useMedia } from "react-use";
 import AddBlock from "../blocks/add-block";
 
 const icons: { [key in TBlock]: JSX.Element } = {
@@ -49,36 +39,16 @@ const icons: { [key in TBlock]: JSX.Element } = {
 };
 
 const FormReorder = ({ children }: { children: React.ReactNode }) => {
-  const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
-
-  if (isDesktop) {
-    return (
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild>{children}</SheetTrigger>
-        <SheetContent className="flex flex-col min-w-[450px]">
-          <SheetHeader>
-            <SheetTitle>Reorder Blocks</SheetTitle>
-            <SheetDescription>
-              Reorder the blocks in your form to adjust the flow and structure.
-              Drag and drop to reorder them as needed.
-            </SheetDescription>
-          </SheetHeader>
-          <Body setState={setOpen} />
-        </SheetContent>
-      </Sheet>
-    );
-  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="p-3 flex flex-col pt-10 max-h-[600px]">
+      <DialogContent className="flex flex-col min-w-[650px] h-[600px] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Reorder Blocks</DialogTitle>
           <DialogDescription>
-            Reorder the blocks in your form to adjust the flow and structure.
-            Drag and drop to reorder them as needed.
+            Reorder the blocks in your form to adjust the flow and structure. Drag and drop to reorder them as needed.
           </DialogDescription>
         </DialogHeader>
         <Body setState={setOpen} />
@@ -101,9 +71,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     <div className="flex flex-col gap-6 overflow-y-auto pt-4 sm:pt-0 flex-1 h-full">
       {blocks.length <= 0 && (
         <div className="flex justify-center items-center py-14 gap-4 flex-col h-full">
-          <span className="text-sm text-foreground/80">
-            No blocks to reorder.
-          </span>
+          <span className="text-sm text-foreground/80">No blocks to reorder.</span>
           <AddBlock formId={form.id}>
             <Button variant={"secondary"} size={"sm"}>
               <PlusIcon className="w-4 h-4 mr-2" />
@@ -124,11 +92,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
         </Reorder.Group>
       )}
       <div className="flex justify-end items-center">
-        <Button
-          onClick={() => setState(false)}
-          variant={"outline"}
-          size={"sm"}
-          className="w-full sm:w-fit">
+        <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
           Close
         </Button>
       </div>
@@ -138,17 +102,12 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
 
 const Item = ({ block }: { block: EBlock }) => {
   return (
-    <Reorder.Item
-      value={block}
-      id={block.id}
-      className="flex border cursor-grab bg-background rounded p-2 gap-2">
-      <div className="flex justify-center items-center bg-foreground/80 rounded relative p-2 h-full">
+    <Reorder.Item value={block} id={block.id} className="flex border cursor-grab bg-background rounded p-1 gap-3">
+      <div className="flex justify-center items-center bg-foreground rounded relative p-2 h-full">
         {icons[block.type as TBlock]}
       </div>
       <div className="flex justify-start items-center overflow-y-auto">
-        <p className="text-sm font-medium text-foreground/80 truncate max-w-xs">
-          {block.name}
-        </p>
+        <p className="text-xs text-foreground/80 truncate max-w-xs">{block.name}</p>
       </div>
     </Reorder.Item>
   );

@@ -30,6 +30,7 @@ const useEditorStore = create<editor>((set) => ({
     submit_text: "Submit",
     public_url: "",
     new_submission_notification: false,
+    nebulaform_branding: true,
   },
   theme: {
     id: "",
@@ -76,6 +77,7 @@ const useEditorStore = create<editor>((set) => ({
         submit_text: "Submit",
         public_url: "",
         new_submission_notification: false,
+        nebulaform_branding: true,
       },
       theme: {
         id: "",

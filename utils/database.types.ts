@@ -166,6 +166,7 @@ export type Database = {
           description: string | null
           id: string
           name: string
+          nebulaform_branding: boolean
           new_submission_notification: boolean
           owner_id: string
           public_url: string
@@ -178,6 +179,7 @@ export type Database = {
           description?: string | null
           id?: string
           name?: string
+          nebulaform_branding?: boolean
           new_submission_notification?: boolean
           owner_id?: string
           public_url?: string
@@ -190,6 +192,7 @@ export type Database = {
           description?: string | null
           id?: string
           name?: string
+          nebulaform_branding?: boolean
           new_submission_notification?: boolean
           owner_id?: string
           public_url?: string

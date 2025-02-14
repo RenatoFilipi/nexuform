@@ -1,17 +1,17 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import useEditorStore from "@/stores/editor";
 import { minWidth640 } from "@/utils/constants";
 import { EBlock } from "@/utils/entities";
@@ -34,14 +34,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMedia } from "react-use";
 import { z } from "zod";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "../../ui/drawer";
+import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
 
 const blockList: IBlockData[] = [
   {
@@ -109,31 +102,25 @@ const blockList: IBlockData[] = [
   },
 ];
 
-const AddBlock = ({
-  children,
-  formId,
-}: {
-  children: React.ReactNode;
-  formId: string;
-}) => {
+const AddBlock = ({ children, formId }: { children: React.ReactNode; formId: string }) => {
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
   if (isDesktop) {
     return (
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild>{children}</SheetTrigger>
-        <SheetContent className="flex flex-col min-w-[550px]">
-          <SheetHeader>
-            <SheetTitle>Blocks</SheetTitle>
-            <SheetDescription>
-              Select and add new block to your form. Customize each block to
-              suit your needs and enhance the user experience.
-            </SheetDescription>
-          </SheetHeader>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogContent className="flex flex-col min-w-[650px] h-[600px] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Blocks</DialogTitle>
+            <DialogDescription>
+              Select and add new block to your form. Customize each block to suit your needs and enhance the user
+              experience.
+            </DialogDescription>
+          </DialogHeader>
           <Body setState={setOpen} formId={formId} />
-        </SheetContent>
-      </Sheet>
+        </DialogContent>
+      </Dialog>
     );
   }
 
@@ -144,8 +131,8 @@ const AddBlock = ({
         <DrawerHeader>
           <DrawerTitle>Blocks</DrawerTitle>
           <DrawerDescription>
-            Select and add new block to your form. Customize each block to suit
-            your needs and enhance the user experience.
+            Select and add new block to your form. Customize each block to suit your needs and enhance the user
+            experience.
           </DrawerDescription>
         </DrawerHeader>
         <Body setState={setOpen} formId={formId} />
@@ -154,13 +141,7 @@ const AddBlock = ({
   );
 };
 
-const Body = ({
-  setState,
-  formId,
-}: {
-  setState: TSetState<boolean>;
-  formId: string;
-}) => {
+const Body = ({ setState, formId }: { setState: TSetState<boolean>; formId: string }) => {
   const { addBlock, blocks } = useEditorStore();
 
   const formSchema = z.object({
@@ -205,10 +186,8 @@ const Body = ({
   return (
     <div className="flex flex-col h-screen flex-1 overflow-y-auto">
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-6 h-full overflow-y-auto">
-          <div className="flex flex-col gap-4 overflow-y-auto h-full">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6 h-full overflow-y-auto">
+          <div className="flex flex-col gap-4 overflow-y-auto h-full pr-4">
             <FormField
               control={form.control}
               name="block"
@@ -223,24 +202,16 @@ const Body = ({
                         if (block.enabled)
                           return (
                             <div key={index}>
-                              <RadioGroupItem
-                                value={block.type}
-                                id={block.type}
-                                className="peer sr-only"
-                              />
+                              <RadioGroupItem value={block.type} id={block.type} className="peer sr-only" />
                               <Label
                                 htmlFor={block.type}
                                 className="text-sm cursor-pointer flex items-center justify-start gap-2 rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 [&:has([data-state=checked])]:border-primary">
-                                <div className="p-2 flex justify-center items-center bg-primary/10 rounded">
+                                <div className="p-2 flex justify-center items-center bg-primary/10 rounded text-primary">
                                   {block.icon}
                                 </div>
                                 <div className="flex flex-col gap-1">
-                                  <span className="font-medium">
-                                    {block.name}
-                                  </span>
-                                  <p className="text-xs text-foreground/60 hidden">
-                                    {block.description}
-                                  </p>
+                                  <span className="font-medium">{block.name}</span>
+                                  <p className="text-xs text-foreground/60 hidden">{block.description}</p>
                                 </div>
                               </Label>
                             </div>
@@ -252,7 +223,7 @@ const Body = ({
               )}
             />
           </div>
-          <div className="flex justify-end items-center gap-4 sm:flex-row flex-col-reverse">
+          <div className="flex justify-between items-center gap-4 sm:flex-row flex-col-reverse">
             <Button
               onClick={() => setState(false)}
               type="button"
@@ -261,11 +232,7 @@ const Body = ({
               className="w-full sm:w-fit">
               Cancel
             </Button>
-            <Button
-              type="submit"
-              variant={"default"}
-              size={"sm"}
-              className="w-full sm:w-fit">
+            <Button type="submit" variant={"default"} size={"sm"} className="w-full sm:w-fit">
               Add New Block
             </Button>
           </div>
