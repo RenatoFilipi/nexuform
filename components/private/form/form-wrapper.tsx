@@ -96,7 +96,7 @@ const FormWrapper = ({
   if (query.isPending) return null;
 
   return (
-    <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-6 flex-1 mt-14">
+    <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 lg:px-36 sm:px-6 flex-1 mt-14">
       <div className="flex flex-col">
         <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
           <div className="flex justify-between sm:justify-start items-center gap-3 w-full sm:w-fit">
