@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import useFormStore from "@/stores/form";
+import useUserStore from "@/stores/user";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -87,12 +88,14 @@ const GeneralSettings = () => {
   const supabase = createClient();
   const [settingsState, setSettingsState] = useState<TAppState>("idle");
   const { form, setForm } = useFormStore();
+  const user = useUserStore();
 
   const formSchema = z.object({
     name: z.string().min(3, "Name must contain at least 3 letters."),
     description: z.string(),
     submitText: z.string().min(3, "Submit text must contain at least 3 letters."),
     newSubmissionNotification: z.boolean(),
+    nebulaformBranding: z.boolean(),
   });
   const formHandler = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -101,10 +104,11 @@ const GeneralSettings = () => {
       description: form.description ?? "",
       submitText: form.submit_text,
       newSubmissionNotification: form.new_submission_notification,
+      nebulaformBranding: form.nebulaform_branding,
     },
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const { name, description, submitText, newSubmissionNotification } = values;
+    const { name, description, submitText, newSubmissionNotification, nebulaformBranding } = values;
 
     setSettingsState("loading");
     const { data, error } = await supabase
@@ -114,6 +118,7 @@ const GeneralSettings = () => {
         description,
         submit_text: submitText,
         new_submission_notification: newSubmissionNotification,
+        nebulaform_branding: nebulaformBranding,
       })
       .eq("id", form.id)
       .select("*")
@@ -202,6 +207,33 @@ const GeneralSettings = () => {
                   </div>
                   <FormControl>
                     <Switch checked={field.value} onCheckedChange={field.onChange} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={formHandler.control}
+              name="nebulaformBranding"
+              render={({ field }) => (
+                <FormItem className="flex justify-between items-center border rounded p-4">
+                  <div className="grid gap-1">
+                    <div className="flex justify-start items-center gap-2">
+                      <FormLabel>Nebulaform branding</FormLabel>
+                      {user.subscription.plan !== "pro" && <Badge variant={"pink"}>Pro</Badge>}
+                    </div>
+                    <span className="text-xs text-foreground/70">
+                      Show &quot;Powered by Nebulaform&quot; on your form.
+                    </span>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={(e) => {
+                        if (user.subscription.plan === "pro") {
+                          field.onChange(e);
+                        }
+                      }}
+                    />
                   </FormControl>
                 </FormItem>
               )}
