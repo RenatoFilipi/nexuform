@@ -105,8 +105,7 @@ const design: IDesign[] = [
 
 const EditorPreviewGroup = () => {
   const { blocks, form, theme } = useEditorStore();
-  const currentColor =
-    design.find((x) => x.label === theme.primary_color) ?? design[0];
+  const currentColor = design.find((x) => x.label === theme.primary_color) ?? design[0];
 
   return (
     <div
@@ -121,104 +120,37 @@ const EditorPreviewGroup = () => {
         {blocks.map((block) => {
           switch (block.type) {
             case "short_text":
-              return (
-                <ShortTextDesign
-                  key={block.id}
-                  block={block}
-                  theme={theme}
-                  onValueChange={() => {}}
-                />
-              );
+              return <ShortTextDesign key={block.id} block={block} theme={theme} onValueChange={() => {}} />;
             case "paragraph_text":
-              return (
-                <ParagraphTextDesign
-                  key={block.id}
-                  block={block}
-                  theme={theme}
-                  onValueChange={() => {}}
-                />
-              );
+              return <ParagraphTextDesign key={block.id} block={block} theme={theme} onValueChange={() => {}} />;
             case "multiple_choice":
-              return (
-                <MultipleChoiceDesign
-                  key={block.id}
-                  block={block}
-                  theme={theme}
-                  onValueChange={() => {}}
-                />
-              );
+              return <MultipleChoiceDesign key={block.id} block={block} theme={theme} onValueChange={() => {}} />;
             case "checkboxes":
-              return (
-                <CheckBoxesDesign
-                  key={block.id}
-                  block={block}
-                  theme={theme}
-                  onValueChange={() => {}}
-                />
-              );
+              return <CheckBoxesDesign key={block.id} block={block} theme={theme} onValueChange={() => {}} />;
             case "dropdown_menu":
-              return (
-                <DropdownMenuDesign
-                  key={block.id}
-                  block={block}
-                  theme={theme}
-                  onValueChange={() => {}}
-                />
-              );
+              return <DropdownMenuDesign key={block.id} block={block} theme={theme} onValueChange={() => {}} />;
             case "number_input":
-              return (
-                <NumberInputDesign
-                  key={block.id}
-                  block={block}
-                  theme={theme}
-                  onValueChange={() => {}}
-                />
-              );
+              return <NumberInputDesign key={block.id} block={block} theme={theme} onValueChange={() => {}} />;
             case "email_address":
-              return (
-                <EmailAddressDesign
-                  key={block.id}
-                  block={block}
-                  theme={theme}
-                  onValueChange={() => {}}
-                />
-              );
+              return <EmailAddressDesign key={block.id} block={block} theme={theme} onValueChange={() => {}} />;
             case "star_rating":
-              return (
-                <StarRatingDesign
-                  key={block.id}
-                  block={block}
-                  theme={theme}
-                  onValueChange={() => {}}
-                />
-              );
+              return <StarRatingDesign key={block.id} block={block} theme={theme} onValueChange={() => {}} />;
             case "custom_scale":
-              return (
-                <CustomScaleDesign
-                  key={block.id}
-                  block={block}
-                  theme={theme}
-                  onValueChange={() => {}}
-                />
-              );
+              return <CustomScaleDesign key={block.id} block={block} theme={theme} onValueChange={() => {}} />;
           }
         })}
       </div>
       <div className="flex flex-col gap-4">
         <div className="flex justify-end items-center w-full">
-          <Button
-            size={"sm"}
-            className={`${currentColor.tw_class} w-full sm:w-fit`}>
+          <Button size={"sm"} className={`${currentColor.tw_class} w-full sm:w-fit`}>
             {form.submit_text}
           </Button>
         </div>
-        {theme.nebulaform_branding && (
+        {form.nebulaform_branding && (
           <div className="flex justify-center items-center w-full">
             <span className="border rounded p-2 w-fit flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
               <Brand type="logo" className="fill-foreground w-4 h-4" />
-              <span className="text-foreground/80 text-xs font-semibold">
-                Powered by Nebulaform
-              </span>
+              <span className="text-foreground/80 text-xs font-semibold">Powered by Nebulaform</span>
             </span>
           </div>
         )}

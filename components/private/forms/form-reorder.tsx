@@ -71,13 +71,20 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     <div className="flex flex-col gap-6 overflow-y-auto pt-4 sm:pt-0 flex-1 h-full">
       {blocks.length <= 0 && (
         <div className="flex justify-center items-center py-14 gap-4 flex-col h-full">
-          <span className="text-sm text-foreground/80">No blocks to reorder.</span>
-          <AddBlock formId={form.id}>
-            <Button variant={"secondary"} size={"sm"}>
-              <PlusIcon className="w-4 h-4 mr-2" />
-              Add New Block
-            </Button>
-          </AddBlock>
+          <div className="flex flex-col gap-4 justify-center items-center">
+            <div className="flex justify-center items-center flex-col gap-1">
+              <span className="font-medium text-base">No blocks to reorder</span>
+              <p className="text-xs text-foreground/70 text-center">
+                There are currently no blocks available to reorder. Add blocks to start organizing them.
+              </p>
+            </div>
+            <AddBlock formId={form.id}>
+              <Button variant={"secondary"} size={"sm"}>
+                <PlusIcon className="w-4 h-4 mr-2" />
+                Add New Block
+              </Button>
+            </AddBlock>
+          </div>
         </div>
       )}
       {blocks.length >= 1 && (
@@ -107,7 +114,7 @@ const Item = ({ block }: { block: EBlock }) => {
         {icons[block.type as TBlock]}
       </div>
       <div className="flex justify-start items-center overflow-y-auto">
-        <p className="text-xs text-foreground/80 truncate max-w-xs">{block.name}</p>
+        <p className="text-sm text-foreground/80 truncate max-w-xs">{block.name}</p>
       </div>
     </Reorder.Item>
   );
