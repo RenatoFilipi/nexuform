@@ -27,6 +27,7 @@ const useSubmissionStore = create<submission>((set) => ({
     submit_text: "Submit",
     public_url: "",
     new_submission_notification: false,
+    nebulaform_branding: true,
   },
   theme: {
     id: "",
@@ -68,6 +69,7 @@ const useSubmissionStore = create<submission>((set) => ({
         submit_text: "Submit",
         public_url: "",
         new_submission_notification: false,
+        nebulaform_branding: true,
       },
       theme: {
         id: "",

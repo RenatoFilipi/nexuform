@@ -28,7 +28,7 @@ const statusList = [
   {
     status: "draft",
     label: "Draft",
-    description: "The form is being created or edited. It’s not available for users to access yet.",
+    description: `The form is being created or edited. It’s not available for users to access yet.`,
     icon: BookDashedIcon,
   },
   {
@@ -175,7 +175,7 @@ const GeneralSettings = () => {
               <Label>Nebulaform branding</Label>
               {user.subscription.plan !== "pro" && <Badge variant={"pink"}>Pro</Badge>}
             </div>
-            <span className="text-xs text-foreground/60">Show "Powered by Nebulaform" on your form.</span>
+            <span className="text-xs text-foreground/60">Show &quot;Powered by Nebulaform&quot; on your form.</span>
           </div>
         </div>
         <Switch checked={form.nebulaform_branding} onCheckedChange={onSetNebulaformBranding} />
