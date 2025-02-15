@@ -38,10 +38,11 @@ export interface IPlanLanding extends IPlan {
   highlighted: boolean;
   buttonLabel: string;
 }
-export interface IFormIntegration {
+export interface IIntegration {
   name: string;
   description: string;
   type: TIntegrations;
   icon: React.ReactNode;
   enabled: boolean;
+  pro: boolean;
 }
