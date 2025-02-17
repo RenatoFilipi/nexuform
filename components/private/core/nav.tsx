@@ -133,7 +133,7 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
             </Link>
           </Button>
         </div>
-        <div className="flex justify-end items-center gap-2 p-2">
+        <div className="justify-end items-center gap-2 p-2 hidden">
           <Link href={"/legal/privacy"} className="text-xs text-foreground/80 hover:underline">
             Privacy
           </Link>

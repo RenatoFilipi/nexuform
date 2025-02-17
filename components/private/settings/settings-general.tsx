@@ -74,7 +74,7 @@ const GeneralProfile = () => {
           <h2 className="text-base font-semibold">Profile Information</h2>
           <p className="text-xs text-foreground/70">Manage and update your personal details.</p>
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-4 flex-col sm:flex-row">
           <FormField
             control={profileHandler.control}
             name="firstName"
