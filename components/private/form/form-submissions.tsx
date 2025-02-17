@@ -23,6 +23,7 @@ const FormSubmissions = () => {
   const disabledPrevious = appState === "loading" || pagination.from <= 0;
   const disabledNext = appState === "loading";
   const noSubmission = submissions.length <= 0;
+  const records = submissions.length == 1 ? "1 record" : `${submissions.length} records`;
 
   const onPreviousData = async () => {
     setAppState("loading");
@@ -114,15 +115,18 @@ const FormSubmissions = () => {
               <span className="text-sm text-foreground/70">No submission to show.</span>
             </div>
           )}
-          <div className="flex w-full justify-end items-center gap-4">
-            <Button disabled={disabledPrevious} onClick={onPreviousData} variant={"outline"} size={"sm"}>
-              <ChevronLeftIcon className="w-4 h-4 mr-2" />
-              Previous
-            </Button>
-            <Button disabled={disabledNext} onClick={onNextData} variant={"outline"} size={"sm"}>
-              Next
-              <ChevronRightIcon className="w-4 h-4 ml-2" />
-            </Button>
+          <div className="flex w-full justify-between items-center gap-4">
+            <span className="text-xs text-foreground/80">{records}</span>
+            <div className="flex justify-center items-center gap-4">
+              <Button disabled={disabledPrevious} onClick={onPreviousData} variant={"outline"} size={"sm"}>
+                <ChevronLeftIcon className="w-4 h-4 mr-2" />
+                Previous
+              </Button>
+              <Button disabled={disabledNext} onClick={onNextData} variant={"outline"} size={"sm"}>
+                Next
+                <ChevronRightIcon className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
           </div>
         </div>
       )}
