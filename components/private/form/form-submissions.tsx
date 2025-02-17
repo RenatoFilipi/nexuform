@@ -34,7 +34,7 @@ const FormSubmissions = () => {
       .select("*")
       .range(from, to)
       .eq("form_id", form.id)
-      .order("created_at", { ascending: true });
+      .order("created_at", { ascending: false });
 
     if (error) {
       toast.error("Error on fetching submissions.");
@@ -57,7 +57,7 @@ const FormSubmissions = () => {
       .select("*")
       .range(from, to)
       .eq("form_id", form.id)
-      .order("created_at", { ascending: true });
+      .order("created_at", { ascending: false });
 
     if (error) {
       toast.error("Error on fetching submissions.");

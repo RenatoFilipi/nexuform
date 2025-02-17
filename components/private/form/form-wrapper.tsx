@@ -62,7 +62,9 @@ const FormWrapper = ({
   profile,
   subscription,
   email,
+  overviewSubmissions,
 }: {
+  overviewSubmissions: ESubmission[];
   submissions: ESubmission[];
   blocks: EBlock[];
   form: EForm;
@@ -83,7 +85,7 @@ const FormWrapper = ({
       formStore.setForm(form);
       formStore.setBlocks(blocks);
       formStore.setSubmissions(submissions);
-      formStore.setOverviewSubmissions(submissions);
+      formStore.setOverviewSubmissions(overviewSubmissions);
       formStore.setFormAnalytics(formAnalytics);
       userStore.setProfile(profile);
       userStore.setSubscription(subscription);
