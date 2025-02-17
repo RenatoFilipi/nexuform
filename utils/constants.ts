@@ -14,7 +14,10 @@ import { IPlanLanding } from "./interfaces";
 
 export const minWidth640 = "(min-width: 640px)";
 export const minute = 1000 * 60;
+export const day = 24 * 60 * 60 * 1000;
 export const paginationRange = 8;
+export const paginationFrom = 0;
+export const paginationTo = paginationRange;
 export const planSettings = {
   freeTrial: {
     period: freeTrialPeriod,

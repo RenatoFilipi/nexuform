@@ -1,4 +1,5 @@
 import FormWrapper from "@/components/private/form/form-wrapper";
+import { day, paginationFrom, paginationTo } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -54,7 +55,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { data: submissions, error: submissionsError } = await supabase
     .from("submissions")
     .select("*")
-    .range(0, 8)
+    .range(paginationFrom, paginationTo)
     .eq("form_id", slug)
     .order("created_at", { ascending: false });
 
@@ -64,7 +65,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .from("submissions")
     .select("*")
     .eq("form_id", slug)
-    .gte("created_at", new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString());
+    .gte("created_at", new Date(Date.now() - 30 * day).toISOString());
 
   if (overviewSubmissionsError) return <ErrorUI />;
 

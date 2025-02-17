@@ -4,6 +4,7 @@ import FormStatusBadge from "@/components/shared/form-status-badge";
 import { Button } from "@/components/ui/button";
 import useFormStore from "@/stores/form";
 import useUserStore from "@/stores/user";
+import { paginationFrom, paginationTo } from "@/utils/constants";
 import { EBlock, EForm, EFormAnalytics, EProfile, ESubmission, ESubscription } from "@/utils/entities";
 import { formatDateRelativeToNow } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
@@ -90,7 +91,7 @@ const FormWrapper = ({
       userStore.setProfile(profile);
       userStore.setSubscription(subscription);
       userStore.setEmail(email);
-      formStore.setPagination({ from: 0, to: 8 });
+      formStore.setPagination({ from: paginationFrom, to: paginationTo });
       return null;
     },
     refetchOnWindowFocus: false,

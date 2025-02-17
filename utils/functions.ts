@@ -1,24 +1,17 @@
 import { differenceInDays, formatDistance } from "date-fns";
 import { customAlphabet } from "nanoid";
 import { redirect } from "next/navigation";
-import { planSettings } from "./constants";
+import { day, planSettings } from "./constants";
 import { TBlock, TPlan } from "./types";
 
 export const uuid = () => {
   const uuid = self.crypto.randomUUID();
   return uuid;
 };
-export const nanoid = (
-  length: number = 12,
-  onlyLetters: boolean = false,
-  onlyLowercase: boolean = false
-): string => {
-  let alphabet =
-    "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+export const nanoid = (length: number = 12, onlyLetters: boolean = false, onlyLowercase: boolean = false): string => {
+  let alphabet = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   if (onlyLetters) {
-    alphabet = onlyLowercase
-      ? "abcdefghijklmnopqrstuvwxyz"
-      : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    alphabet = onlyLowercase ? "abcdefghijklmnopqrstuvwxyz" : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   } else if (onlyLowercase) {
     alphabet = "1234567890abcdefghijklmnopqrstuvwxyz";
   }
@@ -54,11 +47,7 @@ export const formatDateRelativeToNow = (isoDate: string) => {
     addSuffix: true,
   });
 };
-export const encodedRedirect = (
-  type: "error" | "success",
-  path: string,
-  message: string
-): never => {
+export const encodedRedirect = (type: "error" | "success", path: string, message: string): never => {
   return redirect(`${path}?${type}=${encodeURIComponent(message)}`);
 };
 export const isValidEmail = (email: string): boolean => {
@@ -68,9 +57,7 @@ export const isValidEmail = (email: string): boolean => {
 export const formatTime = (time: number, decimalPlaces: number = 3) => {
   const totalSeconds = Math.floor(time / 1000);
   const milliseconds = time % 1000;
-  const formattedMilliseconds = (milliseconds / 1000)
-    .toFixed(decimalPlaces)
-    .slice(2);
+  const formattedMilliseconds = (milliseconds / 1000).toFixed(decimalPlaces).slice(2);
 
   if (totalSeconds >= 60) {
     const minutes = Math.floor(totalSeconds / 60);
@@ -93,7 +80,7 @@ export const calculateAverageCompletionTime = (times: number[]): number => {
 export const getDateRange = (days: number) => {
   const now = new Date().toISOString();
   return {
-    from: new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString(),
+    from: new Date(Date.now() - days * 24 * day).toISOString(),
     to: now,
   };
 };

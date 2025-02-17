@@ -1,3 +1,4 @@
+import { day, paginationFrom, paginationTo } from "@/utils/constants";
 import { EBlock, EForm, EFormAnalytics, ESubmission } from "@/utils/entities";
 import { IFormFilters, IPagination } from "@/utils/interfaces";
 import { create } from "zustand";
@@ -20,8 +21,8 @@ interface form {
   reset: () => void;
 }
 
-const to = new Date().toISOString();
-const from = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+const to = new Date(Date.now() - 1 * day).toISOString();
+const from = new Date(Date.now() - 24 * day).toISOString();
 
 const useFormStore = create<form>((set) => ({
   form: {
@@ -52,7 +53,7 @@ const useFormStore = create<form>((set) => ({
   },
   overviewSubmissions: [],
   filters: { from, to, sort: "ascending", status: "all" },
-  pagination: { from: 0, to: 8 },
+  pagination: { from: paginationFrom, to: paginationTo },
   setForm: (payload) => set({ form: payload }),
   setBlocks: (payload) => set({ blocks: payload }),
   setSubmissions: (payload) => set({ submissions: payload }),
@@ -88,7 +89,7 @@ const useFormStore = create<form>((set) => ({
         avg_completion_rate: null,
         avg_completion_time: null,
       },
-      pagination: { from: 0, to: 8 },
+      pagination: { from: paginationFrom, to: paginationTo },
     }),
 }));
 
