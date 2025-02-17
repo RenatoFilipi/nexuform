@@ -1,5 +1,5 @@
 import { EBlock, EForm, EFormAnalytics, ESubmission } from "@/utils/entities";
-import { IFormFilters } from "@/utils/interfaces";
+import { IFormFilters, IPagination } from "@/utils/interfaces";
 import { create } from "zustand";
 
 interface form {
@@ -9,12 +9,14 @@ interface form {
   overviewSubmissions: ESubmission[];
   formAnalytics: EFormAnalytics;
   filters: IFormFilters;
+  pagination: IPagination;
   setForm: (payload: EForm) => void;
   setBlocks: (payload: EBlock[]) => void;
   setSubmissions: (payload: ESubmission[]) => void;
   setOverviewSubmissions: (payload: ESubmission[]) => void;
   setFormAnalytics: (payload: EFormAnalytics) => void;
   setFilters: (payload: IFormFilters) => void;
+  setPagination: (payload: IPagination) => void;
   reset: () => void;
 }
 
@@ -50,12 +52,14 @@ const useFormStore = create<form>((set) => ({
   },
   overviewSubmissions: [],
   filters: { from, to, sort: "ascending", status: "all" },
+  pagination: { from: 0, to: 8 },
   setForm: (payload) => set({ form: payload }),
   setBlocks: (payload) => set({ blocks: payload }),
   setSubmissions: (payload) => set({ submissions: payload }),
   setFormAnalytics: (payload) => set({ formAnalytics: payload }),
   setFilters: (payload) => set({ filters: payload }),
   setOverviewSubmissions: (payload) => set({ overviewSubmissions: payload }),
+  setPagination: (payload) => set({ pagination: payload }),
   reset: () =>
     set({
       form: {
@@ -84,6 +88,7 @@ const useFormStore = create<form>((set) => ({
         avg_completion_rate: null,
         avg_completion_time: null,
       },
+      pagination: { from: 0, to: 8 },
     }),
 }));
 

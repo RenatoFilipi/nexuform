@@ -88,6 +88,7 @@ const FormWrapper = ({
       userStore.setProfile(profile);
       userStore.setSubscription(subscription);
       userStore.setEmail(email);
+      formStore.setPagination({ from: 0, to: 8 });
       return null;
     },
     refetchOnWindowFocus: false,

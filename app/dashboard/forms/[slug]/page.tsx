@@ -54,6 +54,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { data: submissions, error: submissionsError } = await supabase
     .from("submissions")
     .select("*")
+    .range(0, 8)
     .eq("form_id", slug)
     .order("created_at", { ascending: true });
 

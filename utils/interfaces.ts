@@ -46,3 +46,7 @@ export interface IIntegration {
   enabled: boolean;
   pro: boolean;
 }
+export interface IPagination {
+  from: number;
+  to: number;
+}
