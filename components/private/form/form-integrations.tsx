@@ -1,7 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { IIntegration } from "@/utils/interfaces";
-import { PlugIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import useUserStore from "@/stores/user";
+import { IIntegration } from "@/utils/interfaces";
+import { BirdIcon, PlugIcon } from "lucide-react";
+import ChangePlans from "../core/change-plans";
+import ManageIntegration from "./manage-integration";
 
 const integrations: IIntegration[] = [
   {
@@ -14,7 +17,7 @@ const integrations: IIntegration[] = [
       </svg>
     ),
     enabled: true,
-    description: "Connect with Google Sheets to automate data import and export directly from your spreadsheets.",
+    description: "Connect with Google Sheets to automate data export directly to your spreadsheets.",
     pro: false,
   },
   {
@@ -66,6 +69,8 @@ const FormIntegrations = () => {
 };
 
 const CardTemplate = ({ integration }: { integration: IIntegration }) => {
+  const user = useUserStore();
+
   return (
     <div className="flex flex-col items-center justify-start p-4 gap-4 border rounded-lg shadow-sm bg-background">
       <div className="flex items-center gap-3 w-full justify-between">
@@ -82,10 +87,21 @@ const CardTemplate = ({ integration }: { integration: IIntegration }) => {
         <p className="text-sm text-foreground/70">{integration.description}</p>
       </div>
       <div className="flex justify-start w-full">
-        <Button size="sm" variant="outline">
-          <PlugIcon className="w-4 h-4 mr-2" />
-          Connect
-        </Button>
+        {user.subscription.plan !== "pro" && integration.pro ? (
+          <ChangePlans>
+            <Button size="sm" variant="outline">
+              <BirdIcon className="w-4 h-4 mr-2" />
+              Upgrade
+            </Button>
+          </ChangePlans>
+        ) : (
+          <ManageIntegration integration={integration.type}>
+            <Button size="sm" variant="outline">
+              <PlugIcon className="w-4 h-4 mr-2" />
+              Connect
+            </Button>
+          </ManageIntegration>
+        )}
       </div>
     </div>
   );

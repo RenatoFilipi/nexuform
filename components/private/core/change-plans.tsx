@@ -66,10 +66,17 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const filteredPlans = plans.filter((x) => x.type !== "free_trial");
 
   return (
-    <div className="grid sm:grid-cols-2 gap-4">
-      {filteredPlans.map((plan) => (
-        <CardTemplate key={plan.type} plan={plan} />
-      ))}
+    <div className="flex flex-col gap-6">
+      <div className="grid sm:grid-cols-2 gap-4">
+        {filteredPlans.map((plan) => (
+          <CardTemplate key={plan.type} plan={plan} />
+        ))}
+      </div>
+      <div className="flex justify-start items-center">
+        <Button onClick={() => setState(false)} variant={"outline"} size={"sm"}>
+          Close
+        </Button>
+      </div>
     </div>
   );
 };

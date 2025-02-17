@@ -74,7 +74,7 @@ const SettingsBilling = () => {
               <div className="flex flex-col gap-2">
                 <div className="flex justify-start items-center gap-1 flex-col">
                   <div className="flex justify-between items-center w-full">
-                    <span className="text-xs text-foreground/80">Monthly usage</span>
+                    <span className="text-xs text-foreground/80">All time</span>
                     <span className="text-xs text-foreground/80">{userStore.formsCount}</span>
                   </div>
                   <Progress value={formsUsage} />

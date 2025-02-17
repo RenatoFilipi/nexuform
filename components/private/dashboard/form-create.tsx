@@ -1,14 +1,7 @@
 "use client";
 
 import { createFormAction } from "@/app/actions";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { minWidth640 } from "@/utils/constants";
 import { TSetState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,31 +14,11 @@ import { useMedia } from "react-use";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "../../ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../../ui/dialog";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "../../ui/drawer";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog";
+import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
 import { Input } from "../../ui/input";
 
-const FormCreate = ({
-  children,
-  userId,
-}: {
-  children: React.ReactNode;
-  userId: string;
-}) => {
+const FormCreate = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
   const [error] = useQueryState("error");
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
@@ -69,8 +42,7 @@ const FormCreate = ({
           <DialogHeader>
             <DialogTitle>Create New Form</DialogTitle>
             <DialogDescription>
-              Fill in the details below to create a new form. You can customize
-              the settings as needed.
+              Fill in the details below to create a new form. You can customize the settings as needed.
             </DialogDescription>
           </DialogHeader>
           <Body setState={setOpen} userId={userId} />
@@ -86,8 +58,7 @@ const FormCreate = ({
         <DrawerHeader>
           <DrawerTitle>Create New Form</DrawerTitle>
           <DrawerDescription>
-            Fill in the details below to create a new form. You can customize
-            the settings as needed.
+            Fill in the details below to create a new form. You can customize the settings as needed.
           </DrawerDescription>
         </DrawerHeader>
         <Body setState={setOpen} userId={userId} />
@@ -96,13 +67,7 @@ const FormCreate = ({
   );
 };
 
-const Body = ({
-  setState,
-  userId,
-}: {
-  setState: TSetState<boolean>;
-  userId: string;
-}) => {
+const Body = ({ setState, userId }: { setState: TSetState<boolean>; userId: string }) => {
   const [isPending, startTransition] = useTransition();
 
   const formSchema = z.object({
@@ -127,9 +92,7 @@ const Body = ({
   return (
     <div className="flex flex-col gap-4 pt-4 sm:pt-0">
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
           <FormField
             control={form.control}
             name="name"
@@ -153,15 +116,8 @@ const Body = ({
               className="w-full sm:w-fit">
               Cancel
             </Button>
-            <Button
-              disabled={isPending}
-              type="submit"
-              variant={"default"}
-              size={"sm"}
-              className="w-full sm:w-fit">
-              {isPending && (
-                <Loader2Icon className="animate-spin w-4 h-4 mr-2" />
-              )}
+            <Button disabled={isPending} type="submit" variant={"default"} size={"sm"} className="w-full sm:w-fit">
+              {isPending && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
               Create New Form
             </Button>
           </div>
