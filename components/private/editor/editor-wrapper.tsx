@@ -1,14 +1,22 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
 import { EBlock, EForm, EProfile, ESubscription, ETheme } from "@/utils/entities";
+import { TEditorView } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { useTransition } from "react";
 import EditorPreview from "./editor-preview";
 import EditorPreviewGroup from "./editor-preview-group";
+import EditorPreviewSuccess from "./editor-preview-success";
 import EditorTips from "./editor-tips";
 import EditorTools from "./editor-tools";
+
+const views: { name: string; view: TEditorView }[] = [
+  { name: "Blocks", view: "blocks" },
+  { name: "Success", view: "success" },
+];
 
 const EditorWrapper = ({
   form,
@@ -26,6 +34,7 @@ const EditorWrapper = ({
   const editorStore = useEditorStore();
   const userStore = useUserStore();
   const [isPending, startTransition] = useTransition();
+  const { view, setView } = useEditorStore();
 
   const query = useQuery({
     queryKey: ["EditorData"],
@@ -51,8 +60,30 @@ const EditorWrapper = ({
   if (editorStore.preview)
     return (
       <div className="flex flex-col relative w-full overflow-y-auto h-full flex-1 mt-12">
-        <div className="flex w-full h-full justify-center items-start bg-foreground/5">
-          <EditorPreviewGroup />
+        <div className="flex justify-center items-center w-full px-4 pt-4">
+          {views.map((x) => {
+            return (
+              <button
+                onClick={() => setView(x.view)}
+                key={x.view}
+                className={`${
+                  x.view === view
+                    ? "border-foreground/30 text-foreground/100 font-medium bg-background"
+                    : "border-transparent text-foreground/70"
+                } border py-1 px-2 rounded text-xs gap-1 flex justify-center items-center w-full`}>
+                {x.name}
+                {x.view === "success" && (
+                  <Badge variant={"pink"} className="py-0 hidden">
+                    Pro
+                  </Badge>
+                )}
+              </button>
+            );
+          })}
+        </div>
+        <div className="flex w-full h-full justify-center items-start">
+          {view === "blocks" && <EditorPreviewGroup />}
+          {view === "success" && <EditorPreviewSuccess />}
         </div>
       </div>
     );

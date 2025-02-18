@@ -67,7 +67,7 @@ const FormSettings = ({ children }: { children: React.ReactNode }) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3 flex flex-col">
+      <DrawerContent className="p-3 flex flex-col h-[90%]">
         <DrawerHeader>
           <DrawerTitle className="text-xl font-medium">Settings</DrawerTitle>
           <DrawerDescription>Configure your form preferences and update settings as needed.</DrawerDescription>

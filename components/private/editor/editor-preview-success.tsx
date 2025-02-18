@@ -36,7 +36,7 @@ const EditorPreviewSuccess = () => {
   const currentColor = design.find((x) => x.label === theme.primary_color) ?? design[0];
 
   return (
-    <div className="flex justify-center items-center w-full">
+    <div className="flex justify-center items-center w-full px-4 sm:px-0">
       <Card className="flex flex-col gap-10 w-[500px] mt-20 p-8">
         <div className="flex flex-col justify-center items-center gap-6">
           <div className={twMerge(currentColor.tw_class, "rounded-full p-3")}>
