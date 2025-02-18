@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { minWidth640 } from "@/utils/constants";
 import { TIntegrations, TSetState } from "@/utils/types";
 import { useState } from "react";
@@ -57,10 +58,11 @@ const ManageGoogleSheets = ({ setState }: { setState: TSetState<boolean> }) => {
 
   return (
     <div className="h-full flex flex-col gap-6 overflow-y-auto">
-      <div>
+      <div className="flex justify-between items-center w-full">
         <Badge variant={"primary"} uppercase>
           Google Sheets
         </Badge>
+        <Switch />
       </div>
       <div className="h-full flex flex-col gap-8 overflow-y-auto pr-4">
         <div className="grid gap-3">
@@ -139,10 +141,11 @@ const ManageSlack = ({ setState }: { setState: TSetState<boolean> }) => {
 
   return (
     <div className="h-full flex flex-col gap-6 overflow-y-auto">
-      <div>
+      <div className="flex justify-between items-center w-full">
         <Badge variant={"primary"} uppercase>
           Slack
         </Badge>
+        <Switch />
       </div>
       <div className="h-full flex flex-col gap-8 overflow-y-auto pr-4">
         <div className="grid gap-3">

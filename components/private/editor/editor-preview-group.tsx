@@ -111,7 +111,7 @@ const EditorPreviewGroup = () => {
     <div
       className={`${
         theme.width === "centered" ? "sm:w-[650px]" : "w-full"
-      }  flex flex-col gap-6 w-full border rounded m-4 sm:m-8 p-6 bg-background relative`}>
+      }  flex flex-col gap-6 w-full border rounded m-4 sm:m-8 p-6 bg-background relative overflow-y-auto`}>
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-bold">{form.name}</h1>
         <p className="text-sm text-foreground/80">{form.description}</p>

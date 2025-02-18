@@ -14,6 +14,7 @@ export type TBlock =
   | "star_rating"
   | "custom_scale";
 export type TIntegrations = "google_sheets" | "zapier" | "slack";
+export type TEditorView = "blocks" | "success";
 
 // submission
 export type TSubmissionStatus = "reviewed" | "not_reviewed" | "ignored";

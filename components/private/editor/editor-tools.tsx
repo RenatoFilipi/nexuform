@@ -1,11 +1,6 @@
 import { Button } from "@/components/ui/button";
 import useEditorStore from "@/stores/editor";
-import {
-  ListOrderedIcon,
-  PaintbrushIcon,
-  PlusIcon,
-  Settings2Icon,
-} from "lucide-react";
+import { ListOrderedIcon, PaintbrushIcon, PlusIcon, Settings2Icon } from "lucide-react";
 import AddBlock from "../blocks/add-block";
 import Block from "../blocks/block";
 import FormDesign from "../forms/form-design";
@@ -18,12 +13,6 @@ const EditorTools = () => {
   return (
     <div className="flex justify-start flex-col items-center h-full border-r p-4 gap-3 bg-background">
       <div className="w-full flex flex-col gap-3">
-        <AddBlock formId={form.id}>
-          <Button size={"sm"} className="w-full" variant={"secondary"}>
-            <PlusIcon className="w-4 h-4 mr-2" />
-            Add New Block
-          </Button>
-        </AddBlock>
         <div className="flex justify-center items-center w-full gap-4">
           <FormDesign>
             <Button variant={"outline"} size={"sm"} className="flex-1">
@@ -50,6 +39,12 @@ const EditorTools = () => {
           {blocks.map((block, index) => {
             return <Block key={index} block={block} />;
           })}
+          <AddBlock formId={form.id}>
+            <Button size={"sm"} className="w-full" variant={"ghost"}>
+              <PlusIcon className="w-4 h-4 mr-2" />
+              Add New Block
+            </Button>
+          </AddBlock>
         </div>
       </div>
     </div>

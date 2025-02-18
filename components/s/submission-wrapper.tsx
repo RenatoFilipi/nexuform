@@ -8,23 +8,8 @@ import { LoaderIcon } from "lucide-react";
 import { useTransition } from "react";
 import SubmissionGroup from "./submission-group";
 
-const SubmissionWrapper = ({
-  form,
-  theme,
-  blocks,
-}: {
-  form: EForm;
-  theme: ETheme;
-  blocks: EBlock[];
-}) => {
-  const {
-    setForm,
-    setTheme,
-    setBlocks,
-    blocks: b,
-    setSubmission,
-    setAnswers,
-  } = useSubmissionStore();
+const SubmissionWrapper = ({ form, theme, blocks }: { form: EForm; theme: ETheme; blocks: EBlock[] }) => {
+  const { setForm, setTheme, setBlocks, blocks: b, setSubmission, setAnswers } = useSubmissionStore();
   const [isPending, startTransition] = useTransition();
 
   useQuery({
@@ -70,7 +55,7 @@ const SubmissionWrapper = ({
   }
 
   return (
-    <div className="flex justify-center items-start min-h-screen flex-1 border-t-foreground/5 border-t bg-[#F8F8F8] dark:bg-background">
+    <div className="flex justify-center items-start min-h-screen flex-1 border-t-foreground/5 border-t bg-[#F8F8F8] dark:bg-[#2f3235]">
       {b.length > 0 && <SubmissionGroup />}
     </div>
   );

@@ -5,8 +5,7 @@ import { IDesign } from "@/utils/interfaces";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { CheckCircleIcon, LoaderIcon } from "lucide-react";
-import Link from "next/link";
+import { LoaderIcon } from "lucide-react";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import Brand from "../core/brand";
@@ -20,7 +19,7 @@ import ParagraphTextDesign from "../private/blocks/design/paragraph-text-design"
 import ShortTextDesign from "../private/blocks/design/short-text-design";
 import StarRatingDesign from "../private/blocks/design/star-rating-design";
 import { Button } from "../ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
+import SubmissionSuccess from "./submission-success";
 
 const design: IDesign[] = [
   {
@@ -209,38 +208,7 @@ const SubmissionGroup = () => {
     return true;
   };
 
-  if (appState === "success")
-    return (
-      <div className="flex justify-center items-center w-full relative mt-20">
-        <Card className="w-full max-w-md shadow-lg">
-          <CardHeader>
-            <div className="flex items-center space-x-3">
-              <CheckCircleIcon className="w-8 h-8 text-success" />
-              <CardTitle className="text-2xl font-bold">Form Submitted Successfully!</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <p className="mb-4 text-foreground/80">
-              Thank you for submitting your form. We have received your information.
-            </p>
-          </CardContent>
-          <CardFooter className="flex flex-col items-stretch space-y-4">
-            <span>Want to create a form like this?</span>
-            <Button asChild className="w-full">
-              <Link href="/dashboard/forms" className="flex items-center justify-center">
-                ⚡️ Access Nebulaform
-              </Link>
-            </Button>
-          </CardFooter>
-        </Card>
-        <div className="fixed bottom-4 w-full flex justify-center">
-          <Link href="/" className="text-sm text-gray-500 hover:underline flex items-center gap-2">
-            <Brand type="logo" className="w-4 h-4 fill-current" />
-            <span className="text-xs font-medium">Powered by Nebulaform</span>
-          </Link>
-        </div>
-      </div>
-    );
+  if (appState === "success") return <SubmissionSuccess />;
 
   return (
     <div
