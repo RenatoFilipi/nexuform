@@ -37,6 +37,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
+import FormSettings from "../forms/form-settings";
 import ChangePlans from "./change-plans";
 
 const links = [
@@ -406,14 +407,18 @@ const NavEditor = () => {
 
   return (
     <div className="h-12 flex justify-between items-center w-full bg-background border-y border-t-foreground/5 sm:px-4 px-2 z-20 fixed">
-      <div className="flex justify-center items-center gap-2">
+      <div className="flex justify-center items-center gap-1">
         <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
           <Link href={"/dashboard/forms"}>
             <Brand type="logo" className="h-5 fill-foreground" />
           </Link>
         </Button>
         <div className="flex justify-center items-center gap-2">
-          <span className="text-sm font-medium truncate max-w-[280px]">{form.name}</span>
+          <FormSettings>
+            <span className="text-sm font-medium truncate max-w-[280px] cursor-pointer hover:bg-foreground/5 py-1 px-2 flex justify-center items-center rounded">
+              {form.name}
+            </span>
+          </FormSettings>
         </div>
       </div>
       <div className="flex justify-center items-center gap-1">

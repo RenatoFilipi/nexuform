@@ -1,5 +1,6 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,10 +15,26 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import useEditorStore from "@/stores/editor";
 import { minWidth640 } from "@/utils/constants";
+import { EBlock } from "@/utils/entities";
 import { IDesign } from "@/utils/interfaces";
-import { TSetState } from "@/utils/types";
-import { CheckIcon, Layers2Icon, PaintBucketIcon } from "lucide-react";
-import { useState } from "react";
+import { TBlock, TSetState } from "@/utils/types";
+import { Reorder } from "framer-motion";
+import {
+  ArrowDownUpIcon,
+  CheckCircleIcon,
+  CheckIcon,
+  CheckSquareIcon,
+  ChevronDownIcon,
+  EqualIcon,
+  HashIcon,
+  Layers2Icon,
+  MailIcon,
+  PaintbrushIcon,
+  ScaleIcon,
+  StarIcon,
+  TextIcon,
+} from "lucide-react";
+import { useState, type JSX } from "react";
 import { useMedia } from "react-use";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
 
@@ -111,6 +128,17 @@ const colors: IDesign[] = [
     label: "rose",
   },
 ];
+const icons: { [key in TBlock]: JSX.Element } = {
+  short_text: <EqualIcon className="w-4 h-4 text-foreground" />,
+  paragraph_text: <TextIcon className="w-4 h-4 text-foreground" />,
+  checkboxes: <CheckSquareIcon className="w-4 h-4 text-foreground" />,
+  multiple_choice: <CheckCircleIcon className="w-4 h-4 text-foreground" />,
+  dropdown_menu: <ChevronDownIcon className="w-4 h-4 text-foreground" />,
+  number_input: <HashIcon className="w-4 h-4 text-foreground" />,
+  email_address: <MailIcon className="w-4 h-4 text-foreground" />,
+  star_rating: <StarIcon className="w-4 h-4 text-foreground" />,
+  custom_scale: <ScaleIcon className="w-4 h-4 text-foreground" />,
+};
 
 const FormDesign = ({ children }: { children: React.ReactNode }) => {
   const isDesktop = useMedia(minWidth640);
@@ -145,11 +173,12 @@ const FormDesign = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-type TView = "general" | "colors";
+type TView = "general" | "colors" | "reorder";
 
 const views = [
   { label: "General", icon: Layers2Icon, view: "general", enabled: true },
-  { label: "Colors", icon: PaintBucketIcon, view: "colors", enabled: true },
+  { label: "Colors", icon: PaintbrushIcon, view: "colors", enabled: true },
+  { label: "Reorder", icon: ArrowDownUpIcon, view: "reorder", enabled: true },
 ];
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const [view, setView] = useState<TView>("general");
@@ -178,6 +207,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
         <div className="flex w-full overflow-y-auto flex-1 h-full">
           {view === "general" && <GeneralDesign />}
           {view === "colors" && <ColorsDesign />}
+          {view === "reorder" && <ReorderDesign />}
         </div>
       </div>
       <div className="flex justify-end items-center gap-2 flex-col sm:flex-row">
@@ -271,6 +301,60 @@ const ColorsDesign = () => {
           })}
         </div>
       </div>
+    </div>
+  );
+};
+const ReorderDesign = () => {
+  const { blocks, setBlocks } = useEditorStore();
+  const empty = blocks.length <= 0;
+  const onReorderedBlocks = (payload: EBlock[]) => {
+    const newPositionBlocks = payload.map((pay, index) => {
+      return { ...pay, position: index + 1 };
+    });
+    setBlocks(newPositionBlocks);
+  };
+
+  return (
+    <div className="flex flex-col gap-6 overflow-y-auto pt-4 sm:pt-0 flex-1 h-full">
+      {empty && (
+        <div className="flex justify-center items-center py-14 gap-4 flex-col h-full">
+          <div className="flex justify-center items-center flex-col gap-1">
+            <span className="font-medium text-base">No blocks to reorder</span>
+            <p className="text-xs text-foreground/70 text-center">
+              There are currently no blocks available to reorder. Add blocks to start organizing them.
+            </p>
+          </div>
+        </div>
+      )}
+      {!empty && (
+        <Reorder.Group
+          axis="y"
+          onReorder={(e) => onReorderedBlocks(e)}
+          values={blocks}
+          className="flex flex-col gap-3 overflow-y-auto h-full">
+          {blocks.map((block) => {
+            return (
+              <Reorder.Item
+                key={block.id}
+                value={block}
+                id={block.id}
+                className="flex cursor-grab bg-[#F8F8F8] dark:bg-foreground/5 border rounded gap-2 px-1 justify-start items-center">
+                <div className="flex justify-center items-center rounded relative p-2 h-full">
+                  {icons[block.type as TBlock]}
+                </div>
+                {block.is_identifier && (
+                  <Badge variant={"green"} className="p-0 px-2 h-fit">
+                    Identifier
+                  </Badge>
+                )}
+                <div className="flex justify-start items-center overflow-y-auto">
+                  <p className="text-xs text-foreground/80 truncate max-w-sm font-medium">{block.name}</p>
+                </div>
+              </Reorder.Item>
+            );
+          })}
+        </Reorder.Group>
+      )}
     </div>
   );
 };
