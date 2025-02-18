@@ -1,4 +1,5 @@
 import { EBlock, EForm, ETheme } from "@/utils/entities";
+import { TEditorView } from "@/utils/types";
 import { create } from "zustand";
 
 interface editor {
@@ -7,6 +8,7 @@ interface editor {
   blocks: EBlock[];
   blocksReadyOnly: EBlock[];
   preview: boolean;
+  view: TEditorView;
   setForm: (payload: EForm) => void;
   setTheme: (payload: ETheme) => void;
   setBlocks: (payload: EBlock[]) => void;
@@ -15,6 +17,7 @@ interface editor {
   updateBlock: (id: string, payload: EBlock) => void;
   removeBlock: (id: string) => void;
   setPreview: (value: boolean) => void;
+  setView: (value: TEditorView) => void;
   reset: () => void;
 }
 
@@ -31,6 +34,8 @@ const useEditorStore = create<editor>((set) => ({
     public_url: "",
     new_submission_notification: false,
     nebulaform_branding: true,
+    success_title: "",
+    success_description: "",
   },
   theme: {
     id: "",
@@ -46,6 +51,7 @@ const useEditorStore = create<editor>((set) => ({
   blocks: [],
   blocksReadyOnly: [],
   preview: false,
+  view: "blocks",
   setForm: (payload) => set({ form: payload }),
   setTheme: (payload) => set({ theme: payload }),
   setBlocks: (payload) => set({ blocks: payload }),
@@ -64,6 +70,7 @@ const useEditorStore = create<editor>((set) => ({
     }));
   },
   setPreview: (value) => set({ preview: value }),
+  setView: (payload) => set({ view: payload }),
   reset: () =>
     set({
       form: {
@@ -78,6 +85,8 @@ const useEditorStore = create<editor>((set) => ({
         public_url: "",
         new_submission_notification: false,
         nebulaform_branding: true,
+        success_title: "",
+        success_description: "",
       },
       theme: {
         id: "",
@@ -92,6 +101,7 @@ const useEditorStore = create<editor>((set) => ({
       },
       blocks: [],
       blocksReadyOnly: [],
+      view: "blocks",
     }),
 }));
 

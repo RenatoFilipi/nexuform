@@ -172,6 +172,8 @@ export type Database = {
           public_url: string
           status: string
           submit_text: string
+          success_description: string
+          success_title: string
           updated_at: string
         }
         Insert: {
@@ -185,6 +187,8 @@ export type Database = {
           public_url?: string
           status?: string
           submit_text?: string
+          success_description?: string
+          success_title?: string
           updated_at?: string
         }
         Update: {
@@ -198,6 +202,8 @@ export type Database = {
           public_url?: string
           status?: string
           submit_text?: string
+          success_description?: string
+          success_title?: string
           updated_at?: string
         }
         Relationships: [

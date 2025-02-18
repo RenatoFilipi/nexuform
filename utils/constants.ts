@@ -10,7 +10,7 @@ import {
   proPricing,
   proSubmissions,
 } from "./envs";
-import { IPlanLanding } from "./interfaces";
+import { IDesign, IPlanLanding } from "./interfaces";
 
 export const minWidth640 = "(min-width: 640px)";
 export const minute = 1000 * 60;
@@ -82,4 +82,28 @@ export const plans: IPlanLanding[] = [
     type: "pro",
     buttonLabel: "Upgrade to Pro",
   },
+];
+const designTemplate: IDesign[] = [
+  { label: "slate", tw_class: "" },
+  { label: "gray", tw_class: "" },
+  { label: "zinc", tw_class: "" },
+  { label: "neutral", tw_class: "" },
+  { label: "stone", tw_class: "" },
+  { label: "red", tw_class: "" },
+  { label: "orange", tw_class: "" },
+  { label: "amber", tw_class: "" },
+  { label: "yellow", tw_class: "" },
+  { label: "lime", tw_class: "" },
+  { label: "green", tw_class: "" },
+  { label: "emerald", tw_class: "" },
+  { label: "teal", tw_class: "" },
+  { label: "cyan", tw_class: "" },
+  { label: "sky", tw_class: "" },
+  { label: "blue", tw_class: "" },
+  { label: "indigo", tw_class: "" },
+  { label: "violet", tw_class: "" },
+  { label: "purple", tw_class: "" },
+  { label: "fuchsia", tw_class: "" },
+  { label: "pink", tw_class: "" },
+  { label: "rose", tw_class: "" },
 ];

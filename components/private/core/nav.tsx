@@ -37,7 +37,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
-import FormSettings from "../forms/form-settings";
 import ChangePlans from "./change-plans";
 
 const links = [
@@ -309,6 +308,9 @@ const NavEditor = () => {
           description: form.description,
           status: form.status,
           submit_text: form.submit_text,
+          nebulaform_branding: form.nebulaform_branding,
+          success_title: form.success_title,
+          success_description: form.success_description,
         })
         .eq("id", form.id);
 
@@ -414,11 +416,9 @@ const NavEditor = () => {
           </Link>
         </Button>
         <div className="flex justify-center items-center gap-2">
-          <FormSettings>
-            <span className="text-sm font-medium truncate max-w-[280px] cursor-pointer hover:bg-foreground/5 py-1 px-2 flex justify-center items-center rounded">
-              {form.name}
-            </span>
-          </FormSettings>
+          <span className="text-sm font-medium truncate max-w-[280px] hover:bg-foreground/5 py-1 px-2 flex justify-center items-center rounded">
+            {form.name}
+          </span>
         </div>
       </div>
       <div className="flex justify-center items-center gap-1">

@@ -140,7 +140,7 @@ const EditorPreviewGroup = () => {
           }
         })}
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-14">
         <div className="flex justify-end items-center w-full">
           <Button size={"sm"} className={`${currentColor.tw_class} w-full sm:w-fit`}>
             {form.submit_text}
@@ -150,7 +150,7 @@ const EditorPreviewGroup = () => {
           <div className="flex justify-center items-center w-full">
             <span className="border rounded p-2 w-fit flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
               <Brand type="logo" className="fill-foreground w-4 h-4" />
-              <span className="text-foreground/80 text-xs font-semibold">Powered by Nebulaform</span>
+              <span className="text-foreground text-sm font-semibold">Powered by Nebulaform</span>
             </span>
           </div>
         )}

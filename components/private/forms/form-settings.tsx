@@ -142,6 +142,14 @@ const GeneralSettings = () => {
     if (user.subscription.plan !== "pro") return;
     setForm({ ...form, nebulaform_branding: value });
   };
+  const onSetSuccessTitle = (value: string) => {
+    if (user.subscription.plan !== "pro") return;
+    setForm({ ...form, success_title: value });
+  };
+  const onSetSuccessDescription = (value: string) => {
+    if (user.subscription.plan !== "pro") return;
+    setForm({ ...form, success_description: value });
+  };
 
   return (
     <div className="flex flex-col w-full gap-6 pr-4">
@@ -167,6 +175,24 @@ const GeneralSettings = () => {
           <p className="text-xs text-foreground/60">Customize the text displayed on the form&apos;s submit button.</p>
         </div>
         <Input type="text" value={form.submit_text} onChange={(e) => onSetSubmitText(e.target.value)} />
+      </div>
+      <div className="grid gap-3">
+        <div className="grid gap-1">
+          <Label>Success title</Label>
+          <p className="text-xs text-foreground/60">
+            Set the title that will be displayed after the form is successfully submitted.
+          </p>
+        </div>
+        <Input type="text" value={form.success_title} onChange={(e) => onSetSuccessTitle(e.target.value)} />
+      </div>
+      <div className="grid gap-3">
+        <div className="grid gap-1">
+          <Label>Success description</Label>
+          <p className="text-xs text-foreground/60">
+            Enter the message that will be shown after the form is successfully submitted.
+          </p>
+        </div>
+        <Input type="text" value={form.success_description} onChange={(e) => onSetSuccessDescription(e.target.value)} />
       </div>
       <div className="flex justify-between items-center w-full">
         <div className="flex justify-center items-center gap-2">
