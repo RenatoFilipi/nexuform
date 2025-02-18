@@ -338,7 +338,7 @@ const ReorderDesign = () => {
                 key={block.id}
                 value={block}
                 id={block.id}
-                className="flex cursor-grab bg-[#F8F8F8] dark:bg-foreground/5 border rounded gap-2 px-1 justify-start items-center">
+                className="flex cursor-grab border rounded gap-2 px-1 justify-start items-center">
                 <div className="flex justify-center items-center rounded relative p-2 h-full">
                   {icons[block.type as TBlock]}
                 </div>

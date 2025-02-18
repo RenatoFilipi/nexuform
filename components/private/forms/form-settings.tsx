@@ -192,7 +192,7 @@ const GeneralSettings = () => {
             Enter the message that will be shown after the form is successfully submitted.
           </p>
         </div>
-        <Input type="text" value={form.success_description} onChange={(e) => onSetSuccessDescription(e.target.value)} />
+        <Textarea value={form.success_description} onChange={(e) => onSetSuccessDescription(e.target.value)} />
       </div>
       <div className="flex justify-between items-center w-full">
         <div className="flex justify-center items-center gap-2">
