@@ -12,28 +12,10 @@ import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import { toast } from "sonner";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../../ui/dialog";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTrigger,
-} from "../../ui/drawer";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTrigger } from "../../ui/drawer";
 
-const FormShare = ({
-  children,
-  form,
-}: {
-  children: React.ReactNode;
-  form: EForm;
-}) => {
+const FormShare = ({ children, form }: { children: React.ReactNode; form: EForm }) => {
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
@@ -41,12 +23,10 @@ const FormShare = ({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col">
+        <DialogContent className="flex flex-col min-w-[650px] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Share Your Form</DialogTitle>
-            <DialogDescription>
-              Easily share your form with others using a link or a QR code.
-            </DialogDescription>
+            <DialogDescription>Easily share your form with others using a link or a QR code.</DialogDescription>
           </DialogHeader>
           <Body setState={setOpen} form={form} />
         </DialogContent>
@@ -57,12 +37,10 @@ const FormShare = ({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3 flex flex-col">
+      <DrawerContent className="p-3 flex flex-col h-[90%]">
         <DrawerHeader>
           <DialogTitle>Share Your Form</DialogTitle>
-          <DialogDescription>
-            Easily share your form with others using a link or a QR code.
-          </DialogDescription>
+          <DialogDescription>Easily share your form with others using a link or a QR code.</DialogDescription>
         </DrawerHeader>
         <Body setState={setOpen} form={form} />
       </DrawerContent>
@@ -70,13 +48,7 @@ const FormShare = ({
   );
 };
 
-const Body = ({
-  setState,
-  form,
-}: {
-  setState: TSetState<boolean>;
-  form: EForm;
-}) => {
+const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm }) => {
   const [url] = useState(`${window.location.host}/s/${form.public_url}`);
 
   return (
@@ -87,8 +59,7 @@ const Body = ({
           <div className="flex flex-col gap-2">
             <h3 className="text-sm font-medium">Form is not public</h3>
             <p className="text-sm">
-              This form is currently private. To make it public, go to the
-              editor page and update its status.
+              This form is currently private. To make it public, go to the editor page and update its status.
             </p>
             <div className="flex justify-end items-center">
               <Button variant="outline" size="sm" className="w-fit">
@@ -102,11 +73,7 @@ const Body = ({
       {form.status === "published" && (
         <div className="flex flex-col items-center gap-8">
           <div className="flex w-full gap-4 items-center">
-            <Input
-              value={url}
-              className="w-full text-sm text-foreground/60"
-              readOnly
-            />
+            <Input value={url} className="w-full text-sm text-foreground/60" readOnly />
             <Button
               onClick={() => {
                 navigator.clipboard.writeText(url);
@@ -124,18 +91,13 @@ const Body = ({
               <QRCodeSVG value={url} className="w-24 h-24" />
             </Card>
             <p className="text-sm text-center text-foreground/80 max-w-xs">
-              Scan the QR code or copy the link to share your form with others
-              quickly and effortlessly.
+              Scan the QR code or copy the link to share your form with others quickly and effortlessly.
             </p>
           </div>
         </div>
       )}
       <div className="flex justify-end">
-        <Button
-          className="w-full sm:w-auto"
-          variant="outline"
-          size="sm"
-          onClick={() => setState(false)}>
+        <Button className="w-full sm:w-auto" variant="outline" size="sm" onClick={() => setState(false)}>
           Close
         </Button>
       </div>

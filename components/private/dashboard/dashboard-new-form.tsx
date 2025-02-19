@@ -1,7 +1,8 @@
 "use client";
 
 import { createFormAction } from "@/app/actions";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
 import { minWidth640 } from "@/utils/constants";
 import { TSetState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -38,7 +39,7 @@ const DashboardNewForm = ({ children, userId }: { children: React.ReactNode; use
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col">
+        <DialogContent className="flex flex-col min-w-[650px] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Create New Form</DialogTitle>
             <DialogDescription>
@@ -54,7 +55,7 @@ const DashboardNewForm = ({ children, userId }: { children: React.ReactNode; use
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3 flex flex-col">
+      <DrawerContent className="p-3 flex flex-col h-[90%]">
         <DrawerHeader>
           <DrawerTitle>Create New Form</DrawerTitle>
           <DrawerDescription>
@@ -72,40 +73,66 @@ const Body = ({ setState, userId }: { setState: TSetState<boolean>; userId: stri
 
   const formSchema = z.object({
     name: z.string().min(3, "Name must contain at least 3 letters."),
+    description: z.string(),
   });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      description: "",
     },
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const { name } = values;
+    const { name, description } = values;
     startTransition(async () => {
       const formData = new FormData();
       formData.append("name", name);
+      formData.append("description", description);
       formData.append("userId", userId);
       await createFormAction(formData);
     });
   };
 
   return (
-    <div className="flex flex-col gap-4 pt-4 sm:pt-0">
+    <div className="flex flex-col gap-4 pt-4 sm:pt-0 h-full">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input type="text" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6 h-full">
+          <div className="flex flex-col gap-8 h-full">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <div className="grid gap-1">
+                    <FormLabel className="font-semibold">Name</FormLabel>
+                    <p className="text-xs text-foreground/70">
+                      Provide a unique name for your form to identify it easily.
+                    </p>
+                  </div>
+                  <FormControl>
+                    <Input type="text" {...field} placeholder="Enter form name" className="text-sm" />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <div className="grid gap-1">
+                    <FormLabel className="font-semibold">Description (optional)</FormLabel>
+                    <p className="text-xs text-foreground/70">
+                      Add a brief description to inform users about the purpose of this form.
+                    </p>
+                  </div>
+                  <FormControl>
+                    <Textarea {...field} placeholder="Enter form description" className="text-sm" />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
           <div className="flex justify-end flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
             <Button
               disabled={isPending}

@@ -34,9 +34,16 @@ const SettingsBilling = () => {
       </div>
       <div className="flex flex-col gap-6">
         <Card className="p-4 flex flex-col gap-4">
-          <div>
-            <h1 className="text-base font-semibold">Plan Summary</h1>
-            <p className="text-xs text-foreground/70">Your current plan for this billing cycle.</p>
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-base font-semibold">Plan Summary</h1>
+              <p className="text-xs text-foreground/70">Your current plan for this billing cycle.</p>
+            </div>
+            <ManageSubscription>
+              <Button variant="outline" size="xs" className="w-full sm:w-auto self-end">
+                Manage Subscription
+              </Button>
+            </ManageSubscription>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="flex items-center gap-4 p-4 bg-[#F8F8F8] dark:bg-foreground/5 rounded border">
@@ -53,13 +60,6 @@ const SettingsBilling = () => {
                 <p className="text-xs text-muted-foreground">{pendingDaysStr}</p>
               </div>
             </div>
-          </div>
-          <div className="flex justify-end items-center gap-4">
-            <ManageSubscription>
-              <Button variant="secondary" size="sm" className="w-full sm:w-auto self-end">
-                Manage Subscription
-              </Button>
-            </ManageSubscription>
           </div>
         </Card>
         <Card className="p-4 flex flex-col gap-4">

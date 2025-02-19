@@ -13,8 +13,30 @@ export type TBlock =
   | "email_address"
   | "star_rating"
   | "custom_scale";
-export type TIntegrations = "google_sheets" | "zapier" | "slack";
+export type TIntegrations =
+  | "google_sheets"
+  | "zapier"
+  | "slack"
+  | "google_drive"
+  | "notion"
+  | "trello"
+  | "airtable"
+  | "webhooks"
+  | "discord"
+  | "mailchimp"
+  | "hubspot"
+  | "salesforce"
+  | "sendgrid"
+  | "twilio";
 export type TEditorView = "blocks" | "success";
+export type IIntegrationCategory =
+  | "automation"
+  | "communication"
+  | "storage"
+  | "crm"
+  | "email_marketing"
+  | "notifications"
+  | "database";
 
 // submission
 export type TSubmissionStatus = "reviewed" | "not_reviewed" | "ignored";

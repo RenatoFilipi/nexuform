@@ -1,5 +1,15 @@
 import type { JSX } from "react";
-import { TBlock, TBrand, TColor, TFilterSort, TFormStatus, TFormStatusExtended, TIntegrations, TPlan } from "./types";
+import {
+  IIntegrationCategory,
+  TBlock,
+  TBrand,
+  TColor,
+  TFilterSort,
+  TFormStatus,
+  TFormStatusExtended,
+  TIntegrations,
+  TPlan,
+} from "./types";
 
 export interface IDesign {
   label: TColor;
@@ -42,9 +52,9 @@ export interface IIntegration {
   name: string;
   description: string;
   type: TIntegrations;
-  icon: React.ReactNode;
   enabled: boolean;
   pro: boolean;
+  category: IIntegrationCategory;
 }
 export interface IPagination {
   from: number;
