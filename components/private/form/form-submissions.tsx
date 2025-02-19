@@ -13,7 +13,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import { toast } from "sonner";
-import SubmissionDetails from "./submission-details";
+import { default as FormSubmissionDetails, default as SubmissionDetails } from "./form-submission-details";
 
 const FormSubmissions = () => {
   const supabase = createClient();
@@ -134,7 +134,7 @@ const FormSubmissions = () => {
         <div className="flex flex-col gap-2">
           {submissions.map((submission) => {
             return (
-              <SubmissionDetails key={submission.id} blocks={blocks} submission={submission}>
+              <FormSubmissionDetails key={submission.id} blocks={blocks} submission={submission}>
                 <Card className="flex flex-col border cursor-pointer p-2 gap-6">
                   <div className="flex justify-between items-center">
                     <span className="text-sm font-semibold">{submission.identifier}</span>
@@ -145,7 +145,7 @@ const FormSubmissions = () => {
                     <span className="ml-2">({formatDateRelativeToNow(submission.created_at)})</span>
                   </div>
                 </Card>
-              </SubmissionDetails>
+              </FormSubmissionDetails>
             );
           })}
         </div>

@@ -37,7 +37,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
-import ChangePlans from "./change-plans";
+import ManageSubscription from "./manage-subscription";
 
 const links = [
   {
@@ -256,11 +256,11 @@ const NavApp = () => {
             </Button>
           </Feedback>
           {userStore.subscription.plan !== "pro" && (
-            <ChangePlans>
+            <ManageSubscription>
               <Button variant={"secondary"} size={"xs"}>
                 Upgrade
               </Button>
-            </ChangePlans>
+            </ManageSubscription>
           )}
         </div>
         <AvatarAppMenu />

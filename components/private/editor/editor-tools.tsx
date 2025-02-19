@@ -3,8 +3,8 @@ import useEditorStore from "@/stores/editor";
 import { FrameIcon, PlusIcon, Settings2Icon } from "lucide-react";
 import AddBlock from "../blocks/add-block";
 import Block from "../blocks/block";
-import FormDesign from "../forms/form-design";
-import FormSettings from "../forms/form-settings";
+import EditorFormDesign from "./editor-form-design";
+import EditorFormSettings from "./editor-form-settings";
 
 const EditorTools = () => {
   const { form, blocks } = useEditorStore();
@@ -13,18 +13,18 @@ const EditorTools = () => {
     <div className="flex justify-start flex-col items-center h-full border-r p-4 gap-3 bg-background">
       <div className="w-full flex flex-col gap-3">
         <div className="flex justify-center items-center w-full gap-4">
-          <FormSettings>
+          <EditorFormSettings>
             <Button variant={"outline"} size={"sm"} className="w-full">
               <Settings2Icon className="w-4 h-4 mr-2" />
               Settings
             </Button>
-          </FormSettings>
-          <FormDesign>
+          </EditorFormSettings>
+          <EditorFormDesign>
             <Button variant={"outline"} size={"sm"} className="w-full">
               <FrameIcon className="w-4 h-4 mr-2" />
               Design
             </Button>
-          </FormDesign>
+          </EditorFormDesign>
         </div>
       </div>
       <div className="flex w-full h-full justify-center items-start overflow-y-auto">

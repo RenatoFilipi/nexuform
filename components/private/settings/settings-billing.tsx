@@ -6,7 +6,7 @@ import useUserStore from "@/stores/user";
 import { getCurrentPlan, getDaysDifference } from "@/utils/functions";
 import { TPlan } from "@/utils/types";
 import { BuildingIcon, CalendarIcon } from "lucide-react";
-import ChangePlans from "../core/change-plans";
+import ManageSubscription from "../shared/manage-subscription";
 
 const SettingsBilling = () => {
   const userStore = useUserStore();
@@ -55,14 +55,11 @@ const SettingsBilling = () => {
             </div>
           </div>
           <div className="flex justify-end items-center gap-4">
-            <Button variant={"destructive_outline"} size={"sm"}>
-              Cancel Subscription
-            </Button>
-            <ChangePlans>
+            <ManageSubscription>
               <Button variant="secondary" size="sm" className="w-full sm:w-auto self-end">
-                Change Subscription Plan
+                Manage Subscription
               </Button>
-            </ChangePlans>
+            </ManageSubscription>
           </div>
         </Card>
         <Card className="p-4 flex flex-col gap-4">

@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import useUserStore from "@/stores/user";
 import { IIntegration } from "@/utils/interfaces";
 import { BirdIcon, PlugIcon } from "lucide-react";
-import ChangePlans from "../core/change-plans";
-import ManageIntegration from "./manage-integration";
+import ManageSubscription from "../shared/manage-subscription";
+import FormManageIntegration from "./form-manage-integration";
 
 const integrations: IIntegration[] = [
   {
@@ -88,19 +88,19 @@ const CardTemplate = ({ integration }: { integration: IIntegration }) => {
       </div>
       <div className="flex justify-start w-full">
         {user.subscription.plan !== "pro" && integration.pro ? (
-          <ChangePlans>
+          <ManageSubscription>
             <Button size="sm" variant="outline">
               <BirdIcon className="w-4 h-4 mr-2" />
               Upgrade
             </Button>
-          </ChangePlans>
+          </ManageSubscription>
         ) : (
-          <ManageIntegration integration={integration.type}>
+          <FormManageIntegration integration={integration.type}>
             <Button size="sm" variant="outline">
               <PlugIcon className="w-4 h-4 mr-2" />
               Connect
             </Button>
-          </ManageIntegration>
+          </FormManageIntegration>
         )}
       </div>
     </div>

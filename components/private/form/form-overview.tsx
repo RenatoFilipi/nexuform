@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import useFormStore from "@/stores/form";
 import { formatDecimal, formatTime } from "@/utils/functions";
 import { CheckCircleIcon, EyeIcon, SendIcon, TimerIcon } from "lucide-react";
-import SubmissionsActivityChart from "./submissions-activity-chart";
+import FormSubmissionsActivityChart from "./form-submissions-activity-chart";
 
 const FormOverview = () => {
   const { formAnalytics } = useFormStore();
@@ -43,7 +43,7 @@ const FormOverview = () => {
             badge="All time"
           />
         </div>
-        <SubmissionsActivityChart />
+        <FormSubmissionsActivityChart />
       </div>
     </div>
   );

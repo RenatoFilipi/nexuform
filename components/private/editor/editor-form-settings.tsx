@@ -22,7 +22,7 @@ import { BookDashedIcon, EyeIcon, GlobeIcon, Layers2Icon, MonitorOffIcon, Shield
 import { useState } from "react";
 import { useMedia } from "react-use";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
-import FormDelete from "./form-delete";
+import FormDelete from "../shared/form-delete";
 
 const statusList = [
   {
@@ -45,7 +45,7 @@ const statusList = [
   },
 ];
 
-const FormSettings = ({ children }: { children: React.ReactNode }) => {
+const EditorFormSettings = ({ children }: { children: React.ReactNode }) => {
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
@@ -290,4 +290,4 @@ const DeleteSettings = () => {
   );
 };
 
-export default FormSettings;
+export default EditorFormSettings;

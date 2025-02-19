@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import useFormsStore from "@/stores/forms";
 import useUserStore from "@/stores/user";
 import { BookIcon, PlusIcon } from "lucide-react";
-import FormCard from "./form-card";
-import FormCreate from "./form-create";
+import DashboardFormCard from "./dashboard-form-card";
+import DashboardNewForm from "./dashboard-new-form";
 
 const DashboardForms = () => {
   const { forms } = useFormsStore();
@@ -20,17 +20,16 @@ const DashboardForms = () => {
             <div className="flex justify-center items-center flex-col">
               <span className="text-lg font-medium">No forms available</span>
               <span className="text-sm text-center text-foreground/80">
-                Create your very first form and start collecting responses
-                effortlessly.
+                Create your very first form and start collecting responses effortlessly.
               </span>
             </div>
           </div>
-          <FormCreate userId={profile.id}>
+          <DashboardNewForm userId={profile.id}>
             <Button variant={"default"} size={"sm"}>
               <PlusIcon className="w-4 h-4 mr-2" />
               Create New Form
             </Button>
-          </FormCreate>
+          </DashboardNewForm>
         </div>
       </div>
     );
@@ -38,7 +37,7 @@ const DashboardForms = () => {
   return (
     <div className="overflow-y-auto grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
       {forms.map((form) => (
-        <FormCard key={form.id} form={form} />
+        <DashboardFormCard key={form.id} form={form} />
       ))}
     </div>
   );

@@ -8,9 +8,9 @@ import { getCurrentPlan } from "@/utils/functions";
 import { TPlan } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { PlusIcon } from "lucide-react";
-import ChangePlans from "../core/change-plans";
+import ManageSubscription from "../shared/manage-subscription";
 import DashboardForms from "./dashboard-forms";
-import FormCreate from "./form-create";
+import DashboardNewForm from "./dashboard-new-form";
 
 const DashboardWrapper = ({
   forms,
@@ -49,19 +49,19 @@ const DashboardWrapper = ({
         <h1 className="text-xl font-medium">Forms</h1>
         <div className="flex justify-center items-center gap-4">
           {mustUpgrade ? (
-            <ChangePlans>
+            <ManageSubscription>
               <Button size={"sm"} variant={"default"}>
                 <PlusIcon className="w-4 h-4 mr-2" />
                 Create New Form
               </Button>
-            </ChangePlans>
+            </ManageSubscription>
           ) : (
-            <FormCreate userId={profile.id}>
+            <DashboardNewForm userId={profile.id}>
               <Button size={"sm"} variant={"default"}>
                 <PlusIcon className="w-4 h-4 mr-2" />
                 Create New Form
               </Button>
-            </FormCreate>
+            </DashboardNewForm>
           )}
         </div>
       </div>

@@ -6,7 +6,7 @@ import { TFormStatus } from "@/utils/types";
 import { ChevronRightIcon } from "lucide-react";
 import Link from "next/link";
 
-const FormCard = ({ form }: { form: EForm }) => {
+const DashboardFormCard = ({ form }: { form: EForm }) => {
   const { id, name, status, updated_at } = form;
 
   return (
@@ -25,4 +25,4 @@ const FormCard = ({ form }: { form: EForm }) => {
   );
 };
 
-export default FormCard;
+export default DashboardFormCard;

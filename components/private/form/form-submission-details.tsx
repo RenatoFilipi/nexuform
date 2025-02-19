@@ -21,10 +21,10 @@ import Papa from "papaparse";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
-import ChangePlans from "../core/change-plans";
-import SubmissionStatus from "./submission-status";
+import ManageSubscription from "../shared/manage-subscription";
+import FormSubmissionStatus from "./form-submission-status";
 
-const SubmissionDetails = ({
+const FormSubmissionDetails = ({
   children,
   submission,
   blocks,
@@ -175,17 +175,17 @@ const Body = ({
             </Button>
           )}
           {!isAllowedToExport && (
-            <ChangePlans>
+            <ManageSubscription>
               <Button variant={"outline"} size={"sm"} className="w-full sm:w-fit">
                 Export as CSV
               </Button>
-            </ChangePlans>
+            </ManageSubscription>
           )}
-          <SubmissionStatus submission={submission} setState={setState} />
+          <FormSubmissionStatus submission={submission} setState={setState} />
         </div>
       </div>
     </div>
   );
 };
 
-export default SubmissionDetails;
+export default FormSubmissionDetails;

@@ -18,7 +18,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
 import { Input } from "../../ui/input";
 
-const FormCreate = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
+const DashboardNewForm = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
   const [error] = useQueryState("error");
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
@@ -127,4 +127,4 @@ const Body = ({ setState, userId }: { setState: TSetState<boolean>; userId: stri
   );
 };
 
-export default FormCreate;
+export default DashboardNewForm;

@@ -35,7 +35,7 @@ const hasDataReducer = (state: boolean, action: HasDataAction): boolean => {
   }
 };
 
-const SubmissionsActivityChart: React.FC = () => {
+const FormSubmissionsActivityChart: React.FC = () => {
   const { overviewSubmissions } = useFormStore();
   const [days, setDays] = useState<number>(7);
   const [chartData, setChartData] = useState<IChartData[]>([]);
@@ -120,4 +120,4 @@ const SubmissionsActivityChart: React.FC = () => {
   );
 };
 
-export default SubmissionsActivityChart;
+export default FormSubmissionsActivityChart;

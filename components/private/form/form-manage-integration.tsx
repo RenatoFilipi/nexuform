@@ -10,7 +10,13 @@ import { useMedia } from "react-use";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
 
-const ManageIntegration = ({ children, integration }: { children: React.ReactNode; integration: TIntegrations }) => {
+const FormManageIntegration = ({
+  children,
+  integration,
+}: {
+  children: React.ReactNode;
+  integration: TIntegrations;
+}) => {
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
@@ -290,4 +296,4 @@ const ManageWebhook = ({ setState }: { setState: TSetState<boolean> }) => {
   );
 };
 
-export default ManageIntegration;
+export default FormManageIntegration;

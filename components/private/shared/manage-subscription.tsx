@@ -26,7 +26,7 @@ import { CheckIcon } from "lucide-react";
 import { useState } from "react";
 import { useMedia } from "react-use";
 
-const ChangePlans = ({ children }: { children: React.ReactNode }) => {
+const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
@@ -36,9 +36,9 @@ const ChangePlans = ({ children }: { children: React.ReactNode }) => {
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="flex flex-col w-full min-w-[700px]">
           <DialogHeader>
-            <DialogTitle>Change Subscription Plan</DialogTitle>
+            <DialogTitle>Manage Subscription</DialogTitle>
             <DialogDescription>
-              Select a new plan that fits your needs. Your current subscription will be updated accordingly.
+              Manage your subscription settings, update your plan, or cancel your subscription at any time.
             </DialogDescription>
           </DialogHeader>
           <Body setState={setOpen} />
@@ -52,9 +52,9 @@ const ChangePlans = ({ children }: { children: React.ReactNode }) => {
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Change Subscription Plan</DrawerTitle>
+          <DrawerTitle>Manage Subscription</DrawerTitle>
           <DrawerDescription>
-            Select a new plan that fits your needs. Your current subscription will be updated accordingly.
+            Manage your subscription settings, update your plan, or cancel your subscription at any time.
           </DrawerDescription>
         </DrawerHeader>
         <Body setState={setOpen} />
@@ -72,7 +72,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
           <CardTemplate key={plan.type} plan={plan} />
         ))}
       </div>
-      <div className="flex justify-start items-center">
+      <div className="flex justify-end items-center">
         <Button onClick={() => setState(false)} variant={"outline"} size={"sm"}>
           Close
         </Button>
@@ -119,4 +119,4 @@ const CardTemplate = ({ plan }: { plan: IPlanLanding }) => {
     </div>
   );
 };
-export default ChangePlans;
+export default ManageSubscription;

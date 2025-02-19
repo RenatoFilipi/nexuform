@@ -11,7 +11,7 @@ import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import AccountDelete from "./account-delete";
+import SettingsAccountDelete from "./settings-account-delete";
 
 const SettingsGeneral = () => {
   return (
@@ -213,11 +213,11 @@ const GeneralDeleteAccount = () => {
           Delete your account and all its associated data. This action is not reversible, so please continue with
           caution.
         </p>
-        <AccountDelete>
+        <SettingsAccountDelete>
           <Button variant={"destructive_outline"} size={"sm"}>
             Delete Account
           </Button>
-        </AccountDelete>
+        </SettingsAccountDelete>
       </div>
     </div>
   );

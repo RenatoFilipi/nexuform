@@ -140,7 +140,7 @@ const icons: { [key in TBlock]: JSX.Element } = {
   custom_scale: <ScaleIcon className="w-4 h-4 text-foreground" />,
 };
 
-const FormDesign = ({ children }: { children: React.ReactNode }) => {
+const EditorFormDesign = ({ children }: { children: React.ReactNode }) => {
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
@@ -359,4 +359,4 @@ const ReorderDesign = () => {
   );
 };
 
-export default FormDesign;
+export default EditorFormDesign;

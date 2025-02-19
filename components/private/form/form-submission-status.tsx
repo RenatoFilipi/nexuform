@@ -37,7 +37,7 @@ const options = [
   },
 ];
 
-const SubmissionStatus = ({ submission, setState }: { submission: ESubmission; setState: TSetState<boolean> }) => {
+const FormSubmissionStatus = ({ submission, setState }: { submission: ESubmission; setState: TSetState<boolean> }) => {
   const supabase = createClient();
   const [appState, setAppState] = useState<TAppState>("idle");
   const { submissions, setSubmissions } = useFormStore();
@@ -115,4 +115,4 @@ const SubmissionStatus = ({ submission, setState }: { submission: ESubmission; s
   );
 };
 
-export default SubmissionStatus;
+export default FormSubmissionStatus;
