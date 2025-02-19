@@ -193,7 +193,9 @@ const ManageSlack = ({ setState }: { setState: TSetState<boolean> }) => {
         <div className="grid gap-3">
           <div className="grid gap-1">
             <Label htmlFor="icon-emoji">Bot Icon Emoji</Label>
-            <span className="text-xs text-foreground/60">The emoji to use as the bot's icon (e.g., :robot_face:).</span>
+            <span className="text-xs text-foreground/60">
+              The emoji to use as the bot&apos;s icon (e.g., :robot_face:).
+            </span>
           </div>
           <Input
             id="icon-emoji"
