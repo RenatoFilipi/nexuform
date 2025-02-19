@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
+import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState, TPlan } from "@/utils/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -277,10 +278,12 @@ const NavApp = () => {
 };
 const NavEditor = () => {
   const { form, theme, blocks, blocksReadyOnly, preview, setPreview } = useEditorStore();
+  const { subscription } = useUserStore();
   const queryClient = useQueryClient();
   const supabase = createClient();
   const router = useRouter();
   const [appState, setAppState] = useState<TAppState>("idle");
+  const active = isSubscriptionActive(subscription);
 
   const onSave = async () => {
     try {
@@ -422,20 +425,22 @@ const NavEditor = () => {
           </span>
         </div>
       </div>
-      <div className="flex justify-center items-center gap-1">
-        {form.updated_at !== "" && (
-          <span className="text-xs font-medium text-foreground/80 mr-5 hidden sm:flex">
-            Last updated at {new Date(form.updated_at).toLocaleString()}
-          </span>
-        )}
-        <Button size={"xs"} variant={"outline"} className="flex sm:hidden" onClick={() => setPreview(!preview)}>
-          Preview
-        </Button>
-        <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
-          {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
-          Save Form
-        </Button>
-      </div>
+      {active && (
+        <div className="flex justify-center items-center gap-1">
+          {form.updated_at !== "" && (
+            <span className="text-xs font-medium text-foreground/80 mr-5 hidden sm:flex">
+              Last updated at {new Date(form.updated_at).toLocaleString()}
+            </span>
+          )}
+          <Button size={"xs"} variant={"outline"} className="flex sm:hidden" onClick={() => setPreview(!preview)}>
+            Preview
+          </Button>
+          <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
+            {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
+            Save Form
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

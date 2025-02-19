@@ -1,4 +1,7 @@
 import DashboardWrapper from "@/components/private/dashboard/dashboard-wrapper";
+import ErrorUI from "@/components/private/shared/error-ui";
+import SubscriptionUI from "@/components/private/shared/subscription-ui";
+import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -13,9 +16,7 @@ const Forms = async () => {
     .eq("id", data.user.id)
     .single();
 
-  if (profileError) {
-    return <ErrorUI />;
-  }
+  if (profileError) return <ErrorUI />;
 
   const { data: subscription, error: subscriptionError } = await supabase
     .from("subscriptions")
@@ -23,9 +24,10 @@ const Forms = async () => {
     .eq("profile_id", data.user.id)
     .single();
 
-  if (subscriptionError) {
-    return <ErrorUI />;
-  }
+  if (subscriptionError) return <ErrorUI />;
+
+  const active = isSubscriptionActive(subscription);
+  if (!active) return <SubscriptionUI />;
 
   const { data: form, error: formError } = await supabase
     .from("forms")
@@ -35,24 +37,7 @@ const Forms = async () => {
 
   if (formError) return <ErrorUI />;
 
-  return (
-    <DashboardWrapper
-      forms={form}
-      profile={profile}
-      subscription={subscription}
-      email={data.user.email ?? ""}
-    />
-  );
-};
-
-const ErrorUI = () => {
-  return (
-    <div className="flex flex-col justify-center items-center h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
-      <div className="flex flex-col justify-center items-center gap-2">
-        <span className="">Something went wrong</span>
-      </div>
-    </div>
-  );
+  return <DashboardWrapper forms={form} profile={profile} subscription={subscription} email={data.user.email ?? ""} />;
 };
 
 export default Forms;

@@ -2,6 +2,7 @@ import { differenceInDays, formatDistance } from "date-fns";
 import { customAlphabet } from "nanoid";
 import { redirect } from "next/navigation";
 import { day, planSettings } from "./constants";
+import { ESubscription } from "./entities";
 import { TBlock, TPlan } from "./types";
 
 export const uuid = () => {
@@ -101,4 +102,9 @@ export const getCurrentPlan = (plan: TPlan) => {
     default:
       return planSettings.freeTrial;
   }
+};
+export const isSubscriptionActive = (subscription: ESubscription) => {
+  const now = new Date();
+  const dueDate = new Date(subscription.due_date);
+  return subscription.status === "active" && dueDate >= now;
 };

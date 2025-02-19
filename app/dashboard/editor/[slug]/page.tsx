@@ -1,4 +1,7 @@
 import EditorWrapper from "@/components/private/editor/editor-wrapper";
+import ErrorUI from "@/components/private/shared/error-ui";
+import SubscriptionUI from "@/components/private/shared/subscription-ui";
+import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -15,9 +18,7 @@ const Editor = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("id", data.user.id)
     .single();
 
-  if (profileError) {
-    return <ErrorUI />;
-  }
+  if (profileError) return <ErrorUI />;
 
   const { data: subscription, error: subscriptionError } = await supabase
     .from("subscriptions")
@@ -25,9 +26,10 @@ const Editor = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("profile_id", data.user.id)
     .single();
 
-  if (subscriptionError) {
-    return <ErrorUI />;
-  }
+  if (subscriptionError) return <ErrorUI />;
+
+  const active = isSubscriptionActive(subscription);
+  if (!active) return <SubscriptionUI />;
 
   const { data: form, error: formError } = await supabase
     .from("forms")
@@ -40,11 +42,7 @@ const Editor = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   if (form.owner_id !== data.user.id) return redirect("/dashboard/forms");
 
-  const { data: theme, error: themeError } = await supabase
-    .from("themes")
-    .select("*")
-    .eq("form_id", slug)
-    .single();
+  const { data: theme, error: themeError } = await supabase.from("themes").select("*").eq("form_id", slug).single();
 
   if (themeError) return <ErrorUI />;
 
@@ -56,25 +54,7 @@ const Editor = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   if (blocksError) return <ErrorUI />;
 
-  return (
-    <EditorWrapper
-      form={form}
-      theme={theme}
-      blocks={blocks}
-      profile={profile}
-      subscription={subscription}
-    />
-  );
-};
-
-const ErrorUI = () => {
-  return (
-    <div className="flex flex-col justify-center items-center h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
-      <div className="flex flex-col justify-center items-center gap-2">
-        <span className="">Something went wrong</span>
-      </div>
-    </div>
-  );
+  return <EditorWrapper form={form} theme={theme} blocks={blocks} profile={profile} subscription={subscription} />;
 };
 
 export default Editor;

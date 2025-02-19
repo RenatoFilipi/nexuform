@@ -1,5 +1,7 @@
 import FormWrapper from "@/components/private/form/form-wrapper";
+import SubscriptionUI from "@/components/private/shared/subscription-ui";
 import { day, paginationFrom, paginationTo } from "@/utils/constants";
+import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -7,9 +9,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
-  if (!data.user) {
-    return redirect("login");
-  }
+  if (!data.user) return redirect("login");
 
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
@@ -17,9 +17,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("id", data.user.id)
     .single();
 
-  if (profileError) {
-    return <ErrorUI />;
-  }
+  if (profileError) return <ErrorUI />;
 
   const { data: subscription, error: subscriptionError } = await supabase
     .from("subscriptions")
@@ -27,9 +25,10 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("profile_id", data.user.id)
     .single();
 
-  if (subscriptionError) {
-    return <ErrorUI />;
-  }
+  if (subscriptionError) return <ErrorUI />;
+
+  const active = isSubscriptionActive(subscription);
+  if (!active) return <SubscriptionUI />;
 
   const { data: form, error: formError } = await supabase
     .from("forms")

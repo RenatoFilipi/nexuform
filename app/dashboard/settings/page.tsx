@@ -1,7 +1,8 @@
 import SettingsWrapper from "@/components/private/settings/settings-wrapper";
-import { Button } from "@/components/ui/button";
+import ErrorUI from "@/components/private/shared/error-ui";
+import SubscriptionUI from "@/components/private/shared/subscription-ui";
+import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 const Settings = async () => {
@@ -15,11 +16,7 @@ const Settings = async () => {
     .eq("id", data.user.id)
     .single();
 
-  if (profileError) {
-    console.log("profile");
-    console.log(profileError);
-    return <ErrorUI />;
-  }
+  if (profileError) return <ErrorUI />;
 
   const { data: subscription, error: subscriptionError } = await supabase
     .from("subscriptions")
@@ -27,19 +24,14 @@ const Settings = async () => {
     .eq("profile_id", data.user.id)
     .single();
 
-  if (subscriptionError) {
-    console.log("subscription");
-    console.log(subscriptionError);
-    return <ErrorUI />;
-  }
+  if (subscriptionError) return <ErrorUI />;
+
+  const active = isSubscriptionActive(subscription);
+  if (!active) return <SubscriptionUI />;
 
   const { data: formsData, error: formsError } = await supabase.from("forms").select("id").eq("owner_id", data.user.id);
 
-  if (formsError) {
-    console.log("forms");
-    console.log(formsError);
-    return <ErrorUI />;
-  }
+  if (formsError) return <ErrorUI />;
 
   const idsArray = formsData.map((x) => x.id);
   const startDate = subscription.start_date;
@@ -52,11 +44,7 @@ const Settings = async () => {
     .gte("created_at", startDate)
     .lte("created_at", dueDate);
 
-  if (submissionsError) {
-    console.log("submissions");
-    console.log(submissionsError);
-    return <ErrorUI />;
-  }
+  if (submissionsError) return <ErrorUI />;
 
   return (
     <SettingsWrapper
@@ -66,19 +54,6 @@ const Settings = async () => {
       submissionsCount={submissionsCount ?? 0}
       email={data.user.email ?? ""}
     />
-  );
-};
-
-const ErrorUI = () => {
-  return (
-    <div className="flex justify-center items-center pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
-      <div className="flex flex-col justify-center items-center gap-4">
-        <span className="text-sm text-foreground/80">Error on loading settings</span>
-        <Button variant={"outline"} size={"xs"} asChild>
-          <Link href={"/dashboard"}>Go back</Link>
-        </Button>
-      </div>
-    </div>
   );
 };
 
