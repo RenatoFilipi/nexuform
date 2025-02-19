@@ -5,7 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import useUserStore from "@/stores/user";
 import { getCurrentPlan, getDaysDifference } from "@/utils/functions";
 import { TPlan } from "@/utils/types";
-import { CalendarIcon, LeafIcon } from "lucide-react";
+import { BuildingIcon, CalendarIcon } from "lucide-react";
 import ChangePlans from "../core/change-plans";
 
 const SettingsBilling = () => {
@@ -40,25 +40,30 @@ const SettingsBilling = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="flex items-center gap-4 p-4 bg-[#F8F8F8] dark:bg-foreground/5 rounded border">
-              <LeafIcon className="w-8 h-8 text-primary" />
+              <BuildingIcon className="w-6 h-6 text-primary" />
               <div>
                 <span className="text-lg font-semibold">{planName(userStore.subscription.plan)}</span>
                 <p className="text-xs text-muted-foreground">Plan</p>
               </div>
             </div>
             <div className="flex items-center gap-4 p-4 bg-[#F8F8F8] dark:bg-foreground/5 rounded border">
-              <CalendarIcon className="w-8 h-8 text-primary" />
+              <CalendarIcon className="w-6 h-6 text-primary" />
               <div>
                 <span className="text-lg font-semibold">{new Date(nextBillingDate).toLocaleDateString()}</span>
                 <p className="text-xs text-muted-foreground">{pendingDaysStr}</p>
               </div>
             </div>
           </div>
-          <ChangePlans>
-            <Button variant="secondary" size="sm" className="w-full sm:w-auto self-end">
-              Change Subscription Plan
+          <div className="flex justify-end items-center gap-4">
+            <Button variant={"destructive_outline"} size={"sm"}>
+              Cancel Subscription
             </Button>
-          </ChangePlans>
+            <ChangePlans>
+              <Button variant="secondary" size="sm" className="w-full sm:w-auto self-end">
+                Change Subscription Plan
+              </Button>
+            </ChangePlans>
+          </div>
         </Card>
         <Card className="p-4 flex flex-col gap-4">
           <div className="flex flex-col">

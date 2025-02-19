@@ -311,6 +311,7 @@ const NavEditor = () => {
           nebulaform_branding: form.nebulaform_branding,
           success_title: form.success_title,
           success_description: form.success_description,
+          new_submission_notification: form.new_submission_notification,
         })
         .eq("id", form.id);
 

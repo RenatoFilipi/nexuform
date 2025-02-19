@@ -150,6 +150,9 @@ const GeneralSettings = () => {
     if (user.subscription.plan !== "pro") return;
     setForm({ ...form, success_description: value });
   };
+  const onSetNewSubmissionNotification = (value: boolean) => {
+    setForm({ ...form, new_submission_notification: value });
+  };
 
   return (
     <div className="flex flex-col w-full gap-6 pr-4">
@@ -193,6 +196,17 @@ const GeneralSettings = () => {
           </p>
         </div>
         <Textarea value={form.success_description} onChange={(e) => onSetSuccessDescription(e.target.value)} />
+      </div>
+      <div className="flex justify-between items-center w-full">
+        <div className="flex justify-center items-center gap-2">
+          <div className="grid gap-1">
+            <div className="flex justify-start items-center gap-2">
+              <Label>New submission notification</Label>
+            </div>
+            <span className="text-xs text-foreground/60">Receive an alert whenever a new submission is received.</span>
+          </div>
+        </div>
+        <Switch checked={form.new_submission_notification} onCheckedChange={onSetNewSubmissionNotification} />
       </div>
       <div className="flex justify-between items-center w-full">
         <div className="flex justify-center items-center gap-2">
