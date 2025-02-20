@@ -1,11 +1,14 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { minWidth640 } from "@/utils/constants";
-import { TIntegrations, TSetState } from "@/utils/types";
+import { TAppState, TIntegrations, TSetState } from "@/utils/types";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useMedia } from "react-use";
+import { z } from "zod";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
 
@@ -51,14 +54,27 @@ const FormInstallIntegration = ({
 };
 
 const InstallGoogleSheets = ({ setState }: { setState: TSetState<boolean> }) => {
-  const [sheetId, setSheetId] = useState("");
-  const [sheetName, setSheetName] = useState("");
-  const [range, setRange] = useState("");
-  const [apiKey, setApiKey] = useState("");
+  const [appState, setAppState] = useState<TAppState>("idle");
 
-  const handleSave = () => {
-    console.log({ sheetId, sheetName, range, apiKey });
-    setState(false);
+  const formSchema = z.object({
+    sheetId: z.string().min(1, "Sheet ID is required"),
+    sheetName: z.string().min(1, "Sheet name is required"),
+    range: z.string().optional(),
+    apiKey: z.string().min(1, "API key is required"),
+  });
+
+  const formHandler = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      sheetId: "",
+      sheetName: "",
+      range: "",
+      apiKey: "",
+    },
+  });
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log(values);
   };
 
   return (
@@ -68,78 +84,105 @@ const InstallGoogleSheets = ({ setState }: { setState: TSetState<boolean> }) => 
           Google Sheets
         </Badge>
       </div>
-      <div className="h-full flex flex-col gap-8 overflow-y-auto pr-4">
-        <div className="grid gap-3">
-          <div className="grid gap-1">
-            <Label htmlFor="sheet-id">Google Sheet ID</Label>
-            <span className="text-xs text-foreground/60">The unique ID of your Google Sheet.</span>
+      <Form {...formHandler}>
+        <form onSubmit={formHandler.handleSubmit(onSubmit)} className="flex flex-col overflow-y-auto gap-4">
+          <div className="h-full flex flex-col gap-8 overflow-y-auto pr-4">
+            <FormField
+              control={formHandler.control}
+              name="sheetId"
+              render={({ field }) => (
+                <FormItem className="grid gap-3">
+                  <div className="grid gap-1">
+                    <FormLabel>Google Sheet ID</FormLabel>
+                    <span className="text-xs text-foreground/60">The unique ID of your Google Sheet.</span>
+                  </div>
+                  <FormControl>
+                    <Input placeholder="Enter your Sheet ID" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={formHandler.control}
+              name="sheetName"
+              render={({ field }) => (
+                <FormItem className="grid gap-3">
+                  <div className="grid gap-1">
+                    <FormLabel>Sheet Name</FormLabel>
+                    <span className="text-xs text-foreground/60">
+                      The name of the specific sheet within the document.
+                    </span>
+                  </div>
+                  <FormControl>
+                    <Input placeholder="Enter your Sheet Name" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={formHandler.control}
+              name="sheetName"
+              render={({ field }) => (
+                <FormItem className="grid gap-3">
+                  <div className="grid gap-1">
+                    <FormLabel>Data Range</FormLabel>
+                    <span className="text-xs text-foreground/60">Specify the cell range, e.g., A1:C10.</span>
+                  </div>
+                  <FormControl>
+                    <Input placeholder="Example: A1:C10" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={formHandler.control}
+              name="sheetName"
+              render={({ field }) => (
+                <FormItem className="grid gap-3">
+                  <div className="grid gap-1">
+                    <FormLabel>Google API Key</FormLabel>
+                    <span className="text-xs text-foreground/60">Your Google API key for authentication.</span>
+                  </div>
+                  <FormControl>
+                    <Input placeholder="Enter your API Key" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
           </div>
-          <Input
-            id="sheet-id"
-            placeholder="Enter your Sheet ID"
-            value={sheetId}
-            onChange={(e) => setSheetId(e.target.value)}
-          />
-        </div>
-        <div className="grid gap-3">
-          <div className="grid gap-1">
-            <Label htmlFor="sheet-name">Sheet Name</Label>
-            <span className="text-xs text-foreground/60">The name of the specific sheet within the document.</span>
+          <div className="flex justify-between gap-4 items-center flex-col sm:flex-row">
+            <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
+              Close
+            </Button>
+            <Button variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
+              Install Integration
+            </Button>
           </div>
-          <Input
-            id="sheet-name"
-            placeholder="Enter the Sheet Name"
-            value={sheetName}
-            onChange={(e) => setSheetName(e.target.value)}
-          />
-        </div>
-        <div className="grid gap-3">
-          <div className="grid gap-1">
-            <Label htmlFor="range">Data Range (Optional)</Label>
-            <span className="text-xs text-foreground/60">
-              Specify the cell range, e.g., A1:C10. Leave empty for the entire sheet.
-            </span>
-          </div>
-          <Input id="range" placeholder="Example: A1:C10" value={range} onChange={(e) => setRange(e.target.value)} />
-        </div>
-        <div className="grid gap-3">
-          <div className="grid gap-1">
-            <Label htmlFor="api-key">Google API Key</Label>
-            <span className="text-xs text-foreground/60">Your Google API key for authentication.</span>
-          </div>
-          <Input
-            id="api-key"
-            placeholder="Enter your API Key"
-            value={apiKey}
-            onChange={(e) => setApiKey(e.target.value)}
-          />
-        </div>
-      </div>
-      <div className="flex justify-between gap-4 items-center flex-col sm:flex-row">
-        <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
-          Close
-        </Button>
-        <Button
-          onClick={() => {
-            handleSave();
-          }}
-          variant={"secondary"}
-          size={"sm"}
-          className="w-full sm:w-fit">
-          Install Integration
-        </Button>
-      </div>
+        </form>
+      </Form>
     </div>
   );
 };
 const InstallSlack = ({ setState }: { setState: TSetState<boolean> }) => {
-  const [webhookUrl, setWebhookUrl] = useState("");
-  const [channel, setChannel] = useState("");
-  const [botName, setBotName] = useState("");
-  const [iconEmoji, setIconEmoji] = useState("");
+  const formSchema = z.object({
+    webhookUrl: z.string().min(1, "Webhook URL is required"),
+    channel: z.string().min(1, "Channel is required"),
+    botName: z.string().min(1, "Bot Name is required"),
+    iconEmoji: z.string().min(1, "Icon Emoji is required"),
+  });
 
-  const handleSave = () => {
-    console.log({ webhookUrl, channel, botName, iconEmoji });
+  const formHandler = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      webhookUrl: "",
+      channel: "",
+      botName: "",
+      iconEmoji: "",
+    },
+  });
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log(values);
     setState(false);
   };
 
@@ -150,66 +193,82 @@ const InstallSlack = ({ setState }: { setState: TSetState<boolean> }) => {
           Slack
         </Badge>
       </div>
-      <div className="h-full flex flex-col gap-8 overflow-y-auto pr-4">
-        <div className="grid gap-3">
-          <div className="grid gap-1">
-            <Label htmlFor="webhook-url">Slack Webhook URL</Label>
-            <span className="text-xs text-foreground/60">The webhook URL for sending messages to Slack.</span>
+      <Form {...formHandler}>
+        <form onSubmit={formHandler.handleSubmit(onSubmit)} className="flex flex-col overflow-y-auto gap-4">
+          <div className="h-full flex flex-col gap-8 overflow-y-auto pr-4">
+            <FormField
+              control={formHandler.control}
+              name="webhookUrl"
+              render={({ field }) => (
+                <FormItem className="grid gap-3">
+                  <div className="grid gap-1">
+                    <FormLabel>Slack Webhook URL</FormLabel>
+                    <span className="text-xs text-foreground/60">The webhook URL for sending messages to Slack.</span>
+                  </div>
+                  <FormControl>
+                    <Input placeholder="Enter your Webhook URL" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={formHandler.control}
+              name="channel"
+              render={({ field }) => (
+                <FormItem className="grid gap-3">
+                  <div className="grid gap-1">
+                    <FormLabel>Slack Channel</FormLabel>
+                    <span className="text-xs text-foreground/60">The Slack channel where messages will be sent.</span>
+                  </div>
+                  <FormControl>
+                    <Input placeholder="Enter the Channel Name" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={formHandler.control}
+              name="botName"
+              render={({ field }) => (
+                <FormItem className="grid gap-3">
+                  <div className="grid gap-1">
+                    <FormLabel>Bot Name</FormLabel>
+                    <span className="text-xs text-foreground/60">The display name for your bot in Slack.</span>
+                  </div>
+                  <FormControl>
+                    <Input placeholder="Enter Bot Name" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={formHandler.control}
+              name="iconEmoji"
+              render={({ field }) => (
+                <FormItem className="grid gap-3">
+                  <div className="grid gap-1">
+                    <FormLabel>Bot Icon Emoji</FormLabel>
+                    <span className="text-xs text-foreground/60">
+                      The emoji to use as the bot&apos;s icon (e.g., :robot_face:).
+                    </span>
+                  </div>
+                  <FormControl>
+                    <Input placeholder="Enter Emoji Code" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
           </div>
-          <Input
-            id="webhook-url"
-            placeholder="Enter your Webhook URL"
-            value={webhookUrl}
-            onChange={(e) => setWebhookUrl(e.target.value)}
-          />
-        </div>
-        <div className="grid gap-3">
-          <div className="grid gap-1">
-            <Label htmlFor="channel">Slack Channel</Label>
-            <span className="text-xs text-foreground/60">The Slack channel where messages will be sent.</span>
+          <div className="flex justify-between gap-4 items-center flex-col sm:flex-row">
+            <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
+              Close
+            </Button>
+            <Button variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
+              Install Integration
+            </Button>
           </div>
-          <Input
-            id="channel"
-            placeholder="Enter the Channel Name"
-            value={channel}
-            onChange={(e) => setChannel(e.target.value)}
-          />
-        </div>
-        <div className="grid gap-3">
-          <div className="grid gap-1">
-            <Label htmlFor="bot-name">Bot Name</Label>
-            <span className="text-xs text-foreground/60">The display name for your bot in Slack.</span>
-          </div>
-          <Input
-            id="bot-name"
-            placeholder="Enter Bot Name"
-            value={botName}
-            onChange={(e) => setBotName(e.target.value)}
-          />
-        </div>
-        <div className="grid gap-3">
-          <div className="grid gap-1">
-            <Label htmlFor="icon-emoji">Bot Icon Emoji</Label>
-            <span className="text-xs text-foreground/60">
-              The emoji to use as the bot&apos;s icon (e.g., :robot_face:).
-            </span>
-          </div>
-          <Input
-            id="icon-emoji"
-            placeholder="Enter Emoji Code"
-            value={iconEmoji}
-            onChange={(e) => setIconEmoji(e.target.value)}
-          />
-        </div>
-      </div>
-      <div className="flex justify-between gap-4 items-center flex-col sm:flex-row">
-        <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
-          Close
-        </Button>
-        <Button onClick={handleSave} variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
-          Install Integration
-        </Button>
-      </div>
+        </form>
+      </Form>
     </div>
   );
 };
