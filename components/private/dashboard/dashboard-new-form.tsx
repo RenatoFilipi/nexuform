@@ -55,7 +55,7 @@ const DashboardNewForm = ({ children, userId }: { children: React.ReactNode; use
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3 flex flex-col h-[90%]">
+      <DrawerContent className="p-3 flex flex-col max-h-[90%]">
         <DrawerHeader>
           <DrawerTitle>Create New Form</DrawerTitle>
           <DrawerDescription>

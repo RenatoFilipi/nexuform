@@ -267,6 +267,75 @@ export type Database = {
           },
         ]
       }
+      integrations: {
+        Row: {
+          active: boolean
+          created_at: string
+          form_id: string
+          gs_api_key: string | null
+          gs_data_range: string | null
+          gs_id: string | null
+          gs_name: string | null
+          id: string
+          profile_id: string
+          slack_bot_icon_emoji: string | null
+          slack_bot_name: string | null
+          slack_channel: string | null
+          slack_webhook_url: string | null
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          form_id: string
+          gs_api_key?: string | null
+          gs_data_range?: string | null
+          gs_id?: string | null
+          gs_name?: string | null
+          id?: string
+          profile_id: string
+          slack_bot_icon_emoji?: string | null
+          slack_bot_name?: string | null
+          slack_channel?: string | null
+          slack_webhook_url?: string | null
+          type?: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          form_id?: string
+          gs_api_key?: string | null
+          gs_data_range?: string | null
+          gs_id?: string | null
+          gs_name?: string | null
+          id?: string
+          profile_id?: string
+          slack_bot_icon_emoji?: string | null
+          slack_bot_name?: string | null
+          slack_channel?: string | null
+          slack_webhook_url?: string | null
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "integrations_form_id_fkey"
+            columns: ["form_id"]
+            isOneToOne: false
+            referencedRelation: "forms"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "integrations_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       invoices: {
         Row: {
           amount: number

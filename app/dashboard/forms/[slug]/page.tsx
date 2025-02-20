@@ -43,6 +43,14 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     return redirect("/dashboard/forms");
   }
 
+  const { data: integrations, error: integrationsError } = await supabase
+    .from("integrations")
+    .select("*")
+    .eq("form_id", slug)
+    .order("created_at", { ascending: false });
+
+  if (integrationsError) return <ErrorUI />;
+
   const { data: blocks, error: blocksError } = await supabase
     .from("blocks")
     .select("*")
@@ -86,6 +94,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
       profile={profile}
       subscription={subscription}
       email={data.user.email ?? ""}
+      integrations={integrations}
     />
   );
 };

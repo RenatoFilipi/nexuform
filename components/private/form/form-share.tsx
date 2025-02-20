@@ -37,7 +37,7 @@ const FormShare = ({ children, form }: { children: React.ReactNode; form: EForm 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3 flex flex-col h-[90%]">
+      <DrawerContent className="p-3 flex flex-col max-h-[90%]">
         <DrawerHeader>
           <DialogTitle>Share Your Form</DialogTitle>
           <DialogDescription>Easily share your form with others using a link or a QR code.</DialogDescription>

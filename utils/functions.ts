@@ -3,7 +3,7 @@ import { customAlphabet } from "nanoid";
 import { redirect } from "next/navigation";
 import { day, planSettings } from "./constants";
 import { ESubscription } from "./entities";
-import { TBlock, TPlan } from "./types";
+import { TBlock, TIntegrations, TPlan } from "./types";
 
 export const uuid = () => {
   const uuid = self.crypto.randomUUID();
@@ -107,4 +107,24 @@ export const isSubscriptionActive = (subscription: ESubscription) => {
   const now = new Date();
   const dueDate = new Date(subscription.due_date);
   return subscription.status === "active" && dueDate >= now;
+};
+export const getIntegrationName = (type: TIntegrations) => {
+  const integrationNames: Record<TIntegrations, string> = {
+    google_sheets: "Google Sheets",
+    zapier: "Zapier",
+    slack: "Slack",
+    google_drive: "Google Drive",
+    notion: "Notion",
+    trello: "Trello",
+    airtable: "Airtable",
+    webhooks: "Webhooks",
+    discord: "Discord",
+    mailchimp: "Mailchimp",
+    hubspot: "HubSpot",
+    salesforce: "Salesforce",
+    sendgrid: "SendGrid",
+    twilio: "Twilio",
+  };
+
+  return integrationNames[type] || "Unknown Integration";
 };

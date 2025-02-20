@@ -2,16 +2,20 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { minWidth640 } from "@/utils/constants";
-import { EIntegration } from "@/utils/entities";
-import { TSetState } from "@/utils/types";
+import { TIntegrations, TSetState } from "@/utils/types";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
 
-const FormManageIntegration = ({ children, integration }: { children: React.ReactNode; integration: EIntegration }) => {
+const FormInstallIntegration = ({
+  children,
+  integration,
+}: {
+  children: React.ReactNode;
+  integration: TIntegrations;
+}) => {
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
@@ -22,10 +26,10 @@ const FormManageIntegration = ({ children, integration }: { children: React.Reac
         <DialogContent className="flex flex-col min-w-[650px] h-[600px] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Integration</DialogTitle>
-            <DialogDescription>Manage and configure third-party integrations for your form.</DialogDescription>
+            <DialogDescription>Install and configure third-party integrations for your form.</DialogDescription>
           </DialogHeader>
-          {integration.type === "google_sheets" && <ManageGoogleSheets setState={setOpen} integration={integration} />}
-          {integration.type === "slack" && <ManageSlack setState={setOpen} integration={integration} />}
+          {integration === "google_sheets" && <InstallGoogleSheets setState={setOpen} />}
+          {integration === "slack" && <InstallSlack setState={setOpen} />}
         </DialogContent>
       </Dialog>
     );
@@ -37,21 +41,20 @@ const FormManageIntegration = ({ children, integration }: { children: React.Reac
       <DrawerContent className="p-3 flex flex-col gap-8 max-h-[90%]">
         <DrawerHeader>
           <DrawerTitle>Integration</DrawerTitle>
-          <DrawerDescription>Manage and configure third-party integrations for your form.</DrawerDescription>
+          <DrawerDescription>Install and configure third-party integrations for your form.</DrawerDescription>
         </DrawerHeader>
-        {integration.type === "google_sheets" && <ManageGoogleSheets setState={setOpen} integration={integration} />}
-        {integration.type === "slack" && <ManageSlack setState={setOpen} integration={integration} />}
+        {integration === "google_sheets" && <InstallGoogleSheets setState={setOpen} />}
+        {integration === "slack" && <InstallSlack setState={setOpen} />}
       </DrawerContent>
     </Drawer>
   );
 };
 
-const ManageGoogleSheets = ({ setState, integration }: { setState: TSetState<boolean>; integration: EIntegration }) => {
-  const [sheetId, setSheetId] = useState(integration.gs_id ?? "");
-  const [sheetName, setSheetName] = useState(integration.gs_name ?? "");
-  const [range, setRange] = useState(integration.gs_data_range ?? "");
-  const [apiKey, setApiKey] = useState(integration.gs_api_key ?? "");
-  const [active, setActive] = useState(integration.active);
+const InstallGoogleSheets = ({ setState }: { setState: TSetState<boolean> }) => {
+  const [sheetId, setSheetId] = useState("");
+  const [sheetName, setSheetName] = useState("");
+  const [range, setRange] = useState("");
+  const [apiKey, setApiKey] = useState("");
 
   const handleSave = () => {
     console.log({ sheetId, sheetName, range, apiKey });
@@ -64,7 +67,6 @@ const ManageGoogleSheets = ({ setState, integration }: { setState: TSetState<boo
         <Badge variant={"primary"} uppercase>
           Google Sheets
         </Badge>
-        <Switch checked={active} onCheckedChange={setActive} />
       </div>
       <div className="h-full flex flex-col gap-8 overflow-y-auto pr-4">
         <div className="grid gap-3">
@@ -124,18 +126,17 @@ const ManageGoogleSheets = ({ setState, integration }: { setState: TSetState<boo
           variant={"secondary"}
           size={"sm"}
           className="w-full sm:w-fit">
-          Save Integration
+          Install Integration
         </Button>
       </div>
     </div>
   );
 };
-const ManageSlack = ({ setState, integration }: { setState: TSetState<boolean>; integration: EIntegration }) => {
-  const [webhookUrl, setWebhookUrl] = useState(integration.slack_webhook_url ?? "");
-  const [channel, setChannel] = useState(integration.slack_channel ?? "");
-  const [botName, setBotName] = useState(integration.slack_bot_name ?? "");
-  const [iconEmoji, setIconEmoji] = useState(integration.slack_bot_icon_emoji ?? "");
-  const [active, setActive] = useState(integration.active);
+const InstallSlack = ({ setState }: { setState: TSetState<boolean> }) => {
+  const [webhookUrl, setWebhookUrl] = useState("");
+  const [channel, setChannel] = useState("");
+  const [botName, setBotName] = useState("");
+  const [iconEmoji, setIconEmoji] = useState("");
 
   const handleSave = () => {
     console.log({ webhookUrl, channel, botName, iconEmoji });
@@ -148,7 +149,6 @@ const ManageSlack = ({ setState, integration }: { setState: TSetState<boolean>; 
         <Badge variant={"primary"} uppercase>
           Slack
         </Badge>
-        <Switch checked={active} onCheckedChange={setActive} />
       </div>
       <div className="h-full flex flex-col gap-8 overflow-y-auto pr-4">
         <div className="grid gap-3">
@@ -207,11 +207,11 @@ const ManageSlack = ({ setState, integration }: { setState: TSetState<boolean>; 
           Close
         </Button>
         <Button onClick={handleSave} variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
-          Save Integration
+          Install Integration
         </Button>
       </div>
     </div>
   );
 };
 
-export default FormManageIntegration;
+export default FormInstallIntegration;

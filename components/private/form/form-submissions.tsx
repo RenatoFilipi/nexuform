@@ -131,23 +131,43 @@ const FormSubmissions = () => {
         </div>
       )}
       {!isDesktop && (
-        <div className="flex flex-col gap-2">
-          {submissions.map((submission) => {
-            return (
-              <FormSubmissionDetails key={submission.id} blocks={blocks} submission={submission}>
-                <Card className="flex flex-col border cursor-pointer p-2 gap-6">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-semibold">{submission.identifier}</span>
-                    <SubmissionStatusBadge status={submission.status as TSubmissionStatus} />
-                  </div>
-                  <div className="text-xs text-foreground/70 flex justify-end">
-                    <span className="">{new Date(submission.created_at).toLocaleString()}</span>
-                    <span className="ml-2">({formatDateRelativeToNow(submission.created_at)})</span>
-                  </div>
-                </Card>
-              </FormSubmissionDetails>
-            );
-          })}
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            {submissions.map((submission) => {
+              return (
+                <FormSubmissionDetails key={submission.id} blocks={blocks} submission={submission}>
+                  <Card className="flex flex-col border cursor-pointer p-2 gap-6">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-semibold">{submission.identifier}</span>
+                      <SubmissionStatusBadge status={submission.status as TSubmissionStatus} />
+                    </div>
+                    <div className="text-xs text-foreground/70 flex justify-end">
+                      <span className="">{new Date(submission.created_at).toLocaleString()}</span>
+                      <span className="ml-2">({formatDateRelativeToNow(submission.created_at)})</span>
+                    </div>
+                  </Card>
+                </FormSubmissionDetails>
+              );
+            })}
+          </div>
+          {noSubmission && (
+            <div className="flex w-full justify-center items-center py-2">
+              <span className="text-sm text-foreground/70">No submission to show.</span>
+            </div>
+          )}
+          <div className="flex w-full justify-between items-center gap-4">
+            <span className="text-xs text-foreground/80">{records}</span>
+            <div className="flex justify-center items-center gap-4">
+              <Button disabled={disabledPrevious} onClick={onPreviousData} variant={"outline"} size={"sm"}>
+                <ChevronLeftIcon className="w-4 h-4 mr-2" />
+                Previous
+              </Button>
+              <Button disabled={disabledNext} onClick={onNextData} variant={"outline"} size={"sm"}>
+                Next
+                <ChevronRightIcon className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+          </div>
         </div>
       )}
     </div>

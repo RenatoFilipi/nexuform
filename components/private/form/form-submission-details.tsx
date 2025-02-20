@@ -56,7 +56,7 @@ const FormSubmissionDetails = ({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3 h-[90%]">
+      <DrawerContent className="p-3 max-h-[90%]">
         <DrawerHeader className="hidden">
           <DrawerTitle>Details</DrawerTitle>
           <DrawerDescription>Review the questions and your responses from this submission.</DrawerDescription>

@@ -59,7 +59,7 @@ const FormSettings = () => {
   const enabledViews = views.filter((x) => x.enabled);
 
   return (
-    <div className="flex w-full h-full">
+    <div className="flex w-full h-full flex-col sm:flex-row gap-4 sm:gap-0">
       <div className="flex sm:flex-col h-fit sm:w-60 gap-1 sm:absolute">
         {enabledViews.map((v) => {
           return (
@@ -68,7 +68,7 @@ const FormSettings = () => {
               onClick={() => setView(v.view as TView)}
               className={`${
                 v.view === view ? "border-foreground/30 font-medium" : "border-transparent text-foreground/70"
-              } border p-2 flex items-center justify-start gap-2 text-sm hover:bg-foreground/5 rounded flex-1`}>
+              } border p-2 flex items-center justify-center sm:justify-start gap-2 text-sm hover:bg-foreground/5 rounded flex-1`}>
               <v.icon className={`${v.view === view ? "text-primary" : "text-foreground/70"} w-4 h-4`} />
               {v.label}
             </button>
@@ -202,7 +202,7 @@ const GeneralSettings = () => {
                   <div className="grid gap-1">
                     <FormLabel>New submission notification</FormLabel>
                     <span className="text-xs text-foreground/70">
-                      Receive an alert whenever a new submission is received.
+                      Receive an email whenever a new submission is received.
                     </span>
                   </div>
                   <FormControl>
@@ -239,7 +239,7 @@ const GeneralSettings = () => {
               )}
             />
             <div className="flex justify-end items-center w-full">
-              <Button variant={"secondary"} size={"sm"}>
+              <Button variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
                 {settingsState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
                 Save Form
               </Button>
@@ -312,7 +312,7 @@ const StatusSettings = () => {
           ))}
         </div>
         <div className="flex justify-end items-center w-full">
-          <Button variant={"secondary"} size={"sm"} onClick={onSubmit}>
+          <Button variant={"secondary"} size={"sm"} onClick={onSubmit} className="w-full sm:w-fit">
             {settingsState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
             Update Status
           </Button>
@@ -343,7 +343,7 @@ const DeleteSettings = () => {
               <br /> This action cannot be undone.
             </span>
             <FormDelete formId={form.id} formName={form.name}>
-              <Button variant={"destructive"} size={"sm"} className="w-full sm:w-fit">
+              <Button variant={"destructive"} size={"sm"} className="w-fit">
                 Continue
               </Button>
             </FormDelete>

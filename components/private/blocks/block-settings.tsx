@@ -51,7 +51,7 @@ const BlockSettings = ({ children, block }: { children: React.ReactNode; block: 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3 h-[90%] flex flex-col">
+      <DrawerContent className="p-3 max-h-[90%] flex flex-col">
         <DrawerHeader>
           <DrawerTitle>Block Settings</DrawerTitle>
           <DrawerDescription>Customize the settings for this form block.</DrawerDescription>

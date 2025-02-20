@@ -67,7 +67,7 @@ const EditorFormSettings = ({ children }: { children: React.ReactNode }) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3 flex flex-col h-[90%]">
+      <DrawerContent className="p-3 flex flex-col max-h-[90%]">
         <DrawerHeader>
           <DrawerTitle className="text-xl font-medium">Settings</DrawerTitle>
           <DrawerDescription>Configure your form preferences and update settings as needed.</DrawerDescription>
@@ -203,7 +203,7 @@ const GeneralSettings = () => {
             <div className="flex justify-start items-center gap-2">
               <Label>New submission notification</Label>
             </div>
-            <span className="text-xs text-foreground/60">Receive an alert whenever a new submission is received.</span>
+            <span className="text-xs text-foreground/60">Receive an email whenever a new submission is received.</span>
           </div>
         </div>
         <Switch checked={form.new_submission_notification} onCheckedChange={onSetNewSubmissionNotification} />

@@ -37,6 +37,7 @@ export type IIntegrationCategory =
   | "email_marketing"
   | "notifications"
   | "database";
+export type TIntegrationStatus = "active" | "inactive";
 
 // submission
 export type TSubmissionStatus = "reviewed" | "not_reviewed" | "ignored";

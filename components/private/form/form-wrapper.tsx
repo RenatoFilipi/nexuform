@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import useFormStore from "@/stores/form";
 import useUserStore from "@/stores/user";
 import { paginationFrom, paginationTo } from "@/utils/constants";
-import { EBlock, EForm, EFormAnalytics, EProfile, ESubmission, ESubscription } from "@/utils/entities";
+import { EBlock, EForm, EFormAnalytics, EIntegration, EProfile, ESubmission, ESubscription } from "@/utils/entities";
 import { formatDateRelativeToNow } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
@@ -64,6 +64,7 @@ const FormWrapper = ({
   subscription,
   email,
   overviewSubmissions,
+  integrations,
 }: {
   overviewSubmissions: ESubmission[];
   submissions: ESubmission[];
@@ -73,6 +74,7 @@ const FormWrapper = ({
   profile: EProfile;
   subscription: ESubscription;
   email: string;
+  integrations: EIntegration[];
 }) => {
   const formStore = useFormStore();
   const userStore = useUserStore();
@@ -92,6 +94,7 @@ const FormWrapper = ({
       userStore.setSubscription(subscription);
       userStore.setEmail(email);
       formStore.setPagination({ from: paginationFrom, to: paginationTo });
+      formStore.setIntegrations(integrations);
       return null;
     },
     refetchOnWindowFocus: false,
