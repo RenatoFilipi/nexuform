@@ -9,7 +9,7 @@ import { minWidth640, paginationRange } from "@/utils/constants";
 import { formatDateRelativeToNow, formatTime } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState, TSubmissionStatus } from "@/utils/types";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon, CogIcon } from "lucide-react";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import { toast } from "sonner";
@@ -101,6 +101,7 @@ const FormSubmissions = () => {
                     <TableCell className="text-right py-2 pr-4">
                       <SubmissionDetails blocks={blocks} submission={submission}>
                         <Button variant={"outline"} size={"xs"}>
+                          <CogIcon className="w-4 h-4 mr-2" />
                           View Details
                         </Button>
                       </SubmissionDetails>

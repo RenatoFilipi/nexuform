@@ -80,7 +80,7 @@ const InstalledIntegrations = ({ setState }: { setState: TSetState<TView> }) => 
         </div>
       )}
       {!empty && (
-        <div className="grid grid-cols-1 sm:grid-cols-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {integrations.map((integration) => {
             return <InstalledIntegrationCard key={integration.id} integration={integration} />;
           })}
@@ -150,11 +150,11 @@ const IntegrationMarketPlaceCard = ({ integration }: { integration: IIntegration
 };
 const InstalledIntegrationCard = ({ integration }: { integration: EIntegration }) => {
   return (
-    <div className="flex flex-col items-center justify-between border rounded-lg shadow-sm bg-background">
-      <div className="border-b w-full flex justify-start items-center px-4 py-2">
+    <div className="flex items-center justify-between border rounded-lg shadow-sm bg-background py-3 px-4">
+      <div>
         <span className="text-sm font-medium">{getIntegrationName(integration.type as TIntegrations)}</span>
       </div>
-      <div className="flex w-full justify-between items-end p-4">
+      <div className="flex justify-center items-center gap-4">
         <IntegrationStatusBadge active={integration.active} />
         <FormManageIntegration integration={integration}>
           <Button variant={"outline"} size={"xs"}>

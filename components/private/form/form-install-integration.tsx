@@ -2,12 +2,17 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import useFormStore from "@/stores/form";
+import useUserStore from "@/stores/user";
 import { minWidth640 } from "@/utils/constants";
+import { createClient } from "@/utils/supabase/client";
 import { TAppState, TIntegrations, TSetState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2Icon } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMedia } from "react-use";
+import { toast } from "sonner";
 import { z } from "zod";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
@@ -54,15 +59,17 @@ const FormInstallIntegration = ({
 };
 
 const InstallGoogleSheets = ({ setState }: { setState: TSetState<boolean> }) => {
+  const supabase = createClient();
+  const { form, integrations, setIntegrations } = useFormStore();
+  const { profile } = useUserStore();
   const [appState, setAppState] = useState<TAppState>("idle");
 
   const formSchema = z.object({
     sheetId: z.string().min(1, "Sheet ID is required"),
     sheetName: z.string().min(1, "Sheet name is required"),
-    range: z.string().optional(),
+    range: z.string().min(1, "Range is required"),
     apiKey: z.string().min(1, "API key is required"),
   });
-
   const formHandler = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -72,9 +79,36 @@ const InstallGoogleSheets = ({ setState }: { setState: TSetState<boolean> }) => 
       apiKey: "",
     },
   });
-
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    setAppState("loading");
+    const { sheetId, sheetName, range, apiKey } = values;
+    const { data, error } = await supabase
+      .from("integrations")
+      .insert([
+        {
+          gs_id: sheetId,
+          gs_name: sheetName,
+          gs_data_range: range,
+          gs_api_key: apiKey,
+          form_id: form.id,
+          profile_id: profile.id,
+          type: "google_sheets",
+          active: true,
+        },
+      ])
+      .select()
+      .single();
+
+    if (error) {
+      toast.error("Error on installing integration, please try again.");
+      setAppState("idle");
+      return;
+    }
+    const updatedIntegrations = [...integrations, data];
+    setIntegrations(updatedIntegrations);
+    setState(false);
+    toast.success("Integration installed.");
+    setAppState("idle");
   };
 
   return (
@@ -121,7 +155,7 @@ const InstallGoogleSheets = ({ setState }: { setState: TSetState<boolean> }) => 
             />
             <FormField
               control={formHandler.control}
-              name="sheetName"
+              name="range"
               render={({ field }) => (
                 <FormItem className="grid gap-3">
                   <div className="grid gap-1">
@@ -136,7 +170,7 @@ const InstallGoogleSheets = ({ setState }: { setState: TSetState<boolean> }) => 
             />
             <FormField
               control={formHandler.control}
-              name="sheetName"
+              name="apiKey"
               render={({ field }) => (
                 <FormItem className="grid gap-3">
                   <div className="grid gap-1">
@@ -155,6 +189,7 @@ const InstallGoogleSheets = ({ setState }: { setState: TSetState<boolean> }) => 
               Close
             </Button>
             <Button variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
+              {appState === "loading" && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
               Install Integration
             </Button>
           </div>
@@ -164,13 +199,17 @@ const InstallGoogleSheets = ({ setState }: { setState: TSetState<boolean> }) => 
   );
 };
 const InstallSlack = ({ setState }: { setState: TSetState<boolean> }) => {
+  const supabase = createClient();
+  const { form, integrations, setIntegrations } = useFormStore();
+  const { profile } = useUserStore();
+  const [appState, setAppState] = useState<TAppState>("idle");
+
   const formSchema = z.object({
     webhookUrl: z.string().min(1, "Webhook URL is required"),
     channel: z.string().min(1, "Channel is required"),
     botName: z.string().min(1, "Bot Name is required"),
     iconEmoji: z.string().min(1, "Icon Emoji is required"),
   });
-
   const formHandler = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -180,10 +219,37 @@ const InstallSlack = ({ setState }: { setState: TSetState<boolean> }) => {
       iconEmoji: "",
     },
   });
-
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    setAppState("loading");
+    const { webhookUrl, botName, channel, iconEmoji } = values;
+    const { data, error } = await supabase
+      .from("integrations")
+      .insert([
+        {
+          slack_webhook_url: webhookUrl,
+          slack_bot_name: botName,
+          slack_channel: channel,
+          slack_bot_icon_emoji: iconEmoji,
+          form_id: form.id,
+          profile_id: profile.id,
+          type: "slack",
+          active: true,
+        },
+      ])
+      .select()
+      .single();
+
+    if (error) {
+      toast.error("Error on installing integration, please try again.");
+      setAppState("idle");
+      return;
+    }
+
+    const updatedIntegrations = [...integrations, data];
+    setIntegrations(updatedIntegrations);
     setState(false);
+    toast.success("Integration installed.");
+    setAppState("idle");
   };
 
   return (
@@ -264,6 +330,7 @@ const InstallSlack = ({ setState }: { setState: TSetState<boolean> }) => {
               Close
             </Button>
             <Button variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
+              {appState === "loading" && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
               Install Integration
             </Button>
           </div>

@@ -3,13 +3,17 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import useFormStore from "@/stores/form";
 import { minWidth640 } from "@/utils/constants";
 import { EIntegration } from "@/utils/entities";
-import { TSetState } from "@/utils/types";
+import { createClient } from "@/utils/supabase/client";
+import { TAppState, TSetState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2Icon } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMedia } from "react-use";
+import { toast } from "sonner";
 import { z } from "zod";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
@@ -50,15 +54,17 @@ const FormManageIntegration = ({ children, integration }: { children: React.Reac
 };
 
 const ManageGoogleSheets = ({ setState, integration }: { setState: TSetState<boolean>; integration: EIntegration }) => {
+  const supabase = createClient();
+  const { integrations, setIntegrations } = useFormStore();
+  const [appState, setAppState] = useState<TAppState>("idle");
   const [active, setActive] = useState(integration.active);
 
   const formSchema = z.object({
     sheetId: z.string().min(1, "Sheet ID is required"),
     sheetName: z.string().min(1, "Sheet name is required"),
-    range: z.string().optional(),
+    range: z.string().min(1, "Range is required"),
     apiKey: z.string().min(1, "API key is required"),
   });
-
   const formHandler = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -68,10 +74,29 @@ const ManageGoogleSheets = ({ setState, integration }: { setState: TSetState<boo
       apiKey: integration.gs_api_key ?? "",
     },
   });
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setAppState("loading");
+    const { sheetId, sheetName, range, apiKey } = values;
+    const { data, error } = await supabase
+      .from("integrations")
+      .update({ gs_id: sheetId, gs_name: sheetName, gs_data_range: range, gs_api_key: apiKey, active })
+      .eq("id", integration.id)
+      .select()
+      .single();
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    if (error) {
+      toast.error("Error on updating integration, please try again.");
+      setAppState("idle");
+      return;
+    }
+
+    const updatedIntegrations = integrations.map((old) => {
+      return old.id === data.id ? data : old;
+    });
+    setIntegrations(updatedIntegrations);
     setState(false);
+    toast.success("Integration updated.");
+    setAppState("idle");
   };
 
   return (
@@ -154,9 +179,15 @@ const ManageGoogleSheets = ({ setState, integration }: { setState: TSetState<boo
             <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
               Close
             </Button>
-            <Button type="submit" variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
-              Save Integration
-            </Button>
+            <div className="flex justify-center items-center gap-4">
+              <Button type="button" variant={"destructive_outline"} size={"sm"} className="w-full sm:w-fit">
+                Delete Integration
+              </Button>
+              <Button type="submit" variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
+                {appState === "loading" && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
+                Save Integration
+              </Button>
+            </div>
           </div>
         </form>
       </Form>
@@ -164,6 +195,9 @@ const ManageGoogleSheets = ({ setState, integration }: { setState: TSetState<boo
   );
 };
 const ManageSlack = ({ setState, integration }: { setState: TSetState<boolean>; integration: EIntegration }) => {
+  const supabase = createClient();
+  const { integrations, setIntegrations } = useFormStore();
+  const [appState, setAppState] = useState<TAppState>("idle");
   const [active, setActive] = useState(integration.active);
 
   const formSchema = z.object({
@@ -172,7 +206,6 @@ const ManageSlack = ({ setState, integration }: { setState: TSetState<boolean>; 
     botName: z.string().min(1, "Bot name is required"),
     iconEmoji: z.string().min(1, "Icon emoji is required"),
   });
-
   const formHandler = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -182,10 +215,35 @@ const ManageSlack = ({ setState, integration }: { setState: TSetState<boolean>; 
       iconEmoji: integration.slack_bot_icon_emoji ?? "",
     },
   });
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setAppState("loading");
+    const { botName, channel, iconEmoji, webhookUrl } = values;
+    const { data, error } = await supabase
+      .from("integrations")
+      .update({
+        slack_webhook_url: webhookUrl,
+        slack_bot_name: botName,
+        slack_channel: channel,
+        slack_bot_icon_emoji: iconEmoji,
+        active,
+      })
+      .eq("id", integration.id)
+      .select()
+      .single();
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    if (error) {
+      toast.error("Error on updating integration, please try again.");
+      setAppState("idle");
+      return;
+    }
+
+    const updatedIntegrations = integrations.map((old) => {
+      return old.id === data.id ? data : old;
+    });
+    setIntegrations(updatedIntegrations);
     setState(false);
+    toast.success("Integration updated.");
+    setAppState("idle");
   };
 
   return (
@@ -266,9 +324,15 @@ const ManageSlack = ({ setState, integration }: { setState: TSetState<boolean>; 
             <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
               Close
             </Button>
-            <Button type="submit" variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
-              Save Integration
-            </Button>
+            <div className="flex justify-center items-center gap-4">
+              <Button type="button" variant={"destructive_outline"} size={"sm"} className="w-full sm:w-fit">
+                Delete Integration
+              </Button>
+              <Button type="submit" variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
+                {appState === "loading" && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
+                Save Integration
+              </Button>
+            </div>
           </div>
         </form>
       </Form>

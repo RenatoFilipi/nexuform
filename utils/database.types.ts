@@ -277,6 +277,7 @@ export type Database = {
           gs_id: string | null
           gs_name: string | null
           id: string
+          name: string
           profile_id: string
           slack_bot_icon_emoji: string | null
           slack_bot_name: string | null
@@ -294,6 +295,7 @@ export type Database = {
           gs_id?: string | null
           gs_name?: string | null
           id?: string
+          name?: string
           profile_id: string
           slack_bot_icon_emoji?: string | null
           slack_bot_name?: string | null
@@ -311,6 +313,7 @@ export type Database = {
           gs_id?: string | null
           gs_name?: string | null
           id?: string
+          name?: string
           profile_id?: string
           slack_bot_icon_emoji?: string | null
           slack_bot_name?: string | null
