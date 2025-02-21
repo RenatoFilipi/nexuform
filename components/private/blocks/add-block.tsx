@@ -110,7 +110,7 @@ const AddBlock = ({ children, formId }: { children: React.ReactNode; formId: str
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col min-w-[650px] h-[600px] overflow-y-auto">
+        <DialogContent className="flex flex-col min-w-[650px] h-[600px]">
           <DialogHeader>
             <DialogTitle>Blocks</DialogTitle>
             <DialogDescription>
@@ -127,7 +127,7 @@ const AddBlock = ({ children, formId }: { children: React.ReactNode; formId: str
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3">
+      <DrawerContent className="p-3 max-h-[90%]">
         <DrawerHeader>
           <DrawerTitle>Blocks</DrawerTitle>
           <DrawerDescription>
@@ -205,13 +205,13 @@ const Body = ({ setState, formId }: { setState: TSetState<boolean>; formId: stri
                               <RadioGroupItem value={block.type} id={block.type} className="peer sr-only" />
                               <Label
                                 htmlFor={block.type}
-                                className="text-sm cursor-pointer flex items-center justify-start gap-2 rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 [&:has([data-state=checked])]:border-primary">
+                                className="text-sm cursor-pointer flex items-center justify-start gap-4 rounded border border-muted bg-popover p-3 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 [&:has([data-state=checked])]:border-primary">
                                 <div className="p-2 flex justify-center items-center bg-primary/10 rounded text-primary">
                                   {block.icon}
                                 </div>
                                 <div className="flex flex-col gap-1">
-                                  <span className="font-medium">{block.name}</span>
-                                  <p className="text-xs text-foreground/60 hidden">{block.description}</p>
+                                  <span className="">{block.name}</span>
+                                  <p className="text-xs text-foreground/70 font-normal">{block.description}</p>
                                 </div>
                               </Label>
                             </div>
