@@ -6,6 +6,7 @@ import useUserStore from "@/stores/user";
 import { getCurrentPlan, getDaysDifference } from "@/utils/functions";
 import { TPlan } from "@/utils/types";
 import { BuildingIcon, CalendarIcon } from "lucide-react";
+import CancelSubscription from "../shared/cancel-subscription";
 import ManageSubscription from "../shared/manage-subscription";
 
 const SettingsBilling = () => {
@@ -16,6 +17,7 @@ const SettingsBilling = () => {
   const pendingDaysStr = pendingDays === 1 ? `1 day remaining` : `${pendingDays} days remaining`;
   const formsUsage = (100 * userStore.formsCount) / currentPlan.forms;
   const submissionsUsage = (100 * userStore.submissionsCount) / currentPlan.submissions;
+  const showCancelButton = userStore.subscription.plan !== "free_trial";
 
   const planName = (plan: string) =>
     ({
@@ -34,16 +36,25 @@ const SettingsBilling = () => {
       </div>
       <div className="flex flex-col gap-6">
         <Card className="p-4 flex flex-col gap-4">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center flex-col gap-4 sm:flex-row">
             <div>
               <h1 className="text-base font-semibold">Plan Summary</h1>
               <p className="text-xs text-foreground/70">Your current plan for this billing cycle.</p>
             </div>
-            <ManageSubscription>
-              <Button variant="outline" size="xs" className="w-full sm:w-auto self-end">
-                Manage Subscription
-              </Button>
-            </ManageSubscription>
+            <div className="flex justify-center items-center gap-4 w-full sm:w-fit">
+              {showCancelButton && (
+                <CancelSubscription>
+                  <Button variant="destructive_outline" size="xs" className="w-full sm:w-auto self-end">
+                    Cancel Subscription
+                  </Button>
+                </CancelSubscription>
+              )}
+              <ManageSubscription>
+                <Button variant="secondary" size="xs" className="w-full sm:w-auto self-end">
+                  Manage Subscription
+                </Button>
+              </ManageSubscription>
+            </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="flex items-center gap-4 p-4 bg-[#F8F8F8] dark:bg-foreground/5 rounded border">

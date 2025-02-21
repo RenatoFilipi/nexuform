@@ -76,6 +76,23 @@ export const createFormAction = async (formData: FormData) => {
 export const refreshFormSlugPageAction = async (slug: string) => {
   revalidatePath("/dashboard/forms/" + slug);
 };
+export const DeleteAccountAction = async (formData: FormData) => {
+  const supabase = await createClient();
+  const userId = formData.get("userId") as string;
+
+  const { data, error } = await supabase.auth.admin.deleteUser(userId);
+
+  if (error) {
+    console.log(error);
+    return encodedRedirect("error", "/dashboard/settings", "An unexpected error occurred while deleting this account.");
+  }
+
+  if (data?.user) {
+    redirect("/login");
+  } else {
+    return encodedRedirect("error", "/dashboard/settings", "Failed to delete the account.");
+  }
+};
 
 // to fix this actions
 export const forgotPasswordAction = async (formData: FormData) => {

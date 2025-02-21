@@ -275,7 +275,7 @@ const DeleteSettings = () => {
           Danger Zone
         </Badge>
         <div className="flex flex-col justify-center items-center gap-6">
-          <span className="text-foreground/80 text-sm text-center">
+          <span className="text-destructive text-sm text-center font-semibold">
             Permanently delete this form and all its associated data from our servers.
             <br /> This action cannot be undone.
           </span>

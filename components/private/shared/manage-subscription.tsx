@@ -36,10 +36,8 @@ const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="flex flex-col w-full min-w-[650px]">
           <DialogHeader>
-            <DialogTitle>Manage Subscription</DialogTitle>
-            <DialogDescription>
-              Manage your subscription settings, update your plan, or cancel your subscription at any time.
-            </DialogDescription>
+            <DialogTitle>Select Your Plan</DialogTitle>
+            <DialogDescription>Choose the plan that best fits your needs.</DialogDescription>
           </DialogHeader>
           <Body setState={setOpen} />
         </DialogContent>
@@ -85,9 +83,12 @@ const CardTemplate = ({ plan }: { plan: IPlanLanding }) => {
   const currentPlan = plan.type === subscription.plan;
 
   return (
-    <div className="relative flex flex-col items-center p-4 bg-background border rounded-lg">
+    <div
+      className={`${
+        plan.highlighted ? "border-primary" : ""
+      } relative flex flex-col items-center p-4 bg-background border rounded-lg`}>
       <div className="flex flex-col w-full gap-3">
-        <div className="flex justify-start items-center gap-2">
+        <div className="flex justify-between items-center gap-2">
           <h3 className="text-primary font-semibold">{plan.name}</h3>
           {plan.highlighted && (
             <Badge variant="green" className="">
@@ -111,7 +112,7 @@ const CardTemplate = ({ plan }: { plan: IPlanLanding }) => {
           {plan.features.map((feature, i) => (
             <li key={i} className="flex items-center gap-2">
               <CheckIcon className="w-4 h-4 text-primary" />
-              <span className="text-xs">{feature}</span>
+              <span className="text-xs font-medium">{feature}</span>
             </li>
           ))}
         </ul>

@@ -19,24 +19,9 @@ import { useRouter } from "next/navigation";
 import { ReactNode, useState, useTransition } from "react";
 import { useMedia } from "react-use";
 import { toast } from "sonner";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "../../ui/drawer";
+import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
 
-const FormDelete = ({
-  children,
-  formId,
-  formName,
-}: {
-  children: ReactNode;
-  formId: string;
-  formName: string;
-}) => {
+const FormDelete = ({ children, formId, formName }: { children: ReactNode; formId: string; formName: string }) => {
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
@@ -44,12 +29,11 @@ const FormDelete = ({
     return (
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-        <AlertDialogContent>
+        <AlertDialogContent className="flex flex-col w-full min-w-[650px]">
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action will permanently delete the selected form, along with
-              all associated submissions and settings.
+              This action will permanently delete the selected form, along with all associated submissions and settings.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <Body formId={formId} formName={formName} setState={setOpen} />
@@ -65,8 +49,7 @@ const FormDelete = ({
         <DrawerHeader>
           <DrawerTitle>Are you absolutely sure?</DrawerTitle>
           <DrawerDescription>
-            This action will permanently delete the selected form, along with
-            all associated submissions and settings.
+            This action will permanently delete the selected form, along with all associated submissions and settings.
           </DrawerDescription>
         </DrawerHeader>
         <Body formId={formId} formName={formName} setState={setOpen} />
@@ -75,15 +58,7 @@ const FormDelete = ({
   );
 };
 
-const Body = ({
-  setState,
-  formId,
-  formName,
-}: {
-  setState: TSetState<boolean>;
-  formId: string;
-  formName: string;
-}) => {
+const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; formId: string; formName: string }) => {
   const [isPending, startTransition] = useTransition();
   const supabase = createClient();
   const router = useRouter();
@@ -104,19 +79,13 @@ const Body = ({
     <div className="flex flex-col gap-3 h-full overflow-y-auto pt-4 sm:pt-0">
       <div className="grid gap-3">
         <Label htmlFor="form_name" className="">
-          Type <span className="text-destructive">&quot;{formName}&quot;</span>{" "}
-          to delete this form.
+          Type <span className="text-destructive">&quot;{formName}&quot;</span> to delete this form.
         </Label>
-        <Input
-          type="text"
-          id="form_name"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
+        <Input type="text" id="form_name" value={value} onChange={(e) => setValue(e.target.value)} />
       </div>
       <div className="flex justify-start items-center gap-1">
         <AlertCircleIcon className="w-4 h-4 text-destructive" />
-        <span className="text-sm">This action cannot be undone.</span>
+        <span className="text-sm font-semibold">This action cannot be undone.</span>
       </div>
       <div className="flex justify-end flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
         <Button
