@@ -11,18 +11,9 @@ const Signup = () => {
     <div className="min-h-screen flex">
       <div className="flex-1 sm:flex hidden w-full relative bg-gradient-to-b from-[#181C1F] to-primary">
         <Link href={"/"}>
-          <Brand
-            type="logo_text"
-            className="h-8 fill-white absolute top-6 left-6"
-          />
+          <Brand type="logo_text" className="h-8 fill-white absolute top-6 left-6" />
         </Link>
-        <Particles
-          className="absolute inset-0 z-0"
-          quantity={100}
-          ease={80}
-          color="#ffffff"
-          refresh
-        />
+        <Particles className="absolute inset-0 z-0" quantity={100} ease={20} color="#ffffff" refresh />
       </div>
       <div className="flex-1 flex justify-center items-center w-full relative">
         <Link href={"/"} className="fixed top-6 flex sm:hidden">

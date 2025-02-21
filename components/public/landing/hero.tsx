@@ -1,37 +1,32 @@
 "use client";
 
-import ShineBorder from "@/components/magicui/shine-border";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
 
 const Hero = () => {
   return (
-    <div className="relative flex flex-col justify-center items-center gap-14 pt-36 w-full px-8 sm:px-0">
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-56 left-1/4 w-72 h-72 bg-purple-500 rounded-full blur-3xl opacity-30"></div>
-        <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-30"></div>
-        <div className="absolute top-1/3 left-1/3 w-80 h-80 bg-pink-500 rounded-full blur-3xl opacity-20"></div>
-        <div className="absolute bottom-1/3 right-1/3 w-64 h-64 bg-yellow-500 rounded-full blur-3xl opacity-25"></div>
-      </div>
-      <div className="flex justify-center items-center flex-col gap-10 w-full">
+    <div className="relative flex flex-col justify-center items-center gap-14 h-screen w-full px-8 sm:px-0">
+      <div className="flex justify-center items-center flex-col gap-8 w-full">
         <div className="flex flex-col justify-center items-center w-full text-center gap-6">
-          <h1 className="font-bold text-2xl sm:text-5xl max-w-[43.5rem]">
+          <h1 className="font-semibold text-2xl sm:text-7xl max-w-[70rem]">
             Elevate Feedback Collection with <span className="text-primary">Powerful Forms.</span>
           </h1>
-          <p className="max-w-xl text-base font-normal text-foreground/70">
+          <p className="max-w-xl text-base font-normal text-foreground/80">
             Gain actionable insights and transform feedback into meaningful data to drive smarter business decisions.
           </p>
         </div>
         <div className="flex justify-center items-center gap-4 flex-col sm:flex-row w-full">
-          <Button asChild variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
-            <Link href={"/signup"}>Get started for free</Link>
+          <Button asChild variant={"default"} className="w-full sm:w-fit">
+            <Link href={"/signup"}>
+              Get started for free <ArrowRightIcon className="w-4 h-4 ml-2" />
+            </Link>
+          </Button>
+          <Button variant={"secondary"} className="w-full sm:w-fit">
+            Watch Demo <ArrowRightIcon className="w-4 h-4 ml-2" />
           </Button>
         </div>
       </div>
-      <ShineBorder className="relative rounded-lg" color={["#7C3AED", "#7C3AED", "#7C3AED"]}>
-        <Image className="" alt="hero preview feature" src={`/hero.png`} width={1000} height={500} priority />
-      </ShineBorder>
     </div>
   );
 };

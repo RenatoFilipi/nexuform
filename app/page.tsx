@@ -31,7 +31,7 @@ const Home = () => {
         <div className="hidden sm:flex justify-center items-center gap-6">
           {urls.map((url) => {
             return (
-              <Link key={url.url} href={`#${url.url}`} className="text-sm text-foreground hover:text-foreground">
+              <Link key={url.url} href={`#${url.url}`} className="text-sm text-foreground/70 hover:text-foreground">
                 {url.name}
               </Link>
             );

@@ -7,29 +7,17 @@ const Features = () => {
     {
       title: "Effortless Form Creation",
       description: "Create custom forms quickly with our intuitive editor.",
-      icon: (
-        <div className="flex justify-center items-center p-3 bg-green-100 rounded dark:bg-green-950">
-          <LayoutDashboardIcon size={40} className="text-green-600" />
-        </div>
-      ),
+      icon: LayoutDashboardIcon,
     },
     {
       title: "Actionable Analytics",
       description: "Get insights to optimize your forms for better results.",
-      icon: (
-        <div className="flex justify-center items-center p-3 bg-blue-100 rounded dark:bg-blue-950">
-          <BarChart3Icon size={40} className="text-blue-600" />
-        </div>
-      ),
+      icon: BarChart3Icon,
     },
     {
       title: "Seamless Data Management",
       description: "Easily export submissions and data for offline analysis.",
-      icon: (
-        <div className="flex justify-center items-center p-3 bg-orange-100 rounded dark:bg-orange-950">
-          <FileTextIcon size={40} className="text-orange-600" />
-        </div>
-      ),
+      icon: FileTextIcon,
     },
   ];
 
@@ -49,8 +37,10 @@ const Features = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="flex flex-col items-center p-8 transition-shadow bg-background border rounded-lg shadow-sm hover:shadow-md hover:border-primary">
-              <div>{feature.icon}</div>
+              className="flex flex-col items-center p-8 transition-shadow bg-background border-2 rounded-lg hover:border-primary">
+              <div className="flex justify-center items-center p-3 bg-primary/20 rounded">
+                <feature.icon className="text-primary w-7 h-7" />
+              </div>
               <h3 className="mt-8 text-xl font-bold text-center">{feature.title}</h3>
               <p className="mt-3 text-sm text-foreground/70 text-center">{feature.description}</p>
             </div>
