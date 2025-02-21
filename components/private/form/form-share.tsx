@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { minWidth640 } from "@/utils/constants";
 import { EForm } from "@/utils/entities";
 import { TSetState } from "@/utils/types";
@@ -26,7 +27,7 @@ const FormShare = ({ children, form }: { children: React.ReactNode; form: EForm 
         <DialogContent className="flex flex-col min-w-[650px] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Share Your Form</DialogTitle>
-            <DialogDescription>Easily share your form with others using a link or a QR code.</DialogDescription>
+            <DialogDescription>Make your form accessible to others and start collecting responses.</DialogDescription>
           </DialogHeader>
           <Body setState={setOpen} form={form} />
         </DialogContent>
@@ -40,7 +41,7 @@ const FormShare = ({ children, form }: { children: React.ReactNode; form: EForm 
       <DrawerContent className="p-3 flex flex-col max-h-[90%]">
         <DrawerHeader>
           <DialogTitle>Share Your Form</DialogTitle>
-          <DialogDescription>Easily share your form with others using a link or a QR code.</DialogDescription>
+          <DialogDescription>Make your form accessible to others and start collecting responses..</DialogDescription>
         </DrawerHeader>
         <Body setState={setOpen} form={form} />
       </DrawerContent>
@@ -52,17 +53,21 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
   const [url] = useState(`${window.location.host}/s/${form.public_url}`);
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 h-full">
       {form.status !== "published" && (
-        <div className="flex items-start gap-4 p-4 border rounded-lg bg-info/10 border-info/20">
-          <AlertCircleIcon className="w-6 h-6 text-info" />
-          <div className="flex flex-col gap-2">
-            <h3 className="text-sm font-medium">Form is not public</h3>
-            <p className="text-sm">
-              This form is currently private. To make it public, go to the editor page and update its status.
-            </p>
+        <div className="flex items-center flex-col justify-center gap-4 p-4 border h-full rounded-lg bg-warning/5 border-warning/70">
+          <div className="flex justify-center items-center p-2 bg-warning/10 rounded">
+            <AlertCircleIcon className="w-8 h-8 text-warning" />
+          </div>
+          <div className="flex flex-col justify-center items-center gap-6">
+            <div className="flex justify-center items-center flex-col gap-1">
+              <h3 className="text-lg font-medium">Form is not public</h3>
+              <p className="text-sm text-foreground/70 text-center">
+                This form is currently private. To make it public, go to the editor page and update its status.
+              </p>
+            </div>
             <div className="flex justify-end items-center">
-              <Button variant="outline" size="sm" className="w-fit">
+              <Button variant="secondary" size="sm" className="w-fit">
                 <Link href={`/dashboard/editor/${form.id}`}>Go to Editor</Link>
                 <ArrowRightIcon className="w-4 h-4 ml-2" />
               </Button>
@@ -71,28 +76,45 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
         </div>
       )}
       {form.status === "published" && (
-        <div className="flex flex-col items-center gap-8">
-          <div className="flex w-full gap-4 items-center">
-            <Input value={url} className="w-full text-sm text-foreground/60" readOnly />
-            <Button
-              onClick={() => {
-                navigator.clipboard.writeText(url);
-                toast.success("Link Copied");
-              }}
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2">
-              <CopyIcon className="w-4 h-4" />
-              Copy
-            </Button>
+        <div className="flex flex-col items-center gap-8 h-full">
+          <div className="grid gap-3 w-full">
+            <div className="grid gap-1">
+              <Label>Share via link</Label>
+              <span className="text-xs text-foreground/60">
+                Copy the link below to easily share your form with others.
+              </span>
+            </div>
+            <div className="flex justify-center items-center w-full gap-4">
+              <Input value={url} className="w-full text-sm text-foreground/60" readOnly />
+              <Button
+                onClick={() => {
+                  navigator.clipboard.writeText(url);
+                  toast.success("Link Copied");
+                }}
+                variant="outline"
+                size="icon"
+                className="flex items-center gap-2">
+                <CopyIcon className="w-4 h-4" />
+              </Button>
+            </div>
           </div>
-          <div className="flex items-center gap-6">
-            <Card className="p-4 bg-white border">
-              <QRCodeSVG value={url} className="w-24 h-24" />
-            </Card>
-            <p className="text-sm text-center text-foreground/80 max-w-xs">
-              Scan the QR code or copy the link to share your form with others quickly and effortlessly.
-            </p>
+          <div className="grid gap-6 w-full">
+            <div className="grid gap-1">
+              <Label>Share via QR Code</Label>
+              <span className="text-xs text-foreground/60">
+                Scan the QR code below to quickly access and share your form.
+              </span>
+            </div>
+            <div className="flex justify-center items-center">
+              <div className="flex items-center gap-6 justify-center">
+                <Card className="p-4 bg-white border">
+                  <QRCodeSVG value={url} className="w-24 h-24" />
+                </Card>
+                <p className="text-sm text-center text-foreground/80 max-w-xs">
+                  Scan the QR code or copy the link to share your form with others quickly and effortlessly.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       )}

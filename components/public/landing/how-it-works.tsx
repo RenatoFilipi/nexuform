@@ -36,10 +36,10 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section id="how-it-works" className="py-12 sm:py-16 lg:py-16 w-full">
+    <section id="how-it-works" className="py-12 sm:py-16 lg:py-16 w-full px-8 sm:px-0">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="text-center flex flex-col justify-center items-center">
-          <h2 className="text-3xl font-bold leading-tight sm:text-4xl xl:text-5xl">How It Works</h2>
+          <h2 className="text-2xl font-bold leading-tight sm:text-4xl xl:text-5xl">How It Works</h2>
           <p className="mt-4 text-base text-foreground/70">
             Easily create, customize, and manage forms in a few simple steps.
           </p>

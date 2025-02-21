@@ -147,7 +147,7 @@ const GeneralSettings = () => {
               control={formHandler.control}
               name="name"
               render={({ field }) => (
-                <FormItem className="flex flex-col border rounded p-4">
+                <FormItem className="flex flex-col">
                   <div className="grid gap-1">
                     <FormLabel className="font-semibold">Name</FormLabel>
                     <p className="text-xs text-foreground/70">
@@ -164,7 +164,7 @@ const GeneralSettings = () => {
               control={formHandler.control}
               name="description"
               render={({ field }) => (
-                <FormItem className="flex flex-col border rounded p-4">
+                <FormItem className="flex flex-col">
                   <div className="grid gap-1">
                     <FormLabel className="font-semibold">Description</FormLabel>
                     <p className="text-xs text-foreground/70">
@@ -181,7 +181,7 @@ const GeneralSettings = () => {
               control={formHandler.control}
               name="submitText"
               render={({ field }) => (
-                <FormItem className="flex flex-col border rounded p-4">
+                <FormItem className="flex flex-col">
                   <div className="grid gap-1">
                     <FormLabel className="font-semibold">Submit Text</FormLabel>
                     <p className="text-xs text-foreground/70">
@@ -198,7 +198,7 @@ const GeneralSettings = () => {
               control={formHandler.control}
               name="newSubmissionNotification"
               render={({ field }) => (
-                <FormItem className="flex justify-between items-center border rounded p-4">
+                <FormItem className="flex justify-between items-center">
                   <div className="grid gap-1">
                     <FormLabel>New submission notification</FormLabel>
                     <span className="text-xs text-foreground/70">
@@ -215,7 +215,7 @@ const GeneralSettings = () => {
               control={formHandler.control}
               name="nebulaformBranding"
               render={({ field }) => (
-                <FormItem className="flex justify-between items-center border rounded p-4">
+                <FormItem className="flex justify-between items-center">
                   <div className="grid gap-1">
                     <div className="flex justify-start items-center gap-2">
                       <FormLabel>Nebulaform branding</FormLabel>

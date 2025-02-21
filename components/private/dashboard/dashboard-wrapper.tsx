@@ -52,14 +52,14 @@ const DashboardWrapper = ({
             <ManageSubscription>
               <Button size={"sm"} variant={"default"}>
                 <PlusIcon className="w-4 h-4 mr-2" />
-                Create New Form
+                Create Form
               </Button>
             </ManageSubscription>
           ) : (
             <DashboardNewForm userId={profile.id}>
               <Button size={"sm"} variant={"default"}>
                 <PlusIcon className="w-4 h-4 mr-2" />
-                Create New Form
+                Create Form
               </Button>
             </DashboardNewForm>
           )}

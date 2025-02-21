@@ -41,7 +41,7 @@ const DashboardNewForm = ({ children, userId }: { children: React.ReactNode; use
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="flex flex-col min-w-[650px] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Create New Form</DialogTitle>
+            <DialogTitle>Create Form</DialogTitle>
             <DialogDescription>
               Fill in the details below to create a new form. You can customize the settings as needed.
             </DialogDescription>
@@ -57,7 +57,7 @@ const DashboardNewForm = ({ children, userId }: { children: React.ReactNode; use
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3 flex flex-col max-h-[90%]">
         <DrawerHeader>
-          <DrawerTitle>Create New Form</DrawerTitle>
+          <DrawerTitle>Create Form</DrawerTitle>
           <DrawerDescription>
             Fill in the details below to create a new form. You can customize the settings as needed.
           </DrawerDescription>
@@ -143,9 +143,9 @@ const Body = ({ setState, userId }: { setState: TSetState<boolean>; userId: stri
               className="w-full sm:w-fit">
               Cancel
             </Button>
-            <Button disabled={isPending} type="submit" variant={"default"} size={"sm"} className="w-full sm:w-fit">
+            <Button disabled={isPending} type="submit" variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
               {isPending && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
-              Create New Form
+              Create Form
             </Button>
           </div>
         </form>

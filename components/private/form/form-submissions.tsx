@@ -21,7 +21,7 @@ const FormSubmissions = () => {
   const { submissions, blocks, setPagination, pagination, form, setSubmissions } = useFormStore();
   const isDesktop = useMedia(minWidth640);
   const disabledPrevious = appState === "loading" || pagination.from <= 0;
-  const disabledNext = appState === "loading";
+  const disabledNext = appState === "loading" || submissions.length <= paginationRange;
   const noSubmission = submissions.length <= 0;
   const records = submissions.length == 1 ? "1 record" : `${submissions.length} records`;
 

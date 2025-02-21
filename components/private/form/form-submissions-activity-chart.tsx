@@ -2,9 +2,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import useFormStore from "@/stores/form";
+import { minWidth640 } from "@/utils/constants";
 import { useQuery } from "@tanstack/react-query";
 import { format, parseISO, subDays } from "date-fns";
+import { TrendingDownIcon, TrendingUpIcon } from "lucide-react";
 import { useEffect, useMemo, useReducer, useState } from "react";
+import { useMedia } from "react-use";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 interface IChartData {
@@ -36,11 +39,11 @@ const hasDataReducer = (state: boolean, action: HasDataAction): boolean => {
 };
 
 const FormSubmissionsActivityChart: React.FC = () => {
+  const isDesktop = useMedia(minWidth640);
   const { overviewSubmissions } = useFormStore();
   const [days, setDays] = useState<number>(7);
   const [chartData, setChartData] = useState<IChartData[]>([]);
   const [hasData, dispatch] = useReducer(hasDataReducer, false);
-
   const barSize = days === 7 ? 14 : 10;
 
   const lastNDays = useMemo<IChartData[]>(
@@ -51,13 +54,11 @@ const FormSubmissionsActivityChart: React.FC = () => {
       })).reverse(),
     [days]
   );
-
   const { data: submissions, isPending } = useQuery({
     queryKey: ["formOverviewChartData", overviewSubmissions, days],
     queryFn: () => overviewSubmissions || [],
     refetchOnWindowFocus: false,
   });
-
   useEffect(() => {
     if (!submissions) return;
 
@@ -77,6 +78,11 @@ const FormSubmissionsActivityChart: React.FC = () => {
     dispatch({ type: "CHECK_DATA", payload: updatedChartData });
   }, [submissions, lastNDays]);
 
+  const todaySubmissions = chartData.find((data) => data.day === format(new Date(), "dd/MM"))?.submission || 0;
+  const yesterdaySubmissions =
+    chartData.find((data) => data.day === format(subDays(new Date(), 1), "dd/MM"))?.submission || 0;
+  const submissionDifference = todaySubmissions - yesterdaySubmissions;
+
   if (isPending) return null;
 
   return (
@@ -95,11 +101,8 @@ const FormSubmissionsActivityChart: React.FC = () => {
               </Button>
             ))}
           </div>
-          {!hasData && (
-            <Badge variant="warning" uppercase>
-              No data available
-            </Badge>
-          )}
+          {hasData && isDesktop && <BadgeDay submissionDifference={submissionDifference} />}
+          {!hasData && <Badge variant="warning">No data available</Badge>}
         </div>
       </div>
       <ChartContainer config={CHART_CONFIG}>
@@ -116,7 +119,41 @@ const FormSubmissionsActivityChart: React.FC = () => {
           <Bar barSize={barSize} dataKey="submission" fill="var(--color-submission)" radius={0} />
         </BarChart>
       </ChartContainer>
+      {hasData && !isDesktop && <BadgeDay submissionDifference={submissionDifference} />}
     </div>
+  );
+};
+
+const BadgeDay = ({ submissionDifference }: { submissionDifference: number }) => {
+  const getBadgeVariant = () => {
+    if (submissionDifference > 0) return "success";
+    if (submissionDifference < 0) return "destructive";
+    return "info";
+  };
+
+  const getBadgeText = () => {
+    if (submissionDifference > 0) {
+      return `+${submissionDifference} submission${submissionDifference > 1 ? "s" : ""} compared to yesterday`;
+    } else if (submissionDifference < 0) {
+      return `${submissionDifference} submission${submissionDifference < -1 ? "s" : ""} compared to yesterday`;
+    }
+    return "No change in submissions compared to yesterday";
+  };
+
+  const renderIcon = () => {
+    if (submissionDifference > 0) {
+      return <TrendingUpIcon className="text-success w-4 h-4" />;
+    } else if (submissionDifference < 0) {
+      return <TrendingDownIcon className="text-destructive w-4 h-4" />;
+    }
+    return null;
+  };
+
+  return (
+    <Badge variant={getBadgeVariant()} className="flex items-center gap-2 justify-center sm:justify-start">
+      {renderIcon()}
+      {getBadgeText()}
+    </Badge>
   );
 };
 

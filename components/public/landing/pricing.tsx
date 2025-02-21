@@ -7,10 +7,10 @@ import { IPlanLanding } from "@/utils/interfaces";
 
 const Pricing = () => {
   return (
-    <section id="pricing" className="py-12 sm:py-16 lg:py-20 bg-background">
+    <section id="pricing" className="py-12 sm:py-16 lg:py-20 bg-background px-8 sm:px-0">
       <div className="px-4 mx-auto sm:px-6 lg:px-8">
         <div className="text-center flex flex-col justify-center items-center">
-          <h2 className="text-3xl font-bold leading-tight sm:text-4xl xl:text-5xl">Simple & Flexible Pricing</h2>
+          <h2 className="text-2xl font-bold leading-tight sm:text-4xl xl:text-5xl">Simple & Flexible Pricing</h2>
           <p className="mt-4 text-base text-foreground/70">
             Pick the perfect plan to match your growth—upgrade anytime.
           </p>

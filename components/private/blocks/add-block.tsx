@@ -205,7 +205,7 @@ const Body = ({ setState, formId }: { setState: TSetState<boolean>; formId: stri
                               <RadioGroupItem value={block.type} id={block.type} className="peer sr-only" />
                               <Label
                                 htmlFor={block.type}
-                                className="text-sm cursor-pointer flex items-center justify-start gap-4 rounded border border-muted bg-popover p-3 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10 [&:has([data-state=checked])]:border-primary">
+                                className="text-sm cursor-pointer flex items-center justify-start gap-4 rounded border border-muted bg-popover p-3 hover:bg-primary/5 hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 [&:has([data-state=checked])]:border-primary">
                                 <div className="p-2 flex justify-center items-center bg-primary/10 rounded text-primary">
                                   {block.icon}
                                 </div>

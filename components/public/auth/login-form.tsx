@@ -2,14 +2,7 @@
 
 import { signInAction } from "@/app/actions";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
@@ -29,9 +22,7 @@ const LoginForm = () => {
 
   const formSchema = z.object({
     email: z.string().email(),
-    password: z
-      .string()
-      .min(8, { message: "Password needs to be at least 8 characters long" }),
+    password: z.string().min(8, { message: "Password needs to be at least 8 characters long" }),
   });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,16 +54,12 @@ const LoginForm = () => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full flex flex-col gap-6 justify-center items-center">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-6 justify-center items-center">
         <div className="flex justify-start w-full flex-col gap-2">
           <h1 className="text-xl font-medium">Login</h1>
           <span className="text-sm text-foreground/80">
             Don&apos;t have an account?{" "}
-            <Link
-              href={"/signup"}
-              className="hover:underline text-info dark:text-blue-500">
+            <Link href={"/signup"} className="hover:underline text-info dark:text-blue-500">
               Sign up
             </Link>
           </span>
@@ -105,32 +92,18 @@ const LoginForm = () => {
                   <FormLabel htmlFor="password">Password</FormLabel>
                   <FormControl>
                     <div className="relative">
-                      <Input
-                        id="password"
-                        type={isVisible ? "text" : "password"}
-                        {...field}
-                      />
+                      <Input id="password" type={isVisible ? "text" : "password"} {...field} />
                       <button
                         className="absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-lg text-muted-foreground/80 outline-offset-2 transition-colors hover:text-foreground focus:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring/70 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
                         type="button"
                         onClick={toggleVisibility}
-                        aria-label={
-                          isVisible ? "Hide password" : "Show password"
-                        }
+                        aria-label={isVisible ? "Hide password" : "Show password"}
                         aria-pressed={isVisible}
                         aria-controls="password">
                         {isVisible ? (
-                          <EyeOffIcon
-                            size={16}
-                            strokeWidth={2}
-                            aria-hidden="true"
-                          />
+                          <EyeOffIcon size={16} strokeWidth={2} aria-hidden="true" />
                         ) : (
-                          <EyeIcon
-                            size={16}
-                            strokeWidth={2}
-                            aria-hidden="true"
-                          />
+                          <EyeIcon size={16} strokeWidth={2} aria-hidden="true" />
                         )}
                       </button>
                     </div>
@@ -140,26 +113,16 @@ const LoginForm = () => {
               )}
             />
             <div className="flex justify-start items-center w-full">
-              <Link
-                href={"/password/reset"}
-                className="text-sm hover:underline text-foreground/80">
+              <Link href={"/password/reset"} className="text-sm hover:underline text-foreground/80">
                 Forgot my password
               </Link>
             </div>
           </div>
         </div>
         <div className="flex flex-col w-full gap-4">
-          <Button
-            disabled={isPending}
-            variant="secondary"
-            type="submit"
-            size="sm"
-            className="w-full">
-            {isPending ? (
-              <LoaderIcon className="animate-spin w-4 h-4" />
-            ) : (
-              "Login"
-            )}
+          <Button disabled={isPending} variant="secondary" type="submit" size="sm" className="w-full">
+            {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
+            Login
           </Button>
         </div>
       </form>

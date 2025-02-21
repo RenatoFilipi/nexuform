@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import useFormsStore from "@/stores/forms";
 import useUserStore from "@/stores/user";
-import { BookIcon, PlusIcon } from "lucide-react";
+import { LayersIcon, PlusIcon } from "lucide-react";
 import DashboardFormCard from "./dashboard-form-card";
 import DashboardNewForm from "./dashboard-new-form";
 
@@ -15,19 +15,19 @@ const DashboardForms = () => {
         <div className="border pb-20 flex flex-col justify-center items-center gap-6 border-none">
           <div className="flex flex-col justify-center items-center gap-4">
             <div className="flex justify-center items-center p-3 bg-foreground/5 rounded">
-              <BookIcon className="w-7 h-7 text-primary" />
+              <LayersIcon className="w-7 h-7 text-primary" />
             </div>
             <div className="flex justify-center items-center flex-col">
-              <span className="text-lg font-medium">No forms available</span>
-              <span className="text-sm text-center text-foreground/80">
-                Create your very first form and start collecting responses effortlessly.
+              <span className="text-lg font-medium">No forms yet</span>
+              <span className="text-sm text-center text-foreground/70">
+                Get started by creating your first form and collecting responses with ease.
               </span>
             </div>
           </div>
           <DashboardNewForm userId={profile.id}>
-            <Button variant={"default"} size={"sm"}>
+            <Button variant={"secondary"} size={"sm"}>
               <PlusIcon className="w-4 h-4 mr-2" />
-              Create New Form
+              Create Form
             </Button>
           </DashboardNewForm>
         </div>
