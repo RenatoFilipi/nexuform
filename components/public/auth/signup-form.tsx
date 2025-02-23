@@ -17,7 +17,6 @@ import { z } from "zod";
 const SignupForm = () => {
   const [success] = useQueryState("success");
   const [error] = useQueryState("error");
-  const [showPassword, setShowPassword] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const toggleVisibility = () => setIsVisible((prevState) => !prevState);
@@ -129,7 +128,7 @@ const SignupForm = () => {
                     privacy policy.
                   </Link>
                 </p>
-                <Button variant={"secondary"} type="submit" size={"sm"} className="w-full">
+                <Button variant={"default"} type="submit" size={"sm"} className="w-full">
                   {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
                   Sign up
                 </Button>

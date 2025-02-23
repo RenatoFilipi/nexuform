@@ -43,7 +43,7 @@ const EditorPreviewSuccess = () => {
             <CheckIcon className="w-10 h-10" />
           </div>
           <div className="flex flex-col justify-center items-center gap-1">
-            <h1 className="text-2xl font-bold">{form.success_title}</h1>
+            <h1 className="text-2xl font-bold text-center">{form.success_title}</h1>
             <p className="text-center text-base text-foreground/60">{form.success_description}</p>
           </div>
         </div>

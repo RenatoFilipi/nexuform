@@ -435,7 +435,7 @@ const NavEditor = () => {
           <Button size={"xs"} variant={"outline"} className="flex sm:hidden" onClick={() => setPreview(!preview)}>
             Preview
           </Button>
-          <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
+          <Button size={"xs"} variant={"default"} onClick={onSave} disabled={appState === "loading"}>
             {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
             Save Form
           </Button>

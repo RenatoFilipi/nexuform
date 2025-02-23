@@ -183,7 +183,7 @@ const ManageGoogleSheets = ({ setState, integration }: { setState: TSetState<boo
               <Button type="button" variant={"destructive_outline"} size={"sm"} className="w-full sm:w-fit">
                 Delete Integration
               </Button>
-              <Button type="submit" variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
+              <Button type="submit" variant={"default"} size={"sm"} className="w-full sm:w-fit">
                 {appState === "loading" && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
                 Save Integration
               </Button>
@@ -328,7 +328,7 @@ const ManageSlack = ({ setState, integration }: { setState: TSetState<boolean>; 
               <Button type="button" variant={"destructive_outline"} size={"sm"} className="w-full sm:w-fit">
                 Delete Integration
               </Button>
-              <Button type="submit" variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
+              <Button type="submit" variant={"default"} size={"sm"} className="w-full sm:w-fit">
                 {appState === "loading" && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
                 Save Integration
               </Button>

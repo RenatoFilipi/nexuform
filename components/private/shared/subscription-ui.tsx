@@ -16,7 +16,7 @@ const SubscriptionUI = () => {
           </div>
           <div className="flex justify-center items-center w-fit">
             <ManageSubscription>
-              <Button variant={"secondary"} size={"xs"}>
+              <Button variant={"default"} size={"xs"}>
                 Manage Subscription
               </Button>
             </ManageSubscription>

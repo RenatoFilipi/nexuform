@@ -103,7 +103,7 @@ const GeneralProfile = () => {
           />
         </div>
         <div className="flex justify-end items-center">
-          <Button disabled={appState === "loading"} variant={"secondary"} type="submit" size={"sm"}>
+          <Button disabled={appState === "loading"} variant={"default"} type="submit" size={"sm"}>
             {appState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
             Save Profile
           </Button>
@@ -192,7 +192,7 @@ const GeneralPassword = () => {
           />
         </div>
         <div className="flex justify-end items-center">
-          <Button type="submit" size="sm" variant="secondary">
+          <Button type="submit" size="sm" variant="default">
             {appState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
             Update Password
           </Button>

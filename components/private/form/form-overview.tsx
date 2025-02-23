@@ -21,25 +21,25 @@ const FormOverview = () => {
           <CardTemplate
             name="Total Views"
             value={totalViews}
-            icon={<EyeIcon className="w-5 h-5 text-blue-500" />}
+            icon={<EyeIcon className="w-5 h-5 text-primary" />}
             badge="All time"
           />
           <CardTemplate
             name="Total Submissions"
             value={totalSubmissions}
-            icon={<SendIcon className="w-5 h-5 text-green-500" />}
+            icon={<SendIcon className="w-5 h-5 text-primary" />}
             badge="All time"
           />
           <CardTemplate
             name="Completion Rate"
             value={averageCompletionRate}
-            icon={<CheckCircleIcon className="w-5 h-5 text-yellow-500" />}
+            icon={<CheckCircleIcon className="w-5 h-5 text-primary" />}
             badge="All time"
           />
           <CardTemplate
             name="Avg. Completion Time"
             value={averageCompletionTime}
-            icon={<TimerIcon className="w-5 h-5 text-red-500" />}
+            icon={<TimerIcon className="w-5 h-5 text-primary" />}
             badge="All time"
           />
         </div>

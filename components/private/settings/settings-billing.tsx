@@ -50,7 +50,7 @@ const SettingsBilling = () => {
                 </CancelSubscription>
               )}
               <ManageSubscription>
-                <Button variant="secondary" size="xs" className="w-full sm:w-auto self-end">
+                <Button variant="default" size="xs" className="w-full sm:w-auto self-end">
                   Manage Subscription
                 </Button>
               </ManageSubscription>

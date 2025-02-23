@@ -143,7 +143,7 @@ const Body = ({ setState, userId }: { setState: TSetState<boolean>; userId: stri
               className="w-full sm:w-fit">
               Cancel
             </Button>
-            <Button disabled={isPending} type="submit" variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
+            <Button disabled={isPending} type="submit" variant={"default"} size={"sm"} className="w-full sm:w-fit">
               {isPending && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
               Create Form
             </Button>

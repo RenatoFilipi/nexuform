@@ -80,7 +80,7 @@ const FormSubmissionStatus = ({ submission, setState }: { submission: ESubmissio
   return (
     <div className="inline-flex -space-x-px divide-x divide-primary-foreground/30 shadow-sm shadow-black/5 rtl:space-x-reverse">
       <Button
-        variant={"secondary"}
+        variant={"default"}
         disabled={appState === "loading"}
         size={"sm"}
         onClick={onSubmissionStatusSubmit}
@@ -91,7 +91,7 @@ const FormSubmissionStatus = ({ submission, setState }: { submission: ESubmissio
       <DropdownMenu>
         <DropdownMenuTrigger asChild disabled={appState === "loading"}>
           <Button
-            variant={"secondary"}
+            variant={"default"}
             className="rounded-none shadow-none first:rounded-s-md last:rounded-e-md focus-visible:z-10"
             size="sm"
             aria-label="Options">

@@ -188,7 +188,7 @@ const InstallGoogleSheets = ({ setState }: { setState: TSetState<boolean> }) => 
             <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
               Close
             </Button>
-            <Button variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
+            <Button variant={"default"} size={"sm"} className="w-full sm:w-fit">
               {appState === "loading" && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
               Install Integration
             </Button>
@@ -329,7 +329,7 @@ const InstallSlack = ({ setState }: { setState: TSetState<boolean> }) => {
             <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
               Close
             </Button>
-            <Button variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
+            <Button variant={"default"} size={"sm"} className="w-full sm:w-fit">
               {appState === "loading" && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
               Install Integration
             </Button>

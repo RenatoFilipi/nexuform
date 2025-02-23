@@ -23,7 +23,7 @@ const OPTIONS = [
 const CHART_CONFIG: ChartConfig = {
   submission: {
     label: "Submissions",
-    color: "#7C3AED",
+    color: "#3A6AED",
   },
 } as ChartConfig;
 

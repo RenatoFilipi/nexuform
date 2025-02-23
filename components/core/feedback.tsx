@@ -104,7 +104,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
               );
             })}
           </div>
-          <Button size={"xs"} variant={"secondary"} onClick={onSendFeedback} disabled={appState === "loading"}>
+          <Button size={"xs"} variant={"default"} onClick={onSendFeedback} disabled={appState === "loading"}>
             {appState === "loading" && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
             Send Feedback
           </Button>

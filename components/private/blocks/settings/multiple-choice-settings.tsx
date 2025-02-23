@@ -87,7 +87,7 @@ const MultipleChoiceSettings = ({ block, setState }: { block: EBlock; setState: 
           <div className="flex flex-col gap-2 overflow-y-auto">
             <div className="flex justify-center items-center gap-2">
               <Input value={input} onChange={(e) => setInput(e.target.value)} />
-              <Button size={"icon"} variant={"secondary"} onClick={onAddOption}>
+              <Button size={"icon"} variant={"outline"} onClick={onAddOption}>
                 <PlusIcon />
               </Button>
             </div>
