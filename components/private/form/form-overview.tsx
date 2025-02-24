@@ -3,7 +3,7 @@
 import { Card } from "@/components/ui/card";
 import useFormStore from "@/stores/form";
 import { formatDecimal, formatTime } from "@/utils/functions";
-import { CheckCircleIcon, EyeIcon, SendIcon, TimerIcon } from "lucide-react";
+import { EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
 import FormSubmissionsActivityChart from "./form-submissions-activity-chart";
 
 const FormOverview = () => {
@@ -33,7 +33,7 @@ const FormOverview = () => {
           <CardTemplate
             name="Completion Rate"
             value={averageCompletionRate}
-            icon={<CheckCircleIcon className="w-5 h-5 text-primary" />}
+            icon={<VoteIcon className="w-5 h-5 text-primary" />}
             badge="All time"
           />
           <CardTemplate

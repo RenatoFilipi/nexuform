@@ -160,7 +160,7 @@ const Body = ({
       </div>
       <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
         <Button variant={"outline"} size={"sm"} className="w-full sm:w-fit" onClick={() => setState(false)}>
-          Cancel
+          Close
         </Button>
         <div className="flex justify-center sm:justify-end items-center gap-3 w-full">
           {isAllowedToExport && (

@@ -1,5 +1,21 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -15,8 +31,6 @@ import { useForm } from "react-hook-form";
 import { useMedia } from "react-use";
 import { toast } from "sonner";
 import { z } from "zod";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog";
-import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
 
 const FormManageIntegration = ({ children, integration }: { children: React.ReactNode; integration: EIntegration }) => {
   const isDesktop = useMedia(minWidth640);
@@ -52,7 +66,6 @@ const FormManageIntegration = ({ children, integration }: { children: React.Reac
     </Drawer>
   );
 };
-
 const ManageGoogleSheets = ({ setState, integration }: { setState: TSetState<boolean>; integration: EIntegration }) => {
   const supabase = createClient();
   const { integrations, setIntegrations } = useFormStore();
@@ -175,15 +188,23 @@ const ManageGoogleSheets = ({ setState, integration }: { setState: TSetState<boo
               )}
             />
           </div>
-          <div className="flex justify-between gap-4 items-center flex-col sm:flex-row">
-            <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
+          <div className="flex justify-end flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
+            <Button
+              disabled={appState === "loading"}
+              type="button"
+              onClick={() => setState(false)}
+              variant={"outline"}
+              size={"sm"}
+              className="w-full sm:w-fit">
               Close
             </Button>
             <div className="flex justify-center items-center gap-4">
-              <Button type="button" variant={"destructive_outline"} size={"sm"} className="w-full sm:w-fit">
-                Delete Integration
-              </Button>
-              <Button type="submit" variant={"default"} size={"sm"} className="w-full sm:w-fit">
+              <Button
+                disabled={appState === "loading"}
+                type="submit"
+                variant={"default"}
+                size={"sm"}
+                className="w-full sm:w-fit">
                 {appState === "loading" && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
                 Save Integration
               </Button>
@@ -320,14 +341,16 @@ const ManageSlack = ({ setState, integration }: { setState: TSetState<boolean>; 
               )}
             />
           </div>
-          <div className="flex justify-between gap-4 items-center flex-col sm:flex-row">
-            <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
+          <div className="flex justify-end flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
+            <Button
+              type="button"
+              onClick={() => setState(false)}
+              variant={"outline"}
+              size={"sm"}
+              className="w-full sm:w-fit">
               Close
             </Button>
             <div className="flex justify-center items-center gap-4">
-              <Button type="button" variant={"destructive_outline"} size={"sm"} className="w-full sm:w-fit">
-                Delete Integration
-              </Button>
               <Button type="submit" variant={"default"} size={"sm"} className="w-full sm:w-fit">
                 {appState === "loading" && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
                 Save Integration

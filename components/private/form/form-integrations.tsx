@@ -8,9 +8,10 @@ import { EIntegration } from "@/utils/entities";
 import { getIntegrationName } from "@/utils/functions";
 import { IIntegration } from "@/utils/interfaces";
 import { TIntegrations, TSetState } from "@/utils/types";
-import { BirdIcon, CogIcon, PlusIcon, ZapIcon, ZapOffIcon } from "lucide-react";
+import { BirdIcon, CheckIcon, CogIcon, PlusIcon, ShieldAlertIcon, ZapIcon, ZapOffIcon } from "lucide-react";
 import { useState } from "react";
 import ManageSubscription from "../shared/manage-subscription";
+import FormDeleteIntegration from "./form-delete-integration";
 import FormInstallIntegration from "./form-install-integration";
 import FormManageIntegration from "./form-manage-integration";
 
@@ -20,7 +21,6 @@ const views = [
   { label: "Installed", icon: ZapIcon, view: "installed", enabled: true },
   { label: "Marketplace", icon: PlusIcon, view: "marketplace", enabled: true },
 ];
-
 const FormIntegrations = () => {
   const [view, setView] = useState<TView>("installed");
   const enabledViews = views.filter((x) => x.enabled);
@@ -80,7 +80,7 @@ const InstalledIntegrations = ({ setState }: { setState: TSetState<TView> }) => 
         </div>
       )}
       {!empty && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {integrations.map((integration) => {
             return <InstalledIntegrationCard key={integration.id} integration={integration} />;
           })}
@@ -108,9 +108,11 @@ const MarketplaceIntegrations = () => {
     </div>
   );
 };
-
 const IntegrationMarketPlaceCard = ({ integration }: { integration: IIntegration }) => {
   const user = useUserStore();
+  const form = useFormStore();
+  const installed = form.integrations.find((x) => x.type == integration.type);
+
   return (
     <div className="flex flex-col items-center justify-between p-4 gap-4 border rounded-lg shadow-sm bg-background">
       <div className="flex flex-col gap-4 w-full">
@@ -118,17 +120,22 @@ const IntegrationMarketPlaceCard = ({ integration }: { integration: IIntegration
           <div className="flex justify-start items-center gap-2">
             <span className="font-medium">{integration.name}</span>
           </div>
-          {integration.pro && (
-            <Badge variant={"pink"} uppercase>
-              Pro
+          <div className="flex justify-center items-center gap-3">
+            <Badge variant={"info"} uppercase>
+              {integration.category}
             </Badge>
-          )}
+            {integration.pro && (
+              <Badge variant={"pink"} uppercase>
+                Pro
+              </Badge>
+            )}
+          </div>
         </div>
         <div className="flex justify-start items-center w-full">
           <p className="text-sm text-start text-foreground/70">{integration.description}</p>
         </div>
       </div>
-      <div className="flex justify-start w-full">
+      <div className="flex justify-end w-full">
         {user.subscription.plan !== "pro" && integration.pro ? (
           <ManageSubscription>
             <Button size="sm" variant="outline">
@@ -137,12 +144,21 @@ const IntegrationMarketPlaceCard = ({ integration }: { integration: IIntegration
             </Button>
           </ManageSubscription>
         ) : (
-          <FormInstallIntegration integration={integration.type}>
-            <Button size="sm" variant="outline">
-              <PlusIcon className="w-4 h-4 mr-2" />
-              Install
-            </Button>
-          </FormInstallIntegration>
+          <div>
+            {installed ? (
+              <Badge variant={"success"}>
+                <CheckIcon className="w-4 h-4 mr-2" />
+                Installed
+              </Badge>
+            ) : (
+              <FormInstallIntegration integration={integration.type}>
+                <Button size="sm" variant="outline">
+                  <PlusIcon className="w-4 h-4 mr-2" />
+                  Install
+                </Button>
+              </FormInstallIntegration>
+            )}
+          </div>
         )}
       </div>
     </div>
@@ -150,18 +166,24 @@ const IntegrationMarketPlaceCard = ({ integration }: { integration: IIntegration
 };
 const InstalledIntegrationCard = ({ integration }: { integration: EIntegration }) => {
   return (
-    <div className="flex items-center justify-between border rounded-lg shadow-sm bg-background py-3 px-4">
-      <div>
+    <div className="flex items-center justify-between border rounded-lg shadow-sm bg-background py-3 px-4 flex-col gap-6">
+      <div className="flex justify-between items-center w-full">
         <span className="text-sm font-medium">{getIntegrationName(integration.type as TIntegrations)}</span>
-      </div>
-      <div className="flex justify-center items-center gap-4">
         <IntegrationStatusBadge active={integration.active} />
+      </div>
+      <div className="flex justify-end items-center gap-3 w-full">
         <FormManageIntegration integration={integration}>
-          <Button variant={"outline"} size={"xs"}>
+          <Button variant={"outline"} size={"sm"}>
             <CogIcon className="w-4 h-4 mr-2" />
             Manage
           </Button>
         </FormManageIntegration>
+        <FormDeleteIntegration integration={integration}>
+          <Button variant={"outline"} size={"sm"}>
+            <ShieldAlertIcon className="w-4 h-4 mr-2" />
+            Delete
+          </Button>
+        </FormDeleteIntegration>
       </div>
     </div>
   );

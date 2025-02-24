@@ -184,8 +184,13 @@ const InstallGoogleSheets = ({ setState }: { setState: TSetState<boolean> }) => 
               )}
             />
           </div>
-          <div className="flex justify-between gap-4 items-center flex-col sm:flex-row">
-            <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
+          <div className="flex justify-end flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
+            <Button
+              type="button"
+              onClick={() => setState(false)}
+              variant={"outline"}
+              size={"sm"}
+              className="w-full sm:w-fit">
               Close
             </Button>
             <Button variant={"default"} size={"sm"} className="w-full sm:w-fit">
@@ -325,8 +330,13 @@ const InstallSlack = ({ setState }: { setState: TSetState<boolean> }) => {
               )}
             />
           </div>
-          <div className="flex justify-between gap-4 items-center flex-col sm:flex-row">
-            <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
+          <div className="flex justify-end flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
+            <Button
+              type="button"
+              onClick={() => setState(false)}
+              variant={"outline"}
+              size={"sm"}
+              className="w-full sm:w-fit">
               Close
             </Button>
             <Button variant={"default"} size={"sm"} className="w-full sm:w-fit">

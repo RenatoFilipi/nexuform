@@ -256,9 +256,9 @@ const NavApp = () => {
               Feedback
             </Button>
           </Feedback>
-          {userStore.subscription.plan !== "pro" && (
+          {userStore.subscription.plan !== "pro" && userStore.subscription.plan !== "" && (
             <ManageSubscription>
-              <Button variant={"secondary"} size={"xs"}>
+              <Button variant={"outline"} size={"xs"}>
                 Upgrade
               </Button>
             </ManageSubscription>
