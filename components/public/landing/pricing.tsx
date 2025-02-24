@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { plans } from "@/utils/constants";
 import { IPlanLanding } from "@/utils/interfaces";
+import { CheckIcon } from "lucide-react";
 
 const Pricing = () => {
   return (
@@ -28,11 +29,11 @@ const Pricing = () => {
 const CardTemplate = ({ plan }: { plan: IPlanLanding }) => {
   return (
     <div
-      className={`relative flex flex-col items-center sm:w-[340px] w-full p-8 bg-background border rounded-lg shadow-lg transition-transform hover:scale-105 hover:shadow-xl ${
+      className={`relative flex flex-col items-center sm:w-[340px] w-full p-6 bg-background border rounded-lg shadow-lg transition-transform hover:scale-105 hover:shadow-xl ${
         plan.highlighted ? "border-primary border-2" : "border-foreground/20"
       }`}>
       <div className="flex flex-col w-full">
-        <div className="flex justify-start items-center gap-2">
+        <div className="flex justify-between items-center gap-2">
           <h3 className="text-2xl font-bold">{plan.name}</h3>
           {plan.highlighted && (
             <Badge variant="green" className="">
@@ -40,35 +41,24 @@ const CardTemplate = ({ plan }: { plan: IPlanLanding }) => {
             </Badge>
           )}
         </div>
-        <p className="mt-3 text-4xl font-extrabold text-primary">${plan.price}</p>
-        <p className="text-sm text-foreground/60">per month</p>
+        <div className="flex flex-col">
+          <p className={`${plan.highlighted ? "text-primary" : "text-primary"} mt-3 text-3xl font-extrabold`}>
+            ${plan.price}
+          </p>
+          <p className="text-sm text-foreground/80">per month</p>
+        </div>
       </div>
       <div className="w-full">
-        <Button className="w-full mt-6" size="lg" variant={plan.highlighted ? "default" : "secondary"}>
+        <Button className="w-full mt-6" size="lg" variant={plan.highlighted ? "secondary" : "default"}>
           {plan.type === "free_trial" ? "Start Free Trial" : "Get Started"}
         </Button>
       </div>
       <div className="flex flex-1 justify-start items-start w-full">
         <ul className="mt-4 space-y-3 text-left w-full">
           {plan.features.map((feature, i) => (
-            <li key={i} className="flex items-center text-sm">
-              <svg
-                className="flex-shrink-0 mr-2 text-primary"
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true">
-                <path
-                  d="M9 11l3 3 7-7"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              {feature}
+            <li key={i} className="flex items-center text-sm justify-start gap-2">
+              <CheckIcon className={`${plan.highlighted ? "text-primary" : "text-primary"} w-4 h-4`} />
+              <span className="text-foreground">{feature}</span>
             </li>
           ))}
         </ul>

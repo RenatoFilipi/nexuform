@@ -1,37 +1,37 @@
 "use client";
-import { BarChart3Icon, ClipboardCheckIcon, LayoutGridIcon, PaletteIcon, SendIcon, SettingsIcon } from "lucide-react";
+import { BarChartIcon, ClipboardCheckIcon, DownloadIcon, LayoutGridIcon, PaintbrushIcon, SendIcon } from "lucide-react";
 
 const HowItWorks = () => {
   const steps = [
     {
       title: "Design Your Form",
       description: "Effortlessly create a form tailored to your specific needs.",
-      icon: <PaletteIcon size={36} className="text-primary" />,
+      icon: PaintbrushIcon,
     },
     {
       title: "Customize and Publish",
       description: "Personalize your form and publish it with just a few clicks.",
-      icon: <ClipboardCheckIcon size={36} className="text-primary" />,
+      icon: ClipboardCheckIcon,
     },
     {
       title: "Share Instantly",
       description: "Distribute your form easily via link or QR code.",
-      icon: <SettingsIcon size={36} className="text-primary" />,
+      icon: SendIcon,
     },
     {
       title: "Manage Submissions",
       description: "Track and organize submissions from a central dashboard.",
-      icon: <LayoutGridIcon size={36} className="text-primary" />,
+      icon: LayoutGridIcon,
     },
     {
       title: "Unlock Insights",
       description: "Analyze form performance using our powerful analytics tools.",
-      icon: <BarChart3Icon size={36} className="text-primary" />,
+      icon: BarChartIcon,
     },
     {
       title: "Export with Ease",
       description: "Download submissions and analytics for offline review.",
-      icon: <SendIcon size={36} className="text-primary" />,
+      icon: DownloadIcon,
     },
   ];
 
@@ -48,10 +48,12 @@ const HowItWorks = () => {
           {steps.map((step, index) => (
             <div
               key={index}
-              className="flex flex-col items-center p-6 transition-shadow border rounded-lg shadow-sm hover:shadow-md hover:border-primary">
-              {step.icon}
-              <h3 className="mt-6 text-xl font-bold">{step.title}</h3>
-              <p className="mt-3 text-sm text-center text-foreground/70">{step.description}</p>
+              className="flex flex-col items-start p-6 transition-shadow bg-background border rounded-lg hover:border-primary hover:bg-primary/5">
+              <div className="flex justify-center items-center gap-3">
+                <step.icon className="w-6 h-6 text-primary" />
+                <h3 className="text-lg font-semibold">{step.title}</h3>
+              </div>
+              <p className="mt-3 text-sm text-foreground/70 text-start">{step.description}</p>
             </div>
           ))}
         </div>

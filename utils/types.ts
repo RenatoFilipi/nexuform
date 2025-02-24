@@ -29,7 +29,7 @@ export type TIntegrations =
   | "sendgrid"
   | "twilio";
 export type TEditorView = "blocks" | "success";
-export type IIntegrationCategory =
+export type TIntegrationCategory =
   | "automation"
   | "communication"
   | "storage"

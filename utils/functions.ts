@@ -3,7 +3,7 @@ import { customAlphabet } from "nanoid";
 import { redirect } from "next/navigation";
 import { day, planSettings } from "./constants";
 import { ESubscription } from "./entities";
-import { TBlock, TIntegrations, TPlan } from "./types";
+import { TBlock, TIntegrationCategory, TIntegrations, TPlan } from "./types";
 
 export const uuid = () => {
   const uuid = self.crypto.randomUUID();
@@ -127,4 +127,18 @@ export const getIntegrationName = (type: TIntegrations) => {
   };
 
   return integrationNames[type] || "Unknown Integration";
+};
+
+export const getIntegrationCategory = (type: TIntegrationCategory) => {
+  const integrationCategory: Record<TIntegrationCategory, string> = {
+    automation: "Automation",
+    communication: "Communication",
+    crm: "CRM",
+    database: "Database",
+    email_marketing: "Email Marketing",
+    notifications: "Notifications",
+    storage: "Storage",
+  };
+
+  return integrationCategory[type] || "Unknown Category";
 };

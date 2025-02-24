@@ -1,12 +1,12 @@
 import type { JSX } from "react";
 import {
-  IIntegrationCategory,
   TBlock,
   TBrand,
   TColor,
   TFilterSort,
   TFormStatus,
   TFormStatusExtended,
+  TIntegrationCategory,
   TIntegrations,
   TPlan,
 } from "./types";
@@ -54,7 +54,7 @@ export interface IIntegration {
   type: TIntegrations;
   enabled: boolean;
   pro: boolean;
-  category: IIntegrationCategory;
+  category: TIntegrationCategory;
 }
 export interface IPagination {
   from: number;

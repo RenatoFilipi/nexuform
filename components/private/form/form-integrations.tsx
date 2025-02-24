@@ -5,7 +5,7 @@ import useFormStore from "@/stores/form";
 import useUserStore from "@/stores/user";
 import { integrations } from "@/utils/constants";
 import { EIntegration } from "@/utils/entities";
-import { getIntegrationName } from "@/utils/functions";
+import { getIntegrationCategory, getIntegrationName } from "@/utils/functions";
 import { IIntegration } from "@/utils/interfaces";
 import { TIntegrations, TSetState } from "@/utils/types";
 import { BirdIcon, CheckIcon, CogIcon, PlusIcon, ShieldAlertIcon, ZapIcon, ZapOffIcon } from "lucide-react";
@@ -119,16 +119,16 @@ const IntegrationMarketPlaceCard = ({ integration }: { integration: IIntegration
         <div className="flex items-center gap-3 w-full justify-between">
           <div className="flex justify-start items-center gap-2">
             <span className="font-medium">{integration.name}</span>
-          </div>
-          <div className="flex justify-center items-center gap-3">
-            <Badge variant={"info"} uppercase>
-              {integration.category}
-            </Badge>
             {integration.pro && (
               <Badge variant={"pink"} uppercase>
                 Pro
               </Badge>
             )}
+          </div>
+          <div className="flex justify-center items-center gap-3">
+            <Badge variant={"info"} uppercase>
+              {getIntegrationCategory(integration.category)}
+            </Badge>
           </div>
         </div>
         <div className="flex justify-start items-center w-full">
