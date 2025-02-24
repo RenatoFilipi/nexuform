@@ -18,7 +18,7 @@ const Login = () => {
           <Brand type="logo" className="h-8 fill-foreground" />
         </Link>
         <div className="w-full flex justify-center items-center">
-          <div className="flex flex-col items-center justify-center w-full sm:max-w-96 gap-6 sm:p-0 px-12">
+          <div className="flex flex-col items-center justify-center w-full sm:max-w-[450px] gap-6 sm:p-0 px-12">
             <Suspense>
               <LoginForm />
             </Suspense>

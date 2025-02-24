@@ -27,7 +27,7 @@ const Signup = () => {
             </Link>
           </Button>
         </div>
-        <div className="w-full flex justify-center items-center sm:max-w-96 sm:p-0 px-12">
+        <div className="flex flex-col items-center justify-center w-full sm:max-w-[450px] gap-6 sm:p-0 px-12">
           <Suspense>
             <SignupForm />
           </Suspense>
