@@ -26,7 +26,7 @@ const Home = () => {
     <div className="min-h-screen flex flex-col relative">
       <div className="flex fixed top-0 w-full justify-between sm:justify-around sm:px-5 px-3 h-16 bg-background/80 z-10 backdrop-blur-lg items-center">
         <Link href={"/"} className="flex justify-center items-center">
-          <Brand type="logo_text" className="h-7 fill-foreground" />
+          <Brand type="primary_logo_text" className="h-7 fill-foreground" />
         </Link>
         <div className="hidden sm:flex justify-center items-center gap-6">
           {urls.map((url) => {

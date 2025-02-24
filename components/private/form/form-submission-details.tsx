@@ -124,7 +124,7 @@ const Body = ({
               <span className="text-base font-medium">{submission.identifier}</span>
               <SubmissionStatusBadge status={submission.status as TSubmissionStatus} />
             </div>
-            <div className="flex justify-start items-center gap-3 p-3 bg-[#F8F8F8] dark:bg-foreground/10">
+            <div className="flex justify-start items-center gap-3 p-3 bg-[#F8F8F8] dark:bg-foreground/5 border rounded">
               <Badge variant={"info"}>{formatTime(submission.completion_time ?? 0, 2)}</Badge>
               <Badge variant={"info"}>{new Date(submission.created_at).toLocaleString()}</Badge>
               <Badge variant={"info"}>{formatDateRelativeToNow(submission.created_at)}</Badge>

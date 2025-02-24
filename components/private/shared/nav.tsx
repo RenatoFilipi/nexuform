@@ -11,7 +11,6 @@ import { createClient } from "@/utils/supabase/client";
 import { TAppState, TPlan } from "@/utils/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  ChartPieIcon,
   InboxIcon,
   LoaderIcon,
   LogOutIcon,
@@ -35,6 +34,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
@@ -48,12 +48,14 @@ const links = [
     icon: InboxIcon,
     enabled: true,
   },
+];
+const linksMobile = [
   {
-    id: 2,
-    name: "Analytics",
-    path: "/dashboard/analytics",
-    icon: ChartPieIcon,
-    enabled: false,
+    id: 1,
+    name: "Dashboard",
+    path: "/dashboard/forms",
+    icon: InboxIcon,
+    enabled: true,
   },
   {
     id: 3,
@@ -63,6 +65,7 @@ const links = [
     enabled: true,
   },
 ];
+
 const Nav = () => {
   const pathname = usePathname();
 
@@ -81,7 +84,7 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent className="w-screen flex flex-col gap-4">
         <div className="flex flex-col">
-          {links.map((link) => {
+          {linksMobile.map((link) => {
             if (link.enabled)
               return (
                 <Link
@@ -159,6 +162,16 @@ const AvatarAppMenu = () => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-6 min-w-52 text-foreground/80">
+        <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="py-0">
+          <Button variant={"ghost"} size={"sm"} asChild className="flex justify-between w-full items-center p-0">
+            <Link href={"/dashboard/settings"}>
+              Settings
+              <Settings2Icon className="w-4 h-4" />
+            </Link>
+          </Button>
+        </DropdownMenuItem>
         <DropdownMenuItem className="flex flex-row justify-between items-center">
           Theme
           <RadioGroup value={theme} onValueChange={setTheme} className="flex gap-1">
@@ -199,6 +212,16 @@ const AvatarAppMenu = () => {
             <LogOutIcon className="w-4 h-4" />
           </Button>
         </DropdownMenuItem>
+        {user.subscription.plan === "free_trial" && (
+          <div className="flex flex-col">
+            <DropdownMenuSeparator />
+            <ManageSubscription>
+              <Button size={"sm"} className="m-1">
+                Upgrade
+              </Button>
+            </ManageSubscription>
+          </div>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );
@@ -256,13 +279,6 @@ const NavApp = () => {
               Feedback
             </Button>
           </Feedback>
-          {userStore.subscription.plan !== "pro" && userStore.subscription.plan !== "" && (
-            <ManageSubscription>
-              <Button variant={"outline"} size={"xs"}>
-                Upgrade
-              </Button>
-            </ManageSubscription>
-          )}
         </div>
         <AvatarAppMenu />
       </div>

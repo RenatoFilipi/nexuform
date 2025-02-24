@@ -24,7 +24,7 @@ const FormShare = ({ children, form }: { children: React.ReactNode; form: EForm 
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col min-w-[650px] overflow-y-auto">
+        <DialogContent className="flex flex-col min-w-[650px] h-[600px] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Share Your Form</DialogTitle>
             <DialogDescription>Make your form accessible to others and start collecting responses.</DialogDescription>
@@ -55,7 +55,7 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
   return (
     <div className="flex flex-col gap-6 h-full">
       {form.status !== "published" && (
-        <div className="flex items-center flex-col justify-center gap-4 p-4 border h-full rounded-lg bg-warning/5 border-warning/70">
+        <div className="flex items-center flex-col justify-center gap-4 p-4 border h-full rounded-lg bg-warning/5 border-warning/50">
           <div className="flex justify-center items-center p-2 bg-warning/10 rounded">
             <AlertCircleIcon className="w-8 h-8 text-warning" />
           </div>
@@ -67,7 +67,7 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
               </p>
             </div>
             <div className="flex justify-end items-center">
-              <Button variant="secondary" size="sm" className="w-fit">
+              <Button variant="default" size="sm" className="w-fit">
                 <Link href={`/dashboard/editor/${form.id}`}>Go to Editor</Link>
                 <ArrowRightIcon className="w-4 h-4 ml-2" />
               </Button>
@@ -76,7 +76,7 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
         </div>
       )}
       {form.status === "published" && (
-        <div className="flex flex-col items-center gap-8 h-full">
+        <div className="flex flex-col items-center justify-start gap-8 h-full">
           <div className="grid gap-3 w-full">
             <div className="grid gap-1">
               <Label>Share via link</Label>
@@ -98,22 +98,17 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
               </Button>
             </div>
           </div>
-          <div className="grid gap-6 w-full">
-            <div className="grid gap-1">
+          <div className="grid gap-3 w-full h-full">
+            <div className="grid gap-1 h-fit">
               <Label>Share via QR Code</Label>
               <span className="text-xs text-foreground/60">
-                Scan the QR code below to quickly access and share your form.
+                Scan the QR code or copy the link to share your form with others quickly and effortlessly.
               </span>
             </div>
-            <div className="flex justify-center items-center">
-              <div className="flex items-center gap-6 justify-center">
-                <Card className="p-4 bg-white border">
-                  <QRCodeSVG value={url} className="w-24 h-24" />
-                </Card>
-                <p className="text-sm text-center text-foreground/80 max-w-xs">
-                  Scan the QR code or copy the link to share your form with others quickly and effortlessly.
-                </p>
-              </div>
+            <div className="flex justify-center items-center flex-1 h-full">
+              <Card className="p-2 bg-primary/10">
+                <QRCodeSVG value={url} className="w-36 h-36" />
+              </Card>
             </div>
           </div>
         </div>

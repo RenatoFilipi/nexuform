@@ -10,13 +10,14 @@ import { formatDateRelativeToNow } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import {
+  BarChartIcon,
+  BeakerIcon,
   ExternalLinkIcon,
-  ForwardIcon,
-  Layers2Icon,
   LoaderIcon,
+  PlugZapIcon,
   SendIcon,
   Settings2Icon,
-  UnplugIcon,
+  Share2Icon,
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -31,7 +32,7 @@ type TView = "overview" | "submissions" | "integrations" | "settings";
 const views = [
   {
     label: "Overview",
-    icon: Layers2Icon,
+    icon: BarChartIcon,
     view: "overview",
     enabled: true,
   },
@@ -43,7 +44,7 @@ const views = [
   },
   {
     label: "Integrations",
-    icon: UnplugIcon,
+    icon: PlugZapIcon,
     view: "integrations",
     enabled: true,
   },
@@ -126,7 +127,7 @@ const FormWrapper = ({
           <div className="flex items-center sm:gap-4 gap-2 w-full sm:w-fit">
             <FormShare form={formStore.form}>
               <Button variant="outline" size="sm" className="w-full">
-                <ForwardIcon className="w-4 h-4 mr-2" />
+                <Share2Icon className="w-4 h-4 mr-2" />
                 Share
               </Button>
             </FormShare>
@@ -140,7 +141,7 @@ const FormWrapper = ({
             )}
             <Button variant="default" size="sm" asChild>
               <Link href={`/dashboard/editor/${formStore.form.id}`} className="w-full sm:w-fit">
-                <Settings2Icon className="w-4 h-4 mr-2" />
+                <BeakerIcon className="w-4 h-4 mr-2" />
                 Editor
               </Link>
             </Button>

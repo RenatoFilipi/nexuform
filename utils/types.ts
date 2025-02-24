@@ -56,7 +56,7 @@ export type TInvoiceStatus = "paid" | "pending" | "failed";
 // misc
 export type TSetState<T> = React.Dispatch<React.SetStateAction<T>>;
 export type TAppState = "loading" | "idle" | "success" | "error";
-export type TBrand = "logo" | "logo_text" | "top_logo_bottom_text";
+export type TBrand = "logo" | "logo_text" | "top_logo_bottom_text" | "primary_logo_text";
 export type TColor =
   | "slate"
   | "gray"

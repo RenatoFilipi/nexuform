@@ -8,7 +8,7 @@ import { EIntegration } from "@/utils/entities";
 import { getIntegrationCategory, getIntegrationName } from "@/utils/functions";
 import { IIntegration } from "@/utils/interfaces";
 import { TIntegrations, TSetState } from "@/utils/types";
-import { BirdIcon, CheckIcon, CogIcon, PlusIcon, ShieldAlertIcon, ZapIcon, ZapOffIcon } from "lucide-react";
+import { BirdIcon, CheckIcon, CogIcon, PlusIcon, ShieldAlertIcon, ZapIcon } from "lucide-react";
 import { useState } from "react";
 import ManageSubscription from "../shared/manage-subscription";
 import FormDeleteIntegration from "./form-delete-integration";
@@ -65,7 +65,7 @@ const InstalledIntegrations = ({ setState }: { setState: TSetState<TView> }) => 
         <div className="flex justify-center items-center w-full mt-10">
           <div className="flex flex-col justify-center items-center gap-4">
             <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/10">
-              <ZapOffIcon className="w-6 h-6 text-primary" />
+              <ZapIcon className="w-6 h-6 text-primary" />
             </div>
             <div className="text-center flex flex-col justify-center items-center gap-1">
               <h2 className="text-lg font-medium">No integrations installed</h2>

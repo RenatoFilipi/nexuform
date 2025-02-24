@@ -332,13 +332,13 @@ const DeleteSettings = () => {
           Permanently remove this form and all its data. This action cannot be undone.
         </p>
       </div>
-      <div className="flex justify-center items-center w-full border bg-destructive/5 rounded border-destructive py-20">
+      <div className="flex justify-center items-center w-full border bg-destructive/5 rounded border-destructive/50 py-20">
         <div className="flex flex-col justify-center items-center gap-4">
           <Badge variant={"destructive"} uppercase className="w-fit">
             Danger Zone
           </Badge>
           <div className="flex flex-col justify-center items-center gap-6">
-            <span className="text-destructive text-sm text-center font-semibold">
+            <span className="text-sm text-center font-medium">
               Permanently delete this form and all its associated data from our servers.
               <br /> This action cannot be undone.
             </span>
