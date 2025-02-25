@@ -98,7 +98,7 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
               </Button>
             </div>
           </div>
-          <div className="grid gap-3 w-full h-full hidden">
+          <div className="gap-3 w-full h-full hidden">
             <div className="grid gap-1 h-fit">
               <Label>Share via QR Code</Label>
               <span className="text-xs text-foreground/60">

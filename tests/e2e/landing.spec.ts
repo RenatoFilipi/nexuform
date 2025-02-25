@@ -1,22 +1,16 @@
 import { expect, test } from "@playwright/test";
 
-test("should navigate to the landing page and render Hero component correctly", async ({
-  page,
-}) => {
+test("should navigate to the landing page and render Hero component correctly", async ({ page }) => {
   await page.goto("/");
 
   // Verifica o título da página
   await expect(page).toHaveTitle(/Nebulaform/);
 
   // Verifica se o título principal do Hero está correto
-  await expect(page.locator("h1")).toHaveText(
-    /Elevate Feedback Collection with Powerful Forms./
-  );
+  await expect(page.locator("h1")).toHaveText(/Elevate Feedback Collection with Powerful Forms./);
 
   // Verifica se o parágrafo de descrição do Hero está correto
-  await expect(page.locator("p")).toHaveText(
-    /Gain actionable insights and transform feedback into meaningful data/
-  );
+  await expect(page.locator("p")).toHaveText(/Gain actionable insights and transform feedback into meaningful data/);
 
   // Verifica se o botão "Get Started for Free" está visível e aponta para "/signup"
   const signUpButton = page.locator("text=Get Started for Free");
@@ -36,14 +30,10 @@ test("should render the Features section correctly", async ({ page }) => {
   await expect(featuresSection).toBeVisible();
 
   // Verifica se o título principal da seção está correto
-  await expect(featuresSection.locator("h2")).toHaveText(
-    /Powerful Tools for Form Building/
-  );
+  await expect(featuresSection.locator("h2")).toHaveText(/Powerful Tools for Form Building/);
 
   // Verifica se a descrição da seção está correta
-  await expect(featuresSection.locator("p")).toContainText(
-    "Enhance your form-building experience"
-  );
+  await expect(featuresSection.locator("p")).toContainText("Enhance your form-building experience");
 
   // Verifica se existem exatamente 3 features sendo renderizadas
   const featureItems = featuresSection.locator("div[role='article']");
@@ -68,9 +58,7 @@ test("should render the Features section correctly", async ({ page }) => {
   for (const feature of features) {
     const featureElement = featuresSection.locator(`text=${feature.title}`);
     await expect(featureElement).toBeVisible();
-    await expect(
-      featuresSection.locator(`text=${feature.description}`)
-    ).toBeVisible();
+    await expect(featuresSection.locator(`text=${feature.description}`)).toBeVisible();
   }
 });
 test("should render the How It Works section correctly", async ({ page }) => {
@@ -84,9 +72,7 @@ test("should render the How It Works section correctly", async ({ page }) => {
   await expect(section.locator("h2")).toHaveText(/How It Works/);
 
   // Verifica a descrição da seção
-  await expect(section.locator("p")).toContainText(
-    "Easily create, customize, and manage forms"
-  );
+  await expect(section.locator("p")).toContainText("Easily create, customize, and manage forms");
 
   // Verifica se existem exatamente 6 passos sendo exibidos
   const stepItems = section.locator("div[role='article']");
@@ -96,17 +82,15 @@ test("should render the How It Works section correctly", async ({ page }) => {
   const steps = [
     {
       title: "Design Your Form",
-      description:
-        "Effortlessly create a form tailored to your specific needs.",
+      description: "Effortlessly create a form tailored to your specific needs.",
     },
     {
       title: "Customize and Publish",
-      description:
-        "Personalize your form and publish it with just a few clicks.",
+      description: "Personalize your form and publish it with just a few clicks.",
     },
     {
       title: "Share Instantly",
-      description: "Distribute your form easily via link or QR code.",
+      description: "Easily distribute your form to your audience in no time.",
     },
     {
       title: "Manage Submissions",
@@ -114,8 +98,7 @@ test("should render the How It Works section correctly", async ({ page }) => {
     },
     {
       title: "Unlock Insights",
-      description:
-        "Analyze form performance using our powerful analytics tools.",
+      description: "Analyze form performance using our powerful analytics tools.",
     },
     {
       title: "Export with Ease",
@@ -191,9 +174,7 @@ test("should render CTA section and verify button action", async ({ page }) => {
   await page.goto("/");
 
   // Seleciona a seção CTA pelo texto
-  const ctaSection = page.locator(
-    "section:has-text('Ready to improve your business?')"
-  );
+  const ctaSection = page.locator("section:has-text('Ready to improve your business?')");
   await expect(ctaSection).toBeVisible();
 
   // Verifica se o logo está renderizado
@@ -201,12 +182,8 @@ test("should render CTA section and verify button action", async ({ page }) => {
   await expect(logo).toBeVisible();
 
   // Verifica o título e subtítulo
-  await expect(ctaSection.locator("h2")).toHaveText(
-    "Ready to improve your business?"
-  );
-  await expect(ctaSection.locator("p")).toHaveText(
-    /Start your free trial today/
-  );
+  await expect(ctaSection.locator("h2")).toHaveText("Ready to improve your business?");
+  await expect(ctaSection.locator("p")).toHaveText(/Start your free trial today/);
 
   // Verifica se o botão existe e tem o texto correto
   const button = ctaSection.locator("button:has-text('Get Started for Free')");

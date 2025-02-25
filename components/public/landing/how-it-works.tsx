@@ -15,7 +15,7 @@ const HowItWorks = () => {
     },
     {
       title: "Share Instantly",
-      description: "Distribute your form easily via link or QR code.",
+      description: "Easily distribute your form to your audience in no time.",
       icon: SendIcon,
     },
     {

@@ -1,5 +1,6 @@
 "use client";
 
+import { freeTrialPeriod } from "@/utils/envs";
 import { useState } from "react";
 
 const Faq = () => {
@@ -10,7 +11,7 @@ const Faq = () => {
   const faqData = [
     {
       question: "What is the Free Trial?",
-      answer: "The Free Trial allows you to use the platform with limited features for 14 days without any cost.",
+      answer: `The Free Trial allows you to use the platform with limited features for ${freeTrialPeriod} days without any cost.`,
     },
     {
       question: "What happens after the Free Trial ends?",

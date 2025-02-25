@@ -37,7 +37,7 @@
       "step2_title": "Customize and Publish",
       "step2_description": "Personalize your form and publish it with just a few clicks.",
       "step3_title": "Share Instantly",
-      "step3_description": "Distribute your form easily via link or QR code.",
+      "step3_description": "Easily distribute your form to your audience in no time.",
       "step4_title": "Manage Responses",
       "step4_description": "Track and organize submissions from a central dashboard.",
       "step5_title": "Unlock Insights",
@@ -60,22 +60,11 @@
       "plans": {
         "free_trial": {
           "name": "Free Trial",
-          "features": [
-            "Everything from Basic Plan for 14 days",
-            "1 form",
-            "100 submissions",
-            "Email support"
-          ]
+          "features": ["Everything from Basic Plan for 14 days", "1 form", "100 submissions", "Email support"]
         },
         "basic": {
           "name": "Basic",
-          "features": [
-            "10 forms",
-            "500 submissions",
-            "Email support",
-            "Integrations (soon)",
-            "Basic analytics"
-          ]
+          "features": ["10 forms", "500 submissions", "Email support", "Integrations (soon)", "Basic analytics"]
         },
         "pro": {
           "name": "Pro",

@@ -34,9 +34,6 @@ const Hero = () => {
               Get started for free <ArrowRightIcon className="w-4 h-4 ml-2" />
             </Link>
           </Button>
-          <Button variant={"secondary"} className="w-full sm:w-fit">
-            Watch Demo <ArrowRightIcon className="w-4 h-4 ml-2" />
-          </Button>
         </div>
       </div>
     </div>
