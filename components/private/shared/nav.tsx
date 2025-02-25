@@ -166,7 +166,7 @@ const AvatarAppMenu = () => {
           <AvatarFallback className="text-sm bg-foreground/5 text-foreground uppercase">{avatarName}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mr-6 min-w-52 text-foreground/80">
+      <DropdownMenuContent className="mr-4 min-w-52 text-foreground/80">
         <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuLabel className="flex justify-between items-center">
