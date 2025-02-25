@@ -318,6 +318,9 @@ const ReorderDesign = () => {
     <div className="flex flex-col gap-6 overflow-y-auto pt-4 sm:pt-0 flex-1 h-full">
       {empty && (
         <div className="flex justify-center items-center py-14 gap-4 flex-col h-full">
+          <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/10">
+            <ArrowDownUpIcon className="w-6 h-6 text-primary" />
+          </div>
           <div className="flex justify-center items-center flex-col gap-1">
             <span className="font-medium text-base">No blocks to reorder</span>
             <p className="text-xs text-foreground/70 text-center">

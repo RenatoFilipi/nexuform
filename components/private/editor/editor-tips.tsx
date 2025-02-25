@@ -2,28 +2,28 @@ import { BrushIcon, LayersIcon, ShareIcon, SlidersIcon } from "lucide-react";
 
 const tips = [
   {
-    title: "1. Build Your Form",
+    title: "Build Your Form",
     desc: "Start by adding blocks like text fields, multiple choice, and more.",
     icon: LayersIcon,
     bgColor: "bg-blue-500/10",
     textColor: "text-blue-500",
   },
   {
-    title: "2. Customize the Look",
+    title: "Customize the Look",
     desc: "Adjust colors, order, and layout to match your brand.",
     icon: BrushIcon,
     bgColor: "bg-green-500/10",
     textColor: "text-green-500",
   },
   {
-    title: "3. Set Up Preferences",
-    desc: "Define settings like responses, notifications, and permissions.",
+    title: "Set Up Preferences",
+    desc: "Define settings like title, description, and permissions.",
     icon: SlidersIcon,
     bgColor: "bg-pink-500/10",
     textColor: "text-pink-500",
   },
   {
-    title: "4. Publish & Share",
+    title: "Publish & Share",
     desc: "Make your form available and share it with your audience.",
     icon: ShareIcon,
     bgColor: "bg-purple-500/10",

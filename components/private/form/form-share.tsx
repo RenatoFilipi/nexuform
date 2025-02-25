@@ -55,7 +55,7 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
   return (
     <div className="flex flex-col gap-6 h-full">
       {form.status !== "published" && (
-        <div className="flex items-center flex-col justify-center gap-4 p-4 border h-full rounded-lg bg-warning/5 border-warning/50">
+        <div className="flex items-center flex-col justify-center gap-4 px-4 py-8 border h-full rounded-lg bg-warning/5 border-warning/50">
           <div className="flex justify-center items-center p-2 bg-warning/10 rounded">
             <AlertCircleIcon className="w-8 h-8 text-warning" />
           </div>

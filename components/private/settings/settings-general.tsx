@@ -69,7 +69,7 @@ const GeneralProfile = () => {
 
   return (
     <Form {...profileHandler}>
-      <form onSubmit={profileHandler.handleSubmit(onProfileSubmit)} className="flex flex-col border rounded p-4 gap-4">
+      <form onSubmit={profileHandler.handleSubmit(onProfileSubmit)} className="flex flex-col gap-4">
         <div className="flex flex-col">
           <h2 className="text-base font-semibold">Profile Information</h2>
           <p className="text-xs text-foreground/70">Manage and update your personal details.</p>
@@ -152,9 +152,7 @@ const GeneralPassword = () => {
 
   return (
     <Form {...passwordHandler}>
-      <form
-        onSubmit={passwordHandler.handleSubmit(onPasswordSubmit)}
-        className="flex flex-col border rounded p-4 gap-4">
+      <form onSubmit={passwordHandler.handleSubmit(onPasswordSubmit)} className="flex flex-col gap-4">
         <div className="flex flex-col">
           <h2 className="text-base font-semibold">Password Update</h2>
           <p className="text-xs text-foreground/70">
@@ -203,7 +201,7 @@ const GeneralPassword = () => {
 };
 const GeneralDeleteAccount = () => {
   return (
-    <div className="flex flex-col border p-4 gap-2 rounded">
+    <div className="flex flex-col gap-2 rounded">
       <div className="flex justify-start items-center gap-4">
         <h2 className="text-base font-semibold">Delete account</h2>
         <Badge variant={"red"}>Danger Zone</Badge>

@@ -37,7 +37,7 @@ const SettingsBilling = () => {
       <div className="flex flex-col gap-6">
         <Card className="p-4 flex flex-col gap-4">
           <div className="flex justify-between items-center flex-col gap-4 sm:flex-row">
-            <div>
+            <div className="w-full">
               <h1 className="text-base font-semibold">Plan Summary</h1>
               <p className="text-xs text-foreground/70">Your current plan for this billing cycle.</p>
             </div>
@@ -78,7 +78,7 @@ const SettingsBilling = () => {
             <h1 className="text-base font-semibold">Usage</h1>
             <p className="text-xs text-foreground/80">Your current usage across this billing cycle.</p>
           </div>
-          <div className="flex w-full gap-4">
+          <div className="flex w-full gap-4 flex-col sm:flex-row">
             <Card className="flex flex-col justify-between p-4 gap-4 w-full">
               <div className="flex justify-between items-center gap-2">
                 <h2 className="text-foreground font-medium text-sm">Forms</h2>
