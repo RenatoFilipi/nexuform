@@ -164,6 +164,8 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
+          email_notifications: boolean
+          email_notifications_to: string[] | null
           id: string
           name: string
           nebulaform_branding: boolean
@@ -179,6 +181,8 @@ export type Database = {
         Insert: {
           created_at?: string
           description?: string | null
+          email_notifications?: boolean
+          email_notifications_to?: string[] | null
           id?: string
           name?: string
           nebulaform_branding?: boolean
@@ -194,6 +198,8 @@ export type Database = {
         Update: {
           created_at?: string
           description?: string | null
+          email_notifications?: boolean
+          email_notifications_to?: string[] | null
           id?: string
           name?: string
           nebulaform_branding?: boolean

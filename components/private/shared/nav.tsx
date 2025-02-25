@@ -73,6 +73,7 @@ const Nav = () => {
   return <NavApp />;
 };
 const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
+  const user = useUserStore();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const isActive = (path: string) => path === pathname;
@@ -82,7 +83,11 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
-      <DropdownMenuContent className="w-screen flex flex-col gap-4">
+      <DropdownMenuContent className="w-screen flex flex-col gap-2 py-4">
+        <div className="flex justify-between items-center">
+          <span>Plan</span>
+          {user.subscription.plan === "" ? null : <PlanBadge plan={user.subscription.plan as TPlan} />}
+        </div>
         <div className="flex flex-col">
           {linksMobile.map((link) => {
             if (link.enabled)
@@ -93,7 +98,7 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
                   href={link.path}
                   className={`${
                     isActive(link.path) && "bg-primary text-white hover:bg-primary"
-                  } p-2 border hover:bg-foreground/5 text-sm flex justify-start items-center`}>
+                  } p-2 hover:bg-foreground/5 text-sm flex justify-start items-center`}>
                   <link.icon className="w-4 h-4 mr-2" />
                   {link.name}
                 </Link>
@@ -164,6 +169,10 @@ const AvatarAppMenu = () => {
       <DropdownMenuContent className="mr-6 min-w-52 text-foreground/80">
         <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuLabel className="flex justify-between items-center">
+          <span>Plan</span>
+          {user.subscription.plan === "" ? null : <PlanBadge plan={user.subscription.plan as TPlan} />}
+        </DropdownMenuLabel>
         <DropdownMenuItem className="py-0">
           <Button variant={"ghost"} size={"sm"} asChild className="flex justify-between w-full items-center p-0">
             <Link href={"/dashboard/settings"}>
@@ -228,7 +237,6 @@ const AvatarAppMenu = () => {
 };
 const NavApp = () => {
   const editorStore = useEditorStore();
-  const userStore = useUserStore();
   const pathname = usePathname();
   const isActive = (path: string) => path === pathname;
 
@@ -249,7 +257,6 @@ const NavApp = () => {
               <Brand type="logo" className="h-5 fill-foreground" />
             </Link>
           </Button>
-          {userStore.subscription.plan === "" ? null : <PlanBadge plan={userStore.subscription.plan as TPlan} />}
         </div>
         <div className="hidden sm:flex justify-center items-center gap-0 h-full">
           {links.map((link) => {
