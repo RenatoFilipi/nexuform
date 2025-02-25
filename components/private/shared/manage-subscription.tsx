@@ -48,7 +48,7 @@ const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent className="flex flex-col p-3 max-h-[90%]">
         <DrawerHeader>
           <DrawerTitle>Manage Subscription</DrawerTitle>
           <DrawerDescription>
@@ -64,8 +64,8 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const filteredPlans = plans.filter((x) => x.type !== "free_trial");
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="grid sm:grid-cols-2 gap-4">
+    <div className="flex flex-col gap-6 overflow-y-auto">
+      <div className="grid sm:grid-cols-2 gap-4 overflow-y-auto">
         {filteredPlans.map((plan) => (
           <CardTemplate key={plan.type} plan={plan} />
         ))}
