@@ -31,7 +31,7 @@ const icons: { [key in TBlock]: JSX.Element } = {
 const Block = ({ block }: { block: EBlock }) => {
   return (
     <BlockSettings block={block}>
-      <div className="flex flex-col justify-between gap-2 border rounded p-3 cursor-pointer hover:bg-foreground/5 group h-24">
+      <div className="flex flex-col justify-between gap-2 border rounded p-3 cursor-pointer hover:bg-foreground/5 group h-20">
         <div className="flex justify-between items-center gap-2 h-7">
           <div className="flex justify-center items-center gap-2">{icons[block.type as TBlock]}</div>
           <div className="flex justify-center items-center gap-2">

@@ -197,7 +197,7 @@ const GeneralSettings = () => {
         </div>
         <Textarea value={form.success_description} onChange={(e) => onSetSuccessDescription(e.target.value)} />
       </div>
-      <div className="flex justify-between items-center w-full">
+      <div className="justify-between items-center w-full hidden">
         <div className="flex justify-center items-center gap-2">
           <div className="grid gap-1">
             <div className="flex justify-start items-center gap-2">

@@ -3,6 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { plans } from "@/utils/constants";
+import { freeTrialPeriod } from "@/utils/envs";
 import { IPlanLanding } from "@/utils/interfaces";
 import { CheckIcon } from "lucide-react";
 
@@ -45,7 +46,11 @@ const CardTemplate = ({ plan }: { plan: IPlanLanding }) => {
           <p className={`${plan.highlighted ? "text-primary" : "text-primary"} mt-3 text-3xl font-extrabold`}>
             ${plan.price}
           </p>
-          <p className="text-sm text-foreground/80">per month</p>
+          {plan.type === "free_trial" ? (
+            <p className="text-sm text-foreground/80">{freeTrialPeriod} days trial</p>
+          ) : (
+            <p className="text-sm text-foreground/80">per month</p>
+          )}
         </div>
       </div>
       <div className="w-full">

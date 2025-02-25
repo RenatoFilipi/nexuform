@@ -24,7 +24,7 @@ const FormShare = ({ children, form }: { children: React.ReactNode; form: EForm 
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col min-w-[650px] h-[600px] overflow-y-auto">
+        <DialogContent className="flex flex-col min-w-[650px] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Share Your Form</DialogTitle>
             <DialogDescription>Make your form accessible to others and start collecting responses.</DialogDescription>
@@ -98,7 +98,7 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
               </Button>
             </div>
           </div>
-          <div className="grid gap-3 w-full h-full">
+          <div className="grid gap-3 w-full h-full hidden">
             <div className="grid gap-1 h-fit">
               <Label>Share via QR Code</Label>
               <span className="text-xs text-foreground/60">

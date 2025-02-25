@@ -198,7 +198,7 @@ const GeneralSettings = () => {
               control={formHandler.control}
               name="newSubmissionNotification"
               render={({ field }) => (
-                <FormItem className="flex justify-between items-center">
+                <FormItem className="justify-between items-center hidden">
                   <div className="grid gap-1">
                     <FormLabel>New submission notification</FormLabel>
                     <span className="text-xs text-foreground/70">

@@ -80,7 +80,7 @@ const SettingsBilling = () => {
           </div>
           <div className="flex w-full gap-4">
             <Card className="flex flex-col justify-between p-4 gap-4 w-full">
-              <div className="flex justify-start items-center gap-2">
+              <div className="flex justify-between items-center gap-2">
                 <h2 className="text-foreground font-medium text-sm">Forms</h2>
                 {userStore.formsCount >= currentPlan.forms && <Badge variant={"warning"}>Limit reached</Badge>}
               </div>
@@ -96,7 +96,7 @@ const SettingsBilling = () => {
               </div>
             </Card>
             <Card className="flex flex-col justify-between p-4 gap-4 w-full">
-              <div className="flex justify-start items-center gap-2">
+              <div className="flex justify-between items-center gap-2">
                 <h2 className="text-foreground font-medium text-sm">Submissions</h2>
                 {userStore.submissionsCount >= currentPlan.submissions && (
                   <Badge variant={"warning"}>Limit reached</Badge>
