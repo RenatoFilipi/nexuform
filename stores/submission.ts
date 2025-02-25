@@ -30,6 +30,8 @@ const useSubmissionStore = create<submission>((set) => ({
     nebulaform_branding: true,
     success_title: "",
     success_description: "",
+    email_notifications: false,
+    email_notifications_to: [],
   },
   theme: {
     id: "",
@@ -74,6 +76,8 @@ const useSubmissionStore = create<submission>((set) => ({
         nebulaform_branding: true,
         success_title: "",
         success_description: "",
+        email_notifications: false,
+        email_notifications_to: [],
       },
       theme: {
         id: "",

@@ -36,6 +36,8 @@ const useEditorStore = create<editor>((set) => ({
     nebulaform_branding: true,
     success_title: "",
     success_description: "",
+    email_notifications: false,
+    email_notifications_to: [],
   },
   theme: {
     id: "",
@@ -87,6 +89,8 @@ const useEditorStore = create<editor>((set) => ({
         nebulaform_branding: true,
         success_title: "",
         success_description: "",
+        email_notifications: false,
+        email_notifications_to: [],
       },
       theme: {
         id: "",
