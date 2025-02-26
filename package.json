@@ -38,6 +38,7 @@
     "eslint": "^9.17.0",
     "file-saver": "^2.0.5",
     "framer-motion": "^11.11.17",
+    "googleapis": "^144.0.0",
     "lucide-react": "^0.469.0",
     "motion": "^11.11.17",
     "nanoid": "^5.0.9",

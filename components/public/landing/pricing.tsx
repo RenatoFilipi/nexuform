@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { plans } from "@/utils/constants";
 import { freeTrialPeriod } from "@/utils/envs";
 import { IPlanLanding } from "@/utils/interfaces";
-import { CheckIcon } from "lucide-react";
+import { CheckIcon, RocketIcon } from "lucide-react";
 
 const Pricing = () => {
   return (
@@ -62,7 +62,11 @@ const CardTemplate = ({ plan }: { plan: IPlanLanding }) => {
         <ul className="mt-4 space-y-3 text-left w-full">
           {plan.features.map((feature, i) => (
             <li key={i} className="flex items-center text-sm justify-start gap-2">
-              <CheckIcon className={`${plan.highlighted ? "text-primary" : "text-primary"} w-4 h-4`} />
+              {feature.includes("Soon") ? (
+                <RocketIcon className="text-primary w-4 h-4" />
+              ) : (
+                <CheckIcon className={`${plan.highlighted ? "text-primary" : "text-primary"} w-4 h-4`} />
+              )}
               <span className="text-foreground">{feature}</span>
             </li>
           ))}

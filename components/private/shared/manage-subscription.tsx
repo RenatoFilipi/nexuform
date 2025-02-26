@@ -22,7 +22,7 @@ import useUserStore from "@/stores/user";
 import { minWidth640, plans } from "@/utils/constants";
 import { IPlanLanding } from "@/utils/interfaces";
 import { TSetState } from "@/utils/types";
-import { CheckIcon } from "lucide-react";
+import { CheckIcon, RocketIcon } from "lucide-react";
 import { useState } from "react";
 import { useMedia } from "react-use";
 
@@ -111,7 +111,11 @@ const CardTemplate = ({ plan }: { plan: IPlanLanding }) => {
         <ul className="mt-4 space-y-3 text-left w-full">
           {plan.features.map((feature, i) => (
             <li key={i} className="flex items-center gap-2">
-              <CheckIcon className="w-4 h-4 text-primary" />
+              {feature.includes("Soon") ? (
+                <RocketIcon className="text-primary w-4 h-4" />
+              ) : (
+                <CheckIcon className={`${plan.highlighted ? "text-primary" : "text-primary"} w-4 h-4`} />
+              )}
               <span className="text-xs font-medium">{feature}</span>
             </li>
           ))}

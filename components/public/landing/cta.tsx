@@ -8,11 +8,13 @@ import Link from "next/link";
 
 const Cta = () => {
   return (
-    <section className="w-full py-40 flex justify-center sm:justify-start items-center px-4 sm:px-20 bg-gradient-to-r relative from-primary to-foreground">
+    <section className="w-full py-40 flex justify-center sm:justify-start items-center px-4 sm:px-20 sm:bg-gradient-to-r relative from-primary to-foreground bg-primary">
       <GridPattern width={15} height={15} x={-1} y={-1} strokeDasharray={"4 2"} className={cn("")} maxOpacity={0.2} />
       <div className="w-full flex flex-col gap-0 z-10 justify-center">
-        <h2 className="text-white text-4xl text-center sm:text-start">Ready to improve your business?</h2>
-        <p className="text-lg text-white/80 text-center sm:text-start">Start your free trial today.</p>
+        <h2 className="text-4xl text-center sm:text-start text-background font-medium">
+          Ready to improve your business?
+        </h2>
+        <p className="text-lg text-center sm:text-start text-background/80">Start your free trial today.</p>
         <div className="mt-8">
           <Button asChild variant={"secondary"} className="w-full sm:w-fit">
             <Link href={"/signup"}>

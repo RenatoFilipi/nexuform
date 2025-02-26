@@ -8,7 +8,7 @@ import { EIntegration } from "@/utils/entities";
 import { getIntegrationCategory, getIntegrationName } from "@/utils/functions";
 import { IIntegration } from "@/utils/interfaces";
 import { TIntegrations, TSetState } from "@/utils/types";
-import { BirdIcon, CheckIcon, CogIcon, PlusIcon, ShieldAlertIcon, ZapIcon } from "lucide-react";
+import { BirdIcon, CheckIcon, CogIcon, PlusIcon, RocketIcon, ShieldAlertIcon, ZapIcon } from "lucide-react";
 import { useState } from "react";
 import ManageSubscription from "../shared/manage-subscription";
 import FormDeleteIntegration from "./form-delete-integration";
@@ -24,6 +24,20 @@ const views = [
 const FormIntegrations = () => {
   const [view, setView] = useState<TView>("installed");
   const enabledViews = views.filter((x) => x.enabled);
+
+  return (
+    <div className="flex justify-center items-center w-full mt-20">
+      <div className="flex flex-col justify-center items-center gap-4">
+        <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/10">
+          <RocketIcon className="w-6 h-6 text-primary" />
+        </div>
+        <div className="text-center flex flex-col justify-center items-center gap-1">
+          <h2 className="text-lg font-medium">Coming Soon</h2>
+          <p className="text-sm text-foreground/70">We are working hard to bring you this feature. Stay tuned!</p>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="flex w-full h-full flex-col sm:flex-row gap-4 sm:gap-0">

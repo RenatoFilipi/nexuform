@@ -2,7 +2,7 @@ import { differenceInDays, formatDistance } from "date-fns";
 import { customAlphabet } from "nanoid";
 import { redirect } from "next/navigation";
 import { day, planSettings } from "./constants";
-import { ESubscription } from "./entities";
+import { EIntegration, ESubscription } from "./entities";
 import { basicSubmissions, freeTrialSubmissions, proSubmissions } from "./envs";
 import { TBlock, TIntegrationCategory, TIntegrations, TPlan } from "./types";
 
@@ -154,3 +154,4 @@ export const isSubmissionsLimitReached = (subscription: ESubscription, submissio
       return true;
   }
 };
+export const googleSheetIntegration = (config: EIntegration) => {};
