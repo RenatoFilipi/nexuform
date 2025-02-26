@@ -3,6 +3,7 @@ import { customAlphabet } from "nanoid";
 import { redirect } from "next/navigation";
 import { day, planSettings } from "./constants";
 import { ESubscription } from "./entities";
+import { basicSubmissions, freeTrialSubmissions, proSubmissions } from "./envs";
 import { TBlock, TIntegrationCategory, TIntegrations, TPlan } from "./types";
 
 export const uuid = () => {
@@ -128,7 +129,6 @@ export const getIntegrationName = (type: TIntegrations) => {
 
   return integrationNames[type] || "Unknown Integration";
 };
-
 export const getIntegrationCategory = (type: TIntegrationCategory) => {
   const integrationCategory: Record<TIntegrationCategory, string> = {
     automation: "Automation",
@@ -141,4 +141,16 @@ export const getIntegrationCategory = (type: TIntegrationCategory) => {
   };
 
   return integrationCategory[type] || "Unknown Category";
+};
+export const isSubmissionsLimitReached = (subscription: ESubscription, submissions: number) => {
+  switch (subscription.plan) {
+    case "free_trial":
+      return submissions > freeTrialSubmissions;
+    case "basic":
+      return submissions > basicSubmissions;
+    case "pro":
+      return submissions > proSubmissions;
+    default:
+      return true;
+  }
 };

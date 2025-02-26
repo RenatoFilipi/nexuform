@@ -1,6 +1,6 @@
 import FormNotAvailableUI from "@/components/private/shared/form-not-available-ui";
 import SubmissionWrapper from "@/components/s/submission-wrapper";
-import { isSubscriptionActive } from "@/utils/functions";
+import { isSubmissionsLimitReached, isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 
 const S = async ({ params }: { params: Promise<{ slug: string }> }) => {
@@ -22,6 +22,28 @@ const S = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   const active = isSubscriptionActive(subscription);
   if (!active) return <FormNotAvailableUI />;
+
+  const { data: formsData, error: formsDataError } = await supabase
+    .from("forms")
+    .select("id")
+    .eq("owner_id", subscription.profile_id);
+
+  if (formsDataError) return <FormNotAvailableUI />;
+
+  const idsArray = formsData.map((x) => x.id);
+  const startDate = subscription.start_date;
+  const dueDate = subscription.due_date;
+
+  const { count: submissionsCount, error: submissionsError } = await supabase
+    .from("submissions")
+    .select("*", { count: "exact", head: true })
+    .in("form_id", idsArray)
+    .gte("created_at", startDate)
+    .lte("created_at", dueDate);
+
+  if (submissionsError || !submissionsCount) return <FormNotAvailableUI />;
+  const limitReached = isSubmissionsLimitReached(subscription, submissionsCount);
+  if (limitReached) return <FormNotAvailableUI />;
 
   const { data: formAnalytics, error: formAnalyticsError } = await supabase
     .from("forms_analytics")

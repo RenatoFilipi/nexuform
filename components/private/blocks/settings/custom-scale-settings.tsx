@@ -93,7 +93,7 @@ const CustomScaleSettings = ({ block, setState }: { block: EBlock; setState: TSe
             removeBlock(block.id);
             setState(false);
           }}
-          variant={"destructive"}
+          variant={"destructive_outline"}
           size={"sm"}
           className="w-full sm:w-fit">
           Remove Block
