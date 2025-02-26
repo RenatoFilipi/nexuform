@@ -4,6 +4,7 @@ import useUserStore from "@/stores/user";
 import { EProfile, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { CreditCardIcon, KeyRoundIcon, UserIcon } from "lucide-react";
+import { useQueryState } from "nuqs";
 import { useState } from "react";
 import SettingsAccount from "./settings-account";
 import SettingsBilling from "./settings-billing";
@@ -45,6 +46,7 @@ const SettingsWrapper = ({
   submissionsCount: number;
   email: string;
 }) => {
+  const [resource] = useQueryState("resource");
   const [view, setView] = useState<TView>("account");
   const enabledViews = views.filter((x) => x.enabled);
   const user = useUserStore();
@@ -57,6 +59,7 @@ const SettingsWrapper = ({
       user.setFormsCount(formsCount);
       user.setSubmissionsCount(submissionsCount);
       user.setEmail(email);
+      if (resource && resource === "update-password") setView("password");
       return null;
     },
     refetchOnWindowFocus: false,

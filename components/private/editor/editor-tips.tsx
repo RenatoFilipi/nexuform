@@ -33,7 +33,7 @@ const tips = [
 
 const EditorTips = () => {
   return (
-    <ul className="grid sm:grid-cols-2 gap-8">
+    <ul className="grid sm:grid-cols-1 gap-8">
       {tips.map((tip, index) => (
         <li key={index} className="flex items-start gap-4">
           <div className={`flex justify-center items-center w-10 h-10 rounded-lg ${tip.bgColor}`}>
