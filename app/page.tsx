@@ -61,7 +61,7 @@ const Home = () => {
         <Faq />
         <Cta />
       </div>
-      <footer className="flex justify-center items-center w-full h-12  border-t">
+      <footer className="flex justify-center items-center w-full h-16">
         <div className="absolute left-4 hidden sm:flex justify-center items-center gap-2">
           <Link href={"/legal/privacy"} className="text-xs text-foreground/80 hover:underline">
             Privacy

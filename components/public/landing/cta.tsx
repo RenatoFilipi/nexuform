@@ -1,21 +1,20 @@
 "use client";
 
-import Brand from "@/components/core/brand";
+import GridPattern from "@/components/magicui/animated-grid-pattern";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
 
 const Cta = () => {
   return (
-    <section className="pb-52 pt-20 w-full relative px-8 sm:px-0">
-      <div className="px-4 mx-auto max-w-7xl text-center flex flex-col justify-center items-center">
-        <div className="flex justify-center items-center mb-5">
-          <Brand type="logo" className="w-14 h-14 fill-foreground" />
-        </div>
-        <h2 className="text-base text-primary font-medium">Ready to improve your business?</h2>
-        <p className="mt-2 text-2xl sm:text-4xl font-bold">Start your free trial today.</p>
-        <div className="mt-8 flex justify-center gap-4 flex-col sm:flex-row w-full">
-          <Button asChild variant={"default"} className="w-full sm:w-fit">
+    <section className="w-full py-40 flex justify-center sm:justify-start items-center px-4 sm:px-20 bg-gradient-to-r relative from-primary to-foreground">
+      <GridPattern width={15} height={15} x={-1} y={-1} strokeDasharray={"4 2"} className={cn("")} maxOpacity={0.2} />
+      <div className="w-full flex flex-col gap-0 z-10 justify-center">
+        <h2 className="text-white text-4xl text-center sm:text-start">Ready to improve your business?</h2>
+        <p className="text-lg text-white/80 text-center sm:text-start">Start your free trial today.</p>
+        <div className="mt-8">
+          <Button asChild variant={"secondary"} className="w-full sm:w-fit">
             <Link href={"/signup"}>
               Get started for free <ArrowRightIcon className="w-4 h-4 ml-2" />
             </Link>

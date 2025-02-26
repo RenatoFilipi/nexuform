@@ -54,7 +54,7 @@ const CardTemplate = ({ plan }: { plan: IPlanLanding }) => {
         </div>
       </div>
       <div className="w-full">
-        <Button className="w-full mt-6" size="lg" variant={plan.highlighted ? "secondary" : "default"}>
+        <Button className="w-full mt-6" size="lg" variant={plan.highlighted ? "default" : "secondary"}>
           {plan.type === "free_trial" ? "Start Free Trial" : "Get Started"}
         </Button>
       </div>

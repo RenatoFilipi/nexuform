@@ -128,7 +128,7 @@ const SignupForm = () => {
                     privacy policy.
                   </Link>
                 </p>
-                <Button variant={"default"} type="submit" size={"sm"} className="w-full">
+                <Button variant={"secondary"} type="submit" size={"sm"} className="w-full">
                   {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
                   Sign up
                 </Button>

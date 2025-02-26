@@ -69,7 +69,7 @@ const ResetPasswordForm = () => {
           />
         </div>
         <div className="flex flex-col w-full gap-4">
-          <Button disabled={isPending} variant="default" type="submit" size="sm" className="w-full">
+          <Button disabled={isPending} variant="secondary" type="submit" size="sm" className="w-full">
             {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
             Reset Password
           </Button>
