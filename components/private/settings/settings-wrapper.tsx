@@ -3,19 +3,31 @@
 import useUserStore from "@/stores/user";
 import { EProfile, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
-import { CreditCardIcon, Layers2Icon } from "lucide-react";
+import { CreditCardIcon, KeyRoundIcon, UserIcon } from "lucide-react";
 import { useState } from "react";
+import SettingsAccount from "./settings-account";
 import SettingsBilling from "./settings-billing";
-import SettingsGeneral from "./settings-general";
+import SettingsPassword from "./settings-password";
 
-type TView = "general" | "billing";
+type TView = "account" | "billing" | "password";
 
 const views = [
-  { label: "General", icon: Layers2Icon, view: "general", enabled: true },
+  {
+    label: "Account",
+    icon: UserIcon,
+    view: "account",
+    enabled: true,
+  },
   {
     label: "Billing & Usage",
     icon: CreditCardIcon,
     view: "billing",
+    enabled: true,
+  },
+  {
+    label: "Password",
+    icon: KeyRoundIcon,
+    view: "password",
     enabled: true,
   },
 ];
@@ -33,7 +45,7 @@ const SettingsWrapper = ({
   submissionsCount: number;
   email: string;
 }) => {
-  const [view, setView] = useState<TView>("general");
+  const [view, setView] = useState<TView>("account");
   const enabledViews = views.filter((x) => x.enabled);
   const user = useUserStore();
 
@@ -69,8 +81,9 @@ const SettingsWrapper = ({
           ))}
         </div>
         <div className="flex w-full sm:ml-64">
-          {view === "general" && <SettingsGeneral />}
+          {view === "account" && <SettingsAccount />}
           {view === "billing" && <SettingsBilling />}
+          {view === "password" && <SettingsPassword />}
         </div>
       </div>
     </div>
