@@ -61,11 +61,11 @@ const CardTemplate = ({
   badge: string;
 }) => {
   return (
-    <Card className="px-4 py-3 flex sm:flex-col flex-1 justify-between gap-2 items-start">
+    <Card className="px-4 py-3 flex sm:flex-col flex-1 justify-between gap-8 items-start">
       <div className="flex justify-between">
         <div className="flex items-center gap-2">
           <div className="flex justify-center items-center">{icon}</div>
-          <span className="text-xs sm:text-sm text-foreground/70">{name}</span>
+          <span className="text-xs sm:text-sm text-foreground/80">{name}</span>
         </div>
       </div>
       <span className="text-base font-medium">{value}</span>

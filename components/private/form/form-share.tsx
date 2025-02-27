@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { minWidth640 } from "@/utils/constants";
 import { EForm } from "@/utils/entities";
 import { TSetState } from "@/utils/types";
-import { AlertCircleIcon, ArrowRightIcon, CopyIcon } from "lucide-react";
+import { ArrowRightIcon, CopyIcon, Share2Icon } from "lucide-react";
 import Link from "next/link";
 import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
@@ -55,9 +55,9 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
   return (
     <div className="flex flex-col gap-6 h-full">
       {form.status !== "published" && (
-        <div className="flex items-center flex-col justify-center gap-4 px-4 py-8 border h-full rounded-lg bg-warning/5 border-warning/50">
+        <div className="flex items-center flex-col justify-center gap-4 px-4 py-8 border h-full rounded-lg">
           <div className="flex justify-center items-center p-2 bg-warning/10 rounded">
-            <AlertCircleIcon className="w-8 h-8 text-warning" />
+            <Share2Icon className="w-8 h-8 text-warning" />
           </div>
           <div className="flex flex-col justify-center items-center gap-6">
             <div className="flex justify-center items-center flex-col gap-1">
@@ -67,7 +67,7 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
               </p>
             </div>
             <div className="flex justify-end items-center">
-              <Button variant="default" size="sm" className="w-fit">
+              <Button variant="secondary" size="sm">
                 <Link href={`/dashboard/editor/${form.id}`}>Go to Editor</Link>
                 <ArrowRightIcon className="w-4 h-4 ml-2" />
               </Button>

@@ -9,7 +9,7 @@ import { minWidth640, paginationRange } from "@/utils/constants";
 import { formatDateRelativeToNow, formatTime } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState, TSubmissionStatus } from "@/utils/types";
-import { ChevronLeftIcon, ChevronRightIcon, CogIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon, CogIcon, SendIcon } from "lucide-react";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import { toast } from "sonner";
@@ -112,23 +112,28 @@ const FormSubmissions = () => {
             </TableBody>
           </Table>
           {noSubmission && (
-            <div className="flex w-full justify-center items-center py-2">
+            <div className="flex w-full justify-center items-center flex-col gap-4 py-20">
+              <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/10">
+                <SendIcon className="w-6 h-6 text-primary" />
+              </div>
               <span className="text-sm text-foreground/70">No submission to show.</span>
             </div>
           )}
-          <div className="flex w-full justify-between items-center gap-4">
-            <span className="text-xs text-foreground/80">{records}</span>
-            <div className="flex justify-center items-center gap-4">
-              <Button disabled={disabledPrevious} onClick={onPreviousData} variant={"outline"} size={"sm"}>
-                <ChevronLeftIcon className="w-4 h-4 mr-2" />
-                Previous
-              </Button>
-              <Button disabled={disabledNext} onClick={onNextData} variant={"outline"} size={"sm"}>
-                Next
-                <ChevronRightIcon className="w-4 h-4 ml-2" />
-              </Button>
+          {!noSubmission && (
+            <div className="flex w-full justify-between items-center gap-4">
+              <span className="text-xs text-foreground/80">{records}</span>
+              <div className="flex justify-center items-center gap-4">
+                <Button disabled={disabledPrevious} onClick={onPreviousData} variant={"outline"} size={"sm"}>
+                  <ChevronLeftIcon className="w-4 h-4 mr-2" />
+                  Previous
+                </Button>
+                <Button disabled={disabledNext} onClick={onNextData} variant={"outline"} size={"sm"}>
+                  Next
+                  <ChevronRightIcon className="w-4 h-4 ml-2" />
+                </Button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
       {!isDesktop && (
@@ -152,23 +157,28 @@ const FormSubmissions = () => {
             })}
           </div>
           {noSubmission && (
-            <div className="flex w-full justify-center items-center py-2">
+            <div className="flex w-full justify-center items-center flex-col gap-4 py-2">
+              <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/10">
+                <SendIcon className="w-6 h-6 text-primary" />
+              </div>
               <span className="text-sm text-foreground/70">No submission to show.</span>
             </div>
           )}
-          <div className="flex w-full justify-between items-center gap-4">
-            <span className="text-xs text-foreground/80">{records}</span>
-            <div className="flex justify-center items-center gap-4">
-              <Button disabled={disabledPrevious} onClick={onPreviousData} variant={"outline"} size={"sm"}>
-                <ChevronLeftIcon className="w-4 h-4 mr-2" />
-                Previous
-              </Button>
-              <Button disabled={disabledNext} onClick={onNextData} variant={"outline"} size={"sm"}>
-                Next
-                <ChevronRightIcon className="w-4 h-4 ml-2" />
-              </Button>
+          {!noSubmission && (
+            <div className="flex w-full justify-between items-center gap-4">
+              <span className="text-xs text-foreground/80">{records}</span>
+              <div className="flex justify-center items-center gap-4">
+                <Button disabled={disabledPrevious} onClick={onPreviousData} variant={"outline"} size={"sm"}>
+                  <ChevronLeftIcon className="w-4 h-4 mr-2" />
+                  Previous
+                </Button>
+                <Button disabled={disabledNext} onClick={onNextData} variant={"outline"} size={"sm"}>
+                  Next
+                  <ChevronRightIcon className="w-4 h-4 ml-2" />
+                </Button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
     </div>
