@@ -22,12 +22,11 @@ const Features = () => {
   ];
 
   return (
-    <section id="features" className="py-12 sm:py-16 lg:py-20 px-8 sm:px-0">
-      <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <section
+      id="features"
+      className="py-12 sm:py-16 lg:py-20 px-8 sm:px-0 min-h-screen flex justify-center items-center">
+      <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 grid gap-10">
         <div className="text-center flex flex-col justify-center items-center">
-          <div className="inline-block px-4 py-1 mb-6 text-xs font-semibold uppercase rounded-lg border bg-primary/20 w-fit border-primary/40 text-primary">
-            Features
-          </div>
           <h2 className="text-2xl font-bold leading-tight sm:text-4xl xl:text-5xl">Powerful Tools for Form Building</h2>
           <p className="text-base text-foreground/70 mt-4">
             Enhance your form-building experience with ease and insights.
@@ -37,7 +36,7 @@ const Features = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="flex flex-col items-start p-6 transition-shadow bg-background border rounded-lg hover:border-primary hover:bg-primary/5">
+              className="flex flex-col items-start px-6 py-8 transition-shadow bg-background border rounded-lg hover:border-primary hover:bg-primary/5">
               <div className="flex justify-center items-center gap-3">
                 <feature.icon className="text-primary w-6 h-6" />
                 <h3 className="text-lg font-semibold text-center">{feature.title}</h3>

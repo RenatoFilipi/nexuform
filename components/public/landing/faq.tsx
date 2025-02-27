@@ -28,27 +28,29 @@ const Faq = () => {
   ];
 
   return (
-    <div id="faq" className="my-10 w-full max-w-2xl px-8 sm:px-0">
-      <h2 className="text-2xl font-bold text-center sm:text-4xl">Frequently Asked Questions</h2>
-      <div className="mt-8 space-y-4">
-        {faqData.map((faq, index) => (
-          <div key={index} className="border rounded-lg p-3 shadow-md transition-shadow hover:shadow-lg">
-            <button
-              className="flex items-center justify-between w-full text-left text-lg font-semibold"
-              onClick={() => toggleFaq(index)}>
-              <span className="text-base">{faq.question}</span>
-              <svg
-                className={`w-5 h-5 transition-transform ${activeIndex === index ? "rotate-180" : ""}`}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {activeIndex === index && <p className="mt-3 text-foreground/60 text-base">{faq.answer}</p>}
-          </div>
-        ))}
+    <div id="faq" className="my-10 w-full max-w-2xl px-8 sm:px-0 min-h-screen flex justify-center items-center">
+      <div className="grid gap-10 w-full">
+        <h2 className="text-2xl font-bold text-center sm:text-4xl">Frequently Asked Questions</h2>
+        <div className="mt-8 space-y-4">
+          {faqData.map((faq, index) => (
+            <div key={index} className="border rounded-lg p-3 shadow-md transition-shadow hover:shadow-lg">
+              <button
+                className="flex items-center justify-between w-full text-left text-lg font-semibold"
+                onClick={() => toggleFaq(index)}>
+                <span className="text-base">{faq.question}</span>
+                <svg
+                  className={`w-5 h-5 transition-transform ${activeIndex === index ? "rotate-180" : ""}`}
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {activeIndex === index && <p className="mt-3 text-foreground/60 text-base">{faq.answer}</p>}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
