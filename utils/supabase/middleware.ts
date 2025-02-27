@@ -21,15 +21,11 @@ export const updateSession = async (request: NextRequest) => {
             return request.cookies.getAll();
           },
           setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value }) =>
-              request.cookies.set(name, value)
-            );
+            cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
             response = NextResponse.next({
               request,
             });
-            cookiesToSet.forEach(({ name, value, options }) =>
-              response.cookies.set(name, value, options)
-            );
+            cookiesToSet.forEach(({ name, value, options }) => response.cookies.set(name, value, options));
           },
         },
       }
@@ -40,7 +36,7 @@ export const updateSession = async (request: NextRequest) => {
     const user = await supabase.auth.getUser();
 
     // protected routes
-    if (request.nextUrl.pathname.startsWith("/dashboard/forms") && user.error) {
+    if (request.nextUrl.pathname.startsWith("/dashboard") && user.error) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
 

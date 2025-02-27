@@ -69,6 +69,7 @@ const linksMobile = [
 const Nav = () => {
   const pathname = usePathname();
 
+  if (pathname.includes("dashboard/payment-confirmation")) return null;
   if (pathname.includes("dashboard/editor/")) return <NavEditor />;
   return <NavApp />;
 };
