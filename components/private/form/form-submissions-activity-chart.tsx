@@ -86,7 +86,7 @@ const FormSubmissionsActivityChart: React.FC = () => {
   if (isPending) return null;
 
   return (
-    <div className="flex flex-col border py-3 px-4 rounded gap-3 relative">
+    <div className="flex flex-col justify-between border py-3 px-4 rounded gap-4 relative">
       <div className="flex flex-col justify-center items-center sm:items-start">
         <div className="flex justify-between items-center gap-4 w-full">
           <div className="flex justify-center items-center gap-3">
