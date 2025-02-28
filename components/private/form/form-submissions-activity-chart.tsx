@@ -119,7 +119,7 @@ const FormSubmissionsActivityChart: React.FC = () => {
             axisLine={false}
             tickFormatter={(value) => value.slice(0, 5)}
           />
-          <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
+          <ChartTooltip cursor={true} content={<ChartTooltipContent indicator="dot" />} />
           <Bar barSize={barSize} dataKey="submission" fill="var(--color-submission)" radius={0} />
         </BarChart>
       </ChartContainer>

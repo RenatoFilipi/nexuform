@@ -68,8 +68,7 @@ export const createFormAction = async (formData: FormData) => {
   const userId = formData.get("userId") as string;
   const supabase = await createClient();
 
-  // Validação de entradas
-  if (!name || !description || !userId) {
+  if (!name || !userId) {
     return encodedRedirect("error", "/dashboard/forms", "All fields are required.");
   }
 
@@ -90,7 +89,6 @@ export const createFormAction = async (formData: FormData) => {
   return redirect(`/dashboard/editor/${form.id}`);
 };
 export const refreshFormSlugPageAction = async (slug: string) => {
-  // Verificar se o usuário tem permissão para revalidar esse path
   if (!slug) {
     return encodedRedirect("error", "/dashboard/forms", "Invalid form slug.");
   }
