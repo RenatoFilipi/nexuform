@@ -102,7 +102,11 @@ const FormSubmissionsActivityChart: React.FC = () => {
             ))}
           </div>
           {hasData && isDesktop && <BadgeDay submissionDifference={submissionDifference} />}
-          {!hasData && <Badge variant="warning">No data available</Badge>}
+          {!hasData && (
+            <Badge variant="warning" uppercase>
+              No data available
+            </Badge>
+          )}
         </div>
       </div>
       <ChartContainer config={CHART_CONFIG}>

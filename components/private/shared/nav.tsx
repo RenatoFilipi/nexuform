@@ -11,6 +11,7 @@ import { createClient } from "@/utils/supabase/client";
 import { TAppState, TPlan } from "@/utils/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  ChartNoAxesColumnIcon,
   InboxIcon,
   LoaderIcon,
   LogOutIcon,
@@ -48,6 +49,13 @@ const links = [
     icon: InboxIcon,
     enabled: true,
   },
+  {
+    id: 2,
+    name: "Analytics",
+    path: "/dashboard/analytics",
+    icon: ChartNoAxesColumnIcon,
+    enabled: true,
+  },
 ];
 const linksMobile = [
   {
@@ -55,6 +63,13 @@ const linksMobile = [
     name: "Dashboard",
     path: "/dashboard/forms",
     icon: InboxIcon,
+    enabled: true,
+  },
+  {
+    id: 2,
+    name: "Analytics",
+    path: "/dashboard/analytics",
+    icon: ChartNoAxesColumnIcon,
     enabled: true,
   },
   {
@@ -259,7 +274,7 @@ const NavApp = () => {
             </Link>
           </Button>
         </div>
-        <div className="hidden sm:flex justify-center items-center gap-0 h-full">
+        <div className="hidden sm:flex justify-center items-center gap-2 h-full">
           {links.map((link) => {
             if (link.enabled)
               return (

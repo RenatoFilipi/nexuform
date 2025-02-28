@@ -56,6 +56,18 @@ const views = [
   },
 ];
 
+interface Props {
+  overviewSubmissions: ESubmission[];
+  submissions: ESubmission[];
+  blocks: EBlock[];
+  form: EForm;
+  formAnalytics: EFormAnalytics;
+  profile: EProfile;
+  subscription: ESubscription;
+  email: string;
+  integrations: EIntegration[];
+}
+
 const FormWrapper = ({
   submissions,
   blocks,
@@ -66,17 +78,7 @@ const FormWrapper = ({
   email,
   overviewSubmissions,
   integrations,
-}: {
-  overviewSubmissions: ESubmission[];
-  submissions: ESubmission[];
-  blocks: EBlock[];
-  form: EForm;
-  formAnalytics: EFormAnalytics;
-  profile: EProfile;
-  subscription: ESubscription;
-  email: string;
-  integrations: EIntegration[];
-}) => {
+}: Props) => {
   const formStore = useFormStore();
   const userStore = useUserStore();
   const [view, setView] = useState<TView>("overview");
@@ -86,16 +88,16 @@ const FormWrapper = ({
   const query = useQuery({
     queryKey: ["formData"],
     queryFn: () => {
-      formStore.setForm(form);
-      formStore.setBlocks(blocks);
-      formStore.setSubmissions(submissions);
-      formStore.setOverviewSubmissions(overviewSubmissions);
-      formStore.setFormAnalytics(formAnalytics);
+      userStore.setEmail(email);
       userStore.setProfile(profile);
       userStore.setSubscription(subscription);
-      userStore.setEmail(email);
-      formStore.setPagination({ from: paginationFrom, to: paginationTo });
+      formStore.setForm(form);
+      formStore.setFormAnalytics(formAnalytics);
+      formStore.setOverviewSubmissions(overviewSubmissions);
+      formStore.setSubmissions(submissions);
+      formStore.setBlocks(blocks);
       formStore.setIntegrations(integrations);
+      formStore.setPagination({ from: paginationFrom, to: paginationTo });
       return null;
     },
     refetchOnWindowFocus: false,

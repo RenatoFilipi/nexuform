@@ -83,9 +83,6 @@ const StarRatingSettings = ({ block, setState }: { block: EBlock; setState: TSet
         </div>
       </div>
       <div className="flex justify-between gap-4 items-center flex-col sm:flex-row">
-        <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
-          Close
-        </Button>
         <Button
           onClick={() => {
             removeBlock(block.id);
@@ -95,6 +92,9 @@ const StarRatingSettings = ({ block, setState }: { block: EBlock; setState: TSet
           size={"sm"}
           className="w-full sm:w-fit">
           Remove Block
+        </Button>
+        <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
+          Close
         </Button>
       </div>
     </div>

@@ -150,7 +150,7 @@ const Body = ({
                   <span className="text-xs text-foreground/60">{coll.answer}</span>
                 ) : (
                   <div className="flex justify-center items-center py-2 mt-2 border border-dashed">
-                    <span className="text-xs text-foreground/80">No answer to this question</span>
+                    <span className="text-xs text-foreground/80">No answer</span>
                   </div>
                 )}
               </div>
