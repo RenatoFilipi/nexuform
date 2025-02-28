@@ -120,7 +120,13 @@ const FormSubmissionsActivityChart: React.FC = () => {
             tickFormatter={(value) => value.slice(0, 5)}
           />
           <ChartTooltip cursor={true} content={<ChartTooltipContent indicator="dot" />} />
-          <Bar barSize={barSize} dataKey="submission" fill="var(--color-submission)" radius={0} />
+          <Bar
+            barSize={barSize}
+            dataKey="submission"
+            fill="var(--color-submission)"
+            radius={0}
+            animationDuration={300}
+          />
         </BarChart>
       </ChartContainer>
       {hasData && !isDesktop && <BadgeDay submissionDifference={submissionDifference} />}

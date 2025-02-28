@@ -44,7 +44,7 @@ const AnalyticsSubmissionsActivityChart = () => {
 
   const formMap = useMemo(() => {
     return forms.reduce((acc, form) => {
-      acc[form.id] = form.name; // Mapeando o nome do formulário com o ID
+      acc[form.id] = form.name;
       return acc;
     }, {} as Record<string, string>);
   }, [forms]);
@@ -106,6 +106,7 @@ const AnalyticsSubmissionsActivityChart = () => {
             <Line
               key={formId}
               type="linear"
+              animationDuration={300}
               dataKey={formMap[formId] || formId}
               stroke={getColor(index)}
               strokeWidth={3}

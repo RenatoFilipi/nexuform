@@ -4,9 +4,9 @@ import useAnalyticsStore from "@/stores/analytics";
 import useUserStore from "@/stores/user";
 import { EForm, EFormAnalytics, EProfile, ESubmission, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
-import { ConstructionIcon } from "lucide-react";
 import AnalyticsOverview from "./analytics-overview";
 import AnalyticsSubmissionsActivityChart from "./analytics-submissions-activity-chart";
+import AnalyticsSubmissionsByFormChart from "./analytics-submissions-by-form-chart";
 
 interface Props {
   email: string;
@@ -45,10 +45,7 @@ const AnalyticsWrapper = ({ forms, formsAnalytics, profile, subscription, email,
         <AnalyticsOverview />
         <div className="grid sm:grid-cols-2 gap-6">
           <AnalyticsSubmissionsActivityChart />
-          <div className="flex justify-center items-center flex-col gap-2">
-            <ConstructionIcon className="w-6 h-6 text-primary" />
-            <span className="text-xs text-foreground/80">Under Development</span>
-          </div>
+          <AnalyticsSubmissionsByFormChart />
         </div>
       </div>
     </div>
