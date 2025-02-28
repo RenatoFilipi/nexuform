@@ -36,9 +36,11 @@ const Features = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="flex flex-col items-start px-6 py-8 transition-shadow bg-background border rounded-lg hover:border-primary hover:bg-primary/5">
-              <div className="flex justify-center items-center gap-3">
-                <feature.icon className="text-primary w-6 h-6" />
+              className="flex flex-col items-center px-6 py-8 transition-shadow bg-background border rounded-lg hover:border-primary hover:bg-primary/5 gap-2">
+              <div className="flex justify-center flex-col items-center gap-3">
+                <div className="flex justify-center items-center p-2 rounded bg-primary/10">
+                  <feature.icon className="text-primary w-6 h-6" />
+                </div>
                 <h3 className="text-lg font-semibold text-center">{feature.title}</h3>
               </div>
               <p className="mt-3 text-sm text-foreground/70 text-start">{feature.description}</p>

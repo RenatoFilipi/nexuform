@@ -50,10 +50,12 @@ const HowItWorks = () => {
           {steps.map((step, index) => (
             <div
               key={index}
-              className="flex flex-col items-start px-6 py-8 transition-shadow bg-background border rounded-lg hover:border-primary hover:bg-primary/5">
-              <div className="flex justify-center items-center gap-3">
-                <step.icon className="w-6 h-6 text-primary" />
-                <h3 className="text-lg font-semibold">{step.title}</h3>
+              className="flex flex-col items-center px-6 py-8 transition-shadow bg-background border rounded-lg hover:border-primary hover:bg-primary/5">
+              <div className="flex justify-center flex-col items-center gap-3">
+                <div className="flex justify-center items-center p-2 rounded bg-primary/10">
+                  <step.icon className="text-primary w-6 h-6" />
+                </div>
+                <h3 className="text-lg font-semibold text-center">{step.title}</h3>
               </div>
               <p className="mt-3 text-sm text-foreground/70 text-start">{step.description}</p>
             </div>
