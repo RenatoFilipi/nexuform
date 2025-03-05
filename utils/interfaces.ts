@@ -1,4 +1,5 @@
 import type { JSX } from "react";
+import { EBlock, EForm, ETheme } from "./entities";
 import {
   TBlock,
   TBrand,
@@ -9,6 +10,7 @@ import {
   TIntegrationCategory,
   TIntegrations,
   TPlan,
+  TTemplateCategory,
 } from "./types";
 
 export interface IDesign {
@@ -59,4 +61,14 @@ export interface IIntegration {
 export interface IPagination {
   from: number;
   to: number;
+}
+
+export interface IFormTemplate {
+  id: string;
+  enabled: boolean;
+  category: TTemplateCategory;
+  form: EForm;
+  theme: ETheme;
+  blocks: EBlock[];
+  pro: boolean;
 }

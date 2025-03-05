@@ -38,6 +38,7 @@ export type TIntegrationCategory =
   | "notifications"
   | "database";
 export type TIntegrationStatus = "active" | "inactive";
+export type TTemplateCategory = "feedback" | "survey" | "registration";
 
 // submission
 export type TSubmissionStatus = "reviewed" | "not_reviewed" | "ignored";

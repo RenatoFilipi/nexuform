@@ -1,14 +1,7 @@
 import SubmissionStatusBadge from "@/components/shared/submission-status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import useUserStore from "@/stores/user";
 import { minWidth640, minute } from "@/utils/constants";
 import { EBlock, ESubmission } from "@/utils/entities";
@@ -38,18 +31,18 @@ const FormSubmissionDetails = ({
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col min-w-[650px] h-[600px] overflow-y-auto">
-          <DialogHeader className="hidden">
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>{children}</SheetTrigger>
+        <SheetContent className="flex flex-col min-w-[650px] overflow-y-auto">
+          <SheetHeader className="hidden">
             <div>
-              <DialogTitle>Submission Details</DialogTitle>
-              <DialogDescription>Review the questions and your responses from this submission.</DialogDescription>
+              <SheetTitle>Submission Details</SheetTitle>
+              <SheetDescription>Review the questions and your responses from this submission.</SheetDescription>
             </div>
-          </DialogHeader>
+          </SheetHeader>
           <Body setState={setOpen} submission={submission} blocks={blocks} />
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
     );
   }
 

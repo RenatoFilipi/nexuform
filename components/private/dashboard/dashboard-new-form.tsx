@@ -1,13 +1,16 @@
 "use client";
 
 import { createFormAction } from "@/app/actions";
+import { Badge } from "@/components/ui/badge";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
+import useUserStore from "@/stores/user";
 import { minWidth640 } from "@/utils/constants";
+import { FormTemplates } from "@/utils/form-templates";
 import { TSetState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { Loader2Icon } from "lucide-react";
+import { ChevronLeftIcon, HexagonIcon, Loader2Icon, PlusIcon } from "lucide-react";
 import { useQueryState } from "nuqs";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -18,6 +21,25 @@ import { Button } from "../../ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
 import { Input } from "../../ui/input";
+
+type TView = "custom" | "templates" | "none";
+
+const options = [
+  {
+    title: "Custom",
+    description: "Start a new form from the ground up, tailored to your needs.",
+    type: "custom",
+    icon: PlusIcon,
+    enabled: true,
+  },
+  {
+    title: "Templates",
+    description: "Choose from a variety of pre-designed templates to jumpstart your form creation.",
+    type: "templates",
+    icon: HexagonIcon,
+    enabled: true,
+  },
+];
 
 const DashboardNewForm = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
   const [error] = useQueryState("error");
@@ -39,14 +61,14 @@ const DashboardNewForm = ({ children, userId }: { children: React.ReactNode; use
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col min-w-[650px] overflow-y-auto">
+        <DialogContent className="flex flex-col min-w-[650px] h-[600px] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Create Form</DialogTitle>
             <DialogDescription>
               Fill in the details below to create a new form. You can customize the settings as needed.
             </DialogDescription>
           </DialogHeader>
-          <Body setState={setOpen} userId={userId} />
+          <Body setState={setOpen} />
         </DialogContent>
       </Dialog>
     );
@@ -62,14 +84,50 @@ const DashboardNewForm = ({ children, userId }: { children: React.ReactNode; use
             Fill in the details below to create a new form. You can customize the settings as needed.
           </DrawerDescription>
         </DrawerHeader>
-        <Body setState={setOpen} userId={userId} />
+        <Body setState={setOpen} />
       </DrawerContent>
     </Drawer>
   );
 };
+const Body = ({ setState }: { setState: TSetState<boolean> }) => {
+  const [view, setView] = useState<TView>("none");
 
-const Body = ({ setState, userId }: { setState: TSetState<boolean>; userId: string }) => {
+  if (view === "custom") return <CustomForm setState={setState} setView={setView} />;
+  if (view === "templates") return <TemplateForm setState={setState} setView={setView} />;
+  return <PreSelectForm setState={setState} setView={setView} />;
+};
+const PreSelectForm = ({ setState, setView }: { setState: TSetState<boolean>; setView: TSetState<TView> }) => {
+  return (
+    <div className="pt-4 sm:pt-0 flex flex-col h-full gap-6">
+      <div className="flex flex-col justify-center items-center gap-6 w-full h-full">
+        {options.map((opt) => {
+          return (
+            <button
+              key={opt.type}
+              onClick={() => setView(opt.type as TView)}
+              className="flex flex-col justify-center items-center border w-full h-full gap-4 hover:bg-primary/5 p-6">
+              <div className="flex justify-center items-center p-2 bg-primary/10 rounded">
+                <opt.icon className="w-8 h-8 text-primary" />
+              </div>
+              <div className="flex flex-col justify-center items-center">
+                <h1 className="text-lg font-medium">{opt.title}</h1>
+                <p className="text-sm text-foreground/70">{opt.description}</p>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+      <div className="flex justify-end items-center gap-2 flex-col sm:flex-row">
+        <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
+          Close
+        </Button>
+      </div>
+    </div>
+  );
+};
+const CustomForm = ({ setState, setView }: { setState: TSetState<boolean>; setView: TSetState<TView> }) => {
   const [isPending, startTransition] = useTransition();
+  const { profile } = useUserStore();
 
   const formSchema = z.object({
     name: z.string().min(3, "Name must contain at least 3 letters."),
@@ -88,13 +146,13 @@ const Body = ({ setState, userId }: { setState: TSetState<boolean>; userId: stri
       const formData = new FormData();
       formData.append("name", name);
       formData.append("description", description);
-      formData.append("userId", userId);
+      formData.append("userId", profile.id);
       await createFormAction(formData);
     });
   };
 
   return (
-    <div className="flex flex-col gap-4 pt-4 sm:pt-0 h-full">
+    <div className="flex flex-col gap-4 pt-4 sm:pt-0 h-full w-full">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6 h-full">
           <div className="flex flex-col gap-8 h-full">
@@ -133,7 +191,7 @@ const Body = ({ setState, userId }: { setState: TSetState<boolean>; userId: stri
               )}
             />
           </div>
-          <div className="flex justify-end flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
+          <div className="flex justify-between flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
             <Button
               disabled={isPending}
               onClick={() => setState(false)}
@@ -143,13 +201,80 @@ const Body = ({ setState, userId }: { setState: TSetState<boolean>; userId: stri
               className="w-full sm:w-fit">
               Cancel
             </Button>
-            <Button disabled={isPending} type="submit" variant={"default"} size={"sm"} className="w-full sm:w-fit">
-              {isPending && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
-              Create Form
-            </Button>
+            <div className="flex justify-center items-center gap-2 sm:gap-4 w-full sm:w-fit">
+              <Button
+                disabled={isPending}
+                onClick={() => setView("none")}
+                type="button"
+                variant={"outline"}
+                size={"sm"}
+                className="w-full sm:w-fit">
+                <ChevronLeftIcon className="w-4 h-4 mr-2" />
+                Back
+              </Button>
+              <Button disabled={isPending} type="submit" variant={"default"} size={"sm"} className="w-full sm:w-fit">
+                {isPending && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
+                Create Form
+              </Button>
+            </div>
           </div>
         </form>
       </Form>
+    </div>
+  );
+};
+const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; setView: TSetState<TView> }) => {
+  const [isPending, startTransition] = useTransition();
+  const [value, setValue] = useState("");
+  const { subscription } = useUserStore();
+  const showBadge = subscription.plan !== "pro";
+
+  return (
+    <div className="flex flex-col h-full gap-6 overflow-y-auto">
+      <div className="flex flex-col w-full h-full overflow-y-auto gap-4 sm:pr-4">
+        {FormTemplates.map((temp) => {
+          return (
+            <button
+              key={temp.id}
+              onClick={() => setValue(temp.id)}
+              className={`${
+                value === temp.id ? "bg-primary/5 border-primary" : ""
+              } border flex justify-between items-center rounded hover:bg-primary/5 px-4 py-6 flex-col sm:flex-row gap-4`}>
+              <div className="flex flex-col justify-ce items-center sm:justify-center sm:items-start">
+                <span className="">{temp.form.name}</span>
+                <p className="text-xs text-foreground/70">{temp.form.description}</p>
+              </div>
+              {temp.pro && showBadge && <Badge variant={"pink"}>Pro Template</Badge>}
+            </button>
+          );
+        })}
+      </div>
+      <div className="flex justify-between flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
+        <Button
+          disabled={isPending}
+          onClick={() => setState(false)}
+          type="button"
+          variant={"outline"}
+          size={"sm"}
+          className="w-full sm:w-fit">
+          Cancel
+        </Button>
+        <div className="flex justify-center items-center gap-2 sm:gap-4 w-full sm:w-fit">
+          <Button
+            onClick={() => setView("none")}
+            type="button"
+            variant={"outline"}
+            size={"sm"}
+            className="w-full sm:w-fit">
+            <ChevronLeftIcon className="w-4 h-4 mr-2" />
+            Back
+          </Button>
+          <Button disabled={isPending} type="button" variant={"default"} size={"sm"} className="w-full sm:w-fit">
+            {isPending && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
+            Create Form
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };
