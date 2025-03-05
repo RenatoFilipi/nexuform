@@ -7,10 +7,13 @@ import { Textarea } from "@/components/ui/textarea";
 import useUserStore from "@/stores/user";
 import { minWidth640 } from "@/utils/constants";
 import { FormTemplates } from "@/utils/form-templates";
-import { TSetState } from "@/utils/types";
+import { nanoid, uuid } from "@/utils/functions";
+import { createClient } from "@/utils/supabase/client";
+import { TAppState, TSetState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronLeftIcon, HexagonIcon, Loader2Icon, PlusIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -224,34 +227,81 @@ const CustomForm = ({ setState, setView }: { setState: TSetState<boolean>; setVi
   );
 };
 const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; setView: TSetState<TView> }) => {
-  const [isPending, startTransition] = useTransition();
+  const supabase = createClient();
+  const router = useRouter();
+  const [appState, setAppState] = useState<TAppState>("idle");
   const [value, setValue] = useState("");
-  const { subscription } = useUserStore();
+  const { subscription, profile } = useUserStore();
   const showBadge = subscription.plan !== "pro";
+
+  const onSubmit = async () => {
+    const targetTemplate = FormTemplates.find((x) => x.id === value);
+    if (!targetTemplate) return;
+    setAppState("loading");
+    const { form, blocks } = targetTemplate;
+
+    const { data: formData, error: formError } = await supabase
+      .from("forms")
+      .insert([
+        {
+          name: form.name,
+          description: form.description,
+          owner_id: profile.id,
+          public_url: nanoid(20, true, true),
+          submit_text: form.submit_text,
+          nebulaform_branding: true,
+          status: "draft",
+          success_title: form.success_title,
+          success_description: form.success_description,
+        },
+      ])
+      .select()
+      .single();
+
+    if (formError) {
+      toast.error("An unexpected error occurred while creating the form. Please try again later.");
+      return;
+    }
+
+    const updatedBlocks = blocks.map((x) => {
+      return {
+        ...x,
+        form_id: formData.id,
+        id: uuid(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
+    });
+  };
 
   return (
     <div className="flex flex-col h-full gap-6 overflow-y-auto">
-      <div className="flex flex-col w-full h-full overflow-y-auto gap-4 sm:pr-4">
+      <div className="flex flex-col w-full h-full overflow-y-auto gap-3 sm:pr-4">
         {FormTemplates.map((temp) => {
           return (
             <button
               key={temp.id}
-              onClick={() => setValue(temp.id)}
+              onClick={() => {
+                if (temp.pro && subscription.plan !== "pro") return;
+                setValue(temp.id);
+              }}
               className={`${
                 value === temp.id ? "bg-primary/5 border-primary" : ""
-              } border flex justify-between items-center rounded hover:bg-primary/5 px-4 py-6 flex-col sm:flex-row gap-4`}>
-              <div className="flex flex-col justify-ce items-center sm:justify-center sm:items-start">
-                <span className="">{temp.form.name}</span>
+              } border flex justify-between items-center rounded hover:bg-primary/5 p-3 flex-col w-full gap-1`}>
+              <div className="flex justify-between items-center w-full">
+                <span className="text-sm font-medium">{temp.form.name}</span>
+                <div>{temp.pro && showBadge && <Badge variant={"pink"}>Pro Template</Badge>}</div>
+              </div>
+              <div className="flex w-full">
                 <p className="text-xs text-foreground/70">{temp.form.description}</p>
               </div>
-              {temp.pro && showBadge && <Badge variant={"pink"}>Pro Template</Badge>}
             </button>
           );
         })}
       </div>
       <div className="flex justify-between flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
         <Button
-          disabled={isPending}
+          disabled={appState === "loading"}
           onClick={() => setState(false)}
           type="button"
           variant={"outline"}
@@ -261,6 +311,7 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
         </Button>
         <div className="flex justify-center items-center gap-2 sm:gap-4 w-full sm:w-fit">
           <Button
+            disabled={appState === "loading"}
             onClick={() => setView("none")}
             type="button"
             variant={"outline"}
@@ -269,8 +320,14 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
             <ChevronLeftIcon className="w-4 h-4 mr-2" />
             Back
           </Button>
-          <Button disabled={isPending} type="button" variant={"default"} size={"sm"} className="w-full sm:w-fit">
-            {isPending && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
+          <Button
+            disabled={appState === "loading"}
+            onClick={onSubmit}
+            type="button"
+            variant={"default"}
+            size={"sm"}
+            className="w-full sm:w-fit">
+            {appState === "loading" && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
             Create Form
           </Button>
         </div>

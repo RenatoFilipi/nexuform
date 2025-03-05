@@ -11,7 +11,7 @@ const UpgradeToProUI = () => {
         </div>
         <div className="text-center flex flex-col justify-center items-center gap-6">
           <div className="text-center flex flex-col justify-center items-center gap-1">
-            <h2 className="text-lg font-medium">Upgrade to Pro.</h2>
+            <h2 className="text-lg font-medium">Upgrade to Pro</h2>
             <p className="text-sm text-foreground/70">
               To access this feature, you must upgrade your subscription to pro plan.
             </p>
