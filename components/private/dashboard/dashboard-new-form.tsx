@@ -260,6 +260,7 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
 
     if (formError) {
       toast.error("An unexpected error occurred while creating the form. Please try again later.");
+      setAppState("idle");
       return;
     }
 
@@ -272,6 +273,16 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
         updated_at: new Date().toISOString(),
       };
     });
+
+    const { error: blocksError } = await supabase.from("blocks").insert(updatedBlocks);
+    if (blocksError) {
+      toast.error("An unexpected error occurred while creating the form blocks. Please try again later.");
+      await supabase.from("forms").delete().eq("id", formData.id);
+      setAppState("idle");
+      return;
+    }
+
+    router.push(`/dashboard/editor/${formData.id}`);
   };
 
   return (
@@ -289,11 +300,11 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
                 value === temp.id ? "bg-primary/5 border-primary" : ""
               } border flex justify-between items-center rounded hover:bg-primary/5 p-3 flex-col w-full gap-1`}>
               <div className="flex justify-between items-center w-full">
-                <span className="text-sm font-medium">{temp.form.name}</span>
+                <span className="text-sm font-medium">{temp.name}</span>
                 <div>{temp.pro && showBadge && <Badge variant={"pink"}>Pro Template</Badge>}</div>
               </div>
               <div className="flex w-full">
-                <p className="text-xs text-foreground/70">{temp.form.description}</p>
+                <p className="text-xs text-foreground/70">{temp.description}</p>
               </div>
             </button>
           );

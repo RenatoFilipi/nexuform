@@ -67,6 +67,8 @@ export interface IFormTemplate {
   id: string;
   enabled: boolean;
   category: TTemplateCategory;
+  name: string;
+  description: string;
   form: EForm;
   theme: ETheme;
   blocks: EBlock[];
