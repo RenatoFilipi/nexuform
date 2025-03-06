@@ -1,30 +1,15 @@
 "use client";
 
-import FormStatusBadge from "@/components/shared/form-status-badge";
-import { Button } from "@/components/ui/button";
 import useFormStore from "@/stores/form";
 import useUserStore from "@/stores/user";
 import { paginationFrom, paginationTo } from "@/utils/constants";
 import { EBlock, EForm, EFormAnalytics, EIntegration, EProfile, ESubmission, ESubscription } from "@/utils/entities";
-import { formatDateRelativeToNow } from "@/utils/functions";
-import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import {
-  BarChartIcon,
-  BeakerIcon,
-  ExternalLinkIcon,
-  LoaderIcon,
-  PlugZapIcon,
-  SendIcon,
-  Settings2Icon,
-  Share2Icon,
-} from "lucide-react";
-import Link from "next/link";
+import { BarChartIcon, PlugIcon, SendIcon, Settings2Icon } from "lucide-react";
 import { useState } from "react";
 import FormIntegrations from "./form-integrations";
 import FormOverview from "./form-overview";
 import FormSettings from "./form-settings";
-import FormShare from "./form-share";
 import FormSubmissions from "./form-submissions";
 
 type TView = "overview" | "submissions" | "integrations" | "settings";
@@ -44,7 +29,7 @@ const views = [
   },
   {
     label: "Integrations",
-    icon: PlugZapIcon,
+    icon: PlugIcon,
     view: "integrations",
     enabled: true,
   },
@@ -106,81 +91,33 @@ const FormWrapper = ({
   if (query.isPending) return null;
 
   return (
-    <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 lg:px-36 sm:px-6 flex-1 mt-14">
-      <div className="flex flex-col">
-        <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
-          <div className="flex justify-between sm:justify-start items-center gap-3 w-full sm:w-fit">
-            <div className="flex items-center gap-2">
-              <h1 className="font-medium truncate max-w-[240px]">{formStore.form.name}</h1>
-            </div>
-            <FormStatusBadge status={formStore.form.status as TFormStatus} uppercase />
-            {formStore.form.updated_at !== "".trim() ? (
-              <div className="hidden sm:flex">
-                <span className="text-xs text-foreground/60">
-                  Form last updated {formatDateRelativeToNow(formStore.form.updated_at)}
+    <div className="flex-1 mt-12 flex flex-col">
+      <div className="border-b h-10 flex justify-start items-center gap-1 px-2 sm:px-6 overflow-x-auto">
+        {enabledViews.map((v) => {
+          return (
+            <button
+              onClick={() => setView(v.view as TView)}
+              key={v.view}
+              className={`${
+                v.view === view ? "font-medium text-foreground" : "text-foreground/60"
+              } text-xs flex justify-center items-center px-2 hover:bg-foreground/5 relative rounded gap-2 h-full`}>
+              <v.icon className={`${v.view === view ? "text-primary" : "text-foreground/60"} w-4 h-4`} />
+              {v.label}
+              {v.view === "submissions" && notReviewedSubmissions > 0 && (
+                <span className="inline-flex items-center justify-center w-4 h-4 text-xs font-semibold text-yellow-600 bg-yellow-600/20 rounded-full">
+                  {notReviewedSubmissions}
                 </span>
-              </div>
-            ) : (
-              <div>
-                <LoaderIcon className="w-4 h-4 animate-spin" />
-              </div>
-            )}
-          </div>
-          <div className="flex items-center sm:gap-4 gap-2 w-full sm:w-fit">
-            <FormShare form={formStore.form}>
-              <Button variant="outline" size="sm" className="w-full">
-                <Share2Icon className="w-4 h-4 mr-2" />
-                Share
-              </Button>
-            </FormShare>
-            {formStore.form.status === "published" && (
-              <a href={`/s/${formStore.form.public_url}`} target="_blank" rel="noopener noreferrer" className="">
-                <Button variant="outline" size="sm">
-                  <ExternalLinkIcon className="w-4 h-4 mr-2" />
-                  Go to Form
-                </Button>
-              </a>
-            )}
-            <Button variant="default" size="sm" asChild>
-              <Link href={`/dashboard/editor/${formStore.form.id}`} className="w-full sm:w-fit">
-                <BeakerIcon className="w-4 h-4 mr-2" />
-                Editor
-              </Link>
-            </Button>
-          </div>
-        </div>
+              )}
+              {v.view === view && <div className="bg-foreground/70 bottom-0 w-full h-0.5 absolute"></div>}
+            </button>
+          );
+        })}
       </div>
-      <div className="flex flex-col flex-1 h-full gap-4 overflow-y-auto">
-        <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
-          <div className="w-full overflow-x-auto">
-            <div className="flex sm:w-fit sm:gap-2 gap-1">
-              {enabledViews.map((v) => (
-                <button
-                  key={v.view}
-                  onClick={() => setView(v.view as TView)}
-                  className={`${
-                    v.view === view
-                      ? "border-foreground/30 text-foreground/100 font-medium"
-                      : "border-transparent text-foreground/70"
-                  } border p-2 flex items-center justify-center gap-2 text-sm hover:bg-foreground/5 rounded flex-1`}>
-                  <v.icon className={`${v.view === view ? "text-primary" : "text-foreground/70"} w-4 h-4`} />
-                  {v.label}
-                  {v.view === "submissions" && notReviewedSubmissions > 0 && (
-                    <span className="inline-flex items-center justify-center w-4 h-4 text-xs font-semibold text-yellow-600 bg-yellow-600/20 rounded-full">
-                      {notReviewedSubmissions}
-                    </span>
-                  )}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-center flex-1 h-full items-start overflow-y-auto">
-          {view === "overview" && <FormOverview />}
-          {view === "submissions" && <FormSubmissions />}
-          {view === "integrations" && <FormIntegrations />}
-          {view === "settings" && <FormSettings />}
-        </div>
+      <div className="px-3 sm:px-20 lg:px-52 py-4 sm:py-8 flex justify-center flex-1 items-start overflow-y-auto">
+        {view === "overview" && <FormOverview />}
+        {view === "submissions" && <FormSubmissions />}
+        {view === "integrations" && <FormIntegrations />}
+        {view === "settings" && <FormSettings />}
       </div>
     </div>
   );

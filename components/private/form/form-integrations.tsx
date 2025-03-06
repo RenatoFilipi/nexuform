@@ -32,8 +32,8 @@ const FormIntegrations = () => {
           <RocketIcon className="w-6 h-6 text-primary" />
         </div>
         <div className="text-center flex flex-col justify-center items-center gap-1">
-          <h2 className="text-lg font-medium">Coming Soon</h2>
-          <p className="text-sm text-foreground/70">We are working hard to bring you this feature. Stay tuned!</p>
+          <h2 className="text-base font-medium">Coming Soon</h2>
+          <p className="text-xs text-foreground/80">We are working hard to bring you this feature. Stay tuned!</p>
         </div>
       </div>
     </div>

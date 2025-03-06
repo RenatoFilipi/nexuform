@@ -255,6 +255,7 @@ const NavApp = () => {
   const editorStore = useEditorStore();
   const pathname = usePathname();
   const isActive = (path: string) => path === pathname;
+  const borderB = pathname === "/dashboard/forms";
 
   useQuery({
     queryKey: [],
@@ -265,7 +266,10 @@ const NavApp = () => {
   });
 
   return (
-    <div className="border-y border-t-foreground/5 h-12 flex items-center px-2 sm:px-4 justify-between z-10 bg-background fixed w-full">
+    <div
+      className={`${
+        borderB ? "" : ""
+      } border-t border-t-foreground/5 h-12 flex items-center px-2 sm:px-4 justify-between z-10 bg-background fixed w-full`}>
       <div className="flex justify-center items-center gap-4 h-full">
         <div className="flex justify-center items-center gap-2">
           <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
@@ -274,25 +278,22 @@ const NavApp = () => {
             </Link>
           </Button>
         </div>
-        <div className="hidden sm:flex justify-center items-center gap-2 h-full">
-          {links.map((link) => {
-            if (link.enabled)
-              return (
-                <Link
-                  key={link.id}
-                  href={link.path}
-                  className={`${
-                    isActive(link.path) ? "text-foreground/100 font-medium" : "text-foreground/70"
-                  } text-xs h-full flex justify-center items-center px-2 hover:bg-foreground/5 relative`}>
-                  {isActive(link.path) && <div className="bg-foreground/70 bottom-0 w-full h-0.5 absolute"></div>}
-                  <link.icon
-                    className={`${isActive(link.path) ? "text-primary" : "text-foreground/70"} w-4 h-4 mr-2`}
-                  />
-                  {link.name}
-                </Link>
-              );
-          })}
-        </div>
+      </div>
+      <div className="hidden sm:flex justify-center items-center gap-2 h-full">
+        {links.map((link) => {
+          if (link.enabled)
+            return (
+              <Link
+                key={link.id}
+                href={link.path}
+                className={`${
+                  isActive(link.path) ? "text-foreground/100 font-medium bg-foreground/5" : "text-foreground/70"
+                } text-xs flex justify-center items-center px-2 py-2 rounded hover:bg-foreground/5 relative`}>
+                <link.icon className={`${isActive(link.path) ? "text-primary" : "text-foreground/70"} w-4 h-4 mr-2`} />
+                {link.name}
+              </Link>
+            );
+        })}
       </div>
       <div className="hidden sm:flex justify-center items-center gap-4">
         <div className="flex justify-center items-center gap-3">
@@ -451,7 +452,7 @@ const NavEditor = () => {
   };
 
   return (
-    <div className="h-12 flex justify-between items-center w-full bg-background border-y border-t-foreground/5 sm:px-4 px-2 z-20 fixed">
+    <div className="h-12 flex justify-between items-center w-full bg-background border-t border-t-foreground/5 sm:px-4 px-2 z-20 fixed">
       <div className="flex justify-center items-center gap-1">
         <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
           <Link href={"/dashboard/forms"}>
@@ -467,14 +468,14 @@ const NavEditor = () => {
       {active && (
         <div className="flex justify-center items-center gap-1">
           {form.updated_at !== "" && (
-            <span className="text-xs font-medium text-foreground/80 mr-5 hidden sm:flex">
+            <span className="text-xs text-foreground/80 mr-5 hidden sm:flex">
               Last updated at {new Date(form.updated_at).toLocaleString()}
             </span>
           )}
           <Button size={"xs"} variant={"outline"} className="flex sm:hidden" onClick={() => setPreview(!preview)}>
             Preview
           </Button>
-          <Button size={"xs"} variant={"default"} onClick={onSave} disabled={appState === "loading"}>
+          <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
             {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
             Save Form
           </Button>

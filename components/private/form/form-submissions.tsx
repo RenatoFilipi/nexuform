@@ -101,8 +101,7 @@ const FormSubmissions = () => {
                     <TableCell className="text-right py-2 pr-4">
                       <SubmissionDetails blocks={blocks} submission={submission}>
                         <Button variant={"outline"} size={"xs"}>
-                          <CogIcon className="w-4 h-4 mr-2" />
-                          View Details
+                          <CogIcon className="w-4 h-4" />
                         </Button>
                       </SubmissionDetails>
                     </TableCell>

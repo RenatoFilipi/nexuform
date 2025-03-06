@@ -37,7 +37,7 @@ const AnalyticsWrapper = ({ forms, formsAnalytics, profile, subscription, email,
   if (query.isPending) return null;
 
   return (
-    <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 lg:px-36 sm:px-6 flex-1 mt-14">
+    <div className="flex-1 mt-12 flex flex-col px-3 sm:px-20 lg:px-52 gap-6 py-4 sm:py-8">
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-medium">Analytics</h1>
       </div>

@@ -11,15 +11,7 @@ import useUserStore from "@/stores/user";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  BookDashedIcon,
-  EyeIcon,
-  GlobeIcon,
-  Layers2Icon,
-  LoaderIcon,
-  MonitorOffIcon,
-  ShieldAlertIcon,
-} from "lucide-react";
+import { BookDashedIcon, GlobeIcon, LoaderIcon, MonitorOffIcon, SettingsIcon, ShieldAlertIcon } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -49,8 +41,8 @@ const statusList = [
   },
 ];
 const views = [
-  { label: "General", icon: Layers2Icon, view: "general", enabled: true },
-  { label: "Status", icon: EyeIcon, view: "status", enabled: true },
+  { label: "General", icon: SettingsIcon, view: "general", enabled: true },
+  { label: "Status", icon: GlobeIcon, view: "status", enabled: true },
   { label: "Delete", icon: ShieldAlertIcon, view: "delete", enabled: true },
 ];
 
@@ -59,8 +51,8 @@ const FormSettings = () => {
   const enabledViews = views.filter((x) => x.enabled);
 
   return (
-    <div className="flex w-full h-full flex-col sm:flex-row gap-4 sm:gap-0">
-      <div className="flex sm:flex-col h-fit sm:w-60 gap-1 sm:absolute">
+    <div className="flex w-full h-full gap-6 flex-col">
+      <div className="flex w-full sm:w-fit gap-1 sm:gap-3">
         {enabledViews.map((v) => {
           return (
             <button
@@ -68,14 +60,14 @@ const FormSettings = () => {
               onClick={() => setView(v.view as TView)}
               className={`${
                 v.view === view ? "border-foreground/30 font-medium" : "border-transparent text-foreground/70"
-              } border p-2 flex items-center justify-center sm:justify-start gap-2 text-sm hover:bg-foreground/5 rounded flex-1`}>
+              } border p-2 flex items-center justify-center sm:justify-start gap-2 text-xs hover:bg-foreground/5 rounded flex-1`}>
               <v.icon className={`${v.view === view ? "text-primary" : "text-foreground/70"} w-4 h-4`} />
               {v.label}
             </button>
           );
         })}
       </div>
-      <div className="flex w-full sm:ml-64">
+      <div className="flex w-full">
         {view === "general" && <GeneralSettings />}
         {view === "status" && <StatusSettings />}
         {view === "delete" && <DeleteSettings />}
@@ -83,7 +75,6 @@ const FormSettings = () => {
     </div>
   );
 };
-
 const GeneralSettings = () => {
   const supabase = createClient();
   const [settingsState, setSettingsState] = useState<TAppState>("idle");
@@ -291,7 +282,7 @@ const StatusSettings = () => {
         </p>
       </div>
       <div className="flex flex-col gap-8">
-        <div className="grid gap-4 overflow-y-auto grid-cols-1 w-full">
+        <div className="grid gap-4 overflow-y-auto sm:grid-cols-1 w-full">
           {statusList.map((statusItem, index) => (
             <button
               key={index}
@@ -306,7 +297,7 @@ const StatusSettings = () => {
               </div>
               <div className="flex flex-col justify-center items-start gap-1">
                 <span className="font-medium">{statusItem.label}</span>
-                <span className="text-xs text-foreground/70">{statusItem.description}</span>
+                <span className="text-xs text-foreground/70 text-start">{statusItem.description}</span>
               </div>
             </button>
           ))}
@@ -332,7 +323,7 @@ const DeleteSettings = () => {
           Permanently remove this form and all its data. This action cannot be undone.
         </p>
       </div>
-      <div className="flex justify-center items-center w-full border bg-destructive/5 rounded border-destructive/50 py-20">
+      <div className="flex justify-center items-center w-full border bg-destructive/5 rounded border-destructive/50 sm:py-20 px-6 py-6">
         <div className="flex flex-col justify-center items-center gap-4">
           <Badge variant={"destructive"} uppercase className="w-fit">
             Danger Zone

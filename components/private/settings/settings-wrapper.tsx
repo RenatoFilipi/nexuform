@@ -68,26 +68,27 @@ const SettingsWrapper = ({
   if (query.isPending) return null;
 
   return (
-    <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 lg:px-60 sm:px-6 flex-1 mt-14">
-      <div className="flex w-full h-full flex-1 relative flex-col sm:flex-row gap-4 sm:gap-0">
-        <div className="flex sm:flex-col h-fit sm:w-60 gap-1 sm:fixed">
-          {enabledViews.map((v) => (
+    <div className="flex-1 mt-12 flex flex-col">
+      <div className="border-b h-10 flex justify-start items-center gap-1 px-2 sm:px-6 overflow-x-auto">
+        {enabledViews.map((v) => {
+          return (
             <button
-              key={v.view}
               onClick={() => setView(v.view as TView)}
+              key={v.view}
               className={`${
-                v.view === view ? "border-foreground/30 font-medium" : "border-transparent text-foreground/70"
-              } border p-2 flex items-center justify-center sm:justify-start gap-2 text-xs hover:bg-foreground/5 rounded flex-1`}>
-              <v.icon className={`${v.view === view ? "text-primary" : "text-foreground/70"} w-4 h-4`} />
+                v.view === view ? "font-medium text-foreground" : "text-foreground/60"
+              } text-xs flex justify-center items-center px-2 hover:bg-foreground/5 relative rounded gap-2 h-full`}>
+              <v.icon className={`${v.view === view ? "text-primary" : "text-foreground/60"} w-4 h-4`} />
               {v.label}
+              {v.view === view && <div className="bg-foreground/70 bottom-0 w-full h-0.5 absolute"></div>}
             </button>
-          ))}
-        </div>
-        <div className="flex w-full sm:ml-64">
-          {view === "account" && <SettingsAccount />}
-          {view === "billing" && <SettingsBilling />}
-          {view === "password" && <SettingsPassword />}
-        </div>
+          );
+        })}
+      </div>
+      <div className="px-3 sm:px-20 lg:px-72 pt-8 flex justify-center flex-1 items-start overflow-y-auto">
+        {view === "account" && <SettingsAccount />}
+        {view === "billing" && <SettingsBilling />}
+        {view === "password" && <SettingsPassword />}
       </div>
     </div>
   );

@@ -70,8 +70,8 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
           <CardTemplate key={plan.type} plan={plan} />
         ))}
       </div>
-      <div className="flex justify-end items-center">
-        <Button onClick={() => setState(false)} variant={"outline"} size={"sm"}>
+      <div className="flex sm:justify-end justify-center items-center">
+        <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
           Close
         </Button>
       </div>

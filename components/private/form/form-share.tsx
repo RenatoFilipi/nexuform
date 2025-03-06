@@ -61,15 +61,15 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
           </div>
           <div className="flex flex-col justify-center items-center gap-6">
             <div className="flex justify-center items-center flex-col gap-1">
-              <h3 className="text-lg font-medium">Form is not public</h3>
-              <p className="text-sm text-foreground/70 text-center">
+              <h3 className="text-base font-medium">Form is not public</h3>
+              <p className="text-xs text-foreground/70 text-center">
                 This form is currently private. To make it public, go to the editor page and update its status.
               </p>
             </div>
             <div className="flex justify-end items-center">
               <Button variant="secondary" size="sm">
+                <ArrowRightIcon className="w-4 h-4 mr-2" />
                 <Link href={`/dashboard/editor/${form.id}`}>Go to Editor</Link>
-                <ArrowRightIcon className="w-4 h-4 ml-2" />
               </Button>
             </div>
           </div>

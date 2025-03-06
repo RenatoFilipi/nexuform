@@ -114,11 +114,11 @@ const PreSelectForm = ({ setState, setView }: { setState: TSetState<boolean>; se
               onClick={() => setView(opt.type as TView)}
               className="flex flex-col justify-center items-center border w-full h-full gap-4 hover:bg-primary/5 p-6">
               <div className="flex justify-center items-center p-2 bg-primary/10 rounded">
-                <opt.icon className="w-8 h-8 text-primary" />
+                <opt.icon className="w-6 h-6 text-primary" />
               </div>
-              <div className="flex flex-col justify-center items-center">
-                <h1 className="text-lg font-medium">{opt.title}</h1>
-                <p className="text-sm text-foreground/70">{opt.description}</p>
+              <div className="flex flex-col justify-center items-center gap-1">
+                <h1 className="text-base font-medium">{opt.title}</h1>
+                <p className="text-xs text-foreground/70">{opt.description}</p>
               </div>
             </button>
           );
