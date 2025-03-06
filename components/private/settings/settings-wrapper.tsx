@@ -68,7 +68,7 @@ const SettingsWrapper = ({
   if (query.isPending) return null;
 
   return (
-    <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 lg:px-36 sm:px-6 flex-1 mt-14">
+    <div className="flex flex-col h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 lg:px-60 sm:px-6 flex-1 mt-14">
       <div className="flex w-full h-full flex-1 relative flex-col sm:flex-row gap-4 sm:gap-0">
         <div className="flex sm:flex-col h-fit sm:w-60 gap-1 sm:fixed">
           {enabledViews.map((v) => (

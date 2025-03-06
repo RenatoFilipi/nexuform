@@ -73,9 +73,8 @@ const Home = () => {
         <span className="text-xs text-foreground/80 sm:text-center">
           © 2025{" "}
           <Link href="/" className="hover:underline">
-            Nebulaform
+            Nebulaform.
           </Link>
-          . All Rights Reserved.
         </span>
         <div className="absolute right-4 hidden sm:flex">
           <ModeToggle2 />

@@ -65,7 +65,7 @@ const DashboardNewForm = ({ children, userId }: { children: React.ReactNode; use
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="flex flex-col min-w-[650px] h-[600px] overflow-y-auto">
-          <DialogHeader>
+          <DialogHeader className="hidden">
             <DialogTitle>Create Form</DialogTitle>
             <DialogDescription>
               Fill in the details below to create a new form. You can customize the settings as needed.
@@ -81,7 +81,7 @@ const DashboardNewForm = ({ children, userId }: { children: React.ReactNode; use
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3 flex flex-col max-h-[90%]">
-        <DrawerHeader>
+        <DrawerHeader className="hidden">
           <DrawerTitle>Create Form</DrawerTitle>
           <DrawerDescription>
             Fill in the details below to create a new form. You can customize the settings as needed.
@@ -102,6 +102,10 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
 const PreSelectForm = ({ setState, setView }: { setState: TSetState<boolean>; setView: TSetState<TView> }) => {
   return (
     <div className="pt-4 sm:pt-0 flex flex-col h-full gap-6">
+      <div className="grid gap-1">
+        <span className="font-semibold">Create Form</span>
+        <p className="text-xs text-foreground/70">Choose a method to create a new form.</p>
+      </div>
       <div className="flex flex-col justify-center items-center gap-6 w-full h-full">
         {options.map((opt) => {
           return (
@@ -156,6 +160,10 @@ const CustomForm = ({ setState, setView }: { setState: TSetState<boolean>; setVi
 
   return (
     <div className="flex flex-col gap-4 pt-4 sm:pt-0 h-full w-full">
+      <div className="grid gap-1">
+        <span className="font-semibold">Custom Form</span>
+        <p className="text-xs text-foreground/70">Complete the fields below to create a custom form from scratch.</p>
+      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6 h-full">
           <div className="flex flex-col gap-8 h-full">
@@ -287,7 +295,13 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
 
   return (
     <div className="flex flex-col h-full gap-6 overflow-y-auto">
-      <div className="flex flex-col w-full h-full overflow-y-auto gap-3 sm:pr-4">
+      <div className="grid gap-1">
+        <span className="font-semibold">Form Templates</span>
+        <p className="text-xs text-foreground/70">
+          Choose a template to quickly get started with your form creation process.
+        </p>
+      </div>
+      <div className="grid w-full h-full overflow-y-auto gap-3 sm:pr-4">
         {FormTemplates.map((temp) => {
           return (
             <button
@@ -298,13 +312,15 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
               }}
               className={`${
                 value === temp.id ? "bg-primary/5 border-primary" : ""
-              } border flex justify-between items-center rounded hover:bg-primary/5 p-3 flex-col w-full gap-1`}>
+              } border flex justify-between items-center rounded hover:bg-primary/5 p-3 flex-col w-full gap-2`}>
               <div className="flex justify-between items-center w-full">
                 <span className="text-sm font-medium">{temp.name}</span>
-                <div>{temp.pro && showBadge && <Badge variant={"pink"}>Pro Template</Badge>}</div>
+                <div className="flex justify-center items-center gap-3">
+                  {temp.pro && showBadge && <Badge variant={"pink"}>Pro</Badge>}
+                </div>
               </div>
-              <div className="flex w-full">
-                <p className="text-xs text-foreground/70">{temp.description}</p>
+              <div className="flex w-full flex-col justify-start">
+                <p className="text-xs text-foreground/70 text-start">{temp.description}</p>
               </div>
             </button>
           );
@@ -332,7 +348,7 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
             Back
           </Button>
           <Button
-            disabled={appState === "loading"}
+            disabled={appState === "loading" || value == ""}
             onClick={onSubmit}
             type="button"
             variant={"default"}
