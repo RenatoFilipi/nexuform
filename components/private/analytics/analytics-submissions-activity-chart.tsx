@@ -75,7 +75,7 @@ const AnalyticsSubmissionsActivityChart = () => {
   };
 
   return (
-    <div className="border flex flex-col gap-4 p-4 rounded">
+    <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center">
         <span>Activity</span>
         <div className="flex justify-center items-center gap-3">

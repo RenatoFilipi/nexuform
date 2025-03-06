@@ -348,7 +348,7 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
             Back
           </Button>
           <Button
-            disabled={appState === "loading" || value == ""}
+            disabled={appState === "loading"}
             onClick={onSubmit}
             type="button"
             variant={"default"}

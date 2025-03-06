@@ -86,7 +86,7 @@ const FormSubmissionsActivityChart: React.FC = () => {
   if (isPending) return null;
 
   return (
-    <div className="flex flex-col justify-between border py-3 px-4 rounded gap-4 relative">
+    <div className="flex flex-col justify-between gap-4 relative border rounded p-4">
       <div className="flex flex-col justify-center items-center sm:items-start">
         <div className="flex justify-between items-center gap-4 w-full">
           <div className="flex justify-center items-center gap-3">
@@ -102,11 +102,7 @@ const FormSubmissionsActivityChart: React.FC = () => {
             ))}
           </div>
           {hasData && isDesktop && <BadgeDay submissionDifference={submissionDifference} />}
-          {!hasData && (
-            <Badge variant="warning" uppercase>
-              No data available
-            </Badge>
-          )}
+          {!hasData && <Badge variant="warning">No data available</Badge>}
         </div>
       </div>
       <ChartContainer config={CHART_CONFIG}>
