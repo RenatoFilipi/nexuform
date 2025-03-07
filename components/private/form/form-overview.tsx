@@ -70,7 +70,7 @@ const FormOverview = () => {
 
 const CardTemplate = ({ name, value, icon }: { name: string; value: string; icon: React.ReactNode }) => {
   return (
-    <Card className="px-4 py-3 flex sm:flex-col flex-1 justify-between gap-4 items-start">
+    <Card className="px-4 py-3 flex sm:flex-col flex-1 justify-between gap-4 items-center sm:items-start">
       <div className="flex justify-between w-full">
         <div className="flex items-center gap-2 justify-between w-full">
           <span className="text-xs text-foreground/80">{name}</span>

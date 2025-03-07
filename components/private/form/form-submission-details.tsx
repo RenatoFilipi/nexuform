@@ -49,7 +49,7 @@ const FormSubmissionDetails = ({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3 max-h-[90%]">
+      <DrawerContent className="p-3 max-h-[90%] h-full">
         <DrawerHeader className="hidden">
           <DrawerTitle>Details</DrawerTitle>
           <DrawerDescription>Review the questions and your responses from this submission.</DrawerDescription>
@@ -151,7 +151,7 @@ const Body = ({
           })}
         </div>
       </div>
-      <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
+      <div className="flex justify-between items-center flex-col-reverse sm:flex-row gap-4">
         <Button variant={"outline"} size={"sm"} className="w-full sm:w-fit" onClick={() => setState(false)}>
           Close
         </Button>

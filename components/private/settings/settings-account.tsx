@@ -102,7 +102,12 @@ const AccountProfile = () => {
           />
         </div>
         <div className="flex justify-end items-center">
-          <Button disabled={appState === "loading"} variant={"default"} type="submit" size={"sm"}>
+          <Button
+            disabled={appState === "loading"}
+            variant={"default"}
+            type="submit"
+            size={"sm"}
+            className="w-full sm:w-fit">
             {appState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
             Save Profile
           </Button>
@@ -114,17 +119,17 @@ const AccountProfile = () => {
 const AccountDelete = () => {
   return (
     <div className="flex flex-col gap-2 rounded border p-4 border-destructive/50">
-      <div className="flex justify-start items-center gap-4">
+      <div className="flex justify-between sm:justify-start items-center gap-4">
         <h2 className="text-base font-semibold">Delete account</h2>
         <Badge variant={"red"}>Danger Zone</Badge>
       </div>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
         <p className="text-xs text-foreground/80">
           Delete your account and all its associated data. This action is not reversible, so please continue with
           caution.
         </p>
         <SettingsAccountDelete>
-          <Button variant={"destructive_outline"} size={"sm"}>
+          <Button variant={"destructive_outline"} size={"sm"} className="w-full sm:w-fit">
             Delete Account
           </Button>
         </SettingsAccountDelete>
