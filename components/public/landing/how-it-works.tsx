@@ -1,66 +1,113 @@
 "use client";
-import { BarChartIcon, ClipboardCheckIcon, DownloadIcon, LayoutGridIcon, PaintbrushIcon, SendIcon } from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { BarChartIcon, CheckIcon, DatabaseIcon, LayersIcon } from "lucide-react";
+import { useState } from "react";
+
+const steps = [
+  {
+    title: "Create Your Form",
+    description: "Easily design and build forms tailored to your needs.",
+    icon: LayersIcon,
+    details: [
+      "Start from scratch or choose a pre-made template.",
+      "Customize with various blocks, themes, and settings to fit your brand.",
+      "Publish and share with a single click, instantly accessible to your audience.",
+    ],
+  },
+  {
+    title: "Manage Submissions",
+    description: "Track responses, analyze data, and export results effortlessly.",
+    icon: DatabaseIcon,
+    details: [
+      "Monitor real-time submissions to stay up-to-date.",
+      "View detailed activity reports, including completion rates and time spent.",
+      "Export the data for deeper analysis and reporting.",
+    ],
+  },
+  {
+    title: "Analyze Your Data",
+    description: "Gain valuable insights to optimize your form's performance.",
+    icon: BarChartIcon,
+    details: [
+      "Track submission trends across all your forms for a comprehensive view.",
+      "Analyze key metrics such as engagement, conversion, and drop-off rates.",
+      "Make data-driven improvements to enhance form effectiveness.",
+    ],
+  },
+];
 
 const HowItWorks = () => {
-  const steps = [
-    {
-      title: "Design Your Form",
-      description: "Effortlessly create a form tailored to your specific needs.",
-      icon: PaintbrushIcon,
-    },
-    {
-      title: "Customize and Publish",
-      description: "Personalize your form and publish it with just a few clicks.",
-      icon: ClipboardCheckIcon,
-    },
-    {
-      title: "Share Instantly",
-      description: "Easily distribute your form to your audience in no time.",
-      icon: SendIcon,
-    },
-    {
-      title: "Manage Submissions",
-      description: "Track and organize submissions from a central dashboard.",
-      icon: LayoutGridIcon,
-    },
-    {
-      title: "Unlock Insights",
-      description: "Analyze form performance using our powerful analytics tools.",
-      icon: BarChartIcon,
-    },
-    {
-      title: "Export with Ease",
-      description: "Download submissions and analytics for offline review.",
-      icon: DownloadIcon,
-    },
-  ];
+  const [selectedStep, setSelectedStep] = useState(steps[0]);
 
   return (
-    <section
-      id="how-it-works"
-      className="py-12 sm:py-16 lg:py-16 w-full px-8 sm:px-0 min-h-screen flex justify-center items-center">
-      <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 grid gap-10">
-        <div className="text-center flex flex-col justify-center items-center">
-          <h2 className="text-2xl font-bold leading-tight sm:text-4xl xl:text-5xl">How It Works</h2>
-          <p className="mt-4 text-base text-foreground/70">
-            Easily create, customize, and manage forms in a few simple steps.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 mt-10 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {steps.map((step, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center px-6 py-8 transition-shadow bg-background border rounded-lg hover:border-primary hover:bg-primary/5">
-              <div className="flex justify-center flex-col items-center gap-3">
-                <div className="flex justify-center items-center p-2 rounded bg-primary/10">
-                  <step.icon className="text-primary w-6 h-6" />
-                </div>
-                <h3 className="text-lg font-semibold text-center">{step.title}</h3>
-              </div>
-              <p className="mt-3 text-sm text-foreground/70 text-start">{step.description}</p>
+    <section id="how-it-works" className="py-16 w-full px-6 sm:px-12 min-h-screen flex justify-center items-center">
+      <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Sidebar - Steps */}
+        <div className="flex flex-col gap-6">
+          <div className="text-center md:text-left flex flex-col gap-4 sm:gap-2 justify-center items-center sm:items-start">
+            <Badge uppercase variant="primary" className="w-fit">
+              How It Works
+            </Badge>
+            <h2 className="text-2xl font-bold leading-tight sm:text-4xl mt-3">
+              Create and Publish Forms in 3 Simple Steps
+            </h2>
+            <p className="text-base text-foreground/70 mt-2">
+              Our platform simplifies the process of creating, publishing, and analyzing forms in just a few minutes.
+            </p>
+          </div>
+          <div className="flex justify-start items-center h-full w-full gap-4">
+            <div className="flex flex-col gap-6 w-full">
+              {steps.map((step) => (
+                <button
+                  key={step.title}
+                  onClick={() => setSelectedStep(step)}
+                  className={`flex items-center gap-4 p-4 rounded-lg transition-all border 
+              ${
+                selectedStep.title === step.title
+                  ? "border-primary bg-primary/5"
+                  : "border-transparent hover:border-muted"
+              }`}>
+                  <div
+                    className={`${
+                      selectedStep.title === step.title ? "bg-foreground" : "bg-primary/10"
+                    } flex justify-center items-center p-2 rounded`}>
+                    <step.icon
+                      className={`${selectedStep.title === step.title ? "text-background" : "text-primary"} w-6 h-6`}
+                    />
+                  </div>
+                  <div className="flex flex-col items-start justify-center">
+                    <h3 className="text-lg font-semibold">{step.title}</h3>
+                    <p className="text-sm text-foreground/70">{step.description}</p>
+                  </div>
+                </button>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
+        {/* Details Section */}
+        <Card className="rounded-lg flex flex-col gap-4">
+          <div className="bg-primary/10 p-4 flex justify-start items-center gap-4">
+            <div className="flex items-center justify-center p-2 bg-primary/20 rounded">
+              <selectedStep.icon className="text-primary w-8 h-8" />
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-foreground">{selectedStep.title}</h3>
+              <p className="text-sm text-foreground/70">{selectedStep.description}</p>
+            </div>
+          </div>
+          <ul className="p-4 flex flex-col gap-3">
+            {selectedStep.details.map((detail, index) => (
+              <li key={index} className="flex items-center justify-start gap-4">
+                <div className="flex justify-center items-center p-1 bg-primary/10 rounded">
+                  <CheckIcon className="text-primary w-4 h-4" />
+                </div>
+                <p className="text-foreground text-sm">{detail}</p>
+              </li>
+            ))}
+          </ul>
+        </Card>
       </div>
     </section>
   );

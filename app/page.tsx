@@ -19,19 +19,19 @@ const Home = () => {
     { name: "Features", url: "features" },
     { name: "How it Works", url: "how-it-works" },
     { name: "Pricing", url: "pricing" },
-    { name: "Faq", url: "faq" },
+    { name: "FAQ", url: "faq" },
   ];
 
   return (
     <div className="min-h-screen flex flex-col relative">
-      <div className="flex fixed top-0 w-full justify-between sm:justify-around sm:px-5 px-3 h-16 bg-background/80 z-20 backdrop-blur-lg items-center">
+      <div className="flex fixed top-0 w-full justify-between sm:px-5 px-3 h-16 bg-background/80 z-20 backdrop-blur-lg items-center">
         <Link href={"/"} className="flex justify-center items-center">
-          <Brand type="primary_logo_text" className="h-7 fill-foreground" />
+          <Brand type="primary_logo_text" className="h-6 fill-foreground" />
         </Link>
         <div className="hidden sm:flex justify-center items-center gap-6">
           {urls.map((url) => {
             return (
-              <Link key={url.url} href={`#${url.url}`} className="text-sm text-foreground/70 hover:text-foreground">
+              <Link key={url.url} href={`#${url.url}`} className="text-sm text-foreground/80 hover:text-foreground">
                 {url.name}
               </Link>
             );

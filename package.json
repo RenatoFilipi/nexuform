@@ -42,7 +42,7 @@
     "framer-motion": "^11.11.17",
     "googleapis": "^144.0.0",
     "lucide-react": "^0.469.0",
-    "motion": "^11.11.17",
+    "motion": "^11.18.2",
     "nanoid": "^5.0.9",
     "negotiator": "^1.0.0",
     "next": "15.1.3",
