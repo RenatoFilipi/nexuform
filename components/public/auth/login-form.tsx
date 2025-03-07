@@ -113,8 +113,8 @@ const LoginForm = () => {
               )}
             />
             <div className="flex justify-start items-center w-full">
-              <Link href={"/password/reset"} className="text-sm hover:underline text-foreground/80">
-                Forgot my password
+              <Link href={"/password/reset"} className="text-sm hover:underline text-info dark:text-blue-500">
+                Forgot my password?
               </Link>
             </div>
           </div>

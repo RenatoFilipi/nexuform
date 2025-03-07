@@ -9,8 +9,8 @@ import { CheckIcon, RocketIcon } from "lucide-react";
 
 const Pricing = () => {
   return (
-    <section id="pricing" className="py-12 sm:py-16 lg:py-20 bg-background px-8 sm:px-0">
-      <div className="px-4 mx-auto sm:px-6 lg:px-8 gap-4 flex flex-col justify-center items-center">
+    <section id="pricing" className="py-12 sm:py-16 lg:py-20 bg-background px-8 sm:px-0 sm:min-h-screen">
+      <div className="mx-auto sm:px-6 lg:px-8 gap-4 flex flex-col justify-center items-center">
         <div className="text-center flex flex-col justify-center items-center gap-4">
           <Badge uppercase variant={"primary"}>
             pricing

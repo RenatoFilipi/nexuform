@@ -42,23 +42,25 @@ const HowItWorks = () => {
   const [selectedStep, setSelectedStep] = useState(steps[0]);
 
   return (
-    <section id="how-it-works" className="py-16 w-full px-6 sm:px-12 min-h-screen flex justify-center items-center">
-      <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12">
+    <section
+      id="how-it-works"
+      className="py-16 w-full px-6 sm:px-12 sm:min-h-screen flex justify-center items-center flex-col gap-6">
+      <div className="flex flex-col gap-4 justify-center items-center">
+        <Badge uppercase variant="primary" className="w-fit">
+          How It Works
+        </Badge>
+        <h2 className="text-2xl font-bold leading-tight sm:text-4xl mt-3 text-center">
+          Create and Publish Forms in 3 Simple Steps
+        </h2>
+        <p className="text-base text-foreground/70 mt-2">
+          Our platform simplifies the process of creating, publishing, and analyzing forms in just a few minutes.
+        </p>
+      </div>
+      <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 mt-10 sm:mt-16 xl:mt-12">
         {/* Sidebar - Steps */}
         <div className="flex flex-col gap-6">
-          <div className="text-center md:text-left flex flex-col gap-4 sm:gap-2 justify-center items-center sm:items-start">
-            <Badge uppercase variant="primary" className="w-fit">
-              How It Works
-            </Badge>
-            <h2 className="text-2xl font-bold leading-tight sm:text-4xl mt-3">
-              Create and Publish Forms in 3 Simple Steps
-            </h2>
-            <p className="text-base text-foreground/70 mt-2">
-              Our platform simplifies the process of creating, publishing, and analyzing forms in just a few minutes.
-            </p>
-          </div>
           <div className="flex justify-start items-center h-full w-full gap-4">
-            <div className="flex flex-col gap-6 w-full">
+            <div className="gap-6 w-full grid grid-cols-1">
               {steps.map((step) => (
                 <button
                   key={step.title}
@@ -66,8 +68,8 @@ const HowItWorks = () => {
                   className={`flex items-center gap-4 p-4 rounded-lg transition-all border 
               ${
                 selectedStep.title === step.title
-                  ? "border-primary bg-primary/5"
-                  : "border-transparent hover:border-muted"
+                  ? "border-primary bg-foreground/5"
+                  : "border-transparent hover:border-foreground/30"
               }`}>
                   <div
                     className={`${
@@ -88,12 +90,12 @@ const HowItWorks = () => {
         </div>
         {/* Details Section */}
         <Card className="rounded-lg flex flex-col gap-4">
-          <div className="bg-primary/10 p-4 flex justify-start items-center gap-4">
+          <div className="bg-primary/5 p-4 flex justify-start items-center gap-4">
             <div className="flex items-center justify-center p-2 bg-primary/20 rounded">
               <selectedStep.icon className="text-primary w-8 h-8" />
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-foreground">{selectedStep.title}</h3>
+              <h3 className="text-lg font-semibold text-foreground">{selectedStep.title}</h3>
               <p className="text-sm text-foreground/70">{selectedStep.description}</p>
             </div>
           </div>
