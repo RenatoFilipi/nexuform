@@ -1,4 +1,10 @@
 {
   "shared": {},
-  "landing": {}
+  "landing": {},
+  "auths": {},
+  "dashboard": {},
+  "form": {},
+  "analytics": {},
+  "settings": {},
+  "editor": {}
 }
