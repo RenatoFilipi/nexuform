@@ -22,6 +22,7 @@ import {
   Settings2Icon,
   SunIcon,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -41,53 +42,6 @@ import {
 } from "../../ui/dropdown-menu";
 import ManageSubscription from "./manage-subscription";
 
-const links = [
-  {
-    id: 1,
-    name: "Dashboard",
-    path: "/dashboard/forms",
-    icon: InboxIcon,
-    enabled: true,
-  },
-  {
-    id: 2,
-    name: "Analytics",
-    path: "/dashboard/analytics",
-    icon: ChartNoAxesColumnIcon,
-    enabled: true,
-  },
-  {
-    id: 3,
-    name: "Settings",
-    path: "/dashboard/settings",
-    icon: Settings2Icon,
-    enabled: true,
-  },
-];
-const linksMobile = [
-  {
-    id: 1,
-    name: "Dashboard",
-    path: "/dashboard/forms",
-    icon: InboxIcon,
-    enabled: true,
-  },
-  {
-    id: 2,
-    name: "Analytics",
-    path: "/dashboard/analytics",
-    icon: ChartNoAxesColumnIcon,
-    enabled: true,
-  },
-  {
-    id: 3,
-    name: "Settings",
-    path: "/dashboard/settings",
-    icon: Settings2Icon,
-    enabled: true,
-  },
-];
-
 const Nav = () => {
   const pathname = usePathname();
 
@@ -96,11 +50,36 @@ const Nav = () => {
   return <NavApp />;
 };
 const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
+  const t = useTranslations("app");
   const user = useUserStore();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const isActive = (path: string) => path === pathname;
   const { setTheme, theme } = useTheme();
+
+  const linksMobile = [
+    {
+      id: 1,
+      name: t("nav_dashboard"),
+      path: "/dashboard/forms",
+      icon: InboxIcon,
+      enabled: true,
+    },
+    {
+      id: 2,
+      name: t("nav_analytics"),
+      path: "/dashboard/analytics",
+      icon: ChartNoAxesColumnIcon,
+      enabled: true,
+    },
+    {
+      id: 3,
+      name: t("nav_settings"),
+      path: "/dashboard/settings",
+      icon: Settings2Icon,
+      enabled: true,
+    },
+  ];
 
   // app
   return (
@@ -178,6 +157,7 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
   );
 };
 const AvatarAppMenu = () => {
+  const t = useTranslations("app");
   const user = useUserStore();
   const { setTheme, theme } = useTheme();
   const avatarName = user.email.charAt(0);
@@ -190,22 +170,21 @@ const AvatarAppMenu = () => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-4 min-w-52 text-foreground/80">
-        <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuLabel className="flex justify-between items-center">
-          <span>Plan</span>
+        <DropdownMenuLabel className="flex justify-center items-center gap-4">
+          {user.email}
           {user.subscription.plan === "" ? null : <PlanBadge plan={user.subscription.plan as TPlan} />}
         </DropdownMenuLabel>
+        <DropdownMenuSeparator />
         <DropdownMenuItem className="py-0">
           <Button variant={"ghost"} size={"sm"} asChild className="flex justify-between w-full items-center p-0">
             <Link href={"/dashboard/settings"}>
-              Settings
+              {t("label_settings")}
               <Settings2Icon className="w-4 h-4" />
             </Link>
           </Button>
         </DropdownMenuItem>
         <DropdownMenuItem className="flex flex-row justify-between items-center">
-          Theme
+          {t("label_theme")}
           <RadioGroup value={theme} onValueChange={setTheme} className="flex gap-1">
             <div>
               <RadioGroupItem value="system" id="system" className="peer sr-only" />
@@ -240,7 +219,7 @@ const AvatarAppMenu = () => {
             variant={"ghost"}
             size={"sm"}
             className="flex justify-between w-full items-center p-0">
-            Log out
+            {t("label_logout")}
             <LogOutIcon className="w-4 h-4" />
           </Button>
         </DropdownMenuItem>
@@ -249,7 +228,7 @@ const AvatarAppMenu = () => {
             <DropdownMenuSeparator />
             <ManageSubscription>
               <Button size={"sm"} className="m-1">
-                Upgrade
+                {t("label_upgrade")}
               </Button>
             </ManageSubscription>
           </div>
@@ -259,10 +238,35 @@ const AvatarAppMenu = () => {
   );
 };
 const NavApp = () => {
+  const t = useTranslations("app");
   const editorStore = useEditorStore();
   const pathname = usePathname();
   const isActive = (path: string) => path === pathname;
   const borderB = pathname === "/dashboard/forms";
+
+  const links = [
+    {
+      id: 1,
+      name: t("nav_dashboard"),
+      path: "/dashboard/forms",
+      icon: InboxIcon,
+      enabled: true,
+    },
+    {
+      id: 2,
+      name: t("nav_analytics"),
+      path: "/dashboard/analytics",
+      icon: ChartNoAxesColumnIcon,
+      enabled: true,
+    },
+    {
+      id: 3,
+      name: t("nav_settings"),
+      path: "/dashboard/settings",
+      icon: Settings2Icon,
+      enabled: true,
+    },
+  ];
 
   useQuery({
     queryKey: [],
@@ -310,7 +314,7 @@ const NavApp = () => {
           <Feedback>
             <Button variant={"outline"} size={"xs"}>
               <MessageSquareCodeIcon className="w-4 h-4 mr-2" />
-              Feedback
+              {t("fb_label")}
             </Button>
           </Feedback>
         </div>

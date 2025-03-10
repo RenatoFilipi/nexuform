@@ -3,6 +3,7 @@ import SubscriptionUI from "@/components/private/shared/subscription-ui";
 import { day, paginationFrom, paginationTo } from "@/utils/constants";
 import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
+import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
@@ -84,8 +85,11 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   if (formAnalyticsError) return <ErrorUI />;
 
+  const locale = await getLocale();
+
   return (
     <FormWrapper
+      locale={locale}
       form={form}
       blocks={blocks}
       overviewSubmissions={overviewSubmissions}

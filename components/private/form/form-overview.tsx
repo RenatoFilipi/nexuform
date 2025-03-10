@@ -7,11 +7,13 @@ import useFormStore from "@/stores/form";
 import { formatDecimal, formatTime } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
 import { ArrowRightIcon, EyeIcon, SendIcon, Share2Icon, TimerIcon, VoteIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import FormShare from "./form-share";
 import FormSubmissionsActivityChart from "./form-submissions-activity-chart";
 
 const FormOverview = () => {
+  const t = useTranslations("app");
   const { formAnalytics, form } = useFormStore();
   const { total_submissions, total_views, avg_completion_rate, avg_completion_time } = formAnalytics;
   const totalViews = total_views === 0 ? "--" : total_views.toString();
@@ -32,32 +34,36 @@ const FormOverview = () => {
           <FormShare form={form}>
             <Button variant="outline" size="sm" className="w-full sm:w-fit">
               <Share2Icon className="w-4 h-4 mr-2" />
-              Share
+              {t("label_share")}
             </Button>
           </FormShare>
           <Button variant="secondary" size="sm" asChild>
             <Link href={`/dashboard/editor/${form.id}`} className="w-full sm:w-fit">
               <ArrowRightIcon className="w-4 h-4 mr-2" />
-              Editor
+              {t("label_editor")}
             </Link>
           </Button>
         </div>
       </div>
       <div className="gap-6 grid sm:grid-cols-2">
         <div className="grid grid-cols-1 sm:grid-rows-4 sm:grid-cols-2 gap-2 sm:gap-6">
-          <CardTemplate name="Total Views" value={totalViews} icon={<EyeIcon className="w-4 h-4 text-primary" />} />
           <CardTemplate
-            name="Total Submissions"
+            name={t("label_total_views")}
+            value={totalViews}
+            icon={<EyeIcon className="w-4 h-4 text-primary" />}
+          />
+          <CardTemplate
+            name={t("label_total_submissions")}
             value={totalSubmissions}
             icon={<SendIcon className="w-4 h-4 text-primary" />}
           />
           <CardTemplate
-            name="Completion Rate"
+            name={t("label_completion_rate")}
             value={averageCompletionRate}
             icon={<VoteIcon className="w-4 h-4 text-primary" />}
           />
           <CardTemplate
-            name="Avg. Completion Time"
+            name={t("label_avg_completion_time")}
             value={averageCompletionTime}
             icon={<TimerIcon className="w-4 h-4 text-primary" />}
           />

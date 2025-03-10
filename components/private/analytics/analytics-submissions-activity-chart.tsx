@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import useAnalyticsStore from "@/stores/analytics";
 import { format, subDays } from "date-fns";
+import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
@@ -9,11 +10,6 @@ interface IChartData {
   day: string;
   [key: string]: string | number;
 }
-
-const OPTIONS = [
-  { label: "7 days", value: 7 },
-  { label: "30 days", value: 30 },
-] as const;
 
 const CHART_CONFIG: ChartConfig = {} as ChartConfig;
 
@@ -31,8 +27,14 @@ const blueColors = [
 ];
 
 const AnalyticsSubmissionsActivityChart = () => {
+  const t = useTranslations("app");
   const { submissions, forms } = useAnalyticsStore();
   const [days, setDays] = useState<number>(7);
+
+  const options = [
+    { label: `7 ${t("label_days")}`, value: 7 },
+    { label: `30 ${t("label_days")}`, value: 30 },
+  ];
 
   const lastNDays = useMemo<IChartData[]>(
     () =>
@@ -77,9 +79,9 @@ const AnalyticsSubmissionsActivityChart = () => {
   return (
     <div className="flex flex-col gap-4 border rounded p-4">
       <div className="flex justify-between items-center">
-        <span>Activity</span>
+        <span>{t("label_activity")}</span>
         <div className="flex justify-center items-center gap-3">
-          {OPTIONS.map((opt) => (
+          {options.map((opt) => (
             <Button
               key={opt.value}
               onClick={() => setDays(opt.value)}

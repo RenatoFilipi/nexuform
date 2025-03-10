@@ -1,4 +1,5 @@
 import { differenceInDays, formatDistance } from "date-fns";
+import { enUS, es, ptBR } from "date-fns/locale";
 import { customAlphabet } from "nanoid";
 import { redirect } from "next/navigation";
 import { day, planSettings } from "./constants";
@@ -43,10 +44,17 @@ export const blockName = (type: TBlock) => {
       return "Custom Scale";
   }
 };
-export const formatDateRelativeToNow = (isoDate: string) => {
+const localeMap: Record<string, any> = {
+  en: enUS,
+  es: es,
+  pt: ptBR,
+};
+export const formatDateRelativeToNow = (isoDate: string, locale: string = "en") => {
   const date = new Date(isoDate);
+  const localeToUse = localeMap[locale] || enUS;
   return formatDistance(date, new Date(), {
     addSuffix: true,
+    locale: localeToUse,
   });
 };
 export const encodedRedirect = (type: "error" | "success", path: string, message: string): never => {

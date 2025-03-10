@@ -6,6 +6,7 @@ import { paginationFrom, paginationTo } from "@/utils/constants";
 import { EBlock, EForm, EFormAnalytics, EIntegration, EProfile, ESubmission, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { BarChartIcon, PlugIcon, SendIcon, Settings2Icon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import FormIntegrations from "./form-integrations";
 import FormOverview from "./form-overview";
@@ -13,33 +14,6 @@ import FormSettings from "./form-settings";
 import FormSubmissions from "./form-submissions";
 
 type TView = "overview" | "submissions" | "integrations" | "settings";
-
-const views = [
-  {
-    label: "Overview",
-    icon: BarChartIcon,
-    view: "overview",
-    enabled: true,
-  },
-  {
-    label: "Submissions",
-    icon: SendIcon,
-    view: "submissions",
-    enabled: true,
-  },
-  {
-    label: "Integrations",
-    icon: PlugIcon,
-    view: "integrations",
-    enabled: true,
-  },
-  {
-    label: "Settings",
-    icon: Settings2Icon,
-    view: "settings",
-    enabled: true,
-  },
-];
 
 interface Props {
   overviewSubmissions: ESubmission[];
@@ -51,6 +25,7 @@ interface Props {
   subscription: ESubscription;
   email: string;
   integrations: EIntegration[];
+  locale: string;
 }
 
 const FormWrapper = ({
@@ -63,7 +38,35 @@ const FormWrapper = ({
   email,
   overviewSubmissions,
   integrations,
+  locale,
 }: Props) => {
+  const t = useTranslations("app");
+  const views = [
+    {
+      label: t("nav_overview"),
+      icon: BarChartIcon,
+      view: "overview",
+      enabled: true,
+    },
+    {
+      label: t("nav_submissions"),
+      icon: SendIcon,
+      view: "submissions",
+      enabled: true,
+    },
+    {
+      label: t("nav_integrations"),
+      icon: PlugIcon,
+      view: "integrations",
+      enabled: true,
+    },
+    {
+      label: t("nav_settings"),
+      icon: Settings2Icon,
+      view: "settings",
+      enabled: true,
+    },
+  ];
   const formStore = useFormStore();
   const userStore = useUserStore();
   const [view, setView] = useState<TView>("overview");
@@ -76,6 +79,7 @@ const FormWrapper = ({
       userStore.setEmail(email);
       userStore.setProfile(profile);
       userStore.setSubscription(subscription);
+      userStore.setLocale(locale);
       formStore.setForm(form);
       formStore.setFormAnalytics(formAnalytics);
       formStore.setOverviewSubmissions(overviewSubmissions);

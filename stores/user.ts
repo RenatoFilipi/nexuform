@@ -7,11 +7,13 @@ interface user {
   formsCount: number;
   submissionsCount: number;
   email: string;
+  locale: string;
   setProfile: (payload: EProfile) => void;
   setSubscription: (payload: ESubscription) => void;
   setFormsCount: (payload: number) => void;
   setSubmissionsCount: (payload: number) => void;
   setEmail: (payload: string) => void;
+  setLocale: (payload: string) => void;
 }
 
 const useUserStore = create<user>((set) => ({
@@ -41,11 +43,13 @@ const useUserStore = create<user>((set) => ({
   formsCount: 0,
   submissionsCount: 0,
   email: "",
+  locale: "",
   setProfile: (payload) => set({ profile: payload }),
   setSubscription: (payload) => set({ subscription: payload }),
   setFormsCount: (payload) => set({ formsCount: payload }),
   setSubmissionsCount: (payload) => set({ submissionsCount: payload }),
   setEmail: (payload) => set({ email: payload }),
+  setLocale: (payload) => set({ locale: payload }),
   reset: () =>
     set({
       profile: {

@@ -8,15 +8,17 @@ import { minWidth640 } from "@/utils/constants";
 import { EForm } from "@/utils/entities";
 import { TSetState } from "@/utils/types";
 import { ArrowRightIcon, CopyIcon, Share2Icon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTrigger } from "../../ui/drawer";
+import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
 
 const FormShare = ({ children, form }: { children: React.ReactNode; form: EForm }) => {
+  const t = useTranslations("app");
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
@@ -26,8 +28,8 @@ const FormShare = ({ children, form }: { children: React.ReactNode; form: EForm 
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="flex flex-col min-w-[650px] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Share Your Form</DialogTitle>
-            <DialogDescription>Make your form accessible to others and start collecting responses.</DialogDescription>
+            <DialogTitle>{t("label_form_share")}</DialogTitle>
+            <DialogDescription>{t("desc_form_share")}</DialogDescription>
           </DialogHeader>
           <Body setState={setOpen} form={form} />
         </DialogContent>
@@ -40,8 +42,8 @@ const FormShare = ({ children, form }: { children: React.ReactNode; form: EForm 
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3 flex flex-col max-h-[90%]">
         <DrawerHeader>
-          <DialogTitle>Share Your Form</DialogTitle>
-          <DialogDescription>Make your form accessible to others and start collecting responses..</DialogDescription>
+          <DrawerTitle>{t("label_form_share")}</DrawerTitle>
+          <DrawerDescription>{t("desc_form_share")}</DrawerDescription>
         </DrawerHeader>
         <Body setState={setOpen} form={form} />
       </DrawerContent>
@@ -50,6 +52,7 @@ const FormShare = ({ children, form }: { children: React.ReactNode; form: EForm 
 };
 
 const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm }) => {
+  const t = useTranslations("app");
   const [url] = useState(`${window.location.host}/s/${form.public_url}`);
 
   return (
@@ -61,15 +64,13 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
           </div>
           <div className="flex flex-col justify-center items-center gap-6">
             <div className="flex justify-center items-center flex-col gap-1">
-              <h3 className="text-base font-medium">Form is not public</h3>
-              <p className="text-xs text-foreground/70 text-center">
-                This form is currently private. To make it public, go to the editor page and update its status.
-              </p>
+              <h3 className="text-base font-medium">{t("label_not_public")}</h3>
+              <p className="text-xs text-foreground/70 text-center">{t("desc_not_public")}</p>
             </div>
             <div className="flex justify-end items-center">
               <Button variant="secondary" size="sm">
                 <ArrowRightIcon className="w-4 h-4 mr-2" />
-                <Link href={`/dashboard/editor/${form.id}`}>Go to Editor</Link>
+                <Link href={`/dashboard/editor/${form.id}`}>{t("nav_editor")}</Link>
               </Button>
             </div>
           </div>
@@ -79,17 +80,15 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
         <div className="flex flex-col items-center justify-start gap-8 h-full">
           <div className="grid gap-3 w-full">
             <div className="grid gap-1">
-              <Label>Share via link</Label>
-              <span className="text-xs text-foreground/60">
-                Copy the link below to easily share your form with others.
-              </span>
+              <Label>{t("label_link_share")}</Label>
+              <span className="text-xs text-foreground/60">{t("desc_link_share")}</span>
             </div>
             <div className="flex justify-center items-center w-full gap-4">
               <Input value={url} className="w-full text-sm text-foreground/60" readOnly />
               <Button
                 onClick={() => {
                   navigator.clipboard.writeText(url);
-                  toast.success("Link Copied");
+                  toast.success(t("label_link_copied"));
                 }}
                 variant="outline"
                 size="icon"
@@ -100,13 +99,11 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
           </div>
           <div className="gap-3 w-full h-full hidden">
             <div className="grid gap-1 h-fit">
-              <Label>Share via QR Code</Label>
-              <span className="text-xs text-foreground/60">
-                Scan the QR code or copy the link to share your form with others quickly and effortlessly.
-              </span>
+              <Label>{t("label_qr_share")}</Label>
+              <span className="text-xs text-foreground/60">{t("desc_qr_share")}</span>
             </div>
             <div className="flex justify-center items-center flex-1 h-full">
-              <Card className="p-2 bg-primary/10">
+              <Card className="p-2 bg-background">
                 <QRCodeSVG value={url} className="w-36 h-36" />
               </Card>
             </div>
@@ -115,7 +112,7 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
       )}
       <div className="flex justify-end">
         <Button className="w-full sm:w-auto" variant="outline" size="sm" onClick={() => setState(false)}>
-          Close
+          {t("label_close")}
         </Button>
       </div>
     </div>

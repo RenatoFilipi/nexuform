@@ -2,6 +2,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { createClient } from "@/utils/supabase/client";
 import { TAppState, TSetState } from "@/utils/types";
 import { CheckIcon, FrownIcon, Loader2Icon, SmileIcon, XIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { ReactNode, useState } from "react";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
@@ -25,6 +26,7 @@ const moods = [
 ];
 
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
+  const t = useTranslations("app");
   const supabase = createClient();
   const [appState, setAppState] = useState<TAppState>("idle");
   const [localMood, setMood] = useState("");
@@ -61,8 +63,8 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
           <XIcon className="text-destructive w-5 h-5" />
         </div>
         <div className="flex flex-col justify-center items-center text-sm text-foreground/80">
-          <span>Something went wrong!</span>
-          <span>Please try again.</span>
+          <span>{t('"fb_error_1"')}</span>
+          <span>{t("fb_error_2")}</span>
         </div>
       </div>
     );
@@ -73,8 +75,8 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
           <CheckIcon className="text-success w-5 h-5" />
         </div>
         <div className="flex flex-col justify-center items-center text-sm text-foreground/80">
-          <span>Your feedback has been received!</span>
-          <span>Thank you for your help.</span>
+          <span>{t("fb_sucess_1")}</span>
+          <span>{t("fb_sucess_2")}</span>
         </div>
       </div>
     );
@@ -82,11 +84,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   return (
     <div className=" flex flex-col justify-between gap-3">
       <div className="flex flex-col">
-        <Textarea
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder="Trouble with something technical? Let us know."
-        />
+        <Textarea value={value} onChange={(e) => setValue(e.target.value)} placeholder={t("fb_placeholder")} />
       </div>
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center w-full">
@@ -106,7 +104,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
           </div>
           <Button size={"xs"} variant={"secondary"} onClick={onSendFeedback} disabled={appState === "loading"}>
             {appState === "loading" && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
-            Send Feedback
+            {t("fb_submit")}
           </Button>
         </div>
       </div>

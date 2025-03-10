@@ -2,8 +2,10 @@ import { Card } from "@/components/ui/card";
 import useAnalyticsStore from "@/stores/analytics";
 import { formatDecimal, formatTime } from "@/utils/functions";
 import { EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const AnalyticsOverview = () => {
+  const t = useTranslations("app");
   const { formsAnalytics } = useAnalyticsStore();
   const totalViews = formsAnalytics.reduce((acc, val) => acc + val.total_views, 0).toString();
   const totalSubmissions = formsAnalytics.reduce((acc, val) => acc + val.total_submissions, 0).toString();
@@ -25,19 +27,23 @@ const AnalyticsOverview = () => {
 
   return (
     <div className="grid sm:grid-cols-4 gap-2 sm:gap-6">
-      <CardTemplate name="Total Views" value={totalViews} icon={<EyeIcon className="w-4 h-4 text-primary" />} />
       <CardTemplate
-        name="Total Submissions"
+        name={t("label_total_views")}
+        value={totalViews}
+        icon={<EyeIcon className="w-4 h-4 text-primary" />}
+      />
+      <CardTemplate
+        name={t("label_total_submissions")}
         value={totalSubmissions}
         icon={<SendIcon className="w-4 h-4 text-primary" />}
       />
       <CardTemplate
-        name="Completion Rate"
+        name={t("label_completion_rate")}
         value={averageCompletionRate + "%"}
         icon={<VoteIcon className="w-4 h-4 text-primary" />}
       />
       <CardTemplate
-        name="Avg. Completion Time"
+        name={t("label_avg_completion_time")}
         value={averageCompletionTime}
         icon={<TimerIcon className="w-4 h-4 text-primary" />}
       />

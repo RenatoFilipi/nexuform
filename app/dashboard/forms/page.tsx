@@ -3,6 +3,7 @@ import ErrorUI from "@/components/private/shared/error-ui";
 import SubscriptionUI from "@/components/private/shared/subscription-ui";
 import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
+import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 const Forms = async () => {
@@ -37,7 +38,17 @@ const Forms = async () => {
 
   if (formError) return <ErrorUI />;
 
-  return <DashboardWrapper forms={form} profile={profile} subscription={subscription} email={data.user.email ?? ""} />;
+  const locale = await getLocale();
+
+  return (
+    <DashboardWrapper
+      locale={locale}
+      forms={form}
+      profile={profile}
+      subscription={subscription}
+      email={data.user.email ?? ""}
+    />
+  );
 };
 
 export default Forms;

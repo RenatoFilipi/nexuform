@@ -4,9 +4,11 @@ import { formatDecimal } from "@/utils/functions";
 import { ISubmissionsByForm } from "@/utils/interfaces";
 import { useQuery } from "@tanstack/react-query";
 import { SendIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 const AnalyticsSubmissionsByFormChart = () => {
+  const t = useTranslations("app");
   const { submissions, forms } = useAnalyticsStore();
   const [subs, setSubs] = useState<ISubmissionsByForm[]>([]);
 
@@ -28,14 +30,14 @@ const AnalyticsSubmissionsByFormChart = () => {
   return (
     <div className="flex flex-col h-full gap-4">
       <div className="flex justify-between items-center">
-        <span>Submissions by form</span>
+        <span>{t("label_submissions_by_form")}</span>
       </div>
       {subs.length <= 0 && (
         <div className="border flex justify-center items-center flex-1 rounded flex-col gap-2">
           <div className="flex justify-center items-center p-2 bg-primary/10">
             <SendIcon className="w-6 h-6 text-primary" />
           </div>
-          <span className="text-sm text-foreground/70">No submission to show.</span>
+          <span className="text-sm text-foreground/70">{t("label_no_submission")}</span>
         </div>
       )}
       {subs.length >= 1 && (

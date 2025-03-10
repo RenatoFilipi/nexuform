@@ -6,6 +6,7 @@ import { minWidth640 } from "@/utils/constants";
 import { useQuery } from "@tanstack/react-query";
 import { format, parseISO, subDays } from "date-fns";
 import { TrendingDownIcon, TrendingUpIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useReducer, useState } from "react";
 import { useMedia } from "react-use";
 import { Bar, CartesianGrid, ComposedChart, XAxis } from "recharts";
@@ -14,11 +15,6 @@ interface IChartData {
   day: string;
   submission: number;
 }
-
-const OPTIONS = [
-  { label: "7 days", value: 7 },
-  { label: "30 days", value: 30 },
-] as const;
 
 const CHART_CONFIG: ChartConfig = {
   submission: {
@@ -39,12 +35,18 @@ const hasDataReducer = (state: boolean, action: HasDataAction): boolean => {
 };
 
 const FormSubmissionsActivityChart: React.FC = () => {
+  const t = useTranslations("app");
   const isDesktop = useMedia(minWidth640);
   const { overviewSubmissions } = useFormStore();
   const [days, setDays] = useState<number>(7);
   const [chartData, setChartData] = useState<IChartData[]>([]);
   const [hasData, dispatch] = useReducer(hasDataReducer, false);
   const barSize = days === 7 ? 14 : 10;
+
+  const options = [
+    { label: `7 ${t("label_days")}`, value: 7 },
+    { label: `30 ${t("label_days")}`, value: 30 },
+  ];
 
   const lastNDays = useMemo<IChartData[]>(
     () =>
@@ -90,7 +92,7 @@ const FormSubmissionsActivityChart: React.FC = () => {
       <div className="flex flex-col justify-center items-center sm:items-start">
         <div className="flex justify-between items-center gap-4 w-full">
           <div className="flex justify-center items-center gap-3">
-            {OPTIONS.map((opt) => (
+            {options.map((opt) => (
               <Button
                 key={opt.value}
                 onClick={() => setDays(opt.value)}
@@ -102,7 +104,7 @@ const FormSubmissionsActivityChart: React.FC = () => {
             ))}
           </div>
           {hasData && isDesktop && <BadgeDay submissionDifference={submissionDifference} />}
-          {!hasData && <Badge variant="warning">No data available</Badge>}
+          {!hasData && <Badge variant="warning">{t("label_no_data")}</Badge>}
         </div>
       </div>
       <ChartContainer config={CHART_CONFIG}>
@@ -131,6 +133,8 @@ const FormSubmissionsActivityChart: React.FC = () => {
 };
 
 const BadgeDay = ({ submissionDifference }: { submissionDifference: number }) => {
+  const t = useTranslations("app");
+
   const getBadgeVariant = () => {
     if (submissionDifference > 0) return "success";
     if (submissionDifference < 0) return "destructive";
@@ -138,12 +142,12 @@ const BadgeDay = ({ submissionDifference }: { submissionDifference: number }) =>
   };
 
   const getBadgeText = () => {
-    if (submissionDifference > 0) {
-      return `+${submissionDifference} submission${submissionDifference > 1 ? "s" : ""} compared to yesterday`;
-    } else if (submissionDifference < 0) {
-      return `${submissionDifference} submission${submissionDifference < -1 ? "s" : ""} compared to yesterday`;
+    if (submissionDifference !== 0) {
+      return `${submissionDifference > 0 ? "+" : ""} ${submissionDifference} ${
+        submissionDifference === 1 ? t("label_submission") : t("label_submissions")
+      }`;
     }
-    return "No change in submissions compared to yesterday";
+    return t("label_no_submissions_change");
   };
 
   const renderIcon = () => {

@@ -2,7 +2,7 @@
 
 import { createFormAction } from "@/app/actions";
 import { Badge } from "@/components/ui/badge";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import useUserStore from "@/stores/user";
 import { minWidth640 } from "@/utils/constants";
@@ -13,6 +13,7 @@ import { TAppState, TSetState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronLeftIcon, HexagonIcon, Loader2Icon, PlusIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useState, useTransition } from "react";
@@ -26,23 +27,6 @@ import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, Dr
 import { Input } from "../../ui/input";
 
 type TView = "custom" | "templates" | "none";
-
-const options = [
-  {
-    title: "Custom",
-    description: "Start a new form from the ground up, tailored to your needs.",
-    type: "custom",
-    icon: PlusIcon,
-    enabled: true,
-  },
-  {
-    title: "Templates",
-    description: "Choose from a variety of pre-designed templates to jumpstart your form creation.",
-    type: "templates",
-    icon: HexagonIcon,
-    enabled: true,
-  },
-];
 
 const DashboardNewForm = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
   const [error] = useQueryState("error");
@@ -66,10 +50,8 @@ const DashboardNewForm = ({ children, userId }: { children: React.ReactNode; use
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="flex flex-col min-w-[650px] h-[600px] overflow-y-auto">
           <DialogHeader className="hidden">
-            <DialogTitle>Create Form</DialogTitle>
-            <DialogDescription>
-              Fill in the details below to create a new form. You can customize the settings as needed.
-            </DialogDescription>
+            <DialogTitle></DialogTitle>
+            <DialogDescription></DialogDescription>
           </DialogHeader>
           <Body setState={setOpen} />
         </DialogContent>
@@ -82,10 +64,8 @@ const DashboardNewForm = ({ children, userId }: { children: React.ReactNode; use
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3 flex flex-col max-h-[90%]">
         <DrawerHeader className="hidden">
-          <DrawerTitle>Create Form</DrawerTitle>
-          <DrawerDescription>
-            Fill in the details below to create a new form. You can customize the settings as needed.
-          </DrawerDescription>
+          <DrawerTitle></DrawerTitle>
+          <DrawerDescription></DrawerDescription>
         </DrawerHeader>
         <Body setState={setOpen} />
       </DrawerContent>
@@ -100,11 +80,30 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   return <PreSelectForm setState={setState} setView={setView} />;
 };
 const PreSelectForm = ({ setState, setView }: { setState: TSetState<boolean>; setView: TSetState<TView> }) => {
+  const t = useTranslations("app");
+
+  const options = [
+    {
+      title: t("label_custom"),
+      description: t("desc_custom"),
+      type: "custom",
+      icon: PlusIcon,
+      enabled: true,
+    },
+    {
+      title: t("label_templates"),
+      description: t("desc_templates"),
+      type: "templates",
+      icon: HexagonIcon,
+      enabled: true,
+    },
+  ];
+
   return (
     <div className="pt-4 sm:pt-0 flex flex-col h-full gap-6">
       <div className="grid gap-1">
-        <span className="font-semibold">Create Form</span>
-        <p className="text-xs text-foreground/70">Choose a method to create a new form.</p>
+        <span className="font-semibold">{t("label_create_form")}</span>
+        <p className="text-xs text-foreground/70">{t("desc_create_form")}</p>
       </div>
       <div className="flex flex-col justify-center items-center gap-6 w-full h-full">
         {options.map((opt) => {
@@ -126,18 +125,19 @@ const PreSelectForm = ({ setState, setView }: { setState: TSetState<boolean>; se
       </div>
       <div className="flex justify-end items-center gap-2 flex-col sm:flex-row">
         <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
-          Close
+          {t("label_close")}
         </Button>
       </div>
     </div>
   );
 };
 const CustomForm = ({ setState, setView }: { setState: TSetState<boolean>; setView: TSetState<TView> }) => {
+  const t = useTranslations("app");
   const [isPending, startTransition] = useTransition();
   const { profile } = useUserStore();
 
   const formSchema = z.object({
-    name: z.string().min(3, "Name must contain at least 3 letters."),
+    name: z.string().min(3, t("required_form_name")),
     description: z.string(),
   });
   const form = useForm<z.infer<typeof formSchema>>({
@@ -161,8 +161,8 @@ const CustomForm = ({ setState, setView }: { setState: TSetState<boolean>; setVi
   return (
     <div className="flex flex-col gap-4 pt-4 sm:pt-0 h-full w-full">
       <div className="grid gap-1">
-        <span className="font-semibold">Custom Form</span>
-        <p className="text-xs text-foreground/70">Complete the fields below to create a custom form from scratch.</p>
+        <span className="font-semibold">{t("label_custom_form")}</span>
+        <p className="text-xs text-foreground/70">{t("desc_custom_form")}</p>
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6 h-full">
@@ -173,14 +173,13 @@ const CustomForm = ({ setState, setView }: { setState: TSetState<boolean>; setVi
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <div className="grid gap-1">
-                    <FormLabel className="font-semibold">Name</FormLabel>
-                    <p className="text-xs text-foreground/70">
-                      Provide a unique name for your form to identify it easily.
-                    </p>
+                    <FormLabel className="font-semibold">{t("label_form_name")}</FormLabel>
+                    <p className="text-xs text-foreground/70">{t("desc_form_name")}</p>
                   </div>
                   <FormControl>
-                    <Input type="text" {...field} placeholder="Enter form name" className="text-sm" />
+                    <Input type="text" {...field} placeholder={t("placeholder_form_name")} className="text-sm" />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -190,13 +189,13 @@ const CustomForm = ({ setState, setView }: { setState: TSetState<boolean>; setVi
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <div className="grid gap-1">
-                    <FormLabel className="font-semibold">Description (optional)</FormLabel>
-                    <p className="text-xs text-foreground/70">
-                      Add a brief description to inform users about the purpose of this form.
-                    </p>
+                    <FormLabel className="font-semibold">
+                      {t("label_form_desc")} ({t("label_optional")})
+                    </FormLabel>
+                    <p className="text-xs text-foreground/70">{t("desc_form_desc")}</p>
                   </div>
                   <FormControl>
-                    <Textarea {...field} placeholder="Enter form description" className="text-sm" />
+                    <Textarea {...field} placeholder={t("placeholder_form_desc")} className="text-sm" />
                   </FormControl>
                 </FormItem>
               )}
@@ -210,7 +209,7 @@ const CustomForm = ({ setState, setView }: { setState: TSetState<boolean>; setVi
               variant={"outline"}
               size={"sm"}
               className="w-full sm:w-fit">
-              Cancel
+              {t("label_cancel")}
             </Button>
             <div className="flex justify-center items-center gap-2 sm:gap-4 w-full sm:w-fit">
               <Button
@@ -221,11 +220,11 @@ const CustomForm = ({ setState, setView }: { setState: TSetState<boolean>; setVi
                 size={"sm"}
                 className="w-full sm:w-fit">
                 <ChevronLeftIcon className="w-4 h-4 mr-2" />
-                Back
+                {t("label_back")}
               </Button>
               <Button disabled={isPending} type="submit" variant={"default"} size={"sm"} className="w-full sm:w-fit">
                 {isPending && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
-                Create Form
+                {t("submit_create_form")}
               </Button>
             </div>
           </div>
@@ -235,6 +234,7 @@ const CustomForm = ({ setState, setView }: { setState: TSetState<boolean>; setVi
   );
 };
 const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; setView: TSetState<TView> }) => {
+  const t = useTranslations("app");
   const supabase = createClient();
   const router = useRouter();
   const [appState, setAppState] = useState<TAppState>("idle");
@@ -296,10 +296,8 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
   return (
     <div className="flex flex-col h-full gap-6 overflow-y-auto">
       <div className="grid gap-1">
-        <span className="font-semibold">Form Templates</span>
-        <p className="text-xs text-foreground/70">
-          Choose a template to quickly get started with your form creation process.
-        </p>
+        <span className="font-semibold">{t("label_form_templates")}</span>
+        <p className="text-xs text-foreground/70">{t("desc_form_templates")}</p>
       </div>
       <div className="grid w-full h-full overflow-y-auto gap-3 sm:pr-4">
         {FormTemplates.map((temp) => {
@@ -334,7 +332,7 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
           variant={"outline"}
           size={"sm"}
           className="w-full sm:w-fit">
-          Cancel
+          {t("label_cancel")}
         </Button>
         <div className="flex justify-center items-center gap-2 sm:gap-4 w-full sm:w-fit">
           <Button
@@ -345,7 +343,7 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
             size={"sm"}
             className="w-full sm:w-fit">
             <ChevronLeftIcon className="w-4 h-4 mr-2" />
-            Back
+            {t("label_back")}
           </Button>
           <Button
             disabled={appState === "loading"}
@@ -355,7 +353,7 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
             size={"sm"}
             className="w-full sm:w-fit">
             {appState === "loading" && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
-            Create Form
+            {t("submit_create_form")}
           </Button>
         </div>
       </div>
