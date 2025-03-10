@@ -91,7 +91,7 @@ const FormWrapper = ({
   if (query.isPending) return null;
 
   return (
-    <div className="flex-1 mt-12 flex flex-col">
+    <div className="flex-1 mt-12 mb-8 sm:mb-0 flex flex-col">
       <div className="border-b h-10 flex justify-start items-center gap-1 px-2 sm:px-6 overflow-x-auto">
         {enabledViews.map((v) => {
           return (
@@ -113,7 +113,7 @@ const FormWrapper = ({
           );
         })}
       </div>
-      <div className="px-3 sm:px-20 lg:px-52 py-4 sm:py-8 flex justify-center flex-1 items-start overflow-y-auto">
+      <div className="px-3 sm:px-20 lg:px-52 py-4 sm:py-4 flex justify-center flex-1 items-start overflow-y-auto">
         {view === "overview" && <FormOverview />}
         {view === "submissions" && <FormSubmissions />}
         {view === "integrations" && <FormIntegrations />}

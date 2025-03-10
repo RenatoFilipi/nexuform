@@ -28,7 +28,12 @@ const Analytics = async () => {
   const active = isSubscriptionActive(subscription);
   if (!active || subscription.plan !== "pro") return <UpgradeToProUI />;
 
-  const { data: forms, error: formsError } = await supabase.from("forms").select("*").eq("owner_id", data.user.id);
+  const { data: forms, error: formsError } = await supabase
+    .from("forms")
+    .select("*")
+    .eq("owner_id", data.user.id)
+    .order("created_at", { ascending: true });
+
   if (formsError) return <ErrorUI />;
 
   const formIds = forms.map((x) => x.id);

@@ -56,6 +56,13 @@ const links = [
     icon: ChartNoAxesColumnIcon,
     enabled: true,
   },
+  {
+    id: 3,
+    name: "Settings",
+    path: "/dashboard/settings",
+    icon: Settings2Icon,
+    enabled: true,
+  },
 ];
 const linksMobile = [
   {
@@ -278,23 +285,26 @@ const NavApp = () => {
             </Link>
           </Button>
         </div>
+        <div className="hidden sm:flex justify-center items-center gap-2 h-full">
+          {links.map((link) => {
+            if (link.enabled)
+              return (
+                <Link
+                  key={link.id}
+                  href={link.path}
+                  className={`${
+                    isActive(link.path) ? "text-foreground/100 font-medium bg-foreground/5" : "text-foreground/70"
+                  } text-xs flex justify-center items-center px-2 py-2 rounded hover:bg-foreground/5 relative`}>
+                  <link.icon
+                    className={`${isActive(link.path) ? "text-primary" : "text-foreground/70"} w-4 h-4 mr-2`}
+                  />
+                  {link.name}
+                </Link>
+              );
+          })}
+        </div>
       </div>
-      <div className="hidden sm:flex justify-center items-center gap-2 h-full">
-        {links.map((link) => {
-          if (link.enabled)
-            return (
-              <Link
-                key={link.id}
-                href={link.path}
-                className={`${
-                  isActive(link.path) ? "text-foreground/100 font-medium bg-foreground/5" : "text-foreground/70"
-                } text-xs flex justify-center items-center px-2 py-2 rounded hover:bg-foreground/5 relative`}>
-                <link.icon className={`${isActive(link.path) ? "text-primary" : "text-foreground/70"} w-4 h-4 mr-2`} />
-                {link.name}
-              </Link>
-            );
-        })}
-      </div>
+
       <div className="hidden sm:flex justify-center items-center gap-4">
         <div className="flex justify-center items-center gap-3">
           <Feedback>

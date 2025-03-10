@@ -74,3 +74,9 @@ export interface IFormTemplate {
   blocks: EBlock[];
   pro: boolean;
 }
+
+export interface ISubmissionsByForm {
+  formId: string;
+  name: string;
+  count: number;
+}

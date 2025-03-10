@@ -8,7 +8,7 @@ import { format, parseISO, subDays } from "date-fns";
 import { TrendingDownIcon, TrendingUpIcon } from "lucide-react";
 import { useEffect, useMemo, useReducer, useState } from "react";
 import { useMedia } from "react-use";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Bar, CartesianGrid, ComposedChart, XAxis } from "recharts";
 
 interface IChartData {
   day: string;
@@ -106,7 +106,7 @@ const FormSubmissionsActivityChart: React.FC = () => {
         </div>
       </div>
       <ChartContainer config={CHART_CONFIG}>
-        <BarChart accessibilityLayer data={chartData}>
+        <ComposedChart accessibilityLayer data={chartData}>
           <CartesianGrid vertical={false} />
           <XAxis
             dataKey="day"
@@ -123,7 +123,7 @@ const FormSubmissionsActivityChart: React.FC = () => {
             radius={0}
             animationDuration={300}
           />
-        </BarChart>
+        </ComposedChart>
       </ChartContainer>
       {hasData && !isDesktop && <BadgeDay submissionDifference={submissionDifference} />}
     </div>

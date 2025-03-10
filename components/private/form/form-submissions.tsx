@@ -1,29 +1,40 @@
 "use client";
 
 import SubmissionStatusBadge from "@/components/shared/submission-status-badge";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import useFormStore from "@/stores/form";
 import { minWidth640, paginationRange } from "@/utils/constants";
+import { ESubmission } from "@/utils/entities";
 import { formatDateRelativeToNow, formatTime } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState, TSubmissionStatus } from "@/utils/types";
-import { ChevronLeftIcon, ChevronRightIcon, CogIcon, SendIcon } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { ChevronLeftIcon, ChevronRightIcon, CogIcon, FilterIcon, SendIcon, XIcon } from "lucide-react";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import { toast } from "sonner";
 import { default as FormSubmissionDetails, default as SubmissionDetails } from "./form-submission-details";
 
+const statusButtons = [
+  { label: "All", status: "all", icon: <div className="h-2 w-2 rounded-full bg-foreground"></div> },
+  { label: "Reviewed", status: "reviewed", icon: <div className="h-2 w-2 rounded-full bg-success"></div> },
+  { label: "Not Reviewed", status: "not_reviewed", icon: <div className="h-2 w-2 rounded-full bg-warning"></div> },
+  { label: "Ignored", status: "ignored", icon: <div className="h-2 w-2 rounded-full bg-gray-500"></div> },
+];
+
 const FormSubmissions = () => {
   const supabase = createClient();
-  const [appState, setAppState] = useState<TAppState>("idle");
-  const { submissions, blocks, setPagination, pagination, form, setSubmissions } = useFormStore();
   const isDesktop = useMedia(minWidth640);
+  const { submissions, blocks, setPagination, pagination, form, setSubmissions } = useFormStore();
+  const [appState, setAppState] = useState<TAppState>("idle");
+  const [filterStatus, setFilterStatus] = useState("all");
+  const [ls, setSl] = useState<ESubmission[]>(submissions);
   const disabledPrevious = appState === "loading" || pagination.from <= 0;
   const disabledNext = appState === "loading" || submissions.length <= paginationRange;
   const noSubmission = submissions.length <= 0;
-  const records = submissions.length == 1 ? "1 record" : `${submissions.length} records`;
 
   const onPreviousData = async () => {
     setAppState("loading");
@@ -70,9 +81,55 @@ const FormSubmissions = () => {
     setPagination({ from, to });
     setAppState("idle");
   };
+  const onFilter = (value: string) => {
+    setFilterStatus(value);
+  };
+  useQuery({
+    queryKey: [filterStatus, submissions],
+    queryFn: () => {
+      if (filterStatus === "all") {
+        setSl(submissions);
+        return null;
+      }
+      const fs = submissions.filter((x) => x.status === filterStatus);
+      setSl(fs);
+      return null;
+    },
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <div className="flex flex-col w-full gap-4 overflow-y-auto">
+      <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
+        <div className="flex justify-start items-center gap-2 w-full">
+          {statusButtons.map((x) => {
+            return (
+              <Button
+                key={x.status}
+                variant={"outline"}
+                size={"xs"}
+                className={`${
+                  filterStatus === x.status ? "bg-foreground/5" : ""
+                } flex justify-center items-center gap-2 w-full sm:w-fit`}
+                onClick={() => onFilter(x.status)}>
+                {x.icon}
+                {x.label}
+              </Button>
+            );
+          })}
+        </div>
+        <div className="flex justify-end items-center w-full gap-4">
+          {filterStatus !== "all" && (
+            <Badge variant={"purple"}>
+              <FilterIcon className="w-4 h-4 mr-2" /> Filter applied
+              <button onClick={() => setFilterStatus("all")} className="ml-2 w-fit hover:bg-purple-500/20 rounded">
+                <XIcon className="w-4 h-4" />
+              </button>
+            </Badge>
+          )}
+        </div>
+      </div>
+
       {isDesktop && (
         <div className="flex flex-col gap-4">
           <Table className="border">
@@ -86,7 +143,7 @@ const FormSubmissions = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {submissions.map((submission) => {
+              {ls.map((submission) => {
                 return (
                   <TableRow key={submission.id} className="text-xs text-foreground/80">
                     <TableCell className="p-0 pl-4 py-2 font-semibold">{submission.identifier}</TableCell>
@@ -119,8 +176,7 @@ const FormSubmissions = () => {
             </div>
           )}
           {!noSubmission && (
-            <div className="flex w-full justify-between items-center gap-4">
-              <span className="text-xs text-foreground/80">{records}</span>
+            <div className="flex w-full justify-end items-center gap-4">
               <div className="flex justify-center items-center gap-4">
                 <Button disabled={disabledPrevious} onClick={onPreviousData} variant={"outline"} size={"sm"}>
                   <ChevronLeftIcon className="w-4 h-4 mr-2" />
@@ -138,7 +194,7 @@ const FormSubmissions = () => {
       {!isDesktop && (
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            {submissions.map((submission) => {
+            {ls.map((submission) => {
               return (
                 <FormSubmissionDetails key={submission.id} blocks={blocks} submission={submission}>
                   <Card className="flex flex-col border cursor-pointer p-2 gap-6">
@@ -164,14 +220,18 @@ const FormSubmissions = () => {
             </div>
           )}
           {!noSubmission && (
-            <div className="flex w-full justify-between items-center gap-4">
-              <span className="text-xs text-foreground/80">{records}</span>
-              <div className="flex justify-center items-center gap-4">
-                <Button disabled={disabledPrevious} onClick={onPreviousData} variant={"outline"} size={"sm"}>
+            <div className="flex w-full justify-center items-center gap-4">
+              <div className="flex justify-center items-center gap-4 w-full">
+                <Button
+                  disabled={disabledPrevious}
+                  onClick={onPreviousData}
+                  variant={"outline"}
+                  size={"sm"}
+                  className="w-full">
                   <ChevronLeftIcon className="w-4 h-4 mr-2" />
                   Previous
                 </Button>
-                <Button disabled={disabledNext} onClick={onNextData} variant={"outline"} size={"sm"}>
+                <Button disabled={disabledNext} onClick={onNextData} variant={"outline"} size={"sm"} className="w-full">
                   Next
                   <ChevronRightIcon className="w-4 h-4 ml-2" />
                 </Button>
