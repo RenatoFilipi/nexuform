@@ -6,7 +6,7 @@ import Link from "next/link";
 const AuthPanel = () => {
   return (
     <div className="flex-1 sm:flex hidden w-full bg-gradient-to-b relative from-primary to-foreground bg-primary">
-      <Link href={"/"}>
+      <Link href={"/"} className="z-50">
         <Brand type="logo_text" className="h-8 fill-background absolute top-6 left-6" />
       </Link>
       {/* <Particles className="absolute inset-0 z-0" quantity={100} ease={20} color="#ffffff" refresh /> */}
