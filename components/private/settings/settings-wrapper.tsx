@@ -4,6 +4,7 @@ import useUserStore from "@/stores/user";
 import { EProfile, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { CreditCardIcon, KeyRoundIcon, UserIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { useState } from "react";
 import SettingsAccount from "./settings-account";
@@ -11,27 +12,6 @@ import SettingsBilling from "./settings-billing";
 import SettingsPassword from "./settings-password";
 
 type TView = "account" | "billing" | "password";
-
-const views = [
-  {
-    label: "Account",
-    icon: UserIcon,
-    view: "account",
-    enabled: true,
-  },
-  {
-    label: "Billing & Usage",
-    icon: CreditCardIcon,
-    view: "billing",
-    enabled: true,
-  },
-  {
-    label: "Password",
-    icon: KeyRoundIcon,
-    view: "password",
-    enabled: true,
-  },
-];
 
 const SettingsWrapper = ({
   profile,
@@ -46,6 +26,28 @@ const SettingsWrapper = ({
   submissionsCount: number;
   email: string;
 }) => {
+  const t = useTranslations("app");
+  const views = [
+    {
+      label: t("nav_account"),
+      icon: UserIcon,
+      view: "account",
+      enabled: true,
+    },
+    {
+      label: t("nav_billing_and_usage"),
+      icon: CreditCardIcon,
+      view: "billing",
+      enabled: true,
+    },
+    {
+      label: t("nav_password"),
+      icon: KeyRoundIcon,
+      view: "password",
+      enabled: true,
+    },
+  ];
+
   const [resource] = useQueryState("resource");
   const [view, setView] = useState<TView>("account");
   const enabledViews = views.filter((x) => x.enabled);

@@ -7,6 +7,7 @@ import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -14,13 +15,13 @@ import { z } from "zod";
 import SettingsAccountDelete from "./settings-account-delete";
 
 const SettingsAccount = () => {
+  const t = useTranslations("app");
+
   return (
     <div className="flex flex-col gap-6 w-full">
       <div className="flex flex-col">
-        <h1 className="font-semibold text-base">Account Preferences</h1>
-        <p className="text-xs text-foreground/70">
-          Customize your profile, account settings, and preferences to tailor your Nebulaform experience.
-        </p>
+        <h1 className="font-semibold text-base">{t("label_account_pref")}</h1>
+        <p className="text-xs text-foreground/70">{t("desc_account_pref")}</p>
       </div>
       <div className="flex flex-col gap-6">
         <AccountProfile />
@@ -30,6 +31,7 @@ const SettingsAccount = () => {
   );
 };
 const AccountProfile = () => {
+  const t = useTranslations("app");
   const supabase = createClient();
   const [appState, setAppState] = useState<TAppState>("idle");
   const { profile, setProfile } = useUserStore();
@@ -56,13 +58,13 @@ const AccountProfile = () => {
       .single();
 
     if (error) {
-      toast.error("Error on updating profile.");
+      toast.error(t("err_generic"));
       setAppState("idle");
       console.log(error);
       return;
     }
     setProfile(data);
-    toast.success("Profile updated.");
+    toast.success(t("suc_update_profile"));
     setAppState("idle");
   };
 
@@ -70,8 +72,8 @@ const AccountProfile = () => {
     <Form {...profileHandler}>
       <form onSubmit={profileHandler.handleSubmit(onProfileSubmit)} className="flex flex-col gap-4 p-4 border rounded">
         <div className="flex flex-col">
-          <h2 className="text-base font-semibold">Profile Information</h2>
-          <p className="text-xs text-foreground/70">Manage and update your personal details.</p>
+          <h2 className="text-base font-semibold">{t("label_profile_info")}</h2>
+          <p className="text-xs text-foreground/70">{t("desc_profile_info")}</p>
         </div>
         <div className="flex gap-4 flex-col">
           <FormField
@@ -79,7 +81,7 @@ const AccountProfile = () => {
             name="firstName"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel>First name</FormLabel>
+                <FormLabel>{t("label_first_name")}</FormLabel>
                 <FormControl>
                   <Input type="text" {...field} />
                 </FormControl>
@@ -92,7 +94,7 @@ const AccountProfile = () => {
             name="lastName"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel>Last name</FormLabel>
+                <FormLabel>{t("label_last_name")}</FormLabel>
                 <FormControl>
                   <Input type="text" {...field} />
                 </FormControl>
@@ -109,7 +111,7 @@ const AccountProfile = () => {
             size={"sm"}
             className="w-full sm:w-fit">
             {appState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
-            Save Profile
+            {t("label_save_profile")}
           </Button>
         </div>
       </form>
@@ -117,20 +119,19 @@ const AccountProfile = () => {
   );
 };
 const AccountDelete = () => {
+  const t = useTranslations("app");
+
   return (
     <div className="flex flex-col gap-2 rounded border p-4 border-destructive/50">
       <div className="flex justify-between sm:justify-start items-center gap-4">
-        <h2 className="text-base font-semibold">Delete account</h2>
-        <Badge variant={"red"}>Danger Zone</Badge>
+        <h2 className="text-base font-semibold">{t("label_delete_account")}</h2>
+        <Badge variant={"red"}>{t("label_danger_zone")}</Badge>
       </div>
       <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
-        <p className="text-xs text-foreground/80">
-          Delete your account and all its associated data. This action is not reversible, so please continue with
-          caution.
-        </p>
+        <p className="text-xs text-foreground/80">{t("desc_delete_account")}</p>
         <SettingsAccountDelete>
           <Button variant={"destructive_outline"} size={"sm"} className="w-full sm:w-fit">
-            Delete Account
+            {t("label_delete_account")}
           </Button>
         </SettingsAccountDelete>
       </div>

@@ -5,20 +5,20 @@ import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeIcon, EyeOffIcon, LoaderIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
 const SettingsPassword = () => {
+  const t = useTranslations("app");
+
   return (
     <div className="flex flex-col gap-6 w-full">
       <div className="flex flex-col">
-        <h1 className="font-semibold text-base">Password</h1>
-        <p className="text-xs text-foreground/70">
-          Update your password to enhance security. Choose a strong password that includes letters, numbers, and special
-          characters.
-        </p>
+        <h1 className="font-semibold text-base">{t("label_password")}</h1>
+        <p className="text-xs text-foreground/70">{t("desc_password")}</p>
       </div>
       <div className="flex flex-col gap-6">
         <PasswordUpdate />
@@ -27,6 +27,7 @@ const SettingsPassword = () => {
   );
 };
 const PasswordUpdate = () => {
+  const t = useTranslations("app");
   const supabase = createClient();
   const [appState, setAppState] = useState<TAppState>("idle");
   const id = useId();
@@ -75,7 +76,7 @@ const PasswordUpdate = () => {
             name="password"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel>New password</FormLabel>
+                <FormLabel>{t("label_new_password")}</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Input id={id} type={isVisible ? "text" : "password"} {...field} />
@@ -101,7 +102,7 @@ const PasswordUpdate = () => {
         <div className="flex justify-end items-center">
           <Button type="submit" size="sm" variant="default" className="w-full sm:w-fit">
             {appState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
-            Update Password
+            {t("label_update_password")}
           </Button>
         </div>
       </form>
