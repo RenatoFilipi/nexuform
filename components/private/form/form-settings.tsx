@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,6 +12,7 @@ import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BookDashedIcon, GlobeIcon, LoaderIcon, MonitorOffIcon, SettingsIcon, ShieldAlertIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -20,33 +21,13 @@ import FormDelete from "../shared/form-delete";
 
 type TView = "general" | "status" | "delete";
 
-const statusList = [
-  {
-    status: "draft",
-    label: "Draft",
-    description: `The form is being created or edited. It’s not available for users to access yet.`,
-    icon: BookDashedIcon,
-  },
-  {
-    status: "published",
-    label: "Published",
-    description: "The form is live and can be accessed, filled out, and submitted by users.",
-    icon: GlobeIcon,
-  },
-  {
-    status: "inactive",
-    label: "Inactive",
-    description: "The form is no longer available for users to fill out or submit.",
-    icon: MonitorOffIcon,
-  },
-];
-const views = [
-  { label: "General", icon: SettingsIcon, view: "general", enabled: true },
-  { label: "Status", icon: GlobeIcon, view: "status", enabled: true },
-  { label: "Delete", icon: ShieldAlertIcon, view: "delete", enabled: true },
-];
-
 const FormSettings = () => {
+  const t = useTranslations("app");
+  const views = [
+    { label: t("nav_general"), icon: SettingsIcon, view: "general", enabled: true },
+    { label: t("nav_status"), icon: GlobeIcon, view: "status", enabled: true },
+    { label: t("nav_delete"), icon: ShieldAlertIcon, view: "delete", enabled: true },
+  ];
   const [view, setView] = useState<TView>("general");
   const enabledViews = views.filter((x) => x.enabled);
 
@@ -76,15 +57,16 @@ const FormSettings = () => {
   );
 };
 const GeneralSettings = () => {
+  const t = useTranslations("app");
   const supabase = createClient();
   const [settingsState, setSettingsState] = useState<TAppState>("idle");
   const { form, setForm } = useFormStore();
   const user = useUserStore();
 
   const formSchema = z.object({
-    name: z.string().min(3, "Name must contain at least 3 letters."),
+    name: z.string().min(3, t("required_form_name")),
     description: z.string(),
-    submitText: z.string().min(3, "Submit text must contain at least 3 letters."),
+    submitText: z.string().min(3, t("required_submit_text")),
     newSubmissionNotification: z.boolean(),
     nebulaformBranding: z.boolean(),
   });
@@ -116,20 +98,20 @@ const GeneralSettings = () => {
       .single();
 
     if (error) {
-      toast.error("Error on update the form.");
+      toast.error(t("err_generic"));
       setSettingsState("idle");
       return;
     }
     setForm(data);
-    toast.success("Form updated with success.");
+    toast.success(t("suc_update_form"));
     setSettingsState("idle");
   };
 
   return (
     <div className="flex w-full flex-1 flex-col gap-6">
       <div className="flex flex-col">
-        <h1 className="font-semibold text-base">General</h1>
-        <p className="text-xs text-foreground/70">Customize the overall settings of your form.</p>
+        <h1 className="font-semibold text-base">{t("label_general")}</h1>
+        <p className="text-xs text-foreground/70">{t("desc_general")}</p>
       </div>
       <Form {...formHandler}>
         <form onSubmit={formHandler.handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -140,14 +122,13 @@ const GeneralSettings = () => {
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <div className="grid gap-1">
-                    <FormLabel className="font-semibold">Name</FormLabel>
-                    <p className="text-xs text-foreground/70">
-                      Provide a unique name for your form to identify it easily.
-                    </p>
+                    <FormLabel className="font-semibold">{t("label_form_name")}</FormLabel>
+                    <p className="text-xs text-foreground/70">{t("desc_form_name")}</p>
                   </div>
                   <FormControl>
-                    <Input type="text" {...field} placeholder="Enter form name" className="text-sm" />
+                    <Input type="text" {...field} placeholder={t("placeholder_form_name")} className="text-sm" />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -157,13 +138,11 @@ const GeneralSettings = () => {
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <div className="grid gap-1">
-                    <FormLabel className="font-semibold">Description</FormLabel>
-                    <p className="text-xs text-foreground/70">
-                      Add a brief description to inform users about the purpose of this form.
-                    </p>
+                    <FormLabel className="font-semibold">{t("label_form_desc")}</FormLabel>
+                    <p className="text-xs text-foreground/70">{t("desc_form_desc")}</p>
                   </div>
                   <FormControl>
-                    <Textarea {...field} placeholder="Enter form description" className="text-sm" />
+                    <Textarea {...field} placeholder={t("placeholder_form_desc")} className="text-sm" />
                   </FormControl>
                 </FormItem>
               )}
@@ -174,14 +153,13 @@ const GeneralSettings = () => {
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <div className="grid gap-1">
-                    <FormLabel className="font-semibold">Submit Text</FormLabel>
-                    <p className="text-xs text-foreground/70">
-                      Customize the text displayed on the form&apos;s submit button.
-                    </p>
+                    <FormLabel className="font-semibold">{t("label_submit_text")}</FormLabel>
+                    <p className="text-xs text-foreground/70">{t("desc_submit_text")}</p>
                   </div>
                   <FormControl>
                     <Input type="text" {...field} placeholder="Submit button text" className="text-sm" />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -209,12 +187,10 @@ const GeneralSettings = () => {
                 <FormItem className="flex justify-between items-center">
                   <div className="grid gap-1">
                     <div className="flex justify-start items-center gap-2">
-                      <FormLabel>Nebulaform branding</FormLabel>
+                      <FormLabel>{t("label_nebula_branding")}</FormLabel>
                       {user.subscription.plan !== "pro" && <Badge variant={"pink"}>Pro</Badge>}
                     </div>
-                    <span className="text-xs text-foreground/70">
-                      Show &quot;Powered by Nebulaform&quot; on your form.
-                    </span>
+                    <span className="text-xs text-foreground/70">{t("desc_nebula_branding")}</span>
                   </div>
                   <FormControl>
                     <Switch
@@ -232,7 +208,7 @@ const GeneralSettings = () => {
             <div className="flex justify-end items-center w-full">
               <Button variant={"default"} size={"sm"} className="w-full sm:w-fit">
                 {settingsState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
-                Save Form
+                {t("label_save_form")}
               </Button>
             </div>
           </div>
@@ -242,6 +218,27 @@ const GeneralSettings = () => {
   );
 };
 const StatusSettings = () => {
+  const t = useTranslations("app");
+  const statusList = [
+    {
+      status: "draft",
+      label: t("label_draft"),
+      description: t("desc_draft"),
+      icon: BookDashedIcon,
+    },
+    {
+      status: "published",
+      label: t("label_published"),
+      description: t("desc_published"),
+      icon: GlobeIcon,
+    },
+    {
+      status: "inactive",
+      label: t("label_inactive"),
+      description: t("desc_inactive"),
+      icon: MonitorOffIcon,
+    },
+  ];
   const supabase = createClient();
   const [settingsState, setSettingsState] = useState<TAppState>("idle");
   const { form, setForm } = useFormStore();
@@ -264,22 +261,20 @@ const StatusSettings = () => {
       .single();
 
     if (error) {
-      toast.error("Error on update the form.");
+      toast.error(t("err_generic"));
       setSettingsState("idle");
       return;
     }
     setForm(data);
-    toast.success("Form updated with success.");
+    toast.success(t("suc_update_form"));
     setSettingsState("idle");
   };
 
   return (
     <div className="flex w-full flex-1 flex-col gap-6">
       <div className="flex flex-col">
-        <h1 className="font-semibold text-base">Status</h1>
-        <p className="text-xs text-foreground/70">
-          Manage the availability of your form by setting it as published, inactive, or in draft mode.
-        </p>
+        <h1 className="font-semibold text-base">{t("label_status")}</h1>
+        <p className="text-xs text-foreground/70">{t("desc_status")}</p>
       </div>
       <div className="flex flex-col gap-8">
         <div className="grid gap-4 overflow-y-auto sm:grid-cols-1 w-full">
@@ -305,7 +300,7 @@ const StatusSettings = () => {
         <div className="flex justify-end items-center w-full">
           <Button variant={"default"} size={"sm"} onClick={onSubmit} className="w-full sm:w-fit">
             {settingsState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
-            Update Status
+            {t("label_save_form")}
           </Button>
         </div>
       </div>
@@ -313,29 +308,25 @@ const StatusSettings = () => {
   );
 };
 const DeleteSettings = () => {
+  const t = useTranslations("app");
   const { form } = useFormStore();
 
   return (
     <div className="flex w-full flex-1 flex-col gap-6">
       <div className="flex flex-col">
-        <h1 className="font-semibold text-base">Delete Form</h1>
-        <p className="text-xs text-foreground/70">
-          Permanently remove this form and all its data. This action cannot be undone.
-        </p>
+        <h1 className="font-semibold text-base">{t("label_delete_form")}</h1>
+        <p className="text-xs text-foreground/70">{t("desc_delete_form")}</p>
       </div>
       <div className="flex justify-center items-center w-full border bg-destructive/5 rounded border-destructive/50 sm:py-20 px-6 py-6">
         <div className="flex flex-col justify-center items-center gap-4">
           <Badge variant={"destructive"} uppercase className="w-fit">
-            Danger Zone
+            {t("label_danger_zone")}
           </Badge>
           <div className="flex flex-col justify-center items-center gap-6">
-            <span className="text-sm text-center font-medium">
-              Permanently delete this form and all its associated data from our servers.
-              <br /> This action cannot be undone.
-            </span>
+            <span className="text-sm text-center font-medium">{t("desc_danger_zone")}</span>
             <FormDelete formId={form.id} formName={form.name}>
               <Button variant={"destructive"} size={"sm"} className="w-fit">
-                Continue
+                {t("label_continue")}
               </Button>
             </FormDelete>
           </div>

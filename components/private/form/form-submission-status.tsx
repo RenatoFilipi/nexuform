@@ -13,35 +13,36 @@ import { ESubmission } from "@/utils/entities";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState, TSetState, TSubmissionStatus } from "@/utils/types";
 import { ChevronDown, LoaderIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 
-const options = [
-  {
-    button: "Mark as Reviewed",
-    label: "Reviewed",
-    value: "reviewed",
-    description: "This indicates that the submission has already been reviewed and processed.",
-  },
-  {
-    button: "Mark as Not Reviewed",
-    label: "Not Reviewed",
-    value: "not_reviewed",
-    description: "This indicates that the submission is pending review and requires attention.",
-  },
-  {
-    button: "Mark as Ignored",
-    label: "Ignored",
-    value: "ignored",
-    description: "This indicates that the submission has been intentionally disregarded and marked as ignored.",
-  },
-];
-
 const FormSubmissionStatus = ({ submission, setState }: { submission: ESubmission; setState: TSetState<boolean> }) => {
+  const t = useTranslations("app");
   const supabase = createClient();
   const [appState, setAppState] = useState<TAppState>("idle");
   const { submissions, setSubmissions } = useFormStore();
 
+  const options = [
+    {
+      button: t("label_mark_reviewed"),
+      label: t("label_reviewed"),
+      value: "reviewed",
+      description: t("desc_reviewed"),
+    },
+    {
+      button: t("label_mark_not_reviewed"),
+      label: t("label_not_reviewed"),
+      value: "not_reviewed",
+      description: t("desc_not_reviewed"),
+    },
+    {
+      button: t("label_mark_ignored"),
+      label: t("label_ignored"),
+      value: "ignored",
+      description: t("desc_ignored"),
+    },
+  ];
   const getDefaultIndex = (status: TSubmissionStatus) => {
     switch (status) {
       case "reviewed":
@@ -52,9 +53,7 @@ const FormSubmissionStatus = ({ submission, setState }: { submission: ESubmissio
         return options.findIndex((x) => x.value === "ignored").toString();
     }
   };
-
   const [selectedIndex, setSelectedIndex] = useState(getDefaultIndex(submission.status as TSubmissionStatus));
-
   const onSubmissionStatusSubmit = async () => {
     const status = options[Number(selectedIndex)].value;
     if (status === submission.status) return;
@@ -62,7 +61,7 @@ const FormSubmissionStatus = ({ submission, setState }: { submission: ESubmissio
     const { data, error } = await supabase.from("submissions").update({ status }).eq("id", submission.id).select();
 
     if (error || !data) {
-      toast.error("Failed to update submission status.");
+      toast.error(t("err_generic"));
       setAppState("idle");
       return;
     }
@@ -72,7 +71,7 @@ const FormSubmissionStatus = ({ submission, setState }: { submission: ESubmissio
       oldSubmission.id === updatedSubmission.id ? updatedSubmission : oldSubmission
     );
     setSubmissions(updatedSubmissions);
-    toast.success("Submission status updated.");
+    toast.success(t("suc_update_submission"));
     setAppState("idle");
     setState(false);
   };

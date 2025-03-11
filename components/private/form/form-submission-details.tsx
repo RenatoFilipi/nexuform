@@ -10,6 +10,7 @@ import { createClient } from "@/utils/supabase/client";
 import { TSetState, TSubmissionStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { saveAs } from "file-saver";
+import { useTranslations } from "next-intl";
 import Papa from "papaparse";
 import { useState } from "react";
 import { useMedia } from "react-use";
@@ -69,23 +70,18 @@ const Body = ({
   submission: ESubmission;
   blocks: EBlock[];
 }) => {
+  const t = useTranslations("app");
   const supabase = createClient();
-  const { subscription } = useUserStore();
+  const { subscription, locale } = useUserStore();
   const isDesktop = useMedia(minWidth640);
   const isAllowedToExport = subscription.plan === "pro";
   const query = useQuery({
     queryKey: [`submissionData`, submission.id],
     queryFn: async () => {
       const { data, error } = await supabase.from("answers").select("*").eq("submission_id", submission.id);
-
       if (error) {
-        throw new Error(`Error fetching answers: ${error.message}`);
+        throw new Error(t("err_generic"));
       }
-
-      if (!data) {
-        throw new Error("No data returned for submission.");
-      }
-
       const collections = blocks.map((block) => {
         const targetAnswer = data.find((x) => x.block_id === block.id);
         if (!targetAnswer) return { question: block.name, answer: "" };
@@ -120,7 +116,7 @@ const Body = ({
             <div className="flex justify-start items-center gap-3 p-3 bg-[#F8F8F8] dark:bg-foreground/5 border rounded">
               <Badge variant={"info"}>{formatTime(submission.completion_time ?? 0, 2)}</Badge>
               <Badge variant={"info"}>{new Date(submission.created_at).toLocaleString()}</Badge>
-              <Badge variant={"info"}>{formatDateRelativeToNow(submission.created_at)}</Badge>
+              <Badge variant={"info"}>{formatDateRelativeToNow(submission.created_at, locale)}</Badge>
             </div>
           </div>
         )}
@@ -143,7 +139,7 @@ const Body = ({
                   <span className="text-xs text-foreground/60">{coll.answer}</span>
                 ) : (
                   <div className="flex justify-center items-center py-2 mt-2 border border-dashed">
-                    <span className="text-xs text-foreground/80">No answer</span>
+                    <span className="text-xs text-foreground/80">{t("label_no_answer")}</span>
                   </div>
                 )}
               </div>
@@ -153,7 +149,7 @@ const Body = ({
       </div>
       <div className="flex justify-between items-center flex-col-reverse sm:flex-row gap-4">
         <Button variant={"outline"} size={"sm"} className="w-full sm:w-fit" onClick={() => setState(false)}>
-          Close
+          {t("label_close")}
         </Button>
         <div className="flex justify-center sm:justify-end items-center gap-3 w-full">
           {isAllowedToExport && (
@@ -164,13 +160,13 @@ const Body = ({
               variant={"outline"}
               size={"sm"}
               className="w-full sm:w-fit">
-              Export as CSV
+              {t("label_csv_export")}
             </Button>
           )}
           {!isAllowedToExport && (
             <ManageSubscription>
               <Button variant={"outline"} size={"sm"} className="w-full sm:w-fit">
-                Export as CSV
+                {t("label_csv_export")}
               </Button>
             </ManageSubscription>
           )}

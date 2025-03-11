@@ -9,6 +9,7 @@ import { getIntegrationCategory, getIntegrationName } from "@/utils/functions";
 import { IIntegration } from "@/utils/interfaces";
 import { TIntegrations, TSetState } from "@/utils/types";
 import { BirdIcon, CheckIcon, CogIcon, PlusIcon, RocketIcon, ShieldAlertIcon, ZapIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import ManageSubscription from "../shared/manage-subscription";
 import FormDeleteIntegration from "./form-delete-integration";
@@ -22,6 +23,7 @@ const views = [
   { label: "Marketplace", icon: PlusIcon, view: "marketplace", enabled: true },
 ];
 const FormIntegrations = () => {
+  const t = useTranslations("app");
   const [view, setView] = useState<TView>("installed");
   const enabledViews = views.filter((x) => x.enabled);
 
@@ -32,8 +34,8 @@ const FormIntegrations = () => {
           <RocketIcon className="w-6 h-6 text-primary" />
         </div>
         <div className="text-center flex flex-col justify-center items-center gap-1">
-          <h2 className="text-base font-medium">Coming Soon</h2>
-          <p className="text-xs text-foreground/80">We are working hard to bring you this feature. Stay tuned!</p>
+          <h2 className="text-base font-medium">{t("label_coming_soon")}</h2>
+          <p className="text-xs text-foreground/80">{t("desc_coming_soon")}</p>
         </div>
       </div>
     </div>

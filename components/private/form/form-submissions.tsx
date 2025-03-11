@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import useFormStore from "@/stores/form";
+import useUserStore from "@/stores/user";
 import { minWidth640, paginationRange } from "@/utils/constants";
 import { ESubmission } from "@/utils/entities";
 import { formatDateRelativeToNow, formatTime } from "@/utils/functions";
@@ -13,21 +14,27 @@ import { createClient } from "@/utils/supabase/client";
 import { TAppState, TSubmissionStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronLeftIcon, ChevronRightIcon, CogIcon, FilterIcon, SendIcon, XIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import { toast } from "sonner";
 import { default as FormSubmissionDetails, default as SubmissionDetails } from "./form-submission-details";
 
-const statusButtons = [
-  { label: "All", status: "all", icon: <div className="h-2 w-2 rounded-full bg-foreground"></div> },
-  { label: "Reviewed", status: "reviewed", icon: <div className="h-2 w-2 rounded-full bg-success"></div> },
-  { label: "Not Reviewed", status: "not_reviewed", icon: <div className="h-2 w-2 rounded-full bg-warning"></div> },
-  { label: "Ignored", status: "ignored", icon: <div className="h-2 w-2 rounded-full bg-gray-500"></div> },
-];
-
 const FormSubmissions = () => {
+  const t = useTranslations("app");
+  const statusButtons = [
+    { label: t("label_all"), status: "all", icon: <div className="h-2 w-2 rounded-full bg-foreground"></div> },
+    { label: t("label_reviewed"), status: "reviewed", icon: <div className="h-2 w-2 rounded-full bg-success"></div> },
+    {
+      label: t("label_not_reviewed"),
+      status: "not_reviewed",
+      icon: <div className="h-2 w-2 rounded-full bg-warning"></div>,
+    },
+    { label: t("label_ignored"), status: "ignored", icon: <div className="h-2 w-2 rounded-full bg-gray-500"></div> },
+  ];
   const supabase = createClient();
   const isDesktop = useMedia(minWidth640);
+  const { locale } = useUserStore();
   const { submissions, blocks, setPagination, pagination, form, setSubmissions } = useFormStore();
   const [appState, setAppState] = useState<TAppState>("idle");
   const [filterStatus, setFilterStatus] = useState("all");
@@ -49,7 +56,7 @@ const FormSubmissions = () => {
       .order("created_at", { ascending: false });
 
     if (error) {
-      toast.error("Error on fetching submissions.");
+      toast.error(t("err_fetch_submissions"));
       setAppState("idle");
       return;
     }
@@ -72,7 +79,7 @@ const FormSubmissions = () => {
       .order("created_at", { ascending: false });
 
     if (error) {
-      toast.error("Error on fetching submissions.");
+      toast.error(t("err_fetch_submissions"));
       setAppState("idle");
       return;
     }
@@ -97,7 +104,6 @@ const FormSubmissions = () => {
     },
     refetchOnWindowFocus: false,
   });
-
   return (
     <div className="flex flex-col w-full gap-4 overflow-y-auto">
       <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
@@ -121,7 +127,7 @@ const FormSubmissions = () => {
         <div className="flex justify-end items-center w-full gap-4">
           {filterStatus !== "all" && (
             <Badge variant={"purple"}>
-              <FilterIcon className="w-4 h-4 mr-2" /> Filter applied
+              <FilterIcon className="w-4 h-4 mr-2" /> {t("label_filter_applied")}
               <button onClick={() => setFilterStatus("all")} className="ml-2 w-fit hover:bg-purple-500/20 rounded">
                 <XIcon className="w-4 h-4" />
               </button>
@@ -129,17 +135,16 @@ const FormSubmissions = () => {
           )}
         </div>
       </div>
-
       {isDesktop && (
         <div className="flex flex-col gap-4">
           <Table className="border">
             <TableHeader>
               <TableRow>
-                <TableHead>Identifier</TableHead>
-                <TableHead>Sent in</TableHead>
-                <TableHead>Completion time</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+                <TableHead>{t("col_identifier")}</TableHead>
+                <TableHead>{t("col_sent_in")}</TableHead>
+                <TableHead>{t("col_completion_time")}</TableHead>
+                <TableHead>{t("col_status")}</TableHead>
+                <TableHead className="text-right">{t("col_actions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -149,7 +154,7 @@ const FormSubmissions = () => {
                     <TableCell className="p-0 pl-4 py-2 font-semibold">{submission.identifier}</TableCell>
                     <TableCell className="py-2">
                       <span className="">{new Date(submission.created_at).toLocaleString()}</span>
-                      <span className="ml-2">({formatDateRelativeToNow(submission.created_at)})</span>
+                      <span className="ml-2">({formatDateRelativeToNow(submission.created_at, locale)})</span>
                     </TableCell>
                     <TableCell className="py-2">{formatTime(submission.completion_time ?? 0, 2)}</TableCell>
                     <TableCell className="py-2 pr-4">
@@ -172,7 +177,7 @@ const FormSubmissions = () => {
               <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/10">
                 <SendIcon className="w-6 h-6 text-primary" />
               </div>
-              <span className="text-sm text-foreground/70">No submission to show.</span>
+              <span className="text-sm text-foreground/70">{t("label_no_submission")}</span>
             </div>
           )}
           {!noSubmission && (
@@ -180,10 +185,10 @@ const FormSubmissions = () => {
               <div className="flex justify-center items-center gap-4">
                 <Button disabled={disabledPrevious} onClick={onPreviousData} variant={"outline"} size={"sm"}>
                   <ChevronLeftIcon className="w-4 h-4 mr-2" />
-                  Previous
+                  {t("label_previous")}
                 </Button>
                 <Button disabled={disabledNext} onClick={onNextData} variant={"outline"} size={"sm"}>
-                  Next
+                  {t("label_next")}
                   <ChevronRightIcon className="w-4 h-4 ml-2" />
                 </Button>
               </div>
@@ -216,7 +221,7 @@ const FormSubmissions = () => {
               <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/10">
                 <SendIcon className="w-6 h-6 text-primary" />
               </div>
-              <span className="text-sm text-foreground/70">No submission to show.</span>
+              <span className="text-sm text-foreground/70">{t("label_no_submission")}</span>
             </div>
           )}
           {!noSubmission && (
@@ -229,10 +234,10 @@ const FormSubmissions = () => {
                   size={"sm"}
                   className="w-full">
                   <ChevronLeftIcon className="w-4 h-4 mr-2" />
-                  Previous
+                  {t("label_previous")}
                 </Button>
                 <Button disabled={disabledNext} onClick={onNextData} variant={"outline"} size={"sm"} className="w-full">
-                  Next
+                  {t("label_next")}
                   <ChevronRightIcon className="w-4 h-4 ml-2" />
                 </Button>
               </div>
