@@ -3,16 +3,18 @@
 import { Badge } from "@/components/ui/badge";
 import useEditorStore from "@/stores/editor";
 import { TEditorView } from "@/utils/types";
+import { useTranslations } from "next-intl";
 import EditorPreviewGroup from "./editor-preview-group";
 import EditorPreviewSuccess from "./editor-preview-success";
 
-const views: { name: string; view: TEditorView }[] = [
-  { name: "Blocks", view: "blocks" },
-  { name: "Success", view: "success" },
-];
-
 const EditorPreview = () => {
+  const t = useTranslations("app");
   const { view, setView } = useEditorStore();
+
+  const views: { name: string; view: TEditorView }[] = [
+    { name: t("label_blocks"), view: "blocks" },
+    { name: t("label_success"), view: "success" },
+  ];
 
   return (
     <div className="flex w-full flex-1 h-full relative flex-col">

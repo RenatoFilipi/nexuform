@@ -75,8 +75,8 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
           <CheckIcon className="text-success w-5 h-5" />
         </div>
         <div className="flex flex-col justify-center items-center text-sm text-foreground/80">
-          <span>{t("fb_sucess_1")}</span>
-          <span>{t("fb_sucess_2")}</span>
+          <span>{t("fb_success_1")}</span>
+          <span>{t("fb_success_2")}</span>
         </div>
       </div>
     );

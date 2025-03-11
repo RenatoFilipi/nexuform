@@ -6,17 +6,13 @@ import useUserStore from "@/stores/user";
 import { EBlock, EForm, EProfile, ESubscription, ETheme } from "@/utils/entities";
 import { TEditorView } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useTransition } from "react";
 import EditorPreview from "./editor-preview";
 import EditorPreviewGroup from "./editor-preview-group";
 import EditorPreviewSuccess from "./editor-preview-success";
 import EditorTips from "./editor-tips";
 import EditorTools from "./editor-tools";
-
-const views: { name: string; view: TEditorView }[] = [
-  { name: "Blocks", view: "blocks" },
-  { name: "Success", view: "success" },
-];
 
 const EditorWrapper = ({
   form,
@@ -31,10 +27,16 @@ const EditorWrapper = ({
   profile: EProfile;
   subscription: ESubscription;
 }) => {
+  const t = useTranslations("app");
   const editorStore = useEditorStore();
   const userStore = useUserStore();
   const [isPending, startTransition] = useTransition();
   const { view, setView } = useEditorStore();
+
+  const views: { name: string; view: TEditorView }[] = [
+    { name: t("label_blocks"), view: "blocks" },
+    { name: t("label_success"), view: "success" },
+  ];
 
   const query = useQuery({
     queryKey: ["EditorData"],

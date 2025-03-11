@@ -19,33 +19,14 @@ import useUserStore from "@/stores/user";
 import { minWidth640 } from "@/utils/constants";
 import { TSetState } from "@/utils/types";
 import { BookDashedIcon, EyeIcon, GlobeIcon, Layers2Icon, MonitorOffIcon, ShieldAlertIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
 import FormDelete from "../shared/form-delete";
 
-const statusList = [
-  {
-    status: "draft",
-    label: "Draft",
-    description: `The form is being created or edited. It’s not available for users to access yet.`,
-    icon: BookDashedIcon,
-  },
-  {
-    status: "published",
-    label: "Published",
-    description: "The form is live and can be accessed, filled out, and submitted by users.",
-    icon: GlobeIcon,
-  },
-  {
-    status: "inactive",
-    label: "Inactive",
-    description: "The form is no longer available for users to fill out or submit.",
-    icon: MonitorOffIcon,
-  },
-];
-
 const EditorFormSettings = ({ children }: { children: React.ReactNode }) => {
+  const t = useTranslations("app");
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
@@ -55,7 +36,7 @@ const EditorFormSettings = ({ children }: { children: React.ReactNode }) => {
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="flex flex-col min-w-[650px] h-[600px] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-xl font-medium">Settings</DialogTitle>
+            <DialogTitle className="text-xl font-medium">{t("label_settings")}</DialogTitle>
             <DialogDescription>Configure your form preferences and update settings as needed.</DialogDescription>
           </DialogHeader>
           <Body setState={setOpen} />
@@ -69,7 +50,7 @@ const EditorFormSettings = ({ children }: { children: React.ReactNode }) => {
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3 flex flex-col max-h-[90%]">
         <DrawerHeader>
-          <DrawerTitle className="text-xl font-medium">Settings</DrawerTitle>
+          <DrawerTitle className="text-xl font-medium">{t("label_settings")}</DrawerTitle>
           <DrawerDescription>Configure your form preferences and update settings as needed.</DrawerDescription>
         </DrawerHeader>
         <Body setState={setOpen} />
@@ -80,13 +61,14 @@ const EditorFormSettings = ({ children }: { children: React.ReactNode }) => {
 
 type TView = "general" | "status" | "delete";
 
-const views = [
-  { label: "General", icon: Layers2Icon, view: "general", enabled: true },
-  { label: "Status", icon: EyeIcon, view: "status", enabled: true },
-  { label: "Delete", icon: ShieldAlertIcon, view: "delete", enabled: true },
-];
-
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
+  const t = useTranslations("app");
+  const views = [
+    { label: t("nav_general"), icon: Layers2Icon, view: "general", enabled: true },
+    { label: t("nav_status"), icon: EyeIcon, view: "status", enabled: true },
+    { label: t("nav_delete"), icon: ShieldAlertIcon, view: "delete", enabled: true },
+  ];
+
   const [view, setView] = useState<TView>("general");
   const enabledViews = views.filter((x) => x.enabled);
 
@@ -118,7 +100,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       </div>
       <div className="flex justify-end items-center gap-2 flex-col sm:flex-row">
         <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
-          Close
+          {t("label_close")}
         </Button>
       </div>
     </div>
@@ -126,6 +108,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
 };
 
 const GeneralSettings = () => {
+  const t = useTranslations("app");
   const { form, setForm } = useEditorStore();
   const user = useUserStore();
 
@@ -158,42 +141,47 @@ const GeneralSettings = () => {
     <div className="flex flex-col w-full gap-6 pr-4">
       <div className="grid gap-3">
         <div className="grid gap-1">
-          <Label>Name</Label>
-          <p className="text-xs text-foreground/60">Provide a unique name for your form to identify it easily.</p>
+          <Label>{t("label_form_name")}</Label>
+          <p className="text-xs text-foreground/60">{t("desc_form_name")}</p>
         </div>
-        <Input type="text" value={form.name} onChange={(e) => onSetName(e.target.value)} />
+        <Input
+          type="text"
+          placeholder={t("placeholder_form_name")}
+          value={form.name}
+          onChange={(e) => onSetName(e.target.value)}
+        />
       </div>
       <div className="grid gap-3">
         <div className="grid gap-1">
-          <Label>Description (Optional)</Label>
-          <p className="text-xs text-foreground/60">
-            Add a brief description to inform users about the purpose of this form.
-          </p>
+          <Label>
+            {t("label_form_desc")} ({t("label_optional")})
+          </Label>
+          <p className="text-xs text-foreground/60">{t("desc_form_desc")}</p>
         </div>
-        <Textarea value={form.description ?? ""} onChange={(e) => onSetDescription(e.target.value)} />
+        <Textarea
+          placeholder={t("placeholder_form_desc")}
+          value={form.description ?? ""}
+          onChange={(e) => onSetDescription(e.target.value)}
+        />
       </div>
       <div className="grid gap-3">
         <div className="grid gap-1">
-          <Label>Submit text</Label>
-          <p className="text-xs text-foreground/60">Customize the text displayed on the form&apos;s submit button.</p>
+          <Label>{t("label_submit_text")}</Label>
+          <p className="text-xs text-foreground/60">{t("desc_submit_text")}</p>
         </div>
         <Input type="text" value={form.submit_text} onChange={(e) => onSetSubmitText(e.target.value)} />
       </div>
       <div className="grid gap-3">
         <div className="grid gap-1">
-          <Label>Success title</Label>
-          <p className="text-xs text-foreground/60">
-            Set the title that will be displayed after the form is successfully submitted.
-          </p>
+          <Label>{t("label_success_title")}</Label>
+          <p className="text-xs text-foreground/60">{t("desc_success_title")}</p>
         </div>
         <Input type="text" value={form.success_title} onChange={(e) => onSetSuccessTitle(e.target.value)} />
       </div>
       <div className="grid gap-3">
         <div className="grid gap-1">
-          <Label>Success description</Label>
-          <p className="text-xs text-foreground/60">
-            Enter the message that will be shown after the form is successfully submitted.
-          </p>
+          <Label>{t("label_success_desc")}</Label>
+          <p className="text-xs text-foreground/60">{t("desc_success_desc")}</p>
         </div>
         <Textarea value={form.success_description} onChange={(e) => onSetSuccessDescription(e.target.value)} />
       </div>
@@ -212,10 +200,10 @@ const GeneralSettings = () => {
         <div className="flex justify-center items-center gap-2">
           <div className="grid gap-1">
             <div className="flex justify-start items-center gap-2">
-              <Label>Nebulaform branding</Label>
+              <Label>{t("label_nebula_branding")}</Label>
               {user.subscription.plan !== "pro" && <Badge variant={"pink"}>Pro</Badge>}
             </div>
-            <span className="text-xs text-foreground/60">Show &quot;Powered by Nebulaform&quot; on your form.</span>
+            <span className="text-xs text-foreground/60">{t("desc_nebula_branding")}</span>
           </div>
         </div>
         <Switch checked={form.nebulaform_branding} onCheckedChange={onSetNebulaformBranding} />
@@ -224,7 +212,28 @@ const GeneralSettings = () => {
   );
 };
 const StatusSettings = () => {
+  const t = useTranslations("app");
   const { form, setForm } = useEditorStore();
+  const statusList = [
+    {
+      status: "draft",
+      label: t("label_draft"),
+      description: t("desc_draft"),
+      icon: BookDashedIcon,
+    },
+    {
+      status: "published",
+      label: t("label_published"),
+      description: t("desc_published"),
+      icon: GlobeIcon,
+    },
+    {
+      status: "inactive",
+      label: t("label_inactive"),
+      description: t("desc_inactive"),
+      icon: MonitorOffIcon,
+    },
+  ];
 
   const onSetStatus = (value: string) => {
     setForm({ ...form, status: value });
@@ -234,10 +243,8 @@ const StatusSettings = () => {
     <div className="flex flex-col w-full">
       <div className="grid gap-3">
         <div className="grid gap-1">
-          <Label className="">Status</Label>
-          <p className="text-xs text-foreground/60">
-            Choose the current status of the form. This determines its availability and visibility.
-          </p>
+          <Label className="">{t("label_status")}</Label>
+          <p className="text-xs text-foreground/60">{t("desc_status")}</p>
         </div>
         <div className="flex flex-col gap-4">
           <div className="grid gap-4 overflow-y-auto grid-cols-1">
@@ -255,7 +262,7 @@ const StatusSettings = () => {
                 </div>
                 <div className="flex flex-col justify-center items-start gap-1">
                   <span className="font-medium">{statusItem.label}</span>
-                  <span className="text-xs text-foreground/70">{statusItem.description}</span>
+                  <span className="text-xs text-foreground/70 text-start">{statusItem.description}</span>
                 </div>
               </button>
             ))}
@@ -266,22 +273,20 @@ const StatusSettings = () => {
   );
 };
 const DeleteSettings = () => {
+  const t = useTranslations("app");
   const { form } = useEditorStore();
 
   return (
     <div className="flex justify-center items-center w-full border bg-destructive/5 rounded border-destructive/50">
       <div className="flex flex-col justify-center items-center gap-4">
         <Badge variant={"destructive"} uppercase className="w-fit">
-          Danger Zone
+          {t("label_danger_zone")}
         </Badge>
         <div className="flex flex-col justify-center items-center gap-6">
-          <span className="text-sm text-center font-medium">
-            Permanently delete this form and all its associated data from our servers.
-            <br /> This action cannot be undone.
-          </span>
+          <span className="text-sm text-center font-medium">{t("desc_danger_zone")}</span>
           <FormDelete formId={form.id} formName={form.name}>
             <Button variant={"destructive"} size={"sm"} className="w-full sm:w-fit">
-              Continue
+              {t("label_continue")}
             </Button>
           </FormDelete>
         </div>

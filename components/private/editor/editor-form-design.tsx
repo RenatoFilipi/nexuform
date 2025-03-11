@@ -34,6 +34,7 @@ import {
   StarIcon,
   TextIcon,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState, type JSX } from "react";
 import { useMedia } from "react-use";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
@@ -141,6 +142,7 @@ const icons: { [key in TBlock]: JSX.Element } = {
 };
 
 const EditorFormDesign = ({ children }: { children: React.ReactNode }) => {
+  const t = useTranslations("app");
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
@@ -150,8 +152,8 @@ const EditorFormDesign = ({ children }: { children: React.ReactNode }) => {
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="flex flex-col min-w-[650px] h-[600px] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Design</DialogTitle>
-            <DialogDescription>Customize the appearance of your form.</DialogDescription>
+            <DialogTitle>{t("label_design")}</DialogTitle>
+            <DialogDescription>{t("desc_design")}</DialogDescription>
           </DialogHeader>
           <Body setState={setOpen} />
         </DialogContent>
@@ -164,8 +166,8 @@ const EditorFormDesign = ({ children }: { children: React.ReactNode }) => {
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3 flex flex-col gap-8">
         <DrawerHeader>
-          <DrawerTitle>Design</DrawerTitle>
-          <DrawerDescription>Customize the appearance of your form.</DrawerDescription>
+          <DrawerTitle>{t("label_design")}</DrawerTitle>
+          <DrawerDescription>{t("desc_design")}</DrawerDescription>
         </DrawerHeader>
         <Body setState={setOpen} />
       </DrawerContent>
@@ -175,12 +177,13 @@ const EditorFormDesign = ({ children }: { children: React.ReactNode }) => {
 
 type TView = "general" | "colors" | "reorder";
 
-const views = [
-  { label: "General", icon: Layers2Icon, view: "general", enabled: true },
-  { label: "Colors", icon: PaintbrushIcon, view: "colors", enabled: true },
-  { label: "Reorder", icon: ArrowDownUpIcon, view: "reorder", enabled: true },
-];
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
+  const t = useTranslations("app");
+  const views = [
+    { label: t("nav_general"), icon: Layers2Icon, view: "general", enabled: true },
+    { label: t("nav_colors"), icon: PaintbrushIcon, view: "colors", enabled: true },
+    { label: t("nav_reorder"), icon: ArrowDownUpIcon, view: "reorder", enabled: true },
+  ];
   const [view, setView] = useState<TView>("general");
   const enabledViews = views.filter((x) => x.enabled);
 
@@ -212,13 +215,14 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       </div>
       <div className="flex justify-end items-center gap-2 flex-col sm:flex-row">
         <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
-          Close
+          {t("label_close")}
         </Button>
       </div>
     </div>
   );
 };
 const GeneralDesign = () => {
+  const t = useTranslations("app");
   const { theme, setTheme } = useEditorStore();
 
   const onSetNumericBlocks = (value: boolean) => {
@@ -228,7 +232,6 @@ const GeneralDesign = () => {
     setTheme({ ...theme, uppercase_block_name: value });
   };
   const onSetWidth = (value: string) => {
-    console.log(value);
     setTheme({ ...theme, width: value });
   };
 
@@ -236,34 +239,30 @@ const GeneralDesign = () => {
     <div className="flex flex-col w-full gap-6">
       <div className="flex justify-between items-center w-full">
         <div className="grid gap-1">
-          <Label>Show numeric blocks</Label>
-          <p className="text-xs text-foreground/60">
-            Enable this option to display numeric identifiers for each block.
-          </p>
+          <Label>{t("label_numeric_blocks")}</Label>
+          <p className="text-xs text-foreground/60">{t("desc_numeric_blocks")}</p>
         </div>
         <Switch checked={theme.numeric_blocks} onCheckedChange={onSetNumericBlocks} />
       </div>
       <div className="flex justify-between items-center w-full">
         <div className="grid gap-1">
-          <Label>Uppercase Block Name</Label>
-          <p className="text-xs text-foreground/60">When enabled, block names will be displayed in uppercase.</p>
+          <Label>{t("label_uppercase_block")}</Label>
+          <p className="text-xs text-foreground/60">{t("desc_uppercase_block")}.</p>
         </div>
         <Switch checked={theme.uppercase_block_name} onCheckedChange={onSetUppercaseBlockName} />
       </div>
-      <div className="flex justify-between items-center w-full">
+      <div className="flex justify-between items-center w-full sm:gap-4">
         <div className="grid gap-1">
-          <Label>Form Width</Label>
-          <p className="text-xs text-foreground/60">
-            Choose how the form width should be displayed: centered or full width.
-          </p>
+          <Label>{t("label_form_width")}</Label>
+          <p className="text-xs text-foreground/60">{t("desc_form_width")}</p>
         </div>
         <Select onValueChange={onSetWidth} defaultValue={theme.width}>
           <SelectTrigger className="w-[160px]">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="centered">Centered</SelectItem>
-            <SelectItem value="full">Full Width</SelectItem>
+            <SelectItem value="centered">{t("label_centered")}</SelectItem>
+            <SelectItem value="full">{t("label_full_width")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -271,6 +270,7 @@ const GeneralDesign = () => {
   );
 };
 const ColorsDesign = () => {
+  const t = useTranslations("app");
   const { theme, setTheme } = useEditorStore();
 
   const onSetPrimaryColor = (value: string) => {
@@ -282,10 +282,8 @@ const ColorsDesign = () => {
       <div className="grid gap-3">
         <div className="flex justify-start items-center gap-2">
           <div className="grid gap-1">
-            <Label>Primary color</Label>
-            <span className="text-xs text-foreground/60">
-              Choose the main color for your design. This color will be used for key elements.
-            </span>
+            <Label>{t("label_primary_color")}</Label>
+            <span className="text-xs text-foreground/60">{t("desc_primary_color")}</span>
           </div>
         </div>
         <div className="grid grid-cols-10 gap-4">
@@ -305,6 +303,7 @@ const ColorsDesign = () => {
   );
 };
 const ReorderDesign = () => {
+  const t = useTranslations("app");
   const { blocks, setBlocks } = useEditorStore();
   const empty = blocks.length <= 0;
   const onReorderedBlocks = (payload: EBlock[]) => {
@@ -322,10 +321,8 @@ const ReorderDesign = () => {
             <ArrowDownUpIcon className="w-6 h-6 text-primary" />
           </div>
           <div className="flex justify-center items-center flex-col gap-1">
-            <span className="font-medium text-base">No blocks to reorder</span>
-            <p className="text-xs text-foreground/70 text-center">
-              There are currently no blocks available to reorder. Add blocks to start organizing them.
-            </p>
+            <span className="font-medium text-base">{t("label_reorder_blocks")}</span>
+            <p className="text-xs text-foreground/70 text-center">{t("desc_reorder_blocks")}</p>
           </div>
         </div>
       )}
@@ -347,7 +344,7 @@ const ReorderDesign = () => {
                 </div>
                 {block.is_identifier && (
                   <Badge variant={"green"} className="p-0 px-2 h-fit">
-                    Identifier
+                    {t("label_identifier")}
                   </Badge>
                 )}
                 <div className="flex justify-start items-center overflow-y-auto">

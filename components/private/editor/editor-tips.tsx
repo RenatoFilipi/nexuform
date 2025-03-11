@@ -1,37 +1,38 @@
 import { BrushIcon, LayersIcon, ShareIcon, SlidersIcon } from "lucide-react";
-
-const tips = [
-  {
-    title: "Build Your Form",
-    desc: "Start by adding blocks like text fields, multiple choice, and more.",
-    icon: LayersIcon,
-    bgColor: "bg-blue-500/10",
-    textColor: "text-blue-500",
-  },
-  {
-    title: "Customize the Look",
-    desc: "Adjust colors, order, and layout to match your brand.",
-    icon: BrushIcon,
-    bgColor: "bg-green-500/10",
-    textColor: "text-green-500",
-  },
-  {
-    title: "Set Up Preferences",
-    desc: "Define settings like title, description, and permissions.",
-    icon: SlidersIcon,
-    bgColor: "bg-pink-500/10",
-    textColor: "text-pink-500",
-  },
-  {
-    title: "Publish & Share",
-    desc: "Make your form available and share it with your audience.",
-    icon: ShareIcon,
-    bgColor: "bg-purple-500/10",
-    textColor: "text-purple-500",
-  },
-];
+import { useTranslations } from "next-intl";
 
 const EditorTips = () => {
+  const t = useTranslations("app");
+  const tips = [
+    {
+      title: t("label_tips_form"),
+      desc: t("desc_tips_form"),
+      icon: LayersIcon,
+      bgColor: "bg-blue-500/10",
+      textColor: "text-blue-500",
+    },
+    {
+      title: t("label_tips_design"),
+      desc: t("desc_tips_design"),
+      icon: BrushIcon,
+      bgColor: "bg-green-500/10",
+      textColor: "text-green-500",
+    },
+    {
+      title: t("label_tips_settings"),
+      desc: t("desc_tips_settings"),
+      icon: SlidersIcon,
+      bgColor: "bg-pink-500/10",
+      textColor: "text-pink-500",
+    },
+    {
+      title: t("label_tips_share"),
+      desc: t("desc_tips_share"),
+      icon: ShareIcon,
+      bgColor: "bg-purple-500/10",
+      textColor: "text-purple-500",
+    },
+  ];
   return (
     <ul className="grid sm:grid-cols-1 gap-8">
       {tips.map((tip, index) => (

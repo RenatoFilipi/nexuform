@@ -1,12 +1,14 @@
 import { Button } from "@/components/ui/button";
 import useEditorStore from "@/stores/editor";
 import { FrameIcon, PlusIcon, Settings2Icon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import AddBlock from "../blocks/add-block";
 import Block from "../blocks/block";
 import EditorFormDesign from "./editor-form-design";
 import EditorFormSettings from "./editor-form-settings";
 
 const EditorTools = () => {
+  const t = useTranslations("app");
   const { form, blocks } = useEditorStore();
 
   return (
@@ -16,13 +18,13 @@ const EditorTools = () => {
           <EditorFormSettings>
             <Button variant={"outline"} size={"sm"} className="w-full">
               <Settings2Icon className="w-4 h-4 mr-2" />
-              Settings
+              {t("label_settings")}
             </Button>
           </EditorFormSettings>
           <EditorFormDesign>
             <Button variant={"outline"} size={"sm"} className="w-full">
               <FrameIcon className="w-4 h-4 mr-2" />
-              Design
+              {t("label_design")}
             </Button>
           </EditorFormDesign>
         </div>
@@ -35,7 +37,7 @@ const EditorTools = () => {
           <AddBlock formId={form.id}>
             <Button size={"sm"} className="w-full" variant={"ghost"}>
               <PlusIcon className="w-4 h-4 mr-2" />
-              New Block
+              {t("label_new_block")}
             </Button>
           </AddBlock>
         </div>

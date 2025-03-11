@@ -331,6 +331,7 @@ const NavApp = () => {
   );
 };
 const NavEditor = () => {
+  const t = useTranslations("app");
   const { form, theme, blocks, blocksReadyOnly, preview, setPreview } = useEditorStore();
   const { subscription } = useUserStore();
   const queryClient = useQueryClient();
@@ -482,16 +483,16 @@ const NavEditor = () => {
       {active && (
         <div className="flex justify-center items-center gap-1">
           {form.updated_at !== "" && (
-            <span className="text-xs text-foreground/80 mr-5 hidden sm:flex">
-              Last updated at {new Date(form.updated_at).toLocaleString()}
+            <span className="text-xs text-foreground/80 mr-5 hidden">
+              {t("label_last_updated")}: {new Date(form.updated_at).toLocaleString()}
             </span>
           )}
           <Button size={"xs"} variant={"outline"} className="flex sm:hidden" onClick={() => setPreview(!preview)}>
-            Preview
+            {t("label_preview")}
           </Button>
           <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
             {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
-            Save Form
+            {t("label_save_form")}
           </Button>
         </div>
       )}

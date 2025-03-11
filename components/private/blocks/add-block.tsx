@@ -30,79 +30,15 @@ import {
   StarIcon,
   TextIcon,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMedia } from "react-use";
 import { z } from "zod";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
 
-const blockList: IBlockData[] = [
-  {
-    type: "short_text",
-    name: "Short Text",
-    icon: <EqualIcon className="w-4 h-4" />,
-    enabled: true,
-    description: "A single-line input field for brief text responses.",
-  },
-  {
-    type: "paragraph_text",
-    name: "Paragraph Text",
-    icon: <TextIcon className="w-4 h-4" />,
-    enabled: true,
-    description: "A multi-line input field for detailed text responses.",
-  },
-  {
-    type: "checkboxes",
-    name: "Checkboxes",
-    icon: <CheckSquareIcon className="w-4 h-4" />,
-    enabled: true,
-    description: "Allows the selection of multiple options from a list.",
-  },
-  {
-    type: "multiple_choice",
-    name: "Multiple Choice",
-    icon: <CheckCircleIcon className="w-4 h-4" />,
-    enabled: true,
-    description: "Allows the selection of a single option from a list.",
-  },
-  {
-    type: "dropdown_menu",
-    name: "Dropdown Menu",
-    icon: <ChevronDownIcon className="w-4 h-4" />,
-    enabled: true,
-    description: "A collapsible menu for selecting a single option.",
-  },
-  {
-    type: "number_input",
-    name: "Number Input",
-    icon: <HashIcon className="w-4 h-4" />,
-    enabled: true,
-    description: "An input field specifically for numeric values.",
-  },
-  {
-    type: "email_address",
-    name: "Email Address",
-    icon: <MailIcon className="w-4 h-4" />,
-    enabled: true,
-    description: "An input field for capturing valid email addresses.",
-  },
-  {
-    type: "star_rating",
-    name: "Star Rating",
-    icon: <StarIcon className="w-4 h-4" />,
-    enabled: true,
-    description: "A scale for rating, typically displayed as stars.",
-  },
-  {
-    type: "custom_scale",
-    name: "Custom Scale",
-    icon: <ScaleIcon className="w-4 h-4" />,
-    enabled: true,
-    description: "A range-based scale for responses, such as 1–10.",
-  },
-];
-
 const AddBlock = ({ children, formId }: { children: React.ReactNode; formId: string }) => {
+  const t = useTranslations("app");
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
@@ -112,11 +48,8 @@ const AddBlock = ({ children, formId }: { children: React.ReactNode; formId: str
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="flex flex-col min-w-[650px] h-[600px]">
           <DialogHeader>
-            <DialogTitle>Blocks</DialogTitle>
-            <DialogDescription>
-              Select and add new block to your form. Customize each block to suit your needs and enhance the user
-              experience.
-            </DialogDescription>
+            <DialogTitle>{t("label_blocks")}</DialogTitle>
+            <DialogDescription>{t("desc_blocks")}</DialogDescription>
           </DialogHeader>
           <Body setState={setOpen} formId={formId} />
         </DialogContent>
@@ -129,11 +62,8 @@ const AddBlock = ({ children, formId }: { children: React.ReactNode; formId: str
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3 max-h-[90%]">
         <DrawerHeader>
-          <DrawerTitle>Blocks</DrawerTitle>
-          <DrawerDescription>
-            Select and add new block to your form. Customize each block to suit your needs and enhance the user
-            experience.
-          </DrawerDescription>
+          <DrawerTitle>{t("label_blocks")}</DrawerTitle>
+          <DrawerDescription>{t("desc_blocks")}</DrawerDescription>
         </DrawerHeader>
         <Body setState={setOpen} formId={formId} />
       </DrawerContent>
@@ -142,7 +72,74 @@ const AddBlock = ({ children, formId }: { children: React.ReactNode; formId: str
 };
 
 const Body = ({ setState, formId }: { setState: TSetState<boolean>; formId: string }) => {
+  const t = useTranslations("app");
   const { addBlock, blocks } = useEditorStore();
+
+  const blockList: IBlockData[] = [
+    {
+      type: "short_text",
+      name: t("label_short_text"),
+      icon: <EqualIcon className="w-4 h-4" />,
+      enabled: true,
+      description: t("desc_short_text"),
+    },
+    {
+      type: "paragraph_text",
+      name: t("label_paragraph_text"),
+      icon: <TextIcon className="w-4 h-4" />,
+      enabled: true,
+      description: t("desc_paragraph_text"),
+    },
+    {
+      type: "checkboxes",
+      name: t("label_checkboxes"),
+      icon: <CheckSquareIcon className="w-4 h-4" />,
+      enabled: true,
+      description: t("desc_checkboxes"),
+    },
+    {
+      type: "multiple_choice",
+      name: t("label_multiple_choice"),
+      icon: <CheckCircleIcon className="w-4 h-4" />,
+      enabled: true,
+      description: t("desc_multiple_choice"),
+    },
+    {
+      type: "dropdown_menu",
+      name: t("label_dropdown_menu"),
+      icon: <ChevronDownIcon className="w-4 h-4" />,
+      enabled: true,
+      description: t("desc_dropdown_menu"),
+    },
+    {
+      type: "number_input",
+      name: t("label_number_input"),
+      icon: <HashIcon className="w-4 h-4" />,
+      enabled: true,
+      description: t("desc_number_input"),
+    },
+    {
+      type: "email_address",
+      name: t("label_email_address"),
+      icon: <MailIcon className="w-4 h-4" />,
+      enabled: true,
+      description: t("desc_email_address"),
+    },
+    {
+      type: "star_rating",
+      name: t("label_star_rating"),
+      icon: <StarIcon className="w-4 h-4" />,
+      enabled: true,
+      description: t("desc_star_rating"),
+    },
+    {
+      type: "custom_scale",
+      name: t("label_custom_scale"),
+      icon: <ScaleIcon className="w-4 h-4" />,
+      enabled: true,
+      description: t("desc_custom_scale"),
+    },
+  ];
 
   const formSchema = z.object({
     block: z.string(),
@@ -230,10 +227,10 @@ const Body = ({ setState, formId }: { setState: TSetState<boolean>; formId: stri
               variant={"outline"}
               size={"sm"}
               className="w-full sm:w-fit">
-              Cancel
+              {t("label_cancel")}
             </Button>
             <Button type="submit" variant={"default"} size={"sm"} className="w-full sm:w-fit">
-              Add Block
+              {t("label_add_block")}
             </Button>
           </div>
         </form>
