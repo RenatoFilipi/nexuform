@@ -13,6 +13,7 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { EBlock } from "@/utils/entities";
+import { useTranslations } from "next-intl";
 import type { JSX } from "react";
 import BlockSettings from "./block-settings";
 
@@ -29,14 +30,16 @@ const icons: { [key in TBlock]: JSX.Element } = {
 };
 
 const Block = ({ block }: { block: EBlock }) => {
+  const t = useTranslations("app");
+
   return (
     <BlockSettings block={block}>
       <div className="flex flex-col justify-between gap-2 border rounded p-3 cursor-pointer hover:bg-foreground/5 group h-20">
         <div className="flex justify-between items-center gap-2 h-7">
           <div className="flex justify-center items-center gap-2">{icons[block.type as TBlock]}</div>
           <div className="flex justify-center items-center gap-2">
-            {block.is_identifier && <Badge variant={"green"}>Identifier</Badge>}
-            {block.required && <Badge variant={"orange"}>Required</Badge>}
+            {block.is_identifier && <Badge variant={"green"}>{t("label_identifier")}</Badge>}
+            {block.required && <Badge variant={"orange"}>{t("label_required")}</Badge>}
           </div>
         </div>
         <div className="flex justify-start items-center overflow-y-auto">

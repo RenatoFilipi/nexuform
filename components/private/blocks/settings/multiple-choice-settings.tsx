@@ -11,9 +11,11 @@ import { EBlock } from "@/utils/entities";
 import { TSetState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { PlusIcon, XIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 const MultipleChoiceSettings = ({ block, setState }: { block: EBlock; setState: TSetState<boolean> }) => {
+  const t = useTranslations("app");
   const { id } = block;
   const { updateBlock, removeBlock } = useEditorStore();
   const [options, setOptions] = useState<string[]>(block.options ?? []);
@@ -46,14 +48,14 @@ const MultipleChoiceSettings = ({ block, setState }: { block: EBlock; setState: 
     <div className="h-full flex flex-col gap-6 overflow-y-auto">
       <div className="flex justify-center sm:justify-start items-center gap-3">
         <Badge variant={"primary"} uppercase>
-          Multiple Choice
+          {t("label_multiple_choice")}
         </Badge>
       </div>
       <div className="h-full flex flex-col gap-8 overflow-y-auto pr-4">
         <div className="grid gap-3">
           <div className="grid gap-1">
-            <Label htmlFor="name">Name</Label>
-            <span className="text-xs text-foreground/60">The label displayed above the input field.</span>
+            <Label htmlFor="name">{t("label_block_name")}</Label>
+            <span className="text-xs text-foreground/60">{t("desc_block_name")}</span>
           </div>
           <Input
             type="text"
@@ -66,10 +68,8 @@ const MultipleChoiceSettings = ({ block, setState }: { block: EBlock; setState: 
         </div>
         <div className="grid gap-3">
           <div className="grid gap-1">
-            <Label htmlFor="description">Description</Label>
-            <span className="text-xs text-foreground/60">
-              Additional information displayed below the input to guide the user.
-            </span>
+            <Label htmlFor="description">{t("label_block_desc")}</Label>
+            <span className="text-xs text-foreground/60">{t("desc_block_desc")}</span>
           </div>
           <Textarea
             id="description"
@@ -81,8 +81,8 @@ const MultipleChoiceSettings = ({ block, setState }: { block: EBlock; setState: 
         </div>
         <div className="grid gap-3">
           <div className="grid gap-1">
-            <Label htmlFor="options">Options</Label>
-            <span className="text-xs text-foreground/60">Add multiple options for users to select from.</span>
+            <Label htmlFor="options">{t("label_block_options")}</Label>
+            <span className="text-xs text-foreground/60">{t("desc_block_options")}</span>
           </div>
           <div className="flex flex-col gap-2 overflow-y-auto">
             <div className="flex justify-center items-center gap-2">
@@ -110,8 +110,8 @@ const MultipleChoiceSettings = ({ block, setState }: { block: EBlock; setState: 
         </div>
         <div className="flex justify-between items-center w-full">
           <div className="grid gap-1">
-            <Label htmlFor="required">Required</Label>
-            <p className="text-xs text-foreground/60">If enabled, users must fill out this field before submitting.</p>
+            <Label htmlFor="required">{t("label_block_required")}</Label>
+            <p className="text-xs text-foreground/60">{t("desc_block_required")}</p>
           </div>
           <Switch
             id="required"
@@ -131,10 +131,10 @@ const MultipleChoiceSettings = ({ block, setState }: { block: EBlock; setState: 
           variant={"destructive_outline"}
           size={"sm"}
           className="w-full sm:w-fit">
-          Remove Block
+          {t("label_remove_block")}
         </Button>
         <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
-          Close
+          {t("label_close")}
         </Button>
       </div>
     </div>

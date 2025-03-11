@@ -9,8 +9,10 @@ import { Textarea } from "@/components/ui/textarea";
 import useEditorStore from "@/stores/editor";
 import { EBlock } from "@/utils/entities";
 import { TSetState } from "@/utils/types";
+import { useTranslations } from "next-intl";
 
 const StarRatingSettings = ({ block, setState }: { block: EBlock; setState: TSetState<boolean> }) => {
+  const t = useTranslations("app");
   const { id } = block;
   const { updateBlock, removeBlock } = useEditorStore();
 
@@ -18,14 +20,14 @@ const StarRatingSettings = ({ block, setState }: { block: EBlock; setState: TSet
     <div className="h-full flex flex-col gap-6 overflow-y-auto">
       <div className="flex justify-center sm:justify-start items-center gap-3">
         <Badge variant={"primary"} uppercase>
-          Star Rating
+          {t("label_star_rating")}
         </Badge>
       </div>
       <div className="h-full flex flex-col gap-8 overflow-y-auto pr-4">
         <div className="grid gap-3">
           <div className="grid gap-1">
-            <Label htmlFor="name">Name</Label>
-            <span className="text-xs text-foreground/60">The label displayed above the input field.</span>
+            <Label htmlFor="name">{t("label_block_name")}</Label>
+            <span className="text-xs text-foreground/60">{t("desc_block_name")}</span>
           </div>
           <Input
             type="text"
@@ -38,10 +40,8 @@ const StarRatingSettings = ({ block, setState }: { block: EBlock; setState: TSet
         </div>
         <div className="grid gap-3">
           <div className="grid gap-1">
-            <Label htmlFor="description">Description</Label>
-            <span className="text-xs text-foreground/60">
-              Additional information displayed below the input to guide the user.
-            </span>
+            <Label htmlFor="description">{t("label_block_desc")}</Label>
+            <span className="text-xs text-foreground/60">{t("desc_block_desc")}</span>
           </div>
           <Textarea
             id="description"
@@ -53,8 +53,8 @@ const StarRatingSettings = ({ block, setState }: { block: EBlock; setState: TSet
         </div>
         <div className="grid gap-3">
           <div className="grid gap-1">
-            <Label htmlFor="max-rating">Max rating</Label>
-            <span className="text-xs text-foreground/60">Set the maximum number of stars users can rate.</span>
+            <Label htmlFor="max-rating">{t("label_max_rating")}</Label>
+            <span className="text-xs text-foreground/60">{t("desc_max_rating")}</span>
           </div>
           <Input
             type="number_input"
@@ -70,8 +70,8 @@ const StarRatingSettings = ({ block, setState }: { block: EBlock; setState: TSet
         </div>
         <div className="flex justify-between items-center w-full">
           <div className="grid gap-1">
-            <Label htmlFor="required">Required</Label>
-            <p className="text-xs text-foreground/60">If enabled, users must fill out this field before submitting.</p>
+            <Label htmlFor="required">{t("label_block_required")}</Label>
+            <p className="text-xs text-foreground/60">{t("desc_block_required")}</p>
           </div>
           <Switch
             id="required"
@@ -91,10 +91,10 @@ const StarRatingSettings = ({ block, setState }: { block: EBlock; setState: TSet
           variant={"destructive_outline"}
           size={"sm"}
           className="w-full sm:w-fit">
-          Remove Block
+          {t("label_remove_block")}
         </Button>
         <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
-          Close
+          {t("label_close")}
         </Button>
       </div>
     </div>

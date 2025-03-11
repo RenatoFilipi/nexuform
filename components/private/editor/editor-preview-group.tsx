@@ -2,6 +2,7 @@ import Brand from "@/components/core/brand";
 import { Button } from "@/components/ui/button";
 import useEditorStore from "@/stores/editor";
 import { IDesign } from "@/utils/interfaces";
+import { useTranslations } from "next-intl";
 import CheckBoxesDesign from "../blocks/design/checkboxes-design";
 import CustomScaleDesign from "../blocks/design/custom-scale-design";
 import DropdownMenuDesign from "../blocks/design/dropdown-menu-design";
@@ -104,6 +105,7 @@ const design: IDesign[] = [
 ];
 
 const EditorPreviewGroup = () => {
+  const t = useTranslations("app");
   const { blocks, form, theme } = useEditorStore();
   const currentColor = design.find((x) => x.label === theme.primary_color) ?? design[0];
 
@@ -150,7 +152,7 @@ const EditorPreviewGroup = () => {
           <div className="flex justify-center items-center w-full">
             <span className="border rounded p-2 w-fit flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
               <Brand type="logo" className="fill-foreground w-4 h-4" />
-              <span className="text-foreground text-sm font-semibold">Powered by Nebulaform</span>
+              <span className="text-foreground text-sm font-semibold">{t("label_powered")}</span>
             </span>
           </div>
         )}

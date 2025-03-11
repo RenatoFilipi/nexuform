@@ -11,9 +11,11 @@ import useEditorStore from "@/stores/editor";
 import { EBlock } from "@/utils/entities";
 import { TSetState } from "@/utils/types";
 import { CircleHelpIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 const EmailAddressSettings = ({ block, setState }: { block: EBlock; setState: TSetState<boolean> }) => {
+  const t = useTranslations("app");
   const { id, is_identifier } = block;
   const { updateBlock, removeBlock, blocks } = useEditorStore();
   const [isIdentifierAvailable] = useState(blocks.some((e) => e.is_identifier === true && e.id !== id));
@@ -23,18 +25,18 @@ const EmailAddressSettings = ({ block, setState }: { block: EBlock; setState: TS
       <div className="flex justify-center sm:justify-start items-center gap-3">
         {is_identifier && (
           <Badge variant={"green"} uppercase>
-            Identifier
+            {t("label_identifier")}
           </Badge>
         )}
         <Badge variant={"primary"} uppercase>
-          Email Address
+          {t("label_email_address")}
         </Badge>
       </div>
       <div className="h-full flex flex-col gap-8 overflow-y-auto pr-4">
         <div className="grid gap-3">
           <div className="grid gap-1">
-            <Label htmlFor="name">Name</Label>
-            <span className="text-xs text-foreground/60">The label displayed above the input field.</span>
+            <Label htmlFor="name">{t("label_block_name")}</Label>
+            <span className="text-xs text-foreground/60">{t("desc_block_name")}</span>
           </div>
           <Input
             type="text"
@@ -47,10 +49,8 @@ const EmailAddressSettings = ({ block, setState }: { block: EBlock; setState: TS
         </div>
         <div className="grid gap-3">
           <div className="grid gap-1">
-            <Label htmlFor="description">Description</Label>
-            <span className="text-xs text-foreground/60">
-              Additional information displayed below the input to guide the user.
-            </span>
+            <Label htmlFor="description">{t("label_block_desc")}</Label>
+            <span className="text-xs text-foreground/60">{t("desc_block_desc")}</span>
           </div>
           <Textarea
             id="description"
@@ -62,12 +62,11 @@ const EmailAddressSettings = ({ block, setState }: { block: EBlock; setState: TS
         </div>
         <div className="grid gap-3">
           <div className="grid gap-1">
-            <Label htmlFor="placeholder">Placeholder</Label>
-            <span className="text-xs text-foreground/60">
-              A hint text inside the input field before the user types.
-            </span>
+            <Label htmlFor="placeholder">{t("label_block_placeholder")}</Label>
+            <span className="text-xs text-foreground/60">{t("desc_block_placeholder")}</span>
           </div>
           <Input
+            type="text"
             id="placeholder"
             value={block.placeholder ?? ""}
             onChange={(e) => {
@@ -77,8 +76,8 @@ const EmailAddressSettings = ({ block, setState }: { block: EBlock; setState: TS
         </div>
         <div className="flex justify-between items-center w-full">
           <div className="grid gap-1">
-            <Label htmlFor="required">Required</Label>
-            <p className="text-xs text-foreground/60">If enabled, users must fill out this field before submitting.</p>
+            <Label htmlFor="required">{t("label_block_required")}</Label>
+            <p className="text-xs text-foreground/60">{t("desc_block_required")}</p>
           </div>
           <Switch
             id="required"
@@ -92,14 +91,12 @@ const EmailAddressSettings = ({ block, setState }: { block: EBlock; setState: TS
           <div className="flex justify-between items-center w-full">
             <div className="grid gap-1">
               <div className="flex justify-start items-center gap-2">
-                <Label htmlFor="identifier">Mark as Identifier</Label>
+                <Label htmlFor="identifier">{t("label_mark_identifier")}</Label>
                 <IdentifierToolTip>
                   <CircleHelpIcon className="w-4 h-4 text-foreground/80" />
                 </IdentifierToolTip>
               </div>
-              <p className="text-xs text-foreground/60">
-                This field will be used as an identifier for unique user actions.
-              </p>
+              <p className="text-xs text-foreground/60">{t("desc_mark_identifier")}</p>
             </div>
             <Switch
               id="identifier"
@@ -120,10 +117,10 @@ const EmailAddressSettings = ({ block, setState }: { block: EBlock; setState: TS
           variant={"destructive_outline"}
           size={"sm"}
           className="w-full sm:w-fit">
-          Remove Block
+          {t("label_remove_block")}
         </Button>
         <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
-          Close
+          {t("label_close")}
         </Button>
       </div>
     </div>
@@ -131,14 +128,14 @@ const EmailAddressSettings = ({ block, setState }: { block: EBlock; setState: TS
 };
 
 const IdentifierToolTip = ({ children }: { children: React.ReactNode }) => {
+  const t = useTranslations("app");
+
   return (
     <TooltipProvider delayDuration={0}>
       <Tooltip>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
         <TooltipContent>
-          <p className="text-xs">
-            When enabled, this block will be used as an identifier <br /> for specific actions or configurations.
-          </p>
+          <p className="text-xs">{t("tt_mark_identifier")}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

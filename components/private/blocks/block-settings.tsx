@@ -17,6 +17,7 @@ import {
 import { minWidth640 } from "@/utils/constants";
 import { EBlock } from "@/utils/entities";
 import { TSetState } from "@/utils/types";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import CheckboxesSettings from "./settings/checkboxes-settings";
@@ -30,6 +31,7 @@ import ShortTextSettings from "./settings/short-text-settings";
 import StarRatingSettings from "./settings/star-rating-settings";
 
 const BlockSettings = ({ children, block }: { children: React.ReactNode; block: EBlock }) => {
+  const t = useTranslations("app");
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
@@ -39,8 +41,8 @@ const BlockSettings = ({ children, block }: { children: React.ReactNode; block: 
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="flex flex-col min-w-[650px] h-[600px] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Block Settings</DialogTitle>
-            <DialogDescription>Customize the settings for this form block.</DialogDescription>
+            <DialogTitle>{t("label_block_settings")}</DialogTitle>
+            <DialogDescription>{t("desc_block_settings")}</DialogDescription>
           </DialogHeader>
           <Body block={block} setState={setOpen} />
         </DialogContent>
@@ -53,8 +55,8 @@ const BlockSettings = ({ children, block }: { children: React.ReactNode; block: 
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3 max-h-[90%] flex flex-col">
         <DrawerHeader>
-          <DrawerTitle>Block Settings</DrawerTitle>
-          <DrawerDescription>Customize the settings for this form block.</DrawerDescription>
+          <DrawerTitle>{t("label_block_settings")}</DrawerTitle>
+          <DrawerDescription>{t("desc_block_settings")}</DrawerDescription>
         </DrawerHeader>
         <Body block={block} setState={setOpen} />
       </DrawerContent>

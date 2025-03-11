@@ -9,8 +9,10 @@ import { Textarea } from "@/components/ui/textarea";
 import useEditorStore from "@/stores/editor";
 import { EBlock } from "@/utils/entities";
 import { TSetState } from "@/utils/types";
+import { useTranslations } from "next-intl";
 
 const NumberInputSettings = ({ block, setState }: { block: EBlock; setState: TSetState<boolean> }) => {
+  const t = useTranslations("app");
   const { id } = block;
   const { updateBlock, removeBlock } = useEditorStore();
 
@@ -18,14 +20,14 @@ const NumberInputSettings = ({ block, setState }: { block: EBlock; setState: TSe
     <div className="h-full flex flex-col gap-6 overflow-y-auto">
       <div className="flex justify-center sm:justify-start items-center gap-3">
         <Badge variant={"primary"} uppercase>
-          Number Input
+          {t("label_number_input")}
         </Badge>
       </div>
       <div className="h-full flex flex-col gap-8 overflow-y-auto pr-4">
         <div className="grid gap-3">
           <div className="grid gap-1">
-            <Label htmlFor="name">Name</Label>
-            <span className="text-xs text-foreground/60">The label displayed above the input field.</span>
+            <Label htmlFor="name">{t("label_block_name")}</Label>
+            <span className="text-xs text-foreground/60">{t("desc_block_name")}</span>
           </div>
           <Input
             type="text"
@@ -38,10 +40,8 @@ const NumberInputSettings = ({ block, setState }: { block: EBlock; setState: TSe
         </div>
         <div className="grid gap-3">
           <div className="grid gap-1">
-            <Label htmlFor="description">Description</Label>
-            <span className="text-xs text-foreground/60">
-              Additional information displayed below the input to guide the user.
-            </span>
+            <Label htmlFor="description">{t("label_block_desc")}</Label>
+            <span className="text-xs text-foreground/60">{t("desc_block_desc")}</span>
           </div>
           <Textarea
             id="description"
@@ -53,12 +53,11 @@ const NumberInputSettings = ({ block, setState }: { block: EBlock; setState: TSe
         </div>
         <div className="grid gap-3">
           <div className="grid gap-1">
-            <Label htmlFor="placeholder">Placeholder</Label>
-            <span className="text-xs text-foreground/60">
-              A hint text inside the input field before the user types.
-            </span>
+            <Label htmlFor="placeholder">{t("label_block_placeholder")}</Label>
+            <span className="text-xs text-foreground/60">{t("desc_block_placeholder")}</span>
           </div>
           <Input
+            type="text"
             id="placeholder"
             value={block.placeholder ?? ""}
             onChange={(e) => {
@@ -68,7 +67,7 @@ const NumberInputSettings = ({ block, setState }: { block: EBlock; setState: TSe
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="grid gap-3">
-            <Label htmlFor="min-character-limit">Min</Label>
+            <Label htmlFor="min-character-limit">{t("label_block_min")}</Label>
             <Input
               type="number"
               id="min-character-limit"
@@ -82,7 +81,7 @@ const NumberInputSettings = ({ block, setState }: { block: EBlock; setState: TSe
             />
           </div>
           <div className="grid gap-3">
-            <Label htmlFor="max-character-limit">Max</Label>
+            <Label htmlFor="max-character-limit">{t("label_block_max")}</Label>
             <Input
               type="number"
               id="max-character-limit"
@@ -98,8 +97,8 @@ const NumberInputSettings = ({ block, setState }: { block: EBlock; setState: TSe
         </div>
         <div className="flex justify-between items-center w-full">
           <div className="grid gap-1">
-            <Label htmlFor="required">Required</Label>
-            <p className="text-xs text-foreground/60">If enabled, users must fill out this field before submitting.</p>
+            <Label htmlFor="required">{t("label_block_required")}</Label>
+            <p className="text-xs text-foreground/60">{t("desc_block_required")}</p>
           </div>
           <Switch
             id="required"
@@ -119,10 +118,10 @@ const NumberInputSettings = ({ block, setState }: { block: EBlock; setState: TSe
           variant={"destructive_outline"}
           size={"sm"}
           className="w-full sm:w-fit">
-          Remove Block
+          {t("label_remove_block")}
         </Button>
         <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
-          Close
+          {t("label_close")}
         </Button>
       </div>
     </div>
