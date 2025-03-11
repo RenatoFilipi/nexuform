@@ -339,6 +339,7 @@ const NavEditor = () => {
   const router = useRouter();
   const [appState, setAppState] = useState<TAppState>("idle");
   const active = isSubscriptionActive(subscription);
+  const empty = blocks.length <= 0;
 
   const onSave = async () => {
     try {
@@ -481,19 +482,23 @@ const NavEditor = () => {
         </div>
       </div>
       {active && (
-        <div className="flex justify-center items-center gap-1">
+        <div className="flex justify-center items-center gap-4">
           {form.updated_at !== "" && (
-            <span className="text-xs text-foreground/80 mr-5 hidden">
+            <span className="text-xs text-foreground/80 hidden sm:flex">
               {t("label_last_updated")}: {new Date(form.updated_at).toLocaleString()}
             </span>
           )}
-          <Button size={"xs"} variant={"outline"} className="flex sm:hidden" onClick={() => setPreview(!preview)}>
-            {t("label_preview")}
-          </Button>
-          <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
-            {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
-            {t("label_save_form")}
-          </Button>
+          {!empty && (
+            <Button size={"xs"} variant={"outline"} className="flex sm:hidden" onClick={() => setPreview(!preview)}>
+              {preview ? t("label_close") : t("label_preview")}
+            </Button>
+          )}
+          {!preview && (
+            <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
+              {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
+              {t("label_save_form")}
+            </Button>
+          )}
         </div>
       )}
     </div>

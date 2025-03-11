@@ -9,12 +9,9 @@ import HowItWorks from "@/components/public/landing/how-it-works";
 import Pricing from "@/components/public/landing/pricing";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 const Home = () => {
-  const t = useTranslations("landing");
-
   const urls = [
     { name: "Features", url: "features" },
     { name: "How it Works", url: "how-it-works" },

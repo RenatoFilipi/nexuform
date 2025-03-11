@@ -1,4 +1,4 @@
-import { BrushIcon, LayersIcon, ShareIcon, SlidersIcon } from "lucide-react";
+import { BrushIcon, LayersIcon, Share2Icon, SlidersIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 const EditorTips = () => {
@@ -28,7 +28,7 @@ const EditorTips = () => {
     {
       title: t("label_tips_share"),
       desc: t("desc_tips_share"),
-      icon: ShareIcon,
+      icon: Share2Icon,
       bgColor: "bg-purple-500/10",
       textColor: "text-purple-500",
     },

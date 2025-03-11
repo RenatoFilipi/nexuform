@@ -202,6 +202,8 @@
     "label_max_rating": "Max rating",
     "desc_max_rating": "Set the maximum number of stars users can rate.",
     "label_max_scale": "Max scale",
-    "desc_max_scale": "Define the highest value in the scale for user selection."
+    "desc_max_scale": "Define the highest value in the scale for user selection.",
+    "success_cta": "Want to create a form like this?",
+    "access_cta": "Access Nebulaform"
   }
 }

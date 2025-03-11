@@ -202,6 +202,8 @@
     "label_max_rating": "Avaliação Máxima",
     "desc_max_rating": "Defina o número máximo de estrelas que os usuários podem atribuir.",
     "label_max_scale": "Escala Máxima",
-    "desc_max_scale": "Defina o valor mais alto na escala para seleção do usuário."
+    "desc_max_scale": "Defina o valor mais alto na escala para seleção do usuário.",
+    "success_cta": "Quer criar um formulário como este?",
+    "access_cta": "Acessar o Nebulaform"
   }
 }
