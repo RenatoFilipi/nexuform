@@ -116,6 +116,10 @@
     "label_delete_form": "Delete Form",
     "desc_delete_form": "Permanently remove this form and all its data. This action cannot be undone.",
     "desc_danger_zone": "Permanently delete this form and all its associated data from our servers. This action cannot be undone.",
-    "label_continue": "Continue"
+    "label_continue": "Continue",
+    "label_absolute_delete_form": "Are you absolutely sure?",
+    "desc_absolute_delete_form": "This action will permanently delete the selected form, along with all associated submissions and settings.",
+    "label_absolute_type_email_delete_form": "Type the email of this account to delete this form.",
+    "label_action_undone": "This action cannot be undone."
   }
 }

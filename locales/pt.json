@@ -116,6 +116,10 @@
     "label_delete_form": "Excluir Formulário",
     "desc_delete_form": "Remova permanentemente este formulário e todos os seus dados. Esta ação não pode ser desfeita.",
     "desc_danger_zone": "Exclua permanentemente este formulário e todos os dados associados aos nossos servidores. Esta ação não pode ser desfeita.",
-    "label_continue": "Continuar"
+    "label_continue": "Continuar",
+    "label_absolute_delete_form": "Você tem certeza absoluta?",
+    "desc_absolute_delete_form": "Esta ação excluirá permanentemente o formulário selecionado, juntamente com todas as submissões e configurações associadas.",
+    "label_absolute_type_email_delete_form": "Digite o e-mail desta conta para excluir este formulário.",
+    "label_action_undone": "Esta ação não pode ser desfeita."
   }
 }

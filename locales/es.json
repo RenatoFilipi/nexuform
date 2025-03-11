@@ -116,6 +116,10 @@
     "label_delete_form": "Eliminar Formulario",
     "desc_delete_form": "Elimina permanentemente este formulario y todos sus datos. Esta acción no se puede deshacer.",
     "desc_danger_zone": "Elimina permanentemente este formulario y todos los datos asociados desde nuestros servidores. Esta acción no se puede deshacer.",
-    "label_continue": "Continuar"
+    "label_continue": "Continuar",
+    "label_absolute_delete_form": "¿Estás absolutamente seguro?",
+    "desc_absolute_delete_form": "Esta acción eliminará permanentemente el formulario seleccionado, junto con todas las presentaciones y configuraciones asociadas.",
+    "label_absolute_type_email_delete_form": "Escribe el correo electrónico de esta cuenta para eliminar este formulario.",
+    "label_action_undone": "Esta acción no se puede deshacer."
   }
 }

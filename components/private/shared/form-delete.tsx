@@ -15,6 +15,7 @@ import { minWidth640 } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState } from "@/utils/types";
 import { AlertCircleIcon, LoaderIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { ReactNode, useState, useTransition } from "react";
 import { useMedia } from "react-use";
@@ -22,6 +23,7 @@ import { toast } from "sonner";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
 
 const FormDelete = ({ children, formId, formName }: { children: ReactNode; formId: string; formName: string }) => {
+  const t = useTranslations("app");
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
@@ -31,10 +33,8 @@ const FormDelete = ({ children, formId, formName }: { children: ReactNode; formI
         <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
         <AlertDialogContent className="flex flex-col w-full min-w-[650px]">
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action will permanently delete the selected form, along with all associated submissions and settings.
-            </AlertDialogDescription>
+            <AlertDialogTitle>{t("label_absolute_delete_form")}</AlertDialogTitle>
+            <AlertDialogDescription>{t("desc_absolute_delete_form")}</AlertDialogDescription>
           </AlertDialogHeader>
           <Body formId={formId} formName={formName} setState={setOpen} />
         </AlertDialogContent>
@@ -47,10 +47,8 @@ const FormDelete = ({ children, formId, formName }: { children: ReactNode; formI
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3">
         <DrawerHeader>
-          <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-          <DrawerDescription>
-            This action will permanently delete the selected form, along with all associated submissions and settings.
-          </DrawerDescription>
+          <DrawerTitle>{t("label_absolute_delete_form")}</DrawerTitle>
+          <DrawerDescription>{t("desc_absolute_delete_form")}</DrawerDescription>
         </DrawerHeader>
         <Body formId={formId} formName={formName} setState={setOpen} />
       </DrawerContent>
@@ -59,6 +57,7 @@ const FormDelete = ({ children, formId, formName }: { children: ReactNode; formI
 };
 
 const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; formId: string; formName: string }) => {
+  const t = useTranslations("app");
   const [isPending, startTransition] = useTransition();
   const supabase = createClient();
   const router = useRouter();
@@ -68,7 +67,7 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
     startTransition(async () => {
       const { error } = await supabase.from("forms").delete().eq("id", formId);
       if (error) {
-        toast.error("Error on deleting form.");
+        toast.error(t("err_generic"));
         return;
       }
       router.push("/dashboard/forms");
@@ -79,13 +78,13 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
     <div className="flex flex-col gap-3 h-full overflow-y-auto pt-4 sm:pt-0">
       <div className="grid gap-3">
         <Label htmlFor="form_name" className="">
-          Type <span className="text-destructive">&quot;{formName}&quot;</span> to delete this form.
+          {t("label_absolute_type_email_delete_form")}
         </Label>
         <Input type="text" id="form_name" value={value} onChange={(e) => setValue(e.target.value)} />
       </div>
       <div className="flex justify-start items-center gap-1">
         <AlertCircleIcon className="w-4 h-4 text-destructive" />
-        <span className="text-sm font-semibold">This action cannot be undone.</span>
+        <span className="text-sm font-semibold">{t("label_action_undone")}</span>
       </div>
       <div className="flex justify-end flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
         <Button
@@ -94,7 +93,7 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
           variant={"outline"}
           size={"sm"}
           className="w-full sm:w-fit">
-          Cancel
+          {t("label_cancel")}
         </Button>
         <Button
           disabled={formName !== value}
@@ -103,7 +102,7 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
           size={"sm"}
           className="w-full sm:w-fit">
           {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
-          Delete Form
+          {t("label_delete_form")}
         </Button>
       </div>
     </div>
