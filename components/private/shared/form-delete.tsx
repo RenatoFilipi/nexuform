@@ -84,7 +84,7 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
       </div>
       <div className="flex justify-start items-center gap-1">
         <AlertCircleIcon className="w-4 h-4 text-destructive" />
-        <span className="text-sm font-semibold">{t("label_action_undone")}</span>
+        <span className="text-sm font-semibold text-destructive">{t("label_action_undone")}</span>
       </div>
       <div className="flex justify-end flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
         <Button

@@ -18,11 +18,13 @@ import { createClient } from "@/utils/supabase/client";
 import { TSetState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2Icon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { ReactNode, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 const SettingsAccountDelete = ({ children }: { children: ReactNode }) => {
+  const t = useTranslations("app");
   const [open, setOpen] = useState(false);
   const [error] = useQueryState("error");
 

@@ -40,7 +40,7 @@ const CardTemplate = ({ plan }: { plan: IPlanLanding }) => {
         <div className="flex justify-between items-center gap-2">
           <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
           {plan.highlighted && (
-            <Badge variant="purple" uppercase>
+            <Badge variant="green" uppercase>
               Most Popular
             </Badge>
           )}

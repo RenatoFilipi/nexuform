@@ -23,10 +23,12 @@ import { minWidth640, plans } from "@/utils/constants";
 import { IPlanLanding } from "@/utils/interfaces";
 import { TSetState } from "@/utils/types";
 import { CheckIcon, RocketIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useMedia } from "react-use";
 
 const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
+  const t = useTranslations("app");
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
@@ -36,8 +38,8 @@ const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="flex flex-col w-full min-w-[650px]">
           <DialogHeader>
-            <DialogTitle>Select Your Plan</DialogTitle>
-            <DialogDescription>Choose the plan that best fits your needs.</DialogDescription>
+            <DialogTitle>{t("label_manage_sub")}</DialogTitle>
+            <DialogDescription>{t("desc_manage_sub")}</DialogDescription>
           </DialogHeader>
           <Body setState={setOpen} />
         </DialogContent>
@@ -50,10 +52,8 @@ const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="flex flex-col p-3 max-h-[90%]">
         <DrawerHeader>
-          <DrawerTitle>Manage Subscription</DrawerTitle>
-          <DrawerDescription>
-            Manage your subscription settings, update your plan, or cancel your subscription at any time.
-          </DrawerDescription>
+          <DrawerTitle>{t("label_manage_sub")}</DrawerTitle>
+          <DrawerDescription>{t("desc_manage_sub")}</DrawerDescription>
         </DrawerHeader>
         <Body setState={setOpen} />
       </DrawerContent>
@@ -61,6 +61,7 @@ const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
   );
 };
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
+  const t = useTranslations("app");
   const filteredPlans = plans.filter((x) => x.type !== "free_trial");
 
   return (
@@ -72,7 +73,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       </div>
       <div className="flex sm:justify-end justify-center items-center">
         <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
-          Close
+          {t("label_close")}
         </Button>
       </div>
     </div>

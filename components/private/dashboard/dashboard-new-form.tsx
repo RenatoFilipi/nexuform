@@ -137,7 +137,7 @@ const CustomForm = ({ setState, setView }: { setState: TSetState<boolean>; setVi
   const { profile } = useUserStore();
 
   const formSchema = z.object({
-    name: z.string().min(3, t("required_form_name")),
+    name: z.string().min(3, t("required_n_letters", { n: 3 })),
     description: z.string(),
   });
   const form = useForm<z.infer<typeof formSchema>>({

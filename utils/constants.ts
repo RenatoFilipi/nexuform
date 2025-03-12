@@ -76,9 +76,9 @@ export const plans: IPlanLanding[] = [
       "Remove Nebulaform branding",
       "Data export (CSV)",
       "Premium templates",
-      "Premium analytics (Soon)",
-      "Email notifications (Soon)",
+      "Premium analytics",
       "Premium integrations (Soon)",
+      "Email notifications (Soon)",
       "More to come",
     ],
     highlighted: true,
@@ -86,7 +86,7 @@ export const plans: IPlanLanding[] = [
     buttonLabel: "Upgrade to Pro",
   },
 ];
-const designTemplate: IDesign[] = [
+export const designTemplate: IDesign[] = [
   { label: "slate", tw_class: "" },
   { label: "gray", tw_class: "" },
   { label: "zinc", tw_class: "" },

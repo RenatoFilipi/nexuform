@@ -38,11 +38,11 @@ const PasswordUpdate = () => {
   const passwordSchema = z.object({
     password: z
       .string()
-      .min(8, { message: "At least 8 characters" })
-      .regex(/[0-9]/, { message: "At least 1 number" })
-      .regex(/[a-z]/, { message: "At least 1 lowercase letter" })
-      .regex(/[A-Z]/, { message: "At least 1 uppercase letter" })
-      .regex(/[\W_]/, { message: "At least 1 special character" }),
+      .min(8, { message: t("required_n_char", { n: 8 }) })
+      .regex(/[0-9]/, { message: t("required_n_number", { n: 1 }) })
+      .regex(/[a-z]/, { message: t("required_n_lower", { n: 1 }) })
+      .regex(/[A-Z]/, { message: t("required_n_upper", { n: 1 }) })
+      .regex(/[\W_]/, { message: t("required_n_special", { n: 1 }) }),
   });
 
   const passwordHandler = useForm<z.infer<typeof passwordSchema>>({
@@ -55,12 +55,12 @@ const PasswordUpdate = () => {
     const { password } = values;
     const { error } = await supabase.auth.updateUser({ password });
     if (error) {
-      toast.error("Error on updating the password.");
+      toast.error(t("err_generic"));
       setAppState("idle");
       passwordHandler.setValue("password", "");
       return;
     }
-    toast.success("Password updated.");
+    toast.success(t("suc_update_password"));
     setAppState("idle");
     passwordHandler.setValue("password", "");
   };

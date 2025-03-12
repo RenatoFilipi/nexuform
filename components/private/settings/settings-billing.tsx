@@ -16,7 +16,7 @@ const SettingsBilling = () => {
   const nextBillingDate = userStore.subscription.due_date;
   const currentPlan = getCurrentPlan(userStore.subscription.plan as TPlan);
   const pendingDays = getDaysDifference(new Date(), new Date(userStore.subscription.due_date));
-  const pendingDaysStr = pendingDays === 1 ? `1 day remaining` : `${pendingDays} days remaining`;
+  const pendingDaysStr = t("label_n_days_remaining", { n: pendingDays });
   const formsUsage = (100 * userStore.formsCount) / currentPlan.forms;
   const submissionsUsage = (100 * userStore.submissionsCount) / currentPlan.submissions;
   const showCancelButton = userStore.subscription.plan !== "free_trial";
