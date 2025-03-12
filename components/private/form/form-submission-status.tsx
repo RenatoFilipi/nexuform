@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -54,6 +52,8 @@ const FormSubmissionStatus = ({ submission, setState }: { submission: ESubmissio
     }
   };
   const [selectedIndex, setSelectedIndex] = useState(getDefaultIndex(submission.status as TSubmissionStatus));
+  const [isOpen, setIsOpen] = useState(false);
+
   const onSubmissionStatusSubmit = async () => {
     const status = options[Number(selectedIndex)].value;
     if (status === submission.status) return;
@@ -77,24 +77,29 @@ const FormSubmissionStatus = ({ submission, setState }: { submission: ESubmissio
   };
 
   return (
-    <div className="inline-flex -space-x-px divide-x divide-primary-foreground/30 shadow-sm shadow-black/5 rtl:space-x-reverse">
+    <div className="inline-flex -space-x-px divide-x divide-primary-foreground/30 shadow-sm shadow-black/5 rtl:space-x-reverse w-full sm:w-fit">
       <Button
-        variant={"default"}
+        variant={"secondary"}
         disabled={appState === "loading"}
         size={"sm"}
         onClick={onSubmissionStatusSubmit}
-        className="rounded-none shadow-none first:rounded-s-md last:rounded-e-md focus-visible:z-10">
+        className="rounded-none shadow-none first:rounded-s-md last:rounded-e-md focus-visible:z-10 w-full sm:w-fit">
         {appState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
         {options[Number(selectedIndex)].button}
       </Button>
-      <DropdownMenu>
+      <DropdownMenu onOpenChange={(open) => setIsOpen(open)}>
         <DropdownMenuTrigger asChild disabled={appState === "loading"}>
           <Button
-            variant={"default"}
+            variant={"secondary"}
             className="rounded-none shadow-none first:rounded-s-md last:rounded-e-md focus-visible:z-10"
             size="sm"
             aria-label="Options">
-            <ChevronDown size={16} strokeWidth={2} aria-hidden="true" />
+            <ChevronDown
+              size={16}
+              strokeWidth={2}
+              aria-hidden="true"
+              className={`${isOpen ? "rotate-180" : ""} transition-all`}
+            />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="max-w-64 md:max-w-xs" side="bottom" sideOffset={4} align="end">

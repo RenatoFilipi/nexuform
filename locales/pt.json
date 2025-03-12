@@ -101,8 +101,8 @@
     "desc_general": "Personalize as configurações gerais do seu formulário.",
     "label_submit_text": "Texto do Botão de Envio",
     "desc_submit_text": "Personalize o texto exibido no botão de envio do formulário.",
-    "label_nebula_branding": "Branding do Nebulaform",
-    "desc_nebula_branding": "Exibir 'Desenvolvido por Nebulaform' no seu formulário.",
+    "label_nebula_branding": "Marca do Nebulaform",
+    "desc_nebula_branding": "Exibir 'Powered by Nebulaform' no seu formulário.",
     "label_save_form": "Salvar Formulário",
     "suc_update_form": "Formulário atualizado com sucesso.",
     "required_submit_text": "O texto do botão de envio deve conter pelo menos 3 letras.",
@@ -123,7 +123,7 @@
     "label_design": "Design",
     "label_blocks": "Blocos",
     "label_success": "Sucesso",
-    "label_powered": "Desenvolvido por Nebulaform",
+    "label_powered": "Powered by Nebulaform",
     "label_new_block": "Novo Bloco",
     "label_preview": "Pré-visualização",
     "label_tips_form": "Construa Seu Formulário",
@@ -251,5 +251,11 @@
     "label_sub_cancel_confirm": "Confirmar Cancelamento",
     "label_sub_cancel_warning_feats": "Você perderá o acesso a todos esses recursos",
     "desc_manage_sub": "Escolha o plano que melhor se adapta às suas necessidades."
+  },
+  "s": {
+    "err_required_all": "Responda todas as perguntas obrigatórias.",
+    "err_generic": "Algo deu errado.",
+    "err_sub": "Erro ao enviar, por favor tente novamente.",
+    "label_powered": "Powered by Nebulaform"
   }
 }

@@ -251,5 +251,11 @@
     "label_sub_cancel_confirm": "Confirm Cancellation",
     "label_sub_cancel_warning_feats": "You will lose access to all these features",
     "desc_manage_sub": "Choose the plan that best fits your needs."
+  },
+  "s": {
+    "err_required_all": "Answer all required questions.",
+    "err_generic": "Something went wrong.",
+    "err_sub": "Error on submission, please try again.",
+    "label_powered": "Powered by Nebulaform"
   }
 }

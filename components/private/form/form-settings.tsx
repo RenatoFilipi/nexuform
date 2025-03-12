@@ -206,7 +206,7 @@ const GeneralSettings = () => {
               )}
             />
             <div className="flex justify-end items-center w-full">
-              <Button variant={"default"} size={"sm"} className="w-full sm:w-fit">
+              <Button variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
                 {settingsState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
                 {t("label_save_form")}
               </Button>
@@ -298,7 +298,7 @@ const StatusSettings = () => {
           ))}
         </div>
         <div className="flex justify-end items-center w-full">
-          <Button variant={"default"} size={"sm"} onClick={onSubmit} className="w-full sm:w-fit">
+          <Button variant={"secondary"} size={"sm"} onClick={onSubmit} className="w-full sm:w-fit">
             {settingsState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
             {t("label_save_form")}
           </Button>

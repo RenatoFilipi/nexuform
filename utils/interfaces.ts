@@ -40,11 +40,7 @@ export interface IFormFilters {
   status: TFormStatusExtended;
   sort: TFilterSort;
 }
-export interface IPlan {
-  name: string;
-  price: number;
-  type: TPlan;
-}
+
 export interface IPlanLanding extends IPlan {
   features: string[];
   highlighted: boolean;
@@ -62,7 +58,6 @@ export interface IPagination {
   from: number;
   to: number;
 }
-
 export interface IFormTemplate {
   id: string;
   enabled: boolean;
@@ -74,9 +69,26 @@ export interface IFormTemplate {
   blocks: EBlock[];
   pro: boolean;
 }
-
 export interface ISubmissionsByForm {
   formId: string;
   name: string;
   count: number;
+}
+export interface IPlan {
+  name: string;
+  price: number;
+  type: TPlan;
+}
+export interface IPlan2 {
+  name: string;
+  price: number;
+  type: TPlan;
+  isMostPopular: boolean;
+  freeTrialDuration: number | null;
+  features: IPlanFeatures[];
+  ctaButton: string;
+}
+export interface IPlanFeatures {
+  description: string;
+  comingSoon: boolean;
 }

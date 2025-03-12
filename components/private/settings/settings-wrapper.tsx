@@ -70,7 +70,7 @@ const SettingsWrapper = ({
   if (query.isPending) return null;
 
   return (
-    <div className="flex-1 mt-12 flex flex-col">
+    <div className="flex-1 mt-12 mb-12 sm:mb-0 flex flex-col">
       <div className="border-b h-10 flex justify-start items-center gap-1 px-2 sm:px-6 overflow-x-auto">
         {enabledViews.map((v) => {
           return (

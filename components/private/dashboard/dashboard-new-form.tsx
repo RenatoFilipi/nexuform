@@ -222,7 +222,7 @@ const CustomForm = ({ setState, setView }: { setState: TSetState<boolean>; setVi
                 <ChevronLeftIcon className="w-4 h-4 mr-2" />
                 {t("label_back")}
               </Button>
-              <Button disabled={isPending} type="submit" variant={"default"} size={"sm"} className="w-full sm:w-fit">
+              <Button disabled={isPending} type="submit" variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
                 {isPending && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
                 {t("submit_create_form")}
               </Button>
@@ -349,7 +349,7 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
             disabled={appState === "loading"}
             onClick={onSubmit}
             type="button"
-            variant={"default"}
+            variant={"secondary"}
             size={"sm"}
             className="w-full sm:w-fit">
             {appState === "loading" && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}

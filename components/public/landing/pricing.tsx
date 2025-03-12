@@ -2,9 +2,8 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { plans } from "@/utils/constants";
-import { freeTrialPeriod } from "@/utils/envs";
-import { IPlanLanding } from "@/utils/interfaces";
+import { IPlan2 } from "@/utils/interfaces";
+import { plans } from "@/utils/plans";
 import { CheckIcon, RocketIcon } from "lucide-react";
 
 const Pricing = () => {
@@ -30,34 +29,30 @@ const Pricing = () => {
   );
 };
 
-const CardTemplate = ({ plan }: { plan: IPlanLanding }) => {
+const CardTemplate = ({ plan }: { plan: IPlan2 }) => {
   return (
     <div
       className={`relative flex flex-col items-center sm:w-[360px] w-full p-6 bg-background border rounded ${
-        plan.highlighted ? "border-primary border-2" : "border-foreground/20"
+        plan.isMostPopular ? "border-amber-500 border-2" : "border-foreground/20"
       }`}>
       <div className="flex flex-col w-full">
         <div className="flex justify-between items-center gap-2">
           <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
-          {plan.highlighted && (
-            <Badge variant="green" uppercase>
-              Most Popular
-            </Badge>
-          )}
+          {plan.isMostPopular && <Badge variant="green">Most Popular</Badge>}
         </div>
         <div className="flex flex-col">
-          <p className={`${plan.highlighted ? "text-primary" : "text-foreground"} mt-3 text-3xl font-extrabold`}>
+          <p className={`${plan.isMostPopular ? "text-primary" : "text-foreground"} mt-3 text-3xl font-extrabold`}>
             ${plan.price}
           </p>
           {plan.type === "free_trial" ? (
-            <p className="text-sm text-foreground/80">{freeTrialPeriod} days trial</p>
+            <p className="text-sm text-foreground/80">{plan.freeTrialDuration} days trial</p>
           ) : (
             <p className="text-sm text-foreground/80">per month</p>
           )}
         </div>
       </div>
       <div className="w-full">
-        <Button className="w-full mt-6" size="lg" variant={plan.highlighted ? "default" : "secondary"}>
+        <Button className="w-full mt-6" size="lg" variant={plan.isMostPopular ? "default" : "secondary"}>
           {plan.type === "free_trial" ? "Start Free Trial" : "Get Started"}
         </Button>
       </div>
@@ -65,12 +60,14 @@ const CardTemplate = ({ plan }: { plan: IPlanLanding }) => {
         <ul className="mt-4 space-y-3 text-left w-full">
           {plan.features.map((feature, i) => (
             <li key={i} className="flex items-center text-sm justify-start gap-3">
-              {feature.includes("Soon") ? (
-                <RocketIcon className="text-primary w-4 h-4" />
+              {feature.comingSoon ? (
+                <RocketIcon className="text-amber-500 w-4 h-4" />
               ) : (
-                <CheckIcon className={`${plan.highlighted ? "text-primary" : "text-primary"} w-4 h-4`} />
+                <CheckIcon className={`${plan.isMostPopular ? "text-primary" : "text-foreground"} w-4 h-4`} />
               )}
-              <span className="text-foreground">{feature}</span>
+              <span className={`${feature.comingSoon ? "text-foreground/80" : "font-medium"} text-foreground`}>
+                {feature.description} {feature.comingSoon && "(Soon)"}
+              </span>
             </li>
           ))}
         </ul>

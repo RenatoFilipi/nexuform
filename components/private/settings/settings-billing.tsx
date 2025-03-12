@@ -44,7 +44,7 @@ const SettingsBilling = () => {
             <div className="flex justify-center items-center gap-4 w-full sm:w-fit">
               {showCancelButton && (
                 <CancelSubscription>
-                  <Button variant="destructive_outline" size="xs" className="w-full sm:w-auto self-end">
+                  <Button variant="outline" size="xs" className="w-full sm:w-auto self-end">
                     {t("label_cancel_sub")}
                   </Button>
                 </CancelSubscription>

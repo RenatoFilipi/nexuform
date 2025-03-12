@@ -6,6 +6,7 @@ import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { LoaderIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import Brand from "../core/brand";
@@ -113,6 +114,7 @@ const design: IDesign[] = [
 ];
 
 const SubmissionGroup = () => {
+  const t = useTranslations("s");
   const { form, theme, blocks, submission, answers, setAnswers } = useSubmissionStore();
   const supabase = createClient();
   const [appState, setAppState] = useState<TAppState>("idle");
@@ -162,7 +164,7 @@ const SubmissionGroup = () => {
       if (!block) return;
       const isValidResponse = responseCheck(answer, block);
       if (!isValidResponse) {
-        toast.error("Answer all required questions.");
+        toast.error(t("err_required_all"));
         startTimer();
         return;
       }
@@ -183,19 +185,15 @@ const SubmissionGroup = () => {
     const { error: submissionError } = await supabase.from("submissions").insert(updatedSubmission);
 
     if (submissionError) {
-      console.log("erro na submissao");
-      console.log(submissionError);
-      toast.error("Error on submission, please try again.");
+      toast.error(t("err_sub"));
       return;
     }
 
     const { error: answersError } = await supabase.from("answers").insert(answers);
 
     if (answersError) {
-      console.log("erro nas respostas");
-      console.log(answersError);
       await supabase.from("submissions").delete().eq("id", updatedSubmission.id);
-      toast.error("Error on submission, please try again.");
+      toast.error(t("err_sub"));
       return;
     }
 
@@ -254,7 +252,7 @@ const SubmissionGroup = () => {
           <div className="flex justify-center items-center w-full">
             <span className="border rounded p-2 w-fit flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
               <Brand type="logo" className="fill-foreground w-4 h-4" />
-              <span className="text-foreground text-sm font-semibold">Powered by Nebulaform</span>
+              <span className="text-foreground text-sm font-semibold">{t("label_powered")}</span>
             </span>
           </div>
         )}

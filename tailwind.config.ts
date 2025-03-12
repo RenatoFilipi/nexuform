@@ -126,14 +126,14 @@ const config = {
   			},
   			meteor: {
   				'0%': {
-  					transform: 'rotate(215deg) translateX(0)',
+  					transform: 'rotate(var(--angle)) translateX(0)',
   					opacity: '1'
   				},
   				'70%': {
   					opacity: '1'
   				},
   				'100%': {
-  					transform: 'rotate(215deg) translateX(-500px)',
+  					transform: 'rotate(var(--angle)) translateX(-500px)',
   					opacity: '0'
   				}
   			},
