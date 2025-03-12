@@ -37,7 +37,7 @@ const EditorFormSettings = ({ children }: { children: React.ReactNode }) => {
         <DialogContent className="flex flex-col min-w-[650px] h-[600px] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-xl font-medium">{t("label_settings")}</DialogTitle>
-            <DialogDescription>Configure your form preferences and update settings as needed.</DialogDescription>
+            <DialogDescription>{t("desc_settings")}</DialogDescription>
           </DialogHeader>
           <Body setState={setOpen} />
         </DialogContent>
@@ -51,7 +51,7 @@ const EditorFormSettings = ({ children }: { children: React.ReactNode }) => {
       <DrawerContent className="p-3 flex flex-col max-h-[90%]">
         <DrawerHeader>
           <DrawerTitle className="text-xl font-medium">{t("label_settings")}</DrawerTitle>
-          <DrawerDescription>Configure your form preferences and update settings as needed.</DrawerDescription>
+          <DrawerDescription>{t("desc_settings")}.</DrawerDescription>
         </DrawerHeader>
         <Body setState={setOpen} />
       </DrawerContent>

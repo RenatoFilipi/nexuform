@@ -7,7 +7,6 @@ import { getCurrentPlan, getDaysDifference } from "@/utils/functions";
 import { TPlan } from "@/utils/types";
 import { BuildingIcon, CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import CancelSubscription from "../shared/cancel-subscription";
 import ManageSubscription from "../shared/manage-subscription";
 
 const SettingsBilling = () => {
@@ -19,7 +18,6 @@ const SettingsBilling = () => {
   const pendingDaysStr = t("label_n_days_remaining", { n: pendingDays });
   const formsUsage = (100 * userStore.formsCount) / currentPlan.forms;
   const submissionsUsage = (100 * userStore.submissionsCount) / currentPlan.submissions;
-  const showCancelButton = userStore.subscription.plan !== "free_trial";
 
   const planName = (plan: string) =>
     ({
@@ -42,13 +40,6 @@ const SettingsBilling = () => {
               <p className="text-xs text-foreground/70">{t("desc_plan_summary")}</p>
             </div>
             <div className="flex justify-center items-center gap-4 w-full sm:w-fit">
-              {showCancelButton && (
-                <CancelSubscription>
-                  <Button variant="outline" size="xs" className="w-full sm:w-auto self-end">
-                    {t("label_cancel_sub")}
-                  </Button>
-                </CancelSubscription>
-              )}
               <ManageSubscription>
                 <Button variant="secondary" size="xs" className="w-full sm:w-auto self-end">
                   {t("label_manage_sub")}

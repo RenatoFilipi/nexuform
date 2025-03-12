@@ -19,13 +19,15 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import useUserStore from "@/stores/user";
-import { minWidth640, plans } from "@/utils/constants";
-import { IPlanLanding } from "@/utils/interfaces";
+import { minWidth640 } from "@/utils/constants";
+import { IPlan2 } from "@/utils/interfaces";
+import { plans } from "@/utils/plans";
 import { TSetState } from "@/utils/types";
 import { CheckIcon, RocketIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useMedia } from "react-use";
+import CancelSubscription from "./cancel-subscription";
 
 const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations("app");
@@ -62,7 +64,9 @@ const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
 };
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
+  const userStore = useUserStore();
   const filteredPlans = plans.filter((x) => x.type !== "free_trial");
+  const showCancelButton = userStore.subscription.plan !== "free_trial";
 
   return (
     <div className="flex flex-col gap-6 overflow-y-auto">
@@ -71,40 +75,45 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
           <CardTemplate key={plan.type} plan={plan} />
         ))}
       </div>
-      <div className="flex sm:justify-end justify-center items-center">
+      <div className="flex sm:justify-between justify-center items-center gap-4">
         <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
           {t("label_close")}
         </Button>
+        {showCancelButton && (
+          <CancelSubscription>
+            <Button variant="destructive_outline" size="sm" className="w-full sm:w-auto self-end">
+              {t("label_cancel_sub")}
+            </Button>
+          </CancelSubscription>
+        )}
       </div>
     </div>
   );
 };
-const CardTemplate = ({ plan }: { plan: IPlanLanding }) => {
+const CardTemplate = ({ plan }: { plan: IPlan2 }) => {
+  const t = useTranslations("app");
   const { subscription } = useUserStore();
   const currentPlan = plan.type === subscription.plan;
 
   return (
     <div
       className={`${
-        plan.highlighted ? "border-primary" : ""
-      } relative flex flex-col items-center p-4 bg-background border rounded-lg`}>
+        plan.isMostPopular ? "border-amber-500" : ""
+      } relative flex flex-col items-center p-4 bg-background border-2 rounded-lg`}>
       <div className="flex flex-col w-full gap-3">
         <div className="flex justify-between items-center gap-2">
-          <h3 className="text-primary font-semibold">{plan.name}</h3>
-          {plan.highlighted && (
-            <Badge variant="green" className="">
-              Most Popular
-            </Badge>
-          )}
+          <h3 className="font-semibold">{plan.name}</h3>
+          {plan.isMostPopular && <Badge variant="green">{t("label_most_popular")}</Badge>}
         </div>
         <div className="flex w-full">
-          <span className="text-sm text-foreground/80">
-            <span className="text-foreground font-semibold text-base">${plan.price} </span>/ per month
-          </span>
+          <div className="">
+            <span className="text-primary font-semibold text-lg">${plan.price} </span>
+            <span className="text-xs">/ {t("label_per_month")}</span>
+          </div>
         </div>
         <div className="w-full">
           <Button disabled={currentPlan} className="w-full" size="sm">
-            {currentPlan ? "Current plan" : plan.buttonLabel}
+            {currentPlan ? "Current plan" : plan.ctaButton}
           </Button>
         </div>
       </div>
@@ -112,12 +121,14 @@ const CardTemplate = ({ plan }: { plan: IPlanLanding }) => {
         <ul className="mt-4 space-y-3 text-left w-full">
           {plan.features.map((feature, i) => (
             <li key={i} className="flex items-center gap-2">
-              {feature.includes("Soon") ? (
-                <RocketIcon className="text-primary w-4 h-4" />
+              {feature.comingSoon ? (
+                <RocketIcon className="text-amber-500 w-4 h-4" />
               ) : (
-                <CheckIcon className={`${plan.highlighted ? "text-primary" : "text-primary"} w-4 h-4`} />
+                <CheckIcon className={`${plan.isMostPopular ? "text-primary" : "text-primary"} w-4 h-4`} />
               )}
-              <span className="text-xs font-medium">{feature}</span>
+              <span className={`${feature.comingSoon ? "text-foreground/80" : "font-semibold"} text-xs`}>
+                {feature.description} {feature.comingSoon && "(Soon)"}
+              </span>
             </li>
           ))}
         </ul>
@@ -125,4 +136,5 @@ const CardTemplate = ({ plan }: { plan: IPlanLanding }) => {
     </div>
   );
 };
+
 export default ManageSubscription;

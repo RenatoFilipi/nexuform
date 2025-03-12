@@ -26,7 +26,7 @@ const FormShare = ({ children, form }: { children: React.ReactNode; form: EForm 
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col min-w-[650px] overflow-y-auto">
+        <DialogContent className="flex flex-col min-w-[650px] h-[500px] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{t("label_form_share")}</DialogTitle>
             <DialogDescription>{t("desc_form_share")}</DialogDescription>

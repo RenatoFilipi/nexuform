@@ -78,15 +78,11 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
           <AlertDescription className="text-sm font-semibold">{t("label_sub_cancel_warning_feats")}.</AlertDescription>
         </Alert>
         <div className="flex flex-col gap-4">
-          <div className="flex gap-4">
-            <Button onClick={() => setState(false)} variant="outline" size="sm" className="w-full">
+          <div className="flex gap-4 justify-between w-full">
+            <Button onClick={() => setState(false)} variant="outline" size="sm">
               {t("label_close")}
             </Button>
-            <Button
-              onClick={() => setState(false)}
-              variant="destructive"
-              size="sm"
-              className="w-full bg-red-600 text-white hover:bg-red-700">
+            <Button onClick={() => setState(false)} variant="destructive" size="sm" className="">
               {t("label_sub_cancel_confirm")}
             </Button>
           </div>

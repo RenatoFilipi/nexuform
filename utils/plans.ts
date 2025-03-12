@@ -53,7 +53,6 @@ export const plans: IPlan2[] = [
     isMostPopular: true,
     freeTrialDuration: null,
     features: [
-      { description: `Everything from Basic plan`, comingSoon: false },
       { description: `Up to ${proForms} forms`, comingSoon: false },
       { description: `Up to ${proSubmissions} submissions`, comingSoon: false },
       { description: "Priority support (6h response time)", comingSoon: false },
@@ -63,6 +62,7 @@ export const plans: IPlan2[] = [
       { description: "Premium analytics", comingSoon: true },
       { description: "Email notifications", comingSoon: true },
       { description: "Premium integrations", comingSoon: true },
+      { description: "More to come", comingSoon: false },
     ],
     ctaButton: "Choose Pro Plan",
   },

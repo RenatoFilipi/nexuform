@@ -229,7 +229,7 @@ const Body = ({ setState, formId }: { setState: TSetState<boolean>; formId: stri
               className="w-full sm:w-fit">
               {t("label_cancel")}
             </Button>
-            <Button type="submit" variant={"default"} size={"sm"} className="w-full sm:w-fit">
+            <Button type="submit" variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
               {t("label_add_block")}
             </Button>
           </div>
