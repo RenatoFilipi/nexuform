@@ -100,7 +100,7 @@ const PasswordUpdate = () => {
           />
         </div>
         <div className="flex justify-end items-center">
-          <Button type="submit" size="sm" variant="default" className="w-full sm:w-fit">
+          <Button type="submit" size="sm" variant="secondary" className="w-full sm:w-fit">
             {appState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
             {t("label_update_password")}
           </Button>

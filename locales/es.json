@@ -250,7 +250,12 @@
     "label_sub_cancel_alert": "Perderá el acceso a todo el contenido inmediatamente al cancelar su suscripción",
     "label_sub_cancel_confirm": "Confirmar Cancelación",
     "label_sub_cancel_warning_feats": "Perderá el acceso a todas estas funciones",
-    "desc_manage_sub": "Elija el plan que mejor se adapte a sus necesidades."
+    "desc_manage_sub": "Elija el plan que mejor se adapte a sus necesidades.",
+    "label_delete_personal_account": "Eliminar Cuenta Personal",
+    "desc_delete_personal_account": "Esta acción eliminará permanentemente todos sus formularios, junto con todos los datos relacionados. Esto incluye todas las respuestas, configuraciones y cualquier archivo asociado. Una vez eliminado, estos datos no se pueden recuperar. Por favor, proceda con precaución.",
+    "label_type_delete_personal_account": "Escriba el correo electrónico de su cuenta relacionada para continuar.",
+    "label_delete_personal_account_alert": "Esta acción no es reversible. Una vez confirmada, todos sus formularios y datos asociados serán eliminados permanentemente. Por favor, esté absolutamente seguro antes de continuar.",
+    "err_delete_personal_account": "Ocurrió un error inesperado al eliminar esta cuenta."
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

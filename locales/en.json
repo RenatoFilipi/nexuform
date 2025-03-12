@@ -250,7 +250,12 @@
     "label_sub_cancel_alert": "You will lose access to all content immediately upon canceling your subscription",
     "label_sub_cancel_confirm": "Confirm Cancellation",
     "label_sub_cancel_warning_feats": "You will lose access to all these features",
-    "desc_manage_sub": "Choose the plan that best fits your needs."
+    "desc_manage_sub": "Choose the plan that best fits your needs.",
+    "label_delete_personal_account": "Delete Personal Account",
+    "desc_delete_personal_account": "This action will permanently delete all of your forms, along with all the related data. This includes all responses, settings, and any associated files. Once deleted, this data cannot be recovered. Please proceed with caution.",
+    "label_type_delete_personal_account": "Type your related account email to continue.",
+    "label_delete_personal_account_alert": "This action is not reversible. Once confirmed, all your forms and associated data will be permanently deleted. Please be absolutely certain before proceeding.",
+    "err_delete_personal_account": "An unexpected error occurred while deleting this account."
   },
   "s": {
     "err_required_all": "Answer all required questions.",

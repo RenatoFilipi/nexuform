@@ -111,7 +111,7 @@ const Body = ({
           <div className="flex flex-col gap-4">
             <div className="flex justify-between items-center gap-4">
               <span className="text-base font-medium">{submission.identifier}</span>
-              <SubmissionStatusBadge status={submission.status as TSubmissionStatus} />
+              <SubmissionStatusBadge status={submission.status as TSubmissionStatus} uppercase />
             </div>
             <div className="flex justify-start items-center gap-3 p-2 bg-[#F8F8F8] dark:bg-foreground/5 border rounded-sm">
               <Badge variant={"info"}>{formatTime(submission.completion_time ?? 0, 2)}</Badge>
@@ -122,7 +122,10 @@ const Body = ({
         )}
         {!isDesktop && (
           <div className="flex flex-col gap-2 justify-center items-start mt-4">
-            <span className="text-sm">{submission.identifier}</span>
+            <div className="flex justify-center items-start w-full flex-col gap-2">
+              <span className="text-sm">{submission.identifier}</span>
+              <SubmissionStatusBadge status={submission.status as TSubmissionStatus} uppercase />
+            </div>
             <div className="flex w-full justify-start items-center gap-2">
               <Badge variant={"info"}>{formatTime(submission.completion_time ?? 0, 2)}</Badge>
               <Badge variant={"info"}>{new Date(submission.created_at).toLocaleString()}</Badge>

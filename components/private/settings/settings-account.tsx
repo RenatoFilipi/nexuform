@@ -106,7 +106,7 @@ const AccountProfile = () => {
         <div className="flex justify-end items-center">
           <Button
             disabled={appState === "loading"}
-            variant={"default"}
+            variant={"secondary"}
             type="submit"
             size={"sm"}
             className="w-full sm:w-fit">

@@ -17,7 +17,7 @@ import useUserStore from "@/stores/user";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { Loader2Icon } from "lucide-react";
+import { AlertCircleIcon, Loader2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { ReactNode, useState, useTransition } from "react";
@@ -43,15 +43,14 @@ const SettingsAccountDelete = ({ children }: { children: ReactNode }) => {
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogPortal>
-        <AlertDialogOverlay className="bg-destructive/40" />
+        <AlertDialogOverlay className="" />
         <AlertDialogContent className="flex flex-col w-full sm:min-w-[650px]">
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Personal Account</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action will <strong className="text-destructive">permanently delete all of your forms</strong>, along
-              with all the related data. This includes all responses, settings, and any associated files. Once deleted,
-              this data cannot be recovered. Please proceed with caution.
-            </AlertDialogDescription>
+            <AlertDialogTitle className="flex justify-start items-center gap-2">
+              <AlertCircleIcon className="w-5 h-5 text-destructive" />
+              {t("label_delete_personal_account")}
+            </AlertDialogTitle>
+            <AlertDialogDescription className="hidden">{t("desc_delete_personal_account")}</AlertDialogDescription>
           </AlertDialogHeader>
           <Body setState={setOpen} />
         </AlertDialogContent>
@@ -61,6 +60,7 @@ const SettingsAccountDelete = ({ children }: { children: ReactNode }) => {
 };
 
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
+  const t = useTranslations("app");
   const [isPending, startTransition] = useTransition();
   const supabase = createClient();
   const { email } = useUserStore();
@@ -70,7 +70,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     startTransition(async () => {
       const { data, error } = await supabase.auth.getUser();
       if (!data || error) {
-        toast.error("An unexpected error occurred while deleting this account.");
+        toast.error(t("err_delete_personal_account"));
         return;
       }
       const formData = new FormData();
@@ -82,24 +82,24 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-4">
+        <div className="bg-foreground p-3 rounded text-background border-transparent">
+          <span className="text-sm font-semibold">{t("desc_delete_personal_account")}</span>
+        </div>
         <div className="grid gap-3">
-          <Label htmlFor="account_email">Type your related account email to continue.</Label>
+          <Label htmlFor="account_email">{t("label_type_delete_personal_account")}</Label>
           <Input id="account_email" type="email" value={value} onChange={(e) => setValue(e.target.value)} />
         </div>
         <Alert variant={"destructive"} className="p-4 bg-red-100">
-          <AlertDescription className="text-sm font-semibold">
-            This action is not reversible. Once confirmed, all your forms and associated data will be permanently
-            deleted. Please be absolutely certain before proceeding.
-          </AlertDescription>
+          <AlertDescription className="font-medium">{t("label_delete_personal_account_alert")}</AlertDescription>
         </Alert>
       </div>
       <div className="flex justify-between items-center">
         <Button disabled={isPending} variant={"outline"} size={"sm"} onClick={() => setState(false)}>
-          Cancel
+          {t("label_cancel")}
         </Button>
         <Button disabled={email !== value} onClick={onDeleteAccount} variant={"destructive"} size={"sm"}>
           {isPending && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
-          Delete Account
+          {t("label_delete_personal_account")}
         </Button>
       </div>
     </div>
