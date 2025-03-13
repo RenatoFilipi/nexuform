@@ -349,11 +349,11 @@ const NavEditor = () => {
       await onSaveTheme();
       await onSaveBlocks();
 
-      toast.success("Form Updated.");
+      toast.success(t("suc_update_form"));
       queryClient.invalidateQueries({ queryKey: ["submissionData"] });
       router.push(`/dashboard/forms/${form.id}`);
     } catch (error) {
-      toast.error((error as Error).message || "Something went wrong.");
+      toast.error((error as Error).message || t("err_generic"));
     } finally {
       setAppState("idle");
     }
@@ -375,11 +375,9 @@ const NavEditor = () => {
         .eq("id", form.id);
 
       if (error) {
-        console.error("Error updating form:", error);
-        throw new Error("Failed to update form.");
+        throw new Error(t("err_generic"));
       }
     } catch (error) {
-      console.error("Unexpected error in onSaveForm:", error);
       throw error;
     }
   };
@@ -397,11 +395,9 @@ const NavEditor = () => {
         .eq("id", theme.id);
 
       if (error) {
-        console.error("Error updating theme:", error);
-        throw new Error("Failed to update theme.");
+        throw new Error(t("err_generic"));
       }
     } catch (error) {
-      console.error("Unexpected error in onSaveTheme:", error);
       throw error;
     }
   };
@@ -448,8 +444,7 @@ const NavEditor = () => {
 
       const { error: upsertError } = await supabase.from("blocks").upsert(elementsToUpsert);
       if (upsertError) {
-        console.error("Error upserting blocks:", upsertError);
-        throw new Error("Failed to upsert blocks.");
+        throw new Error(t("err_generic"));
       }
 
       const deletePromises = elementsToDelete.map(async (x) => await supabase.from("blocks").delete().eq("id", x.id));
@@ -457,18 +452,16 @@ const NavEditor = () => {
 
       deleteResults.forEach(({ error }, index) => {
         if (error) {
-          console.error(`Error deleting block with id ${elementsToDelete[index].id}:`, error);
-          throw new Error("Failed to delete blocks.");
+          throw new Error(t("err_generic"));
         }
       });
     } catch (error) {
-      console.error("Unexpected error in onSaveBlocks:", error);
       throw error;
     }
   };
 
   return (
-    <div className="h-12 flex justify-between items-center w-full bg-background border-t border-t-foreground/5 sm:px-4 px-2 z-20 fixed">
+    <div className="h-12 flex justify-between items-center w-full bg-background border-y border-y-foreground/5 sm:px-4 px-2 z-20 fixed">
       <div className="flex justify-center items-center gap-1">
         <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
           <Link href={"/dashboard/forms"}>

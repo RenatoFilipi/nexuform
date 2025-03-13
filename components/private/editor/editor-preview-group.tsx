@@ -118,7 +118,7 @@ const EditorPreviewGroup = () => {
         <h1 className="text-2xl font-bold">{form.name}</h1>
         <p className="text-sm text-foreground/80">{form.description}</p>
       </div>
-      <div className="flex flex-col justify-center items-center gap-8 w-full">
+      <div className="flex flex-col justify-center items-center gap-14 w-full">
         {blocks.map((block) => {
           switch (block.type) {
             case "short_text":

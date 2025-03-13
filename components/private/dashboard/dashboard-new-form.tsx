@@ -7,8 +7,9 @@ import { Textarea } from "@/components/ui/textarea";
 import useUserStore from "@/stores/user";
 import { minWidth640 } from "@/utils/constants";
 import { nanoid, uuid } from "@/utils/functions";
+import { IFormTemplate } from "@/utils/interfaces";
 import { createClient } from "@/utils/supabase/client";
-import { FormTemplates } from "@/utils/templates";
+import { getTemplates } from "@/utils/templates";
 import { TAppState, TSetState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
@@ -238,11 +239,21 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
   const router = useRouter();
   const [appState, setAppState] = useState<TAppState>("idle");
   const [value, setValue] = useState("");
-  const { subscription, profile } = useUserStore();
+  const { subscription, profile, locale } = useUserStore();
+  const [localTemplates, setLocalTemplates] = useState<IFormTemplate[]>([]);
   const showBadge = subscription.plan !== "pro";
 
+  const query = useQuery({
+    queryKey: ["templatesData"],
+    queryFn: async () => {
+      setLocalTemplates(await getTemplates(locale));
+      return null;
+    },
+    refetchOnWindowFocus: false,
+  });
+
   const onSubmit = async () => {
-    const targetTemplate = FormTemplates.find((x) => x.id === value);
+    const targetTemplate = localTemplates.find((x) => x.id === value);
     if (!targetTemplate) return;
     setAppState("loading");
     const { form, blocks } = targetTemplate;
@@ -292,6 +303,8 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
     router.push(`/dashboard/editor/${formData.id}`);
   };
 
+  if (query.isPending) return null;
+
   return (
     <div className="flex flex-col h-full gap-6 overflow-y-auto">
       <div className="grid gap-1">
@@ -299,7 +312,7 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
         <p className="text-xs text-foreground/70">{t("desc_form_templates")}</p>
       </div>
       <div className="flex flex-col w-full h-full overflow-y-auto gap-3 sm:pr-4">
-        {FormTemplates.map((temp) => {
+        {localTemplates.map((temp) => {
           return (
             <button
               key={temp.id}

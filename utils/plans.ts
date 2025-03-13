@@ -1,4 +1,3 @@
-import messages from "@/locales/en.json";
 import { createTranslator } from "use-intl/core";
 import {
   basicForms,
@@ -13,7 +12,6 @@ import {
   proSubmissions,
 } from "./envs";
 import { IPlan } from "./interfaces";
-const t = createTranslator({ locale: "en", messages });
 
 export const plans: IPlan[] = [
   {
@@ -74,7 +72,6 @@ export const plans: IPlan[] = [
 export const getPlans = async (locale: string): Promise<IPlan[]> => {
   const messages = (await import(`@/locales/${locale}.json`)).default;
   const t = createTranslator({ locale, messages });
-
   return [
     {
       name: t("app.label_plan_free_trial"),
