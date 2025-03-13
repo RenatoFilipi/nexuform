@@ -278,7 +278,14 @@
     "label_plan_pro": "Pro",
     "label_upgrade_now": "Actualizar ahora",
     "label_current_plan": "Plan actual",
-    "label_no_sub_data": "No hay datos de suscripción disponibles"
+    "label_no_sub_data": "No hay datos de suscripción disponibles",
+    "label_upgrade_pro": "Actualizar a Pro",
+    "desc_upgrade_pro": "Para acceder a esta función, debes actualizar tu suscripción al plan Pro.",
+    "label_error_generic": "¡Ups! Algo salió mal.",
+    "desc_error_generic": "Inténtalo de nuevo más tarde o contacta con el soporte si el problema persiste.",
+    "label_more_templates_alert": "Se lanzarán más plantillas con el tiempo para ampliar tus opciones.",
+    "label_no_forms": "Aún no hay formularios",
+    "desc_no_forms": "Empieza creando tu primer formulario y recopila respuestas con facilidad."
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

@@ -278,7 +278,14 @@
     "label_plan_pro": "Pro",
     "label_upgrade_now": "Atualizar agora",
     "label_current_plan": "Plano atual",
-    "label_no_sub_data": "Nenhum dado de assinatura disponível"
+    "label_no_sub_data": "Nenhum dado de assinatura disponível",
+    "label_upgrade_pro": "Atualizar para Pro",
+    "desc_upgrade_pro": "Para acessar este recurso, você deve atualizar sua assinatura para o plano Pro.",
+    "label_error_generic": "Ops! Algo deu errado.",
+    "desc_error_generic": "Tente novamente mais tarde ou entre em contato com o suporte se o problema persistir.",
+    "label_more_templates_alert": "Mais modelos serão lançados ao longo do tempo para expandir suas opções.",
+    "label_no_forms": "Nenhum formulário ainda",
+    "desc_no_forms": "Comece criando seu primeiro formulário e colete respostas com facilidade."
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

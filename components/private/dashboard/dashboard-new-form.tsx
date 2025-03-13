@@ -1,6 +1,7 @@
 "use client";
 
 import { createFormAction } from "@/app/actions";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
@@ -29,7 +30,7 @@ import { Input } from "../../ui/input";
 
 type TView = "custom" | "templates" | "none";
 
-const DashboardNewForm = ({ children, userId }: { children: React.ReactNode; userId: string }) => {
+const DashboardNewForm = ({ children }: { children: React.ReactNode }) => {
   const [error] = useQueryState("error");
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
@@ -311,30 +312,35 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
         <span className="font-semibold">{t("label_form_templates")}</span>
         <p className="text-xs text-foreground/70">{t("desc_form_templates")}</p>
       </div>
-      <div className="flex flex-col w-full h-full overflow-y-auto gap-3 sm:pr-4">
-        {localTemplates.map((temp) => {
-          return (
-            <button
-              key={temp.id}
-              onClick={() => {
-                if (temp.pro && subscription.plan !== "pro") return;
-                setValue(temp.id);
-              }}
-              className={`${
-                value === temp.id ? "bg-primary/5 border-primary" : ""
-              } border flex justify-between items-center rounded hover:bg-primary/5 p-3 flex-col w-full gap-2 min-h-16`}>
-              <div className="flex justify-between items-center w-full">
-                <span className="text-sm font-medium">{temp.name}</span>
-                <div className="flex justify-center items-center gap-3">
-                  {temp.pro && showBadge && <Badge variant={"pink"}>Pro</Badge>}
+      <div className="flex flex-col h-full overflow-y-auto gap-4">
+        <div className="flex flex-col w-full h-full overflow-y-auto gap-2">
+          {localTemplates.map((temp) => {
+            return (
+              <button
+                key={temp.id}
+                onClick={() => {
+                  if (temp.pro && subscription.plan !== "pro") return;
+                  setValue(temp.id);
+                }}
+                className={`${
+                  value === temp.id ? "bg-primary/5 border-primary" : ""
+                } border flex justify-between items-center rounded hover:bg-primary/5 p-3 flex-col w-full gap-2 min-h-16`}>
+                <div className="flex justify-between items-center w-full">
+                  <span className="text-sm font-medium">{temp.name}</span>
+                  <div className="flex justify-center items-center gap-3">
+                    {temp.pro && showBadge && <Badge variant={"pink"}>Pro</Badge>}
+                  </div>
                 </div>
-              </div>
-              <div className="flex w-full flex-col justify-start">
-                <p className="text-xs text-foreground/70 text-start">{temp.description}</p>
-              </div>
-            </button>
-          );
-        })}
+                <div className="flex w-full flex-col justify-start">
+                  <p className="text-xs text-foreground/70 text-start">{temp.description}</p>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+        <Alert variant={"info"}>
+          <AlertDescription className="">{t("label_more_templates_alert")}</AlertDescription>
+        </Alert>
       </div>
       <div className="flex justify-between flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">
         <Button

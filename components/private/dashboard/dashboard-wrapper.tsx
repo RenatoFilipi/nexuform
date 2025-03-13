@@ -61,7 +61,7 @@ const DashboardWrapper = ({
               </Button>
             </ManageSubscription>
           ) : (
-            <DashboardNewForm userId={profile.id}>
+            <DashboardNewForm>
               <Button size={"sm"} variant={"secondary"}>
                 <PlusIcon className="w-4 h-4 mr-2" />
                 {t("label_create_form")}

@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button";
 import useFormsStore from "@/stores/forms";
-import useUserStore from "@/stores/user";
 import { LayersIcon, PlusIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import DashboardFormCard from "./dashboard-form-card";
 import DashboardNewForm from "./dashboard-new-form";
 
 const DashboardForms = () => {
   const { forms } = useFormsStore();
-  const { profile } = useUserStore();
+  const t = useTranslations("app");
 
   if (forms.length === 0) {
     return (
@@ -18,16 +18,14 @@ const DashboardForms = () => {
               <LayersIcon className="w-7 h-7 text-primary" />
             </div>
             <div className="flex justify-center items-center flex-col">
-              <span className="text-lg font-medium">No forms yet</span>
-              <span className="text-sm text-center text-foreground/70">
-                Get started by creating your first form and collecting responses with ease.
-              </span>
+              <span className="text-lg font-medium">{t("label_no_forms")}</span>
+              <span className="text-sm text-center text-foreground/70">{t("desc_no_forms")}</span>
             </div>
           </div>
-          <DashboardNewForm userId={profile.id}>
+          <DashboardNewForm>
             <Button variant={"secondary"} size={"sm"}>
               <PlusIcon className="w-4 h-4 mr-2" />
-              Create Form
+              {t("label_create_form")}
             </Button>
           </DashboardNewForm>
         </div>

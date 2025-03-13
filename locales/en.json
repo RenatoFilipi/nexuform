@@ -278,7 +278,14 @@
     "label_plan_pro": "Pro",
     "label_upgrade_now": "Upgrade now",
     "label_current_plan": "Current plan",
-    "label_no_sub_data": "No subscription data available"
+    "label_no_sub_data": "No subscription data available",
+    "label_upgrade_pro": "Upgrade to Pro",
+    "desc_upgrade_pro": "To access this feature, you must upgrade your subscription to pro plan.",
+    "label_error_generic": "Oops! Something went wrong.",
+    "desc_error_generic": "Please try again later or contact support if the issue persists.",
+    "label_more_templates_alert": "More templates will be released over time to expand your options.",
+    "label_no_forms": "No forms yet",
+    "desc_no_forms": "Get started by creating your first form and collecting responses with ease."
   },
   "s": {
     "err_required_all": "Answer all required questions.",
