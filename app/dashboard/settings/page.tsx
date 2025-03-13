@@ -3,6 +3,7 @@ import ErrorUI from "@/components/private/shared/error-ui";
 import SubscriptionUI from "@/components/private/shared/subscription-ui";
 import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
+import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 const Settings = async () => {
@@ -46,8 +47,11 @@ const Settings = async () => {
 
   if (submissionsError) return <ErrorUI />;
 
+  const locale = await getLocale();
+
   return (
     <SettingsWrapper
+      locale={locale}
       profile={profile}
       subscription={subscription}
       formsCount={formsData.length}

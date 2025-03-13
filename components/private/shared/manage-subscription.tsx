@@ -20,9 +20,10 @@ import {
 } from "@/components/ui/drawer";
 import useUserStore from "@/stores/user";
 import { minWidth640 } from "@/utils/constants";
-import { IPlan2 } from "@/utils/interfaces";
-import { plans } from "@/utils/plans";
+import { IPlan } from "@/utils/interfaces";
+import { getPlans } from "@/utils/plans";
 import { TSetState } from "@/utils/types";
+import { useQuery } from "@tanstack/react-query";
 import { CheckIcon, RocketIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -65,8 +66,20 @@ const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const userStore = useUserStore();
-  const filteredPlans = plans.filter((x) => x.type !== "free_trial");
+  const [localPlans, setLocalPlans] = useState<IPlan[]>([]);
+  const filteredPlans = localPlans.filter((x) => x.type !== "free_trial");
   const showCancelButton = userStore.subscription.plan !== "free_trial";
+
+  const query = useQuery({
+    queryKey: ["manageSubData"],
+    queryFn: async () => {
+      setLocalPlans(await getPlans(userStore.locale));
+      return null;
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  if (query.isPending) return null;
 
   return (
     <div className="flex flex-col gap-6 overflow-y-auto">
@@ -90,7 +103,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     </div>
   );
 };
-const CardTemplate = ({ plan }: { plan: IPlan2 }) => {
+const CardTemplate = ({ plan }: { plan: IPlan }) => {
   const t = useTranslations("app");
   const { subscription } = useUserStore();
   const currentPlan = plan.type === subscription.plan;
@@ -113,7 +126,7 @@ const CardTemplate = ({ plan }: { plan: IPlan2 }) => {
         </div>
         <div className="w-full">
           <Button disabled={currentPlan} className="w-full" size="sm">
-            {currentPlan ? "Current plan" : plan.ctaButton}
+            {currentPlan ? t("label_current_plan") : plan.ctaButton}
           </Button>
         </div>
       </div>
@@ -127,7 +140,7 @@ const CardTemplate = ({ plan }: { plan: IPlan2 }) => {
                 <CheckIcon className={`${plan.isMostPopular ? "text-primary" : "text-primary"} w-4 h-4`} />
               )}
               <span className={`${feature.comingSoon ? "text-foreground/80" : "font-semibold"} text-xs`}>
-                {feature.description} {feature.comingSoon && "(Soon)"}
+                {feature.description} {feature.comingSoon && `(${t("label_soon")})`}
               </span>
             </li>
           ))}

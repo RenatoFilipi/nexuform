@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { IPlan2 } from "@/utils/interfaces";
+import { IPlan } from "@/utils/interfaces";
 import { plans } from "@/utils/plans";
 import { CheckIcon, RocketIcon } from "lucide-react";
 
@@ -29,7 +29,7 @@ const Pricing = () => {
   );
 };
 
-const CardTemplate = ({ plan }: { plan: IPlan2 }) => {
+const CardTemplate = ({ plan }: { plan: IPlan }) => {
   return (
     <div
       className={`relative flex flex-col items-center sm:w-[360px] w-full p-6 bg-background border rounded ${

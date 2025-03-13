@@ -19,12 +19,14 @@ const SettingsWrapper = ({
   formsCount,
   submissionsCount,
   email,
+  locale,
 }: {
   profile: EProfile;
   subscription: ESubscription;
   formsCount: number;
   submissionsCount: number;
   email: string;
+  locale: string;
 }) => {
   const t = useTranslations("app");
   const views = [
@@ -56,6 +58,7 @@ const SettingsWrapper = ({
   const query = useQuery({
     queryKey: ["settingsData"],
     queryFn: () => {
+      user.setLocale(locale);
       user.setProfile(profile);
       user.setSubscription(subscription);
       user.setFormsCount(formsCount);

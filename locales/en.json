@@ -271,7 +271,14 @@
     "feat_basic_integrations": "Basic integrations",
     "label_soon": "Soon",
     "label_most_popular": "Most Popular",
-    "label_per_month": "Per month"
+    "label_per_month": "Per month",
+    "label_plan_free_trial": "Free Trial",
+    "label_plan_starter": "Starter",
+    "label_plan_basic": "Basic",
+    "label_plan_pro": "Pro",
+    "label_upgrade_now": "Upgrade now",
+    "label_current_plan": "Current plan",
+    "label_no_sub_data": "No subscription data available"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

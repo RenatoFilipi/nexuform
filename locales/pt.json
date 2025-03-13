@@ -271,7 +271,14 @@
     "feat_basic_integrations": "Integrações básicas",
     "label_soon": "Em breve",
     "label_most_popular": "Mais Popular",
-    "label_per_month": "Por mês"
+    "label_per_month": "Por mês",
+    "label_plan_free_trial": "Teste grátis",
+    "label_plan_starter": "Inicial",
+    "label_plan_basic": "Básico",
+    "label_plan_pro": "Pro",
+    "label_upgrade_now": "Atualizar agora",
+    "label_current_plan": "Plano atual",
+    "label_no_sub_data": "Nenhum dado de assinatura disponível"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

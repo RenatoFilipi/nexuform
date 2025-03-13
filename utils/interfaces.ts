@@ -40,12 +40,6 @@ export interface IFormFilters {
   status: TFormStatusExtended;
   sort: TFilterSort;
 }
-
-export interface IPlanLanding extends IPlan {
-  features: string[];
-  highlighted: boolean;
-  buttonLabel: string;
-}
 export interface IIntegration {
   name: string;
   description: string;
@@ -74,12 +68,8 @@ export interface ISubmissionsByForm {
   name: string;
   count: number;
 }
+
 export interface IPlan {
-  name: string;
-  price: number;
-  type: TPlan;
-}
-export interface IPlan2 {
   name: string;
   price: number;
   type: TPlan;

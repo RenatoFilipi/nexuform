@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import useUserStore from "@/stores/user";
-import { plans } from "@/utils/constants";
+import { plans } from "@/utils/plans";
 import { TSetState } from "@/utils/types";
 import { XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -43,7 +43,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   if (!subscription) {
     return (
       <div className="">
-        <p>No subscription data available.</p>
+        <p>{t("label_no_sub_data")}</p>
         <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="mt-4 w-full">
           {t("label_close")}
         </Button>
@@ -66,8 +66,11 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
           <span className="">{t("label_sub_cancel_alert")}:</span>
           <div className="text-sm">
             {targetPlan?.features.map((feat) => (
-              <div key={feat} className="flex items-center gap-2">
-                <XIcon className="w-5 h-5 text-destructive" /> <span>{feat}</span>
+              <div key={feat.description} className="flex items-center gap-2">
+                <XIcon className="w-5 h-5 text-destructive" />{" "}
+                <span>
+                  {feat.description} {feat.comingSoon && `(${t("label_soon")})`}
+                </span>
               </div>
             ))}
           </div>

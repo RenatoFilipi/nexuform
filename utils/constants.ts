@@ -10,7 +10,7 @@ import {
   proPricing,
   proSubmissions,
 } from "./envs";
-import { IDesign, IIntegration, IPlanLanding } from "./interfaces";
+import { IDesign, IIntegration } from "./interfaces";
 
 export const minWidth640 = "(min-width: 640px)";
 export const minute = 1000 * 60;
@@ -36,56 +36,6 @@ export const planSettings = {
     submissions: proSubmissions,
   },
 };
-export const plans: IPlanLanding[] = [
-  {
-    name: "Starter",
-    price: freeTrialPricing,
-    features: [
-      `${freeTrialForms} forms`,
-      `${freeTrialSubmissions} submissions`,
-      "Basic analytics (Submissions tracking)",
-    ],
-    highlighted: false,
-    type: "free_trial",
-    buttonLabel: "Start Free Trial",
-  },
-  {
-    name: "Basic",
-    price: basicPricing,
-    features: [
-      `${basicForms} forms`,
-      `${basicSubmissions} submissions`,
-      "Basic support (24h response time)",
-      "Basic analytics (Submissions tracking)",
-      "Basic templates",
-      "Integrations (Soon)",
-      "Email notifications (Soon)",
-    ],
-    highlighted: false,
-    type: "basic",
-    buttonLabel: "Upgrade to Basic",
-  },
-  {
-    name: "Pro",
-    price: proPricing,
-    features: [
-      "Everything from basic plan",
-      `${proForms} forms`,
-      `${proSubmissions} submissions`,
-      "Priority support (6h response time)",
-      "Remove Nebulaform branding",
-      "Data export (CSV)",
-      "Premium templates",
-      "Premium analytics",
-      "Premium integrations (Soon)",
-      "Email notifications (Soon)",
-      "More to come",
-    ],
-    highlighted: true,
-    type: "pro",
-    buttonLabel: "Upgrade to Pro",
-  },
-];
 export const designTemplate: IDesign[] = [
   { label: "slate", tw_class: "" },
   { label: "gray", tw_class: "" },
