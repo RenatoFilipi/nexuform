@@ -285,5 +285,6 @@
     "err_generic": "Algo salió mal.",
     "err_sub": "Error al enviar, por favor intente nuevamente.",
     "label_powered": "Powered by Nebulaform"
-  }
+  },
+  "templates": {}
 }

@@ -75,6 +75,7 @@ const Body = ({
   const { subscription, locale } = useUserStore();
   const isDesktop = useMedia(minWidth640);
   const isAllowedToExport = subscription.plan === "pro";
+
   const query = useQuery({
     queryKey: [`submissionData`, submission.id],
     queryFn: async () => {
@@ -108,12 +109,12 @@ const Body = ({
     <div className="h-full overflow-y-auto flex flex-col gap-4">
       <div className="flex flex-col overflow-y-auto flex-1 gap-6">
         {isDesktop && (
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
             <div className="flex justify-between items-center gap-4">
               <span className="text-base font-medium">{submission.identifier}</span>
               <SubmissionStatusBadge status={submission.status as TSubmissionStatus} uppercase />
             </div>
-            <div className="flex justify-start items-center gap-3 p-2 bg-[#F8F8F8] dark:bg-foreground/5 border rounded-sm">
+            <div className="flex justify-start items-center gap-3">
               <Badge variant={"info"}>{formatTime(submission.completion_time ?? 0, 2)}</Badge>
               <Badge variant={"info"}>{new Date(submission.created_at).toLocaleString()}</Badge>
               <Badge variant={"info"}>{formatDateRelativeToNow(submission.created_at, locale)}</Badge>
@@ -133,11 +134,13 @@ const Body = ({
             </div>
           </div>
         )}
-        <div className="flex-1 flex flex-col overflow-y-auto gap-4">
+        <div className="flex-1 flex flex-col overflow-y-auto gap-6">
           {query.data?.collections.map((coll, i) => {
             return (
-              <div key={i} className="flex flex-col gap-1">
-                <span className="font-medium text-sm">{coll.question}</span>
+              <div key={i} className="flex flex-col gap-1 py-2 px-3 rounded">
+                <div className="flex justify-start items-center gap-2">
+                  <span className="font-medium text-sm text-foreground">{coll.question}</span>
+                </div>
                 {coll.answer.trim() !== "" ? (
                   <span className="text-xs text-foreground/70">{coll.answer}</span>
                 ) : (

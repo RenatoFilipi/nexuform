@@ -6,9 +6,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Textarea } from "@/components/ui/textarea";
 import useUserStore from "@/stores/user";
 import { minWidth640 } from "@/utils/constants";
-import { FormTemplates } from "@/utils/form-templates";
 import { nanoid, uuid } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
+import { FormTemplates } from "@/utils/templates";
 import { TAppState, TSetState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
@@ -81,7 +81,6 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
 };
 const PreSelectForm = ({ setState, setView }: { setState: TSetState<boolean>; setView: TSetState<TView> }) => {
   const t = useTranslations("app");
-
   const options = [
     {
       title: t("label_custom"),
@@ -267,7 +266,7 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
       .single();
 
     if (formError) {
-      toast.error("An unexpected error occurred while creating the form. Please try again later.");
+      toast.error(t("err_generic"));
       setAppState("idle");
       return;
     }
@@ -284,7 +283,7 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
 
     const { error: blocksError } = await supabase.from("blocks").insert(updatedBlocks);
     if (blocksError) {
-      toast.error("An unexpected error occurred while creating the form blocks. Please try again later.");
+      toast.error(t("err_generic"));
       await supabase.from("forms").delete().eq("id", formData.id);
       setAppState("idle");
       return;
@@ -299,7 +298,7 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
         <span className="font-semibold">{t("label_form_templates")}</span>
         <p className="text-xs text-foreground/70">{t("desc_form_templates")}</p>
       </div>
-      <div className="grid w-full h-full overflow-y-auto gap-3 sm:pr-4">
+      <div className="flex flex-col w-full h-full overflow-y-auto gap-3 sm:pr-4">
         {FormTemplates.map((temp) => {
           return (
             <button
@@ -310,7 +309,7 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
               }}
               className={`${
                 value === temp.id ? "bg-primary/5 border-primary" : ""
-              } border flex justify-between items-center rounded hover:bg-primary/5 p-3 flex-col w-full gap-2`}>
+              } border flex justify-between items-center rounded hover:bg-primary/5 p-3 flex-col w-full gap-2 min-h-16`}>
               <div className="flex justify-between items-center w-full">
                 <span className="text-sm font-medium">{temp.name}</span>
                 <div className="flex justify-center items-center gap-3">

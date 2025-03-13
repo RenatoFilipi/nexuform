@@ -34,7 +34,6 @@ const design: IDesign[] = [
   { label: "pink", tw_class: "bg-pink-500/10 text-pink-500" },
   { label: "rose", tw_class: "bg-rose-500/10 text-rose-500" },
 ];
-
 interface IProps {
   brand: boolean;
   preview: boolean;
@@ -49,7 +48,7 @@ const SuccessDesign = ({ brand, preview, color, description, title }: IProps) =>
 
   return (
     <div className="flex justify-center items-center w-full px-4 sm:px-0">
-      <Card className="flex flex-col gap-10 w-[500px] mt-20 p-8">
+      <Card className="flex flex-col gap-6 w-[500px] mt-20 p-8">
         <div className="flex flex-col justify-center items-center gap-6">
           <div className={twMerge(currentColor.tw_class, "rounded-full p-3")}>
             <CheckIcon className="w-10 h-10" />
@@ -60,7 +59,7 @@ const SuccessDesign = ({ brand, preview, color, description, title }: IProps) =>
           </div>
         </div>
         {brand && (
-          <div className="flex justify-center items-center gap-2 flex-col">
+          <div className="flex justify-center items-center gap-3 flex-col">
             <div className="text-center">
               <span className="font-medium text-sm text-foreground/70">{t("success_cta")}</span>
             </div>
