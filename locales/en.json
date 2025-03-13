@@ -348,5 +348,16 @@
     "t2_b8_desc": "How many employees work in your company?",
     "t2_b9_name": "Email Address",
     "t2_b9_desc": "Please provide your email address so we can follow up if needed."
+  },
+  "auth": {
+    "label_login": "Login",
+    "label_signup": "Sign up",
+    "desc_signup": "Don't have an account?",
+    "label_email": "Email",
+    "label_password": "Password",
+    "label_forgot_password": "Forgot my password?",
+    "submit_login": "Login",
+    "required_email": "Email is required",
+    "required_n_password": "Password must be at least {n, plural, =1 {# character long} other {# characters long}}."
   }
 }

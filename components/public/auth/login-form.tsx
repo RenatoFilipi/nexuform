@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { EyeIcon, EyeOffIcon, LoaderIcon, MailIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useQueryState } from "nuqs";
 import { useState, useTransition } from "react";
@@ -15,14 +16,15 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 const LoginForm = () => {
+  const t = useTranslations("auth");
   const [error] = useQueryState("error");
   const [isPending, startTransition] = useTransition();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const toggleVisibility = () => setIsVisible((prevState) => !prevState);
 
   const formSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(8, { message: "Password needs to be at least 8 characters long" }),
+    email: z.string().email(t("required_email")),
+    password: z.string().min(8, { message: t("required_n_password", { n: 8 }) }),
   });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -56,11 +58,11 @@ const LoginForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-6 justify-center items-center">
         <div className="flex justify-start w-full flex-col gap-2">
-          <h1 className="text-xl font-medium">Login</h1>
+          <h1 className="text-xl font-medium">{t("label_login")}</h1>
           <span className="text-sm text-foreground/80">
-            Don&apos;t have an account?{" "}
+            {t("desc_signup")}{" "}
             <Link href={"/signup"} className="hover:underline text-info dark:text-blue-500">
-              Sign up
+              {t("label_signup")}
             </Link>
           </span>
         </div>
@@ -70,7 +72,7 @@ const LoginForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="email">Email</FormLabel>
+                <FormLabel htmlFor="email">{t("label_email")}</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Input id="email" type="email" {...field} />
@@ -89,7 +91,7 @@ const LoginForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="password">Password</FormLabel>
+                  <FormLabel htmlFor="password">{t("label_password")}</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Input id="password" type={isVisible ? "text" : "password"} {...field} />
@@ -114,7 +116,7 @@ const LoginForm = () => {
             />
             <div className="flex justify-start items-center w-full">
               <Link href={"/password/reset"} className="text-sm hover:underline text-info dark:text-blue-500">
-                Forgot my password?
+                {t("label_forgot_password")}
               </Link>
             </div>
           </div>
@@ -122,7 +124,7 @@ const LoginForm = () => {
         <div className="flex flex-col w-full gap-4">
           <Button disabled={isPending} variant="secondary" type="submit" size="sm" className="w-full">
             {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
-            Login
+            {t("submit_login")}
           </Button>
         </div>
       </form>

@@ -349,5 +349,16 @@
     "t2_b8_desc": "¿Cuántos empleados tiene tu empresa?",
     "t2_b9_name": "Dirección de Correo Electrónico",
     "t2_b9_desc": "Por favor, proporciona tu dirección de correo electrónico para que podamos hacer un seguimiento si es necesario."
+  },
+  "auth": {
+    "label_login": "Iniciar sesión",
+    "label_signup": "Registrarse",
+    "desc_signup": "¿No tienes una cuenta?",
+    "label_email": "Correo electrónico",
+    "label_password": "Contraseña",
+    "label_forgot_password": "¿Olvidé mi contraseña?",
+    "submit_login": "Iniciar sesión",
+    "required_email": "El correo electrónico es obligatorio",
+    "required_n_password": "La contraseña debe tener al menos {n, plural, =1 {# carácter de largo} other {# caracteres de largo}}."
   }
 }

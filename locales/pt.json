@@ -349,5 +349,16 @@
     "t2_b8_desc": "Quantos funcionários sua empresa possui?",
     "t2_b9_name": "Endereço de E-mail",
     "t2_b9_desc": "Por favor, forneça seu endereço de e-mail para que possamos fazer um acompanhamento, se necessário."
+  },
+  "auth": {
+    "label_login": "Entrar",
+    "label_signup": "Criar conta",
+    "desc_signup": "Não tem uma conta?",
+    "label_email": "Email",
+    "label_password": "Senha",
+    "label_forgot_password": "Esqueci minha senha?",
+    "submit_login": "Entrar",
+    "required_email": "O email é obrigatório",
+    "required_n_password": "A senha deve ter pelo menos {n, plural, =1 {# caractere de comprimento} other {# caracteres de comprimento}}."
   }
 }
