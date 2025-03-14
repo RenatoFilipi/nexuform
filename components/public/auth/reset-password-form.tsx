@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { LoaderIcon, MailIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -13,6 +14,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 const ResetPasswordForm = () => {
+  const t = useTranslations("auth");
   const [error] = useQueryState("error");
   const [isPending, startTransition] = useTransition();
 
@@ -27,7 +29,7 @@ const ResetPasswordForm = () => {
     refetchOnWindowFocus: false,
   });
   const formSchema = z.object({
-    email: z.string().email("Email is required."),
+    email: z.string().email(t("required_email")),
   });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -43,10 +45,8 @@ const ResetPasswordForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-6 justify-center items-center">
         <div className="flex justify-start w-full flex-col gap-2">
-          <h1 className="text-xl font-medium">Reset your password</h1>
-          <span className="text-sm text-foreground/80">
-            To reset your password, enter the email address you use to log in.
-          </span>
+          <h1 className="text-xl font-medium">{t("label_reset_password")}</h1>
+          <span className="text-sm text-foreground/80">{t("desc_reset_password")}</span>
         </div>
         <div className="flex flex-col gap-3 w-full">
           <FormField
@@ -54,7 +54,7 @@ const ResetPasswordForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="email">Email</FormLabel>
+                <FormLabel htmlFor="email">{t("label_email")}</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Input id="email" type="email" {...field} />
@@ -71,7 +71,7 @@ const ResetPasswordForm = () => {
         <div className="flex flex-col w-full gap-4">
           <Button disabled={isPending} variant="secondary" type="submit" size="sm" className="w-full">
             {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
-            Reset Password
+            {t("label_reset_password")}
           </Button>
         </div>
       </form>

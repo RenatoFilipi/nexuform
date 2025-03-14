@@ -358,6 +358,14 @@
     "label_forgot_password": "Forgot my password?",
     "submit_login": "Login",
     "required_email": "Email is required",
-    "required_n_password": "Password must be at least {n, plural, =1 {# character long} other {# characters long}}."
+    "required_n_password": "Password must be at least {n, plural, =1 {# character long} other {# characters long}}.",
+    "desc_login": "Already have an account?",
+    "label_signup_consent": "By signing up for an account, you agree to all <terms>terms</terms> and <privacy>privacy</privacy>.",
+    "label_confirm_email": "Confirm your email",
+    "desc_confirm_email": "Thanks for signing up! Please check your email for a verification link.",
+    "required_all_fields": "All fields required.",
+    "err_generic": "An unexpected error occurred. Please try again later.",
+    "label_reset_password": "Reset your password",
+    "desc_reset_password": "To reset your password, enter the email address you use to log in."
   }
 }

@@ -3,18 +3,20 @@
 import { encodedRedirect, nanoid } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { createClient as superCreateClient } from "@supabase/supabase-js";
+import { getTranslations } from "next-intl/server";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export const signInAction = async (formData: FormData) => {
+  const t = await getTranslations("auth");
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const supabase = await createClient();
 
   // Validação de entradas
   if (!email || !password) {
-    return encodedRedirect("error", "/login", "Email and password are required.");
+    return encodedRedirect("error", "/login", t("required_all_fields"));
   }
 
   const { error } = await supabase.auth.signInWithPassword({
@@ -29,14 +31,14 @@ export const signInAction = async (formData: FormData) => {
   return redirect("/dashboard/forms");
 };
 export const signUpAction = async (formData: FormData) => {
+  const t = await getTranslations("auth");
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const supabase = await createClient();
   const origin = (await headers()).get("origin");
 
-  // Validação de entradas
   if (!email || !password) {
-    return encodedRedirect("error", "/signup", "Email and password are required.");
+    return encodedRedirect("error", "/signup", t("required_all_fields"));
   }
 
   const { error } = await supabase.auth.signUp({
@@ -51,11 +53,7 @@ export const signUpAction = async (formData: FormData) => {
     return encodedRedirect("error", "/signup", error.message);
   }
 
-  return encodedRedirect(
-    "success",
-    "/signup",
-    "Thanks for signing up! Please check your email for a verification link."
-  );
+  return encodedRedirect("success", "/signup", t("desc_confirm_email"));
 };
 export const signOutAction = async () => {
   const supabase = await createClient();
@@ -63,13 +61,14 @@ export const signOutAction = async () => {
   return redirect("/login");
 };
 export const createFormAction = async (formData: FormData) => {
+  const t = await getTranslations("auth");
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
   const userId = formData.get("userId") as string;
   const supabase = await createClient();
 
   if (!name || !userId) {
-    return encodedRedirect("error", "/dashboard/forms", "All fields are required.");
+    return encodedRedirect("error", "/dashboard/forms", t("required_all_fields"));
   }
 
   const { data: form, error: formError } = await supabase
@@ -79,11 +78,7 @@ export const createFormAction = async (formData: FormData) => {
     .single();
 
   if (formError) {
-    return encodedRedirect(
-      "error",
-      "/dashboard/forms",
-      "An unexpected error occurred while creating the form. Please try again later."
-    );
+    return encodedRedirect("error", "/dashboard/forms", t("err_generic"));
   }
 
   return redirect(`/dashboard/editor/${form.id}`);

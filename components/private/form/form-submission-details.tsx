@@ -107,9 +107,9 @@ const Body = ({
 
   return (
     <div className="h-full overflow-y-auto flex flex-col gap-4">
-      <div className="flex flex-col overflow-y-auto flex-1 gap-6">
+      <div className="flex flex-col overflow-y-auto flex-1 gap-4">
         {isDesktop && (
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 p-3 border rounded dark:bg-foreground/5 bg-[#F8F8F8]">
             <div className="flex justify-between items-center gap-4">
               <span className="text-base font-medium">{submission.identifier}</span>
               <SubmissionStatusBadge status={submission.status as TSubmissionStatus} uppercase />
@@ -137,7 +137,7 @@ const Body = ({
         <div className="flex-1 flex flex-col overflow-y-auto gap-6">
           {query.data?.collections.map((coll, i) => {
             return (
-              <div key={i} className="flex flex-col gap-1 py-2 px-3 rounded">
+              <div key={i} className="flex flex-col gap-1">
                 <div className="flex justify-start items-center gap-2">
                   <span className="font-medium text-sm text-foreground">{coll.question}</span>
                 </div>

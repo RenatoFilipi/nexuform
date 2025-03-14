@@ -359,6 +359,14 @@
     "label_forgot_password": "¿Olvidé mi contraseña?",
     "submit_login": "Iniciar sesión",
     "required_email": "El correo electrónico es obligatorio",
-    "required_n_password": "La contraseña debe tener al menos {n, plural, =1 {# carácter de largo} other {# caracteres de largo}}."
+    "required_n_password": "La contraseña debe tener al menos {n, plural, =1 {# carácter de largo} other {# caracteres de largo}}.",
+    "desc_login": "¿Ya tienes una cuenta?",
+    "label_signup_consent": "Al registrarte, aceptas todos los <terms>términos</terms> y la <privacy>política de privacidad</privacy>.",
+    "label_confirm_email": "Confirma tu correo electrónico",
+    "desc_confirm_email": "¡Gracias por registrarte! Por favor, revisa tu correo electrónico para el enlace de verificación.",
+    "required_all_fields": "Todos los campos son obligatorios.",
+    "err_generic": "Ocurrió un error inesperado. Por favor, inténtalo de nuevo más tarde.",
+    "label_reset_password": "Restablecer tu contraseña",
+    "desc_reset_password": "Para restablecer tu contraseña, ingresa la dirección de correo electrónico que usas para iniciar sesión."
   }
 }

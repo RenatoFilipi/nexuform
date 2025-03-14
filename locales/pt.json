@@ -359,6 +359,14 @@
     "label_forgot_password": "Esqueci minha senha?",
     "submit_login": "Entrar",
     "required_email": "O email é obrigatório",
-    "required_n_password": "A senha deve ter pelo menos {n, plural, =1 {# caractere de comprimento} other {# caracteres de comprimento}}."
+    "required_n_password": "A senha deve ter pelo menos {n, plural, =1 {# caractere de comprimento} other {# caracteres de comprimento}}.",
+    "desc_login": "Já tem uma conta?",
+    "label_signup_consent": "Ao se cadastrar, você concorda com todos os <terms>termos</terms> e a <privacy>política de privacidade</privacy>.",
+    "label_confirm_email": "Confirme seu e-mail",
+    "desc_confirm_email": "Obrigado por se cadastrar! Por favor, verifique seu e-mail para o link de verificação.",
+    "required_all_fields": "Todos os campos são obrigatórios.",
+    "err_generic": "Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.",
+    "label_reset_password": "Redefinir sua senha",
+    "desc_reset_password": "Para redefinir sua senha, insira o endereço de e-mail que você usa para fazer login."
   }
 }
