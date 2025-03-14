@@ -2,35 +2,36 @@
 
 import { freeTrialPeriod } from "@/utils/envs";
 import { ChevronDownIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
-const faqData = [
-  {
-    question: "What is the Free Trial?",
-    answer: `The Free Trial allows you to use the platform with limited features for ${freeTrialPeriod} days without any cost.`,
-  },
-  {
-    question: "What happens after the Free Trial ends?",
-    answer: "Once the Free Trial ends, you will need to choose a paid plan to continue accessing the platform.",
-  },
-  {
-    question: "Can I cancel my subscription anytime?",
-    answer: "Yes, you can cancel your subscription at any time from your account settings.",
-  },
-  {
-    question: "Do you offer support?",
-    answer: "Yes, we offer email support for the Free Trial and priority or premium support for paid plans.",
-  },
-];
-
 const Faq = () => {
+  const t = useTranslations("landing");
+  const faqData = [
+    {
+      question: t("faq1_q"),
+      answer: t("faq1_a", { period: freeTrialPeriod }),
+    },
+    {
+      question: t("faq2_q"),
+      answer: t("faq2_a"),
+    },
+    {
+      question: t("faq3_q"),
+      answer: t("faq3_a"),
+    },
+    {
+      question: t("faq4_q"),
+      answer: t("faq4_a"),
+    },
+  ];
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const toggleFaq = (index: number) => setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
 
   return (
     <div id="faq" className="my-10 w-full max-w-3xl px-8 sm:px-0 sm:min-h-screen flex justify-center items-center">
       <div className="grid gap-10 w-full">
-        <h2 className="text-2xl font-bold text-center sm:text-4xl">Frequently Asked Questions</h2>
+        <h2 className="text-2xl font-bold text-center sm:text-4xl">{t("faq_headline")}</h2>
         <div className="space-y-4">
           {faqData.map((faq, index) => (
             <div key={index} className="border rounded-lg p-3">

@@ -3,42 +3,31 @@
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { BarChartIcon, CheckIcon, DatabaseIcon, LayersIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
-const steps = [
-  {
-    title: "Create Your Form",
-    description: "Easily design and build forms tailored to your needs.",
-    icon: LayersIcon,
-    details: [
-      "Start from scratch or choose a pre-made template.",
-      "Customize with various blocks, themes, and settings to fit your brand.",
-      "Publish and share with a single click, instantly accessible to your audience.",
-    ],
-  },
-  {
-    title: "Manage Submissions",
-    description: "Track responses, analyze data, and export results effortlessly.",
-    icon: DatabaseIcon,
-    details: [
-      "Monitor real-time submissions to stay up-to-date.",
-      "View detailed activity reports, including completion rates and time spent.",
-      "Export the data for deeper analysis and reporting.",
-    ],
-  },
-  {
-    title: "Analyze Your Data",
-    description: "Gain valuable insights to optimize your form's performance.",
-    icon: BarChartIcon,
-    details: [
-      "Track submission trends across all your forms for a comprehensive view.",
-      "Analyze key metrics such as engagement, conversion, and drop-off rates.",
-      "Make data-driven improvements to enhance form effectiveness.",
-    ],
-  },
-];
-
 const HowItWorks = () => {
+  const t = useTranslations("landing");
+  const steps = [
+    {
+      title: t("step1_label"),
+      description: t("step1_desc"),
+      icon: LayersIcon,
+      details: [t("step1_topic1"), t("step1_topic2"), t("step1_topic3")],
+    },
+    {
+      title: t("step2_label"),
+      description: t("step2_desc"),
+      icon: DatabaseIcon,
+      details: [t("step2_topic1"), t("step2_topic2"), t("step2_topic3")],
+    },
+    {
+      title: t("step3_label"),
+      description: t("step3_desc"),
+      icon: BarChartIcon,
+      details: [t("step3_topic1"), t("step3_topic2"), t("step3_topic3")],
+    },
+  ];
   const [selectedStep, setSelectedStep] = useState(steps[0]);
 
   return (
@@ -47,14 +36,10 @@ const HowItWorks = () => {
       className="py-16 w-full px-6 sm:px-12 sm:min-h-screen flex justify-center items-center flex-col gap-6">
       <div className="flex flex-col gap-4 justify-center items-center">
         <Badge uppercase variant="primary" className="w-fit">
-          How It Works
+          {t("nav_htw")}
         </Badge>
-        <h2 className="text-2xl font-bold leading-tight sm:text-4xl mt-3 text-center">
-          Create and Publish Forms in 3 Simple Steps
-        </h2>
-        <p className="text-base text-foreground/70 mt-2">
-          Our platform simplifies the process of creating, publishing, and analyzing forms in just a few minutes.
-        </p>
+        <h2 className="text-2xl font-bold leading-tight sm:text-4xl mt-3 text-center">{t("htw_headline")}</h2>
+        <p className="text-base text-foreground/70 mt-2">{t("htw_subheadline")}</p>
       </div>
       <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 mt-10 sm:mt-16 xl:mt-12">
         {/* Sidebar - Steps */}
@@ -80,8 +65,8 @@ const HowItWorks = () => {
                     />
                   </div>
                   <div className="flex flex-col items-start justify-center">
-                    <h3 className="text-lg font-semibold">{step.title}</h3>
-                    <p className="text-sm text-foreground/70">{step.description}</p>
+                    <h3 className="text-lg font-semibold text-start">{step.title}</h3>
+                    <p className="text-sm text-foreground/70 text-start">{step.description}</p>
                   </div>
                 </button>
               ))}
@@ -95,8 +80,8 @@ const HowItWorks = () => {
               <selectedStep.icon className="text-primary w-8 h-8" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-foreground">{selectedStep.title}</h3>
-              <p className="text-sm text-foreground/70">{selectedStep.description}</p>
+              <h3 className="text-lg font-semibold text-foreground text-start">{selectedStep.title}</h3>
+              <p className="text-sm text-foreground/70 text-start">{selectedStep.description}</p>
             </div>
           </div>
           <ul className="p-4 flex flex-col gap-3">

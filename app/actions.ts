@@ -14,7 +14,6 @@ export const signInAction = async (formData: FormData) => {
   const password = formData.get("password") as string;
   const supabase = await createClient();
 
-  // Validação de entradas
   if (!email || !password) {
     return encodedRedirect("error", "/login", t("required_all_fields"));
   }

@@ -2,27 +2,29 @@
 
 import { Badge } from "@/components/ui/badge";
 import { BarChartIcon, BlocksIcon, DatabaseIcon, HexagonIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const Features = () => {
+  const t = useTranslations("landing");
   const features = [
     {
-      title: "Intuitive Form Builder",
-      description: "Design and customize forms effortlessly with our drag-and-drop interface.",
+      title: t("feat1_headline"),
+      description: t("feat1_subheadline"),
       icon: BlocksIcon,
     },
     {
-      title: "Actionable Analytics",
-      description: "Get insights to optimize your forms for better results.",
+      title: t("feat2_headline"),
+      description: t("feat2_subheadline"),
       icon: BarChartIcon,
     },
     {
-      title: "Smart Data Handling",
-      description: "Seamlessly export, organize, and analyze form submissions.",
+      title: t("feat3_headline"),
+      description: t("feat3_subheadline"),
       icon: DatabaseIcon,
     },
     {
-      title: "Custom Templates",
-      description: "Start with one of our professionally designed templates or create your own.",
+      title: t("feat4_headline"),
+      description: t("feat4_subheadline"),
       icon: HexagonIcon,
     },
   ];
@@ -34,12 +36,12 @@ const Features = () => {
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 grid gap-4">
         <div className="text-center flex flex-col justify-center items-center gap-4">
           <Badge uppercase variant={"primary"}>
-            Features
+            {t("nav_features")}
           </Badge>
-          <h2 className="text-2xl font-bold leading-tight sm:text-4xl">Everything You Need to Build Amazing Forms</h2>
-          <p className="text-lg text-foreground/70">Enhance your form-building experience with ease and insights.</p>
+          <h2 className="text-2xl font-bold leading-tight sm:text-4xl">{t("feat_headline")}</h2>
+          <p className="text-lg text-foreground/70">{t("feat_subheadline")}</p>
         </div>
-        <div className="grid grid-cols-1 mt-10 gap-6 sm:grid-cols-4 sm:mt-16 xl:mt-12">
+        <div className="grid grid-cols-1 mt-10 gap-6 sm:grid-cols-2 sm:mt-16 xl:mt-12">
           {features.map((feature, index) => (
             <div
               key={index}
@@ -48,9 +50,9 @@ const Features = () => {
                 <div className="flex justify-center items-center p-2 rounded bg-primary/10">
                   <feature.icon className="text-primary w-6 h-6" />
                 </div>
-                <h3 className="text-lg font-semibold text-center">{feature.title}</h3>
+                <h3 className="text-lg font-semibold text-start">{feature.title}</h3>
               </div>
-              <p className="mt-3 text-sm text-foreground/70 text-start">{feature.description}</p>
+              <p className="text-sm text-foreground/70 text-start">{feature.description}</p>
             </div>
           ))}
         </div>

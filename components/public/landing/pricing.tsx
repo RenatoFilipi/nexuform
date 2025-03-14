@@ -1,23 +1,25 @@
-"use client";
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { IPlan } from "@/utils/interfaces";
-import { plans } from "@/utils/plans";
+import { getPlans } from "@/utils/plans";
 import { CheckIcon, RocketIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
 
-const Pricing = () => {
+const Pricing = async () => {
+  const t = await getTranslations("landing");
+  const locale = await getLocale();
+  const plans = await getPlans(locale);
+
   return (
     <section id="pricing" className="py-12 sm:py-16 lg:py-20 bg-background px-8 sm:px-0 sm:min-h-screen">
       <div className="mx-auto sm:px-6 lg:px-8 gap-4 flex flex-col justify-center items-center">
         <div className="text-center flex flex-col justify-center items-center gap-4">
           <Badge uppercase variant={"primary"}>
-            pricing
+            {t("nav_pricing")}
           </Badge>
-          <h2 className="text-2xl font-bold leading-tight sm:text-4xl">Simple, Transparent Pricing</h2>
-          <p className="text-base text-foreground/70">
-            Choose the plan that fits your growth and scale at your own pace—upgrade whenever you&apos;re ready.
-          </p>
+          <h2 className="text-2xl font-bold leading-tight sm:text-4xl">{t("pricing_headline")}</h2>
+          <p className="text-base text-foreground/70">{t("pricing_subheadline")}</p>
         </div>
         <div className="grid grid-cols-1 mt-10 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {plans.map((plan) => (
@@ -30,24 +32,27 @@ const Pricing = () => {
 };
 
 const CardTemplate = ({ plan }: { plan: IPlan }) => {
+  const t = useTranslations("landing");
   return (
     <div
       className={`relative flex flex-col items-center sm:w-[360px] w-full p-6 bg-background border rounded ${
-        plan.isMostPopular ? "border-amber-500 border-2" : "border-foreground/20"
+        plan.isMostPopular ? "border-primary border-2" : "border-foreground/20"
       }`}>
       <div className="flex flex-col w-full">
         <div className="flex justify-between items-center gap-2">
           <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
-          {plan.isMostPopular && <Badge variant="green">Most Popular</Badge>}
+          {plan.isMostPopular && <Badge variant="green">{t("pricing_most_popular")}</Badge>}
         </div>
         <div className="flex flex-col">
           <p className={`${plan.isMostPopular ? "text-primary" : "text-foreground"} mt-3 text-3xl font-extrabold`}>
             ${plan.price}
           </p>
           {plan.type === "free_trial" ? (
-            <p className="text-sm text-foreground/80">{plan.freeTrialDuration} days trial</p>
+            <p className="text-sm text-foreground/80">
+              {plan.freeTrialDuration} {t("pricing_days_trial")}
+            </p>
           ) : (
-            <p className="text-sm text-foreground/80">per month</p>
+            <p className="text-sm text-foreground/80">{t("pricing_per_month")}</p>
           )}
         </div>
       </div>

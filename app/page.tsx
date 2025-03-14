@@ -9,14 +9,17 @@ import HowItWorks from "@/components/public/landing/how-it-works";
 import Pricing from "@/components/public/landing/pricing";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 
-const Home = () => {
+const Home = async () => {
+  const t = await getTranslations("landing");
+
   const urls = [
-    { name: "Features", url: "features" },
-    { name: "How it Works", url: "how-it-works" },
-    { name: "Pricing", url: "pricing" },
-    { name: "FAQ", url: "faq" },
+    { name: t("nav_features"), url: "features" },
+    { name: t("nav_htw"), url: "how-it-works" },
+    { name: t("nav_pricing"), url: "pricing" },
+    { name: t("nav_faq"), url: "faq" },
   ];
 
   return (
@@ -36,10 +39,10 @@ const Home = () => {
         </div>
         <div className="hidden sm:flex justify-center items-center gap-4">
           <Button variant={"outline"} size={"sm"} asChild>
-            <Link href={"/login"}>Login</Link>
+            <Link href={"/login"}>{t("label_login")}</Link>
           </Button>
           <Button variant={"secondary"} size={"sm"} asChild>
-            <Link href={"/signup"}>Get Started</Link>
+            <Link href={"/signup"}>{t("label_get_started")}</Link>
           </Button>
         </div>
         <div className="flex sm:hidden">
@@ -61,10 +64,10 @@ const Home = () => {
       <footer className="flex justify-center items-center w-full h-16">
         <div className="absolute left-4 hidden sm:flex justify-center items-center gap-2">
           <Link href={"/legal/privacy"} className="text-xs text-foreground/80 hover:underline">
-            Privacy
+            {t("label_privacy")}
           </Link>
           <Link href={"/legal/terms"} className="text-xs text-foreground/80 hover:underline">
-            Terms
+            {t("label_terms")}
           </Link>
         </div>
         <span className="text-xs text-foreground/80 sm:text-center">
