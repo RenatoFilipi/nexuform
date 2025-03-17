@@ -371,7 +371,9 @@
     "required_all_fields": "Todos los campos son obligatorios.",
     "err_generic": "Ocurrió un error inesperado. Por favor, inténtalo de nuevo más tarde.",
     "label_reset_password": "Restablecer tu contraseña",
-    "desc_reset_password": "Para restablecer tu contraseña, ingresa la dirección de correo electrónico que usas para iniciar sesión."
+    "desc_reset_password": "Para restablecer tu contraseña, ingresa la dirección de correo electrónico que usas para iniciar sesión.",
+    "label_suc_confirm_email": "Gracias por confirmar tu dirección de correo electrónico. Tu cuenta ahora está completamente activada y puedes acceder a nuestra plataforma.",
+    "label_continue_login": "Continuar al Inicio de Sesión"
   },
   "landing": {
     "nav_features": "Características",

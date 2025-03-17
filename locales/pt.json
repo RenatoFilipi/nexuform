@@ -371,7 +371,9 @@
     "required_all_fields": "Todos os campos são obrigatórios.",
     "err_generic": "Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.",
     "label_reset_password": "Redefinir sua senha",
-    "desc_reset_password": "Para redefinir sua senha, insira o endereço de e-mail que você usa para fazer login."
+    "desc_reset_password": "Para redefinir sua senha, insira o endereço de e-mail que você usa para fazer login.",
+    "label_suc_confirm_email": "Obrigado por confirmar seu endereço de e-mail. Sua conta agora está totalmente ativada e você pode acessar nossa plataforma.",
+    "label_continue_login": "Continuar para o Login"
   },
   "landing": {
     "nav_features": "Recursos",

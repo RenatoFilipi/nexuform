@@ -370,7 +370,9 @@
     "required_all_fields": "All fields required.",
     "err_generic": "An unexpected error occurred. Please try again later.",
     "label_reset_password": "Reset your password",
-    "desc_reset_password": "To reset your password, enter the email address you use to log in."
+    "desc_reset_password": "To reset your password, enter the email address you use to log in.",
+    "label_suc_confirm_email": "Thank you for confirming your email address. Your account is now fully activated and you can access our platform.",
+    "label_continue_login": "Continue to Login"
   },
   "landing": {
     "nav_features": "Features",
