@@ -289,7 +289,11 @@
     "label_form_not_available": "This form is not available or does not exist.",
     "label_go_back": "Go back",
     "label_upgrade_sub": "Update your subscription.",
-    "desc_upgrade_sub": "To keep using our plataform update your subscription."
+    "desc_upgrade_sub": "To keep using our plataform update your subscription.",
+    "label_help": "Need help?",
+    "desc_help": "Feel free to reach out to us via email with any questions or concerns:",
+    "label_copy": "Copy",
+    "nav_help": "Help"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

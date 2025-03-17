@@ -12,6 +12,7 @@ import { TAppState, TPlan } from "@/utils/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ChartNoAxesColumnIcon,
+  HelpingHandIcon,
   InboxIcon,
   LoaderIcon,
   LogOutIcon,
@@ -79,6 +80,13 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
       icon: Settings2Icon,
       enabled: true,
     },
+    {
+      id: 4,
+      name: t("nav_help"),
+      path: "/dashboard/help",
+      icon: HelpingHandIcon,
+      enabled: true,
+    },
   ];
 
   // app
@@ -87,7 +95,7 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent className="w-screen flex flex-col gap-2 py-4">
         <div className="flex justify-between items-center">
-          <span>Plan</span>
+          <span>{t("label_plan")}</span>
           {user.subscription.plan === "" ? null : <PlanBadge plan={user.subscription.plan as TPlan} />}
         </div>
         <div className="flex flex-col">
@@ -99,8 +107,8 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
                   key={link.id}
                   href={link.path}
                   className={`${
-                    isActive(link.path) && "bg-primary text-white hover:bg-primary"
-                  } p-2 hover:bg-foreground/5 text-sm flex justify-start items-center`}>
+                    isActive(link.path) ? "bg-foreground text-background" : ""
+                  } p-2 text-sm flex justify-start items-center`}>
                   <link.icon className="w-4 h-4 mr-2" />
                   {link.name}
                 </Link>
@@ -180,6 +188,14 @@ const AvatarAppMenu = () => {
             <Link href={"/dashboard/settings"}>
               {t("label_settings")}
               <Settings2Icon className="w-4 h-4" />
+            </Link>
+          </Button>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="py-0">
+          <Button variant={"ghost"} size={"sm"} asChild className="flex justify-between w-full items-center p-0">
+            <Link href={"/dashboard/help"}>
+              {t("nav_help")}
+              <HelpingHandIcon className="w-4 h-4" />
             </Link>
           </Button>
         </DropdownMenuItem>
@@ -506,11 +522,7 @@ const PlanBadge = ({ plan }: { plan: TPlan }) => {
     custom: "Custom",
   };
 
-  return (
-    <Badge variant="plan" uppercase className="">
-      {planLabels[plan] || "Custom"}
-    </Badge>
-  );
+  return <Badge variant="plan">{planLabels[plan] || "Custom"}</Badge>;
 };
 
 export default Nav;

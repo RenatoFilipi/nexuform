@@ -289,7 +289,11 @@
     "label_form_not_available": "Este formulário não está disponível ou não existe.",
     "label_go_back": "Voltar",
     "label_upgrade_sub": "Atualize sua assinatura.",
-    "desc_upgrade_sub": "Para continuar usando nossa plataforma, atualize sua assinatura."
+    "desc_upgrade_sub": "Para continuar usando nossa plataforma, atualize sua assinatura.",
+    "label_help": "Precisa de ajuda?",
+    "desc_help": "Sinta-se à vontade para nos contatar por e-mail com quaisquer dúvidas ou preocupações:",
+    "label_copy": "Copiar",
+    "nav_help": "Ajuda"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",
