@@ -1,4 +1,5 @@
 import FormWrapper from "@/components/private/form/form-wrapper";
+import ErrorUI from "@/components/private/shared/error-ui";
 import SubscriptionUI from "@/components/private/shared/subscription-ui";
 import { day, paginationFrom, paginationTo } from "@/utils/constants";
 import { isSubscriptionActive } from "@/utils/functions";
@@ -102,15 +103,4 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     />
   );
 };
-
-const ErrorUI = () => {
-  return (
-    <div className="flex flex-col justify-center items-center h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
-      <div className="flex flex-col justify-center items-center gap-2">
-        <span className="">Something went wrong</span>
-      </div>
-    </div>
-  );
-};
-
 export default Form;

@@ -293,7 +293,10 @@
     "label_help": "Need help?",
     "desc_help": "Feel free to reach out to us via email with any questions or concerns:",
     "label_copy": "Copy",
-    "nav_help": "Help"
+    "nav_help": "Help",
+    "label_go_home": "Ho home",
+    "label_active_sub": "Subscription Active",
+    "desc_active_sub": "Thank you for subscribing. Your subscription is now active."
   },
   "s": {
     "err_required_all": "Answer all required questions.",

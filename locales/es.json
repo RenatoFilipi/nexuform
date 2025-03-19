@@ -293,7 +293,10 @@
     "label_help": "¿Necesitas ayuda?",
     "desc_help": "No dudes en contactarnos por correo electrónico si tienes alguna pregunta o inquietud:",
     "label_copy": "Copiar",
-    "nav_help": "Ayuda"
+    "nav_help": "Ayuda",
+    "label_go_home": "Ir a inicio",
+    "label_active_sub": "Suscripción Activa",
+    "desc_active_sub": "Gracias por suscribirte. Tu suscripción está activa."
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

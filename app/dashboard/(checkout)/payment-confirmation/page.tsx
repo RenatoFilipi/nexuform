@@ -4,9 +4,12 @@ import Brand from "@/components/core/brand";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ShoppingBagIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 const PaymentConfirmation = () => {
+  const t = useTranslations("app");
+
   return (
     <div className="flex justify-center items-center h-screen relative border-t border-t-foreground/5 dark:bg-foreground/5 bg-[#F8F8F8]">
       <Card className="flex flex-col justify-center items-center py-6 gap-8 relative px-10 mx-4">
@@ -16,15 +19,13 @@ const PaymentConfirmation = () => {
             <ShoppingBagIcon className="w-8 h-8 text-success" />
           </div>
           <div className="flex flex-col justify-center items-center gap-2">
-            <h1 className="text-xl font-semibold">Subscription Active</h1>
-            <span className="text-sm text-foreground/60">
-              Thank you for subscribing. Your subscription is now active.
-            </span>
+            <h1 className="text-xl font-semibold">{t("label_active_sub")}</h1>
+            <span className="text-sm text-foreground/60">{t("desc_active_sub")}</span>
           </div>
         </div>
         <div className="flex flex-col justify-center items-center gap-2 w-full">
           <Button asChild variant={"secondary"} size={"sm"} className="w-full">
-            <Link href={"/dashboard/forms"}>Go to Dashboard</Link>
+            <Link href={"/dashboard/forms"}>{t("label_go_home")}</Link>
           </Button>
         </div>
       </Card>

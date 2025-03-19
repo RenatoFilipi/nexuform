@@ -1,4 +1,5 @@
 import AnalyticsWrapper from "@/components/private/analytics/analytics-wrapper";
+import ErrorUI from "@/components/private/shared/error-ui";
 import UpgradeToProUI from "@/components/private/shared/upgrade-to-pro-ui";
 import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
@@ -61,16 +62,6 @@ const Analytics = async () => {
       formsAnalytics={formsAnalytics}
       submissions={submissions}
     />
-  );
-};
-
-const ErrorUI = () => {
-  return (
-    <div className="flex flex-col justify-center items-center h-full gap-4 overflow-y-auto pb-6 pt-3 px-3 sm:px-12 flex-1 mt-16">
-      <div className="flex flex-col justify-center items-center gap-2">
-        <span className="">Something went wrong</span>
-      </div>
-    </div>
   );
 };
 

@@ -178,11 +178,15 @@ const AvatarAppMenu = () => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-4 min-w-52 text-foreground/80">
-        <DropdownMenuLabel className="flex justify-center items-center gap-4">
-          {user.email}
-          {user.subscription.plan === "" ? null : <PlanBadge plan={user.subscription.plan as TPlan} />}
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        {user.email !== "" && (
+          <>
+            <DropdownMenuLabel className="flex justify-center items-center gap-4">
+              {user.email}
+              {user.subscription.plan === "" ? null : <PlanBadge plan={user.subscription.plan as TPlan} />}
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+          </>
+        )}
         <DropdownMenuItem className="py-0">
           <Button variant={"ghost"} size={"sm"} asChild className="flex justify-between w-full items-center p-0">
             <Link href={"/dashboard/settings"}>
@@ -243,7 +247,7 @@ const AvatarAppMenu = () => {
           <div className="flex flex-col">
             <DropdownMenuSeparator />
             <ManageSubscription>
-              <Button size={"sm"} className="m-1">
+              <Button size={"sm"} variant={"secondary"} className="m-1">
                 {t("label_upgrade")}
               </Button>
             </ManageSubscription>

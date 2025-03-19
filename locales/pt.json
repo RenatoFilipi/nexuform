@@ -293,7 +293,10 @@
     "label_help": "Precisa de ajuda?",
     "desc_help": "Sinta-se à vontade para nos contatar por e-mail com quaisquer dúvidas ou preocupações:",
     "label_copy": "Copiar",
-    "nav_help": "Ajuda"
+    "nav_help": "Ajuda",
+    "label_go_home": "Ir para início",
+    "label_active_sub": "Assinatura Ativa",
+    "desc_active_sub": "Obrigado por assinar. Sua assinatura está ativa."
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",
