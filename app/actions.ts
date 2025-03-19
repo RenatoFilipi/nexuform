@@ -109,7 +109,7 @@ export const DeleteAccountAction = async (formData: FormData) => {
     return encodedRedirect("error", "/dashboard/settings", "Failed to delete the account.");
   }
 };
-export const ResetPasswordACtion = async (formData: FormData) => {
+export const ResetPasswordAction = async (formData: FormData) => {
   const t = await getTranslations("auth");
   const supabase = await createClient();
   const origin = (await headers()).get("origin");

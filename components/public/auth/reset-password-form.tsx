@@ -1,5 +1,6 @@
 "use client";
 
+import { ResetPasswordAction } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -42,6 +43,7 @@ const ResetPasswordForm = () => {
     startTransition(async () => {
       const formData = new FormData();
       formData.append("email", email);
+      await ResetPasswordAction(formData);
     });
   };
 
