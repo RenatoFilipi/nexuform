@@ -51,7 +51,6 @@ export const signUpAction = async (formData: FormData) => {
   if (error) {
     return encodedRedirect("error", "/signup", error.message);
   }
-
   return encodedRedirect("success", "/signup", t("desc_confirm_email"));
 };
 export const signOutAction = async () => {
@@ -109,4 +108,21 @@ export const DeleteAccountAction = async (formData: FormData) => {
   } else {
     return encodedRedirect("error", "/dashboard/settings", "Failed to delete the account.");
   }
+};
+export const ResetPasswordACtion = async (formData: FormData) => {
+  const t = await getTranslations("auth");
+  const supabase = await createClient();
+  const origin = (await headers()).get("origin");
+  const email = formData.get("email") as string;
+  if (!email) {
+    return encodedRedirect("error", "/password/reset", t("required_email"));
+  }
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${origin}/dashboard/settings?resource=update-password`,
+  });
+
+  if (error) {
+    return encodedRedirect("error", "/password/reset", t("err_generic"));
+  }
+  return redirect("/dashboard");
 };

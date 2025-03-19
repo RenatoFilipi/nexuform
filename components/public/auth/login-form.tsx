@@ -22,6 +22,16 @@ const LoginForm = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const toggleVisibility = () => setIsVisible((prevState) => !prevState);
 
+  useQuery({
+    queryKey: [error],
+    queryFn: () => {
+      if (error !== null) {
+        toast.error(error);
+      }
+      return null;
+    },
+    refetchOnWindowFocus: false,
+  });
   const formSchema = z.object({
     email: z.string().email(t("required_email")),
     password: z.string().min(8, { message: t("required_n_password", { n: 8 }) }),
@@ -42,17 +52,6 @@ const LoginForm = () => {
       await signInAction(formData);
     });
   };
-
-  useQuery({
-    queryKey: [error],
-    queryFn: () => {
-      if (error !== null) {
-        toast.error(error);
-      }
-      return null;
-    },
-    refetchOnWindowFocus: false,
-  });
 
   return (
     <Form {...form}>

@@ -38,7 +38,11 @@ const ResetPasswordForm = () => {
     },
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    const { email } = values;
+    startTransition(async () => {
+      const formData = new FormData();
+      formData.append("email", email);
+    });
   };
 
   return (
