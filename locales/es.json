@@ -380,7 +380,15 @@
     "label_reset_password": "Restablecer tu contraseña",
     "desc_reset_password": "Para restablecer tu contraseña, ingresa la dirección de correo electrónico que usas para iniciar sesión.",
     "label_suc_confirm_email": "Gracias por confirmar tu dirección de correo electrónico. Tu cuenta ahora está completamente activada y puedes acceder a nuestra plataforma.",
-    "label_continue_login": "Continuar al Inicio de Sesión"
+    "label_continue_login": "Continuar al Inicio de Sesión",
+    "required_n_char": "Al menos {n, plural, =1 {# carácter} other {# caracteres}}.",
+    "required_n_lower": "Al menos {n, plural, =1 {# letra minúscula} other {# letras minúsculas}}.",
+    "required_n_upper": "Al menos {n, plural, =1 {# letra mayúscula} other {# letras mayúsculas}}.",
+    "required_n_special": "Al menos {n, plural, =1 {# carácter especial} other {# caracteres especiales}}.",
+    "required_n_number": "Al menos {n, plural, =1 {# número} other {# números}}.",
+    "required_n_letters": "Al menos {n, plural, =1 {# letra} other {# letras}}.",
+    "label_update_password": "Actualizar Contraseña",
+    "desc_update_password": "Cambia tu contraseña para mejorar la seguridad de tu cuenta."
   },
   "landing": {
     "nav_features": "Características",

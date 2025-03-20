@@ -379,7 +379,15 @@
     "label_reset_password": "Reset your password",
     "desc_reset_password": "To reset your password, enter the email address you use to log in.",
     "label_suc_confirm_email": "Thank you for confirming your email address. Your account is now fully activated and you can access our platform.",
-    "label_continue_login": "Continue to Login"
+    "label_continue_login": "Continue to Login",
+    "required_n_char": "At least {n, plural, =1 {# character} other {# characters}}.",
+    "required_n_lower": "At least {n, plural, =1 {# lowercase letter} other {# lowercase letters}}.",
+    "required_n_upper": "At least {n, plural, =1 {# uppercase letter} other {# uppercase letters}}.",
+    "required_n_special": "At least {n, plural, =1 {# special character} other {# special characters}}.",
+    "required_n_number": "At least {n, plural, =1 {# number} other {# numbers}}.",
+    "required_n_letters": "At least {n, plural, =1 {# letter} other {# letters}}.",
+    "label_update_password": "Update Password",
+    "desc_update_password": "Change your password to enhance the security of your account."
   },
   "landing": {
     "nav_features": "Features",

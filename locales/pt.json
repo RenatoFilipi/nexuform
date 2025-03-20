@@ -380,7 +380,15 @@
     "label_reset_password": "Redefinir sua senha",
     "desc_reset_password": "Para redefinir sua senha, insira o endereço de e-mail que você usa para fazer login.",
     "label_suc_confirm_email": "Obrigado por confirmar seu endereço de e-mail. Sua conta agora está totalmente ativada e você pode acessar nossa plataforma.",
-    "label_continue_login": "Continuar para o Login"
+    "label_continue_login": "Continuar para o Login",
+    "required_n_char": "Pelo menos {n, plural, =1 {# caractere} other {# caracteres}}.",
+    "required_n_lower": "Pelo menos {n, plural, =1 {# letra minúscula} other {# letras minúsculas}}.",
+    "required_n_upper": "Pelo menos {n, plural, =1 {# letra maiúscula} other {# letras maiúsculas}}.",
+    "required_n_special": "Pelo menos {n, plural, =1 {# caractere especial} other {# caracteres especiais}}.",
+    "required_n_number": "Pelo menos {n, plural, =1 {# número} other {# números}}.",
+    "required_n_letters": "Pelo menos {n, plural, =1 {# letra} other {# letras}}.",
+    "label_update_password": "Atualizar Senha",
+    "desc_update_password": "Altere sua senha para aumentar a segurança da sua conta."
   },
   "landing": {
     "nav_features": "Recursos",
