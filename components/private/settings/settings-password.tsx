@@ -67,9 +67,7 @@ const PasswordUpdate = () => {
 
   return (
     <Form {...passwordHandler}>
-      <form
-        onSubmit={passwordHandler.handleSubmit(onPasswordSubmit)}
-        className="flex flex-col gap-4 p-4 border rounded">
+      <form onSubmit={passwordHandler.handleSubmit(onPasswordSubmit)} className="flex flex-col gap-4">
         <div className="flex flex-col gap-4">
           <FormField
             control={passwordHandler.control}

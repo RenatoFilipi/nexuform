@@ -70,7 +70,7 @@ const AccountProfile = () => {
 
   return (
     <Form {...profileHandler}>
-      <form onSubmit={profileHandler.handleSubmit(onProfileSubmit)} className="flex flex-col gap-4 p-4 border rounded">
+      <form onSubmit={profileHandler.handleSubmit(onProfileSubmit)} className="flex flex-col gap-4">
         <div className="flex flex-col">
           <h2 className="text-base font-semibold">{t("label_profile_info")}</h2>
           <p className="text-xs text-foreground/70">{t("desc_profile_info")}</p>

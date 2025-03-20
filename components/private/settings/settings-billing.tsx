@@ -33,7 +33,7 @@ const SettingsBilling = () => {
         <p className="text-xs text-foreground/70">{t("desc_billing_and_usage")}</p>
       </div>
       <div className="flex flex-col gap-6">
-        <Card className="p-4 flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
           <div className="flex justify-between items-center flex-col gap-4 sm:flex-row">
             <div className="w-full">
               <h1 className="text-base font-semibold">{t("label_plan_summary")}</h1>
@@ -41,7 +41,7 @@ const SettingsBilling = () => {
             </div>
             <div className="flex justify-center items-center gap-4 w-full sm:w-fit">
               <ManageSubscription>
-                <Button variant="secondary" size="xs" className="w-full sm:w-auto self-end">
+                <Button variant="secondary" size="sm" className="w-full sm:w-auto self-end">
                   {t("label_manage_sub")}
                 </Button>
               </ManageSubscription>
@@ -63,8 +63,8 @@ const SettingsBilling = () => {
               </div>
             </div>
           </div>
-        </Card>
-        <Card className="p-4 flex flex-col gap-4">
+        </div>
+        <div className="flex flex-col gap-4">
           <div className="flex flex-col">
             <h1 className="text-base font-semibold">{t("label_usage")}</h1>
             <p className="text-xs text-foreground/80">{t("desc_usage")}</p>
@@ -111,7 +111,7 @@ const SettingsBilling = () => {
               </div>
             </Card>
           </div>
-        </Card>
+        </div>
       </div>
     </div>
   );

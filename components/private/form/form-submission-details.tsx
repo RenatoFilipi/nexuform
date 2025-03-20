@@ -109,7 +109,7 @@ const Body = ({
     <div className="h-full overflow-y-auto flex flex-col gap-4">
       <div className="flex flex-col overflow-y-auto flex-1 gap-4">
         {isDesktop && (
-          <div className="flex flex-col gap-2 p-3 border rounded dark:bg-foreground/5 bg-[#F8F8F8]">
+          <div className="flex flex-col gap-2 p-3 border rounded">
             <div className="flex justify-between items-center gap-4">
               <span className="text-base font-medium">{submission.identifier}</span>
               <SubmissionStatusBadge status={submission.status as TSubmissionStatus} uppercase />

@@ -58,7 +58,7 @@ const FormWrapper = ({
       label: t("nav_integrations"),
       icon: PlugIcon,
       view: "integrations",
-      enabled: true,
+      enabled: false,
     },
     {
       label: t("nav_settings"),
