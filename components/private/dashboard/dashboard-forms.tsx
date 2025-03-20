@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import useFormsStore from "@/stores/forms";
+import useFormsStore from "@/stores/dashboard";
 import { LayersIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import DashboardFormCard from "./dashboard-form-card";

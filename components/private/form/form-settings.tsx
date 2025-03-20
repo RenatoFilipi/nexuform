@@ -11,7 +11,7 @@ import useUserStore from "@/stores/user";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BookDashedIcon, GlobeIcon, LoaderIcon, MonitorOffIcon, SettingsIcon, ShieldAlertIcon } from "lucide-react";
+import { BookDashedIcon, GlobeIcon, LoaderIcon, MonitorOffIcon, ShieldAlertIcon, WrenchIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -24,7 +24,7 @@ type TView = "general" | "status" | "delete";
 const FormSettings = () => {
   const t = useTranslations("app");
   const views = [
-    { label: t("nav_general"), icon: SettingsIcon, view: "general", enabled: true },
+    { label: t("nav_general"), icon: WrenchIcon, view: "general", enabled: true },
     { label: t("nav_status"), icon: GlobeIcon, view: "status", enabled: true },
     { label: t("nav_delete"), icon: ShieldAlertIcon, view: "delete", enabled: true },
   ];
@@ -32,8 +32,8 @@ const FormSettings = () => {
   const enabledViews = views.filter((x) => x.enabled);
 
   return (
-    <div className="flex w-full h-full gap-6 flex-col">
-      <div className="flex w-full sm:w-fit gap-1 sm:gap-3">
+    <div className="flex w-full h-full gap-6 flex-col sm:flex-row">
+      <div className="flex gap-1 sm:gap-3 flex-row sm:flex-col h-full sm:h-fit w-full sm:w-[260px]">
         {enabledViews.map((v) => {
           return (
             <button

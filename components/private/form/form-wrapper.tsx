@@ -26,6 +26,7 @@ interface Props {
   email: string;
   integrations: EIntegration[];
   locale: string;
+  forms: EForm[];
 }
 
 const FormWrapper = ({
@@ -39,6 +40,7 @@ const FormWrapper = ({
   overviewSubmissions,
   integrations,
   locale,
+  forms,
 }: Props) => {
   const t = useTranslations("app");
   const views = [
@@ -87,6 +89,7 @@ const FormWrapper = ({
       formStore.setBlocks(blocks);
       formStore.setIntegrations(integrations);
       formStore.setPagination({ from: paginationFrom, to: paginationTo });
+      formStore.setForms(forms);
       return null;
     },
     refetchOnWindowFocus: false,

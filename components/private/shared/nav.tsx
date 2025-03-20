@@ -1,17 +1,29 @@
 "use client";
 
 import { signOutAction } from "@/app/actions";
+import FormStatusBadge from "@/components/shared/form-status-badge";
 import { Badge } from "@/components/ui/badge";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import useEditorStore from "@/stores/editor";
+import useFormStore from "@/stores/form";
 import useUserStore from "@/stores/user";
-import { isSubscriptionActive } from "@/utils/functions";
+import { minWidth640 } from "@/utils/constants";
+import { getCurrentPlan, isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
-import { TAppState, TPlan } from "@/utils/types";
+import { TAppState, TFormStatus, TPlan, TSetState } from "@/utils/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ChartNoAxesColumnIcon,
+  ChevronsUpDownIcon,
   HelpingHandIcon,
   InboxIcon,
   LoaderIcon,
@@ -20,14 +32,16 @@ import {
   MessageSquareCodeIcon,
   MonitorIcon,
   MoonIcon,
+  PlusIcon,
   Settings2Icon,
   SunIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { useMedia } from "react-use";
 import { toast } from "sonner";
 import { default as Brand } from "../../core/brand";
 import Feedback from "../../core/feedback";
@@ -41,6 +55,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
+import DashboardNewForm from "../dashboard/dashboard-new-form";
 import ManageSubscription from "./manage-subscription";
 
 const Nav = () => {
@@ -189,18 +204,18 @@ const AvatarAppMenu = () => {
         )}
         <DropdownMenuItem className="py-0">
           <Button variant={"ghost"} size={"sm"} asChild className="flex justify-between w-full items-center p-0">
-            <Link href={"/dashboard/settings"}>
+            <a href={"/dashboard/settings"}>
               {t("label_settings")}
               <Settings2Icon className="w-4 h-4" />
-            </Link>
+            </a>
           </Button>
         </DropdownMenuItem>
         <DropdownMenuItem className="py-0">
           <Button variant={"ghost"} size={"sm"} asChild className="flex justify-between w-full items-center p-0">
-            <Link href={"/dashboard/help"}>
+            <a href={"/dashboard/help"}>
               {t("nav_help")}
               <HelpingHandIcon className="w-4 h-4" />
-            </Link>
+            </a>
           </Button>
         </DropdownMenuItem>
         <DropdownMenuItem className="flex flex-row justify-between items-center">
@@ -258,11 +273,12 @@ const AvatarAppMenu = () => {
   );
 };
 const NavApp = () => {
+  const { slug } = useParams<{ slug: string }>();
   const t = useTranslations("app");
   const editorStore = useEditorStore();
+  const formStore = useFormStore();
   const pathname = usePathname();
   const isActive = (path: string) => path === pathname;
-  const borderB = pathname === "/dashboard/forms";
 
   const links = [
     {
@@ -297,10 +313,7 @@ const NavApp = () => {
   });
 
   return (
-    <div
-      className={`${
-        borderB ? "" : ""
-      } border-t border-t-foreground/5 h-12 flex items-center px-2 sm:px-4 justify-between z-10 bg-background fixed w-full`}>
+    <div className="h-12 flex items-center px-2 sm:px-4 justify-between z-10 bg-background fixed w-full">
       <div className="flex justify-center items-center gap-4 h-full">
         <div className="flex justify-center items-center gap-2">
           <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
@@ -309,6 +322,16 @@ const NavApp = () => {
             </Link>
           </Button>
         </div>
+        {slug && formStore.form.id !== "" && (
+          <div className="flex justify-center items-center gap-1">
+            <span className="text-xs font-medium">{formStore.form.name}</span>
+            <ChangeForm>
+              <button className="flex justify-center items-center p-1 hover:bg-foreground/5 rounded">
+                <ChevronsUpDownIcon className="w-4 h-4" />
+              </button>
+            </ChangeForm>
+          </div>
+        )}
         <div className="hidden sm:flex justify-center items-center gap-2 h-full">
           {links.map((link) => {
             if (link.enabled)
@@ -326,7 +349,6 @@ const NavApp = () => {
           })}
         </div>
       </div>
-
       <div className="hidden sm:flex justify-center items-center gap-4">
         <div className="flex justify-center items-center gap-3">
           <Feedback>
@@ -479,7 +501,7 @@ const NavEditor = () => {
   };
 
   return (
-    <div className="h-12 flex justify-between items-center w-full bg-background border-y border-y-foreground/5 sm:px-4 px-2 z-20 fixed">
+    <div className="h-12 flex justify-between items-center w-full bg-background border-b sm:px-4 px-2 z-20 fixed">
       <div className="flex justify-center items-center gap-1">
         <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
           <Link href={"/dashboard/forms"}>
@@ -525,6 +547,88 @@ const PlanBadge = ({ plan }: { plan: TPlan }) => {
   };
 
   return <Badge variant="plan">{planLabels[plan] || "Custom"}</Badge>;
+};
+const ChangeForm = ({ children }: { children: React.ReactNode }) => {
+  const isDesktop = useMedia(minWidth640);
+  const [open, setOpen] = useState(false);
+
+  if (isDesktop) {
+    return (
+      <DropdownMenu open={open} onOpenChange={setOpen}>
+        <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
+        <DropdownMenuContent className="flex w-[300px]">
+          <Body setState={setOpen} />
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
+  }
+
+  return (
+    <Drawer>
+      <DrawerTrigger asChild>{children}</DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader className="hidden">
+          <DrawerTitle></DrawerTitle>
+          <DrawerDescription></DrawerDescription>
+        </DrawerHeader>
+        <Body setState={setOpen} />
+      </DrawerContent>
+    </Drawer>
+  );
+};
+
+const Body = ({ setState }: { setState: TSetState<boolean> }) => {
+  const t = useTranslations("app");
+  const store = useFormStore();
+  const user = useUserStore();
+  const currentPlan = getCurrentPlan(user.subscription.plan as TPlan);
+  const mustUpgrade = user.formsCount >= currentPlan.forms;
+  const isDesktop = useMedia(minWidth640);
+
+  return (
+    <div className="flex flex-col gap-4 w-full p-2">
+      <span className="text-sm font-medium">{t("label_forms")}</span>
+      <div className="flex flex-col w-full">
+        {store.forms.map((x) => {
+          return (
+            <a
+              key={x.id}
+              href={`/dashboard/forms/${x.id}`}
+              className={`${
+                store.form.id === x.id ? "pointer-events-none bg-foreground/5" : "hover:bg-foreground/5"
+              } px-2 py-2 flex justify-between items-center rounded`}>
+              <span className="truncate text-xs">{x.name}</span>
+              <FormStatusBadge status={x.status as TFormStatus} />
+            </a>
+          );
+        })}
+      </div>
+      <div className="flex w-full justify-between items-center flex-col-reverse sm:flex-row gap-2">
+        <Button
+          variant={"outline"}
+          size={isDesktop ? "xs" : "sm"}
+          onClick={() => setState(false)}
+          className="w-full sm:w-fit">
+          {t("label_close")}
+        </Button>
+        {mustUpgrade ? (
+          <ManageSubscription>
+            <Button size={isDesktop ? "xs" : "sm"} variant={"secondary"} className="w-full sm:w-fit">
+              <PlusIcon className="w-4 h-4 mr-2" />
+              {t("label_create_form")}
+            </Button>
+          </ManageSubscription>
+        ) : (
+          <DashboardNewForm>
+            <Button size={isDesktop ? "xs" : "sm"} variant={"secondary"} className="w-full sm:w-fit">
+              <PlusIcon className="w-4 h-4 mr-2" />
+              {t("label_create_form")}
+            </Button>
+          </DashboardNewForm>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Nav;

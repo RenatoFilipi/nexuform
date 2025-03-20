@@ -32,14 +32,16 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const active = isSubscriptionActive(subscription);
   if (!active) return <SubscriptionUI />;
 
-  const { data: form, error: formError } = await supabase
+  const { data: forms, error: formsError } = await supabase
     .from("forms")
     .select("*")
     .eq("owner_id", data.user.id)
-    .eq("id", slug)
-    .single();
+    .order("created_at", { ascending: true });
 
-  if (formError) return <ErrorUI />;
+  if (formsError) return <ErrorUI />;
+
+  const form = forms.find((x) => x.id === slug);
+  if (!form) return <ErrorUI />;
 
   if (form.owner_id !== data.user.id) {
     return redirect("/dashboard/forms");
@@ -90,6 +92,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   return (
     <FormWrapper
+      forms={forms}
       locale={locale}
       form={form}
       blocks={blocks}

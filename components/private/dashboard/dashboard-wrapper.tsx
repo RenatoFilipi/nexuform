@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import useFormsStore from "@/stores/forms";
+import useDashboardStore from "@/stores/dashboard";
 import useUserStore from "@/stores/user";
 import { EForm, EProfile, ESubscription } from "@/utils/entities";
 import { getCurrentPlan } from "@/utils/functions";
@@ -28,7 +28,7 @@ const DashboardWrapper = ({
 }) => {
   const t = useTranslations("app");
   const user = useUserStore();
-  const { setForms } = useFormsStore();
+  const { setForms } = useDashboardStore();
   const currentPlan = getCurrentPlan(subscription.plan as TPlan);
   const mustUpgrade = user.formsCount >= currentPlan.forms;
 

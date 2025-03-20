@@ -12,6 +12,7 @@ interface form {
   filters: IFormFilters;
   pagination: IPagination;
   integrations: EIntegration[];
+  forms: EForm[];
   setForm: (payload: EForm) => void;
   setBlocks: (payload: EBlock[]) => void;
   setSubmissions: (payload: ESubmission[]) => void;
@@ -20,6 +21,7 @@ interface form {
   setFilters: (payload: IFormFilters) => void;
   setPagination: (payload: IPagination) => void;
   setIntegrations: (payload: EIntegration[]) => void;
+  setForms: (payload: EForm[]) => void;
   reset: () => void;
 }
 
@@ -61,6 +63,7 @@ const useFormStore = create<form>((set) => ({
   filters: { from, to, sort: "ascending", status: "all" },
   pagination: { from: paginationFrom, to: paginationTo },
   integrations: [],
+  forms: [],
   setForm: (payload) => set({ form: payload }),
   setBlocks: (payload) => set({ blocks: payload }),
   setSubmissions: (payload) => set({ submissions: payload }),
@@ -69,6 +72,7 @@ const useFormStore = create<form>((set) => ({
   setOverviewSubmissions: (payload) => set({ overviewSubmissions: payload }),
   setPagination: (payload) => set({ pagination: payload }),
   setIntegrations: (payload) => set({ integrations: payload }),
+  setForms: (payload) => set({ forms: payload }),
   reset: () =>
     set({
       form: {
@@ -103,6 +107,7 @@ const useFormStore = create<form>((set) => ({
       },
       pagination: { from: paginationFrom, to: paginationTo },
       integrations: [],
+      forms: [],
     }),
 }));
 

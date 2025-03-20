@@ -12,7 +12,7 @@ const EditorTools = () => {
   const { form, blocks } = useEditorStore();
 
   return (
-    <div className="flex justify-start flex-col items-center h-full border-r border-t p-4 gap-3 bg-background">
+    <div className="flex justify-start flex-col items-center h-full border-r p-4 gap-3 bg-background">
       <div className="w-full flex flex-col gap-3">
         <div className="flex justify-center items-center w-full gap-4">
           <EditorFormSettings>

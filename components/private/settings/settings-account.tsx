@@ -122,7 +122,7 @@ const AccountDelete = () => {
   const t = useTranslations("app");
 
   return (
-    <div className="flex flex-col gap-2 rounded border p-4 border-destructive/50">
+    <div className="flex flex-col gap-2 border-2 p-4 border-destructive/50">
       <div className="flex justify-between sm:justify-start items-center gap-4">
         <h2 className="text-base font-semibold">{t("label_delete_account")}</h2>
         <Badge variant={"red"}>{t("label_danger_zone")}</Badge>
@@ -130,7 +130,7 @@ const AccountDelete = () => {
       <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
         <p className="text-xs text-foreground/80">{t("desc_delete_account")}</p>
         <SettingsAccountDelete>
-          <Button variant={"destructive_outline"} size={"sm"} className="w-full sm:w-fit">
+          <Button variant={"destructive"} size={"sm"} className="w-full sm:w-fit">
             {t("label_delete_account")}
           </Button>
         </SettingsAccountDelete>

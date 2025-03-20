@@ -6,10 +6,10 @@ interface forms {
   setForms: (payload: EForm[]) => void;
 }
 
-const useFormsStore = create<forms>((set) => ({
+const useDashboardStore = create<forms>((set) => ({
   forms: [],
   setForms: (payload) => set({ forms: payload }),
   reset: () => set({ forms: [] }),
 }));
 
-export default useFormsStore;
+export default useDashboardStore;
