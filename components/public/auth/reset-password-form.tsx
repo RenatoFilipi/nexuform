@@ -17,6 +17,7 @@ import { z } from "zod";
 const ResetPasswordForm = () => {
   const t = useTranslations("auth");
   const [error] = useQueryState("error");
+  const [success] = useQueryState("success");
   const [isPending, startTransition] = useTransition();
 
   useQuery({
@@ -46,6 +47,10 @@ const ResetPasswordForm = () => {
       await ResetPasswordAction(formData);
     });
   };
+
+  if (success) {
+    return <div>Success message placeholder</div>;
+  }
 
   return (
     <Form {...form}>

@@ -124,5 +124,5 @@ export const ResetPasswordAction = async (formData: FormData) => {
   if (error) {
     return encodedRedirect("error", "/password/reset", t("err_generic"));
   }
-  return redirect("/dashboard");
+  return encodedRedirect("success", "/password/reset", "Reset password requested.");
 };

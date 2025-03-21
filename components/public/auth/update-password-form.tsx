@@ -15,7 +15,7 @@ import { z } from "zod";
 const UpdatePasswordForm = () => {
   const t = useTranslations("auth");
   const [appState, setAppState] = useState<TAppState>("idle");
-  const [accessToken] = useQueryState("access_token");
+  const [code] = useQueryState("code");
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const toggleVisibility = () => setIsVisible((prevState) => !prevState);
 
