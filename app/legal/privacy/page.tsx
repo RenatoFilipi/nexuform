@@ -1,4 +1,5 @@
 import Brand from "@/components/core/brand";
+import { supportEmail } from "@/utils/envs";
 import Link from "next/link";
 
 const topics = [
@@ -51,9 +52,8 @@ const Privacy = () => {
         <div className="mb-6">
           <h1 className="text-2xl font-bold">Privacy Policy</h1>
           <p className="mt-2 text-foreground/80">
-            Your privacy is important to us at NebulaForm. This Privacy Policy
-            explains how we collect, use, and protect your personal information
-            when you use our services.
+            Your privacy is important to us at NebulaForm. This Privacy Policy explains how we collect, use, and protect
+            your personal information when you use our services.
           </p>
         </div>
         {topics.map((topic, index) => (
@@ -64,13 +64,10 @@ const Privacy = () => {
         ))}
         <div className="mt-6">
           <p className="text-foreground/80 text-xs">
-            By using NebulaForm, you consent to the terms of this Privacy Policy
-            and our data practices. For questions or concerns, please reach out
-            to{" "}
-            <a
-              href="mailto:support@nebulaform.com"
-              className="text-blue-600 hover:underline">
-              support@nebulaform.com
+            By using NebulaForm, you consent to the terms of this Privacy Policy and our data practices. For questions
+            or concerns, please reach out to{" "}
+            <a href="mailto:support@nebulaform.com" className="text-blue-600 hover:underline">
+              {supportEmail}
             </a>
             .
           </p>

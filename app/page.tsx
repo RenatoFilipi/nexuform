@@ -24,18 +24,20 @@ const Home = async () => {
 
   return (
     <div className="min-h-screen flex flex-col relative">
-      <div className="flex fixed top-0 w-full justify-between sm:px-5 px-3 h-14 bg-background/80 z-20 backdrop-blur-lg items-center border-b border-b-foreground/10">
-        <Link href={"/"} className="flex justify-center items-center">
-          <Brand type="primary_logo_text" className="h-6 fill-foreground" />
-        </Link>
-        <div className="hidden sm:flex justify-center items-center gap-6">
-          {urls.map((url) => {
-            return (
-              <Link key={url.url} href={`#${url.url}`} className="text-xs text-foreground hover:text-foreground">
-                {url.name}
-              </Link>
-            );
-          })}
+      <div className="flex fixed top-0 w-full justify-between sm:px-20 px-3 h-14 bg-background/80 z-20 backdrop-blur-lg items-center border-b border-b-foreground/10">
+        <div className="flex justify-center items-center gap-8">
+          <Link href={"/"} className="flex justify-center items-center">
+            <Brand type="primary_logo_text" className="h-7 fill-foreground" />
+          </Link>
+          <div className="hidden sm:flex justify-center items-center gap-6">
+            {urls.map((url) => {
+              return (
+                <Link key={url.url} href={`#${url.url}`} className="text-xs text-foreground hover:text-foreground">
+                  {url.name}
+                </Link>
+              );
+            })}
+          </div>
         </div>
         <div className="hidden sm:flex justify-center items-center gap-4">
           <Button variant={"outline"} size={"sm"} asChild>

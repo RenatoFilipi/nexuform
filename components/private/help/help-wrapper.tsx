@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import useUserStore from "@/stores/user";
 import { EProfile, ESubscription } from "@/utils/entities";
+import { supportEmail } from "@/utils/envs";
 import { useQuery } from "@tanstack/react-query";
 import { CopyIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -16,7 +17,6 @@ interface Props {
 const HelpWrapper = ({ email, profile, subscription }: Props) => {
   const t = useTranslations("app");
   const userStore = useUserStore();
-  const contact = "re.rosa98@gmail.com";
 
   const query = useQuery({
     queryKey: ["helpData"],
@@ -41,12 +41,12 @@ const HelpWrapper = ({ email, profile, subscription }: Props) => {
         <div
           className="flex justify-center items-center gap-4 bg-foreground text-background px-4 py-2
          rounded border">
-          <span>{contact}</span>
+          <span>{supportEmail}</span>
           <Button
             variant={"ghost"}
             size={"sm"}
             onClick={() => {
-              navigator.clipboard.writeText(contact);
+              navigator.clipboard.writeText(supportEmail);
             }}>
             {t("label_copy")} <CopyIcon className="w-4 h-4 ml-2" />
           </Button>

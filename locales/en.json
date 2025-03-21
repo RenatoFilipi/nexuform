@@ -387,7 +387,10 @@
     "required_n_number": "At least {n, plural, =1 {# number} other {# numbers}}.",
     "required_n_letters": "At least {n, plural, =1 {# letter} other {# letters}}.",
     "label_update_password": "Update Password",
-    "desc_update_password": "Change your password to enhance the security of your account."
+    "desc_update_password": "Change your password to enhance the security of your account.",
+    "label_suc_request_password": "Request Sent",
+    "desc_suc_request_password": "We have sent an email with instructions to reset your password. Please check your inbox and follow the instructions.",
+    "label_go_back_login": "Go back to login"
   },
   "landing": {
     "nav_features": "Features",

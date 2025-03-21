@@ -6,8 +6,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { LoaderIcon, MailIcon } from "lucide-react";
+import { CheckIcon, LoaderIcon, MailIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { useQueryState } from "nuqs";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -49,7 +50,20 @@ const ResetPasswordForm = () => {
   };
 
   if (success) {
-    return <div>Success message placeholder</div>;
+    return (
+      <div className="flex flex-col justify-center items-center gap-6">
+        <div className="flex justify-center items-center p-2 rounded-xl bg-success/20">
+          <CheckIcon className="w-10 h-10 text-success" />
+        </div>
+        <div className="flex flex-col justify-center items-center text-center gap-2">
+          <h1 className="font-semibold text-xl">{t("label_suc_request_password")}</h1>
+          <span className="text-foreground/70 text-sm">{t("desc_suc_request_password")}</span>
+        </div>
+        <Button variant={"secondary"} size={"sm"} className="w-full" asChild>
+          <Link href={"/login"}>{t("label_go_back_login")}</Link>
+        </Button>
+      </div>
+    );
   }
 
   return (

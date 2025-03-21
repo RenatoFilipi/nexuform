@@ -41,8 +41,8 @@ const Terms = () => {
         <div className="mb-6">
           <h1 className="text-2xl font-bold">Terms of Service</h1>
           <p className="mt-2 text-foreground/80">
-            Welcome to NebulaForm! By accessing or using our services, you agree
-            to comply with these Terms of Service. Please read them carefully.
+            Welcome to NebulaForm! By accessing or using our services, you agree to comply with these Terms of Service.
+            Please read them carefully.
           </p>
         </div>
         {topics.map((topic, index) => (

@@ -388,7 +388,10 @@
     "required_n_number": "Al menos {n, plural, =1 {# número} other {# números}}.",
     "required_n_letters": "Al menos {n, plural, =1 {# letra} other {# letras}}.",
     "label_update_password": "Actualizar Contraseña",
-    "desc_update_password": "Cambia tu contraseña para mejorar la seguridad de tu cuenta."
+    "desc_update_password": "Cambia tu contraseña para mejorar la seguridad de tu cuenta.",
+    "label_suc_request_password": "Solicitud Enviada",
+    "desc_suc_request_password": "Hemos enviado un correo con instrucciones para restablecer tu contraseña. Por favor, revisa tu bandeja de entrada y sigue las instrucciones.",
+    "label_go_back_login": "Volver al inicio de sesión"
   },
   "landing": {
     "nav_features": "Características",
