@@ -166,7 +166,7 @@ const EditorFormDesign = ({ children }: { children: React.ReactNode }) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3 flex flex-col gap-8">
+      <DrawerContent className="p-3 flex flex-col max-h-[90%] h-full">
         <DrawerHeader>
           <DrawerTitle>{t("label_design")}</DrawerTitle>
           <DrawerDescription>{t("desc_design")}</DrawerDescription>
@@ -288,7 +288,7 @@ const ColorsDesign = () => {
             <span className="text-xs text-foreground/60">{t("desc_primary_color")}</span>
           </div>
         </div>
-        <div className="grid grid-cols-10 gap-4">
+        <div className="grid grid-cols-6 sm:grid-cols-10 gap-4">
           {colors.map((color, index) => {
             return (
               <button

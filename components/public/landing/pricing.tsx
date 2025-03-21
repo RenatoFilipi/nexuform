@@ -5,6 +5,7 @@ import { getPlans } from "@/utils/plans";
 import { CheckIcon, RocketIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
+import Link from "next/link";
 
 const Pricing = async () => {
   const t = await getTranslations("landing");
@@ -57,8 +58,8 @@ const CardTemplate = ({ plan }: { plan: IPlan }) => {
         </div>
       </div>
       <div className="w-full">
-        <Button className="w-full mt-6" size="lg" variant={plan.isMostPopular ? "default" : "secondary"}>
-          {plan.type === "free_trial" ? "Start Free Trial" : "Get Started"}
+        <Button asChild className="w-full mt-6" size="lg" variant={plan.isMostPopular ? "default" : "secondary"}>
+          <Link href={"/signup"}>{plan.type === "free_trial" ? "Start Free Trial" : "Get Started"}</Link>
         </Button>
       </div>
       <div className="flex flex-1 justify-start items-start w-full">

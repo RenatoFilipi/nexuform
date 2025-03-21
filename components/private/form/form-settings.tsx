@@ -317,7 +317,7 @@ const DeleteSettings = () => {
         <h1 className="font-semibold text-base">{t("label_delete_form")}</h1>
         <p className="text-xs text-foreground/70">{t("desc_delete_form")}</p>
       </div>
-      <div className="flex justify-center items-center w-full border bg-destructive/5 rounded border-destructive/50 sm:py-20 px-6 py-6">
+      <div className="flex justify-center items-center w-full border rounded sm:py-20 px-6 py-6">
         <div className="flex flex-col justify-center items-center gap-4">
           <Badge variant={"destructive"} uppercase className="w-fit">
             {t("label_danger_zone")}

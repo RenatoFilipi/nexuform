@@ -48,7 +48,7 @@ const EditorFormSettings = ({ children }: { children: React.ReactNode }) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3 flex flex-col max-h-[90%]">
+      <DrawerContent className="p-3 flex flex-col max-h-[90%] h-full">
         <DrawerHeader>
           <DrawerTitle className="text-xl font-medium">{t("label_settings")}</DrawerTitle>
           <DrawerDescription>{t("desc_settings")}.</DrawerDescription>
@@ -277,7 +277,7 @@ const DeleteSettings = () => {
   const { form } = useEditorStore();
 
   return (
-    <div className="flex justify-center items-center w-full border bg-destructive/5 rounded border-destructive/50">
+    <div className="flex justify-center items-center w-full border rounded">
       <div className="flex flex-col justify-center items-center gap-4">
         <Badge variant={"destructive"} uppercase className="w-fit">
           {t("label_danger_zone")}

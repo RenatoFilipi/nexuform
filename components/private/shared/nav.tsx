@@ -508,7 +508,7 @@ const NavEditor = () => {
             <Brand type="logo" className="h-5 fill-foreground" />
           </Link>
         </Button>
-        <div className="flex justify-center items-center gap-2">
+        <div className="hidden sm:flex justify-center items-center gap-2">
           <span className="text-sm font-medium truncate max-w-[280px] hover:bg-foreground/5 py-1 px-2 flex justify-center items-center rounded">
             {form.name}
           </span>
