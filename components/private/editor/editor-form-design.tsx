@@ -21,6 +21,7 @@ import { TBlock, TSetState } from "@/utils/types";
 import { Reorder } from "framer-motion";
 import {
   ArrowDownUpIcon,
+  CalendarIcon,
   CheckCircleIcon,
   CheckIcon,
   CheckSquareIcon,
@@ -139,6 +140,7 @@ const icons: { [key in TBlock]: JSX.Element } = {
   email_address: <MailIcon className="w-4 h-4 text-foreground" />,
   star_rating: <StarIcon className="w-4 h-4 text-foreground" />,
   custom_scale: <ScaleIcon className="w-4 h-4 text-foreground" />,
+  date_picker: <CalendarIcon className="w-4 h-4 text-foreground" />,
 };
 
 const EditorFormDesign = ({ children }: { children: React.ReactNode }) => {

@@ -183,6 +183,8 @@ const Body = ({ setState, formId }: { setState: TSetState<boolean>; formId: stri
       max_scale: null,
       min_scale: null,
       is_identifier: false,
+      min_date: null,
+      max_date: null,
     };
     addBlock(block);
     setState(false);

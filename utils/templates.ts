@@ -56,6 +56,8 @@ export const FormTemplates: IFormTemplate[] = [
         show_char: null,
         type: "star_rating",
         updated_at: "",
+        max_date: null,
+        min_date: null,
       },
       {
         created_at: "",
@@ -76,6 +78,8 @@ export const FormTemplates: IFormTemplate[] = [
         show_char: true,
         type: "paragraph_text",
         updated_at: "",
+        max_date: null,
+        min_date: null,
       },
       {
         created_at: "",
@@ -96,6 +100,8 @@ export const FormTemplates: IFormTemplate[] = [
         show_char: true,
         type: "paragraph_text",
         updated_at: "",
+        max_date: null,
+        min_date: null,
       },
       {
         created_at: "",
@@ -116,6 +122,8 @@ export const FormTemplates: IFormTemplate[] = [
         show_char: null,
         type: "multiple_choice",
         updated_at: "",
+        max_date: null,
+        min_date: null,
       },
       {
         created_at: "",
@@ -136,6 +144,8 @@ export const FormTemplates: IFormTemplate[] = [
         show_char: true,
         type: "email_address",
         updated_at: "",
+        max_date: null,
+        min_date: null,
       },
     ],
     pro: false,
@@ -195,6 +205,8 @@ export const FormTemplates: IFormTemplate[] = [
         show_char: true,
         type: "short_text",
         updated_at: "",
+        max_date: null,
+        min_date: null,
       },
       {
         created_at: "",
@@ -215,6 +227,8 @@ export const FormTemplates: IFormTemplate[] = [
         show_char: true,
         type: "paragraph_text",
         updated_at: "",
+        max_date: null,
+        min_date: null,
       },
       {
         created_at: "",
@@ -236,6 +250,8 @@ export const FormTemplates: IFormTemplate[] = [
         show_char: null,
         type: "custom_scale",
         updated_at: "",
+        max_date: null,
+        min_date: null,
       },
       {
         created_at: "",
@@ -256,6 +272,8 @@ export const FormTemplates: IFormTemplate[] = [
         show_char: null,
         type: "dropdown_menu",
         updated_at: "",
+        max_date: null,
+        min_date: null,
       },
       {
         created_at: "",
@@ -276,6 +294,8 @@ export const FormTemplates: IFormTemplate[] = [
         show_char: null,
         type: "checkboxes",
         updated_at: "",
+        max_date: null,
+        min_date: null,
       },
       {
         created_at: "",
@@ -296,6 +316,8 @@ export const FormTemplates: IFormTemplate[] = [
         show_char: null,
         type: "star_rating",
         updated_at: "",
+        max_date: null,
+        min_date: null,
       },
       {
         created_at: "",
@@ -316,6 +338,8 @@ export const FormTemplates: IFormTemplate[] = [
         show_char: true,
         type: "paragraph_text",
         updated_at: "",
+        max_date: null,
+        min_date: null,
       },
       {
         created_at: "",
@@ -336,6 +360,8 @@ export const FormTemplates: IFormTemplate[] = [
         show_char: true,
         type: "number_input",
         updated_at: "",
+        max_date: null,
+        min_date: null,
       },
       {
         created_at: "",
@@ -356,6 +382,8 @@ export const FormTemplates: IFormTemplate[] = [
         show_char: null,
         type: "email_address",
         updated_at: "",
+        max_date: null,
+        min_date: null,
       },
     ],
     pro: true,
@@ -420,6 +448,8 @@ export const getTemplates = async (locale: string): Promise<IFormTemplate[]> => 
           show_char: null,
           type: "star_rating",
           updated_at: "",
+          max_date: null,
+          min_date: null,
         },
         {
           created_at: "",
@@ -440,6 +470,8 @@ export const getTemplates = async (locale: string): Promise<IFormTemplate[]> => 
           show_char: true,
           type: "paragraph_text",
           updated_at: "",
+          max_date: null,
+          min_date: null,
         },
         {
           created_at: "",
@@ -460,6 +492,8 @@ export const getTemplates = async (locale: string): Promise<IFormTemplate[]> => 
           show_char: true,
           type: "paragraph_text",
           updated_at: "",
+          max_date: null,
+          min_date: null,
         },
         {
           created_at: "",
@@ -480,6 +514,8 @@ export const getTemplates = async (locale: string): Promise<IFormTemplate[]> => 
           show_char: null,
           type: "multiple_choice",
           updated_at: "",
+          max_date: null,
+          min_date: null,
         },
         {
           created_at: "",
@@ -500,6 +536,8 @@ export const getTemplates = async (locale: string): Promise<IFormTemplate[]> => 
           show_char: true,
           type: "email_address",
           updated_at: "",
+          max_date: null,
+          min_date: null,
         },
       ],
       pro: false,
@@ -558,6 +596,8 @@ export const getTemplates = async (locale: string): Promise<IFormTemplate[]> => 
           show_char: true,
           type: "short_text",
           updated_at: "",
+          max_date: null,
+          min_date: null,
         },
         {
           created_at: "",
@@ -578,6 +618,8 @@ export const getTemplates = async (locale: string): Promise<IFormTemplate[]> => 
           show_char: true,
           type: "paragraph_text",
           updated_at: "",
+          max_date: null,
+          min_date: null,
         },
         {
           created_at: "",
@@ -598,6 +640,8 @@ export const getTemplates = async (locale: string): Promise<IFormTemplate[]> => 
           show_char: null,
           type: "custom_scale",
           updated_at: "",
+          max_date: null,
+          min_date: null,
         },
         {
           created_at: "",
@@ -626,6 +670,8 @@ export const getTemplates = async (locale: string): Promise<IFormTemplate[]> => 
           show_char: null,
           type: "dropdown_menu",
           updated_at: "",
+          max_date: null,
+          min_date: null,
         },
         {
           created_at: "",
@@ -652,6 +698,8 @@ export const getTemplates = async (locale: string): Promise<IFormTemplate[]> => 
           show_char: null,
           type: "checkboxes",
           updated_at: "",
+          max_date: null,
+          min_date: null,
         },
         {
           created_at: "",
@@ -672,6 +720,8 @@ export const getTemplates = async (locale: string): Promise<IFormTemplate[]> => 
           show_char: null,
           type: "star_rating",
           updated_at: "",
+          max_date: null,
+          min_date: null,
         },
         {
           created_at: "",
@@ -692,6 +742,8 @@ export const getTemplates = async (locale: string): Promise<IFormTemplate[]> => 
           show_char: true,
           type: "paragraph_text",
           updated_at: "",
+          max_date: null,
+          min_date: null,
         },
         {
           created_at: "",
@@ -712,6 +764,8 @@ export const getTemplates = async (locale: string): Promise<IFormTemplate[]> => 
           show_char: true,
           type: "number_input",
           updated_at: "",
+          max_date: null,
+          min_date: null,
         },
         {
           created_at: "",
@@ -732,6 +786,8 @@ export const getTemplates = async (locale: string): Promise<IFormTemplate[]> => 
           show_char: true,
           type: "email_address",
           updated_at: "",
+          max_date: null,
+          min_date: null,
         },
       ],
       pro: true,

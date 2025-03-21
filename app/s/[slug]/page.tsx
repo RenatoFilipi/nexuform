@@ -43,7 +43,6 @@ const S = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const idsArray = formsData.map((x) => x.id);
   const startDate = subscription.start_date;
   const dueDate = subscription.due_date;
-  console.log(idsArray);
 
   const { count: submissionsCount, error: submissionsError } = await supabase
     .from("submissions")
