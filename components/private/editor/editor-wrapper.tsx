@@ -93,7 +93,7 @@ const EditorWrapper = ({
   return (
     <div className="flex flex-col relative w-full overflow-y-auto h-full flex-1 mt-12">
       <div className="flex flex-1 overflow-y-auto">
-        <div className="sm:w-[380px] fixed top-0 h-screen pt-12 w-full">
+        <div className="sm:w-[380px] fixed top-0 h-dvh pt-12 w-full">
           <EditorTools />
         </div>
         <div className="hidden sm:flex flex-1 overflow-y-auto justify-center items-center ml-[380px]">

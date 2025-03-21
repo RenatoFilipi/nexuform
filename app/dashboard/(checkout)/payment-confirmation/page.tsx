@@ -11,7 +11,7 @@ const PaymentConfirmation = () => {
   const t = useTranslations("app");
 
   return (
-    <div className="flex justify-center items-center h-screen relative border-t border-t-foreground/5 dark:bg-foreground/5 bg-[#F8F8F8]">
+    <div className="flex justify-center items-center h-dvh relative border-t border-t-foreground/5 dark:bg-foreground/5 bg-[#F8F8F8]">
       <Card className="flex flex-col justify-center items-center py-6 gap-8 relative px-10 mx-4">
         <Brand type="logo" className="h-10 fill-foreground absolute -top-16 hidden" />
         <div className="flex flex-col justify-center items-center gap-4">

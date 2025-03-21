@@ -42,7 +42,7 @@ const topics = [
 
 const Privacy = () => {
   return (
-    <div className="flex flex-col w-full min-h-screen px-4 sm:px-8 lg:px-16 py-8 bg-foreground/5">
+    <div className="flex flex-col w-full min-h-dvh px-4 sm:px-8 lg:px-16 py-8 bg-foreground/5">
       <div className="flex justify-center items-center py-4 gap-4">
         <Link href={"/"} className="flex justify-center items-center">
           <Brand type="logo_text" className="h-8 fill-foreground" />

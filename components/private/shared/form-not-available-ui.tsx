@@ -8,7 +8,7 @@ const FormNotAvailableUI = () => {
   const t = useTranslations("app");
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-dvh">
       <div className="flex flex-col justify-center items-center gap-4">
         <span className="text-sm text-foreground/80">{t("label_form_not_available")}</span>
         <div className="flex justify-center items-center w-full">

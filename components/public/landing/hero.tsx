@@ -8,7 +8,7 @@ import Link from "next/link";
 const Hero = () => {
   const t = useTranslations("landing");
   return (
-    <div className="relative flex flex-col justify-center items-center gap-14 h-screen w-full px-8 sm:px-0">
+    <div className="relative flex flex-col justify-center items-center gap-14 h-dvh w-full px-8 sm:px-0">
       <BgDesign />
       <div className="flex justify-center items-center flex-col gap-8 w-full z-10 relative">
         <CtaBadge />

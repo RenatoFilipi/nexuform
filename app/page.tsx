@@ -23,7 +23,7 @@ const Home = async () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col relative">
+    <div className="min-h-dvh flex flex-col relative">
       <div className="flex fixed top-0 w-full justify-between sm:px-20 px-3 h-14 bg-background/80 z-20 backdrop-blur-lg items-center border-b border-b-foreground/10">
         <div className="flex justify-center items-center gap-8">
           <Link href={"/"} className="flex justify-center items-center">

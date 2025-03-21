@@ -13,7 +13,7 @@ const Pricing = async () => {
   const plans = await getPlans(locale);
 
   return (
-    <section id="pricing" className="py-12 sm:py-16 lg:py-20 bg-background px-8 sm:px-0 sm:min-h-screen">
+    <section id="pricing" className="py-12 sm:py-16 lg:py-20 bg-background px-8 sm:px-0 sm:min-h-dvh">
       <div className="mx-auto sm:px-6 lg:px-8 gap-4 flex flex-col justify-center items-center">
         <div className="text-center flex flex-col justify-center items-center gap-4">
           <Badge uppercase variant={"primary"}>

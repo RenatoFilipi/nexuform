@@ -32,7 +32,7 @@ const Features = () => {
   return (
     <section
       id="features"
-      className="py-12 sm:py-16 lg:py-20 px-8 sm:px-0 sm:min-h-screen flex justify-center items-center">
+      className="py-12 sm:py-16 lg:py-20 px-8 sm:px-0 sm:min-h-dvh flex justify-center items-center">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 grid gap-4">
         <div className="text-center flex flex-col justify-center items-center gap-4">
           <Badge uppercase variant={"primary"}>

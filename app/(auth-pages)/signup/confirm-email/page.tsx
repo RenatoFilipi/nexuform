@@ -12,7 +12,7 @@ const ConfirmEmail = () => {
 
   if (error)
     return (
-      <div className="flex justify-center items-center w-full h-screen relative">
+      <div className="flex justify-center items-center w-full h-dvh relative">
         <div className="flex flex-col justify-center items-center sm:p-0 px-6 gap-8">
           <div className="flex justify-center items-center p-2 rounded-xl bg-destructive/20">
             <XIcon className="w-12 h-12 text-destructive" />
@@ -25,7 +25,7 @@ const ConfirmEmail = () => {
     );
 
   return (
-    <div className="flex justify-center items-center w-full h-screen relative">
+    <div className="flex justify-center items-center w-full h-dvh relative">
       <div className="flex flex-col justify-center items-center sm:max-w-96 sm:p-0 px-6 gap-8">
         <div className="flex justify-center items-center p-2 rounded-xl bg-success/20">
           <CheckIcon className="w-12 h-12 text-success" />

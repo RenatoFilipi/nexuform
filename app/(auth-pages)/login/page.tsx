@@ -6,7 +6,7 @@ import { Suspense } from "react";
 
 const Login = () => {
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-dvh flex">
       <AuthPanel />
       <div className="flex-1 flex justify-center items-center w-full relative">
         <Link href={"/"} className="fixed top-6 flex sm:hidden">

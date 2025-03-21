@@ -33,7 +33,7 @@ const HowItWorks = () => {
   return (
     <section
       id="how-it-works"
-      className="py-16 w-full px-6 sm:px-12 sm:min-h-screen flex justify-center items-center flex-col gap-6">
+      className="py-16 w-full px-6 sm:px-12 sm:min-h-dvh flex justify-center items-center flex-col gap-6">
       <div className="flex flex-col gap-4 justify-center items-center">
         <Badge uppercase variant="primary" className="w-fit">
           {t("nav_htw")}

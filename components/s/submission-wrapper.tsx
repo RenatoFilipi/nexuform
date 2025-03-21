@@ -48,14 +48,14 @@ const SubmissionWrapper = ({ form, theme, blocks }: { form: EForm; theme: ETheme
 
   if (isPending) {
     return (
-      <div className="flex justify-center items-center w-full h-screen">
+      <div className="flex justify-center items-center w-full h-dvh">
         <LoaderIcon className="w-10 h-10 animate-spin fill-foreground" />
       </div>
     );
   }
 
   return (
-    <div className="flex justify-center items-start min-h-screen flex-1 border-t-foreground/5 border-t bg-[#F8F8F8] dark:bg-[#2f3235]">
+    <div className="flex justify-center items-start min-h-dvh flex-1 border-t-foreground/5 border-t bg-[#F8F8F8] dark:bg-[#2f3235]">
       {b.length > 0 && <SubmissionGroup />}
     </div>
   );

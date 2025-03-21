@@ -29,7 +29,7 @@ const Faq = () => {
   const toggleFaq = (index: number) => setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
 
   return (
-    <div id="faq" className="my-10 w-full max-w-3xl px-8 sm:px-0 sm:min-h-screen flex justify-center items-center">
+    <div id="faq" className="my-10 w-full max-w-3xl px-8 sm:px-0 sm:min-h-dvh flex justify-center items-center">
       <div className="grid gap-10 w-full">
         <h2 className="text-2xl font-bold text-center sm:text-4xl">{t("faq_headline")}</h2>
         <div className="space-y-4">

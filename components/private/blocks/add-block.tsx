@@ -191,7 +191,7 @@ const Body = ({ setState, formId }: { setState: TSetState<boolean>; formId: stri
   };
 
   return (
-    <div className="flex flex-col h-screen flex-1 overflow-y-auto">
+    <div className="flex flex-col h-dvh flex-1 overflow-y-auto">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6 h-full overflow-y-auto">
           <div className="flex flex-col gap-4 overflow-y-auto h-full pr-4">
