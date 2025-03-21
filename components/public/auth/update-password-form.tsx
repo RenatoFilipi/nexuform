@@ -5,8 +5,10 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { TAppState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
 import { EyeIcon, EyeOffIcon, LoaderIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -14,10 +16,20 @@ import { z } from "zod";
 
 const UpdatePasswordForm = () => {
   const t = useTranslations("auth");
+  const router = useRouter();
   const [appState, setAppState] = useState<TAppState>("idle");
   const [code] = useQueryState("code");
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const toggleVisibility = () => setIsVisible((prevState) => !prevState);
+
+  const query = useQuery({
+    queryKey: [code],
+    queryFn: () => {
+      if (!code) router.push("/login");
+      return null;
+    },
+    refetchOnWindowFocus: false,
+  });
 
   const passwordSchema = z.object({
     password: z
@@ -36,6 +48,8 @@ const UpdatePasswordForm = () => {
   const onPasswordSubmit = async (values: z.infer<typeof passwordSchema>) => {
     console.log(values);
   };
+
+  if (query.isPending) return null;
 
   return (
     <Form {...passwordHandler}>

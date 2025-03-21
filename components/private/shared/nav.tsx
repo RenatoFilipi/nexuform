@@ -160,20 +160,10 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
               </div>
             </RadioGroup>
           </div>
-          <Button variant={"ghost"} size={"sm"} className="flex justify-between" asChild>
-            <Link href={"/"}>
-              Log out
-              <LogOutIcon className="w-4 h-4" />
-            </Link>
+          <Button variant={"ghost"} size={"sm"} className="flex justify-between" onClick={signOutAction}>
+            {t("label_logout")}
+            <LogOutIcon className="w-4 h-4" />
           </Button>
-        </div>
-        <div className="justify-end items-center gap-2 p-2 hidden">
-          <Link href={"/legal/privacy"} className="text-xs text-foreground/80 hover:underline">
-            Privacy
-          </Link>
-          <Link href={"/legal/terms"} className="text-xs text-foreground/80 hover:underline">
-            Terms
-          </Link>
         </div>
       </DropdownMenuContent>
     </DropdownMenu>

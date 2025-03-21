@@ -1,22 +1,23 @@
 "use client";
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
 import ModeToggle2 from "../../core/mode-toggle2";
 
-const navLinks = [
-  { name: "Dashboard", path: "/" },
-  { name: "Log In", path: "/login" },
-  { name: "Sign Up", path: "/signup" },
-  { name: "Features", path: "#features" },
-  { name: "How It Works", path: "#how-it-works" },
-  { name: "Pricing", path: "#pricing" },
-  { name: "Faq", path: "#faq" },
-];
-
 const Nav = ({ children }: { children: React.ReactNode }) => {
+  const t = useTranslations("landing");
   const [open, setOpen] = useState(false);
+
+  const navLinks = [
+    { name: t("label_login"), path: "/login" },
+    { name: t("label_get_started"), path: "/signup" },
+    { name: t("nav_features"), path: "#features" },
+    { name: t("nav_htw"), path: "#how-it-works" },
+    { name: t("nav_pricing"), path: "#pricing" },
+    { name: t("nav_faq"), path: "#faq" },
+  ];
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -37,10 +38,10 @@ const Nav = ({ children }: { children: React.ReactNode }) => {
         </div>
         <div className="flex justify-start items-center gap-4 mt-4 p-2">
           <Link href={"/legal/privacy"} className="text-xs text-foreground/80 hover:underline transition-colors">
-            Privacy
+            {t("label_privacy")}
           </Link>
           <Link href={"/legal/terms"} className="text-xs text-foreground/80 hover:underline transition-colors">
-            Terms
+            {t("label_terms")}
           </Link>
         </div>
       </DropdownMenuContent>

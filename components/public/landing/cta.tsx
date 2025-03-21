@@ -11,7 +11,7 @@ const Cta = () => {
   const t = useTranslations("landing");
 
   return (
-    <section className="w-full py-40 flex justify-center sm:justify-start items-center px-4 sm:px-20 sm:bg-gradient-to-r relative from-primary to-foreground bg-primary">
+    <section className="w-full py-40 flex justify-center sm:justify-start items-center px-4 sm:px-20 relative  sm:bg-gradient-to-r from-primary to-foreground bg-primary">
       <GridPattern width={15} height={15} x={-1} y={-1} strokeDasharray={"4 2"} className={cn("")} maxOpacity={0.2} />
       <div className="w-full flex flex-col gap-4 sm:gap-0 z-10 justify-center">
         <h2 className=" text-2xl sm:text-4xl text-center sm:text-start text-background font-medium">

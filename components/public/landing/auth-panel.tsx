@@ -9,7 +9,6 @@ const AuthPanel = () => {
       <Link href={"/"} className="z-50">
         <Brand type="logo_text" className="h-8 fill-background absolute top-6 left-6" />
       </Link>
-      {/* <Particles className="absolute inset-0 z-0" quantity={100} ease={20} color="#ffffff" refresh /> */}
       <GridPattern width={15} height={15} x={-1} y={-1} strokeDasharray={"4 2"} className={cn("")} maxOpacity={0.2} />
     </div>
   );
