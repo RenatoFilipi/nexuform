@@ -20,6 +20,7 @@ import { IBlockData } from "@/utils/interfaces";
 import { TBlock, TSetState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+  CalendarIcon,
   CheckCircleIcon,
   CheckSquareIcon,
   ChevronDownIcon,
@@ -138,6 +139,13 @@ const Body = ({ setState, formId }: { setState: TSetState<boolean>; formId: stri
       icon: <ScaleIcon className="w-4 h-4" />,
       enabled: true,
       description: t("desc_custom_scale"),
+    },
+    {
+      type: "date_picker",
+      name: t("label_date_picker"),
+      icon: <CalendarIcon className="w-4 h-4" />,
+      enabled: true,
+      description: t("desc_date_picker"),
     },
   ];
 

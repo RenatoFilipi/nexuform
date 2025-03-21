@@ -7,7 +7,7 @@ import { minWidth640, minute } from "@/utils/constants";
 import { EBlock, ESubmission } from "@/utils/entities";
 import { formatDateRelativeToNow, formatTime } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
-import { TSetState, TSubmissionStatus } from "@/utils/types";
+import { TBlock, TSetState, TSubmissionStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { saveAs } from "file-saver";
 import { useTranslations } from "next-intl";
@@ -37,8 +37,8 @@ const FormSubmissionDetails = ({
         <SheetContent className="flex flex-col min-w-[650px] overflow-y-auto">
           <SheetHeader className="hidden">
             <div>
-              <SheetTitle>Submission Details</SheetTitle>
-              <SheetDescription>Review the questions and your responses from this submission.</SheetDescription>
+              <SheetTitle></SheetTitle>
+              <SheetDescription></SheetDescription>
             </div>
           </SheetHeader>
           <Body setState={setOpen} submission={submission} blocks={blocks} />
@@ -52,8 +52,8 @@ const FormSubmissionDetails = ({
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="p-3 max-h-[90%] h-full">
         <DrawerHeader className="hidden">
-          <DrawerTitle>Details</DrawerTitle>
-          <DrawerDescription>Review the questions and your responses from this submission.</DrawerDescription>
+          <DrawerTitle></DrawerTitle>
+          <DrawerDescription></DrawerDescription>
         </DrawerHeader>
         <Body setState={setOpen} submission={submission} blocks={blocks} />
       </DrawerContent>
@@ -85,8 +85,14 @@ const Body = ({
       }
       const collections = blocks.map((block) => {
         const targetAnswer = data.find((x) => x.block_id === block.id);
-        if (!targetAnswer) return { question: block.name, answer: "" };
-        return { question: block.name, answer: targetAnswer.value };
+        if (!targetAnswer) return { question: block.name, answer: "", type: block.type as TBlock };
+
+        if (block.type === "date_picker") {
+          const date = new Date(targetAnswer.value);
+          const formattedAnswer = new Intl.DateTimeFormat(locale).format(date);
+          return { question: block.name, answer: formattedAnswer, type: block.type as TBlock };
+        }
+        return { question: block.name, answer: targetAnswer.value, type: block.type as TBlock };
       });
 
       return { collections };
@@ -136,13 +142,14 @@ const Body = ({
         )}
         <div className="flex-1 flex flex-col overflow-y-auto gap-6">
           {query.data?.collections.map((coll, i) => {
+            const { question, answer, type } = coll;
             return (
               <div key={i} className="flex flex-col gap-1">
                 <div className="flex justify-start items-center gap-2">
-                  <span className="font-medium text-sm text-foreground">{coll.question}</span>
+                  <span className="font-medium text-sm text-foreground">{question}</span>
                 </div>
-                {coll.answer.trim() !== "" ? (
-                  <span className="text-xs text-foreground/70">{coll.answer}</span>
+                {answer.trim() !== "" ? (
+                  <span className="text-xs text-foreground/70">{answer}</span>
                 ) : (
                   <div className="flex justify-center items-center py-2 mt-2 border border-dashed">
                     <span className="text-xs text-foreground/80">{t("label_no_answer")}</span>

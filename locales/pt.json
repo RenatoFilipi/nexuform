@@ -296,7 +296,9 @@
     "nav_help": "Ajuda",
     "label_go_home": "Ir para início",
     "label_active_sub": "Assinatura Ativa",
-    "desc_active_sub": "Obrigado por assinar. Sua assinatura está ativa."
+    "desc_active_sub": "Obrigado por assinar. Sua assinatura está ativa.",
+    "label_date_picker": "Seletor de Data",
+    "desc_date_picker": "Escolha uma data usando o calendário suspenso ou digitando-a."
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

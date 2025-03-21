@@ -1,5 +1,6 @@
 import { TBlock } from "@/utils/types";
 import {
+  CalendarIcon,
   CheckCircleIcon,
   CheckSquareIcon,
   ChevronDownIcon,
@@ -27,6 +28,7 @@ const icons: { [key in TBlock]: JSX.Element } = {
   email_address: <MailIcon className="w-4 h-4" />,
   star_rating: <StarIcon className="w-4 h-4" />,
   custom_scale: <ScaleIcon className="w-4 h-4" />,
+  date_picker: <CalendarIcon className="w-4 h-4" />,
 };
 
 const Block = ({ block }: { block: EBlock }) => {

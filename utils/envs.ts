@@ -11,4 +11,4 @@ export const proPricing = Number(process.env.NEXT_PUBLIC_PLAN_PRO_PRICING)!;
 export const proForms = Number(process.env.NEXT_PUBLIC_PLAN_PRO_FORMS)!;
 export const proSubmissions = Number(process.env.NEXT_PUBLIC_PLAN_PRO_SUBMISSIONS)!;
 
-export const supportEmail = process.env.NEXT_SUPPORT_EMAIL!;
+export const supportEmail = process.env.NEXT_PUBLIC_SUPPORT_EMAIL!;

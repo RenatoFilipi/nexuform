@@ -5,6 +5,7 @@ import { IDesign } from "@/utils/interfaces";
 import { useTranslations } from "next-intl";
 import CheckBoxesDesign from "../blocks/design/checkboxes-design";
 import CustomScaleDesign from "../blocks/design/custom-scale-design";
+import DatePickerDesign from "../blocks/design/date-picker-design";
 import DropdownMenuDesign from "../blocks/design/dropdown-menu-design";
 import EmailAddressDesign from "../blocks/design/email-address-design";
 import MultipleChoiceDesign from "../blocks/design/multiple-choice-design";
@@ -139,6 +140,8 @@ const EditorPreviewGroup = () => {
               return <StarRatingDesign key={block.id} block={block} theme={theme} onValueChange={() => {}} />;
             case "custom_scale":
               return <CustomScaleDesign key={block.id} block={block} theme={theme} onValueChange={() => {}} />;
+            case "date_picker":
+              return <DatePickerDesign key={block.id} block={block} theme={theme} onValueChange={() => {}} />;
           }
         })}
       </div>

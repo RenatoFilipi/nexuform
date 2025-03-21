@@ -22,6 +22,7 @@ import { useState } from "react";
 import { useMedia } from "react-use";
 import CheckboxesSettings from "./settings/checkboxes-settings";
 import CustomScaleSettings from "./settings/custom-scale-settings";
+import DatePickerSettings from "./settings/date-picker-settings";
 import DropdownMenuSettings from "./settings/dropdown-menu-settings";
 import EmailAddressSettings from "./settings/email-address-settings";
 import MultipleChoiceSettings from "./settings/multiple-choice-settings";
@@ -92,6 +93,9 @@ const Body = ({ block, setState }: { block: EBlock; setState: TSetState<boolean>
     }
     case "custom_scale": {
       return <CustomScaleSettings block={block} setState={setState} />;
+    }
+    case "date_picker": {
+      return <DatePickerSettings block={block} setState={setState} />;
     }
     default:
       return null;

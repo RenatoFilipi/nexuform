@@ -12,7 +12,8 @@ export type TBlock =
   | "number_input"
   | "email_address"
   | "star_rating"
-  | "custom_scale";
+  | "custom_scale"
+  | "date_picker";
 export type TIntegrations =
   | "google_sheets"
   | "zapier"

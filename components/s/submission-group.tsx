@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import Brand from "../core/brand";
 import CheckBoxesDesign from "../private/blocks/design/checkboxes-design";
 import CustomScaleDesign from "../private/blocks/design/custom-scale-design";
+import DatePickerDesign from "../private/blocks/design/date-picker-design";
 import DropdownMenuDesign from "../private/blocks/design/dropdown-menu-design";
 import EmailAddressDesign from "../private/blocks/design/email-address-design";
 import MultipleChoiceDesign from "../private/blocks/design/multiple-choice-design";
@@ -239,6 +240,8 @@ const SubmissionGroup = () => {
               return <StarRatingDesign key={block.id} block={block} theme={theme} onValueChange={onValueChange} />;
             case "custom_scale":
               return <CustomScaleDesign key={block.id} block={block} theme={theme} onValueChange={onValueChange} />;
+            case "date_picker":
+              return <DatePickerDesign key={block.id} block={block} theme={theme} onValueChange={onValueChange} />;
           }
         })}
       </div>

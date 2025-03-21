@@ -1,9 +1,7 @@
-import { Button } from "@/components/ui/button";
 import useFormsStore from "@/stores/dashboard";
-import { LayersIcon, PlusIcon } from "lucide-react";
+import { LayersIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import DashboardFormCard from "./dashboard-form-card";
-import DashboardNewForm from "./dashboard-new-form";
 
 const DashboardForms = () => {
   const { forms } = useFormsStore();
@@ -22,12 +20,6 @@ const DashboardForms = () => {
               <span className="text-sm text-center text-foreground/70">{t("desc_no_forms")}</span>
             </div>
           </div>
-          <DashboardNewForm>
-            <Button variant={"secondary"} size={"sm"}>
-              <PlusIcon className="w-4 h-4 mr-2" />
-              {t("label_create_form")}
-            </Button>
-          </DashboardNewForm>
         </div>
       </div>
     );

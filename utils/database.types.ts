@@ -59,8 +59,10 @@ export type Database = {
           id: string
           is_identifier: boolean
           max_char: number | null
+          max_date: string | null
           max_scale: number | null
           min_char: number | null
+          min_date: string | null
           min_scale: number | null
           name: string
           options: string[] | null
@@ -79,8 +81,10 @@ export type Database = {
           id?: string
           is_identifier?: boolean
           max_char?: number | null
+          max_date?: string | null
           max_scale?: number | null
           min_char?: number | null
+          min_date?: string | null
           min_scale?: number | null
           name?: string
           options?: string[] | null
@@ -99,8 +103,10 @@ export type Database = {
           id?: string
           is_identifier?: boolean
           max_char?: number | null
+          max_date?: string | null
           max_scale?: number | null
           min_char?: number | null
+          min_date?: string | null
           min_scale?: number | null
           name?: string
           options?: string[] | null
@@ -396,6 +402,38 @@ export type Database = {
           {
             foreignKeyName: "invoices_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          id: string
+          profile_id: string
+          read_at: string | null
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          profile_id: string
+          read_at?: string | null
+          type?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          profile_id?: string
+          read_at?: string | null
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_profile_id_fkey"
+            columns: ["profile_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]

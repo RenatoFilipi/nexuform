@@ -296,7 +296,9 @@
     "nav_help": "Ayuda",
     "label_go_home": "Ir a inicio",
     "label_active_sub": "Suscripción Activa",
-    "desc_active_sub": "Gracias por suscribirte. Tu suscripción está activa."
+    "desc_active_sub": "Gracias por suscribirte. Tu suscripción está activa.",
+    "label_date_picker": "Selector de Fecha",
+    "desc_date_picker": "Elige una fecha usando el menú desplegable del calendario o escribiéndola."
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",
