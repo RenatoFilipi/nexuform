@@ -64,8 +64,6 @@
     "label_link_share": "Compartir vía enlace",
     "desc_link_share": "Copia el enlace a continuación para compartir fácilmente tu formulario con otros.",
     "label_link_copied": "Enlace copiado",
-    "label_qr_share": "Compartir vía Código QR",
-    "desc_qr_share": "Escanea el código QR o copia el enlace para compartir tu formulario con otros de manera rápida y sencilla.",
     "label_not_public": "El formulario no es público",
     "desc_not_public": "Este formulario está actualmente privado. Para hacerlo público, ve a la página del editor y actualiza su estado.",
     "nav_editor": "Ir al Editor",
@@ -298,7 +296,9 @@
     "label_active_sub": "Suscripción Activa",
     "desc_active_sub": "Gracias por suscribirte. Tu suscripción está activa.",
     "label_date_picker": "Selector de Fecha",
-    "desc_date_picker": "Seleccione una fecha del calendario desplegable o ingrésela manualmente."
+    "desc_date_picker": "Seleccione una fecha del calendario desplegable o ingrésela manualmente.",
+    "label_qr_share": "Compartir vía Código QR",
+    "desc_qr_share": "Escanea el código QR o copia el enlace para compartir tu formulario con otros de manera rápida y sencilla."
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

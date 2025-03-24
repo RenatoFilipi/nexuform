@@ -386,7 +386,7 @@ const UpgradeToPro = () => {
         </div>
         <div className="flex justify-center items-center w-fit">
           <ManageSubscription>
-            <Button variant={"secondary"} size={"xs"}>
+            <Button variant={"secondary"} size={"sm"}>
               {t("label_upgrade_pro")}
             </Button>
           </ManageSubscription>

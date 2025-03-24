@@ -64,8 +64,6 @@
     "label_link_share": "Share via link",
     "desc_link_share": "Copy the link below to easily share your form with others.",
     "label_link_copied": "Link copied",
-    "label_qr_share": "Share via QR Code",
-    "desc_qr_share": "Scan the QR code or copy the link to share your form with others quickly and effortlessly.",
     "label_not_public": "Form is not public",
     "desc_not_public": "This form is currently private. To make it public, go to the editor page and update its status",
     "nav_editor": "Go to Editor",
@@ -298,7 +296,9 @@
     "label_active_sub": "Subscription Active",
     "desc_active_sub": "Thank you for subscribing. Your subscription is now active.",
     "label_date_picker": "Date Picker",
-    "desc_date_picker": "Select a date from the calendar dropdown or enter it manually."
+    "desc_date_picker": "Select a date from the calendar dropdown or enter it manually.",
+    "label_qr_share": "Share via QR Code",
+    "desc_qr_share": "Scan the QR code or copy the link to share your form with others quickly and effortlessly."
   },
   "s": {
     "err_required_all": "Answer all required questions.",

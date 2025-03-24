@@ -13,17 +13,17 @@ interface IChartData {
 
 const CHART_CONFIG: ChartConfig = {} as ChartConfig;
 
-const blueColors = [
-  "hsl(220, 70%, 50%)",
-  "hsl(173, 58%, 39%)",
-  "hsl(197, 37%, 24%)",
-  "hsl(43, 74%, 66%)",
-  "hsl(27, 87%, 67%)",
-  "hsl(210, 60%, 40%)",
-  "hsl(190, 50%, 45%)",
-  "hsl(240, 70%, 35%)",
-  "hsl(180, 80%, 50%)",
-  "hsl(230, 65%, 55%)",
+const colors = [
+  "hsl(259, 78%, 58%)",
+  "hsl(265, 80%, 50%)",
+  "hsl(270, 75%, 45%)",
+  "hsl(275, 85%, 65%)",
+  "hsl(280, 70%, 55%)",
+  "hsl(285, 60%, 40%)",
+  "hsl(290, 75%, 60%)",
+  "hsl(295, 85%, 70%)",
+  "hsl(300, 65%, 50%)",
+  "hsl(305, 80%, 55%)",
 ];
 
 const AnalyticsSubmissionsActivityChart = () => {
@@ -73,7 +73,7 @@ const AnalyticsSubmissionsActivityChart = () => {
   }, [submissions, lastNDays, formIds, formMap]);
 
   const getColor = (index: number) => {
-    return blueColors[index % blueColors.length];
+    return colors[index % colors.length];
   };
 
   return (

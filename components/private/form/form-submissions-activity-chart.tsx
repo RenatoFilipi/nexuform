@@ -19,7 +19,7 @@ interface IChartData {
 const CHART_CONFIG: ChartConfig = {
   submission: {
     label: "Submissions",
-    color: "#3A6AED",
+    color: "#713AED",
   },
 } as ChartConfig;
 
@@ -138,7 +138,7 @@ const BadgeDay = ({ submissionDifference }: { submissionDifference: number }) =>
   const getBadgeVariant = () => {
     if (submissionDifference > 0) return "success";
     if (submissionDifference < 0) return "destructive";
-    return "info";
+    return "primary";
   };
 
   const getBadgeText = () => {

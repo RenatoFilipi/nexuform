@@ -54,6 +54,7 @@ const FormShare = ({ children, form }: { children: React.ReactNode; form: EForm 
 const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm }) => {
   const t = useTranslations("app");
   const [url] = useState(`${window.location.host}/s/${form.public_url}`);
+  console.log(url);
 
   return (
     <div className="flex flex-col gap-6 h-full">
@@ -90,20 +91,20 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
                   navigator.clipboard.writeText(url);
                   toast.success(t("label_link_copied"));
                 }}
-                variant="outline"
+                variant="secondary"
                 size="icon"
                 className="flex items-center gap-2">
                 <CopyIcon className="w-4 h-4" />
               </Button>
             </div>
           </div>
-          <div className="gap-3 w-full h-full hidden">
+          <div className="gap-3 w-full h-full">
             <div className="grid gap-1 h-fit">
               <Label>{t("label_qr_share")}</Label>
               <span className="text-xs text-foreground/60">{t("desc_qr_share")}</span>
             </div>
             <div className="flex justify-center items-center flex-1 h-full">
-              <Card className="p-2 bg-background">
+              <Card className="p-2 bg-white">
                 <QRCodeSVG value={url} className="w-36 h-36" />
               </Card>
             </div>
