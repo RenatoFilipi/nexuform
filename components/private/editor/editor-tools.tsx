@@ -22,8 +22,8 @@ const EditorTools = () => {
             </Button>
           </EditorFormSettings>
           <EditorFormDesign>
-            <Button variant={"outline"} size={"sm"} className="w-full">
-              <FrameIcon className="w-4 h-4 mr-2" />
+            <Button variant={"outline"} size={"sm"} className="w-full flex justify-center items-center gap-2">
+              <FrameIcon className="w-4 h-4" />
               {t("label_design")}
             </Button>
           </EditorFormDesign>

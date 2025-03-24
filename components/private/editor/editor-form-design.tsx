@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import useEditorStore from "@/stores/editor";
+import useUserStore from "@/stores/user";
 import { minWidth640 } from "@/utils/constants";
 import { EBlock } from "@/utils/entities";
 import { IDesign } from "@/utils/interfaces";
@@ -26,6 +27,7 @@ import {
   CheckIcon,
   CheckSquareIcon,
   ChevronDownIcon,
+  CrownIcon,
   EqualIcon,
   HashIcon,
   Layers2Icon,
@@ -39,6 +41,7 @@ import { useTranslations } from "next-intl";
 import { useState, type JSX } from "react";
 import { useMedia } from "react-use";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
+import ManageSubscription from "../shared/manage-subscription";
 
 const colors: IDesign[] = [
   {
@@ -226,6 +229,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
 const GeneralDesign = () => {
   const t = useTranslations("app");
   const { theme, setTheme } = useEditorStore();
+  const user = useUserStore();
 
   const onSetNumericBlocks = (value: boolean) => {
     setTheme({ ...theme, numeric_blocks: value });
@@ -237,36 +241,40 @@ const GeneralDesign = () => {
     setTheme({ ...theme, width: value });
   };
 
+  if (user.subscription.plan !== "pro") return <UpgradeToPro />;
+
   return (
-    <div className="flex flex-col w-full gap-6">
-      <div className="flex justify-between items-center w-full">
-        <div className="grid gap-1">
-          <Label>{t("label_numeric_blocks")}</Label>
-          <p className="text-xs text-foreground/60">{t("desc_numeric_blocks")}</p>
+    <div className="flex justify-center items-start relative">
+      <div className="flex flex-col w-full gap-6">
+        <div className="flex justify-between items-center w-full">
+          <div className="grid gap-1">
+            <Label>{t("label_numeric_blocks")}</Label>
+            <p className="text-xs text-foreground/60">{t("desc_numeric_blocks")}</p>
+          </div>
+          <Switch checked={theme.numeric_blocks} onCheckedChange={onSetNumericBlocks} />
         </div>
-        <Switch checked={theme.numeric_blocks} onCheckedChange={onSetNumericBlocks} />
-      </div>
-      <div className="flex justify-between items-center w-full">
-        <div className="grid gap-1">
-          <Label>{t("label_uppercase_block")}</Label>
-          <p className="text-xs text-foreground/60">{t("desc_uppercase_block")}.</p>
+        <div className="flex justify-between items-center w-full">
+          <div className="grid gap-1">
+            <Label>{t("label_uppercase_block")}</Label>
+            <p className="text-xs text-foreground/60">{t("desc_uppercase_block")}.</p>
+          </div>
+          <Switch checked={theme.uppercase_block_name} onCheckedChange={onSetUppercaseBlockName} />
         </div>
-        <Switch checked={theme.uppercase_block_name} onCheckedChange={onSetUppercaseBlockName} />
-      </div>
-      <div className="flex justify-between items-center w-full sm:gap-4">
-        <div className="grid gap-1">
-          <Label>{t("label_form_width")}</Label>
-          <p className="text-xs text-foreground/60">{t("desc_form_width")}</p>
+        <div className="flex justify-between items-center w-full sm:gap-4">
+          <div className="grid gap-1">
+            <Label>{t("label_form_width")}</Label>
+            <p className="text-xs text-foreground/60">{t("desc_form_width")}</p>
+          </div>
+          <Select onValueChange={onSetWidth} defaultValue={theme.width}>
+            <SelectTrigger className="w-[160px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="centered">{t("label_centered")}</SelectItem>
+              <SelectItem value="full">{t("label_full_width")}</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
-        <Select onValueChange={onSetWidth} defaultValue={theme.width}>
-          <SelectTrigger className="w-[160px]">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="centered">{t("label_centered")}</SelectItem>
-            <SelectItem value="full">{t("label_full_width")}</SelectItem>
-          </SelectContent>
-        </Select>
       </div>
     </div>
   );
@@ -274,10 +282,13 @@ const GeneralDesign = () => {
 const ColorsDesign = () => {
   const t = useTranslations("app");
   const { theme, setTheme } = useEditorStore();
+  const user = useUserStore();
 
   const onSetPrimaryColor = (value: string) => {
     setTheme({ ...theme, primary_color: value });
   };
+
+  if (user.subscription.plan !== "pro") return <UpgradeToPro />;
 
   return (
     <div className="flex flex-col w-full gap-6">
@@ -357,6 +368,30 @@ const ReorderDesign = () => {
           })}
         </Reorder.Group>
       )}
+    </div>
+  );
+};
+const UpgradeToPro = () => {
+  const t = useTranslations("app");
+
+  return (
+    <div className="flex flex-col justify-center items-center w-full h-full">
+      <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/10">
+        <CrownIcon className="w-6 h-6 text-primary" />
+      </div>
+      <div className="text-center flex flex-col justify-center items-center gap-6">
+        <div className="text-center flex flex-col justify-center items-center gap-1">
+          <h2 className="text-lg font-medium">{t("label_upgrade_pro")}</h2>
+          <p className="text-sm text-foreground/70">{t("desc_upgrade_pro")}</p>
+        </div>
+        <div className="flex justify-center items-center w-fit">
+          <ManageSubscription>
+            <Button variant={"secondary"} size={"xs"}>
+              {t("label_upgrade_pro")}
+            </Button>
+          </ManageSubscription>
+        </div>
+      </div>
     </div>
   );
 };

@@ -298,7 +298,7 @@
     "label_active_sub": "Subscription Active",
     "desc_active_sub": "Thank you for subscribing. Your subscription is now active.",
     "label_date_picker": "Date Picker",
-    "desc_date_picker": "Choose a date using the calendar dropdown or by typing it in."
+    "desc_date_picker": "Select a date from the calendar dropdown or enter it manually."
   },
   "s": {
     "err_required_all": "Answer all required questions.",

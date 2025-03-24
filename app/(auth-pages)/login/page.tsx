@@ -22,7 +22,7 @@ const Login = () => {
             </Button>
           </Nav>
         </div>
-        <div className="w-full flex justify-center items-center">
+        <div className="w-full flex justify-center items-center h-full bg-background">
           <div className="flex flex-col items-center justify-center w-full sm:max-w-[450px] gap-6 sm:p-0 px-12">
             <Suspense>
               <LoginForm />
