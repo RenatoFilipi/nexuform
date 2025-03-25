@@ -1,4 +1,4 @@
-import { BrushIcon, LayersIcon, Share2Icon, SlidersIcon } from "lucide-react";
+import { LayersIcon, PaintbrushIcon, SettingsIcon, Share2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 const EditorTips = () => {
@@ -14,14 +14,14 @@ const EditorTips = () => {
     {
       title: t("label_tips_design"),
       desc: t("desc_tips_design"),
-      icon: BrushIcon,
+      icon: PaintbrushIcon,
       bgColor: "bg-green-500/10",
       textColor: "text-green-500",
     },
     {
       title: t("label_tips_settings"),
       desc: t("desc_tips_settings"),
-      icon: SlidersIcon,
+      icon: SettingsIcon,
       bgColor: "bg-pink-500/10",
       textColor: "text-pink-500",
     },
@@ -34,7 +34,7 @@ const EditorTips = () => {
     },
   ];
   return (
-    <ul className="grid sm:grid-cols-1 gap-8">
+    <ul className="grid sm:grid-cols-1 gap-8 sm:gap-10">
       {tips.map((tip, index) => (
         <li key={index} className="flex items-start gap-4">
           <div className={`flex justify-center items-center w-10 h-10 rounded-lg ${tip.bgColor}`}>

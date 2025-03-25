@@ -294,16 +294,18 @@ const NavApp = () => {
     },
   ];
 
-  useQuery({
-    queryKey: [],
+  const query = useQuery({
+    queryKey: ["editorResetData"],
     queryFn: () => {
       editorStore.reset();
       return null;
     },
   });
 
+  if (query.isPending) return null;
+
   return (
-    <div className="h-12 flex items-center px-2 sm:px-4 justify-between z-10 bg-background fixed w-full">
+    <div className="h-12 flex items-center px-3 justify-between z-10 bg-background fixed w-full">
       <div className="flex justify-center items-center gap-4 h-full">
         <div className="flex justify-center items-center gap-2">
           <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
@@ -491,7 +493,7 @@ const NavEditor = () => {
   };
 
   return (
-    <div className="h-12 flex justify-between items-center w-full bg-background border-b sm:px-4 px-2 z-20 fixed">
+    <div className="h-12 flex justify-between items-center w-full bg-background border-b px-3 z-20 fixed">
       <div className="flex justify-center items-center gap-1">
         <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
           <Link href={"/dashboard/forms"}>
@@ -507,21 +509,19 @@ const NavEditor = () => {
       {active && (
         <div className="flex justify-center items-center gap-4">
           {form.updated_at !== "" && (
-            <span className="text-xs text-foreground/80 hidden sm:flex">
+            <span className="text-xs text-foreground/80 hidden">
               {t("label_last_updated")}: {new Date(form.updated_at).toLocaleString()}
             </span>
           )}
           {!empty && (
-            <Button size={"xs"} variant={"outline"} className="flex sm:hidden" onClick={() => setPreview(!preview)}>
-              {preview ? t("label_close") : t("label_preview")}
+            <Button size={"xs"} variant={"outline"} className="flex" onClick={() => setPreview(!preview)}>
+              {preview ? t("label_editor") : t("label_preview")}
             </Button>
           )}
-          {!preview && (
-            <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
-              {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
-              {t("label_save_form")}
-            </Button>
-          )}
+          <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
+            {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
+            {t("label_save_form")}
+          </Button>
         </div>
       )}
     </div>

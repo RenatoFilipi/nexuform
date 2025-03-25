@@ -48,7 +48,7 @@ const SuccessDesign = ({ brand, preview, color, description, title }: IProps) =>
 
   return (
     <div className="flex justify-center items-center w-full px-4 sm:px-0">
-      <Card className="flex flex-col gap-6 w-[500px] mt-20 p-8">
+      <Card className="flex flex-col gap-6 w-[500px] p-8">
         <div className="flex flex-col justify-center items-center gap-6">
           <div className={twMerge(currentColor.tw_class, "rounded-full p-3")}>
             <CheckIcon className="w-10 h-10" />

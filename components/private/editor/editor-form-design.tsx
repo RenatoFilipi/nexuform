@@ -21,7 +21,6 @@ import { IDesign } from "@/utils/interfaces";
 import { TBlock, TSetState } from "@/utils/types";
 import { Reorder } from "framer-motion";
 import {
-  ArrowDownUpIcon,
   CalendarIcon,
   CheckCircleIcon,
   CheckIcon,
@@ -32,6 +31,7 @@ import {
   HashIcon,
   Layers2Icon,
   MailIcon,
+  MoveVerticalIcon,
   PaintbrushIcon,
   ScaleIcon,
   StarIcon,
@@ -187,7 +187,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const views = [
     { label: t("nav_general"), icon: Layers2Icon, view: "general", enabled: true },
     { label: t("nav_colors"), icon: PaintbrushIcon, view: "colors", enabled: true },
-    { label: t("nav_reorder"), icon: ArrowDownUpIcon, view: "reorder", enabled: true },
+    { label: t("nav_reorder"), icon: MoveVerticalIcon, view: "reorder", enabled: true },
   ];
   const [view, setView] = useState<TView>("general");
   const enabledViews = views.filter((x) => x.enabled);
@@ -331,7 +331,7 @@ const ReorderDesign = () => {
       {empty && (
         <div className="flex justify-center items-center py-14 gap-4 flex-col h-full">
           <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/10">
-            <ArrowDownUpIcon className="w-6 h-6 text-primary" />
+            <MoveVerticalIcon className="w-6 h-6 text-primary" />
           </div>
           <div className="flex justify-center items-center flex-col gap-1">
             <span className="font-medium text-base">{t("label_reorder_blocks")}</span>

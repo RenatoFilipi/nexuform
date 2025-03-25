@@ -106,6 +106,7 @@ const useEditorStore = create<editor>((set) => ({
       blocks: [],
       blocksReadyOnly: [],
       view: "blocks",
+      preview: false,
     }),
 }));
 

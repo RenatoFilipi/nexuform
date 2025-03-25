@@ -34,7 +34,7 @@ const EditorTools = () => {
           {blocks.map((block, index) => {
             return <Block key={index} block={block} />;
           })}
-          <AddBlock formId={form.id}>
+          <AddBlock>
             <Button size={"sm"} className="w-full" variant={"ghost"}>
               <PlusIcon className="w-4 h-4 mr-2" />
               {t("label_new_block")}

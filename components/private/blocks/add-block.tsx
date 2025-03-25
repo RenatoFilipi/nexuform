@@ -38,7 +38,7 @@ import { useMedia } from "react-use";
 import { z } from "zod";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
 
-const AddBlock = ({ children, formId }: { children: React.ReactNode; formId: string }) => {
+const AddBlock = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations("app");
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
@@ -52,7 +52,7 @@ const AddBlock = ({ children, formId }: { children: React.ReactNode; formId: str
             <DialogTitle>{t("label_blocks")}</DialogTitle>
             <DialogDescription>{t("desc_blocks")}</DialogDescription>
           </DialogHeader>
-          <Body setState={setOpen} formId={formId} />
+          <Body setState={setOpen} />
         </DialogContent>
       </Dialog>
     );
@@ -66,15 +66,15 @@ const AddBlock = ({ children, formId }: { children: React.ReactNode; formId: str
           <DrawerTitle>{t("label_blocks")}</DrawerTitle>
           <DrawerDescription>{t("desc_blocks")}</DrawerDescription>
         </DrawerHeader>
-        <Body setState={setOpen} formId={formId} />
+        <Body setState={setOpen} />
       </DrawerContent>
     </Drawer>
   );
 };
 
-const Body = ({ setState, formId }: { setState: TSetState<boolean>; formId: string }) => {
+const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
-  const { addBlock, blocks } = useEditorStore();
+  const editor = useEditorStore();
 
   const blockList: IBlockData[] = [
     {
@@ -166,7 +166,7 @@ const Body = ({ setState, formId }: { setState: TSetState<boolean>; formId: stri
 
     const block: EBlock = {
       id: uuid(),
-      form_id: formId,
+      form_id: editor.form.id,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       name: targetBlock.name,
@@ -178,7 +178,7 @@ const Body = ({ setState, formId }: { setState: TSetState<boolean>; formId: stri
       max_char: 100,
       min_char: 1,
       show_char: null,
-      position: blocks.length + 1,
+      position: editor.blocks.length + 1,
       rating: null,
       max_scale: null,
       min_scale: null,
@@ -186,7 +186,7 @@ const Body = ({ setState, formId }: { setState: TSetState<boolean>; formId: stri
       min_date: null,
       max_date: null,
     };
-    addBlock(block);
+    editor.addBlock(block);
     setState(false);
   };
 
