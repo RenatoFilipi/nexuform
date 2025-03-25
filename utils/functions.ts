@@ -2,6 +2,7 @@ import { differenceInDays, formatDistance } from "date-fns";
 import { enUS, es, ptBR } from "date-fns/locale";
 import { customAlphabet } from "nanoid";
 import { redirect } from "next/navigation";
+import { createTranslator } from "use-intl/core";
 import { day, planSettings } from "./constants";
 import { ESubscription } from "./entities";
 import { basicSubmissions, freeTrialSubmissions, proSubmissions } from "./envs";
@@ -21,28 +22,6 @@ export const nanoid = (length: number = 12, onlyLetters: boolean = false, onlyLo
   alphabet = alphabet.replace(/[^a-zA-Z0-9]/g, "");
   const nnid = customAlphabet(alphabet, length);
   return nnid();
-};
-export const blockName = (type: TBlock) => {
-  switch (type) {
-    case "short_text":
-      return "Short Text";
-    case "paragraph_text":
-      return "Paragraph Text";
-    case "multiple_choice":
-      return "Multiple Choice";
-    case "checkboxes":
-      return "Checkboxes";
-    case "dropdown_menu":
-      return "Dropdown Menu";
-    case "number_input":
-      return "Number";
-    case "email_address":
-      return "Email Address";
-    case "star_rating":
-      return "Star Rating";
-    case "custom_scale":
-      return "Custom Scale";
-  }
 };
 const localeMap: Record<string, any> = {
   en: enUS,
@@ -160,5 +139,55 @@ export const isSubmissionsLimitReached = (subscription: ESubscription, submissio
       return submissions > proSubmissions;
     default:
       return true;
+  }
+};
+export const blockName = (type: TBlock) => {
+  switch (type) {
+    case "short_text":
+      return "Short Text";
+    case "paragraph_text":
+      return "Paragraph Text";
+    case "multiple_choice":
+      return "Multiple Choice";
+    case "checkboxes":
+      return "Checkboxes";
+    case "dropdown_menu":
+      return "Dropdown Menu";
+    case "number_input":
+      return "Number";
+    case "email_address":
+      return "Email Address";
+    case "star_rating":
+      return "Star Rating";
+    case "custom_scale":
+      return "Custom Scale";
+  }
+};
+export const getBlockName = async (type: TBlock, locale: string): Promise<string> => {
+  const messages = (await import(`@/locales/${locale}.json`)).default;
+  const t = createTranslator({ locale, messages });
+  switch (type) {
+    case "short_text":
+      return t("app.label_short_text");
+    case "paragraph_text":
+      return t("app.label_paragraph_text");
+    case "multiple_choice":
+      return t("app.label_multiple_choice");
+    case "checkboxes":
+      return t("app.label_checkboxes");
+    case "dropdown_menu":
+      return t("app.label_dropdown_menu");
+    case "number_input":
+      return t("app.label_number_input");
+    case "email_address":
+      return t("app.label_email_address");
+    case "star_rating":
+      return t("app.label_star_rating");
+    case "custom_scale":
+      return t("app.label_custom_scale");
+    case "date_picker":
+      return t("app.label_date_picker");
+    default:
+      return "Unknown";
   }
 };

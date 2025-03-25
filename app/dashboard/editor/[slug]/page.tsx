@@ -1,8 +1,9 @@
-import EditorWrapper from "@/components/private/editor/v2/editor-wrapper";
+import EditorWrapper from "@/components/private/editor/editor-wrapper";
 import ErrorUI from "@/components/private/shared/error-ui";
 import SubscriptionUI from "@/components/private/shared/subscription-ui";
 import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
+import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 const Editor = async ({ params }: { params: Promise<{ slug: string }> }) => {
@@ -54,7 +55,18 @@ const Editor = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   if (blocksError) return <ErrorUI />;
 
-  return <EditorWrapper form={form} theme={theme} blocks={blocks} profile={profile} subscription={subscription} />;
+  const locale = await getLocale();
+
+  return (
+    <EditorWrapper
+      locale={locale}
+      form={form}
+      theme={theme}
+      blocks={blocks}
+      profile={profile}
+      subscription={subscription}
+    />
+  );
 };
 
 export default Editor;

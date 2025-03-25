@@ -1,47 +1,27 @@
 import { Button } from "@/components/ui/button";
-import useEditorStore from "@/stores/editor";
-import { FrameIcon, PlusIcon, Settings2Icon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { PaintbrushIcon, PlusIcon, SettingsIcon } from "lucide-react";
 import AddBlock from "../blocks/add-block";
-import Block from "../blocks/block";
 import EditorFormDesign from "./editor-form-design";
 import EditorFormSettings from "./editor-form-settings";
 
 const EditorTools = () => {
-  const t = useTranslations("app");
-  const { form, blocks } = useEditorStore();
-
   return (
-    <div className="flex justify-start flex-col items-center h-full border-r p-4 gap-3 bg-background">
-      <div className="w-full flex flex-col gap-3">
-        <div className="flex justify-center items-center w-full gap-4">
-          <EditorFormSettings>
-            <Button variant={"outline"} size={"sm"} className="w-full">
-              <Settings2Icon className="w-4 h-4 mr-2" />
-              {t("label_settings")}
-            </Button>
-          </EditorFormSettings>
-          <EditorFormDesign>
-            <Button variant={"outline"} size={"sm"} className="w-full flex justify-center items-center gap-2">
-              <FrameIcon className="w-4 h-4" />
-              {t("label_design")}
-            </Button>
-          </EditorFormDesign>
-        </div>
-      </div>
-      <div className="flex w-full h-full justify-center items-start overflow-y-auto">
-        <div className="w-full flex flex-col gap-2 overflow-y-auto">
-          {blocks.map((block, index) => {
-            return <Block key={index} block={block} />;
-          })}
-          <AddBlock>
-            <Button size={"sm"} className="w-full" variant={"ghost"}>
-              <PlusIcon className="w-4 h-4 mr-2" />
-              {t("label_new_block")}
-            </Button>
-          </AddBlock>
-        </div>
-      </div>
+    <div className="fixed py-2 flex flex-col justify-start items-center gap-3 sm:w-[56px] h-full bg-background">
+      <EditorFormSettings>
+        <Button variant={"ghost"} size={"icon"}>
+          <SettingsIcon className="w-5 h-5" />
+        </Button>
+      </EditorFormSettings>
+      <EditorFormDesign>
+        <Button variant={"ghost"} size={"icon"}>
+          <PaintbrushIcon className="w-5 h-5" />
+        </Button>
+      </EditorFormDesign>
+      <AddBlock>
+        <Button variant={"ghost"} size={"icon"}>
+          <PlusIcon className="w-5 h-5" />
+        </Button>
+      </AddBlock>
     </div>
   );
 };

@@ -2,21 +2,24 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import useEditorStore from "@/stores/editor";
+import useUserStore from "@/stores/user";
 import { EBlock } from "@/utils/entities";
-import { blockName } from "@/utils/functions";
+import { getBlockName } from "@/utils/functions";
 import { TBlock } from "@/utils/types";
+import { useQuery } from "@tanstack/react-query";
 import { SettingsIcon } from "lucide-react";
-import BlockSettings from "../../blocks/block-settings";
-import CheckBoxesDesign from "../../blocks/design/checkboxes-design";
-import CustomScaleDesign from "../../blocks/design/custom-scale-design";
-import DatePickerDesign from "../../blocks/design/date-picker-design";
-import DropdownMenuDesign from "../../blocks/design/dropdown-menu-design";
-import EmailAddressDesign from "../../blocks/design/email-address-design";
-import MultipleChoiceDesign from "../../blocks/design/multiple-choice-design";
-import NumberInputDesign from "../../blocks/design/number-input-design";
-import ParagraphTextDesign from "../../blocks/design/paragraph-text-design";
-import ShortTextDesign from "../../blocks/design/short-text-design";
-import StarRatingDesign from "../../blocks/design/star-rating-design";
+import { useState } from "react";
+import BlockSettings from "../blocks/block-settings";
+import CheckBoxesDesign from "../blocks/design/checkboxes-design";
+import CustomScaleDesign from "../blocks/design/custom-scale-design";
+import DatePickerDesign from "../blocks/design/date-picker-design";
+import DropdownMenuDesign from "../blocks/design/dropdown-menu-design";
+import EmailAddressDesign from "../blocks/design/email-address-design";
+import MultipleChoiceDesign from "../blocks/design/multiple-choice-design";
+import NumberInputDesign from "../blocks/design/number-input-design";
+import ParagraphTextDesign from "../blocks/design/paragraph-text-design";
+import ShortTextDesign from "../blocks/design/short-text-design";
+import StarRatingDesign from "../blocks/design/star-rating-design";
 
 const EditorBlockGroup = () => {
   const editor = useEditorStore();
@@ -94,12 +97,26 @@ const EditorBlockGroup = () => {
 };
 
 const SW = ({ children, block }: { children: React.ReactNode; block: EBlock }) => {
+  const user = useUserStore();
+  const [blockType, setBlockType] = useState("");
+
+  const query = useQuery({
+    queryKey: ["blockSettingsData", block.id],
+    queryFn: async () => {
+      setBlockType(await getBlockName(block.type as TBlock, user.locale));
+      return null;
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  if (query.isPending) return null;
+
   return (
     <Card className="p-2">
       <div className="flex justify-between items-center w-full">
         <div className="px-2">
           <Badge variant={"primary"} uppercase>
-            {blockName(block.type as TBlock)}
+            {blockType}
           </Badge>
         </div>
         <div className="flex justify-center items-center">

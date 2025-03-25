@@ -2,11 +2,11 @@ import { Button } from "@/components/ui/button";
 import useEditorStore from "@/stores/editor";
 import { TEditorView } from "@/utils/types";
 import { useTranslations } from "next-intl";
-import EditorPreviewGroup from "../editor-preview-group";
-import EditorPreviewSuccess from "../editor-preview-success";
 import EditorBlockGroup from "./editor-block-group";
+import EditorPreviewGroup from "./editor-preview-group";
+import EditorPreviewSuccess from "./editor-preview-success";
 
-const EditorPreview = () => {
+const EditorContent = () => {
   const t = useTranslations("app");
   const editor = useEditorStore();
 
@@ -42,4 +42,4 @@ const EditorPreview = () => {
   );
 };
 
-export default EditorPreview;
+export default EditorContent;
