@@ -123,8 +123,10 @@ const Body = ({
             </div>
             <div className="flex justify-start items-center gap-3">
               <Badge variant={"info"}>{formatTime(submission.completion_time ?? 0, 2)}</Badge>
-              <Badge variant={"info"}>{new Date(submission.created_at).toLocaleString()}</Badge>
-              <Badge variant={"info"}>{formatDateRelativeToNow(submission.created_at, locale)}</Badge>
+              <Badge variant={"info"}>
+                {new Date(submission.created_at).toLocaleString()} (
+                {formatDateRelativeToNow(submission.created_at, locale)})
+              </Badge>
             </div>
           </div>
         )}
@@ -136,8 +138,10 @@ const Body = ({
             </div>
             <div className="flex w-full justify-start items-center gap-2">
               <Badge variant={"info"}>{formatTime(submission.completion_time ?? 0, 2)}</Badge>
-              <Badge variant={"info"}>{new Date(submission.created_at).toLocaleString()}</Badge>
-              <Badge variant={"info"}>{formatDateRelativeToNow(submission.created_at)}</Badge>
+              <Badge variant={"info"}>
+                {new Date(submission.created_at).toLocaleString()} (
+                {formatDateRelativeToNow(submission.created_at, locale)})
+              </Badge>
             </div>
           </div>
         )}

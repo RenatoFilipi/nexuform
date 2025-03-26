@@ -516,7 +516,14 @@ const NavEditor = () => {
           })}
         </div>
         <div>
-          <Button size={"xs"} variant={"outline"} className="flex" onClick={() => setPreview(!preview)}>
+          <Button
+            size={"xs"}
+            variant={"outline"}
+            className="flex"
+            onClick={() => {
+              setPreview(!preview);
+              setView("blocks");
+            }}>
             <ChevronLeftIcon className="w-4 h-4 mr-2" />
             {t("label_go_back")}
           </Button>

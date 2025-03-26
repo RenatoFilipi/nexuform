@@ -250,7 +250,7 @@
     "label_sub_cancel_warning_feats": "Você perderá o acesso a todos esses recursos",
     "desc_manage_sub": "Escolha o plano que melhor se adapta às suas necessidades.",
     "label_delete_personal_account": "Excluir Conta Pessoal",
-    "desc_delete_personal_account": "Esta ação excluirá permanentemente todos os seus formulários, juntamente com todos os dados relacionados. Isso inclui todas as respostas, configurações e quaisquer arquivos associados. Uma vez excluído, esses dados não podem ser recuperados. Por favor, proceed com cautela.",
+    "desc_delete_personal_account": "Esta ação excluirá permanentemente todos os seus formulários, juntamente com todos os dados relacionados. Isso inclui todas as respostas, configurações e quaisquer arquivos associados. Uma vez excluído, esses dados não podem ser recuperados. Por favor, prossiga com cautela.",
     "label_type_delete_personal_account": "Digite o e-mail da sua conta relacionada para continuar.",
     "label_delete_personal_account_alert": "Esta ação não pode ser revertida. Uma vez confirmada, todos os seus formulários e dados associados serão excluídos permanentemente. Por favor, tenha certeza antes de prosseguir.",
     "err_delete_personal_account": "Ocorreu um erro inesperado ao excluir esta conta.",
