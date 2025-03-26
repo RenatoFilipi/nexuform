@@ -23,6 +23,7 @@ import { TAppState, TEditorView, TFormStatus, TPlan, TSetState } from "@/utils/t
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ChartNoAxesColumnIcon,
+  ChevronLeftIcon,
   ChevronsUpDownIcon,
   HelpingHandIcon,
   InboxIcon,
@@ -516,7 +517,8 @@ const NavEditor = () => {
         </div>
         <div>
           <Button size={"xs"} variant={"outline"} className="flex" onClick={() => setPreview(!preview)}>
-            {t("label_editor")}
+            <ChevronLeftIcon className="w-4 h-4 mr-2" />
+            {t("label_go_back")}
           </Button>
         </div>
       </div>

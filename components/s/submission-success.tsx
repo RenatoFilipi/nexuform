@@ -6,13 +6,15 @@ const SubmissionSuccess = () => {
   const { form, theme } = useSubmissionStore();
 
   return (
-    <SuccessDesign
-      brand={form.nebulaform_branding}
-      color={theme.primary_color as TColor}
-      preview={false}
-      title={form.success_title}
-      description={form.success_description}
-    />
+    <div className="flex w-full h-dvh p-6">
+      <SuccessDesign
+        brand={form.nebulaform_branding}
+        color={theme.primary_color as TColor}
+        preview={false}
+        title={form.success_title}
+        description={form.success_description}
+      />
+    </div>
   );
 };
 
