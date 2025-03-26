@@ -18,7 +18,7 @@ import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
 import { minWidth640 } from "@/utils/constants";
 import { TSetState } from "@/utils/types";
-import { BookDashedIcon, EyeIcon, GlobeIcon, Layers2Icon, MonitorOffIcon, ShieldAlertIcon } from "lucide-react";
+import { BookDashedIcon, GlobeIcon, Layers2Icon, MonitorOffIcon, ShieldAlertIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useMedia } from "react-use";
@@ -65,7 +65,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const views = [
     { label: t("nav_general"), icon: Layers2Icon, view: "general", enabled: true },
-    { label: t("nav_status"), icon: EyeIcon, view: "status", enabled: true },
+    { label: t("nav_status"), icon: GlobeIcon, view: "status", enabled: true },
     { label: t("nav_delete"), icon: ShieldAlertIcon, view: "delete", enabled: true },
   ];
 
