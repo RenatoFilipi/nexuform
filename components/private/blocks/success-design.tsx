@@ -47,8 +47,8 @@ const SuccessDesign = ({ brand, preview, color, description, title }: IProps) =>
   const currentColor = design.find((x) => x.label === color) ?? design[0];
 
   return (
-    <div className="flex justify-center items-center w-full px-4 sm:px-0">
-      <Card className="flex flex-col gap-6 w-[500px] p-8">
+    <div className="flex justify-center items-center w-full">
+      <Card className="flex flex-col gap-6 sm:w-[500px] p-8 w-full">
         <div className="flex flex-col justify-center items-center gap-6">
           <div className={twMerge(currentColor.tw_class, "rounded-full p-3")}>
             <CheckIcon className="w-10 h-10" />

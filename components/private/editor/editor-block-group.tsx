@@ -7,7 +7,7 @@ import { EBlock } from "@/utils/entities";
 import { getBlockName } from "@/utils/functions";
 import { TBlock } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { SettingsIcon } from "lucide-react";
+import { SettingsIcon, Trash2Icon } from "lucide-react";
 import { useState } from "react";
 import BlockSettings from "../blocks/block-settings";
 import CheckBoxesDesign from "../blocks/design/checkboxes-design";
@@ -26,7 +26,7 @@ const EditorBlockGroup = () => {
 
   return (
     <div className="flex justify-center items-start w-full h-full">
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 sm:w-[650px] w-full">
         {editor.blocks.map((block) => {
           switch (block.type) {
             case "short_text":
@@ -98,6 +98,7 @@ const EditorBlockGroup = () => {
 
 const SW = ({ children, block }: { children: React.ReactNode; block: EBlock }) => {
   const user = useUserStore();
+  const editor = useEditorStore();
   const [blockType, setBlockType] = useState("");
 
   const query = useQuery({
@@ -125,6 +126,13 @@ const SW = ({ children, block }: { children: React.ReactNode; block: EBlock }) =
               <SettingsIcon className="w-4 h-4" />
             </Button>
           </BlockSettings>
+          <Button
+            variant={"ghost"}
+            size={"icon"}
+            className="hover:text-destructive hover:bg-destructive/5 hidden"
+            onClick={() => editor.removeBlock(block.id)}>
+            <Trash2Icon className="w-4 h-4" />
+          </Button>
         </div>
       </div>
       <div className="flex p-3">{children}</div>

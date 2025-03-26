@@ -277,7 +277,7 @@ const DeleteSettings = () => {
   const { form } = useEditorStore();
 
   return (
-    <div className="flex justify-center items-center w-full border rounded">
+    <div className="flex justify-center items-center w-full border rounded p-8">
       <div className="flex flex-col justify-center items-center gap-4">
         <Badge variant={"destructive"} uppercase className="w-fit">
           {t("label_danger_zone")}

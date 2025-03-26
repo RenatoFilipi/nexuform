@@ -43,8 +43,8 @@ const EditorWrapper = ({ form, theme, blocks, profile, subscription, locale }: P
 
   return (
     <div className="mt-12 flex w-full h-full flex-1 gap-4 relative">
-      <div className="flex flex-1 overflow-y-auto">
-        <EditorTools />
+      <div className="flex flex-1">
+        {!isPending && !editor.preview && <EditorTools />}
         {!isPending && editor.blocks.length <= 0 && (
           <div className="flex justify-center items-center w-full sm:ml-[56px]">
             <EditorTips />

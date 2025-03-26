@@ -6,7 +6,7 @@ import EditorFormSettings from "./editor-form-settings";
 
 const EditorTools = () => {
   return (
-    <div className="fixed py-2 flex flex-col justify-start items-center gap-3 sm:w-[56px] h-full bg-background">
+    <div className="fixed p-0 sm:p-4 flex justify-center sm:justify-start items-center gap-3 sm:w-[56px] w-full sm:h-full h-12 bg-background sm:flex-col border-b sm:border-none">
       <EditorFormSettings>
         <Button variant={"ghost"} size={"icon"}>
           <SettingsIcon className="w-5 h-5" />

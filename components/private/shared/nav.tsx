@@ -19,7 +19,7 @@ import useUserStore from "@/stores/user";
 import { minWidth640 } from "@/utils/constants";
 import { getCurrentPlan, isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
-import { TAppState, TFormStatus, TPlan, TSetState } from "@/utils/types";
+import { TAppState, TEditorView, TFormStatus, TPlan, TSetState } from "@/utils/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ChartNoAxesColumnIcon,
@@ -364,7 +364,7 @@ const NavApp = () => {
 };
 const NavEditor = () => {
   const t = useTranslations("app");
-  const { form, theme, blocks, blocksReadyOnly, preview, setPreview } = useEditorStore();
+  const { form, theme, blocks, blocksReadyOnly, preview, setPreview, setView, view } = useEditorStore();
   const { subscription } = useUserStore();
   const queryClient = useQueryClient();
   const supabase = createClient();
@@ -372,6 +372,11 @@ const NavEditor = () => {
   const [appState, setAppState] = useState<TAppState>("idle");
   const active = isSubscriptionActive(subscription);
   const empty = blocks.length <= 0;
+
+  const sections = [
+    { view: "blocks", label: t("label_blocks") },
+    { view: "success", label: t("label_success") },
+  ];
 
   const onSave = async () => {
     try {
@@ -492,6 +497,32 @@ const NavEditor = () => {
     }
   };
 
+  if (preview) {
+    return (
+      <div className="h-12 flex justify-between items-center w-full bg-background px-3 z-20 fixed">
+        <div className="flex justify-center items-center gap-4">
+          {sections.map((sec) => {
+            return (
+              <Button
+                onClick={() => setView(sec.view as TEditorView)}
+                key={sec.view}
+                variant={"outline"}
+                size={"xs"}
+                className={`${view === sec.view ? "bg-foreground/5" : ""}`}>
+                {sec.label}
+              </Button>
+            );
+          })}
+        </div>
+        <div>
+          <Button size={"xs"} variant={"outline"} className="flex" onClick={() => setPreview(!preview)}>
+            {t("label_editor")}
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="h-12 flex justify-between items-center w-full bg-background border-b px-3 z-20 fixed">
       <div className="flex justify-center items-center gap-1">
@@ -508,11 +539,6 @@ const NavEditor = () => {
       </div>
       {active && (
         <div className="flex justify-center items-center gap-4">
-          {form.updated_at !== "" && (
-            <span className="text-xs text-foreground/80 hidden">
-              {t("label_last_updated")}: {new Date(form.updated_at).toLocaleString()}
-            </span>
-          )}
           {!empty && (
             <Button size={"xs"} variant={"outline"} className="flex" onClick={() => setPreview(!preview)}>
               {preview ? t("label_editor") : t("label_preview")}
