@@ -5,7 +5,7 @@ import useUserStore from "@/stores/user";
 import { paginationFrom, paginationTo } from "@/utils/constants";
 import { EBlock, EForm, EFormAnalytics, EIntegration, EProfile, ESubmission, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
-import { BarChartIcon, PlugIcon, SendIcon, Settings2Icon } from "lucide-react";
+import { BarChartIcon, PlugIcon, SendIcon, SettingsIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import FormIntegrations from "./form-integrations";
@@ -64,7 +64,7 @@ const FormWrapper = ({
     },
     {
       label: t("nav_settings"),
-      icon: Settings2Icon,
+      icon: SettingsIcon,
       view: "settings",
       enabled: true,
     },

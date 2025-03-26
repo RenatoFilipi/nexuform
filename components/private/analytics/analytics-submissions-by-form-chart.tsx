@@ -28,7 +28,7 @@ const AnalyticsSubmissionsByFormChart = () => {
   if (query.isPending) return null;
 
   return (
-    <div className="flex flex-col h-full gap-4">
+    <div className="flex flex-col h-full gap-8">
       <div className="flex justify-between items-center">
         <span>{t("label_submissions_by_form")}</span>
       </div>
@@ -45,7 +45,7 @@ const AnalyticsSubmissionsByFormChart = () => {
           {subs.map((sub) => {
             const percentage = (100 * sub.count) / submissions.length;
             return (
-              <div key={sub.formId} className="flex flex-col gap-2 border p-4 rounded">
+              <div key={sub.formId} className="flex flex-col gap-2">
                 <div className="flex justify-between items-center">
                   <span className="text-sm">{sub.name}</span>
                   <div className="flex justify-center items-center gap-2">

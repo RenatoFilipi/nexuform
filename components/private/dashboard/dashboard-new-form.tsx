@@ -14,7 +14,7 @@ import { getTemplates } from "@/utils/templates";
 import { TAppState, TSetState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronLeftIcon, HexagonIcon, Loader2Icon, PlusIcon } from "lucide-react";
+import { ChevronLeftIcon, ConstructionIcon, HexagonIcon, Loader2Icon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
@@ -338,8 +338,10 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
             );
           })}
         </div>
-        <Alert variant={"info"}>
-          <AlertDescription className="">{t("label_more_templates_alert")}</AlertDescription>
+        <Alert variant={"info"} className="px-3 py-2">
+          <AlertDescription className="text-xs flex justify-start items-center gap-3">
+            <ConstructionIcon className="w-4 h-4" /> {t("label_more_templates_alert")}
+          </AlertDescription>
         </Alert>
       </div>
       <div className="flex justify-between flex-col-reverse sm:flex-row items-center gap-2 sm:gap-4">

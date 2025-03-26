@@ -11,7 +11,7 @@ import useUserStore from "@/stores/user";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BookDashedIcon, GlobeIcon, LoaderIcon, MonitorOffIcon, ShieldAlertIcon, WrenchIcon } from "lucide-react";
+import { BookDashedIcon, GlobeIcon, LoaderIcon, MonitorOffIcon, SettingsIcon, ShieldAlertIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -24,7 +24,7 @@ type TView = "general" | "status" | "delete";
 const FormSettings = () => {
   const t = useTranslations("app");
   const views = [
-    { label: t("nav_general"), icon: WrenchIcon, view: "general", enabled: true },
+    { label: t("nav_general"), icon: SettingsIcon, view: "general", enabled: true },
     { label: t("nav_status"), icon: GlobeIcon, view: "status", enabled: true },
     { label: t("nav_delete"), icon: ShieldAlertIcon, view: "delete", enabled: true },
   ];
@@ -33,15 +33,15 @@ const FormSettings = () => {
 
   return (
     <div className="flex w-full h-full gap-6 flex-col sm:flex-row">
-      <div className="flex gap-1 sm:gap-3 flex-row sm:flex-col h-full sm:h-fit w-full sm:w-[260px]">
+      <div className="flex gap-1 sm:gap-1 flex-row sm:flex-col h-full sm:h-fit w-full sm:w-[260px]">
         {enabledViews.map((v) => {
           return (
             <button
               key={v.view}
               onClick={() => setView(v.view as TView)}
               className={`${
-                v.view === view ? "border-foreground/30 font-medium" : "border-transparent text-foreground/70"
-              } border p-2 flex items-center justify-center sm:justify-start gap-2 text-xs hover:bg-foreground/5 rounded flex-1`}>
+                v.view === view ? "font-medium bg-foreground/5" : "border-transparent text-foreground/70"
+              } border p-2 flex items-center justify-center sm:justify-start gap-2 text-xs hover:bg-foreground/5 border-transparent rounded flex-1`}>
               <v.icon className={`${v.view === view ? "text-primary" : "text-foreground/70"} w-4 h-4`} />
               {v.label}
             </button>
