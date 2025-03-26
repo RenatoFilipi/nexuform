@@ -27,6 +27,7 @@ const nextConfig = {
       },
     ];
   },
+  devIndicators: false,
 };
 
 export default withNextIntl(nextConfig);

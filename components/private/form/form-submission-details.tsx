@@ -1,6 +1,7 @@
 import SubmissionStatusBadge from "@/components/shared/submission-status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import useUserStore from "@/stores/user";
 import { minWidth640, minute } from "@/utils/constants";
@@ -115,7 +116,7 @@ const Body = ({
     <div className="h-full overflow-y-auto flex flex-col gap-4">
       <div className="flex flex-col overflow-y-auto flex-1 gap-4">
         {isDesktop && (
-          <div className="flex flex-col gap-2 p-3 border rounded">
+          <div className="flex flex-col gap-2">
             <div className="flex justify-between items-center gap-4">
               <span className="text-base font-medium">{submission.identifier}</span>
               <SubmissionStatusBadge status={submission.status as TSubmissionStatus} uppercase />
@@ -140,6 +141,7 @@ const Body = ({
             </div>
           </div>
         )}
+        <Separator />
         <div className="flex-1 flex flex-col overflow-y-auto gap-6">
           {query.data?.collections.map((coll, i) => {
             const { question, answer, type } = coll;
@@ -170,7 +172,7 @@ const Body = ({
               onClick={() => {
                 exportOneSubmissionToCSV(submission, query.data?.collections ?? []);
               }}
-              variant={"outline"}
+              variant={"secondary"}
               size={"sm"}
               className="w-full sm:w-fit">
               {t("label_csv_export")}
@@ -178,7 +180,7 @@ const Body = ({
           )}
           {!isAllowedToExport && (
             <ManageSubscription>
-              <Button variant={"outline"} size={"sm"} className="w-full sm:w-fit">
+              <Button variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
                 {t("label_csv_export")}
               </Button>
             </ManageSubscription>
