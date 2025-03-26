@@ -106,8 +106,8 @@ const FormSubmissions = () => {
   });
   return (
     <div className="flex flex-col w-full gap-4 overflow-y-auto">
-      <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
-        <div className="flex justify-start items-center gap-2 w-full">
+      <div className="flex justify-between items-center flex-col sm:flex-row gap-4 w-full">
+        <div className="flex justify-start items-center gap-2 w-full overflow-x-auto">
           {statusButtons.map((x) => {
             return (
               <Button
@@ -124,10 +124,10 @@ const FormSubmissions = () => {
             );
           })}
         </div>
-        <div className="flex justify-end items-center w-full gap-4">
+        <div className="flex justify-end items-center gap-4">
           {filterStatus !== "all" && (
             <Badge variant={"purple"}>
-              <FilterIcon className="w-4 h-4 mr-2" /> {t("label_filter_applied")}
+              <FilterIcon className="w-4 h-4 mr-2" /> <span className="truncate">{t("label_filter_applied")}</span>
               <button onClick={() => setFilterStatus("all")} className="ml-2 w-fit hover:bg-purple-500/20 rounded">
                 <XIcon className="w-4 h-4" />
               </button>
