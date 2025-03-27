@@ -13,34 +13,30 @@ import ManageSubscription from "../shared/manage-subscription";
 import DashboardForms from "./dashboard-forms";
 import DashboardNewForm from "./dashboard-new-form";
 
-const DashboardWrapper = ({
-  forms,
-  profile,
-  subscription,
-  email,
-  locale,
-}: {
+interface IProps {
   forms: EForm[];
   profile: EProfile;
   subscription: ESubscription;
   email: string;
   locale: string;
-}) => {
+}
+
+const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProps) => {
   const t = useTranslations("app");
   const user = useUserStore();
-  const { setForms } = useDashboardStore();
+  const dashboard = useDashboardStore();
   const currentPlan = getCurrentPlan(subscription.plan as TPlan);
   const mustUpgrade = user.formsCount >= currentPlan.forms;
 
   const query = useQuery({
     queryKey: ["dashboardData"],
     queryFn: () => {
-      setForms(forms);
       user.setFormsCount(forms.length);
       user.setProfile(profile);
       user.setSubscription(subscription);
       user.setEmail(email);
       user.setLocale(locale);
+      dashboard.setForms(forms);
       return null;
     },
     refetchOnWindowFocus: false,
@@ -53,14 +49,15 @@ const DashboardWrapper = ({
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-medium">{t("label_forms")}</h1>
         <div className="flex justify-center items-center gap-4">
-          {mustUpgrade ? (
+          {mustUpgrade && (
             <ManageSubscription>
               <Button size={"sm"} variant={"secondary"}>
                 <PlusIcon className="w-4 h-4 mr-2" />
                 {t("label_create_form")}
               </Button>
             </ManageSubscription>
-          ) : (
+          )}
+          {!mustUpgrade && (
             <DashboardNewForm>
               <Button size={"sm"} variant={"secondary"}>
                 <PlusIcon className="w-4 h-4 mr-2" />

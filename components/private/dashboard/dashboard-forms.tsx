@@ -1,13 +1,13 @@
-import useFormsStore from "@/stores/dashboard";
+import useDashboardStore from "@/stores/dashboard";
 import { LayersIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import DashboardFormCard from "./dashboard-form-card";
 
 const DashboardForms = () => {
-  const { forms } = useFormsStore();
+  const dashboard = useDashboardStore();
   const t = useTranslations("app");
 
-  if (forms.length === 0) {
+  if (dashboard.forms.length === 0) {
     return (
       <div className="flex justify-center items-center h-full flex-1 flex-col gap-4">
         <div className="border pb-20 flex flex-col justify-center items-center gap-6 border-none">
@@ -26,7 +26,7 @@ const DashboardForms = () => {
   }
   return (
     <div className="overflow-y-auto grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-      {forms.map((form) => (
+      {dashboard.forms.map((form) => (
         <DashboardFormCard key={form.id} form={form} />
       ))}
     </div>

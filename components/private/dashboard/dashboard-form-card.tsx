@@ -11,7 +11,7 @@ import Link from "next/link";
 const DashboardFormCard = ({ form }: { form: EForm }) => {
   const t = useTranslations("app");
   const { id, name, status, updated_at } = form;
-  const { locale } = useUserStore();
+  const user = useUserStore();
 
   return (
     <Link href={`/dashboard/forms/${id}`}>
@@ -20,7 +20,7 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
           <div className="flex justify-between items-start w-full flex-col gap-2">
             <span className="text-sm truncate max-w-[240px] font-medium">{name}</span>
             <span className="text-xs text-foreground/70">
-              {t("label_last_updated")} {formatDateRelativeToNow(updated_at, locale)}
+              {t("label_last_updated")} {formatDateRelativeToNow(updated_at, user.locale)}
             </span>
             <FormStatusBadge status={status as TFormStatus} uppercase />
           </div>

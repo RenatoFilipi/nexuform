@@ -135,7 +135,7 @@ const PreSelectForm = ({ setState, setView }: { setState: TSetState<boolean>; se
 const CustomForm = ({ setState, setView }: { setState: TSetState<boolean>; setView: TSetState<TView> }) => {
   const t = useTranslations("app");
   const [isPending, startTransition] = useTransition();
-  const { profile } = useUserStore();
+  const user = useUserStore();
 
   const formSchema = z.object({
     name: z.string().min(3, t("required_n_letters", { n: 3 })),
@@ -154,7 +154,7 @@ const CustomForm = ({ setState, setView }: { setState: TSetState<boolean>; setVi
       const formData = new FormData();
       formData.append("name", name);
       formData.append("description", description);
-      formData.append("userId", profile.id);
+      formData.append("userId", user.profile.id);
       await createFormAction(formData);
     });
   };
@@ -236,23 +236,22 @@ const CustomForm = ({ setState, setView }: { setState: TSetState<boolean>; setVi
 };
 const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; setView: TSetState<TView> }) => {
   const t = useTranslations("app");
-  const supabase = createClient();
   const router = useRouter();
+  const supabase = createClient();
+  const user = useUserStore();
   const [appState, setAppState] = useState<TAppState>("idle");
-  const [value, setValue] = useState("");
-  const { subscription, profile, locale } = useUserStore();
   const [localTemplates, setLocalTemplates] = useState<IFormTemplate[]>([]);
-  const showBadge = subscription.plan !== "pro";
+  const [value, setValue] = useState("");
+  const showBadge = user.subscription.plan !== "pro";
 
   const query = useQuery({
     queryKey: ["templatesData"],
     queryFn: async () => {
-      setLocalTemplates(await getTemplates(locale));
+      setLocalTemplates(await getTemplates(user.locale));
       return null;
     },
     refetchOnWindowFocus: false,
   });
-
   const onSubmit = async () => {
     const targetTemplate = localTemplates.find((x) => x.id === value);
     if (!targetTemplate) return;
@@ -265,7 +264,7 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
         {
           name: form.name,
           description: form.description,
-          owner_id: profile.id,
+          owner_id: user.profile.id,
           public_url: nanoid(20, true, true),
           submit_text: form.submit_text,
           nebulaform_branding: true,
@@ -303,7 +302,6 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
 
     router.push(`/dashboard/editor/${formData.id}`);
   };
-
   if (query.isPending) return null;
 
   return (
@@ -319,7 +317,7 @@ const TemplateForm = ({ setState, setView }: { setState: TSetState<boolean>; set
               <button
                 key={temp.id}
                 onClick={() => {
-                  if (temp.pro && subscription.plan !== "pro") return;
+                  if (temp.pro && user.subscription.plan !== "pro") return;
                   setValue(temp.id);
                 }}
                 className={`${
