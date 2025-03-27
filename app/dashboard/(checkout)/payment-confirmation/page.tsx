@@ -20,7 +20,7 @@ const PaymentConfirmation = () => {
           </div>
           <div className="flex flex-col justify-center items-center gap-2">
             <h1 className="text-xl font-semibold">{t("label_active_sub")}</h1>
-            <span className="text-sm text-foreground/60">{t("desc_active_sub")}</span>
+            <span className="text-sm text-foreground/60 text-center">{t("desc_active_sub")}</span>
           </div>
         </div>
         <div className="flex flex-col justify-center items-center gap-2 w-full">

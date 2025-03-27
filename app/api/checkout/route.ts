@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
 export async function POST(request: Request) {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "");
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   try {
     const session = await stripe.checkout.sessions.create({
       ui_mode: "embedded",
@@ -13,8 +13,8 @@ export async function POST(request: Request) {
         },
       ],
       mode: "subscription",
-      payment_method_types: ["card", "pix", "paypal"],
-      return_url: `${request.headers.get("origin")}/payment-confirmation?session_id={CHECKOUT_SESSION_ID}`,
+      payment_method_types: ["card", "pix"],
+      return_url: `${request.headers.get("origin")}/dashboard/payment-confirmation?session_id={CHECKOUT_SESSION_ID}`,
     });
     return NextResponse.json({ id: session.id, client_secret: session.client_secret });
   } catch (e) {

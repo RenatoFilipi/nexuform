@@ -33,12 +33,12 @@ const HowItWorks = () => {
   return (
     <section
       id="how-it-works"
-      className="py-16 w-full px-6 sm:px-12 sm:min-h-dvh flex justify-center items-center flex-col gap-6">
+      className="py-16 w-full px-8 sm:px-0 sm:min-h-dvh flex justify-center items-center flex-col gap-6">
       <div className="flex flex-col gap-4 justify-center items-center">
         <Badge uppercase variant="primary" className="w-fit">
           {t("nav_htw")}
         </Badge>
-        <h2 className="text-2xl font-bold leading-tight sm:text-4xl mt-3 text-center">{t("htw_headline")}</h2>
+        <h2 className="text-2xl font-bold leading-tight sm:text-4xl text-center">{t("htw_headline")}</h2>
         <p className="text-base text-foreground/70 mt-2">{t("htw_subheadline")}</p>
       </div>
       <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 mt-10 sm:mt-16 xl:mt-12">

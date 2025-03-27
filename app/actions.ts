@@ -1,5 +1,6 @@
 "use server";
 
+import { stripe } from "@/lib/stripe";
 import { encodedRedirect, nanoid } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { createClient as superCreateClient } from "@supabase/supabase-js";
@@ -125,4 +126,15 @@ export const ResetPasswordAction = async (formData: FormData) => {
     return encodedRedirect("error", "/password/reset", t("err_generic"));
   }
   return encodedRedirect("success", "/password/reset", t("label_suc_request_password"));
+};
+export const fetchClientSecretAction = async () => {
+  const origin = (await headers()).get("origin");
+  const session = await stripe.checkout.sessions.create({
+    ui_mode: "embedded",
+    line_items: [{ price: "", quantity: 1 }],
+    mode: "payment",
+    payment_method_types: ["card", "pix"],
+    return_url: `${origin}/dashboard/payment-confirmation?session_id={CHECKOUT_SESSION_ID}`,
+  });
+  return session.client_secret;
 };
