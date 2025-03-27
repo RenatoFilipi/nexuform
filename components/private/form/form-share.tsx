@@ -40,7 +40,7 @@ const FormShare = ({ children, form }: { children: React.ReactNode; form: EForm 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3 flex flex-col max-h-[90%]">
+      <DrawerContent className="p-3 flex flex-col max-h-[90%] h-full">
         <DrawerHeader>
           <DrawerTitle>{t("label_form_share")}</DrawerTitle>
           <DrawerDescription>{t("desc_form_share")}</DrawerDescription>

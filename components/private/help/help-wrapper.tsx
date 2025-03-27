@@ -33,7 +33,7 @@ const HelpWrapper = ({ email, profile, subscription }: Props) => {
 
   return (
     <div className="flex-1 mt-12 mb-12 sm:mb-0 flex flex-col">
-      <div className="flex justify-center items-center h-full flex-1 flex-col gap-8">
+      <div className="flex justify-center items-center h-full flex-1 flex-col gap-8 px-4">
         <div className="flex justify-center items-center gap-2 flex-col">
           <h1 className="text-2xl font-semibold">{t("label_help")}</h1>
           <span className="text-sm text-foreground/70 text-center">{t("desc_help")}</span>
@@ -44,7 +44,7 @@ const HelpWrapper = ({ email, profile, subscription }: Props) => {
           <span>{supportEmail}</span>
           <Button
             variant={"ghost"}
-            size={"sm"}
+            size={"xs"}
             onClick={() => {
               navigator.clipboard.writeText(supportEmail);
             }}>

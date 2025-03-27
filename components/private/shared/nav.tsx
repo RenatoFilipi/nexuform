@@ -61,7 +61,6 @@ import ManageSubscription from "./manage-subscription";
 
 const Nav = () => {
   const pathname = usePathname();
-
   if (pathname.includes("dashboard/payment-confirmation")) return null;
   if (pathname.includes("dashboard/editor/")) return <NavEditor />;
   return <NavApp />;
@@ -110,8 +109,8 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent className="w-screen flex flex-col gap-2 py-4">
-        <div className="flex justify-between items-center">
-          <span>{t("label_plan")}</span>
+        <div className="flex justify-between items-center px-2">
+          <span className="font-medium">{user.email}</span>
           {user.subscription.plan === "" ? null : <PlanBadge plan={user.subscription.plan as TPlan} />}
         </div>
         <div className="flex flex-col">
@@ -133,7 +132,7 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
         </div>
         <div className="flex flex-col w-full gap-2">
           <div className="flex justify-between items-center px-2">
-            <span className="text-sm flex items-center justify-center">Theme</span>
+            <span className="text-sm flex items-center justify-center">{t("label_theme")}</span>
             <RadioGroup value={theme} onValueChange={setTheme} className="flex gap-1">
               <div>
                 <RadioGroupItem value="system" id="system" className="peer sr-only" />
@@ -581,7 +580,7 @@ const ChangeForm = ({ children }: { children: React.ReactNode }) => {
     return (
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
-        <DropdownMenuContent className="flex w-[300px]">
+        <DropdownMenuContent className="flex w-[300px] p-3">
           <Body setState={setOpen} />
         </DropdownMenuContent>
       </DropdownMenu>
@@ -591,7 +590,7 @@ const ChangeForm = ({ children }: { children: React.ReactNode }) => {
   return (
     <Drawer>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent className="p-3 flex flex-col max-h-[60%] h-full">
         <DrawerHeader className="hidden">
           <DrawerTitle></DrawerTitle>
           <DrawerDescription></DrawerDescription>
@@ -601,7 +600,6 @@ const ChangeForm = ({ children }: { children: React.ReactNode }) => {
     </Drawer>
   );
 };
-
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const store = useFormStore();
@@ -611,22 +609,24 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const isDesktop = useMedia(minWidth640);
 
   return (
-    <div className="flex flex-col gap-4 w-full p-2">
-      <span className="text-sm font-medium">{t("label_forms")}</span>
-      <div className="flex flex-col w-full">
-        {store.forms.map((x) => {
-          return (
-            <a
-              key={x.id}
-              href={`/dashboard/forms/${x.id}`}
-              className={`${
-                store.form.id === x.id ? "pointer-events-none bg-foreground/5" : "hover:bg-foreground/5"
-              } px-2 py-2 flex justify-between items-center rounded`}>
-              <span className="truncate text-xs">{x.name}</span>
-              <FormStatusBadge status={x.status as TFormStatus} />
-            </a>
-          );
-        })}
+    <div className="flex flex-col gap-4 w-full justify-between h-full">
+      <div className="flex flex-col gap-4 h-full">
+        <span className="text-sm font-medium">{t("label_forms")}</span>
+        <div className="flex flex-col w-full h-full">
+          {store.forms.map((x) => {
+            return (
+              <a
+                key={x.id}
+                href={`/dashboard/forms/${x.id}`}
+                className={`${
+                  store.form.id === x.id ? "pointer-events-none bg-foreground/5" : "hover:bg-foreground/5"
+                } px-2 py-2 flex justify-between items-center rounded`}>
+                <span className="truncate text-xs">{x.name}</span>
+                <FormStatusBadge status={x.status as TFormStatus} />
+              </a>
+            );
+          })}
+        </div>
       </div>
       <div className="flex w-full justify-between items-center flex-col-reverse sm:flex-row gap-2">
         <Button

@@ -64,7 +64,7 @@ const DashboardNewForm = ({ children }: { children: React.ReactNode }) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3 flex flex-col max-h-[90%]">
+      <DrawerContent className="p-3 flex flex-col max-h-[90%] h-full">
         <DrawerHeader className="hidden">
           <DrawerTitle></DrawerTitle>
           <DrawerDescription></DrawerDescription>
@@ -160,7 +160,7 @@ const CustomForm = ({ setState, setView }: { setState: TSetState<boolean>; setVi
   };
 
   return (
-    <div className="flex flex-col gap-4 pt-4 sm:pt-0 h-full w-full">
+    <div className="flex flex-col gap-4 pt-4 sm:pt-0 h-full w-full flex-1">
       <div className="grid gap-1">
         <span className="font-semibold">{t("label_custom_form")}</span>
         <p className="text-xs text-foreground/70">{t("desc_custom_form")}</p>
