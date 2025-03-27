@@ -393,7 +393,10 @@
     "desc_update_password": "Cambia tu contraseña para mejorar la seguridad de tu cuenta.",
     "label_suc_request_password": "Solicitud Enviada",
     "desc_suc_request_password": "Hemos enviado un correo con instrucciones para restablecer tu contraseña. Por favor, revisa tu bandeja de entrada y sigue las instrucciones.",
-    "label_go_back_login": "Volver al inicio de sesión"
+    "label_go_back_login": "Volver al inicio de sesión",
+    "err_update_password": "Código inválido o expirado.",
+    "label_suc_update_password": "Contraseña Actualizada",
+    "desc_suc_update_password": "Tu contraseña ha sido actualizada con éxito. Usa tu nueva contraseña para acceder a tu cuenta."
   },
   "landing": {
     "nav_features": "Características",

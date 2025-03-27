@@ -3,11 +3,13 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { EyeIcon, EyeOffIcon, LoaderIcon } from "lucide-react";
+import { CheckIcon, EyeIcon, EyeOffIcon, LoaderIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useState } from "react";
@@ -16,6 +18,7 @@ import { z } from "zod";
 
 const UpdatePasswordForm = () => {
   const t = useTranslations("auth");
+  const supabase = createClient();
   const router = useRouter();
   const [appState, setAppState] = useState<TAppState>("idle");
   const [code] = useQueryState("code");
@@ -30,7 +33,6 @@ const UpdatePasswordForm = () => {
     },
     refetchOnWindowFocus: false,
   });
-
   const passwordSchema = z.object({
     password: z
       .string()
@@ -44,12 +46,55 @@ const UpdatePasswordForm = () => {
     resolver: zodResolver(passwordSchema),
     defaultValues: { password: "" },
   });
-
   const onPasswordSubmit = async (values: z.infer<typeof passwordSchema>) => {
-    console.log(values);
+    setAppState("loading");
+    if (!code) {
+      setAppState("error");
+      return;
+    }
+    const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+    if (exchangeError) {
+      setAppState("error");
+      return;
+    }
+    const { password } = values;
+    const { error: passwordError } = await supabase.auth.updateUser({
+      password,
+    });
+    if (passwordError) {
+      setAppState("error");
+      return;
+    }
+    setAppState("success");
   };
-
   if (query.isPending) return null;
+
+  if (appState === "error") {
+    return (
+      <div className="flex flex-col justify-center items-center gap-2">
+        <div className="flex justify-center items-center rounded p-2 bg-destructive/10">
+          <XIcon className="text-destructive" />
+        </div>
+        <span className="text-sm text-foreground/70">{t("err_update_password")}</span>
+      </div>
+    );
+  }
+  if (appState === "success") {
+    return (
+      <div className="flex flex-col justify-center items-center gap-4">
+        <div className="flex justify-center items-center rounded p-2 bg-success/10">
+          <CheckIcon className="text-success" />
+        </div>
+        <div className="flex flex-col justify-center items-center gap-2">
+          <span className="text-lg font-medium">{t("label_suc_update_password")}</span>
+          <p className="text-sm text-foreground/70 text-center">{t("desc_suc_update_password")}</p>
+          <Button variant={"secondary"} size={"sm"} className="mt-4 w-full" asChild>
+            <Link href={"/login"}>{t("label_go_back_login")}</Link>
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Form {...passwordHandler}>

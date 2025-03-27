@@ -392,7 +392,10 @@
     "desc_update_password": "Change your password to enhance the security of your account.",
     "label_suc_request_password": "Request Sent",
     "desc_suc_request_password": "We have sent an email with instructions to reset your password. Please check your inbox and follow the instructions.",
-    "label_go_back_login": "Go back to login"
+    "label_go_back_login": "Go back to login",
+    "err_update_password": "Invalid or expired code.",
+    "label_suc_update_password": "Password Updated",
+    "desc_suc_update_password": "Your password has been successfully updated. Use your new password to access your account."
   },
   "landing": {
     "nav_features": "Features",
