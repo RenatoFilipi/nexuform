@@ -32,7 +32,7 @@ import {
   Layers2Icon,
   MailIcon,
   MoveVerticalIcon,
-  PaintbrushIcon,
+  PaletteIcon,
   ScaleIcon,
   StarIcon,
   TextIcon,
@@ -186,7 +186,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const views = [
     { label: t("nav_general"), icon: Layers2Icon, view: "general", enabled: true },
-    { label: t("nav_colors"), icon: PaintbrushIcon, view: "colors", enabled: true },
+    { label: t("nav_colors"), icon: PaletteIcon, view: "colors", enabled: true },
     { label: t("nav_reorder"), icon: MoveVerticalIcon, view: "reorder", enabled: true },
   ];
   const [view, setView] = useState<TView>("general");

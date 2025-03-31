@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
 export async function POST(request: Request) {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   try {
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
     const session = await stripe.checkout.sessions.create({
       ui_mode: "embedded",
       line_items: [

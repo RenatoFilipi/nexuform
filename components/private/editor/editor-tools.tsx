@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { FrameIcon, PlusIcon, SettingsIcon } from "lucide-react";
+import { PaintbrushIcon, PlusIcon, SettingsIcon } from "lucide-react";
 import AddBlock from "../blocks/add-block";
 import EditorFormDesign from "./editor-form-design";
 import EditorFormSettings from "./editor-form-settings";
@@ -14,7 +14,7 @@ const EditorTools = () => {
       </EditorFormSettings>
       <EditorFormDesign>
         <Button variant={"ghost"} size={"icon"}>
-          <FrameIcon className="w-5 h-5" />
+          <PaintbrushIcon className="w-5 h-5" />
         </Button>
       </EditorFormDesign>
       <AddBlock>
