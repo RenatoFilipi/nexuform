@@ -9,7 +9,6 @@ import { LoaderIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
-import Brand from "../core/brand";
 import CheckBoxesDesign from "../private/blocks/design/checkboxes-design";
 import CustomScaleDesign from "../private/blocks/design/custom-scale-design";
 import DatePickerDesign from "../private/blocks/design/date-picker-design";
@@ -213,7 +212,7 @@ const SubmissionGroup = () => {
     <div
       className={`${
         theme.width === "centered" ? "sm:w-[650px]" : "w-full"
-      }  flex flex-col gap-6 w-full border rounded m-4 sm:m-8 p-6 bg-background relative`}>
+      }  flex flex-col gap-6 w-full rounded bg-background relative px-2 my-10`}>
       <span className="hidden">{formatTime(time)}</span>
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-bold">{form.name}</h1>
@@ -245,7 +244,7 @@ const SubmissionGroup = () => {
           }
         })}
       </div>
-      <div className="flex flex-col gap-14">
+      <div className="flex flex-col gap-4 sm:gap-8">
         <div className="flex justify-end items-center w-full">
           <Button onClick={onSubmit} size={"sm"} className={`${currentColor.tw_class} w-full sm:w-fit`}>
             {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />} {form.submit_text}
@@ -253,9 +252,8 @@ const SubmissionGroup = () => {
         </div>
         {form.nebulaform_branding && (
           <div className="flex justify-center items-center w-full">
-            <span className="border rounded p-2 w-fit flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
-              <Brand type="logo" className="fill-foreground w-4 h-4" />
-              <span className="text-foreground text-sm font-semibold">{t("label_powered")}</span>
+            <span className="flex justify-center items-center gap-2 bg-foreground/5 w-full py-2 rounded sm:w-fit px-6">
+              <span className="text-foreground text-sm font-medium">{t("label_powered")}</span>
             </span>
           </div>
         )}

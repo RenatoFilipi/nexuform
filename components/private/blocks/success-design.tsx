@@ -48,7 +48,7 @@ const SuccessDesign = ({ brand, preview, color, description, title }: IProps) =>
 
   return (
     <div className="flex justify-center items-center w-full">
-      <Card className="flex flex-col gap-6 sm:w-[500px] p-8 w-full">
+      <Card className="flex flex-col gap-10 p-8 w-full border-transparent sm:w-fit">
         <div className="flex flex-col justify-center items-center gap-6">
           <div className={twMerge(currentColor.tw_class, "rounded-full p-3")}>
             <CheckIcon className="w-10 h-10" />
@@ -59,23 +59,23 @@ const SuccessDesign = ({ brand, preview, color, description, title }: IProps) =>
           </div>
         </div>
         {brand && (
-          <div className="flex justify-center items-center gap-3 flex-col">
+          <div className="flex justify-center items-center gap-4 flex-col">
             <div className="text-center">
               <span className="font-medium text-sm text-foreground/70">{t("success_cta")}</span>
             </div>
             <Button
-              size="lg"
-              variant={"outline"}
-              className="w-full flex items-center justify-center gap-2"
+              size="default"
+              variant={"secondary"}
+              className="flex items-center justify-center gap-2 w-full"
               asChild={!preview}>
               {preview ? (
                 <>
-                  <Brand type="logo" className="w-4 h-4 fill-foreground" />
+                  <Brand type="logo" className="w-4 h-4 fill-background" />
                   {t("access_cta")}
                 </>
               ) : (
                 <Link href={"/signup"}>
-                  <Brand type="logo" className="w-4 h-4 fill-foreground" />
+                  <Brand type="logo" className="w-4 h-4 fill-background" />
                   {t("access_cta")}
                 </Link>
               )}

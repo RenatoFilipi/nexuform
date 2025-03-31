@@ -1,4 +1,3 @@
-import Brand from "@/components/core/brand";
 import { Button } from "@/components/ui/button";
 import useEditorStore from "@/stores/editor";
 import { IDesign } from "@/utils/interfaces";
@@ -114,7 +113,7 @@ const EditorPreviewGroup = () => {
     <div
       className={`${
         theme.width === "centered" ? "sm:w-[650px]" : "w-full"
-      }  flex flex-col gap-6 w-full border rounded p-6 bg-background relative overflow-y-auto`}>
+      }  flex flex-col gap-6 w-full rounded bg-background relative overflow-y-auto px-2`}>
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-bold">{form.name}</h1>
         <p className="text-sm text-foreground/80">{form.description}</p>
@@ -145,18 +144,17 @@ const EditorPreviewGroup = () => {
           }
         })}
       </div>
-      <div className="flex flex-col gap-14">
+      <div className="flex flex-col gap-4 sm:gap-8">
         <div className="flex justify-end items-center w-full">
           <Button size={"sm"} className={`${currentColor.tw_class} w-full sm:w-fit`}>
             {form.submit_text}
           </Button>
         </div>
         {form.nebulaform_branding && (
-          <div className="flex justify-center items-center w-full">
-            <span className="border rounded p-2 w-fit flex justify-center items-center gap-2 hover:bg-foreground/5 cursor-pointer">
-              <Brand type="logo" className="fill-foreground w-4 h-4" />
-              <span className="text-foreground text-sm font-semibold">{t("label_powered")}</span>
-            </span>
+          <div className="w-full flex justify-center items-center">
+            <div className="flex justify-center items-center gap-2 bg-foreground/5 w-full py-2 rounded sm:w-fit px-6">
+              <span className="text-foreground text-sm font-medium">{t("label_powered")}</span>
+            </div>
           </div>
         )}
       </div>

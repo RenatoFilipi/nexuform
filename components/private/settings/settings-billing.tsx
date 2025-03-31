@@ -5,7 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import useUserStore from "@/stores/user";
 import { getCurrentPlan, getDaysDifference } from "@/utils/functions";
 import { TPlan } from "@/utils/types";
-import { BuildingIcon, CalendarIcon } from "lucide-react";
+import { CalendarIcon, CrownIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import ManageSubscription from "../shared/manage-subscription";
 
@@ -47,15 +47,15 @@ const SettingsBilling = () => {
               </ManageSubscription>
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="flex items-center gap-4 p-4 bg-[#F8F8F8] dark:bg-foreground/5 rounded border">
-              <BuildingIcon className="w-6 h-6 text-primary" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="flex items-center gap-4 p-4 rounded border">
+              <CrownIcon className="w-6 h-6 text-primary" />
               <div>
                 <span className="text-lg font-semibold">{planName(userStore.subscription.plan)}</span>
                 <p className="text-xs text-muted-foreground">{t("label_plan")}</p>
               </div>
             </div>
-            <div className="flex items-center gap-4 p-4 bg-[#F8F8F8] dark:bg-foreground/5 rounded border">
+            <div className="flex items-center gap-4 p-4 rounded border">
               <CalendarIcon className="w-6 h-6 text-primary" />
               <div>
                 <span className="text-lg font-semibold">{new Date(nextBillingDate).toLocaleDateString()}</span>
