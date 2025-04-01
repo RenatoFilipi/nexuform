@@ -1,6 +1,6 @@
 "use client";
 
-import { ResetPasswordAction } from "@/app/actions";
+import { ResetPasswordAction } from "@/app/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";

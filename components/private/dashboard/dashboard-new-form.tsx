@@ -1,6 +1,6 @@
 "use client";
 
-import { createFormAction } from "@/app/actions";
+import { createFormAction } from "@/app/actions/form";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";

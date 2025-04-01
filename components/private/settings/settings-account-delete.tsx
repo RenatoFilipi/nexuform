@@ -1,4 +1,4 @@
-import { DeleteAccountAction } from "@/app/actions";
+import { DeleteAccountAction } from "@/app/actions/auth";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   AlertDialog,

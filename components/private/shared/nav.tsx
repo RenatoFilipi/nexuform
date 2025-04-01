@@ -1,6 +1,6 @@
 "use client";
 
-import { signOutAction } from "@/app/actions";
+import { signOutAction } from "@/app/actions/auth";
 import FormStatusBadge from "@/components/shared/form-status-badge";
 import { Badge } from "@/components/ui/badge";
 import {
