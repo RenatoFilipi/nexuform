@@ -7,12 +7,11 @@ import { ShoppingBagIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
-const PaymentConfirmation = () => {
+const CheckoutSuccess = () => {
   const t = useTranslations("app");
-
   return (
-    <div className="flex justify-center items-center h-dvh relative border-t border-t-foreground/5 dark:bg-foreground/5 bg-[#F8F8F8]">
-      <Card className="flex flex-col justify-center items-center py-6 gap-8 relative px-10 mx-4">
+    <div className="flex justify-center items-center h-dvh relative" id="success">
+      <Card className="flex flex-col justify-center items-center py-6 gap-8 relative px-10 mx-4 border-transparent">
         <Brand type="logo" className="h-10 fill-foreground absolute -top-16 hidden" />
         <div className="flex flex-col justify-center items-center gap-4">
           <div className="flex justify-center items-center bg-success/10 p-3 rounded">
@@ -33,4 +32,4 @@ const PaymentConfirmation = () => {
   );
 };
 
-export default PaymentConfirmation;
+export default CheckoutSuccess;

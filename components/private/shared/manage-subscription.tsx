@@ -1,6 +1,5 @@
 "use client";
 
-import Checkout from "@/components/shared/checkout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,6 +28,7 @@ import { CheckIcon, RocketIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useMedia } from "react-use";
+import CheckoutStripe from "../checkout/checkout-stripe";
 import CancelSubscription from "./cancel-subscription";
 
 const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
@@ -126,11 +126,11 @@ const CardTemplate = ({ plan }: { plan: IPlan }) => {
           </div>
         </div>
         <div className="w-full">
-          <Checkout plan={plan.type}>
+          <CheckoutStripe plan={plan.type}>
             <Button disabled={currentPlan} className="w-full" size="sm">
               {currentPlan ? t("label_current_plan") : plan.ctaButton}
             </Button>
-          </Checkout>
+          </CheckoutStripe>
         </div>
       </div>
       <div className="flex flex-1 justify-start items-start w-full">

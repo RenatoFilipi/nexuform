@@ -61,7 +61,7 @@ import ManageSubscription from "./manage-subscription";
 
 const Nav = () => {
   const pathname = usePathname();
-  if (pathname.includes("dashboard/payment-confirmation")) return null;
+  if (pathname.includes("dashboard/checkout-result")) return null;
   if (pathname.includes("dashboard/editor/")) return <NavEditor />;
   return <NavApp />;
 };

@@ -18,7 +18,7 @@ import { useState } from "react";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-const Checkout = ({ children, plan }: { children: React.ReactNode; plan: TPlan }) => {
+const CheckoutStripe = ({ children, plan }: { children: React.ReactNode; plan: TPlan }) => {
   const t = useTranslations("app");
   const [open, setOpen] = useState(false);
   const { email } = useUserStore();
@@ -55,4 +55,4 @@ const Checkout = ({ children, plan }: { children: React.ReactNode; plan: TPlan }
   );
 };
 
-export default Checkout;
+export default CheckoutStripe;

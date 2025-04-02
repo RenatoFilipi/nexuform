@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 const Analytics = async () => {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
-  if (!data.user) return redirect("login");
+  if (!data.user) return redirect("/login");
   const email = data.user.email ?? "";
 
   const { data: profile, error: profileError } = await supabase
