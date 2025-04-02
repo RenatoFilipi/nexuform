@@ -298,7 +298,9 @@
     "label_date_picker": "Seletor de Data",
     "desc_date_picker": "Selecione uma data no calendário suspenso ou insira-a manualmente.",
     "label_qr_share": "Compartilhar via QR Code",
-    "desc_qr_share": "Escaneie o código QR ou copie o link para compartilhar seu formulário com outras pessoas de forma rápida e fácil."
+    "desc_qr_share": "Escaneie o código QR ou copie o link para compartilhar seu formulário com outras pessoas de forma rápida e fácil.",
+    "label_checkout": "Finalizar Compra",
+    "desc_checkout": "Revise seus itens e informações de pagamento antes de concluir sua compra."
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

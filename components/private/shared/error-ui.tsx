@@ -1,10 +1,26 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import useUserStore from "@/stores/user";
+import { useQuery } from "@tanstack/react-query";
 import { HandHelpingIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
-const ErrorUI = () => {
+const ErrorUI = ({ email }: { email: string }) => {
   const t = useTranslations("app");
+  const user = useUserStore();
+
+  const query = useQuery({
+    queryKey: ["errorUIData"],
+    queryFn: () => {
+      user.setEmail(email);
+      return null;
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  if (query.isPending) return null;
 
   return (
     <div className="flex flex-col items-center justify-center h-full px-4 py-6 sm:px-6 lg:px-36 mt-36 w-full">

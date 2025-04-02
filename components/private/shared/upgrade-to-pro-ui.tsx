@@ -1,10 +1,26 @@
+"use client";
+
+import Checkout from "@/components/shared/checkout";
 import { Button } from "@/components/ui/button";
+import useUserStore from "@/stores/user";
+import { useQuery } from "@tanstack/react-query";
 import { CrownIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import ManageSubscription from "./manage-subscription";
 
-const UpgradeToProUI = () => {
+const UpgradeToProUI = ({ email }: { email: string }) => {
   const t = useTranslations("app");
+  const user = useUserStore();
+
+  const query = useQuery({
+    queryKey: ["upgradeToProUIData"],
+    queryFn: () => {
+      user.setEmail(email);
+      return null;
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  if (query.isPending) return null;
 
   return (
     <div className="flex flex-col items-center justify-center h-full px-4 py-6 sm:px-6 lg:px-36 mt-36 w-full">
@@ -18,11 +34,11 @@ const UpgradeToProUI = () => {
             <p className="text-sm text-foreground/70">{t("desc_upgrade_pro")}</p>
           </div>
           <div className="flex justify-center items-center w-fit">
-            <ManageSubscription>
+            <Checkout plan="pro">
               <Button variant={"secondary"} size={"xs"}>
                 {t("label_upgrade_pro")}
               </Button>
-            </ManageSubscription>
+            </Checkout>
           </div>
         </div>
       </div>

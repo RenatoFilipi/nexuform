@@ -16,9 +16,10 @@ interface Props {
   profile: EProfile;
   subscription: ESubscription;
   locale: string;
+  email: string;
 }
 
-const EditorWrapper = ({ form, theme, blocks, profile, subscription, locale }: Props) => {
+const EditorWrapper = ({ form, theme, blocks, profile, subscription, locale, email }: Props) => {
   const editor = useEditorStore();
   const user = useUserStore();
   const [isPending, startTransition] = useTransition();
@@ -28,6 +29,7 @@ const EditorWrapper = ({ form, theme, blocks, profile, subscription, locale }: P
     queryFn: () => {
       startTransition(() => {
         user.setLocale(locale);
+        user.setEmail(email);
         user.setProfile(profile);
         user.setSubscription(subscription);
         editor.setForm(form);

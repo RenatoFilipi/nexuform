@@ -9,6 +9,7 @@ const Help = async () => {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   if (!data.user) return redirect("login");
+  const email = data.user.email ?? "";
 
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
@@ -16,7 +17,7 @@ const Help = async () => {
     .eq("id", data.user.id)
     .single();
 
-  if (profileError) return <ErrorUI />;
+  if (profileError) return <ErrorUI email={email} />;
 
   const { data: subscription, error: subscriptionError } = await supabase
     .from("subscriptions")
@@ -24,12 +25,12 @@ const Help = async () => {
     .eq("profile_id", data.user.id)
     .single();
 
-  if (subscriptionError) return <ErrorUI />;
+  if (subscriptionError) return <ErrorUI email={email} />;
 
   const active = isSubscriptionActive(subscription);
-  if (!active) return <SubscriptionUI />;
+  if (!active) return <SubscriptionUI email={email} />;
 
-  return <HelpWrapper email={data.user.email ?? ""} profile={profile} subscription={subscription} />;
+  return <HelpWrapper email={email} profile={profile} subscription={subscription} />;
 };
 
 export default Help;

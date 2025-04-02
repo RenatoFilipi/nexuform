@@ -298,7 +298,9 @@
     "label_date_picker": "Selector de Fecha",
     "desc_date_picker": "Seleccione una fecha del calendario desplegable o ingrésela manualmente.",
     "label_qr_share": "Compartir vía Código QR",
-    "desc_qr_share": "Escanea el código QR o copia el enlace para compartir tu formulario con otros de manera rápida y sencilla."
+    "desc_qr_share": "Escanea el código QR o copia el enlace para compartir tu formulario con otros de manera rápida y sencilla.",
+    "label_checkout": "Finalizar Compra",
+    "desc_checkout": "Revisa tus artículos e información de pago antes de completar tu compra."
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

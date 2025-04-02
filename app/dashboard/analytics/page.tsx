@@ -9,6 +9,7 @@ const Analytics = async () => {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   if (!data.user) return redirect("login");
+  const email = data.user.email ?? "";
 
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
@@ -16,7 +17,7 @@ const Analytics = async () => {
     .eq("id", data.user.id)
     .single();
 
-  if (profileError) return <ErrorUI />;
+  if (profileError) return <ErrorUI email={email} />;
 
   const { data: subscription, error: subscriptionError } = await supabase
     .from("subscriptions")
@@ -24,10 +25,10 @@ const Analytics = async () => {
     .eq("profile_id", data.user.id)
     .single();
 
-  if (subscriptionError) return <ErrorUI />;
+  if (subscriptionError) return <ErrorUI email={email} />;
 
   const active = isSubscriptionActive(subscription);
-  if (!active || subscription.plan !== "pro") return <UpgradeToProUI />;
+  if (!active || subscription.plan !== "pro") return <UpgradeToProUI email={email} />;
 
   const { data: forms, error: formsError } = await supabase
     .from("forms")
@@ -35,7 +36,7 @@ const Analytics = async () => {
     .eq("owner_id", data.user.id)
     .order("created_at", { ascending: true });
 
-  if (formsError) return <ErrorUI />;
+  if (formsError) return <ErrorUI email={email} />;
 
   const formIds = forms.map((x) => x.id);
 
@@ -44,18 +45,18 @@ const Analytics = async () => {
     .select("*")
     .in("form_id", formIds);
 
-  if (submissionsError) return <ErrorUI />;
+  if (submissionsError) return <ErrorUI email={email} />;
 
   const { data: formsAnalytics, error: formsAnalyticsError } = await supabase
     .from("forms_analytics")
     .select("*")
     .eq("profile_id", data.user.id);
 
-  if (formsAnalyticsError) return <ErrorUI />;
+  if (formsAnalyticsError) return <ErrorUI email={email} />;
 
   return (
     <AnalyticsWrapper
-      email={data.user.email ?? ""}
+      email={email}
       profile={profile}
       subscription={subscription}
       forms={forms}

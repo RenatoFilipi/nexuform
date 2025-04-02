@@ -1,5 +1,6 @@
 "use client";
 
+import Checkout from "@/components/shared/checkout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -39,7 +40,7 @@ const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col w-full min-w-[650px]">
+        <DialogContent className="flex flex-col w-full min-w-[650px] h-[600px]">
           <DialogHeader>
             <DialogTitle>{t("label_manage_sub")}</DialogTitle>
             <DialogDescription>{t("desc_manage_sub")}</DialogDescription>
@@ -82,8 +83,8 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   if (query.isPending) return null;
 
   return (
-    <div className="flex flex-col gap-6 overflow-y-auto">
-      <div className="grid sm:grid-cols-2 gap-4 overflow-y-auto">
+    <div className="flex flex-col gap-6 overflow-y-auto h-full">
+      <div className="grid sm:grid-cols-2 gap-4 overflow-y-auto flex-1">
         {filteredPlans.map((plan) => (
           <CardTemplate key={plan.type} plan={plan} />
         ))}
@@ -125,9 +126,11 @@ const CardTemplate = ({ plan }: { plan: IPlan }) => {
           </div>
         </div>
         <div className="w-full">
-          <Button disabled={currentPlan} className="w-full" size="sm">
-            {currentPlan ? t("label_current_plan") : plan.ctaButton}
-          </Button>
+          <Checkout plan={plan.type}>
+            <Button disabled={currentPlan} className="w-full" size="sm">
+              {currentPlan ? t("label_current_plan") : plan.ctaButton}
+            </Button>
+          </Checkout>
         </div>
       </div>
       <div className="flex flex-1 justify-start items-start w-full">

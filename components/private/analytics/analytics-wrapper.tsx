@@ -20,18 +20,18 @@ interface Props {
 
 const AnalyticsWrapper = ({ forms, formsAnalytics, profile, subscription, email, submissions }: Props) => {
   const t = useTranslations("app");
-  const userStore = useUserStore();
-  const analyticsStore = useAnalyticsStore();
+  const user = useUserStore();
+  const analytics = useAnalyticsStore();
 
   const query = useQuery({
     queryKey: ["analyticsData"],
     queryFn: () => {
-      userStore.setProfile(profile);
-      userStore.setSubscription(subscription);
-      userStore.setEmail(email);
-      analyticsStore.setForms(forms);
-      analyticsStore.setFormAnalytics(formsAnalytics);
-      analyticsStore.setSubmissions(submissions);
+      user.setProfile(profile);
+      user.setSubscription(subscription);
+      user.setEmail(email);
+      analytics.setForms(forms);
+      analytics.setFormAnalytics(formsAnalytics);
+      analytics.setSubmissions(submissions);
       return null;
     },
     refetchOnWindowFocus: false,

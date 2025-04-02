@@ -12,6 +12,7 @@ const Editor = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   const { data } = await supabase.auth.getUser();
   if (!data.user) return redirect("login");
+  const email = data.user.email ?? "";
 
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
@@ -19,7 +20,7 @@ const Editor = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("id", data.user.id)
     .single();
 
-  if (profileError) return <ErrorUI />;
+  if (profileError) return <ErrorUI email={email} />;
 
   const { data: subscription, error: subscriptionError } = await supabase
     .from("subscriptions")
@@ -27,10 +28,10 @@ const Editor = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("profile_id", data.user.id)
     .single();
 
-  if (subscriptionError) return <ErrorUI />;
+  if (subscriptionError) return <ErrorUI email={email} />;
 
   const active = isSubscriptionActive(subscription);
-  if (!active) return <SubscriptionUI />;
+  if (!active) return <SubscriptionUI email={email} />;
 
   const { data: form, error: formError } = await supabase
     .from("forms")
@@ -39,13 +40,13 @@ const Editor = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("id", slug)
     .single();
 
-  if (formError) return <ErrorUI />;
+  if (formError) return <ErrorUI email={email} />;
 
   if (form.owner_id !== data.user.id) return redirect("/dashboard/forms");
 
   const { data: theme, error: themeError } = await supabase.from("themes").select("*").eq("form_id", slug).single();
 
-  if (themeError) return <ErrorUI />;
+  if (themeError) return <ErrorUI email={email} />;
 
   const { data: blocks, error: blocksError } = await supabase
     .from("blocks")
@@ -53,12 +54,13 @@ const Editor = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("form_id", slug)
     .order("position", { ascending: true });
 
-  if (blocksError) return <ErrorUI />;
+  if (blocksError) return <ErrorUI email={email} />;
 
   const locale = await getLocale();
 
   return (
     <EditorWrapper
+      email={email}
       locale={locale}
       form={form}
       theme={theme}

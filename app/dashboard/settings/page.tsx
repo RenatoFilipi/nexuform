@@ -10,6 +10,7 @@ const Settings = async () => {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   if (!data.user) return redirect("login");
+  const email = data.user.email ?? "";
 
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
@@ -17,7 +18,7 @@ const Settings = async () => {
     .eq("id", data.user.id)
     .single();
 
-  if (profileError) return <ErrorUI />;
+  if (profileError) return <ErrorUI email={email} />;
 
   const { data: subscription, error: subscriptionError } = await supabase
     .from("subscriptions")
@@ -25,14 +26,14 @@ const Settings = async () => {
     .eq("profile_id", data.user.id)
     .single();
 
-  if (subscriptionError) return <ErrorUI />;
+  if (subscriptionError) return <ErrorUI email={email} />;
 
   const active = isSubscriptionActive(subscription);
-  if (!active) return <SubscriptionUI />;
+  if (!active) return <SubscriptionUI email={email} />;
 
   const { data: formsData, error: formsError } = await supabase.from("forms").select("id").eq("owner_id", data.user.id);
 
-  if (formsError) return <ErrorUI />;
+  if (formsError) return <ErrorUI email={email} />;
 
   const idsArray = formsData.map((x) => x.id);
   const startDate = subscription.start_date;
@@ -45,7 +46,7 @@ const Settings = async () => {
     .gte("created_at", startDate)
     .lte("created_at", dueDate);
 
-  if (submissionsError) return <ErrorUI />;
+  if (submissionsError) return <ErrorUI email={email} />;
 
   const locale = await getLocale();
 
@@ -56,7 +57,7 @@ const Settings = async () => {
       subscription={subscription}
       formsCount={formsData.length}
       submissionsCount={submissionsCount ?? 0}
-      email={data.user.email ?? ""}
+      email={email}
     />
   );
 };

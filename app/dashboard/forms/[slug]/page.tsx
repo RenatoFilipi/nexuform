@@ -12,6 +12,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   if (!data.user) return redirect("login");
+  const email = data.user.email ?? "";
 
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
@@ -19,7 +20,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("id", data.user.id)
     .single();
 
-  if (profileError) return <ErrorUI />;
+  if (profileError) return <ErrorUI email={email} />;
 
   const { data: subscription, error: subscriptionError } = await supabase
     .from("subscriptions")
@@ -27,10 +28,10 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("profile_id", data.user.id)
     .single();
 
-  if (subscriptionError) return <ErrorUI />;
+  if (subscriptionError) return <ErrorUI email={email} />;
 
   const active = isSubscriptionActive(subscription);
-  if (!active) return <SubscriptionUI />;
+  if (!active) return <SubscriptionUI email={email} />;
 
   const { data: forms, error: formsError } = await supabase
     .from("forms")
@@ -38,10 +39,10 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("owner_id", data.user.id)
     .order("created_at", { ascending: true });
 
-  if (formsError) return <ErrorUI />;
+  if (formsError) return <ErrorUI email={email} />;
 
   const form = forms.find((x) => x.id === slug);
-  if (!form) return <ErrorUI />;
+  if (!form) return <ErrorUI email={email} />;
 
   if (form.owner_id !== data.user.id) {
     return redirect("/dashboard/forms");
@@ -53,7 +54,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("form_id", slug)
     .order("created_at", { ascending: false });
 
-  if (integrationsError) return <ErrorUI />;
+  if (integrationsError) return <ErrorUI email={email} />;
 
   const { data: blocks, error: blocksError } = await supabase
     .from("blocks")
@@ -61,7 +62,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("form_id", slug)
     .order("position", { ascending: true });
 
-  if (blocksError) return <ErrorUI />;
+  if (blocksError) return <ErrorUI email={email} />;
 
   const { data: submissions, error: submissionsError } = await supabase
     .from("submissions")
@@ -70,7 +71,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("form_id", slug)
     .order("created_at", { ascending: false });
 
-  if (submissionsError) return <ErrorUI />;
+  if (submissionsError) return <ErrorUI email={email} />;
 
   const { data: overviewSubmissions, error: overviewSubmissionsError } = await supabase
     .from("submissions")
@@ -78,7 +79,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("form_id", slug)
     .gte("created_at", new Date(Date.now() - 30 * day).toISOString());
 
-  if (overviewSubmissionsError) return <ErrorUI />;
+  if (overviewSubmissionsError) return <ErrorUI email={email} />;
 
   const { data: formAnalytics, error: formAnalyticsError } = await supabase
     .from("forms_analytics")
@@ -86,7 +87,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("form_id", form.id)
     .single();
 
-  if (formAnalyticsError) return <ErrorUI />;
+  if (formAnalyticsError) return <ErrorUI email={email} />;
 
   const locale = await getLocale();
 
@@ -101,7 +102,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
       formAnalytics={formAnalytics}
       profile={profile}
       subscription={subscription}
-      email={data.user.email ?? ""}
+      email={email}
       integrations={integrations}
     />
   );

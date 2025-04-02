@@ -298,7 +298,9 @@
     "label_date_picker": "Date Picker",
     "desc_date_picker": "Select a date from the calendar dropdown or enter it manually.",
     "label_qr_share": "Share via QR Code",
-    "desc_qr_share": "Scan the QR code or copy the link to share your form with others quickly and effortlessly."
+    "desc_qr_share": "Scan the QR code or copy the link to share your form with others quickly and effortlessly.",
+    "label_checkout": "Checkout",
+    "desc_checkout": "Please review your items and payment information before completing your purchase."
   },
   "s": {
     "err_required_all": "Answer all required questions.",
