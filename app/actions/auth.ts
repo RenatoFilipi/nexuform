@@ -1,5 +1,7 @@
 "use server";
 
+import { stripe } from "@/lib/stripe";
+import { Database } from "@/utils/database.types";
 import { encodedRedirect } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { createClient as superCreateClient } from "@supabase/supabase-js";
@@ -39,7 +41,7 @@ export const signUpAction = async (formData: FormData) => {
     return encodedRedirect("error", "/signup", t("required_all_fields"));
   }
 
-  const { error } = await supabase.auth.signUp({
+  const { data: auth, error: authError } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -47,9 +49,19 @@ export const signUpAction = async (formData: FormData) => {
     },
   });
 
-  if (error) {
-    return encodedRedirect("error", "/signup", error.message);
+  if (authError) {
+    return encodedRedirect("error", "/signup", authError.message);
   }
+
+  if (auth.user) {
+    try {
+      const customer = await stripe.customers.create({ email, metadata: { supabase_user_id: auth.user.id } });
+      await supabase.from("profiles").update({ stripe_customer_id: customer.id }).eq("id", auth.user.id);
+    } catch (error: any) {
+      console.log("Stripe customer creation error", error);
+    }
+  }
+
   return encodedRedirect("success", "/signup", t("desc_confirm_email"));
 };
 export const signOutAction = async () => {
@@ -58,24 +70,56 @@ export const signOutAction = async () => {
   return redirect("/login");
 };
 export const DeleteAccountAction = async (formData: FormData) => {
-  const supabase = superCreateClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE!);
   const userId = formData.get("userId") as string;
+  const redirectError = (message: string) => encodedRedirect("error", "/dashboard/settings", message);
 
   if (!userId) {
-    return encodedRedirect("error", "/dashboard/settings", "User ID is required.");
+    return redirectError("User ID is required.");
   }
 
-  const { data, error } = await supabase.auth.admin.deleteUser(userId);
+  try {
+    const supabase = superCreateClient<Database>(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE!
+    );
 
-  if (error) {
-    console.log(error);
-    return encodedRedirect("error", "/dashboard/settings", "An unexpected error occurred while deleting this account.");
-  }
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("stripe_customer_id")
+      .eq("id", userId)
+      .single();
 
-  if (data?.user) {
+    if (profileError) {
+      console.error("Profile fetch error:", profileError);
+      return redirectError("Failed to retrieve account information.");
+    }
+
+    if (profile.stripe_customer_id) {
+      try {
+        const subs = await stripe.subscriptions.list({
+          customer: profile.stripe_customer_id,
+        });
+
+        if (subs.data.length > 0) {
+          await Promise.all(subs.data.map((sub) => stripe.subscriptions.cancel(sub.id)));
+        }
+
+        await stripe.customers.del(profile.stripe_customer_id);
+      } catch (stripeError) {
+        console.error("Stripe cancellation error:", stripeError);
+      }
+    }
+
+    const { error: authError } = await supabase.auth.admin.deleteUser(userId);
+    if (authError) {
+      console.error("Auth deletion error:", authError);
+      return redirectError("Failed to delete authentication record.");
+    }
+
     return redirect("/login");
-  } else {
-    return encodedRedirect("error", "/dashboard/settings", "Failed to delete the account.");
+  } catch (error) {
+    console.error("Account deletion process failed:", error);
+    return redirectError("An unexpected error occurred during account deletion.");
   }
 };
 export const ResetPasswordAction = async (formData: FormData) => {

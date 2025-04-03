@@ -33,7 +33,7 @@ const CheckoutStripe = ({ children, plan }: { children: React.ReactNode; plan: T
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="flex flex-col w-full min-w-[650px] max-h-[90%] overflow-y-auto p-0">
+      <DialogContent className="flex flex-col w-full min-w-[650px] h-[90%] overflow-y-auto p-0">
         <DialogHeader className="pt-6 px-6">
           <DialogTitle>{t("label_checkout")}</DialogTitle>
           <DialogDescription>{t("desc_checkout")}</DialogDescription>

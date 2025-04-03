@@ -484,6 +484,7 @@ export type Database = {
           id: string
           last_name: string
           role: string
+          stripe_customer_id: string | null
           updated_at: string | null
           username: string | null
           website: string | null
@@ -496,6 +497,7 @@ export type Database = {
           id: string
           last_name?: string
           role?: string
+          stripe_customer_id?: string | null
           updated_at?: string | null
           username?: string | null
           website?: string | null
@@ -508,6 +510,7 @@ export type Database = {
           id?: string
           last_name?: string
           role?: string
+          stripe_customer_id?: string | null
           updated_at?: string | null
           username?: string | null
           website?: string | null

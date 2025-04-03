@@ -18,7 +18,7 @@ export const fetchBasicPlanAction = async (formData: FormData) => {
     ],
     mode: "subscription",
     payment_method_types: ["card"],
-    return_url: `${origin}/dashboard/payment-confirmation?session_id={CHECKOUT_SESSION_ID}`,
+    return_url: `${origin}/dashboard/checkout-result?session_id={CHECKOUT_SESSION_ID}`,
   });
 
   return session.client_secret as string;
@@ -38,7 +38,7 @@ export const fetchProPlanAction = async (formData: FormData) => {
     ],
     mode: "subscription",
     payment_method_types: ["card"],
-    return_url: `${origin}/dashboard/payment-confirmation?session_id={CHECKOUT_SESSION_ID}`,
+    return_url: `${origin}/dashboard/checkout-result?session_id={CHECKOUT_SESSION_ID}`,
   });
 
   return session.client_secret as string;

@@ -30,6 +30,7 @@ const useUserStore = create<user>((set) => ({
     role: "member",
     full_name: "",
     free_trial_due_date: null,
+    stripe_customer_id: null,
   },
   subscription: {
     id: "",
@@ -67,6 +68,7 @@ const useUserStore = create<user>((set) => ({
         role: "member",
         full_name: "",
         free_trial_due_date: null,
+        stripe_customer_id: null,
       },
       subscription: {
         id: "",

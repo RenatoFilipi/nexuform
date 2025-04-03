@@ -16,7 +16,6 @@ const CheckoutResult = async ({ searchParams }: { searchParams: Promise<{ [key: 
   const { status, customer_details } = await stripe.checkout.sessions.retrieve(session_id, {
     expand: ["line_items", "payment_intent"],
   });
-  console.log(customer_details);
 
   if (status === "open" || status === "expired") return redirect("/dashboard/forms");
   return <CheckoutSuccess />;
