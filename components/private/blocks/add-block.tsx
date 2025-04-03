@@ -47,7 +47,7 @@ const AddBlock = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col min-w-[650px] h-[600px]">
+        <DialogContent className="flex flex-col min-w-[650px] h-[85%]">
           <DialogHeader>
             <DialogTitle>{t("label_blocks")}</DialogTitle>
             <DialogDescription>{t("desc_blocks")}</DialogDescription>
@@ -194,7 +194,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     <div className="flex flex-col h-dvh flex-1 overflow-y-auto">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6 h-full overflow-y-auto">
-          <div className="flex flex-col gap-4 overflow-y-auto h-full pr-4">
+          <div className="flex flex-col gap-4 overflow-y-auto h-full">
             <FormField
               control={form.control}
               name="block"

@@ -50,7 +50,7 @@ const DashboardNewForm = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col min-w-[650px] h-[600px] overflow-y-auto">
+        <DialogContent className="flex flex-col min-w-[650px] h-[90%] overflow-y-auto">
           <DialogHeader className="hidden">
             <DialogTitle></DialogTitle>
             <DialogDescription></DialogDescription>

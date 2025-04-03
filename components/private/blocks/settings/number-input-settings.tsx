@@ -23,7 +23,7 @@ const NumberInputSettings = ({ block, setState }: { block: EBlock; setState: TSe
           {t("label_number_input")}
         </Badge>
       </div>
-      <div className="h-full flex flex-col gap-8 overflow-y-auto pr-4">
+      <div className="h-full flex flex-col gap-8 overflow-y-auto  ">
         <div className="grid gap-3">
           <div className="grid gap-1">
             <Label htmlFor="name">{t("label_block_name")}</Label>

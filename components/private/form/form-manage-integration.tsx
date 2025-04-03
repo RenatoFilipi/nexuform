@@ -40,7 +40,7 @@ const FormManageIntegration = ({ children, integration }: { children: React.Reac
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col min-w-[650px] h-[600px] overflow-y-auto">
+        <DialogContent className="flex flex-col min-w-[650px] h-[90%] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Integration</DialogTitle>
             <DialogDescription>Manage and configure third-party integrations for your form.</DialogDescription>
@@ -122,7 +122,7 @@ const ManageGoogleSheets = ({ setState, integration }: { setState: TSetState<boo
       </div>
       <Form {...formHandler}>
         <form onSubmit={formHandler.handleSubmit(onSubmit)} className="flex flex-col overflow-y-auto gap-4">
-          <div className="h-full flex flex-col gap-8 overflow-y-auto pr-4">
+          <div className="h-full flex flex-col gap-8 overflow-y-auto  ">
             <FormField
               control={formHandler.control}
               name="sheetId"
@@ -277,7 +277,7 @@ const ManageSlack = ({ setState, integration }: { setState: TSetState<boolean>; 
       </div>
       <Form {...formHandler}>
         <form onSubmit={formHandler.handleSubmit(onSubmit)} className="flex flex-col overflow-y-auto gap-4">
-          <div className="h-full flex flex-col gap-8 overflow-y-auto pr-4">
+          <div className="h-full flex flex-col gap-8 overflow-y-auto  ">
             <FormField
               control={formHandler.control}
               name="webhookUrl"

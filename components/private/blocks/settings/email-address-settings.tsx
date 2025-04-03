@@ -32,7 +32,7 @@ const EmailAddressSettings = ({ block, setState }: { block: EBlock; setState: TS
           {t("label_email_address")}
         </Badge>
       </div>
-      <div className="h-full flex flex-col gap-8 overflow-y-auto pr-4">
+      <div className="h-full flex flex-col gap-8 overflow-y-auto  ">
         <div className="grid gap-3">
           <div className="grid gap-1">
             <Label htmlFor="name">{t("label_block_name")}</Label>

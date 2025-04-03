@@ -34,7 +34,7 @@ const EditorFormSettings = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col min-w-[650px] h-[600px] overflow-y-auto">
+        <DialogContent className="flex flex-col min-w-[650px] h-[90%] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-xl font-medium">{t("label_settings")}</DialogTitle>
             <DialogDescription>{t("desc_settings")}</DialogDescription>
@@ -136,7 +136,7 @@ const GeneralSettings = () => {
   };
 
   return (
-    <div className="flex flex-col w-full gap-6 pr-4">
+    <div className="flex flex-col w-full gap-6">
       <div className="grid gap-3">
         <div className="grid gap-1">
           <Label>{t("label_form_name")}</Label>

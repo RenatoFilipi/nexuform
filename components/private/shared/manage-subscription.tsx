@@ -40,7 +40,7 @@ const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col w-full min-w-[650px] h-[600px]">
+        <DialogContent className="flex flex-col w-full min-w-[650px] h-[90%]">
           <DialogHeader>
             <DialogTitle>{t("label_manage_sub")}</DialogTitle>
             <DialogDescription>{t("desc_manage_sub")}</DialogDescription>

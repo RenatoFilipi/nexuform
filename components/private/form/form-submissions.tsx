@@ -157,10 +157,10 @@ const FormSubmissions = () => {
                       <span className="ml-2">({formatDateRelativeToNow(submission.created_at, locale)})</span>
                     </TableCell>
                     <TableCell className="py-2">{formatTime(submission.completion_time ?? 0, 2)}</TableCell>
-                    <TableCell className="py-2 pr-4">
+                    <TableCell className="py-2  ">
                       <SubmissionStatusBadge status={submission.status as TSubmissionStatus} />
                     </TableCell>
-                    <TableCell className="text-right py-2 pr-4">
+                    <TableCell className="text-right py-2  ">
                       <SubmissionDetails blocks={blocks} submission={submission}>
                         <Button variant={"outline"} size={"xs"} className="">
                           <ReceiptTextIcon className="w-4 h-4" />

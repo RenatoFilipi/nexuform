@@ -40,7 +40,7 @@ const BlockSettings = ({ children, block }: { children: React.ReactNode; block: 
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col min-w-[650px] h-[600px] overflow-y-auto">
+        <DialogContent className="flex flex-col min-w-[650px] h-[90%] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{t("label_block_settings")}</DialogTitle>
             <DialogDescription>{t("desc_block_settings")}</DialogDescription>
