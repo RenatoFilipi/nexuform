@@ -41,7 +41,7 @@ import { useTranslations } from "next-intl";
 import { useState, type JSX } from "react";
 import { useMedia } from "react-use";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
-import ManageSubscription from "../shared/manage-subscription";
+import CheckoutStripe from "../checkout/checkout-stripe";
 
 const colors: IDesign[] = [
   {
@@ -385,11 +385,11 @@ const UpgradeToPro = () => {
           <p className="text-sm text-foreground/70">{t("desc_upgrade_pro")}</p>
         </div>
         <div className="flex justify-center items-center w-fit">
-          <ManageSubscription>
+          <CheckoutStripe plan="pro">
             <Button variant={"secondary"} size={"sm"}>
               {t("label_upgrade_pro")}
             </Button>
-          </ManageSubscription>
+          </CheckoutStripe>
         </div>
       </div>
     </div>
