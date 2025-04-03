@@ -48,7 +48,7 @@ const SuccessDesign = ({ brand, preview, color, description, title }: IProps) =>
 
   return (
     <div className="flex justify-center items-center w-full">
-      <Card className="flex flex-col gap-10 p-8 w-full border-transparent sm:w-fit">
+      <Card className="flex flex-col gap-10 p-4 w-full border-transparent sm:w-fit">
         <div className="flex flex-col justify-center items-center gap-6">
           <div className={twMerge(currentColor.tw_class, "rounded-full p-3")}>
             <CheckIcon className="w-10 h-10" />
@@ -66,7 +66,7 @@ const SuccessDesign = ({ brand, preview, color, description, title }: IProps) =>
             <Button
               size="default"
               variant={"secondary"}
-              className="flex items-center justify-center gap-2 w-full"
+              className="flex items-center justify-center gap-2 w-full sm:w-fit"
               asChild={!preview}>
               {preview ? (
                 <>

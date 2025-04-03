@@ -118,6 +118,7 @@ const SubmissionGroup = () => {
   const { form, theme, blocks, submission, answers, setAnswers } = useSubmissionStore();
   const supabase = createClient();
   const [appState, setAppState] = useState<TAppState>("idle");
+  const [submissionState, setSubmissionState] = useState<TAppState>("idle");
   const currentColor = design.find((x) => x.label === theme.primary_color) ?? design[0];
   const [time, setTime] = useState(0);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -157,6 +158,12 @@ const SubmissionGroup = () => {
     });
     setAnswers(updatedAnswer);
   };
+  const responseCheck = (answer: EAnswer, block: EBlock): boolean => {
+    if (!block.required) return true;
+    if (answer.value.trim() === "") return false;
+    if (block.type === "email_address" && !isValidEmail(answer.value)) return false;
+    return true;
+  };
   const onSubmit = async () => {
     stopTimer();
     for (const answer of answers) {
@@ -182,9 +189,11 @@ const SubmissionGroup = () => {
       }
     }
 
+    setSubmissionState("loading");
     const { error: submissionError } = await supabase.from("submissions").insert(updatedSubmission);
 
     if (submissionError) {
+      setSubmissionState("idle");
       toast.error(t("err_sub"));
       return;
     }
@@ -193,26 +202,27 @@ const SubmissionGroup = () => {
 
     if (answersError) {
       await supabase.from("submissions").delete().eq("id", updatedSubmission.id);
+      setSubmissionState("idle");
       toast.error(t("err_sub"));
       return;
     }
 
     setAppState("success");
-  };
-  const responseCheck = (answer: EAnswer, block: EBlock): boolean => {
-    if (!block.required) return true;
-    if (answer.value.trim() === "") return false;
-    if (block.type === "email_address" && !isValidEmail(answer.value)) return false;
-    return true;
+    setSubmissionState("idle");
   };
 
-  if (appState === "success") return <SubmissionSuccess />;
+  if (appState === "success")
+    return (
+      <div className="flex justify-center items-center sm:w-[650px] h-dvh w-full">
+        <SubmissionSuccess />
+      </div>
+    );
 
   return (
     <div
       className={`${
         theme.width === "centered" ? "sm:w-[650px]" : "w-full"
-      }  flex flex-col gap-6 w-full rounded bg-background relative px-2 my-10`}>
+      }  flex flex-col gap-6 w-full rounded bg-background relative p-4 my-4`}>
       <span className="hidden">{formatTime(time)}</span>
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-bold">{form.name}</h1>
@@ -246,8 +256,12 @@ const SubmissionGroup = () => {
       </div>
       <div className="flex flex-col gap-4 sm:gap-8">
         <div className="flex justify-end items-center w-full">
-          <Button onClick={onSubmit} size={"sm"} className={`${currentColor.tw_class} w-full sm:w-fit`}>
-            {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />} {form.submit_text}
+          <Button
+            disabled={submissionState === "loading"}
+            onClick={onSubmit}
+            size={"sm"}
+            className={`${currentColor.tw_class} w-full sm:w-fit`}>
+            {submissionState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />} {form.submit_text}
           </Button>
         </div>
         {form.nebulaform_branding && (

@@ -126,11 +126,9 @@ const GeneralSettings = () => {
     setForm({ ...form, nebulaform_branding: value });
   };
   const onSetSuccessTitle = (value: string) => {
-    if (user.subscription.plan !== "pro") return;
     setForm({ ...form, success_title: value });
   };
   const onSetSuccessDescription = (value: string) => {
-    if (user.subscription.plan !== "pro") return;
     setForm({ ...form, success_description: value });
   };
   const onSetNewSubmissionNotification = (value: boolean) => {

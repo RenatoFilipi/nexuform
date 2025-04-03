@@ -25,73 +25,71 @@ const EditorBlockGroup = () => {
   const editor = useEditorStore();
 
   return (
-    <div className="flex justify-center items-start w-full h-full">
-      <div className="flex flex-col gap-4 sm:w-[650px] w-full">
-        {editor.blocks.map((block) => {
-          switch (block.type) {
-            case "short_text":
-              return (
-                <SW block={block} key={block.id}>
-                  <ShortTextDesign block={block} theme={editor.theme} onValueChange={() => {}} />
-                </SW>
-              );
-            case "paragraph_text":
-              return (
-                <SW block={block} key={block.id}>
-                  <ParagraphTextDesign key={block.id} block={block} theme={editor.theme} onValueChange={() => {}} />
-                </SW>
-              );
-            case "multiple_choice":
-              return (
-                <SW block={block} key={block.id}>
-                  <MultipleChoiceDesign key={block.id} block={block} theme={editor.theme} onValueChange={() => {}} />
-                </SW>
-              );
-            case "checkboxes":
-              return (
-                <SW block={block} key={block.id}>
-                  <CheckBoxesDesign key={block.id} block={block} theme={editor.theme} onValueChange={() => {}} />
-                </SW>
-              );
-            case "dropdown_menu":
-              return (
-                <SW block={block} key={block.id}>
-                  <DropdownMenuDesign key={block.id} block={block} theme={editor.theme} onValueChange={() => {}} />
-                </SW>
-              );
-            case "number_input":
-              return (
-                <SW block={block} key={block.id}>
-                  <NumberInputDesign key={block.id} block={block} theme={editor.theme} onValueChange={() => {}} />
-                </SW>
-              );
-            case "email_address":
-              return (
-                <SW block={block} key={block.id}>
-                  <EmailAddressDesign key={block.id} block={block} theme={editor.theme} onValueChange={() => {}} />
-                </SW>
-              );
-            case "star_rating":
-              return (
-                <SW block={block} key={block.id}>
-                  <StarRatingDesign key={block.id} block={block} theme={editor.theme} onValueChange={() => {}} />
-                </SW>
-              );
-            case "custom_scale":
-              return (
-                <SW block={block} key={block.id}>
-                  <CustomScaleDesign key={block.id} block={block} theme={editor.theme} onValueChange={() => {}} />
-                </SW>
-              );
-            case "date_picker":
-              return (
-                <SW block={block} key={block.id}>
-                  <DatePickerDesign key={block.id} block={block} theme={editor.theme} onValueChange={() => {}} />
-                </SW>
-              );
-          }
-        })}
-      </div>
+    <div className="flex flex-col gap-8 sm:w-[650px] w-full">
+      {editor.blocks.map((block) => {
+        switch (block.type) {
+          case "short_text":
+            return (
+              <SW block={block} key={block.id}>
+                <ShortTextDesign block={block} theme={editor.theme} onValueChange={() => {}} />
+              </SW>
+            );
+          case "paragraph_text":
+            return (
+              <SW block={block} key={block.id}>
+                <ParagraphTextDesign key={block.id} block={block} theme={editor.theme} onValueChange={() => {}} />
+              </SW>
+            );
+          case "multiple_choice":
+            return (
+              <SW block={block} key={block.id}>
+                <MultipleChoiceDesign key={block.id} block={block} theme={editor.theme} onValueChange={() => {}} />
+              </SW>
+            );
+          case "checkboxes":
+            return (
+              <SW block={block} key={block.id}>
+                <CheckBoxesDesign key={block.id} block={block} theme={editor.theme} onValueChange={() => {}} />
+              </SW>
+            );
+          case "dropdown_menu":
+            return (
+              <SW block={block} key={block.id}>
+                <DropdownMenuDesign key={block.id} block={block} theme={editor.theme} onValueChange={() => {}} />
+              </SW>
+            );
+          case "number_input":
+            return (
+              <SW block={block} key={block.id}>
+                <NumberInputDesign key={block.id} block={block} theme={editor.theme} onValueChange={() => {}} />
+              </SW>
+            );
+          case "email_address":
+            return (
+              <SW block={block} key={block.id}>
+                <EmailAddressDesign key={block.id} block={block} theme={editor.theme} onValueChange={() => {}} />
+              </SW>
+            );
+          case "star_rating":
+            return (
+              <SW block={block} key={block.id}>
+                <StarRatingDesign key={block.id} block={block} theme={editor.theme} onValueChange={() => {}} />
+              </SW>
+            );
+          case "custom_scale":
+            return (
+              <SW block={block} key={block.id}>
+                <CustomScaleDesign key={block.id} block={block} theme={editor.theme} onValueChange={() => {}} />
+              </SW>
+            );
+          case "date_picker":
+            return (
+              <SW block={block} key={block.id}>
+                <DatePickerDesign key={block.id} block={block} theme={editor.theme} onValueChange={() => {}} />
+              </SW>
+            );
+        }
+      })}
     </div>
   );
 };

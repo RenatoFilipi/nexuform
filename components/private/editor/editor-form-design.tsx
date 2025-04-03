@@ -375,7 +375,7 @@ const UpgradeToPro = () => {
   const t = useTranslations("app");
 
   return (
-    <div className="flex flex-col justify-center items-center w-full h-full">
+    <div className="flex flex-col justify-center items-center w-full h-full gap-4">
       <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/10">
         <CrownIcon className="w-6 h-6 text-primary" />
       </div>
