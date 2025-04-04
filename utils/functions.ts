@@ -191,3 +191,6 @@ export const getBlockName = async (type: TBlock, locale: string): Promise<string
       return "Unknown";
   }
 };
+export const formatDate = (unixTimestamp: number) => {
+  return new Date(unixTimestamp * 1000).toISOString();
+};

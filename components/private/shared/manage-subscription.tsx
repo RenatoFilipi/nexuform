@@ -74,6 +74,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const query = useQuery({
     queryKey: ["manageSubData"],
     queryFn: async () => {
+      console.log(userStore.locale);
       setLocalPlans(await getPlans(userStore.locale));
       return null;
     },

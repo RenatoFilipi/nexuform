@@ -3,34 +3,27 @@ import ErrorUI from "@/components/private/shared/error-ui";
 import SubscriptionUI from "@/components/private/shared/subscription-ui";
 import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
+import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 const Help = async () => {
+  const locale = await getLocale();
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   if (!data.user) return redirect("/login");
-  const email = data.user.email ?? "";
+  const email = data.user.email!;
+  const userId = data.user.id;
 
-  const { data: profile, error: profileError } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", data.user.id)
-    .single();
+  const profiles = await supabase.from("profiles").select("*").eq("id", userId).single();
+  if (profiles.error) return <ErrorUI email={email} />;
 
-  if (profileError) return <ErrorUI email={email} />;
+  const subscriptions = await supabase.from("subscriptions").select("*").eq("profile_id", userId).single();
+  if (subscriptions.error) return <ErrorUI email={email} />;
 
-  const { data: subscription, error: subscriptionError } = await supabase
-    .from("subscriptions")
-    .select("*")
-    .eq("profile_id", data.user.id)
-    .single();
+  const active = isSubscriptionActive(subscriptions.data);
+  if (!active) return <SubscriptionUI email={email} locale={locale} profile={profiles.data} />;
 
-  if (subscriptionError) return <ErrorUI email={email} />;
-
-  const active = isSubscriptionActive(subscription);
-  if (!active) return <SubscriptionUI email={email} />;
-
-  return <HelpWrapper email={email} profile={profile} subscription={subscription} />;
+  return <HelpWrapper email={email} profile={profiles.data} subscription={subscriptions.data} />;
 };
 
 export default Help;

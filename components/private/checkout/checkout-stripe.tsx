@@ -21,10 +21,10 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 const CheckoutStripe = ({ children, plan }: { children: React.ReactNode; plan: TPlan }) => {
   const t = useTranslations("app");
   const [open, setOpen] = useState(false);
-  const { email } = useUserStore();
+  const { profile } = useUserStore();
 
   const formData = new FormData();
-  formData.append("email", email);
+  formData.append("customerId", profile.stripe_customer_id as string);
 
   const options = {
     fetchClientSecret: () => (plan === "basic" ? fetchBasicPlanAction(formData) : fetchProPlanAction(formData)),

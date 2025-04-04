@@ -7,66 +7,42 @@ import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 const Editor = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const locale = await getLocale();
   const { slug } = await params;
   const supabase = await createClient();
-
   const { data } = await supabase.auth.getUser();
   if (!data.user) return redirect("/login");
-  const email = data.user.email ?? "";
+  const email = data.user.email!;
+  const userId = data.user.id;
 
-  const { data: profile, error: profileError } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", data.user.id)
-    .single();
+  const profiles = await supabase.from("profiles").select("*").eq("id", userId).single();
+  if (profiles.error) return <ErrorUI email={email} />;
 
-  if (profileError) return <ErrorUI email={email} />;
+  const subscriptions = await supabase.from("subscriptions").select("*").eq("profile_id", userId).single();
+  if (subscriptions.error) return <ErrorUI email={email} />;
 
-  const { data: subscription, error: subscriptionError } = await supabase
-    .from("subscriptions")
-    .select("*")
-    .eq("profile_id", data.user.id)
-    .single();
+  const active = isSubscriptionActive(subscriptions.data);
+  if (!active) return <SubscriptionUI email={email} locale={locale} profile={profiles.data} />;
 
-  if (subscriptionError) return <ErrorUI email={email} />;
+  const forms = await supabase.from("forms").select("*").eq("owner_id", userId).eq("id", slug).single();
+  if (forms.error) return <ErrorUI email={email} />;
+  if (forms.data.owner_id !== userId) return redirect("/dashboard/forms");
 
-  const active = isSubscriptionActive(subscription);
-  if (!active) return <SubscriptionUI email={email} />;
+  const themes = await supabase.from("themes").select("*").eq("form_id", slug).single();
+  if (themes.error) return <ErrorUI email={email} />;
 
-  const { data: form, error: formError } = await supabase
-    .from("forms")
-    .select("*")
-    .eq("owner_id", data.user.id)
-    .eq("id", slug)
-    .single();
-
-  if (formError) return <ErrorUI email={email} />;
-
-  if (form.owner_id !== data.user.id) return redirect("/dashboard/forms");
-
-  const { data: theme, error: themeError } = await supabase.from("themes").select("*").eq("form_id", slug).single();
-
-  if (themeError) return <ErrorUI email={email} />;
-
-  const { data: blocks, error: blocksError } = await supabase
-    .from("blocks")
-    .select("*")
-    .eq("form_id", slug)
-    .order("position", { ascending: true });
-
-  if (blocksError) return <ErrorUI email={email} />;
-
-  const locale = await getLocale();
+  const blocks = await supabase.from("blocks").select("*").eq("form_id", slug).order("position", { ascending: true });
+  if (blocks.error) return <ErrorUI email={email} />;
 
   return (
     <EditorWrapper
-      email={email}
       locale={locale}
-      form={form}
-      theme={theme}
-      blocks={blocks}
-      profile={profile}
-      subscription={subscription}
+      email={email}
+      profile={profiles.data}
+      form={forms.data}
+      theme={themes.data}
+      blocks={blocks.data}
+      subscription={subscriptions.data}
     />
   );
 };

@@ -7,57 +7,45 @@ import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 const Settings = async () => {
+  const locale = await getLocale();
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   if (!data.user) return redirect("/login");
-  const email = data.user.email ?? "";
+  const email = data.user.email!;
+  const userId = data.user.id;
 
-  const { data: profile, error: profileError } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", data.user.id)
-    .single();
+  const profiles = await supabase.from("profiles").select("*").eq("id", userId).single();
+  if (profiles.error) return <ErrorUI email={email} />;
 
-  if (profileError) return <ErrorUI email={email} />;
+  const subscriptions = await supabase.from("subscriptions").select("*").eq("profile_id", userId).single();
+  if (subscriptions.error) return <ErrorUI email={email} />;
 
-  const { data: subscription, error: subscriptionError } = await supabase
-    .from("subscriptions")
-    .select("*")
-    .eq("profile_id", data.user.id)
-    .single();
+  const active = isSubscriptionActive(subscriptions.data);
+  if (!active) return <SubscriptionUI email={email} locale={locale} profile={profiles.data} />;
 
-  if (subscriptionError) return <ErrorUI email={email} />;
+  const forms = await supabase.from("forms").select("id").eq("owner_id", userId);
+  if (forms.error) return <ErrorUI email={email} />;
 
-  const active = isSubscriptionActive(subscription);
-  if (!active) return <SubscriptionUI email={email} />;
+  const idsArray = forms.data.map((x) => x.id);
+  const startDate = subscriptions.data.start_date;
+  const dueDate = subscriptions.data.due_date;
 
-  const { data: formsData, error: formsError } = await supabase.from("forms").select("id").eq("owner_id", data.user.id);
-
-  if (formsError) return <ErrorUI email={email} />;
-
-  const idsArray = formsData.map((x) => x.id);
-  const startDate = subscription.start_date;
-  const dueDate = subscription.due_date;
-
-  const { count: submissionsCount, error: submissionsError } = await supabase
+  const submissions = await supabase
     .from("submissions")
     .select("*", { count: "exact", head: true })
     .in("form_id", idsArray)
     .gte("created_at", startDate)
     .lte("created_at", dueDate);
-
-  if (submissionsError) return <ErrorUI email={email} />;
-
-  const locale = await getLocale();
+  if (submissions.error) return <ErrorUI email={email} />;
 
   return (
     <SettingsWrapper
       locale={locale}
-      profile={profile}
-      subscription={subscription}
-      formsCount={formsData.length}
-      submissionsCount={submissionsCount ?? 0}
       email={email}
+      profile={profiles.data}
+      subscription={subscriptions.data}
+      formsCount={forms.data.length}
+      submissionsCount={submissions.count ?? 0}
     />
   );
 };

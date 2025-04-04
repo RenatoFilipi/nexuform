@@ -2,19 +2,22 @@
 
 import { Button } from "@/components/ui/button";
 import useUserStore from "@/stores/user";
+import { EProfile } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { WalletIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import ManageSubscription from "./manage-subscription";
 
-const SubscriptionUI = ({ email }: { email: string }) => {
+const SubscriptionUI = ({ email, locale, profile }: { email: string; locale: string; profile: EProfile }) => {
   const t = useTranslations("app");
   const user = useUserStore();
 
   const query = useQuery({
     queryKey: ["subscriptionUIData"],
     queryFn: () => {
+      user.setLocale(locale);
       user.setEmail(email);
+      user.setProfile(profile);
       return null;
     },
     refetchOnWindowFocus: false,

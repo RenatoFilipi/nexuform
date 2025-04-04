@@ -12,23 +12,19 @@ export const createFormAction = async (formData: FormData) => {
   const userId = formData.get("userId") as string;
   const supabase = await createClient();
 
-  try {
-    if (!name || !userId) {
-      return encodedRedirect("error", "/dashboard/forms", t("required_all_fields"));
-    }
+  if (!name || !userId) {
+    return encodedRedirect("error", "/dashboard/forms", t("required_all_fields"));
+  }
 
-    const { data: form, error: formError } = await supabase
-      .from("forms")
-      .insert([{ name, description, owner_id: userId, public_url: nanoid(20, true, true) }])
-      .select()
-      .single();
+  const { data: form, error: formError } = await supabase
+    .from("forms")
+    .insert([{ name, description, owner_id: userId, public_url: nanoid(20, true, true) }])
+    .select()
+    .single();
 
-    if (formError) {
-      return encodedRedirect("error", "/dashboard/forms", t("err_generic"));
-    }
-
-    return redirect(`/dashboard/editor/${form.id}`);
-  } catch (error) {
+  if (formError) {
     return encodedRedirect("error", "/dashboard/forms", t("err_generic"));
   }
+
+  return redirect(`/dashboard/editor/${form.id}`);
 };

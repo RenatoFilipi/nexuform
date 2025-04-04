@@ -1,28 +1,29 @@
 import { stripe } from "@/lib/stripe";
-import { createClient } from "@/utils/supabase/server";
+import { Database } from "@/utils/database.types";
+import { formatDate } from "@/utils/functions";
+import { createClient } from "@supabase/supabase-js";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+const basicPlanPriceId = process.env.STRIPE_BASIC_PLAN_PRICE_ID!;
+const proPlanPriceId = process.env.STRIPE_PRO_PLAN_PRICE_ID!;
+
 export const POST = async (req: Request) => {
-  const supabase = await createClient();
+  const supabase = createClient<Database>(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE!);
+
   const body = await req.text();
-  const signature = (await headers()).get("Stripe-Signature") as string;
+  const signature = (await headers()).get("stripe-signature") as string;
   let event: Stripe.Event;
-  const secret = process.env.STRIPE_WEBHOOK_SECRET!;
-  const basicPlanPriceId = process.env.STRIPE_BASIC_PLAN_PRICE_ID!;
-  const proPlanPriceId = process.env.STRIPE_PRO_PLAN_PRICE_ID!;
 
   try {
-    event = stripe.webhooks.constructEvent(body, signature, secret);
+    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
   } catch (err: any) {
     console.error("❌ Webhook signature verification failed:", err.message);
     return new NextResponse("Invalid signature", { status: 400 });
   }
 
-  const formatDate = (unixTimestamp: number) => {
-    return new Date(unixTimestamp * 1000).toISOString();
-  };
   const planName = (priceId: string) => {
     switch (priceId) {
       case basicPlanPriceId:
@@ -40,30 +41,85 @@ export const POST = async (req: Request) => {
   try {
     switch (event.type) {
       case "checkout.session.completed": {
-        const session = event.data.object as Stripe.Checkout.Session;
+        const session = await stripe.checkout.sessions.retrieve(event.data.object.id);
 
-        if (session.mode !== "subscription" || !session.customer) {
+        if (session.mode !== "subscription" || !session.customer || !session.subscription) {
           return new NextResponse("Invalid subscription session", { status: 400 });
         }
+        const customerId = session.customer.toString();
+        const { data: profile, error: profileError } = await profileByStripe(customerId);
 
-        const { data: profile, error: profileError } = await profileByStripe(session.customer.toString());
-
-        if (profileError || !profile) {
+        if (profileError) {
           console.error("Profile not found:", profileError);
           return new NextResponse("Profile not found", { status: 404 });
         }
+        console.log(profile);
 
         const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
+        console.log(subscription);
 
         const subscriptionData = {
-          id: subscription.id,
-          profile_id: profile.id,
           plan: planName(subscription.items.data[0].price.id),
           status: subscription.status,
           billing_interval: subscription.items.data[0].plan.interval as string,
           start_date: formatDate(subscription.current_period_start),
           due_date: formatDate(subscription.current_period_end),
-          created_at: formatDate(subscription.created),
+          updated_at: new Date().toISOString(),
+        };
+        console.log(subscriptionData);
+
+        const { error: updateError } = await supabase
+          .from("subscriptions")
+          .update(subscriptionData)
+          .eq("profile_id", profile.id);
+
+        if (updateError) {
+          console.error("Subscription update failed:", updateError);
+          throw updateError;
+        }
+        console.log("✅ Subscription created/updated:", subscription.id);
+        break;
+      }
+      case "customer.subscription.deleted": {
+        const subscription = await stripe.subscriptions.retrieve(event.data.object.id);
+
+        const customerId = subscription.customer.toString();
+        const { data: profile, error: profileError } = await profileByStripe(customerId);
+
+        if (profileError) {
+          console.error("Profile not found:", profileError);
+          return new NextResponse("Profile not found", { status: 404 });
+        }
+
+        const { error: subscriptionsError } = await supabase
+          .from("subscriptions")
+          .update({ status: subscription.status })
+          .eq("profile_id", profile.id);
+
+        if (subscriptionsError) {
+          console.log(subscriptionsError);
+          return new NextResponse(null, { status: 400 });
+        }
+
+        console.log("✅ Subscription deleted:", subscription.id);
+        break;
+      }
+      case "customer.subscription.updated": {
+        const subscription = await stripe.subscriptions.retrieve(event.data.object.id);
+        const customerId = subscription.customer.toString();
+        const { data: profile, error: profileError } = await profileByStripe(customerId);
+
+        if (profileError) {
+          console.error("Profile not found:", profileError);
+          return new NextResponse("Profile not found", { status: 404 });
+        }
+
+        const subscriptionData = {
+          plan: planName(subscription.items.data[0].price.id),
+          status: subscription.status,
+          billing_interval: subscription.items.data[0].plan.interval as string,
+          start_date: formatDate(subscription.current_period_start),
+          due_date: formatDate(subscription.current_period_end),
           updated_at: new Date().toISOString(),
         };
 
@@ -73,155 +129,10 @@ export const POST = async (req: Request) => {
           .eq("profile_id", profile.id);
 
         if (updateError) {
-          console.error("Subscription upsert failed:", updateError);
+          console.error("Subscription update failed:", updateError);
           throw updateError;
         }
-
         console.log("✅ Subscription created/updated:", subscription.id);
-        break;
-      }
-      case "customer.subscription.deleted": {
-        const subscription = event.data.object as Stripe.Subscription;
-
-        const { data: profile, error: profileError } = await profileByStripe(subscription.customer.toString());
-
-        if (profileError || !profile) {
-          console.error("Profile not found:", profileError);
-          return new NextResponse("Profile not found", { status: 404 });
-        }
-
-        const { error: updateError } = await supabase
-          .from("subscriptions")
-          .update({
-            status: "canceled",
-            updated_at: new Date().toISOString(),
-          })
-          .eq("profile_id", profile.id);
-
-        if (updateError) {
-          console.error("Failed to cancel subscription:", updateError);
-          throw updateError;
-        }
-
-        console.log("❌ Subscription canceled:", subscription.id);
-        break;
-      }
-      case "invoice.payment_succeeded": {
-        const invoice = event.data.object as Stripe.Invoice;
-
-        if (!invoice.customer || !invoice.subscription) {
-          return new NextResponse("Invalid invoice data", { status: 400 });
-        }
-
-        const { data: profile, error: profileError } = await profileByStripe(invoice.customer.toString());
-
-        if (profileError || !profile) {
-          console.error("Profile not found:", profileError);
-          return new NextResponse("Profile not found", { status: 404 });
-        }
-
-        const subscription = await stripe.subscriptions.retrieve(invoice.subscription as string);
-
-        const { error: updateError } = await supabase
-          .from("subscriptions")
-          .update({
-            status: subscription.status,
-            due_date: formatDate(subscription.current_period_end),
-            updated_at: new Date().toISOString(),
-          })
-          .eq("profile_id", profile.id);
-
-        if (updateError) {
-          console.error("Failed to update subscription after payment:", updateError);
-          throw updateError;
-        }
-
-        console.log("✅ Invoice payment succeeded for subscription:", subscription.id);
-        break;
-      }
-      case "invoice.payment_failed": {
-        const invoice = event.data.object as Stripe.Invoice;
-
-        if (!invoice.customer || !invoice.subscription) {
-          return new NextResponse("Invalid invoice data", { status: 400 });
-        }
-
-        const { data: profile, error: profileError } = await profileByStripe(invoice.customer.toString());
-
-        if (profileError || !profile) {
-          console.error("Profile not found:", profileError);
-          return new NextResponse("Profile not found", { status: 404 });
-        }
-
-        const { error: updateError } = await supabase
-          .from("subscriptions")
-          .update({
-            status: "past_due",
-            updated_at: new Date().toISOString(),
-          })
-          .eq("profile_id", profile.id);
-
-        if (updateError) {
-          console.error("Failed to update subscription after payment failure:", updateError);
-          throw updateError;
-        }
-
-        console.log("❌ Invoice payment failed for customer:", invoice.customer);
-        break;
-      }
-      case "customer.subscription.updated": {
-        const subscription = event.data.object as Stripe.Subscription;
-
-        const { data: profile, error: profileError } = await profileByStripe(subscription.customer.toString());
-
-        if (profileError || !profile) {
-          console.error("Profile not found:", profileError);
-          return new NextResponse("Profile not found", { status: 404 });
-        }
-
-        const { error: updateError } = await supabase
-          .from("subscriptions")
-          .update({
-            status: subscription.status,
-            plan: planName(subscription.items.data[0].price.id),
-            billing_interval: subscription.items.data[0].plan.interval as string,
-            due_date: formatDate(subscription.current_period_end),
-            updated_at: new Date().toISOString(),
-          })
-          .eq("profile_id", profile.id);
-
-        if (updateError) {
-          console.error("Failed to update subscription:", updateError);
-          throw updateError;
-        }
-
-        console.log("🔄 Subscription updated:", subscription.id);
-        break;
-      }
-      case "customer.subscription.deleted": {
-        const subscription = event.data.object as Stripe.Subscription;
-
-        const { data: profile, error: profileError } = await profileByStripe(subscription.customer.toString());
-
-        if (profileError || !profile) {
-          console.error("Profile not found:", profileError);
-          return new NextResponse("Profile not found", { status: 404 });
-        }
-
-        const { error: updateError } = await supabase
-          .from("subscriptions")
-          .update({
-            status: "canceled",
-            updated_at: new Date().toISOString(),
-          })
-          .eq("profile_id", profile.id);
-
-        if (updateError) {
-          console.error("Failed to cancel subscription:", updateError);
-          throw updateError;
-        }
-
-        console.log("❌ Subscription canceled:", subscription.id);
         break;
       }
       default:

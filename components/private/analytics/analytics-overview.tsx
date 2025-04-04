@@ -9,21 +9,29 @@ const AnalyticsOverview = () => {
   const { formsAnalytics } = useAnalyticsStore();
   const totalViews = formsAnalytics.reduce((acc, val) => acc + val.total_views, 0).toString();
   const totalSubmissions = formsAnalytics.reduce((acc, val) => acc + val.total_submissions, 0).toString();
-  const averageCompletionTime = formatTime(
-    formsAnalytics.reduce((acc, val) => {
-      return (
-        acc + (val.avg_completion_time !== null && val.avg_completion_time !== undefined ? val.avg_completion_time : 0)
-      );
-    }, 0) / formsAnalytics.length,
-    1
-  );
-  const averageCompletionRate = formatDecimal(
-    formsAnalytics.reduce((acc, val) => {
-      return (
-        acc + (val.avg_completion_rate !== null && val.avg_completion_rate !== undefined ? val.avg_completion_rate : 0)
-      );
-    }, 0) / formsAnalytics.length
-  );
+  const averageCompletionTime =
+    formsAnalytics.length < 1
+      ? "--"
+      : formatTime(
+          formsAnalytics.reduce((acc, val) => {
+            return (
+              acc +
+              (val.avg_completion_time !== null && val.avg_completion_time !== undefined ? val.avg_completion_time : 0)
+            );
+          }, 0) / formsAnalytics.length,
+          1
+        );
+  const averageCompletionRate =
+    formsAnalytics.length <= 1
+      ? "--"
+      : formatDecimal(
+          formsAnalytics.reduce((acc, val) => {
+            return (
+              acc +
+              (val.avg_completion_rate !== null && val.avg_completion_rate !== undefined ? val.avg_completion_rate : 0)
+            );
+          }, 0) / formsAnalytics.length
+        );
 
   return (
     <div className="grid sm:grid-cols-4 gap-2 sm:gap-6">
@@ -39,7 +47,7 @@ const AnalyticsOverview = () => {
       />
       <CardTemplate
         name={t("label_completion_rate")}
-        value={averageCompletionRate + "%"}
+        value={averageCompletionRate}
         icon={<VoteIcon className="w-4 h-4 text-primary" />}
       />
       <CardTemplate

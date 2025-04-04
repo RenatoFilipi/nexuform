@@ -9,59 +9,40 @@ const Analytics = async () => {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   if (!data.user) return redirect("/login");
-  const email = data.user.email ?? "";
+  const email = data.user.email!;
+  const userId = data.user.id;
 
-  const { data: profile, error: profileError } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", data.user.id)
-    .single();
+  const profiles = await supabase.from("profiles").select("*").eq("id", userId).single();
+  if (profiles.error) return <ErrorUI email={email} />;
 
-  if (profileError) return <ErrorUI email={email} />;
+  const subscriptions = await supabase.from("subscriptions").select("*").eq("profile_id", userId).single();
+  if (subscriptions.error) return <ErrorUI email={email} />;
 
-  const { data: subscription, error: subscriptionError } = await supabase
-    .from("subscriptions")
-    .select("*")
-    .eq("profile_id", data.user.id)
-    .single();
+  const active = isSubscriptionActive(subscriptions.data);
+  if (!active || subscriptions.data.plan !== "pro") return <UpgradeToProUI email={email} />;
 
-  if (subscriptionError) return <ErrorUI email={email} />;
-
-  const active = isSubscriptionActive(subscription);
-  if (!active || subscription.plan !== "pro") return <UpgradeToProUI email={email} />;
-
-  const { data: forms, error: formsError } = await supabase
+  const forms = await supabase
     .from("forms")
     .select("*")
-    .eq("owner_id", data.user.id)
+    .eq("owner_id", userId)
     .order("created_at", { ascending: true });
+  if (forms.error) return <ErrorUI email={email} />;
 
-  if (formsError) return <ErrorUI email={email} />;
+  const formIds = forms.data.map((x) => x.id);
+  const submissions = await supabase.from("submissions").select("*").in("form_id", formIds);
+  if (submissions.error) return <ErrorUI email={email} />;
 
-  const formIds = forms.map((x) => x.id);
-
-  const { data: submissions, error: submissionsError } = await supabase
-    .from("submissions")
-    .select("*")
-    .in("form_id", formIds);
-
-  if (submissionsError) return <ErrorUI email={email} />;
-
-  const { data: formsAnalytics, error: formsAnalyticsError } = await supabase
-    .from("forms_analytics")
-    .select("*")
-    .eq("profile_id", data.user.id);
-
-  if (formsAnalyticsError) return <ErrorUI email={email} />;
+  const formsAnalytics = await supabase.from("forms_analytics").select("*").eq("profile_id", userId);
+  if (formsAnalytics.error) return <ErrorUI email={email} />;
 
   return (
     <AnalyticsWrapper
       email={email}
-      profile={profile}
-      subscription={subscription}
-      forms={forms}
-      formsAnalytics={formsAnalytics}
-      submissions={submissions}
+      profile={profiles.data}
+      subscription={subscriptions.data}
+      forms={forms.data}
+      formsAnalytics={formsAnalytics.data}
+      submissions={submissions.data}
     />
   );
 };

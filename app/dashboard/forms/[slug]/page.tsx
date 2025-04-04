@@ -9,101 +9,67 @@ import { redirect } from "next/navigation";
 
 const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
+  const locale = await getLocale();
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   if (!data.user) return redirect("/login");
-  const email = data.user.email ?? "";
+  const email = data.user.email!;
+  const userId = data.user.id;
 
-  const { data: profile, error: profileError } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", data.user.id)
-    .single();
+  const profiles = await supabase.from("profiles").select("*").eq("id", userId).single();
+  if (profiles.error) return <ErrorUI email={email} />;
 
-  if (profileError) return <ErrorUI email={email} />;
+  const subscriptions = await supabase.from("subscriptions").select("*").eq("profile_id", userId).single();
+  if (subscriptions.error) return <ErrorUI email={email} />;
 
-  const { data: subscription, error: subscriptionError } = await supabase
-    .from("subscriptions")
-    .select("*")
-    .eq("profile_id", data.user.id)
-    .single();
+  const active = isSubscriptionActive(subscriptions.data);
+  if (!active) return <SubscriptionUI email={email} locale={locale} profile={profiles.data} />;
 
-  if (subscriptionError) return <ErrorUI email={email} />;
-
-  const active = isSubscriptionActive(subscription);
-  if (!active) return <SubscriptionUI email={email} />;
-
-  const { data: forms, error: formsError } = await supabase
+  const forms = await supabase
     .from("forms")
     .select("*")
-    .eq("owner_id", data.user.id)
+    .eq("owner_id", userId)
     .order("created_at", { ascending: true });
+  if (forms.error) return <ErrorUI email={email} />;
 
-  if (formsError) return <ErrorUI email={email} />;
-
-  const form = forms.find((x) => x.id === slug);
+  const form = forms.data.find((x) => x.id === slug);
   if (!form) return <ErrorUI email={email} />;
+  if (form.owner_id !== userId) return redirect("/dashboard/forms");
 
-  if (form.owner_id !== data.user.id) {
-    return redirect("/dashboard/forms");
-  }
+  const blocks = await supabase.from("blocks").select("*").eq("form_id", slug).order("position", { ascending: true });
+  if (blocks.error) return <ErrorUI email={email} />;
 
-  const { data: integrations, error: integrationsError } = await supabase
-    .from("integrations")
-    .select("*")
-    .eq("form_id", slug)
-    .order("created_at", { ascending: false });
-
-  if (integrationsError) return <ErrorUI email={email} />;
-
-  const { data: blocks, error: blocksError } = await supabase
-    .from("blocks")
-    .select("*")
-    .eq("form_id", slug)
-    .order("position", { ascending: true });
-
-  if (blocksError) return <ErrorUI email={email} />;
-
-  const { data: submissions, error: submissionsError } = await supabase
+  const submissions = await supabase
     .from("submissions")
     .select("*")
     .range(paginationFrom, paginationTo)
     .eq("form_id", slug)
     .order("created_at", { ascending: false });
+  if (submissions.error) return <ErrorUI email={email} />;
 
-  if (submissionsError) return <ErrorUI email={email} />;
-
-  const { data: overviewSubmissions, error: overviewSubmissionsError } = await supabase
+  const overviewSubmissions = await supabase
     .from("submissions")
     .select("*")
     .eq("form_id", slug)
     .gte("created_at", new Date(Date.now() - 30 * day).toISOString());
+  if (overviewSubmissions.error) return <ErrorUI email={email} />;
 
-  if (overviewSubmissionsError) return <ErrorUI email={email} />;
-
-  const { data: formAnalytics, error: formAnalyticsError } = await supabase
-    .from("forms_analytics")
-    .select("*")
-    .eq("form_id", form.id)
-    .single();
-
-  if (formAnalyticsError) return <ErrorUI email={email} />;
-
-  const locale = await getLocale();
+  const formsAnalytics = await supabase.from("forms_analytics").select("*").eq("form_id", form.id).single();
+  if (formsAnalytics.error) return <ErrorUI email={email} />;
 
   return (
     <FormWrapper
-      forms={forms}
       locale={locale}
-      form={form}
-      blocks={blocks}
-      overviewSubmissions={overviewSubmissions}
-      submissions={submissions}
-      formAnalytics={formAnalytics}
-      profile={profile}
-      subscription={subscription}
       email={email}
-      integrations={integrations}
+      profile={profiles.data}
+      form={form}
+      forms={forms.data}
+      blocks={blocks.data}
+      overviewSubmissions={overviewSubmissions.data}
+      submissions={submissions.data}
+      formAnalytics={formsAnalytics.data}
+      subscription={subscriptions.data}
+      integrations={[]}
     />
   );
 };

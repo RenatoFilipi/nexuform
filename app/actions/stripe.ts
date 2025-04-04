@@ -5,11 +5,11 @@ import { headers } from "next/headers";
 
 export const fetchBasicPlanAction = async (formData: FormData) => {
   const origin = (await headers()).get("origin");
-  const email = formData.get("email") as string;
+  const customerId = formData.get("customerId") as string;
   const price = process.env.STRIPE_BASIC_PLAN_PRICE_ID!;
   const session = await stripe.checkout.sessions.create({
+    customer: customerId,
     ui_mode: "embedded",
-    customer_email: email,
     line_items: [
       {
         price,
@@ -25,11 +25,11 @@ export const fetchBasicPlanAction = async (formData: FormData) => {
 };
 export const fetchProPlanAction = async (formData: FormData) => {
   const origin = (await headers()).get("origin");
-  const email = formData.get("email") as string;
+  const customerId = formData.get("customerId") as string;
   const price = process.env.STRIPE_PRO_PLAN_PRICE_ID!;
   const session = await stripe.checkout.sessions.create({
+    customer: customerId,
     ui_mode: "embedded",
-    customer_email: email,
     line_items: [
       {
         price,
