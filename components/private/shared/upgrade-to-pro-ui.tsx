@@ -3,11 +3,20 @@
 import CheckoutStripe from "@/components/private/checkout/checkout-stripe";
 import { Button } from "@/components/ui/button";
 import useUserStore from "@/stores/user";
+import { EProfile, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { CrownIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-const UpgradeToProUI = ({ email }: { email: string }) => {
+const UpgradeToProUI = ({
+  email,
+  profile,
+  subscription,
+}: {
+  email: string;
+  profile: EProfile;
+  subscription: ESubscription;
+}) => {
   const t = useTranslations("app");
   const user = useUserStore();
 
@@ -15,6 +24,8 @@ const UpgradeToProUI = ({ email }: { email: string }) => {
     queryKey: ["upgradeToProUIData"],
     queryFn: () => {
       user.setEmail(email);
+      user.setProfile(profile);
+      user.setSubscription(subscription);
       return null;
     },
     refetchOnWindowFocus: false,

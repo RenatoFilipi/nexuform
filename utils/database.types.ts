@@ -606,6 +606,7 @@ export type Database = {
           profile_id: string
           start_date: string
           status: string
+          stripe_subscription_id: string | null
           updated_at: string
         }
         Insert: {
@@ -617,6 +618,7 @@ export type Database = {
           profile_id: string
           start_date?: string
           status?: string
+          stripe_subscription_id?: string | null
           updated_at?: string
         }
         Update: {
@@ -628,6 +630,7 @@ export type Database = {
           profile_id?: string
           start_date?: string
           status?: string
+          stripe_subscription_id?: string | null
           updated_at?: string
         }
         Relationships: [

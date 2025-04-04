@@ -19,7 +19,8 @@ const Analytics = async () => {
   if (subscriptions.error) return <ErrorUI email={email} />;
 
   const active = isSubscriptionActive(subscriptions.data);
-  if (!active || subscriptions.data.plan !== "pro") return <UpgradeToProUI email={email} />;
+  if (!active || subscriptions.data.plan !== "pro")
+    return <UpgradeToProUI email={email} profile={profiles.data} subscription={subscriptions.data} />;
 
   const forms = await supabase
     .from("forms")

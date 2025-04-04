@@ -140,7 +140,7 @@ const SignupForm = () => {
                 ),
               })}
             </p>
-            <Button variant={"secondary"} type="submit" size={"sm"} className="w-full">
+            <Button disabled={isPending} variant={"secondary"} type="submit" size={"sm"} className="w-full">
               {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
               {t("label_signup")}
             </Button>
