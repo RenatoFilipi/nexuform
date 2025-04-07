@@ -211,7 +211,7 @@ const GeneralSettings = () => {
 };
 const StatusSettings = () => {
   const t = useTranslations("app");
-  const { form, setForm } = useEditorStore();
+  const { form, setForm, blocks } = useEditorStore();
   const statusList = [
     {
       status: "draft",

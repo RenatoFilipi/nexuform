@@ -34,6 +34,7 @@ const EditorWrapper = ({ form, theme, blocks, profile, subscription, locale, ema
         user.setSubscription(subscription);
         editor.setForm(form);
         editor.setBlocks(blocks);
+        editor.setBlocksReadyOnly(blocks);
         editor.setTheme({ ...theme, nebulaform_branding: subscription.plan !== "pro" });
       });
       return null;

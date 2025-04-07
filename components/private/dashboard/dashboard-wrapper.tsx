@@ -27,6 +27,7 @@ const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProp
   const dashboard = useDashboardStore();
   const currentPlan = getCurrentPlan(subscription.plan as TPlan);
   const mustUpgrade = user.formsCount >= currentPlan.forms;
+  const empty = dashboard.forms.length <= 0;
 
   const query = useQuery({
     queryKey: ["dashboardData"],
@@ -46,27 +47,29 @@ const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProp
 
   return (
     <div className="flex-1 mt-12 mb-12 sm:mb-0 flex flex-col gap-6 px-3 sm:px-20 lg:px-52 py-4 sm:py-8">
-      <div className="flex justify-between items-center">
-        <h1 className="text-xl font-medium">{t("label_forms")}</h1>
-        <div className="flex justify-center items-center gap-4">
-          {mustUpgrade && (
-            <ManageSubscription>
-              <Button size={"sm"} variant={"secondary"}>
-                <PlusIcon className="w-4 h-4 mr-2" />
-                {t("label_create_form")}
-              </Button>
-            </ManageSubscription>
-          )}
-          {!mustUpgrade && (
-            <DashboardNewForm>
-              <Button size={"sm"} variant={"secondary"}>
-                <PlusIcon className="w-4 h-4 mr-2" />
-                {t("label_create_form")}
-              </Button>
-            </DashboardNewForm>
-          )}
+      {!empty && (
+        <div className="flex justify-between items-center">
+          <h1 className="text-xl font-medium">{t("label_forms")}</h1>
+          <div className="flex justify-center items-center gap-4">
+            {mustUpgrade && (
+              <ManageSubscription>
+                <Button size={"sm"} variant={"secondary"}>
+                  <PlusIcon className="w-4 h-4 mr-2" />
+                  {t("label_create_form")}
+                </Button>
+              </ManageSubscription>
+            )}
+            {!mustUpgrade && (
+              <DashboardNewForm>
+                <Button size={"sm"} variant={"secondary"}>
+                  <PlusIcon className="w-4 h-4 mr-2" />
+                  {t("label_create_form")}
+                </Button>
+              </DashboardNewForm>
+            )}
+          </div>
         </div>
-      </div>
+      )}
       <DashboardForms />
     </div>
   );

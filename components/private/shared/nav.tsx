@@ -400,12 +400,13 @@ const NavEditor = () => {
   };
   const onSaveForm = async () => {
     try {
+      const newStatus = blocks.length <= 0 ? "draft" : form.status;
       const { error } = await supabase
         .from("forms")
         .update({
           name: form.name,
           description: form.description,
-          status: form.status,
+          status: newStatus,
           submit_text: form.submit_text,
           nebulaform_branding: form.nebulaform_branding,
           success_title: form.success_title,
@@ -445,57 +446,41 @@ const NavEditor = () => {
     try {
       const elementsBefore = blocksReadyOnly;
       const elementsAfter = blocks;
-      let inBoth = [];
-      let inEither = [];
-      let newElements = [];
-      let removedElements = [];
-      let elementsToUpsert = [];
-      let elementsToDelete = [];
 
       const beforeIds = new Set(elementsBefore.map((x) => x.id));
       const afterIds = new Set(elementsAfter.map((x) => x.id));
 
-      inBoth = [
-        ...elementsBefore.filter((x) => afterIds.has(x.id)),
-        ...elementsAfter.filter((x) => beforeIds.has(x.id)),
-      ];
-      inEither = [
-        ...elementsBefore.filter((x) => !afterIds.has(x.id)),
-        ...elementsAfter.filter((x) => !beforeIds.has(x.id)),
-      ];
-
-      inBoth = inBoth.filter((item, index, self) => self.findIndex((x) => x.id === item.id) === index);
-      inEither = inEither.filter((item, index, self) => self.findIndex((x) => x.id === item.id) === index);
-
-      newElements = inEither.filter((x) => afterIds.has(x.id));
-      removedElements = inEither.filter((x) => beforeIds.has(x.id));
-
-      elementsToUpsert = inBoth.map((before) => {
-        const after = elementsAfter.find((x) => x.id === before.id);
-        if (after && JSON.stringify(before) !== JSON.stringify(after)) {
-          return { ...before, ...after };
-        }
-        return before;
+      const modifiedElements = elementsAfter.filter((after) => {
+        if (!beforeIds.has(after.id)) return false;
+        const before = elementsBefore.find((x) => x.id === after.id);
+        return JSON.stringify(before) !== JSON.stringify(after);
       });
 
-      elementsToUpsert = [...elementsToUpsert, ...newElements];
+      const newElements = elementsAfter.filter((x) => !beforeIds.has(x.id));
+      const removedElements = elementsBefore.filter((x) => !afterIds.has(x.id));
 
-      elementsToDelete = [...removedElements];
+      const elementsToUpsert = [...modifiedElements, ...newElements];
 
-      const { error: upsertError } = await supabase.from("blocks").upsert(elementsToUpsert);
-      if (upsertError) {
-        throw new Error(t("err_generic"));
-      }
+      if (elementsToUpsert.length > 0) {
+        const { error: upsertError } = await supabase.from("blocks").upsert(elementsToUpsert);
 
-      const deletePromises = elementsToDelete.map(async (x) => await supabase.from("blocks").delete().eq("id", x.id));
-      const deleteResults = await Promise.all(deletePromises);
-
-      deleteResults.forEach(({ error }, index) => {
-        if (error) {
+        if (upsertError) {
           throw new Error(t("err_generic"));
         }
-      });
+      }
+
+      if (removedElements.length > 0) {
+        const deletePromises = removedElements.map((x) => supabase.from("blocks").delete().eq("id", x.id));
+
+        const deleteResults = await Promise.all(deletePromises);
+
+        const hasError = deleteResults.some(({ error }) => error);
+        if (hasError) {
+          throw new Error(t("err_generic"));
+        }
+      }
     } catch (error) {
+      console.error("Error saving blocks:", error);
       throw error;
     }
   };
