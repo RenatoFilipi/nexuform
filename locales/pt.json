@@ -300,7 +300,12 @@
     "label_qr_share": "Compartilhar via QR Code",
     "desc_qr_share": "Escaneie o código QR ou copie o link para compartilhar seu formulário com outras pessoas de forma rápida e fácil.",
     "label_checkout": "Finalizar Compra",
-    "desc_checkout": "Revise seus itens e informações de pagamento antes de concluir sua compra."
+    "desc_checkout": "Revise seus itens e informações de pagamento antes de concluir sua compra.",
+    "label_sortby": "Ordenar por",
+    "label_sortby_name": "Ordenar por nome",
+    "label_sortby_date": "Ordenar por data",
+    "label_search_forms": "Buscar formulários",
+    "label_no_form_search": "Nenhum formulário corresponde à sua busca."
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

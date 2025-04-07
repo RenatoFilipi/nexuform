@@ -300,7 +300,12 @@
     "label_qr_share": "Share via QR Code",
     "desc_qr_share": "Scan the QR code or copy the link to share your form with others quickly and effortlessly.",
     "label_checkout": "Checkout",
-    "desc_checkout": "Please review your items and payment information before completing your purchase."
+    "desc_checkout": "Please review your items and payment information before completing your purchase.",
+    "label_sortby": "Sort by",
+    "label_sortby_name": "Sort by name",
+    "label_sortby_date": "Sort by date",
+    "label_search_forms": "Search forms",
+    "label_no_form_search": "No forms match your search."
   },
   "s": {
     "err_required_all": "Answer all required questions.",
