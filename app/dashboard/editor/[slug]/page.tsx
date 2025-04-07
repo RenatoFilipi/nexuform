@@ -22,7 +22,9 @@ const Editor = async ({ params }: { params: Promise<{ slug: string }> }) => {
   if (subscriptions.error) return <ErrorUI email={email} />;
 
   const active = isSubscriptionActive(subscriptions.data);
-  if (!active) return <SubscriptionUI email={email} locale={locale} profile={profiles.data} />;
+  if (!active) {
+    return <SubscriptionUI email={email} locale={locale} profile={profiles.data} subscription={subscriptions.data} />;
+  }
 
   const forms = await supabase.from("forms").select("*").eq("owner_id", userId).eq("id", slug).single();
   if (forms.error) return <ErrorUI email={email} />;

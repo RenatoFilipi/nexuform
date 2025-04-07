@@ -21,7 +21,8 @@ const Forms = async () => {
   if (subscriptions.error) return <ErrorUI email={email} />;
 
   const active = isSubscriptionActive(subscriptions.data);
-  if (!active) return <SubscriptionUI email={email} locale={locale} profile={profiles.data} />;
+  if (!active)
+    return <SubscriptionUI email={email} locale={locale} profile={profiles.data} subscription={subscriptions.data} />;
 
   const forms = await supabase
     .from("forms")

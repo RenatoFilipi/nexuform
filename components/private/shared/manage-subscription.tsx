@@ -108,13 +108,10 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
 const CardTemplate = ({ plan }: { plan: IPlan }) => {
   const t = useTranslations("app");
   const { subscription } = useUserStore();
-  const currentPlan = plan.type === subscription.plan;
+  const currentPlan = plan.type === subscription.plan && subscription.status !== "canceled";
 
   return (
-    <div
-      className={`${
-        plan.isMostPopular ? "border-primary" : ""
-      } relative flex flex-col items-center p-4 bg-background border-2 rounded-lg`}>
+    <div className={`relative flex flex-col items-center p-4 bg-background border-2 rounded-lg`}>
       <div className="flex flex-col w-full gap-3">
         <div className="flex justify-between items-center gap-2">
           <h3 className="font-semibold">{plan.name}</h3>

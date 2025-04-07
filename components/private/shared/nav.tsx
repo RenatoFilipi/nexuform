@@ -169,25 +169,21 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
     </DropdownMenu>
   );
 };
-const AvatarAppMenu = () => {
+const AvatarAppMenu = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations("app");
   const user = useUserStore();
   const { setTheme, theme } = useTheme();
-  const avatarName = user.email.charAt(0);
+  const showPlan = user.subscription.status !== "canceled";
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Avatar className="cursor-pointer w-8 h-8">
-          <AvatarFallback className="text-sm bg-foreground/5 text-foreground uppercase">{avatarName}</AvatarFallback>
-        </Avatar>
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent className="mr-4 min-w-52 text-foreground/80">
         {user.email !== "" && (
           <>
             <DropdownMenuLabel className="flex justify-center items-center gap-4">
               {user.email}
-              {user.subscription.plan === "" ? null : <PlanBadge plan={user.subscription.plan as TPlan} />}
+              {showPlan && <PlanBadge plan={user.subscription.plan as TPlan} />}
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
           </>
@@ -248,16 +244,17 @@ const AvatarAppMenu = () => {
             <LogOutIcon className="w-4 h-4" />
           </Button>
         </DropdownMenuItem>
-        {user.subscription.plan === "free_trial" && (
-          <div className="flex flex-col">
-            <DropdownMenuSeparator />
-            <ManageSubscription>
-              <Button size={"sm"} variant={"secondary"} className="m-1">
-                {t("label_upgrade")}
-              </Button>
-            </ManageSubscription>
-          </div>
-        )}
+        {user.subscription.plan === "free_trial" ||
+          (!showPlan && (
+            <div className="flex flex-col">
+              <DropdownMenuSeparator />
+              <ManageSubscription>
+                <Button size={"sm"} variant={"secondary"} className="m-1">
+                  {t("label_upgrade")}
+                </Button>
+              </ManageSubscription>
+            </div>
+          ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
@@ -268,6 +265,8 @@ const NavApp = () => {
   const editorStore = useEditorStore();
   const formStore = useFormStore();
   const pathname = usePathname();
+  const userStore = useUserStore();
+  const avatarName = userStore.email.charAt(0);
   const isActive = (path: string) => path === pathname;
 
   const links = [
@@ -350,7 +349,11 @@ const NavApp = () => {
             </Button>
           </Feedback>
         </div>
-        <AvatarAppMenu />
+        <AvatarAppMenu>
+          <Avatar className="cursor-pointer w-8 h-8">
+            <AvatarFallback className="text-sm bg-foreground/5 text-foreground uppercase">{avatarName}</AvatarFallback>
+          </Avatar>
+        </AvatarAppMenu>
       </div>
       <div className="flex sm:hidden">
         <NavAppMobile>

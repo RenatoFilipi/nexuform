@@ -94,3 +94,27 @@ export const ResetPasswordAction = async (formData: FormData) => {
 
   return encodedRedirect("success", "/password/reset", t("label_suc_request_password"));
 };
+export const CancelSubscriptionAction = async (formData: FormData) => {
+  const t = await getTranslations("auth");
+  const stripeSubscriptionId = formData.get("stripeSubscriptionId")?.toString();
+  if (!stripeSubscriptionId) return encodedRedirect("error", "/dashboard/settings", t("err_generic"));
+
+  const supabase = superCreateClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE!
+  );
+
+  const result = await stripe.subscriptions.cancel(stripeSubscriptionId, { invoice_now: true });
+  if (result.status !== "canceled") return encodedRedirect("error", "/dashboard/settings", t("err_generic"));
+
+  const { error } = await supabase
+    .from("subscriptions")
+    .update({
+      status: "canceled",
+    })
+    .eq("stripe_subscription_id", stripeSubscriptionId);
+
+  if (error) return encodedRedirect("error", "/dashboard/settings", t("err_generic"));
+
+  return encodedRedirect("success", "/dashboard/settings", "Subscription successfully cancelled.");
+};

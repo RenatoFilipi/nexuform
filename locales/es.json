@@ -216,7 +216,7 @@
     "label_delete_account": "Eliminar Cuenta",
     "desc_delete_account": "Elimina tu cuenta y todos los datos asociados. Esta acción es irreversible, así que procede con precaución.",
     "label_billing_and_usage": "Facturación y Uso",
-    "desc_billing_and_usage": "Consulta información sobre tu facturación y uso. Haz un seguimiento de tus gastos, límites e historial de facturación.",
+    "desc_billing_and_usage": "Consulta información sobre tu facturación y uso.",
     "label_plan_summary": "Resumen del Plan",
     "desc_plan_summary": "Tu plan actual para este ciclo de facturación.",
     "label_cancel_sub": "Cancelar Suscripción",

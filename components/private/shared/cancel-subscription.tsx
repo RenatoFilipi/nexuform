@@ -1,5 +1,6 @@
 "use client";
 
+import { CancelSubscriptionAction } from "@/app/actions/auth";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   AlertDialog,
@@ -13,9 +14,12 @@ import { Button } from "@/components/ui/button";
 import useUserStore from "@/stores/user";
 import { plans } from "@/utils/plans";
 import { TSetState } from "@/utils/types";
-import { XIcon } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { LoaderIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useQueryState } from "nuqs";
+import { useState, useTransition } from "react";
+import { toast } from "sonner";
 
 const CancelSubscription = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations("app");
@@ -37,8 +41,31 @@ const CancelSubscription = ({ children }: { children: React.ReactNode }) => {
 
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
+  const [isPending, startTransition] = useTransition();
   const { subscription } = useUserStore();
   const targetPlan = plans.find((x) => x.type === subscription.plan);
+  const [success] = useQueryState("success");
+  const [error] = useQueryState("error");
+
+  useQuery({
+    queryKey: [success, error],
+    queryFn: () => {
+      if (success !== null) toast.success(success);
+      if (error !== null) toast.error(error);
+      return null;
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  const onCancelSubscription = async () => {
+    startTransition(async () => {
+      const formData = new FormData();
+      if (subscription.stripe_subscription_id) {
+        formData.append("stripeSubscriptionId", subscription.stripe_subscription_id);
+        await CancelSubscriptionAction(formData);
+      }
+    });
+  };
 
   if (!subscription) {
     return (
@@ -85,7 +112,14 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
             <Button onClick={() => setState(false)} variant="outline" size="sm">
               {t("label_close")}
             </Button>
-            <Button onClick={() => setState(false)} variant="destructive" size="sm" className="">
+            <Button
+              disabled={isPending}
+              onClick={() => {
+                onCancelSubscription();
+              }}
+              variant="destructive"
+              size="sm">
+              {isPending && <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />}
               {t("label_sub_cancel_confirm")}
             </Button>
           </div>

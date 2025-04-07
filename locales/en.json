@@ -216,7 +216,7 @@
     "label_delete_account": "Delete account",
     "desc_delete_account": "Delete your account and all its associated data. This action is not reversible, so please continue with caution.",
     "label_billing_and_usage": "Billing & Usage",
-    "desc_billing_and_usage": "View information about your billing and usage. Track your expenses, limits, and billing history.",
+    "desc_billing_and_usage": "View information about your billing and usage.",
     "label_plan_summary": "Plan Summary",
     "desc_plan_summary": "Your current plan for this billing cycle.",
     "label_cancel_sub": "Cancel Subscription",

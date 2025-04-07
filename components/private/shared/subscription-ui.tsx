@@ -2,13 +2,23 @@
 
 import { Button } from "@/components/ui/button";
 import useUserStore from "@/stores/user";
-import { EProfile } from "@/utils/entities";
+import { EProfile, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { WalletIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import ManageSubscription from "./manage-subscription";
 
-const SubscriptionUI = ({ email, locale, profile }: { email: string; locale: string; profile: EProfile }) => {
+const SubscriptionUI = ({
+  email,
+  locale,
+  profile,
+  subscription,
+}: {
+  email: string;
+  locale: string;
+  profile: EProfile;
+  subscription: ESubscription;
+}) => {
   const t = useTranslations("app");
   const user = useUserStore();
 
@@ -18,6 +28,7 @@ const SubscriptionUI = ({ email, locale, profile }: { email: string; locale: str
       user.setLocale(locale);
       user.setEmail(email);
       user.setProfile(profile);
+      user.setSubscription(subscription);
       return null;
     },
     refetchOnWindowFocus: false,
