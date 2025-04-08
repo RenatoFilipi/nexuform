@@ -266,7 +266,7 @@ const NavApp = () => {
   const formStore = useFormStore();
   const pathname = usePathname();
   const userStore = useUserStore();
-  const avatarName = userStore.email.charAt(0);
+  const avatarName = userStore.email.slice(0, 2);
   const isActive = (path: string) => path === pathname;
 
   const links = [
@@ -351,7 +351,9 @@ const NavApp = () => {
         </div>
         <AvatarAppMenu>
           <Avatar className="cursor-pointer w-8 h-8">
-            <AvatarFallback className="text-sm bg-foreground/5 text-foreground uppercase">{avatarName}</AvatarFallback>
+            <AvatarFallback className="bg-foreground/5">
+              <span className="first-letter:uppercase text-xs">{avatarName}</span>
+            </AvatarFallback>
           </Avatar>
         </AvatarAppMenu>
       </div>

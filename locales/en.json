@@ -305,7 +305,10 @@
     "label_sortby_name": "Sort by name",
     "label_sortby_date": "Sort by date",
     "label_search_forms": "Search forms",
-    "label_no_form_search": "No forms match your search."
+    "label_no_form_search": "No forms match your search.",
+    "label_create_form_scratch": "Create from scratch",
+    "label_create_form_template": "Create from template",
+    "label_untitled_form": "Untitled Form"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

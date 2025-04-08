@@ -305,7 +305,10 @@
     "label_sortby_name": "Ordenar por nome",
     "label_sortby_date": "Ordenar por data",
     "label_search_forms": "Buscar formulários",
-    "label_no_form_search": "Nenhum formulário corresponde à sua busca."
+    "label_no_form_search": "Nenhum formulário corresponde à sua busca.",
+    "label_create_form_scratch": "Criar do zero",
+    "label_create_form_template": "Criar a partir de modelo",
+    "label_untitled_form": "Formulário sem título"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

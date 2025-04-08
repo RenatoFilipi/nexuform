@@ -9,6 +9,7 @@ import { EForm, EProfile, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { LayersIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { useQueryState } from "nuqs";
 import { useMemo, useState } from "react";
 import DashboardFormCard from "./dashboard-form-card";
@@ -45,6 +46,7 @@ const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProp
   }, [dashboard.forms, value, sortBy]);
   const empty = dashboard.forms.length <= 0 && value === "";
   const filteredEmpty = filteredForms.length <= 0 && value !== "";
+
   const query = useQuery({
     queryKey: ["dashboardData"],
     queryFn: () => {
@@ -70,14 +72,18 @@ const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProp
       <div className="flex justify-between items-center flex-col sm:flex-row gap-3">
         <div className="flex justify-between items-center w-full">
           <h1 className="text-xl font-medium">{t("label_forms")}</h1>
-          <Button size={"sm"} variant={"secondary"} className="flex sm:hidden">
-            <PlusIcon className="w-4 h-4 mr-2" />
-            {t("label_create_form")}
-          </Button>
+          <div className="flex sm:hidden">
+            <NewFormButton />
+          </div>
         </div>
         <div className="flex justify-center items-center gap-4 flex-col sm:flex-row w-full">
           <div className="flex gap-4 w-full">
-            <Input placeholder={t("label_search_forms")} value={value} onChange={(e) => setValue(e.target.value)} />
+            <Input
+              type="search"
+              placeholder={t("label_search_forms")}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
             <Select defaultValue={sortBy ?? ""} onValueChange={onSort}>
               <SelectTrigger>
                 <SelectValue placeholder={t("label_sortby")} />
@@ -88,10 +94,9 @@ const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProp
               </SelectContent>
             </Select>
           </div>
-          <Button size={"sm"} variant={"secondary"} className="hidden sm:flex">
-            <PlusIcon className="w-4 h-4 mr-2" />
-            {t("label_create_form")}
-          </Button>
+          <div className="hidden sm:flex">
+            <NewFormButton />
+          </div>
         </div>
       </div>
       {filteredEmpty && <FilteredEmptyUI />}
@@ -115,7 +120,6 @@ const FilteredEmptyUI = () => {
     </div>
   );
 };
-
 const EmptyUI = () => {
   const t = useTranslations("app");
   return (
@@ -130,14 +134,22 @@ const EmptyUI = () => {
             <span className="text-sm text-center text-foreground/70">{t("desc_no_forms")}</span>
           </div>
           <div className="flex w-full justify-center items-center mt-2">
-            <Button size={"sm"} variant={"secondary"}>
-              <PlusIcon className="w-4 h-4 mr-2" />
-              {t("label_create_form")}
-            </Button>
+            <NewFormButton />
           </div>
         </div>
       </div>
     </div>
+  );
+};
+const NewFormButton = () => {
+  const t = useTranslations("app");
+  return (
+    <Button size={"sm"} variant={"secondary"} asChild>
+      <Link href={"/dashboard/forms/new"}>
+        <PlusIcon className="w-4 h-4 mr-2" />
+        {t("label_create_form")}
+      </Link>
+    </Button>
   );
 };
 
