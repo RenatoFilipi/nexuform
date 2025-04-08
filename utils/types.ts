@@ -39,7 +39,27 @@ export type TIntegrationCategory =
   | "notifications"
   | "database";
 export type TIntegrationStatus = "active" | "inactive";
-export type TTemplateCategory = "feedback" | "survey" | "registration" | "review";
+export type TTemplateCategory =
+  | "contact"
+  | "feedback"
+  | "marketing"
+  | "customer-success"
+  | "events"
+  | "sales"
+  | "lead-generation"
+  | "application"
+  | "registration"
+  | "survey"
+  | "evaluation"
+  | "order"
+  | "payment"
+  | "onboarding"
+  | "hr"
+  | "healthcare"
+  | "education"
+  | "real-estate"
+  | "application"
+  | "job-application";
 
 // submission
 export type TSubmissionStatus = "reviewed" | "not_reviewed" | "ignored";
