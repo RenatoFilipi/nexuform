@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import useDashboardStore from "@/stores/dashboard";
 import { minWidth640 } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState } from "@/utils/types";
@@ -62,6 +63,7 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
   const supabase = createClient();
   const router = useRouter();
   const [value, setValue] = useState("");
+  const dashboard = useDashboardStore();
 
   const onDeleteForm = () => {
     startTransition(async () => {
@@ -70,7 +72,10 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
         toast.error(t("err_generic"));
         return;
       }
+      toast.success(t("suc_form_delete"));
       router.push("/dashboard/forms");
+      dashboard.setForms(dashboard.forms.filter((x) => x.id !== formId));
+      setState(false);
     });
   };
 
@@ -96,7 +101,7 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
           {t("label_cancel")}
         </Button>
         <Button
-          disabled={formName !== value}
+          disabled={formName !== value || isPending}
           onClick={onDeleteForm}
           variant={"destructive"}
           size={"sm"}

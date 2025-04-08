@@ -308,7 +308,11 @@
     "label_no_form_search": "No forms match your search.",
     "label_create_form_scratch": "Create from scratch",
     "label_create_form_template": "Create from template",
-    "label_untitled_form": "Untitled Form"
+    "label_untitled_form": "Untitled Form",
+    "suc_form_delete": "Form deleted successfully.",
+    "label_view": "View",
+    "label_edit": "Edit",
+    "label_delete": "Delete"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

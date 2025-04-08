@@ -308,7 +308,11 @@
     "label_no_form_search": "Nenhum formulário corresponde à sua busca.",
     "label_create_form_scratch": "Criar do zero",
     "label_create_form_template": "Criar a partir de modelo",
-    "label_untitled_form": "Formulário sem título"
+    "label_untitled_form": "Formulário sem título",
+    "suc_form_delete": "Formulário excluído com sucesso.",
+    "label_view": "Visualizar",
+    "label_edit": "Editar",
+    "label_delete": "Excluir"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

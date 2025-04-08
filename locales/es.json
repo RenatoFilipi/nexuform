@@ -308,7 +308,11 @@
     "label_no_form_search": "Ningún formulario coincide con tu búsqueda.",
     "label_create_form_scratch": "Crear desde cero",
     "label_create_form_template": "Crear desde plantilla",
-    "label_untitled_form": "Formulario sin título"
+    "label_untitled_form": "Formulario sin título",
+    "suc_form_delete": "Formulario eliminado correctamente.",
+    "label_view": "Ver",
+    "label_edit": "Editar",
+    "label_delete": "Eliminar"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",
