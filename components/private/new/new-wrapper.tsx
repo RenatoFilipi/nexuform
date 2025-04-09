@@ -159,7 +159,7 @@ const TemplateList = ({ setView }: { setView: TSetState<TView> }) => {
         <div className="grid sm:grid-cols-3 gap-6">
           {dashboard.templates.map((temp) => {
             return (
-              <div key={temp.id} className="flex border p-3 flex-col justify-between items-start h-28">
+              <div key={temp.id} className="flex border p-3 flex-col justify-between items-start h-32">
                 <div className="flex justify-between items-center w-full">
                   <span className="text-sm font-medium">{temp.name}</span>
                   <div className="flex justify-center items-center gap-2">
