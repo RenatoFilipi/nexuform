@@ -225,18 +225,21 @@ const StatusSettings = () => {
       label: t("label_draft"),
       description: t("desc_draft"),
       icon: BookDashedIcon,
+      color: "bg-yellow-100 text-yellow-800",
     },
     {
       status: "published",
       label: t("label_published"),
       description: t("desc_published"),
       icon: GlobeIcon,
+      color: "bg-green-100 text-green-800",
     },
     {
       status: "inactive",
       label: t("label_inactive"),
       description: t("desc_inactive"),
       icon: MonitorOffIcon,
+      color: "bg-gray-100 text-gray-800",
     },
   ];
   const supabase = createClient();
@@ -283,12 +286,17 @@ const StatusSettings = () => {
               key={index}
               onClick={() => onSetStatus(statusItem.status)}
               className={`${
-                statusItem.status === status ? "border-primary bg-primary/5" : "hover:bg-foreground/5"
+                statusItem.status === status
+                  ? "border-primary bg-primary/10"
+                  : "hover:bg-foreground/5 border-transparent"
               } border p-4 flex gap-4 h-full w-full`}>
               <div className="flex items-center justify-center">
-                <statusItem.icon
-                  className={`${statusItem.status === status ? "text-primary" : "text-foreground/40"} w-5 h-5`}
-                />
+                <div
+                  className={`p-2 rounded-full ${statusItem.color} ${
+                    status === statusItem.status ? "opacity-100" : "opacity-70"
+                  }`}>
+                  <statusItem.icon className="w-5 h-5" />
+                </div>
               </div>
               <div className="flex flex-col justify-center items-start gap-1">
                 <span className="font-medium">{statusItem.label}</span>
@@ -298,6 +306,104 @@ const StatusSettings = () => {
           ))}
         </div>
         <div className="flex justify-end items-center w-full">
+          <Button variant={"secondary"} size={"sm"} onClick={onSubmit} className="w-full sm:w-fit">
+            {settingsState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
+            {t("label_save_form")}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+const StatusSettings2 = () => {
+  const t = useTranslations("app");
+  const supabase = createClient();
+  const { form, setForm } = useFormStore();
+  const [status, setStatus] = useState(form.status);
+  const [settingsState, setSettingsState] = useState<TAppState>("idle");
+
+  const statusList = [
+    {
+      status: "draft",
+      label: t("label_draft"),
+      description: t("desc_draft"),
+      icon: BookDashedIcon,
+      color: "bg-yellow-100 text-yellow-800",
+    },
+    {
+      status: "published",
+      label: t("label_published"),
+      description: t("desc_published"),
+      icon: GlobeIcon,
+      color: "bg-green-100 text-green-800",
+    },
+    {
+      status: "inactive",
+      label: t("label_inactive"),
+      description: t("desc_inactive"),
+      icon: MonitorOffIcon,
+      color: "bg-gray-100 text-gray-800",
+    },
+  ];
+
+  const onSetStatus = (value: string) => setStatus(value);
+
+  const onSubmit = async () => {
+    setSettingsState("loading");
+    try {
+      const { data, error } = await supabase.from("forms").update({ status }).eq("id", form.id).select("*").single();
+
+      if (error) throw error;
+
+      setForm(data);
+      toast.success(t("suc_update_form"));
+    } catch (error) {
+      toast.error(t("err_generic"));
+    } finally {
+      setSettingsState("idle");
+    }
+  };
+
+  return (
+    <div className="flex flex-col gap-6 w-full">
+      <div className="space-y-1">
+        <h2 className="text-lg font-semibold">{t("label_status")}</h2>
+        <p className="text-sm text-muted-foreground">{t("desc_status")}</p>
+      </div>
+
+      <div className="space-y-6">
+        <div className="grid gap-3">
+          {statusList.map((item) => (
+            <button
+              key={item.status}
+              onClick={() => onSetStatus(item.status)}
+              className={`
+                flex items-start gap-4 p-4 rounded border transition-all
+                ${
+                  status === item.status
+                    ? "border-primary bg-primary/5 ring-1 ring-primary/20"
+                    : "hover:bg-accent/50 border-transparent bg-accent/20"
+                }
+              `}>
+              <div
+                className={`p-2 rounded-full ${item.color} ${status === item.status ? "opacity-100" : "opacity-70"}`}>
+                <item.icon className="w-5 h-5" />
+              </div>
+              <div className="text-left flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="font-medium">{item.label}</span>
+                  {status === item.status && (
+                    <span className="px-2 py-0.5 text-xs rounded-full bg-primary/10 text-primary">
+                      {t("label_current")}
+                    </span>
+                  )}
+                </div>
+                <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+        <div className="flex justify-end">
           <Button variant={"secondary"} size={"sm"} onClick={onSubmit} className="w-full sm:w-fit">
             {settingsState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
             {t("label_save_form")}

@@ -7,8 +7,9 @@ import useDashboardStore from "@/stores/dashboard";
 import useUserStore from "@/stores/user";
 import { minute } from "@/utils/constants";
 import { EForm, EProfile, ESubscription, ETemplate } from "@/utils/entities";
+import { getFormCategoryName } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
-import { TSetState } from "@/utils/types";
+import { TSetState, TTemplateCategory } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronLeftIcon, HexagonIcon, LoaderIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -92,27 +93,37 @@ const CustomForm = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full border h-48 gap-6 flex-col p-4">
-      <div className="flex flex-col justify-center items-center gap-3">
+    <div className="flex justify-center items-center w-full border h-56 gap-4 flex-col p-6 rounded-lg bg-background hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md group">
+      <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
         <PlusIcon className="w-7 h-7 text-primary" />
-        <p className="text-sm text-center text-foreground/70">{t("desc_custom")}</p>
       </div>
-      <Button disabled={isPending} variant={"outline"} size={"sm"} onClick={onNewForm}>
+      <p className="text-sm text-center text-foreground/70">{t("desc_custom")}</p>
+      <Button
+        disabled={isPending}
+        variant={"outline"}
+        size={"sm"}
+        onClick={onNewForm}
+        className="mt-2 group-hover:border-primary group-hover:text-primary">
         {isPending && <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />}
         {t("label_create_form_scratch")}
       </Button>
     </div>
   );
 };
+
 const TemplateForm = ({ setView }: { setView: TSetState<TView> }) => {
   const t = useTranslations("app");
   return (
-    <div className="flex justify-center items-center w-full border h-48 gap-6 flex-col p-4">
-      <div className="flex flex-col justify-center items-center gap-3">
+    <div className="flex justify-center items-center w-full border h-56 gap-4 flex-col p-6 rounded-lg bg-background hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md group">
+      <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
         <HexagonIcon className="w-7 h-7 text-primary" />
-        <p className="text-sm text-center text-foreground/70">{t("desc_templates")}</p>
       </div>
-      <Button variant={"outline"} size={"sm"} onClick={() => setView("templates")}>
+      <p className="text-sm text-center text-foreground/70">{t("desc_templates")}</p>
+      <Button
+        variant={"outline"}
+        size={"sm"}
+        onClick={() => setView("templates")}
+        className="mt-2 group-hover:border-primary group-hover:text-primary">
         {t("label_create_form_template")}
       </Button>
     </div>
@@ -167,23 +178,44 @@ const TemplateList = ({ setView }: { setView: TSetState<TView> }) => {
   );
 };
 const PreviewCard = (props: { template: ETemplate }) => {
+  const user = useUserStore();
   const t = useTranslations("app");
-  const { category, is_premium, name } = props.template;
+  const { category, name } = props.template;
+
+  const query = useQuery({
+    queryKey: ["previewCardData", category],
+    queryFn: async () => {
+      const value = await getFormCategoryName(category as TTemplateCategory, user.locale);
+      return { category: value };
+    },
+    staleTime: 60 * minute,
+    refetchOnWindowFocus: false,
+  });
+
+  if (query.isPending)
+    return (
+      <div className="flex border p-4 flex-col justify-between items-start h-36 rounded-lg bg-muted/30 animate-pulse">
+        <div className="w-full space-y-2">
+          <div className="h-5 w-3/4 rounded bg-muted" />
+          <div className="h-4 w-1/2 rounded bg-muted" />
+        </div>
+        <div className="h-8 w-24 rounded bg-muted" />
+      </div>
+    );
 
   return (
-    <div className="flex border p-3 flex-col justify-between items-start h-32">
-      <div className="flex justify-between items-center w-full">
-        <span className="text-sm font-medium">{name}</span>
+    <div className="flex border p-4 flex-col justify-between items-start h-36 rounded-lg bg-background hover:border-primary/50 transition-all duration-200 group hover:shadow-sm">
+      <div className="flex justify-between items-start w-full">
+        <span className="text-base font-medium line-clamp-2 group-hover:text-primary transition-colors">{name}</span>
         <div className="flex justify-center items-center gap-2">
-          <Badge variant={"primary"}>
-            <span className="first-letter:uppercase">{category}</span>
+          <Badge variant={"primary"} className="whitespace-nowrap">
+            <span className="first-letter:uppercase">{query.data?.category}</span>
           </Badge>
-          {is_premium && <Badge variant={"pink"}>Premium</Badge>}
         </div>
       </div>
       <div className="flex justify-start items-center w-full">
         <NewPreview template={props.template}>
-          <Button variant={"outline"} size={"xs"}>
+          <Button variant={"outline"} size={"sm"} className="group-hover:border-primary group-hover:text-primary">
             {t("label_preview")}
           </Button>
         </NewPreview>

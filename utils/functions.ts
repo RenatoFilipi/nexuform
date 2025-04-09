@@ -6,7 +6,7 @@ import { createTranslator } from "use-intl/core";
 import { day, planSettings } from "./constants";
 import { ESubscription } from "./entities";
 import { basicSubmissions, freeTrialSubmissions, proSubmissions } from "./envs";
-import { TBlock, TIntegrationCategory, TIntegrations, TPlan } from "./types";
+import { TBlock, TIntegrationCategory, TIntegrations, TPlan, TTemplateCategory } from "./types";
 
 export const uuid = () => {
   const uuid = self.crypto.randomUUID();
@@ -194,4 +194,50 @@ export const getBlockName = async (type: TBlock, locale: string): Promise<string
 };
 export const formatDate = (unixTimestamp: number) => {
   return new Date(unixTimestamp * 1000).toISOString();
+};
+export const getFormCategoryName = async (category: TTemplateCategory, locale: string): Promise<string> => {
+  const messages = (await import(`@/locales/${locale}.json`)).default;
+  const t = createTranslator({ locale, messages });
+  switch (category) {
+    case "contact":
+      return t("app.label_contact");
+    case "feedback":
+      return t("app.label_feedback");
+    case "marketing":
+      return t("app.label_marketing");
+    case "customer-success":
+      return t("app.label_customer-success");
+    case "events":
+      return t("app.label_events");
+    case "sales":
+      return t("app.label_sales");
+    case "lead-generation":
+      return t("app.label_lead-generation");
+    case "application":
+      return t("app.label_application");
+    case "registration":
+      return t("app.label_registration");
+    case "survey":
+      return t("app.label_survey");
+    case "evaluation":
+      return t("app.label_evaluation");
+    case "order":
+      return t("app.label_order");
+    case "payment":
+      return t("app.label_payment");
+    case "onboarding":
+      return t("app.label_onboarding");
+    case "hr":
+      return t("app.label_hr");
+    case "healthcare":
+      return t("app.label_healthcare");
+    case "education":
+      return t("app.label_education");
+    case "real-estate":
+      return t("app.label_real-estate");
+    case "job-application":
+      return t("app.label_job-application");
+    default:
+      return "Unknown";
+  }
 };

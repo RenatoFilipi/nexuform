@@ -35,6 +35,7 @@ export const FormTemplates: IFormTemplate[] = [
       updated_at: "",
       uppercase_block_name: true,
       width: "full",
+      custom_primary_color: "",
     },
     blocks: [
       {
@@ -184,6 +185,7 @@ export const FormTemplates: IFormTemplate[] = [
       updated_at: "",
       uppercase_block_name: true,
       width: "full",
+      custom_primary_color: "",
     },
     blocks: [
       {
@@ -427,6 +429,7 @@ export const getTemplates = async (locale: string): Promise<IFormTemplate[]> => 
         updated_at: "",
         uppercase_block_name: true,
         width: "full",
+        custom_primary_color: "",
       },
       blocks: [
         {
@@ -575,6 +578,7 @@ export const getTemplates = async (locale: string): Promise<IFormTemplate[]> => 
         updated_at: "",
         uppercase_block_name: true,
         width: "full",
+        custom_primary_color: "",
       },
       blocks: [
         {

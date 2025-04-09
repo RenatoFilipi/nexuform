@@ -25,38 +25,56 @@ const AnalyticsSubmissionsByFormChart = () => {
     refetchOnWindowFocus: false,
   });
 
-  if (query.isPending) return null;
+  if (query.isPending)
+    return (
+      <div className="flex flex-col h-full gap-6">
+        <div className="h-6 w-1/3 rounded bg-muted animate-pulse" />
+        <div className="flex flex-col gap-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="flex flex-col gap-2">
+              <div className="flex justify-between">
+                <div className="h-4 w-3/4 rounded bg-muted animate-pulse" />
+                <div className="h-4 w-10 rounded bg-muted animate-pulse" />
+              </div>
+              <Progress value={0} className="h-2 bg-muted animate-pulse" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
 
   return (
-    <div className="flex flex-col h-full gap-8">
+    <div className="flex flex-col h-full gap-6">
       <div className="flex justify-between items-center">
-        <span className="text-sm font-semibold">{t("label_submissions_by_form")}</span>
+        <h3 className="text-base font-semibold">{t("label_submissions_by_form")}</h3>
       </div>
-      {subs.length <= 0 && (
-        <div className="border flex justify-center items-center flex-1 rounded flex-col gap-2">
-          <div className="flex justify-center items-center p-2 bg-primary/10">
+
+      {subs.length <= 0 ? (
+        <div className="border flex justify-center items-center flex-1 rounded-lg flex-col gap-3 p-6 bg-muted/30">
+          <div className="p-3 rounded-full bg-primary/10">
             <SendIcon className="w-6 h-6 text-primary" />
           </div>
-          <span className="text-sm text-foreground/70">{t("label_no_submission")}</span>
+          <span className="text-sm text-muted-foreground">{t("label_no_submission")}</span>
         </div>
-      )}
-      {subs.length >= 1 && (
+      ) : (
         <div className="flex flex-col gap-4">
-          {subs.map((sub) => {
-            const percentage = (100 * sub.count) / submissions.length;
-            return (
-              <div key={sub.formId} className="flex flex-col gap-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">{sub.name}</span>
-                  <div className="flex justify-center items-center gap-2">
-                    <span className="text-sm">{sub.count}</span>
-                    <span className="text-xs text-foreground/80">({formatDecimal(percentage, 2)}%)</span>
+          {subs
+            .sort((a, b) => b.count - a.count)
+            .map((sub) => {
+              const percentage = (100 * sub.count) / submissions.length;
+              return (
+                <div key={sub.formId} className="flex flex-col gap-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium truncate max-w-[180px]">{sub.name}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium">{sub.count}</span>
+                      <span className="text-xs text-muted-foreground">({formatDecimal(percentage, 1)}%)</span>
+                    </div>
                   </div>
+                  <Progress value={percentage} className="h-2" />
                 </div>
-                <Progress value={percentage} />
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       )}
     </div>

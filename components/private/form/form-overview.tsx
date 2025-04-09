@@ -76,14 +76,14 @@ const FormOverview = () => {
 
 const CardTemplate = ({ name, value, icon }: { name: string; value: string; icon: React.ReactNode }) => {
   return (
-    <Card className="px-4 py-3 flex sm:flex-col flex-1 justify-between gap-4 items-center sm:items-start">
-      <div className="flex justify-between w-full">
-        <div className="flex items-center gap-2 justify-between w-full">
-          <span className="text-xs text-foreground/80">{name}</span>
-          <div className="flex justify-center items-center">{icon}</div>
+    <Card className="p-4 flex flex-col gap-3 hover:shadow-sm transition-shadow duration-200 group">
+      <div className="flex justify-between items-center w-full">
+        <span className="text-xs text-foreground/70 font-medium">{name}</span>
+        <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
+          {icon}
         </div>
       </div>
-      <span className="font-medium">{value}</span>
+      <span className="text-xl font-medium">{value}</span>
     </Card>
   );
 };

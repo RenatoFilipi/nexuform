@@ -7,68 +7,55 @@ import { useTranslations } from "next-intl";
 const AnalyticsOverview = () => {
   const t = useTranslations("app");
   const { formsAnalytics } = useAnalyticsStore();
+
   const totalViews = formsAnalytics.reduce((acc, val) => acc + val.total_views, 0).toString();
   const totalSubmissions = formsAnalytics.reduce((acc, val) => acc + val.total_submissions, 0).toString();
+
   const averageCompletionTime =
     formsAnalytics.length < 1
       ? "--"
       : formatTime(
-          formsAnalytics.reduce((acc, val) => {
-            return (
-              acc +
-              (val.avg_completion_time !== null && val.avg_completion_time !== undefined ? val.avg_completion_time : 0)
-            );
-          }, 0) / formsAnalytics.length,
+          formsAnalytics.reduce((acc, val) => acc + (val.avg_completion_time ?? 0), 0) / formsAnalytics.length,
           1
         );
+
   const averageCompletionRate =
     formsAnalytics.length <= 1
       ? "--"
-      : formatDecimal(
-          formsAnalytics.reduce((acc, val) => {
-            return (
-              acc +
-              (val.avg_completion_rate !== null && val.avg_completion_rate !== undefined ? val.avg_completion_rate : 0)
-            );
-          }, 0) / formsAnalytics.length
-        );
+      : `${formatDecimal(
+          formsAnalytics.reduce((acc, val) => acc + (val.avg_completion_rate ?? 0), 0) / formsAnalytics.length
+        )}%`;
 
   return (
-    <div className="grid sm:grid-cols-4 gap-2 sm:gap-6">
-      <CardTemplate
-        name={t("label_total_views")}
-        value={totalViews}
-        icon={<EyeIcon className="w-4 h-4 text-primary" />}
-      />
-      <CardTemplate
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+      <AnalyticsCard name={t("label_total_views")} value={totalViews} icon={<EyeIcon className="w-4 h-4" />} />
+      <AnalyticsCard
         name={t("label_total_submissions")}
         value={totalSubmissions}
-        icon={<SendIcon className="w-4 h-4 text-primary" />}
+        icon={<SendIcon className="w-4 h-4" />}
       />
-      <CardTemplate
+      <AnalyticsCard
         name={t("label_completion_rate")}
         value={averageCompletionRate}
-        icon={<VoteIcon className="w-4 h-4 text-primary" />}
+        icon={<VoteIcon className="w-4 h-4" />}
       />
-      <CardTemplate
+      <AnalyticsCard
         name={t("label_avg_completion_time")}
         value={averageCompletionTime}
-        icon={<TimerIcon className="w-4 h-4 text-primary" />}
+        icon={<TimerIcon className="w-4 h-4" />}
       />
     </div>
   );
 };
 
-const CardTemplate = ({ name, value, icon }: { name: string; value: string; icon: React.ReactNode }) => {
+const AnalyticsCard = ({ name, value, icon }: { name: string; value: string; icon: React.ReactNode }) => {
   return (
-    <Card className="px-4 py-3 flex sm:flex-col flex-1 justify-between gap-8 items-start">
-      <div className="flex sm:justify-between items-center sm:w-full h-full">
-        <div className="flex justify-between w-full items-center gap-2 flex-row-reverse sm:flex-row">
-          <span className="text-xs sm:text-sm text-foreground/80 font-semibold">{name}</span>
-          <div className="flex justify-center items-center">{icon}</div>
-        </div>
+    <Card className="p-4 flex flex-col gap-3 hover:shadow-md transition-shadow duration-200">
+      <div className="flex justify-between items-center">
+        <span className="text-xs text-muted-foreground font-medium">{name}</span>
+        <div className="p-2 rounded-lg bg-primary/10 text-primary">{icon}</div>
       </div>
-      <span className="text-lg font-medium">{value}</span>
+      <span className="text-2xl font-semibold">{value}</span>
     </Card>
   );
 };

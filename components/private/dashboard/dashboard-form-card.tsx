@@ -24,27 +24,35 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
   const user = useUserStore();
 
   return (
-    <Card className="flex flex-col h-44 p-4 justify-between">
+    <Card className="flex flex-col h-48 p-5 justify-between border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm">
       <div className="flex w-full justify-between items-start">
-        <div className="flex flex-col gap-2">
-          <span className="text-sm truncate max-w-[240px] font-medium">{name}</span>
+        <div
+          className="flex flex-col gap-2 cursor-pointer w-full"
+          onClick={() => router.push(`/dashboard/forms/${id}`)}>
+          <span className="text-base font-medium truncate max-w-[220px] group-hover:text-primary transition-colors">
+            {name}
+          </span>
           <FormStatusBadge status={status as TFormStatus} />
         </div>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant={"ghost"} size={"xs"}>
-              <MoreHorizontalIcon className="w-5 h-5" />
+            <Button
+              variant={"ghost"}
+              size={"xs"}
+              className="opacity-0 group-hover:opacity-100 transition-opacity focus:opacity-100">
+              <MoreHorizontalIcon className="w-5 h-5 text-muted-foreground hover:text-primary" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="">
+          <DropdownMenuContent className="w-48" align="end">
             <DropdownMenuItem
-              className="cursor-pointer"
+              className="cursor-pointer hover:bg-accent"
               onClick={() => router.push(`/dashboard/forms/${id}`)}
               onSelect={(e) => e.preventDefault()}>
               {t("label_view")}
             </DropdownMenuItem>
             <DropdownMenuItem
-              className="cursor-pointer"
+              className="cursor-pointer hover:bg-accent"
               onClick={() => router.push(`/dashboard/editor/${id}`)}
               onSelect={(e) => e.preventDefault()}>
               {t("label_edit")}
@@ -52,7 +60,7 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
             <DropdownMenuSeparator />
             <FormDelete formId={id} formName={name}>
               <DropdownMenuItem
-                className="cursor-pointer text-destructive focus:text-destructive"
+                className="cursor-pointer text-destructive hover:bg-destructive/5 focus:text-destructive"
                 onSelect={(e) => e.preventDefault()}>
                 {t("label_delete")}
               </DropdownMenuItem>
@@ -60,10 +68,18 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="flex justify-start items-center w-full">
-        <span className="text-xs text-foreground/70">
+
+      <div className="flex justify-between items-center w-full">
+        <span className="text-xs text-muted-foreground">
           {t("label_last_updated")} {formatDateRelativeToNow(updated_at, user.locale)}
         </span>
+        <Button
+          variant="outline"
+          size="sm"
+          className="text-xs h-7 opacity-0 group-hover:opacity-100 transition-opacity"
+          onClick={() => router.push(`/dashboard/editor/${id}`)}>
+          {t("label_edit")}
+        </Button>
       </div>
     </Card>
   );

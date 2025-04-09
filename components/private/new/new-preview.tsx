@@ -171,97 +171,7 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
           {!query.isPending && !query.isError && query.data && (
             <div className="overflow-y-auto flex justify-center items-start w-full py-8 px-4 sm:px-0">
               <div className="sm:w-[650px] w-full flex justify-center items-center flex-col gap-8 sm:px-8">
-                <div className="flex flex-col justify-center items-center gap-14 w-full">
-                  {query.data.blocks.map((block) => {
-                    switch (block.type) {
-                      case "short_text":
-                        return (
-                          <ShortTextDesign key={block.id} block={block} theme={defaultTheme} onValueChange={() => {}} />
-                        );
-                      case "paragraph_text":
-                        return (
-                          <ParagraphTextDesign
-                            key={block.id}
-                            block={block}
-                            theme={defaultTheme}
-                            onValueChange={() => {}}
-                          />
-                        );
-                      case "checkboxes":
-                        return (
-                          <CheckBoxesDesign
-                            key={block.id}
-                            block={block}
-                            theme={defaultTheme}
-                            onValueChange={() => {}}
-                          />
-                        );
-                      case "multiple_choice":
-                        return (
-                          <MultipleChoiceDesign
-                            key={block.id}
-                            block={block}
-                            theme={defaultTheme}
-                            onValueChange={() => {}}
-                          />
-                        );
-                      case "dropdown_menu":
-                        return (
-                          <DropdownMenuDesign
-                            key={block.id}
-                            block={block}
-                            theme={defaultTheme}
-                            onValueChange={() => {}}
-                          />
-                        );
-                      case "number_input":
-                        return (
-                          <NumberInputDesign
-                            key={block.id}
-                            block={block}
-                            theme={defaultTheme}
-                            onValueChange={() => {}}
-                          />
-                        );
-                      case "email_address":
-                        return (
-                          <EmailAddressDesign
-                            key={block.id}
-                            block={block}
-                            theme={defaultTheme}
-                            onValueChange={() => {}}
-                          />
-                        );
-                      case "star_rating":
-                        return (
-                          <StarRatingDesign
-                            key={block.id}
-                            block={block}
-                            theme={defaultTheme}
-                            onValueChange={() => {}}
-                          />
-                        );
-                      case "custom_scale":
-                        return (
-                          <CustomScaleDesign
-                            key={block.id}
-                            block={block}
-                            theme={defaultTheme}
-                            onValueChange={() => {}}
-                          />
-                        );
-                      case "date_picker":
-                        return (
-                          <DatePickerDesign
-                            key={block.id}
-                            block={block}
-                            theme={defaultTheme}
-                            onValueChange={() => {}}
-                          />
-                        );
-                    }
-                  })}
-                </div>
+                <BlocksGroup blocks={query.data.blocks} />
                 <div className="flex justify-center items-center w-full">
                   <Button className="w-full">Submit</Button>
                 </div>
@@ -274,8 +184,35 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
   );
 };
 
-const BlocksGroup = () => {
-  return <div></div>;
+const BlocksGroup = ({ blocks }: { blocks: EBlock[] }) => {
+  return (
+    <div className="flex flex-col justify-center items-center gap-14 w-full">
+      {blocks.map((block) => {
+        switch (block.type) {
+          case "short_text":
+            return <ShortTextDesign key={block.id} block={block} theme={defaultTheme} onValueChange={() => {}} />;
+          case "paragraph_text":
+            return <ParagraphTextDesign key={block.id} block={block} theme={defaultTheme} onValueChange={() => {}} />;
+          case "checkboxes":
+            return <CheckBoxesDesign key={block.id} block={block} theme={defaultTheme} onValueChange={() => {}} />;
+          case "multiple_choice":
+            return <MultipleChoiceDesign key={block.id} block={block} theme={defaultTheme} onValueChange={() => {}} />;
+          case "dropdown_menu":
+            return <DropdownMenuDesign key={block.id} block={block} theme={defaultTheme} onValueChange={() => {}} />;
+          case "number_input":
+            return <NumberInputDesign key={block.id} block={block} theme={defaultTheme} onValueChange={() => {}} />;
+          case "email_address":
+            return <EmailAddressDesign key={block.id} block={block} theme={defaultTheme} onValueChange={() => {}} />;
+          case "star_rating":
+            return <StarRatingDesign key={block.id} block={block} theme={defaultTheme} onValueChange={() => {}} />;
+          case "custom_scale":
+            return <CustomScaleDesign key={block.id} block={block} theme={defaultTheme} onValueChange={() => {}} />;
+          case "date_picker":
+            return <DatePickerDesign key={block.id} block={block} theme={defaultTheme} onValueChange={() => {}} />;
+        }
+      })}
+    </div>
+  );
 };
 
 export default NewPreview;
