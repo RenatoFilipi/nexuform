@@ -312,7 +312,8 @@
     "suc_form_delete": "Form deleted successfully.",
     "label_view": "View",
     "label_edit": "Edit",
-    "label_delete": "Delete"
+    "label_delete": "Delete",
+    "label_use_template": "Use template"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

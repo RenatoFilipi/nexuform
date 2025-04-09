@@ -312,7 +312,8 @@
     "suc_form_delete": "Formulário excluído com sucesso.",
     "label_view": "Visualizar",
     "label_edit": "Editar",
-    "label_delete": "Excluir"
+    "label_delete": "Excluir",
+    "label_use_template": "Usar modelo"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",
