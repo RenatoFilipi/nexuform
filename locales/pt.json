@@ -313,7 +313,8 @@
     "label_view": "Visualizar",
     "label_edit": "Editar",
     "label_delete": "Excluir",
-    "label_use_template": "Usar modelo"
+    "label_use_template": "Usar modelo",
+    "suc_form_create": "Formulário criado."
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

@@ -47,8 +47,8 @@ const AnalyticsWrapper = ({ forms, formsAnalytics, profile, subscription, email,
       <div className="grid gap-6">
         <AnalyticsOverview />
         <div className="grid sm:grid-cols-2 gap-6">
-          <AnalyticsSubmissionsActivityChart />
           <AnalyticsSubmissionsByFormChart />
+          <AnalyticsSubmissionsActivityChart />
         </div>
       </div>
     </div>

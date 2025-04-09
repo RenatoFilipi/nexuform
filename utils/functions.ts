@@ -57,6 +57,7 @@ export const formatTime = (time: number, decimalPlaces: number = 3) => {
   return `${totalSeconds}.${formattedMilliseconds}s`;
 };
 export const formatDecimal = (num: number, decimals: number = 1): string => {
+  if (isNaN(num)) return "0";
   if (num % 1 === 0 || decimals === 0) {
     return num.toString();
   }

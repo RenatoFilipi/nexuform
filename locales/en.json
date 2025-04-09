@@ -313,7 +313,8 @@
     "label_view": "View",
     "label_edit": "Edit",
     "label_delete": "Delete",
-    "label_use_template": "Use template"
+    "label_use_template": "Use template",
+    "suc_form_create": "Form created."
   },
   "s": {
     "err_required_all": "Answer all required questions.",

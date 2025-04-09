@@ -30,7 +30,7 @@ const AnalyticsSubmissionsByFormChart = () => {
   return (
     <div className="flex flex-col h-full gap-8">
       <div className="flex justify-between items-center">
-        <span>{t("label_submissions_by_form")}</span>
+        <span className="text-sm font-semibold">{t("label_submissions_by_form")}</span>
       </div>
       {subs.length <= 0 && (
         <div className="border flex justify-center items-center flex-1 rounded flex-col gap-2">

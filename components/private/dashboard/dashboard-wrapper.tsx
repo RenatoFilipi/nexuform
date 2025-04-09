@@ -22,7 +22,7 @@ interface IProps {
   locale: string;
 }
 
-const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProps) => {
+const DashboardWrapper = (props: IProps) => {
   const t = useTranslations("app");
   const [sortBy, setSortBy] = useQueryState("sort-by");
   const [value, setValue] = useState("");
@@ -50,12 +50,12 @@ const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProp
   const query = useQuery({
     queryKey: ["dashboardData"],
     queryFn: () => {
-      user.setFormsCount(forms.length);
-      user.setProfile(profile);
-      user.setSubscription(subscription);
-      user.setEmail(email);
-      user.setLocale(locale);
-      dashboard.setForms(forms);
+      user.setFormsCount(props.forms.length);
+      user.setProfile(props.profile);
+      user.setSubscription(props.subscription);
+      user.setEmail(props.email);
+      user.setLocale(props.locale);
+      dashboard.setForms(props.forms);
       return null;
     },
     refetchOnWindowFocus: false,
@@ -111,7 +111,6 @@ const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProp
     </div>
   );
 };
-
 const FilteredEmptyUI = () => {
   const t = useTranslations("app");
   return (

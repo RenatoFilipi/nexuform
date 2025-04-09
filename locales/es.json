@@ -313,7 +313,8 @@
     "label_view": "Ver",
     "label_edit": "Editar",
     "label_delete": "Eliminar",
-    "label_use_template": "Usar plantilla"
+    "label_use_template": "Usar plantilla",
+    "suc_form_create": "Formulario creado."
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

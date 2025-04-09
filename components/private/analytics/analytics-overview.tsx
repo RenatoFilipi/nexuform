@@ -64,7 +64,7 @@ const CardTemplate = ({ name, value, icon }: { name: string; value: string; icon
     <Card className="px-4 py-3 flex sm:flex-col flex-1 justify-between gap-8 items-start">
       <div className="flex sm:justify-between items-center sm:w-full h-full">
         <div className="flex justify-between w-full items-center gap-2 flex-row-reverse sm:flex-row">
-          <span className="text-xs sm:text-sm text-foreground/80 font-medium">{name}</span>
+          <span className="text-xs sm:text-sm text-foreground/80 font-semibold">{name}</span>
           <div className="flex justify-center items-center">{icon}</div>
         </div>
       </div>

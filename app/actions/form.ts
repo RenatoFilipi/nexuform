@@ -20,5 +20,11 @@ export const createFormAction = async (formData: FormData) => {
     .single();
   if (forms.error) return encodedRedirect("error", "/dashboard/forms", t("err_generic"));
 
+  const theme = await supabase.from("themes").insert([{ form_id: forms.data.id }]);
+  if (theme.error) {
+    await supabase.from("forms").delete().eq("id", forms.data.id);
+    return encodedRedirect("error", "/dashboard/forms", t("err_generic"));
+  }
+
   return redirect(`/dashboard/editor/${forms.data.id}`);
 };

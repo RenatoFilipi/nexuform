@@ -56,7 +56,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
-import DashboardNewForm from "../dashboard/dashboard-new-form";
 import ManageSubscription from "./manage-subscription";
 
 const Nav = () => {
@@ -571,7 +570,7 @@ const ChangeForm = ({ children }: { children: React.ReactNode }) => {
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
         <DropdownMenuContent className="flex w-[300px] p-3">
-          <Body setState={setOpen} />
+          <ChangeFormBody setState={setOpen} />
         </DropdownMenuContent>
       </DropdownMenu>
     );
@@ -585,12 +584,12 @@ const ChangeForm = ({ children }: { children: React.ReactNode }) => {
           <DrawerTitle></DrawerTitle>
           <DrawerDescription></DrawerDescription>
         </DrawerHeader>
-        <Body setState={setOpen} />
+        <ChangeFormBody setState={setOpen} />
       </DrawerContent>
     </Drawer>
   );
 };
-const Body = ({ setState }: { setState: TSetState<boolean> }) => {
+const ChangeFormBody = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const store = useFormStore();
   const user = useUserStore();
@@ -602,15 +601,17 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     <div className="flex flex-col gap-4 w-full justify-between h-full">
       <div className="flex flex-col gap-4 h-full">
         <span className="text-sm font-medium">{t("label_forms")}</span>
-        <div className="flex flex-col w-full h-full">
+        <div className="flex flex-col w-full h-full gap-2">
           {store.forms.map((x) => {
             return (
               <a
                 key={x.id}
                 href={`/dashboard/forms/${x.id}`}
                 className={`${
-                  store.form.id === x.id ? "pointer-events-none bg-foreground/5" : "hover:bg-foreground/5"
-                } px-2 py-2 flex justify-between items-center rounded`}>
+                  store.form.id === x.id
+                    ? "pointer-events-none border-foreground/20 font-semibold"
+                    : "border-transparent hover:border-foreground/20"
+                } flex justify-between items-center rounded border px-2 py-2`}>
                 <span className="truncate text-xs">{x.name}</span>
                 <FormStatusBadge status={x.status as TFormStatus} />
               </a>
@@ -626,21 +627,12 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
           className="w-full sm:w-fit">
           {t("label_close")}
         </Button>
-        {mustUpgrade ? (
-          <ManageSubscription>
-            <Button size={isDesktop ? "xs" : "sm"} variant={"secondary"} className="w-full sm:w-fit">
-              <PlusIcon className="w-4 h-4 mr-2" />
-              {t("label_create_form")}
-            </Button>
-          </ManageSubscription>
-        ) : (
-          <DashboardNewForm>
-            <Button size={isDesktop ? "xs" : "sm"} variant={"secondary"} className="w-full sm:w-fit">
-              <PlusIcon className="w-4 h-4 mr-2" />
-              {t("label_create_form")}
-            </Button>
-          </DashboardNewForm>
-        )}
+        <Button size={isDesktop ? "xs" : "sm"} variant={"secondary"} className="w-full sm:w-fit" asChild>
+          <Link href={"/dashboard/forms/new"}>
+            <PlusIcon className="w-4 h-4 mr-2" />
+            {t("label_create_form")}
+          </Link>
+        </Button>
       </div>
     </div>
   );

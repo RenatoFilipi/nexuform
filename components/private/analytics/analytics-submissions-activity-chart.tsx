@@ -79,7 +79,7 @@ const AnalyticsSubmissionsActivityChart = () => {
   return (
     <div className="flex flex-col gap-4 border rounded p-4">
       <div className="flex justify-between items-center">
-        <span>{t("label_activity")}</span>
+        <span className="text-sm font-semibold">{t("label_activity")}</span>
         <div className="flex justify-center items-center gap-3">
           {options.map((opt) => (
             <Button
