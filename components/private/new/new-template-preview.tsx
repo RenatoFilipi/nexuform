@@ -37,6 +37,7 @@ const theme: ETheme = {
   primary_color: "slate",
   uppercase_block_name: false,
   width: "centered",
+  custom_primary_color: "713AED",
 };
 
 const NewTemplatePreview = ({ children, id, name }: { children: React.ReactNode; id: string; name: string }) => {
@@ -60,13 +61,13 @@ const NewTemplatePreview = ({ children, id, name }: { children: React.ReactNode;
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="h-[90%] min-w-[90%] overflow-y-auto">
+      <DialogContent className="sm:h-[90%] min-w-[90%] overflow-y-auto p-0">
         <DialogHeader className="hidden">
           <DialogTitle></DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
-        <div className="flex flex-col gap-8 w-full justify-start items-center h-full overflow-y-auto">
-          <div className="flex justify-between items-center w-full">
+        <div className="flex flex-col w-full justify-start items-center h-full overflow-y-auto">
+          <div className="flex justify-between items-center w-full p-4 border-b">
             <h1 className="font-medium">{name}</h1>
             <div className="flex justify-center items-center gap-4">
               <Button onClick={() => setOpen(false)} variant={"outline"} size={"sm"}>
@@ -89,7 +90,7 @@ const NewTemplatePreview = ({ children, id, name }: { children: React.ReactNode;
             </div>
           )}
           {!isPending && !isError && (
-            <div className="overflow-y-auto flex justify-center items-start w-full">
+            <div className="overflow-y-auto flex justify-center items-start w-full py-8 px-4 sm:px-0">
               <BlocksPreview blocks={data.blocks} />
             </div>
           )}
@@ -101,7 +102,7 @@ const NewTemplatePreview = ({ children, id, name }: { children: React.ReactNode;
 
 const BlocksPreview = ({ blocks }: { blocks: ETemplate_block[] }) => {
   return (
-    <div className="sm:w-[650px] w-full flex justify-center items-center flex-col gap-8">
+    <div className="sm:w-[650px] w-full flex justify-center items-center flex-col gap-8 sm:px-8">
       <div className="flex flex-col justify-center items-center gap-14 w-full">
         {blocks.map((block) => {
           const {

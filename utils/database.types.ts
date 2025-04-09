@@ -747,6 +747,7 @@ export type Database = {
       themes: {
         Row: {
           created_at: string
+          custom_primary_color: string
           form_id: string
           id: string
           nebulaform_branding: boolean
@@ -758,6 +759,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          custom_primary_color?: string
           form_id: string
           id?: string
           nebulaform_branding?: boolean
@@ -769,6 +771,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          custom_primary_color?: string
           form_id?: string
           id?: string
           nebulaform_branding?: boolean

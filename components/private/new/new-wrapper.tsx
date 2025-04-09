@@ -66,7 +66,7 @@ const NewWrapper = ({ forms, profile, subscription, email, locale }: IProps) => 
             <span className="font-semibold">{t("label_create_form")}</span>
             <p className="text-xs text-foreground/70">{t("desc_create_form")}</p>
           </div>
-          <div className="grid sm:grid-cols-2 gap-8">
+          <div className="grid sm:grid-cols-2 gap-4 sm:gap-8">
             <NewCustom />
             <NewTemplates setView={setView} />
           </div>
@@ -93,8 +93,11 @@ const NewCustom = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full border h-40 gap-6 flex-col">
-      <PlusIcon className="w-7 h-7 text-primary" />
+    <div className="flex justify-center items-center w-full border h-48 gap-6 flex-col p-4">
+      <div className="flex flex-col justify-center items-center gap-3">
+        <PlusIcon className="w-7 h-7 text-primary" />
+        <p className="text-sm text-center text-foreground/70">{t("desc_custom")}</p>
+      </div>
       <Button disabled={isPending} variant={"outline"} size={"sm"} onClick={onNewForm}>
         {isPending && <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />}
         {t("label_create_form_scratch")}
@@ -105,8 +108,11 @@ const NewCustom = () => {
 const NewTemplates = ({ setView }: { setView: TSetState<TView> }) => {
   const t = useTranslations("app");
   return (
-    <div className="flex justify-center items-center w-full border h-40 gap-6 flex-col">
-      <HexagonIcon className="w-7 h-7 text-primary" />
+    <div className="flex justify-center items-center w-full border h-48 gap-6 flex-col p-4">
+      <div className="flex flex-col justify-center items-center gap-3">
+        <HexagonIcon className="w-7 h-7 text-primary" />
+        <p className="text-sm text-center text-foreground/70">{t("desc_templates")}</p>
+      </div>
       <Button variant={"outline"} size={"sm"} onClick={() => setView("templates")}>
         {t("label_create_form_template")}
       </Button>
