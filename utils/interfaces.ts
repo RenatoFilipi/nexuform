@@ -27,6 +27,7 @@ export interface IBlockData {
   icon: JSX.Element | null;
   enabled: boolean;
   description: string;
+  category: string;
 }
 export interface IFormStatus {
   status: TFormStatus;

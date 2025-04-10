@@ -334,7 +334,18 @@
     "label_education": "Educação",
     "label_real-estate": "Imobiliário",
     "label_job-application": "Candidatura",
-    "label_current": "Atual"
+    "label_current": "Atual",
+    "label_properties": "Propriedades",
+    "label_styles": "Estilos",
+    "label_reorder": "Reordenar",
+    "label_start_form": "Comece a criar seu formulário",
+    "desc_start_form": "Construa seu layout com blocos—navegue pelos componentes para começar.",
+    "label_first_block": "Adicione seu primeiro bloco",
+    "label_category_text": "Texto",
+    "label_category_selection": "Seleção",
+    "label_category_numeric": "Numérico",
+    "label_category_data": "Dados",
+    "label_category_rating": "Avaliação"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

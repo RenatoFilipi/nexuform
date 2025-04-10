@@ -11,7 +11,7 @@ import { getFormCategoryName } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState, TTemplateCategory } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronLeftIcon, HexagonIcon, LoaderIcon, PlusIcon } from "lucide-react";
+import { BookDashedIcon, ChevronLeftIcon, HexagonIcon, LoaderIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { useState, useTransition } from "react";
@@ -203,18 +203,19 @@ const PreviewCard = (props: { template: ETemplate }) => {
     );
 
   return (
-    <div className="flex border p-4 flex-col justify-between items-start h-36 rounded-lg bg-background hover:border-primary/50 transition-all duration-200 group hover:shadow-sm">
+    <div className="flex border p-4 flex-col justify-between items-start h-40 rounded-lg bg-background hover:border-primary/50 transition-all duration-200 group hover:shadow-sm">
       <div className="flex justify-between items-start w-full">
-        <span className="text-base font-medium line-clamp-2 group-hover:text-primary transition-colors">{name}</span>
+        <span className="text-sm line-clamp-2 group-hover:text-primary transition-colors">{name}</span>
         <div className="flex justify-center items-center gap-2">
           <Badge variant={"primary"} className="whitespace-nowrap">
             <span className="first-letter:uppercase">{query.data?.category}</span>
           </Badge>
         </div>
       </div>
-      <div className="flex justify-start items-center w-full">
+      <div className="flex justify-end items-center w-full">
         <NewPreview template={props.template}>
           <Button variant={"outline"} size={"sm"} className="group-hover:border-primary group-hover:text-primary">
+            <BookDashedIcon className="w-4 h-4 mr-2" />
             {t("label_preview")}
           </Button>
         </NewPreview>

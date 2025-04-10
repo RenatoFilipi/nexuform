@@ -76,6 +76,29 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const editor = useEditorStore();
 
+  const categoryColors = {
+    text: {
+      bg: "bg-blue-100 dark:bg-blue-900/30",
+      text: "text-blue-600 dark:text-blue-400",
+    },
+    selection: {
+      bg: "bg-purple-100 dark:bg-purple-900/30",
+      text: "text-purple-600 dark:text-purple-400",
+    },
+    numeric: {
+      bg: "bg-green-100 dark:bg-green-900/30",
+      text: "text-green-600 dark:text-green-400",
+    },
+    data: {
+      bg: "bg-yellow-100 dark:bg-yellow-900/30",
+      text: "text-yellow-600 dark:text-yellow-400",
+    },
+    rating: {
+      bg: "bg-red-100 dark:bg-red-900/30",
+      text: "text-red-600 dark:text-red-400",
+    },
+  };
+
   const blockList: IBlockData[] = [
     {
       type: "short_text",
@@ -83,6 +106,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       icon: <EqualIcon className="w-4 h-4" />,
       enabled: true,
       description: t("desc_short_text"),
+      category: "text",
     },
     {
       type: "paragraph_text",
@@ -90,6 +114,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       icon: <TextIcon className="w-4 h-4" />,
       enabled: true,
       description: t("desc_paragraph_text"),
+      category: "text",
     },
     {
       type: "checkboxes",
@@ -97,6 +122,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       icon: <CheckSquareIcon className="w-4 h-4" />,
       enabled: true,
       description: t("desc_checkboxes"),
+      category: "selection",
     },
     {
       type: "multiple_choice",
@@ -104,6 +130,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       icon: <CheckCircleIcon className="w-4 h-4" />,
       enabled: true,
       description: t("desc_multiple_choice"),
+      category: "selection",
     },
     {
       type: "dropdown_menu",
@@ -111,6 +138,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       icon: <ChevronDownIcon className="w-4 h-4" />,
       enabled: true,
       description: t("desc_dropdown_menu"),
+      category: "selection",
     },
     {
       type: "number_input",
@@ -118,6 +146,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       icon: <HashIcon className="w-4 h-4" />,
       enabled: true,
       description: t("desc_number_input"),
+      category: "numeric",
     },
     {
       type: "email_address",
@@ -125,6 +154,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       icon: <MailIcon className="w-4 h-4" />,
       enabled: true,
       description: t("desc_email_address"),
+      category: "data",
     },
     {
       type: "star_rating",
@@ -132,6 +162,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       icon: <StarIcon className="w-4 h-4" />,
       enabled: true,
       description: t("desc_star_rating"),
+      category: "rating",
     },
     {
       type: "custom_scale",
@@ -139,6 +170,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       icon: <ScaleIcon className="w-4 h-4" />,
       enabled: true,
       description: t("desc_custom_scale"),
+      category: "rating",
     },
     {
       type: "date_picker",
@@ -146,8 +178,27 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       icon: <CalendarIcon className="w-4 h-4" />,
       enabled: true,
       description: t("desc_date_picker"),
+      category: "data",
     },
   ];
+
+  const groupedBlocks = blockList.reduce((acc, block) => {
+    if (!block.enabled) return acc;
+
+    if (!acc[block.category]) {
+      acc[block.category] = [];
+    }
+    acc[block.category].push(block);
+    return acc;
+  }, {} as Record<string, IBlockData[]>);
+
+  const categoryLabels = {
+    text: t("label_category_text"),
+    selection: t("label_category_selection"),
+    numeric: t("label_category_numeric"),
+    data: t("label_category_data"),
+    rating: t("label_category_rating"),
+  };
 
   const formSchema = z.object({
     block: z.string(),
@@ -202,28 +253,37 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
                 <FormItem className="w-full">
                   <FormControl>
                     <RadioGroup
-                      className="flex flex-col overflow-y-auto"
+                      className="flex flex-col overflow-y-auto gap-6"
                       value={field.value}
                       onValueChange={field.onChange}>
-                      {blockList.map((block, index) => {
-                        if (block.enabled)
-                          return (
-                            <div key={index}>
-                              <RadioGroupItem value={block.type} id={block.type} className="peer sr-only" />
-                              <Label
-                                htmlFor={block.type}
-                                className="text-sm cursor-pointer flex items-center justify-start gap-4 rounded border border-muted bg-popover p-3 hover:bg-primary/5 hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 [&:has([data-state=checked])]:border-primary">
-                                <div className="p-2 flex justify-center items-center bg-primary/10 rounded text-primary">
-                                  {block.icon}
-                                </div>
-                                <div className="flex flex-col gap-1">
-                                  <span className="">{block.name}</span>
-                                  <p className="text-xs text-foreground/70 font-normal">{block.description}</p>
-                                </div>
-                              </Label>
-                            </div>
-                          );
-                      })}
+                      {Object.entries(groupedBlocks).map(([category, blocks]) => (
+                        <div key={category} className="flex flex-col gap-2">
+                          <h3 className="text-foreground/70">
+                            {categoryLabels[category as keyof typeof categoryLabels]}
+                          </h3>
+                          <div className="flex flex-col">
+                            {blocks.map((block, index) => (
+                              <div key={index}>
+                                <RadioGroupItem value={block.type} id={block.type} className="peer sr-only" />
+                                <Label
+                                  htmlFor={block.type}
+                                  className="text-sm cursor-pointer flex items-center justify-start gap-2.5 rounded border border-transparent bg-popover p-2 hover:bg-primary/5 hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 [&:has([data-state=checked])]:border-primary">
+                                  <div
+                                    className={`p-2 flex justify-center items-center rounded ${
+                                      categoryColors[block.category as keyof typeof categoryColors].bg
+                                    } ${categoryColors[block.category as keyof typeof categoryColors].text}`}>
+                                    {block.icon}
+                                  </div>
+                                  <div className="flex flex-col gap-1">
+                                    <span className="text-xs">{block.name}</span>
+                                    <p className="text-xs text-foreground/70 font-normal hidden">{block.description}</p>
+                                  </div>
+                                </Label>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
                     </RadioGroup>
                   </FormControl>
                 </FormItem>

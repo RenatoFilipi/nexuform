@@ -15,10 +15,11 @@ import WipUI from "../../shared/wip-ui";
 type TView = "properties" | "styles" | "reorder" | "block";
 
 const EditorTools = () => {
+  const t = useTranslations("app");
   const views = [
-    { label: "Properties", view: "properties", enabled: true },
-    { label: "Styles", view: "styles", enabled: true },
-    { label: "Reorder", view: "reorder", enabled: false },
+    { label: t("label_properties"), view: "properties", enabled: true },
+    { label: t("label_styles"), view: "styles", enabled: true },
+    { label: t("label_reorder"), view: "reorder", enabled: false },
   ];
   const enabledViews = views.filter((x) => x.enabled);
   const [view, setView] = useState<TView>("properties");

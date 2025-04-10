@@ -334,7 +334,18 @@
     "label_education": "education",
     "label_real-estate": "real-estate",
     "label_job-application": "job-application",
-    "label_current": "Current"
+    "label_current": "Current",
+    "label_properties": "Properties",
+    "label_styles": "Styles",
+    "label_reorder": "Reorder",
+    "label_start_form": "Start building your form",
+    "desc_start_form": "Build your layout with blocks—browse the components to get started.",
+    "label_first_block": "Add your first block",
+    "label_category_text": "Text",
+    "label_category_selection": "Selection",
+    "label_category_numeric": "Numeric",
+    "label_category_data": "Data",
+    "label_category_rating": "Rating"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

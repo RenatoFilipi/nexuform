@@ -334,7 +334,18 @@
     "label_education": "Educación",
     "label_real-estate": "Bienes Raíces",
     "label_job-application": "Solicitud de Empleo",
-    "label_current": "Actual"
+    "label_current": "Actual",
+    "label_properties": "Propiedades",
+    "label_styles": "Estilos",
+    "label_reorder": "Reordenar",
+    "label_start_form": "Comienza a crear tu formulario",
+    "desc_start_form": "Construye tu diseño con bloques—explora los componentes para comenzar.",
+    "label_first_block": "Añade tu primer bloque",
+    "label_category_text": "Texto",
+    "label_category_selection": "Selección",
+    "label_category_numeric": "Numérico",
+    "label_category_data": "Datos",
+    "label_category_rating": "Calificación"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",
