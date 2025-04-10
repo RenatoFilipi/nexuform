@@ -29,24 +29,50 @@ const Faq = () => {
   const toggleFaq = (index: number) => setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
 
   return (
-    <div id="faq" className="my-10 w-full max-w-3xl px-8 sm:px-0 sm:min-h-dvh flex justify-center items-center">
-      <div className="grid gap-10 w-full">
-        <h2 className="text-2xl font-bold text-center sm:text-4xl">{t("faq_headline")}</h2>
+    <section
+      id="faq"
+      className="py-20 sm:py-32 w-full bg-background dark:bg-gradient-to-b dark:from-background dark:to-muted/10">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">{t("faq_headline")}</h2>
+        </div>
+
         <div className="space-y-4">
           {faqData.map((faq, index) => (
-            <div key={index} className="border rounded-lg p-3">
-              <button className="flex items-center justify-between w-full text-left" onClick={() => toggleFaq(index)}>
-                <span className="font-medium">{faq.question}</span>
+            <div
+              key={index}
+              className={`border rounded-xl p-5 transition-all duration-200 ${
+                activeIndex === index
+                  ? "bg-background dark:bg-muted/5 border-primary/50 shadow-sm"
+                  : "bg-background dark:bg-muted/5 border-muted-foreground/20 hover:border-muted-foreground/30"
+              }`}>
+              <button
+                className="flex items-center justify-between w-full text-left gap-4"
+                onClick={() => toggleFaq(index)}
+                aria-expanded={activeIndex === index}
+                aria-controls={`faq-${index}`}>
+                <span className="text-lg font-medium text-foreground dark:text-foreground/90">{faq.question}</span>
                 <ChevronDownIcon
-                  className={`${activeIndex === index ? "rotate-180" : ""} transition-transform w-5 h-5`}
+                  className={`flex-shrink-0 transition-transform duration-200 w-5 h-5 text-muted-foreground ${
+                    activeIndex === index ? "rotate-180 text-primary" : ""
+                  }`}
                 />
               </button>
-              {activeIndex === index && <p className="mt-3 text-foreground/80 text-sm">{faq.answer}</p>}
+
+              <div
+                id={`faq-${index}`}
+                className={`grid transition-all duration-200 overflow-hidden ${
+                  activeIndex === index ? "grid-rows-[1fr] opacity-100 mt-4" : "grid-rows-[0fr] opacity-0"
+                }`}>
+                <div className="overflow-hidden">
+                  <p className="text-muted-foreground dark:text-muted-foreground/80">{faq.answer}</p>
+                </div>
+              </div>
             </div>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

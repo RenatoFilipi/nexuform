@@ -42,7 +42,7 @@ const defaultTheme: ETheme = {
   primary_color: "slate",
   uppercase_block_name: false,
   width: "centered",
-  custom_primary_color: "713AED",
+  custom_primary_color: "#713AED",
 };
 const NewPreview = ({ children, template }: { children: React.ReactNode; template: ETemplate }) => {
   const t = useTranslations("app");

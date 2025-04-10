@@ -43,7 +43,7 @@ const useSubmissionStore = create<submission>((set) => ({
     width: "centered",
     nebulaform_branding: true,
     uppercase_block_name: false,
-    custom_primary_color: "713AED",
+    custom_primary_color: "#713AED",
   },
   submission: {
     id: "",
@@ -90,7 +90,7 @@ const useSubmissionStore = create<submission>((set) => ({
         width: "centered",
         nebulaform_branding: true,
         uppercase_block_name: false,
-        custom_primary_color: "713AED",
+        custom_primary_color: "#713AED",
       },
       submission: {
         id: "",

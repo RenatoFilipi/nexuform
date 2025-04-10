@@ -1,4 +1,4 @@
-import EditorWrapper from "@/components/private/editor/editor-wrapper";
+import EditorWrapper from "@/components/private/editor/v2/editor-wrapper";
 import ErrorUI from "@/components/private/shared/error-ui";
 import SubscriptionUI from "@/components/private/shared/subscription-ui";
 import { isSubscriptionActive } from "@/utils/functions";

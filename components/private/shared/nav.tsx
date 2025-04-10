@@ -35,6 +35,7 @@ import {
   MoonIcon,
   PlusIcon,
   Settings2Icon,
+  SettingsIcon,
   SunIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -541,6 +542,10 @@ const NavEditor = () => {
               {preview ? t("label_editor") : t("label_preview")}
             </Button>
           )}
+          <Button variant={"outline"} size={"xs"}>
+            <SettingsIcon className="w-4 h-4 mr-2" />
+            {t("label_settings")}
+          </Button>
           <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
             {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
             {t("label_save_form")}
@@ -637,5 +642,4 @@ const ChangeFormBody = ({ setState }: { setState: TSetState<boolean> }) => {
     </div>
   );
 };
-
 export default Nav;
