@@ -14,87 +14,88 @@ const HowItWorks = () => {
       description: t("step1_desc"),
       icon: LayersIcon,
       details: [t("step1_topic1"), t("step1_topic2"), t("step1_topic3")],
+      color: "text-blue-500 bg-blue-50",
     },
     {
       title: t("step2_label"),
       description: t("step2_desc"),
       icon: DatabaseIcon,
       details: [t("step2_topic1"), t("step2_topic2"), t("step2_topic3")],
+      color: "text-purple-500 bg-purple-50",
     },
     {
       title: t("step3_label"),
       description: t("step3_desc"),
       icon: BarChartIcon,
       details: [t("step3_topic1"), t("step3_topic2"), t("step3_topic3")],
+      color: "text-green-500 bg-green-50",
     },
   ];
   const [selectedStep, setSelectedStep] = useState(steps[0]);
 
   return (
-    <section
-      id="how-it-works"
-      className="py-16 w-full px-8 sm:px-0 sm:min-h-dvh flex justify-center items-center flex-col gap-6">
-      <div className="flex flex-col gap-4 justify-center items-center">
-        <Badge uppercase variant="primary" className="w-fit">
-          {t("nav_htw")}
-        </Badge>
-        <h2 className="text-2xl font-bold leading-tight sm:text-4xl text-center">{t("htw_headline")}</h2>
-        <p className="text-base text-foreground/70 mt-2">{t("htw_subheadline")}</p>
-      </div>
-      <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 mt-10 sm:mt-16 xl:mt-12">
-        {/* Sidebar - Steps */}
-        <div className="flex flex-col gap-6">
-          <div className="flex justify-start items-center h-full w-full gap-4">
-            <div className="gap-6 w-full grid grid-cols-1">
-              {steps.map((step) => (
-                <button
-                  key={step.title}
-                  onClick={() => setSelectedStep(step)}
-                  className={`flex items-center gap-4 p-4 rounded-lg transition-all border 
-              ${
-                selectedStep.title === step.title
-                  ? "border-primary bg-foreground/5"
-                  : "border-transparent hover:border-foreground/30"
-              }`}>
-                  <div
-                    className={`${
-                      selectedStep.title === step.title ? "bg-foreground" : "bg-primary/10"
-                    } flex justify-center items-center p-2 rounded`}>
-                    <step.icon
-                      className={`${selectedStep.title === step.title ? "text-background" : "text-primary"} w-6 h-6`}
-                    />
-                  </div>
-                  <div className="flex flex-col items-start justify-center">
-                    <h3 className="text-lg font-semibold text-start">{step.title}</h3>
-                    <p className="text-sm text-foreground/70 text-start">{step.description}</p>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
+    <section id="how-it-works" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/10">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <Badge className="text-primary border-primary/30 bg-primary/10 px-3 py-1 text-sm font-medium">
+            {t("nav_htw")}
+          </Badge>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">{t("htw_headline")}</h2>
+          <p className="text-lg text-muted-foreground">{t("htw_subheadline")}</p>
         </div>
-        {/* Details Section */}
-        <Card className="rounded-lg flex flex-col gap-4">
-          <div className="bg-primary/5 p-4 flex justify-start items-center gap-4">
-            <div className="flex items-center justify-center p-2 bg-primary/20 rounded">
-              <selectedStep.icon className="text-primary w-8 h-8" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-foreground text-start">{selectedStep.title}</h3>
-              <p className="text-sm text-foreground/70 text-start">{selectedStep.description}</p>
-            </div>
-          </div>
-          <ul className="p-4 flex flex-col gap-3">
-            {selectedStep.details.map((detail, index) => (
-              <li key={index} className="flex items-center justify-start gap-4">
-                <div className="flex justify-center items-center p-1 bg-primary/10 rounded">
-                  <CheckIcon className="text-primary w-4 h-4" />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Steps Navigation */}
+          <div className="space-y-4">
+            {steps.map((step) => (
+              <button
+                key={step.title}
+                onClick={() => setSelectedStep(step)}
+                className={`w-full text-left p-6 rounded-xl transition-all border-2 ${
+                  selectedStep.title === step.title
+                    ? "border-primary bg-primary/5 shadow-md"
+                    : "border-transparent hover:border-muted-foreground/20 bg-background hover:shadow-sm"
+                }`}>
+                <div className="flex items-start gap-4">
+                  <div className={`p-3 rounded-lg ${step.color}`}>
+                    <step.icon className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold">{step.title}</h3>
+                    <p className="text-muted-foreground mt-1">{step.description}</p>
+                  </div>
                 </div>
-                <p className="text-foreground text-sm">{detail}</p>
-              </li>
+              </button>
             ))}
-          </ul>
-        </Card>
+          </div>
+
+          {/* Details Panel */}
+          <Card className="h-full overflow-hidden border-0 shadow-lg">
+            <div className={`p-6 ${selectedStep.color.replace("text-", "bg-").replace("500", "50")}`}>
+              <div className="flex items-center gap-4">
+                <div className={`p-3 rounded-lg ${selectedStep.color}`}>
+                  <selectedStep.icon className="h-8 w-8" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-primary">{selectedStep.title}</h3>
+                  <p className="text-muted-foreground">{selectedStep.description}</p>
+                </div>
+              </div>
+            </div>
+            <div className="p-6 space-y-4">
+              <h4 className="font-medium text-lg">Key Features:</h4>
+              <ul className="space-y-3">
+                {selectedStep.details.map((detail, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <div className={`flex-shrink-0 mt-1 p-1 rounded-full ${selectedStep.color}`}>
+                      <CheckIcon className="h-4 w-4" />
+                    </div>
+                    <p className="text-muted-foreground">{detail}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Card>
+        </div>
       </div>
     </section>
   );

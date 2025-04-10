@@ -94,8 +94,8 @@ const CustomForm = () => {
 
   return (
     <div className="flex justify-center items-center w-full border h-56 gap-4 flex-col p-6 rounded-lg bg-background hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md group">
-      <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
-        <PlusIcon className="w-7 h-7 text-primary" />
+      <div className="p-3 rounded-full bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors">
+        <PlusIcon className="w-7 h-7 text-blue-500" />
       </div>
       <p className="text-sm text-center text-foreground/70">{t("desc_custom")}</p>
       <Button
@@ -110,13 +110,12 @@ const CustomForm = () => {
     </div>
   );
 };
-
 const TemplateForm = ({ setView }: { setView: TSetState<TView> }) => {
   const t = useTranslations("app");
   return (
     <div className="flex justify-center items-center w-full border h-56 gap-4 flex-col p-6 rounded-lg bg-background hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md group">
-      <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
-        <HexagonIcon className="w-7 h-7 text-primary" />
+      <div className="p-3 rounded-full bg-orange-500/10 group-hover:bg-orange-500/20 transition-colors">
+        <HexagonIcon className="w-7 h-7 text-orange-500" />
       </div>
       <p className="text-sm text-center text-foreground/70">{t("desc_templates")}</p>
       <Button
