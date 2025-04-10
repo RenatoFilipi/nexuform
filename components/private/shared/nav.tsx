@@ -57,6 +57,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
+import EditorFormSettings from "../editor/editor-form-settings";
 import ManageSubscription from "./manage-subscription";
 
 const Nav = () => {
@@ -542,10 +543,12 @@ const NavEditor = () => {
               {preview ? t("label_editor") : t("label_preview")}
             </Button>
           )}
-          <Button variant={"outline"} size={"xs"}>
-            <SettingsIcon className="w-4 h-4 mr-2" />
-            {t("label_settings")}
-          </Button>
+          <EditorFormSettings>
+            <Button variant={"outline"} size={"xs"}>
+              <SettingsIcon className="w-4 h-4 mr-2" />
+              {t("label_settings")}
+            </Button>
+          </EditorFormSettings>
           <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
             {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
             {t("label_save_form")}

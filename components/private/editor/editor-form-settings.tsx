@@ -18,7 +18,14 @@ import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
 import { minWidth640 } from "@/utils/constants";
 import { TSetState } from "@/utils/types";
-import { BookDashedIcon, GlobeIcon, Layers2Icon, MonitorOffIcon, ShieldAlertIcon } from "lucide-react";
+import {
+  AlertTriangleIcon,
+  BookDashedIcon,
+  GlobeIcon,
+  Layers2Icon,
+  MonitorOffIcon,
+  ShieldAlertIcon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useMedia } from "react-use";
@@ -64,12 +71,12 @@ type TView = "general" | "status" | "delete";
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const views = [
-    { label: t("nav_general"), icon: Layers2Icon, view: "general", enabled: true },
+    { label: t("nav_general"), icon: Layers2Icon, view: "general", enabled: false },
     { label: t("nav_status"), icon: GlobeIcon, view: "status", enabled: true },
     { label: t("nav_delete"), icon: ShieldAlertIcon, view: "delete", enabled: true },
   ];
 
-  const [view, setView] = useState<TView>("general");
+  const [view, setView] = useState<TView>("status");
   const enabledViews = views.filter((x) => x.enabled);
 
   return (
@@ -211,25 +218,29 @@ const GeneralSettings = () => {
 };
 const StatusSettings = () => {
   const t = useTranslations("app");
-  const { form, setForm, blocks } = useEditorStore();
+  const { form, setForm } = useEditorStore();
+
   const statusList = [
     {
       status: "draft",
       label: t("label_draft"),
       description: t("desc_draft"),
       icon: BookDashedIcon,
+      color: "text-orange-500 dark:text-orange-400",
     },
     {
       status: "published",
       label: t("label_published"),
       description: t("desc_published"),
       icon: GlobeIcon,
+      color: "text-green-500 dark:text-green-400",
     },
     {
       status: "inactive",
       label: t("label_inactive"),
       description: t("desc_inactive"),
       icon: MonitorOffIcon,
+      color: "text-gray-500 dark:text-gray-400",
     },
   ];
 
@@ -238,34 +249,38 @@ const StatusSettings = () => {
   };
 
   return (
-    <div className="flex flex-col w-full">
-      <div className="grid gap-3">
-        <div className="grid gap-1">
-          <Label className="">{t("label_status")}</Label>
-          <p className="text-xs text-foreground/60">{t("desc_status")}</p>
-        </div>
-        <div className="flex flex-col gap-4">
-          <div className="grid gap-4 overflow-y-auto grid-cols-1">
-            {statusList.map((statusItem, index) => (
-              <button
-                key={index}
-                onClick={() => onSetStatus(statusItem.status)}
-                className={`${
-                  statusItem.status === form.status ? "border-primary bg-primary/5" : "hover:bg-foreground/5"
-                } border p-4 flex gap-4 h-full`}>
-                <div className="flex items-center justify-center">
-                  <statusItem.icon
-                    className={`${statusItem.status === form.status ? "text-primary" : "text-foreground/40"} w-5 h-5`}
-                  />
-                </div>
-                <div className="flex flex-col justify-center items-start gap-1">
-                  <span className="font-medium">{statusItem.label}</span>
-                  <span className="text-xs text-foreground/70 text-start">{statusItem.description}</span>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
+    <div className="flex flex-col w-full gap-4">
+      <div className="space-y-1 hidden">
+        <Label className="text-sm font-medium">{t("label_status")}</Label>
+        <p className="text-xs text-muted-foreground">{t("desc_status")}</p>
+      </div>
+
+      <div className="grid gap-2">
+        {statusList.map((statusItem) => (
+          <button
+            key={statusItem.status}
+            onClick={() => onSetStatus(statusItem.status)}
+            className={`
+              flex items-start gap-3 p-3 rounded-lg border transition-all
+              ${
+                statusItem.status === form.status
+                  ? "border-primary bg-primary/5 dark:bg-primary/10"
+                  : "border-transparent hover:bg-muted/50 dark:hover:bg-muted/30"
+              }
+            `}>
+            <div
+              className={`p-2 rounded-md ${statusItem.color} ${
+                statusItem.status === form.status ? "bg-primary/10 dark:bg-primary/20" : "bg-muted/50 dark:bg-muted"
+              }`}>
+              <statusItem.icon className="w-4 h-4" />
+            </div>
+            <div className="flex-1 text-left">
+              <h4 className="text-sm font-medium">{statusItem.label}</h4>
+              <p className="text-xs text-foreground/60 mt-1">{statusItem.description}</p>
+            </div>
+            {statusItem.status === form.status && <div className="w-2 h-2 rounded-full bg-primary mt-2" />}
+          </button>
+        ))}
       </div>
     </div>
   );
@@ -275,9 +290,10 @@ const DeleteSettings = () => {
   const { form } = useEditorStore();
 
   return (
-    <div className="flex justify-center items-center w-full border rounded p-8">
+    <div className="flex justify-center items-center w-full border border-destructive/30 rounded p-8 bg-destructive/5">
       <div className="flex flex-col justify-center items-center gap-4">
-        <Badge variant={"destructive"} uppercase className="w-fit">
+        <Badge variant="destructive" className="px-3 py-1 font-medium uppercase tracking-wider flex items-center gap-2">
+          <AlertTriangleIcon className="h-3.5 w-3.5" />
           {t("label_danger_zone")}
         </Badge>
         <div className="flex flex-col justify-center items-center gap-6">
@@ -292,5 +308,4 @@ const DeleteSettings = () => {
     </div>
   );
 };
-
 export default EditorFormSettings;

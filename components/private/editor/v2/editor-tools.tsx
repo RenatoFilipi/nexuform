@@ -3,6 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import useEditorStore from "@/stores/editor";
@@ -17,7 +18,7 @@ const EditorTools = () => {
   const views = [
     { label: "Properties", view: "properties", enabled: true },
     { label: "Styles", view: "styles", enabled: true },
-    { label: "Reorder", view: "reorder", enabled: true },
+    { label: "Reorder", view: "reorder", enabled: false },
   ];
   const enabledViews = views.filter((x) => x.enabled);
   const [view, setView] = useState<TView>("properties");
@@ -47,7 +48,6 @@ const EditorTools = () => {
     </div>
   );
 };
-
 const ToolProperties = () => {
   const t = useTranslations("app");
   const { form, setForm } = useEditorStore();
@@ -74,7 +74,7 @@ const ToolProperties = () => {
   };
 
   return (
-    <div className="flex justify-start items-center w-full h-full flex-col px-5 py-8 gap-9 overflow-y-auto">
+    <div className="flex justify-start items-center w-full h-full flex-col px-5 py-8 gap-8 overflow-y-auto">
       <div className="grid gap-3 w-full">
         <div className="grid gap-1">
           <Label className="">{t("label_form_name")}</Label>
@@ -137,9 +137,51 @@ const ToolProperties = () => {
   );
 };
 const ToolStyles = () => {
+  const t = useTranslations("app");
+  const { theme, setTheme } = useEditorStore();
+  const user = useUserStore();
+
+  const onSetNumericBlocks = (value: boolean) => {
+    setTheme({ ...theme, numeric_blocks: value });
+  };
+  const onSetUppercaseBlockName = (value: boolean) => {
+    setTheme({ ...theme, uppercase_block_name: value });
+  };
+  const onSetWidth = (value: string) => {
+    setTheme({ ...theme, width: value });
+  };
+
   return (
-    <div className="flex justify-center items-center w-full h-full">
-      <WipUI context="styles" />
+    <div className="flex justify-start items-center w-full h-full flex-col px-5 py-8 gap-8 overflow-y-auto">
+      <div className="flex justify-between items-center w-full">
+        <div className="grid gap-1">
+          <Label>{t("label_numeric_blocks")}</Label>
+          <p className="text-xs text-foreground/60 hidden">{t("desc_numeric_blocks")}</p>
+        </div>
+        <Switch checked={theme.numeric_blocks} onCheckedChange={onSetNumericBlocks} />
+      </div>
+      <div className="flex justify-between items-center w-full">
+        <div className="grid gap-1">
+          <Label>{t("label_uppercase_block")}</Label>
+          <p className="text-xs text-foreground/60 hidden">{t("desc_uppercase_block")}.</p>
+        </div>
+        <Switch checked={theme.uppercase_block_name} onCheckedChange={onSetUppercaseBlockName} />
+      </div>
+      <div className="flex justify-between items-start w-full sm:gap-4 flex-col">
+        <div className="grid gap-1">
+          <Label>{t("label_form_width")}</Label>
+          <p className="text-xs text-foreground/60 hidden">{t("desc_form_width")}</p>
+        </div>
+        <Select onValueChange={onSetWidth} defaultValue={theme.width}>
+          <SelectTrigger>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="centered">{t("label_centered")}</SelectItem>
+            <SelectItem value="full">{t("label_full_width")}</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
     </div>
   );
 };
