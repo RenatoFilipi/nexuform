@@ -183,7 +183,6 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
     </AlertDialog>
   );
 };
-
 const BlocksGroup = ({ blocks }: { blocks: EBlock[] }) => {
   return (
     <div className="flex flex-col justify-center items-center gap-14 w-full">

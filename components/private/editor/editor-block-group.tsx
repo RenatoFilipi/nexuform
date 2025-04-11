@@ -93,7 +93,6 @@ const EditorBlockGroup = () => {
     </div>
   );
 };
-
 const SW = ({ children, block }: { children: React.ReactNode; block: EBlock }) => {
   const user = useUserStore();
   const editor = useEditorStore();

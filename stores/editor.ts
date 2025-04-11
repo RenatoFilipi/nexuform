@@ -1,5 +1,5 @@
 import { EBlock, EForm, ETheme } from "@/utils/entities";
-import { TEditorView } from "@/utils/types";
+import { TEditorView, TToolView } from "@/utils/types";
 import { create } from "zustand";
 
 interface editor {
@@ -9,6 +9,8 @@ interface editor {
   blocksReadyOnly: EBlock[];
   preview: boolean;
   view: TEditorView;
+  toolView: TToolView;
+  blockView: EBlock;
   setForm: (payload: EForm) => void;
   setTheme: (payload: ETheme) => void;
   setBlocks: (payload: EBlock[]) => void;
@@ -18,6 +20,8 @@ interface editor {
   removeBlock: (id: string) => void;
   setPreview: (value: boolean) => void;
   setView: (value: TEditorView) => void;
+  setToolView: (value: TToolView) => void;
+  setBlockView: (value: EBlock) => void;
   reset: () => void;
 }
 
@@ -55,13 +59,34 @@ const useEditorStore = create<editor>((set) => ({
   blocksReadyOnly: [],
   preview: false,
   view: "blocks",
+  toolView: "properties",
+  blockView: {
+    id: "",
+    form_id: "",
+    created_at: "",
+    updated_at: "",
+    name: "",
+    description: "",
+    is_identifier: false,
+    max_char: null,
+    min_char: null,
+    max_date: null,
+    max_scale: null,
+    min_date: null,
+    min_scale: null,
+    options: null,
+    placeholder: null,
+    position: 0,
+    rating: null,
+    required: false,
+    show_char: null,
+    type: "",
+  },
   setForm: (payload) => set({ form: payload }),
   setTheme: (payload) => set({ theme: payload }),
   setBlocks: (payload) => set({ blocks: payload }),
   setBlocksReadyOnly: (payload) => set({ blocksReadyOnly: payload }),
-  addBlock: (payload) => {
-    set((state) => ({ blocks: [...state.blocks, payload] }));
-  },
+  addBlock: (payload) => set((state) => ({ blocks: [...state.blocks, payload] })),
   updateBlock: (id, payload) => {
     set((state) => ({
       blocks: state.blocks.map((block) => (block.id === id ? payload : block)),
@@ -74,6 +99,8 @@ const useEditorStore = create<editor>((set) => ({
   },
   setPreview: (value) => set({ preview: value }),
   setView: (payload) => set({ view: payload }),
+  setToolView: (payload) => set({ toolView: payload }),
+  setBlockView: (payload) => set({ blockView: payload }),
   reset: () =>
     set({
       form: {
@@ -109,6 +136,29 @@ const useEditorStore = create<editor>((set) => ({
       blocksReadyOnly: [],
       view: "blocks",
       preview: false,
+      toolView: "properties",
+      blockView: {
+        id: "",
+        form_id: "",
+        created_at: "",
+        updated_at: "",
+        name: "",
+        description: "",
+        is_identifier: false,
+        max_char: null,
+        min_char: null,
+        max_date: null,
+        max_scale: null,
+        min_date: null,
+        min_scale: null,
+        options: null,
+        placeholder: null,
+        position: 0,
+        rating: null,
+        required: false,
+        show_char: null,
+        type: "",
+      },
     }),
 }));
 

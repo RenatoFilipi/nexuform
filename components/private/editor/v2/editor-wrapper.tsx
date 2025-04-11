@@ -41,7 +41,7 @@ const EditorWrapper = (props: IProps) => {
   });
 
   return (
-    <div className="mt-12 flex w-full h-full flex-1 gap-4 relative">
+    <div className="flex w-full flex-1 gap-4 relative pt-12 max-h-dvh overflow-hidden">
       {query.isPending && (
         <div className="flex justify-center items-center w-full">
           <LoaderIcon className="w-6 h-6 animate-spin" />
@@ -49,7 +49,7 @@ const EditorWrapper = (props: IProps) => {
       )}
       {query.isError && <div className="flex justify-center items-center w-full">{t("err_generic")}</div>}
       {!query.isPending && !query.isError && (
-        <div className="flex w-full flex-1 relative">
+        <div className="flex w-full flex-1">
           <EditorContent />
           <EditorTools />
         </div>

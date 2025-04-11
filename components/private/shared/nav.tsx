@@ -34,8 +34,8 @@ import {
   MonitorIcon,
   MoonIcon,
   PlusIcon,
+  RocketIcon,
   Settings2Icon,
-  SettingsIcon,
   SunIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -57,7 +57,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
-import EditorFormSettings from "../editor/editor-form-settings";
 import ManageSubscription from "./manage-subscription";
 
 const Nav = () => {
@@ -538,19 +537,9 @@ const NavEditor = () => {
       </div>
       {active && (
         <div className="flex justify-center items-center gap-4">
-          {!empty && (
-            <Button size={"xs"} variant={"outline"} className="flex" onClick={() => setPreview(!preview)}>
-              {preview ? t("label_editor") : t("label_preview")}
-            </Button>
-          )}
-          <EditorFormSettings>
-            <Button variant={"outline"} size={"xs"}>
-              <SettingsIcon className="w-4 h-4 mr-2" />
-              {t("label_settings")}
-            </Button>
-          </EditorFormSettings>
           <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
             {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
+            {appState !== "loading" && <RocketIcon className="w-4 h-4 mr-2" />}
             {t("label_save_form")}
           </Button>
         </div>

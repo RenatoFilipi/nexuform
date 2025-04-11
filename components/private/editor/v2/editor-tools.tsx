@@ -8,43 +8,43 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
+import { TToolView } from "@/utils/types";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
 import WipUI from "../../shared/wip-ui";
-
-type TView = "properties" | "styles" | "reorder" | "block";
 
 const EditorTools = () => {
   const t = useTranslations("app");
+  const editor = useEditorStore();
   const views = [
     { label: t("label_properties"), view: "properties", enabled: true },
     { label: t("label_styles"), view: "styles", enabled: true },
     { label: t("label_reorder"), view: "reorder", enabled: false },
   ];
   const enabledViews = views.filter((x) => x.enabled);
-  const [view, setView] = useState<TView>("properties");
 
   return (
-    <div className="hidden sm:flex border-l sm:w-[400px] absolute h-full flex-1 right-0 flex-col">
-      <div className="h-12 absolute w-full border-b flex">
-        {enabledViews.map((v) => {
-          return (
-            <button
-              onClick={() => setView(v.view as TView)}
-              key={v.view}
-              className={`${
-                v.view === view ? "font-medium text-foreground" : "text-foreground/60"
-              } text-sm flex justify-center items-center px-4 hover:bg-foreground/5 relative rounded gap-2 h-full`}>
-              <div className="truncate">{v.label}</div>
-              {v.view === view && <div className="bg-primary bottom-0 w-full h-0.5 absolute"></div>}
-            </button>
-          );
-        })}
-      </div>
-      <div className="mt-12 flex flex-1 overflow-y-auto">
-        {view === "properties" && <ToolProperties />}
-        {view === "styles" && <ToolStyles />}
-        {view === "reorder" && <ToolReorder />}
+    <div className="hidden sm:flex border-l h-full overflow-y-auto sm:w-[500px]">
+      <div className="flex w-full overflow-y-auto flex-col">
+        <div className="h-12 w-full border-b flex">
+          {enabledViews.map((v) => {
+            return (
+              <button
+                onClick={() => editor.setToolView(v.view as TToolView)}
+                key={v.view}
+                className={`${
+                  v.view === editor.toolView ? "font-medium text-foreground" : "text-foreground/60"
+                } text-sm flex justify-center items-center px-4 hover:bg-foreground/5 relative rounded gap-2 h-full`}>
+                <div className="truncate">{v.label}</div>
+                {v.view === editor.toolView && <div className="bg-primary bottom-0 w-full h-0.5 absolute"></div>}
+              </button>
+            );
+          })}
+        </div>
+        <div className="flex flex-1 overflow-y-auto">
+          {editor.toolView === "properties" && <ToolProperties />}
+          {editor.toolView === "styles" && <ToolStyles />}
+          {editor.toolView === "reorder" && <ToolReorder />}
+        </div>
       </div>
     </div>
   );
@@ -75,7 +75,7 @@ const ToolProperties = () => {
   };
 
   return (
-    <div className="flex justify-start items-center w-full h-full flex-col px-5 py-8 gap-8 overflow-y-auto">
+    <div className="flex flex-col justify-start items-center w-full p-5 gap-8 overflow-y-auto">
       <div className="grid gap-3 w-full">
         <div className="grid gap-1">
           <Label className="">{t("label_form_name")}</Label>
@@ -153,7 +153,7 @@ const ToolStyles = () => {
   };
 
   return (
-    <div className="flex justify-start items-center w-full h-full flex-col px-5 py-8 gap-8 overflow-y-auto">
+    <div className="flex justify-start items-center w-full h-full flex-col p-5 gap-8 overflow-y-auto">
       <div className="flex justify-between items-center w-full">
         <div className="grid gap-1">
           <Label>{t("label_numeric_blocks")}</Label>
