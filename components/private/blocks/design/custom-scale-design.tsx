@@ -128,23 +128,15 @@ const CustomScaleDesign = ({
 }) => {
   const { name, description, required, max_scale, id, position } = block;
   const maxScaleArray = Array.from({ length: max_scale ?? 5 }, (_, i) => i + 1);
-  const currentColor =
-    design.find((x) => x.label === theme.primary_color) ?? design[0];
+  const currentColor = design.find((x) => x.label === theme.primary_color) ?? design[0];
   const [value, setValue] = useState("");
 
   return (
     <div className="flex flex-col gap-4 w-full">
       <div className="grid gap-1">
         <div className="flex gap-2">
-          {theme.numeric_blocks && (
-            <span className="bg-foreground/5 px-2 rounded h-fit">
-              {position}
-            </span>
-          )}
-          <h1
-            className={`${
-              theme.uppercase_block_name && "uppercase"
-            } text-base font-medium`}>
+          {theme.numeric_blocks && <span className="">{position}.</span>}
+          <h1 className={`${theme.uppercase_block_name && "uppercase"} text-base font-medium`}>
             {name} {required && <span className="text-red-500">*</span>}
           </h1>
         </div>
@@ -161,11 +153,7 @@ const CustomScaleDesign = ({
           const scaleId = `${id}_${scale}`;
           return (
             <div key={scale} className="w-full">
-              <RadioGroupItem
-                value={scale.toString()}
-                id={scaleId}
-                className="peer sr-only"
-              />
+              <RadioGroupItem value={scale.toString()} id={scaleId} className="peer sr-only" />
               <Label
                 htmlFor={scaleId}
                 className={`${currentColor.tw_class} text-sm cursor-pointer flex items-center justify-center gap-2 rounded-md border-2 border-muted bg-popover h-14 hover:bg-accent hover:text-accent-foreground`}>

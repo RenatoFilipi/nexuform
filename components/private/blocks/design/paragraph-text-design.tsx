@@ -37,19 +37,8 @@ const ParagraphTextDesign = ({
   theme: ETheme;
   onValueChange: (value: string, blockId: string) => void;
 }) => {
-  const {
-    name,
-    description,
-    max_char,
-    show_char,
-    required,
-    id,
-    position,
-    min_char,
-    placeholder,
-  } = block;
-  const currentColor =
-    design.find((x) => x.label === theme.primary_color) ?? design[0];
+  const { name, description, max_char, show_char, required, id, position, min_char, placeholder } = block;
+  const currentColor = design.find((x) => x.label === theme.primary_color) ?? design[0];
   const [value, setValue] = useState("");
   const [charCount, setCharCount] = useState(0);
 
@@ -57,15 +46,8 @@ const ParagraphTextDesign = ({
     <div className="flex flex-col gap-4 w-full">
       <div className="grid gap-1">
         <div className="flex gap-2">
-          {theme.numeric_blocks && (
-            <span className="bg-foreground/5 px-2 rounded h-fit">
-              {position}
-            </span>
-          )}
-          <h1
-            className={`${
-              theme.uppercase_block_name && "uppercase"
-            } text-base font-medium`}>
+          {theme.numeric_blocks && <span className="">{position}.</span>}
+          <h1 className={`${theme.uppercase_block_name && "uppercase"} text-base font-medium`}>
             {name} {required && <span className="text-red-500">*</span>}
           </h1>
         </div>

@@ -9,11 +9,102 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
+import { IDesign } from "@/utils/interfaces";
 import { TToolView } from "@/utils/types";
-import { XIcon } from "lucide-react";
+import { CheckIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import WipUI from "../../shared/wip-ui";
 
+const colors: IDesign[] = [
+  {
+    tw_class: "bg-slate-500 hover:bg-slate-600 text-white dark:bg-slate-800 dark:hover:bg-slate-900",
+    label: "slate",
+  },
+  {
+    tw_class: "bg-gray-500 hover:bg-gray-600 text-white dark:bg-gray-800 dark:hover:bg-gray-900",
+    label: "gray",
+  },
+  {
+    tw_class: "bg-zinc-500 hover:bg-zinc-600 text-white dark:bg-zinc-800 dark:hover:bg-zinc-900",
+    label: "zinc",
+  },
+  {
+    tw_class: "bg-neutral-500 hover:bg-neutral-600 text-white dark:bg-neutral-800 dark:hover:bg-neutral-900",
+    label: "neutral",
+  },
+  {
+    tw_class: "bg-stone-500 hover:bg-stone-600 text-white dark:bg-stone-800 dark:hover:bg-stone-900",
+    label: "stone",
+  },
+  {
+    tw_class: "bg-red-500 hover:bg-red-600 text-white dark:bg-red-800 dark:hover:bg-red-900",
+    label: "red",
+  },
+  {
+    tw_class: "bg-orange-500 hover:bg-orange-600 text-white dark:bg-orange-800 dark:hover:bg-orange-900",
+    label: "orange",
+  },
+  {
+    tw_class: "bg-amber-500 hover:bg-amber-600 text-black dark:bg-amber-800 dark:hover:bg-amber-900",
+    label: "amber",
+  },
+  {
+    tw_class: "bg-yellow-500 hover:bg-yellow-600 text-black dark:bg-yellow-800 dark:hover:bg-yellow-900",
+    label: "yellow",
+  },
+  {
+    tw_class: "bg-lime-500 hover:bg-lime-600 text-black dark:bg-lime-800 dark:hover:bg-lime-900",
+    label: "lime",
+  },
+  {
+    tw_class: "bg-green-500 hover:bg-green-600 text-white dark:bg-green-800 dark:hover:bg-green-900",
+    label: "green",
+  },
+  {
+    tw_class: "bg-emerald-500 hover:bg-emerald-600 text-white dark:bg-emerald-800 dark:hover:bg-emerald-900",
+    label: "emerald",
+  },
+  {
+    tw_class: "bg-teal-500 hover:bg-teal-600 text-white dark:bg-teal-800 dark:hover:bg-teal-900",
+    label: "teal",
+  },
+  {
+    tw_class: "bg-cyan-500 hover:bg-cyan-600 text-white dark:bg-cyan-800 dark:hover:bg-cyan-900",
+    label: "cyan",
+  },
+  {
+    tw_class: "bg-sky-500 hover:bg-sky-600 text-white dark:bg-sky-800 dark:hover:bg-sky-900",
+    label: "sky",
+  },
+  {
+    tw_class: "bg-blue-500 hover:bg-blue-600 text-white dark:bg-blue-800 dark:hover:bg-blue-900",
+    label: "blue",
+  },
+  {
+    tw_class: "bg-indigo-500 hover:bg-indigo-600 text-white dark:bg-indigo-800 dark:hover:bg-indigo-900",
+    label: "indigo",
+  },
+  {
+    tw_class: "bg-violet-500 hover:bg-violet-600 text-white dark:bg-violet-800 dark:hover:bg-violet-900",
+    label: "violet",
+  },
+  {
+    tw_class: "bg-purple-500 hover:bg-purple-600 text-white dark:bg-purple-800 dark:hover:bg-purple-900",
+    label: "purple",
+  },
+  {
+    tw_class: "bg-fuchsia-500 hover:bg-fuchsia-600 text-white dark:bg-fuchsia-800 dark:hover:bg-fuchsia-900",
+    label: "fuchsia",
+  },
+  {
+    tw_class: "bg-pink-500 hover:bg-pink-600 text-white dark:bg-pink-800 dark:hover:bg-pink-900",
+    label: "pink",
+  },
+  {
+    tw_class: "bg-rose-500 hover:bg-rose-600 text-white dark:bg-rose-800 dark:hover:bg-rose-900",
+    label: "rose",
+  },
+];
 const EditorTools = () => {
   const t = useTranslations("app");
   const editor = useEditorStore();
@@ -80,7 +171,7 @@ const ToolProperties = () => {
   };
 
   return (
-    <div className="flex flex-col justify-start items-center w-full p-5 gap-8 overflow-y-auto">
+    <div className="flex flex-col justify-start items-center w-full p-5 gap-6 overflow-y-auto">
       <div className="grid gap-3 w-full">
         <div className="grid gap-1">
           <Label className="">{t("label_form_name")}</Label>
@@ -145,7 +236,6 @@ const ToolProperties = () => {
 const ToolStyles = () => {
   const t = useTranslations("app");
   const { theme, setTheme } = useEditorStore();
-  const user = useUserStore();
 
   const onSetNumericBlocks = (value: boolean) => {
     setTheme({ ...theme, numeric_blocks: value });
@@ -156,9 +246,12 @@ const ToolStyles = () => {
   const onSetWidth = (value: string) => {
     setTheme({ ...theme, width: value });
   };
+  const onSetPrimaryColor = (value: string) => {
+    setTheme({ ...theme, primary_color: value });
+  };
 
   return (
-    <div className="flex justify-start items-center w-full h-full flex-col p-5 gap-8 overflow-y-auto">
+    <div className="flex justify-start items-center w-full h-full flex-col p-5 gap-6 overflow-y-auto">
       <div className="flex justify-between items-center w-full">
         <div className="grid gap-1">
           <Label>{t("label_numeric_blocks")}</Label>
@@ -173,7 +266,7 @@ const ToolStyles = () => {
         </div>
         <Switch checked={theme.uppercase_block_name} onCheckedChange={onSetUppercaseBlockName} />
       </div>
-      <div className="flex justify-between items-start w-full sm:gap-4 flex-col">
+      <div className="justify-between items-start w-full sm:gap-4 flex-col hidden">
         <div className="grid gap-1">
           <Label>{t("label_form_width")}</Label>
           <p className="text-xs text-foreground/60 hidden">{t("desc_form_width")}</p>
@@ -187,6 +280,26 @@ const ToolStyles = () => {
             <SelectItem value="full">{t("label_full_width")}</SelectItem>
           </SelectContent>
         </Select>
+      </div>
+      <div className="grid gap-3 w-full">
+        <div className="flex justify-start items-center gap-2">
+          <div className="grid gap-1">
+            <Label>{t("label_primary_color")}</Label>
+            <span className="text-xs text-foreground/60 hidden">{t("desc_primary_color")}</span>
+          </div>
+        </div>
+        <div className="grid grid-cols-8 gap-3">
+          {colors.map((color, index) => {
+            return (
+              <button
+                onClick={() => onSetPrimaryColor(color.label)}
+                key={index}
+                className={`${color.tw_class} w-8 h-8 flex justify-center items-center rounded`}>
+                {theme.primary_color === color.label && <CheckIcon className="w-5 h-5 text-white" />}
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

@@ -19,8 +19,7 @@ const design: IDesign[] = [
   },
   {
     label: "neutral",
-    tw_class:
-      "border-neutral-500 text-neutral-500 focus-visible:ring-neutral-500",
+    tw_class: "border-neutral-500 text-neutral-500 focus-visible:ring-neutral-500",
   },
   {
     label: "stone",
@@ -52,8 +51,7 @@ const design: IDesign[] = [
   },
   {
     label: "emerald",
-    tw_class:
-      "border-emerald-500 text-emerald-500 focus-visible:ring-emerald-500",
+    tw_class: "border-emerald-500 text-emerald-500 focus-visible:ring-emerald-500",
   },
   {
     label: "teal",
@@ -85,8 +83,7 @@ const design: IDesign[] = [
   },
   {
     label: "fuchsia",
-    tw_class:
-      "border-fuchsia-500 text-fuchsia-500 focus-visible:ring-fuchsia-500",
+    tw_class: "border-fuchsia-500 text-fuchsia-500 focus-visible:ring-fuchsia-500",
   },
   {
     label: "pink",
@@ -108,22 +105,14 @@ const MultipleChoiceDesign = ({
   onValueChange: (value: string, blockId: string) => void;
 }) => {
   const { name, description, required, options, id, position } = block;
-  const currentColor =
-    design.find((x) => x.label === theme.primary_color) ?? design[0];
+  const currentColor = design.find((x) => x.label === theme.primary_color) ?? design[0];
 
   return (
     <div className="flex flex-col gap-4 w-full">
       <div className="grid gap-1">
         <div className="flex gap-2">
-          {theme.numeric_blocks && (
-            <span className="bg-foreground/5 px-2 rounded h-fit">
-              {position}
-            </span>
-          )}
-          <h1
-            className={`${
-              theme.uppercase_block_name && "uppercase"
-            } text-base font-medium`}>
+          {theme.numeric_blocks && <span className="">{position}.</span>}
+          <h1 className={`${theme.uppercase_block_name && "uppercase"} text-base font-medium`}>
             {name} {required && <span className="text-red-500">*</span>}
           </h1>
         </div>
@@ -139,11 +128,7 @@ const MultipleChoiceDesign = ({
             const optionId = `${id}_${opt}`;
             return (
               <div key={opt} className="flex items-center space-x-2">
-                <RadioGroupItem
-                  className={twMerge(currentColor.tw_class)}
-                  value={opt}
-                  id={optionId}
-                />
+                <RadioGroupItem className={twMerge(currentColor.tw_class)} value={opt} id={optionId} />
                 <Label htmlFor={optionId} className="text-sm">
                   {opt}
                 </Label>
