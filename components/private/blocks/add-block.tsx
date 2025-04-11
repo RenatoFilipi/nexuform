@@ -253,7 +253,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
                 <FormItem className="w-full">
                   <FormControl>
                     <RadioGroup
-                      className="flex flex-col overflow-y-auto gap-6"
+                      className="flex flex-col overflow-y-auto gap-2"
                       value={field.value}
                       onValueChange={field.onChange}>
                       {Object.entries(groupedBlocks).map(([category, blocks]) => (

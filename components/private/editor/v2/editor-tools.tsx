@@ -1,6 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -9,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
 import { TToolView } from "@/utils/types";
+import { XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import WipUI from "../../shared/wip-ui";
 
@@ -21,31 +23,35 @@ const EditorTools = () => {
     { label: t("label_reorder"), view: "reorder", enabled: false },
   ];
   const enabledViews = views.filter((x) => x.enabled);
+  const isEditingBlock = editor.toolView === "block";
 
   return (
     <div className="hidden sm:flex border-l h-full overflow-y-auto sm:w-[500px]">
-      <div className="flex w-full overflow-y-auto flex-col">
-        <div className="h-12 w-full border-b flex">
-          {enabledViews.map((v) => {
-            return (
-              <button
-                onClick={() => editor.setToolView(v.view as TToolView)}
-                key={v.view}
-                className={`${
-                  v.view === editor.toolView ? "font-medium text-foreground" : "text-foreground/60"
-                } text-sm flex justify-center items-center px-4 hover:bg-foreground/5 relative rounded gap-2 h-full`}>
-                <div className="truncate">{v.label}</div>
-                {v.view === editor.toolView && <div className="bg-primary bottom-0 w-full h-0.5 absolute"></div>}
-              </button>
-            );
-          })}
+      {isEditingBlock && <ToolBlock />}
+      {!isEditingBlock && (
+        <div className="flex w-full overflow-y-auto flex-col">
+          <div className="h-12 w-full border-b flex">
+            {enabledViews.map((v) => {
+              return (
+                <button
+                  onClick={() => editor.setToolView(v.view as TToolView)}
+                  key={v.view}
+                  className={`${
+                    v.view === editor.toolView ? "font-medium text-foreground" : "text-foreground/60"
+                  } text-sm flex justify-center items-center px-4 hover:bg-foreground/5 relative rounded gap-2 h-full`}>
+                  <div className="truncate">{v.label}</div>
+                  {v.view === editor.toolView && <div className="bg-primary bottom-0 w-full h-0.5 absolute"></div>}
+                </button>
+              );
+            })}
+          </div>
+          <div className="flex flex-1 overflow-y-auto">
+            {editor.toolView === "properties" && <ToolProperties />}
+            {editor.toolView === "styles" && <ToolStyles />}
+            {editor.toolView === "reorder" && <ToolReorder />}
+          </div>
         </div>
-        <div className="flex flex-1 overflow-y-auto">
-          {editor.toolView === "properties" && <ToolProperties />}
-          {editor.toolView === "styles" && <ToolStyles />}
-          {editor.toolView === "reorder" && <ToolReorder />}
-        </div>
-      </div>
+      )}
     </div>
   );
 };
@@ -190,6 +196,27 @@ const ToolReorder = () => {
   return (
     <div className="flex justify-center items-center w-full h-full">
       <WipUI context="reorder" />
+    </div>
+  );
+};
+const ToolBlock = () => {
+  const editor = useEditorStore();
+
+  const onClose = () => {
+    editor.setToolView("properties");
+  };
+
+  return (
+    <div className="flex flex-col w-full">
+      <div className="flex justify-between items-center w-full border-b h-12 px-3">
+        <span className="font-semibold text-sm">{editor.blockView.type}</span>
+        <Button onClick={onClose} variant={"ghost"} size={"icon"} className="w-8 h-8">
+          <XIcon className="w-5 h-5" />
+        </Button>
+      </div>
+      <div className="flex justify-center items-center h-full">
+        <WipUI context="Block settings" />
+      </div>
     </div>
   );
 };

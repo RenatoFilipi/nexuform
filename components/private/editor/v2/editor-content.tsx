@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import useEditorStore from "@/stores/editor";
 import { EBlock, ETheme } from "@/utils/entities";
 import { TBlock } from "@/utils/types";
-import { PlusIcon, SettingsIcon } from "lucide-react";
+import { Edit2Icon, PlusIcon, SettingsIcon, Trash2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import AddBlock from "../../blocks/add-block";
 import CheckBoxesDesign from "../../blocks/design/checkboxes-design";
@@ -110,9 +110,42 @@ const EditorGroup = () => {
   );
 };
 const BlockWrapper = ({ children, block }: { children: React.ReactNode; block: EBlock }) => {
+  const editor = useEditorStore();
+
+  const onSelectBlock = () => {
+    editor.setBlockView(block);
+    editor.setToolView("block");
+  };
+  const onRemoveBlock = () => {
+    editor.setToolView("properties");
+    editor.removeBlock(block.id);
+  };
+
   return (
-    <div key={block.id} className="flex w-full">
+    <div
+      key={block.id}
+      className={`${
+        block.id === editor.blockView.id && editor.toolView === "block"
+          ? "border-2 border-primary dark:border-primary"
+          : "border border-transparent"
+      } flex w-full p-3 relative group hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-colors rounded`}>
       {children}
+      <div className="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity flex space-x-1 p-1 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded">
+        <button
+          onClick={onSelectBlock}
+          className="p-1.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50/50 dark:text-gray-300 dark:hover:text-blue-400 dark:hover:bg-blue-900/30 rounded transition-colors"
+          title="Editar bloco"
+          aria-label="Editar bloco">
+          <Edit2Icon className="w-4 h-4" />
+        </button>
+        <button
+          onClick={onRemoveBlock}
+          className="p-1.5 text-gray-600 hover:text-red-600 hover:bg-red-50/50 dark:text-gray-300 dark:hover:text-red-400 dark:hover:bg-red-900/30 rounded transition-colors"
+          title="Deletar bloco"
+          aria-label="Deletar bloco">
+          <Trash2Icon className="w-4 h-4" />
+        </button>
+      </div>
     </div>
   );
 };
