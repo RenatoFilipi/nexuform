@@ -2,7 +2,8 @@ import { Button } from "@/components/ui/button";
 import useEditorStore from "@/stores/editor";
 import { EBlock, ETheme } from "@/utils/entities";
 import { TBlock } from "@/utils/types";
-import { Edit2Icon, PlusIcon, SettingsIcon, Trash2Icon } from "lucide-react";
+import { Reorder, useDragControls } from "framer-motion";
+import { Edit2Icon, GripVerticalIcon, PlusIcon, SettingsIcon, Trash2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import AddBlock from "../../blocks/add-block";
 import CheckBoxesDesign from "../../blocks/design/checkboxes-design";
@@ -93,10 +94,22 @@ const EditorCanvas = () => {
   );
 };
 const EditorGroup = () => {
-  const { blocks, theme } = useEditorStore();
+  const { blocks, theme, setBlocks } = useEditorStore();
+
+  const handleReorder = (newOrder: EBlock[]) => {
+    const updatedBlocks = newOrder.map((block, index) => ({
+      ...block,
+      position: index + 1,
+    }));
+    setBlocks(updatedBlocks);
+  };
 
   return (
-    <div className="flex flex-col sm:w-[600px] gap-6 w-full">
+    <Reorder.Group
+      axis="y"
+      values={blocks}
+      onReorder={handleReorder}
+      className="flex flex-col sm:w-[600px] gap-6 w-full">
       {blocks.map((block) => {
         const Component = COMPONENT_MAP[block.type as TBlock];
         if (!Component) return null;
@@ -106,31 +119,47 @@ const EditorGroup = () => {
           </BlockWrapper>
         );
       })}
-    </div>
+    </Reorder.Group>
   );
 };
 const BlockWrapper = ({ children, block }: { children: React.ReactNode; block: EBlock }) => {
   const editor = useEditorStore();
+  const dragControls = useDragControls();
 
   const onSelectBlock = () => {
     editor.setBlockView(block);
     editor.setToolView("block");
   };
+
   const onRemoveBlock = () => {
     editor.setToolView("properties");
     editor.removeBlock(block.id);
   };
 
   return (
-    <div
-      key={block.id}
+    <Reorder.Item
+      value={block}
+      dragListener={false}
+      dragControls={dragControls}
       className={`${
         block.id === editor.blockView.id && editor.toolView === "block"
           ? "border-2 border-primary dark:border-primary"
           : "border border-transparent"
       } flex w-full p-3 relative group hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-colors rounded`}>
-      {children}
+      {/* Content */}
+      <div className="flex-1">{children}</div>
+      {/* Action buttons */}
       <div className="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity flex space-x-1 p-1 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded">
+        <button
+          onPointerDown={(e) => {
+            e.preventDefault();
+            dragControls.start(e);
+          }}
+          className="cursor-grab active:cursor-grabbing p-1.5 text-gray-600 hover:text-green-600 hover:bg-green-50/50 dark:text-gray-300 dark:hover:text-green-400 dark:hover:bg-green-900/30 rounded transition-colors"
+          title="Reordenar bloco"
+          aria-label="Reordenar bloco">
+          <GripVerticalIcon className="w-4 h-4" />
+        </button>
         <button
           onClick={onSelectBlock}
           className="p-1.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50/50 dark:text-gray-300 dark:hover:text-blue-400 dark:hover:bg-blue-900/30 rounded transition-colors"
@@ -146,7 +175,7 @@ const BlockWrapper = ({ children, block }: { children: React.ReactNode; block: E
           <Trash2Icon className="w-4 h-4" />
         </button>
       </div>
-    </div>
+    </Reorder.Item>
   );
 };
 

@@ -48,7 +48,6 @@ const EditorTools = () => {
           <div className="flex flex-1 overflow-y-auto">
             {editor.toolView === "properties" && <ToolProperties />}
             {editor.toolView === "styles" && <ToolStyles />}
-            {editor.toolView === "reorder" && <ToolReorder />}
           </div>
         </div>
       )}
@@ -189,13 +188,6 @@ const ToolStyles = () => {
           </SelectContent>
         </Select>
       </div>
-    </div>
-  );
-};
-const ToolReorder = () => {
-  return (
-    <div className="flex justify-center items-center w-full h-full">
-      <WipUI context="reorder" />
     </div>
   );
 };
