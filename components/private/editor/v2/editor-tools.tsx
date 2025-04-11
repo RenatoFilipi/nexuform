@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,6 +14,7 @@ import { IDesign } from "@/utils/interfaces";
 import { TToolView } from "@/utils/types";
 import { CheckIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { HexColorPicker } from "react-colorful";
 import WipUI from "../../shared/wip-ui";
 
 const colors: IDesign[] = [
@@ -236,6 +238,7 @@ const ToolProperties = () => {
 const ToolStyles = () => {
   const t = useTranslations("app");
   const { theme, setTheme } = useEditorStore();
+  const primaryColor = `bg-[${theme.custom_primary_color.toLowerCase()}]`;
 
   const onSetNumericBlocks = (value: boolean) => {
     setTheme({ ...theme, numeric_blocks: value });
@@ -248,6 +251,9 @@ const ToolStyles = () => {
   };
   const onSetPrimaryColor = (value: string) => {
     setTheme({ ...theme, primary_color: value });
+  };
+  const onSetCustomPrimaryColor = (value: string) => {
+    setTheme({ ...theme, custom_primary_color: value });
   };
 
   return (
@@ -281,7 +287,7 @@ const ToolStyles = () => {
           </SelectContent>
         </Select>
       </div>
-      <div className="grid gap-3 w-full">
+      <div className="gap-3 w-full hidden">
         <div className="flex justify-start items-center gap-2">
           <div className="grid gap-1">
             <Label>{t("label_primary_color")}</Label>
@@ -300,6 +306,17 @@ const ToolStyles = () => {
             );
           })}
         </div>
+      </div>
+      <div className="flex justify-between items-center w-full">
+        <Label>{t("label_primary_color")}</Label>
+        <Popover>
+          <PopoverTrigger asChild>
+            <button style={{ backgroundColor: theme.custom_primary_color }} className="w-8 h-8 rounded"></button>
+          </PopoverTrigger>
+          <PopoverContent className="w-fit p-2 sm:mr-5 sm:mt-1">
+            <HexColorPicker color={theme.custom_primary_color} onChange={onSetCustomPrimaryColor} />
+          </PopoverContent>
+        </Popover>
       </div>
     </div>
   );

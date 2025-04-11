@@ -17,7 +17,7 @@ const StarRatingDesign = ({
       <div className="grid gap-1">
         <div className="flex gap-2">
           {theme.numeric_blocks && <span className="">{position}.</span>}
-          <h1 className={`${theme.uppercase_block_name && "uppercase"} text-base font-medium`}>
+          <h1 className={`${theme.uppercase_block_name && "uppercase"} text-sm font-semibold`}>
             {name} {required && <span className="text-red-500">*</span>}
           </h1>
         </div>

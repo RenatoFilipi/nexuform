@@ -1,33 +1,8 @@
 import { Input } from "@/components/ui/input";
+import { fallbackColor } from "@/utils/constants";
 import { EBlock, ETheme } from "@/utils/entities";
-import { IDesign } from "@/utils/interfaces";
 import { MailIcon } from "lucide-react";
 import { useState } from "react";
-
-const design: IDesign[] = [
-  { label: "slate", tw_class: "focus-visible:ring-slate-500" },
-  { label: "gray", tw_class: "focus-visible:ring-gray-500" },
-  { label: "zinc", tw_class: "focus-visible:ring-zinc-500" },
-  { label: "neutral", tw_class: "focus-visible:ring-neutral-500" },
-  { label: "stone", tw_class: "focus-visible:ring-stone-500" },
-  { label: "red", tw_class: "focus-visible:ring-red-500" },
-  { label: "orange", tw_class: "focus-visible:ring-orange-500" },
-  { label: "amber", tw_class: "focus-visible:ring-amber-500" },
-  { label: "yellow", tw_class: "focus-visible:ring-yellow-500" },
-  { label: "lime", tw_class: "focus-visible:ring-lime-500" },
-  { label: "green", tw_class: "focus-visible:ring-green-500" },
-  { label: "emerald", tw_class: "focus-visible:ring-emerald-500" },
-  { label: "teal", tw_class: "focus-visible:ring-teal-500" },
-  { label: "cyan", tw_class: "focus-visible:ring-cyan-500" },
-  { label: "sky", tw_class: "focus-visible:ring-sky-500" },
-  { label: "blue", tw_class: "focus-visible:ring-blue-500" },
-  { label: "indigo", tw_class: "focus-visible:ring-indigo-500" },
-  { label: "violet", tw_class: "focus-visible:ring-violet-500" },
-  { label: "purple", tw_class: "focus-visible:ring-purple-500" },
-  { label: "fuchsia", tw_class: "focus-visible:ring-fuchsia-500" },
-  { label: "pink", tw_class: "focus-visible:ring-pink-500" },
-  { label: "rose", tw_class: "focus-visible:ring-rose-500" },
-];
 
 const EmailAddressDesign = ({
   block,
@@ -39,7 +14,6 @@ const EmailAddressDesign = ({
   onValueChange: (value: string, blockId: string) => void;
 }) => {
   const { name, description, required, id, position, placeholder } = block;
-  const currentColor = design.find((x) => x.label === theme.primary_color) ?? design[0];
   const [value, setValue] = useState("");
 
   return (
@@ -47,7 +21,7 @@ const EmailAddressDesign = ({
       <div className="grid gap-1">
         <div className="flex gap-2">
           {theme.numeric_blocks && <span className="">{position}.</span>}
-          <h1 className={`${theme.uppercase_block_name && "uppercase"} text-base font-medium`}>
+          <h1 className={`${theme.uppercase_block_name && "uppercase"} text-sm font-semibold`}>
             {name} {required && <span className="text-red-500">*</span>}
           </h1>
         </div>
@@ -63,7 +37,19 @@ const EmailAddressDesign = ({
           }}
           id={id}
           type="email"
-          className={`${currentColor.tw_class}`}
+          style={
+            {
+              "--ring-color": theme.custom_primary_color || fallbackColor,
+            } as React.CSSProperties
+          }
+          className="
+            transition-colors
+            focus-visible:outline-none
+            focus-visible:ring-2
+            focus-visible:ring-[var(--ring-color)]
+            focus-visible:ring-offset-2
+            pl-3 pr-10  // Ajuste de padding para o ícone
+          "
         />
         <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-muted-foreground/80 peer-disabled:opacity-50">
           <MailIcon size={16} strokeWidth={2} aria-hidden="true" />

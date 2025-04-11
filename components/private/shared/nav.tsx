@@ -434,6 +434,7 @@ const NavEditor = () => {
           nebulaform_branding: theme.nebulaform_branding,
           uppercase_block_name: theme.uppercase_block_name,
           width: theme.width,
+          custom_primary_color: theme.custom_primary_color,
         })
         .eq("id", theme.id);
 

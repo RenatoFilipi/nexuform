@@ -1,32 +1,7 @@
 import { Input } from "@/components/ui/input";
+import { fallbackColor } from "@/utils/constants";
 import { EBlock, ETheme } from "@/utils/entities";
-import { IDesign } from "@/utils/interfaces";
 import { useState } from "react";
-
-const design: IDesign[] = [
-  { label: "slate", tw_class: "focus-visible:ring-slate-500" },
-  { label: "gray", tw_class: "focus-visible:ring-gray-500" },
-  { label: "zinc", tw_class: "focus-visible:ring-zinc-500" },
-  { label: "neutral", tw_class: "focus-visible:ring-neutral-500" },
-  { label: "stone", tw_class: "focus-visible:ring-stone-500" },
-  { label: "red", tw_class: "focus-visible:ring-red-500" },
-  { label: "orange", tw_class: "focus-visible:ring-orange-500" },
-  { label: "amber", tw_class: "focus-visible:ring-amber-500" },
-  { label: "yellow", tw_class: "focus-visible:ring-yellow-500" },
-  { label: "lime", tw_class: "focus-visible:ring-lime-500" },
-  { label: "green", tw_class: "focus-visible:ring-green-500" },
-  { label: "emerald", tw_class: "focus-visible:ring-emerald-500" },
-  { label: "teal", tw_class: "focus-visible:ring-teal-500" },
-  { label: "cyan", tw_class: "focus-visible:ring-cyan-500" },
-  { label: "sky", tw_class: "focus-visible:ring-sky-500" },
-  { label: "blue", tw_class: "focus-visible:ring-blue-500" },
-  { label: "indigo", tw_class: "focus-visible:ring-indigo-500" },
-  { label: "violet", tw_class: "focus-visible:ring-violet-500" },
-  { label: "purple", tw_class: "focus-visible:ring-purple-500" },
-  { label: "fuchsia", tw_class: "focus-visible:ring-fuchsia-500" },
-  { label: "pink", tw_class: "focus-visible:ring-pink-500" },
-  { label: "rose", tw_class: "focus-visible:ring-rose-500" },
-];
 
 const ShortTextDesign = ({
   block,
@@ -38,7 +13,6 @@ const ShortTextDesign = ({
   onValueChange: (value: string, blockId: string) => void;
 }) => {
   const { name, description, max_char, show_char, required, id, position, min_char, placeholder } = block;
-  const currentColor = design.find((x) => x.label === theme.primary_color) ?? design[0];
   const [value, setValue] = useState("");
   const [charCount, setCharCount] = useState(0);
 
@@ -47,7 +21,7 @@ const ShortTextDesign = ({
       <div className="grid gap-1">
         <div className="flex gap-2">
           {theme.numeric_blocks && <span className="">{position}.</span>}
-          <h1 className={`${theme.uppercase_block_name && "uppercase"} text-base font-medium`}>
+          <h1 className={`${theme.uppercase_block_name && "uppercase"} text-sm font-semibold`}>
             {name} {required && <span className="text-red-500">*</span>}
           </h1>
         </div>
@@ -64,7 +38,18 @@ const ShortTextDesign = ({
           }}
           type="text"
           id={id}
-          className={`${currentColor.tw_class}`}
+          style={
+            {
+              "--ring-color": theme.custom_primary_color || fallbackColor,
+            } as React.CSSProperties
+          }
+          className="
+            transition-colors
+            focus-visible:outline-none
+            focus-visible:ring-2
+            focus-visible:ring-[var(--ring-color)]
+            focus-visible:ring-offset-2
+          "
           minLength={min_char ?? 1}
           maxLength={max_char ?? 256}
         />

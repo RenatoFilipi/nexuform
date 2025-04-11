@@ -19,7 +19,6 @@ import NumberInputDesign from "../private/blocks/design/number-input-design";
 import ParagraphTextDesign from "../private/blocks/design/paragraph-text-design";
 import ShortTextDesign from "../private/blocks/design/short-text-design";
 import StarRatingDesign from "../private/blocks/design/star-rating-design";
-import { Button } from "../ui/button";
 import SubmissionSuccess from "./submission-success";
 
 const design: IDesign[] = [
@@ -256,13 +255,13 @@ const SubmissionGroup = () => {
       </div>
       <div className="flex flex-col gap-4 sm:gap-8">
         <div className="flex justify-end items-center w-full">
-          <Button
+          <button
             disabled={submissionState === "loading"}
             onClick={onSubmit}
-            size={"sm"}
-            className={`${currentColor.tw_class} w-full sm:w-fit`}>
+            style={{ backgroundColor: theme.custom_primary_color }}
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 text-white w-full">
             {submissionState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />} {form.submit_text}
-          </Button>
+          </button>
         </div>
         {form.nebulaform_branding && (
           <div className="flex justify-center items-center w-full">
