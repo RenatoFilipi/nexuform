@@ -110,7 +110,7 @@ const EditorGroup = () => {
         axis="y"
         values={blocks}
         onReorder={handleReorder}
-        className="flex flex-col sm:w-[600px] gap-0 w-full">
+        className="flex flex-col sm:w-[600px] gap-2 w-full">
         {blocks.map((block) => {
           const Component = COMPONENT_MAP[block.type as TBlock];
           if (!Component) return null;
@@ -121,7 +121,7 @@ const EditorGroup = () => {
           );
         })}
       </Reorder.Group>
-      <div className="flex justify-center items-center w-full">
+      <div className="flex justify-center items-center w-full px-3">
         <button
           style={{ backgroundColor: theme.custom_primary_color }}
           className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 text-white w-full">

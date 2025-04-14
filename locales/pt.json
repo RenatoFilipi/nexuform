@@ -345,7 +345,8 @@
     "label_category_selection": "Seleção",
     "label_category_numeric": "Numérico",
     "label_category_data": "Dados",
-    "label_category_rating": "Avaliação"
+    "label_category_rating": "Avaliação",
+    "label_no_options_added": "Nenhuma opção adicionada"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

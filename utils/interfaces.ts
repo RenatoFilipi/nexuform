@@ -83,3 +83,21 @@ export interface IPlanFeatures {
   description: string;
   comingSoon: boolean;
 }
+export interface IBlockViewSettings {
+  block: TBlock;
+  showIsIdentifier: boolean;
+  showName: boolean;
+  showDescription: boolean;
+  showPlaceholder: boolean;
+  showMaxChar: boolean;
+  showMinChar: boolean;
+  showMaxDate: boolean;
+  showMinDate: boolean;
+  showMaxScale: boolean;
+  showMinScale: boolean;
+  showOptions: boolean;
+  showPosition: boolean;
+  showRating: boolean;
+  showRequired: boolean;
+  showChar: boolean;
+}

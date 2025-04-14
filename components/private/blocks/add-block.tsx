@@ -238,6 +238,8 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       max_date: null,
     };
     editor.addBlock(block);
+    editor.setBlockView(block);
+    editor.setToolView("block");
     setState(false);
   };
 
