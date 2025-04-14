@@ -1,17 +1,16 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { minWidth640 } from "@/utils/constants";
 import { EForm } from "@/utils/entities";
 import { TSetState } from "@/utils/types";
-import { ArrowRightIcon, CopyIcon, Share2Icon } from "lucide-react";
+import { ArrowRightIcon, CopyIcon, DownloadIcon, ExternalLinkIcon, LoaderIcon, Share2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { QRCodeSVG } from "qrcode.react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useMedia } from "react-use";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog";
@@ -53,11 +52,48 @@ const FormShare = ({ children, form }: { children: React.ReactNode; form: EForm 
 
 const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm }) => {
   const t = useTranslations("app");
-  const [url] = useState(`${window.location.host}/s/${form.public_url}`);
-  console.log(url);
+  const qrCodeRef = useRef<HTMLDivElement>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const isProduction = process.env.NODE_ENV === "production";
+  const protocol = isProduction ? "https" : "http";
+  const fullUrl = `${protocol}://${window.location.host}/s/${form.public_url}`;
+
+  const downloadQRCode = () => {
+    setIsGenerating(true);
+
+    // Temporizador para garantir que o estado seja atualizado antes da captura
+    setTimeout(() => {
+      if (qrCodeRef.current) {
+        const svg = qrCodeRef.current.querySelector("svg");
+        if (svg) {
+          const svgData = new XMLSerializer().serializeToString(svg);
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+          const img = new Image();
+
+          img.onload = () => {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx?.drawImage(img, 0, 0);
+
+            // Trigger download
+            const pngFile = canvas.toDataURL("image/png");
+            const downloadLink = document.createElement("a");
+            downloadLink.download = `qrcode-${new Date().getTime()}.png`;
+            downloadLink.href = pngFile;
+            downloadLink.click();
+
+            setIsGenerating(false);
+          };
+
+          img.src = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgData)))}`;
+        }
+      }
+    }, 100);
+  };
 
   return (
-    <div className="flex flex-col gap-6 h-full">
+    <div className="flex flex-col gap-6 h-full overflow-y-auto">
       {form.status !== "published" && (
         <div className="flex items-center flex-col justify-center gap-4 px-4 py-8 border h-full rounded-lg">
           <div className="flex justify-center items-center p-2 bg-warning/10 rounded">
@@ -78,24 +114,31 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
         </div>
       )}
       {form.status === "published" && (
-        <div className="flex flex-col items-center justify-start gap-8 h-full">
+        <div className="flex flex-col items-center justify-start gap-8 h-full overflow-y-auto sm:overflow-hidden">
           <div className="grid gap-3 w-full">
             <div className="grid gap-1">
               <Label>{t("label_link_share")}</Label>
               <span className="text-xs text-foreground/60">{t("desc_link_share")}</span>
             </div>
             <div className="flex justify-center items-center w-full gap-4">
-              <Input value={url} className="w-full text-sm text-foreground/60" readOnly />
-              <Button
-                onClick={() => {
-                  navigator.clipboard.writeText(url);
-                  toast.success(t("label_link_copied"));
-                }}
-                variant="secondary"
-                size="icon"
-                className="flex items-center gap-2">
-                <CopyIcon className="w-4 h-4" />
-              </Button>
+              <Input value={fullUrl} className="w-full text-sm text-foreground/60" readOnly />
+              <div className="flex justify-center items-center gap-2">
+                <Button variant="outline" size="icon" className="flex items-center gap-2" asChild>
+                  <a href={fullUrl} target="_blank" rel="noopener noreferrer">
+                    <ExternalLinkIcon className="w-4 h-4" />
+                  </a>
+                </Button>
+                <Button
+                  onClick={() => {
+                    navigator.clipboard.writeText(fullUrl);
+                    toast.success(t("label_link_copied"));
+                  }}
+                  variant="outline"
+                  size="icon"
+                  className="flex items-center gap-2">
+                  <CopyIcon className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
           </div>
           <div className="gap-3 w-full h-full">
@@ -103,10 +146,20 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
               <Label>{t("label_qr_share")}</Label>
               <span className="text-xs text-foreground/60">{t("desc_qr_share")}</span>
             </div>
-            <div className="flex justify-center items-center flex-1 h-full">
-              <Card className="p-2 bg-white">
-                <QRCodeSVG value={url} className="w-36 h-36" />
-              </Card>
+            <div className="flex justify-evenly items-center flex-1 h-full gap-4 flex-col sm:flex-row">
+              <div ref={qrCodeRef}>
+                <QRCodeSVG value={fullUrl} size={256} level="H" />
+              </div>
+              <Button
+                onClick={downloadQRCode}
+                disabled={isGenerating}
+                className="gap-2"
+                variant={"outline"}
+                size={"sm"}>
+                {!isGenerating && <DownloadIcon className="w-4 h-4" />}
+                {isGenerating && <LoaderIcon className="w-4 h-4 animate-spin" />}
+                {t("label_download_qrcode")}
+              </Button>
             </div>
           </div>
         </div>

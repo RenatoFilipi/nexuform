@@ -346,7 +346,8 @@
     "label_category_numeric": "Numérico",
     "label_category_data": "Datos",
     "label_category_rating": "Calificación",
-    "label_no_options_added": "No hay opciones añadidas"
+    "label_no_options_added": "No hay opciones añadidas",
+    "label_download_qrcode": "Descargar código QR"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",
