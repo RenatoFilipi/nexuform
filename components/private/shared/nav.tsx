@@ -34,7 +34,6 @@ import {
   MonitorIcon,
   MoonIcon,
   PlusIcon,
-  RocketIcon,
   Settings2Icon,
   SunIcon,
 } from "lucide-react";
@@ -540,7 +539,6 @@ const NavEditor = () => {
         <div className="flex justify-center items-center gap-4">
           <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
             {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
-            {appState !== "loading" && <RocketIcon className="w-4 h-4 mr-2" />}
             {t("label_save_form")}
           </Button>
         </div>

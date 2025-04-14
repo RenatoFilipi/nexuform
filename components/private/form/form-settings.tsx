@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import useFormStore from "@/stores/form";
 import useUserStore from "@/stores/user";
 import { createClient } from "@/utils/supabase/client";
-import { TAppState } from "@/utils/types";
+import { TAppState, TFormStatus } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BookDashedIcon, GlobeIcon, LoaderIcon, MonitorOffIcon, SettingsIcon, ShieldAlertIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import FormDelete from "../shared/form-delete";
+import FormStatus from "./form-status";
 
 type TView = "general" | "status" | "delete";
 
@@ -280,31 +281,7 @@ const StatusSettings = () => {
         <p className="text-xs text-foreground/70">{t("desc_status")}</p>
       </div>
       <div className="flex flex-col gap-8">
-        <div className="grid gap-4 overflow-y-auto sm:grid-cols-1 w-full">
-          {statusList.map((statusItem, index) => (
-            <button
-              key={index}
-              onClick={() => onSetStatus(statusItem.status)}
-              className={`${
-                statusItem.status === status
-                  ? "border-primary bg-primary/10"
-                  : "hover:bg-foreground/5 border-transparent"
-              } border p-4 flex gap-4 h-full w-full`}>
-              <div className="flex items-center justify-center">
-                <div
-                  className={`p-2 rounded-full ${statusItem.color} ${
-                    status === statusItem.status ? "opacity-100" : "opacity-70"
-                  }`}>
-                  <statusItem.icon className="w-5 h-5" />
-                </div>
-              </div>
-              <div className="flex flex-col justify-center items-start gap-1">
-                <span className="font-medium">{statusItem.label}</span>
-                <span className="text-xs text-foreground/70 text-start">{statusItem.description}</span>
-              </div>
-            </button>
-          ))}
-        </div>
+        <FormStatus status={status as TFormStatus} onStatusChange={onSetStatus} />
         <div className="flex justify-end items-center w-full">
           <Button variant={"secondary"} size={"sm"} onClick={onSubmit} className="w-full sm:w-fit">
             {settingsState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}

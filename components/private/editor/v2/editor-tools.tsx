@@ -1,10 +1,10 @@
 "use client";
 
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
@@ -19,7 +19,7 @@ import { Reorder } from "framer-motion";
 import { CircleHelpIcon, PlusIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { HexColorPicker } from "react-colorful";
+import ColorPicker from "../../shared/color-picker";
 
 const EditorTools = () => {
   const t = useTranslations("app");
@@ -197,17 +197,20 @@ const ToolStyles = () => {
         </div>
         <Switch checked={form.nebulaform_branding} onCheckedChange={onSetNebulaformBranding} />
       </div>
-      <div className="flex justify-between items-center w-full">
-        <Label>{t("label_primary_color")}</Label>
-        <Popover>
-          <PopoverTrigger asChild>
-            <button style={{ backgroundColor: theme.custom_primary_color }} className="w-8 h-8 rounded"></button>
-          </PopoverTrigger>
-          <PopoverContent className="w-fit p-2 sm:mr-5 sm:mt-1">
-            <HexColorPicker color={theme.custom_primary_color} onChange={onSetCustomPrimaryColor} />
-          </PopoverContent>
-        </Popover>
-      </div>
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="item-1">
+          <AccordionTrigger className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 pt-0">
+            {t("label_primary_color")}
+          </AccordionTrigger>
+          <AccordionContent>
+            <ColorPicker
+              color={theme.custom_primary_color}
+              onColorChange={onSetCustomPrimaryColor}
+              allowCustom={false}
+            />
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 };
@@ -393,11 +396,7 @@ const ToolBlock = () => {
               </div>
 
               {options.length > 0 ? (
-                <Reorder.Group
-                  axis="y"
-                  values={options}
-                  onReorder={onReorder}
-                  className="flex flex-col gap-2 max-h-60 overflow-y-auto pr-1">
+                <Reorder.Group axis="y" values={options} onReorder={onReorder} className="flex flex-col gap-2 pr-1">
                   {options.map((opt) => (
                     <Reorder.Item
                       key={opt}

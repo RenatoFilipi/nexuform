@@ -17,19 +17,13 @@ import { Textarea } from "@/components/ui/textarea";
 import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
 import { minWidth640 } from "@/utils/constants";
-import { TSetState } from "@/utils/types";
-import {
-  AlertTriangleIcon,
-  BookDashedIcon,
-  GlobeIcon,
-  Layers2Icon,
-  MonitorOffIcon,
-  ShieldAlertIcon,
-} from "lucide-react";
+import { TFormStatus, TSetState } from "@/utils/types";
+import { AlertTriangleIcon, GlobeIcon, Layers2Icon, ShieldAlertIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
+import FormStatus from "../form/form-status";
 import FormDelete from "../shared/form-delete";
 
 const EditorFormSettings = ({ children }: { children: React.ReactNode }) => {
@@ -220,30 +214,6 @@ const StatusSettings = () => {
   const t = useTranslations("app");
   const { form, setForm } = useEditorStore();
 
-  const statusList = [
-    {
-      status: "draft",
-      label: t("label_draft"),
-      description: t("desc_draft"),
-      icon: BookDashedIcon,
-      color: "text-orange-500 dark:text-orange-400",
-    },
-    {
-      status: "published",
-      label: t("label_published"),
-      description: t("desc_published"),
-      icon: GlobeIcon,
-      color: "text-green-500 dark:text-green-400",
-    },
-    {
-      status: "inactive",
-      label: t("label_inactive"),
-      description: t("desc_inactive"),
-      icon: MonitorOffIcon,
-      color: "text-gray-500 dark:text-gray-400",
-    },
-  ];
-
   const onSetStatus = (value: string) => {
     setForm({ ...form, status: value });
   };
@@ -254,34 +224,7 @@ const StatusSettings = () => {
         <Label className="text-sm font-medium">{t("label_status")}</Label>
         <p className="text-xs text-muted-foreground">{t("desc_status")}</p>
       </div>
-
-      <div className="grid gap-2">
-        {statusList.map((statusItem) => (
-          <button
-            key={statusItem.status}
-            onClick={() => onSetStatus(statusItem.status)}
-            className={`
-              flex items-start gap-3 p-3 rounded-lg border transition-all
-              ${
-                statusItem.status === form.status
-                  ? "border-primary bg-primary/5 dark:bg-primary/10"
-                  : "border-transparent hover:bg-muted/50 dark:hover:bg-muted/30"
-              }
-            `}>
-            <div
-              className={`p-2 rounded-md ${statusItem.color} ${
-                statusItem.status === form.status ? "bg-primary/10 dark:bg-primary/20" : "bg-muted/50 dark:bg-muted"
-              }`}>
-              <statusItem.icon className="w-4 h-4" />
-            </div>
-            <div className="flex-1 text-left">
-              <h4 className="text-sm font-medium">{statusItem.label}</h4>
-              <p className="text-xs text-foreground/60 mt-1">{statusItem.description}</p>
-            </div>
-            {statusItem.status === form.status && <div className="w-2 h-2 rounded-full bg-primary mt-2" />}
-          </button>
-        ))}
-      </div>
+      <FormStatus status={form.status as TFormStatus} onStatusChange={onSetStatus} />
     </div>
   );
 };
