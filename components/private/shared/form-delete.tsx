@@ -64,6 +64,8 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
   const router = useRouter();
   const [value, setValue] = useState("");
   const dashboard = useDashboardStore();
+  // Comparação mais robusta: ignora espaços no início/fim e diferenças de case
+  const matches = formName.trim().toLowerCase() === value.trim().toLowerCase();
 
   const onDeleteForm = () => {
     startTransition(async () => {
@@ -82,9 +84,12 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
   return (
     <div className="flex flex-col gap-3 h-full overflow-y-auto pt-4 sm:pt-0">
       <div className="grid gap-3">
-        <Label htmlFor="form_name" className="">
-          {t("label_absolute_type_email_delete_form")}
-        </Label>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="form_name" className="text-xs">
+            {t("label_absolute_type_email_delete_form")}
+          </Label>
+          <span className="font-semibold text-sm hidden">{formName}</span>
+        </div>
         <Input type="text" id="form_name" value={value} onChange={(e) => setValue(e.target.value)} />
       </div>
       <div className="flex justify-start items-center gap-1">
@@ -101,7 +106,7 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
           {t("label_cancel")}
         </Button>
         <Button
-          disabled={formName !== value || isPending}
+          disabled={!matches || isPending}
           onClick={onDeleteForm}
           variant={"destructive"}
           size={"sm"}

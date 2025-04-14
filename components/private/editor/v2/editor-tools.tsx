@@ -64,7 +64,6 @@ const EditorTools = () => {
 const ToolProperties = () => {
   const t = useTranslations("app");
   const { form, setForm } = useEditorStore();
-  const user = useUserStore();
 
   const onSetName = (value: string) => {
     setForm({ ...form, name: value });
@@ -80,10 +79,6 @@ const ToolProperties = () => {
   };
   const onSetSuccessDescription = (value: string) => {
     setForm({ ...form, success_description: value });
-  };
-  const onSetNebulaformBranding = (value: boolean) => {
-    if (user.subscription.plan !== "pro") return;
-    setForm({ ...form, nebulaform_branding: value });
   };
 
   return (
@@ -134,24 +129,13 @@ const ToolProperties = () => {
         </div>
         <Textarea value={form.success_description} onChange={(e) => onSetSuccessDescription(e.target.value)} />
       </div>
-      <div className="flex justify-between items-center w-full">
-        <div className="flex justify-center items-center gap-2">
-          <div className="grid gap-1">
-            <div className="flex justify-start items-center gap-2">
-              <Label>{t("label_nebula_branding")}</Label>
-              {user.subscription.plan !== "pro" && <Badge variant={"pink"}>Pro</Badge>}
-            </div>
-            <span className="text-xs text-foreground/60 hidden">{t("desc_nebula_branding")}</span>
-          </div>
-        </div>
-        <Switch checked={form.nebulaform_branding} onCheckedChange={onSetNebulaformBranding} />
-      </div>
     </div>
   );
 };
 const ToolStyles = () => {
   const t = useTranslations("app");
-  const { theme, setTheme } = useEditorStore();
+  const { theme, setTheme, form, setForm } = useEditorStore();
+  const user = useUserStore();
 
   const onSetNumericBlocks = (value: boolean) => {
     setTheme({ ...theme, numeric_blocks: value });
@@ -164,6 +148,10 @@ const ToolStyles = () => {
   };
   const onSetCustomPrimaryColor = (value: string) => {
     setTheme({ ...theme, custom_primary_color: value });
+  };
+  const onSetNebulaformBranding = (value: boolean) => {
+    if (user.subscription.plan !== "pro") return;
+    setForm({ ...form, nebulaform_branding: value });
   };
 
   return (
@@ -196,6 +184,18 @@ const ToolStyles = () => {
             <SelectItem value="full">{t("label_full_width")}</SelectItem>
           </SelectContent>
         </Select>
+      </div>
+      <div className="flex justify-between items-center w-full">
+        <div className="flex justify-center items-center gap-2">
+          <div className="grid gap-1">
+            <div className="flex justify-start items-center gap-2">
+              <Label>{t("label_nebula_branding")}</Label>
+              {user.subscription.plan !== "pro" && <Badge variant={"pink"}>Pro</Badge>}
+            </div>
+            <span className="text-xs text-foreground/60 hidden">{t("desc_nebula_branding")}</span>
+          </div>
+        </div>
+        <Switch checked={form.nebulaform_branding} onCheckedChange={onSetNebulaformBranding} />
       </div>
       <div className="flex justify-between items-center w-full">
         <Label>{t("label_primary_color")}</Label>

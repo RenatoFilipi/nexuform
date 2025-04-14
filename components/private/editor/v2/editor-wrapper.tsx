@@ -2,6 +2,7 @@
 
 import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
+import { fallbackColor } from "@/utils/constants";
 import { EBlock, EForm, EProfile, ESubscription, ETheme } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { LoaderIcon } from "lucide-react";
@@ -35,7 +36,15 @@ const EditorWrapper = (props: IProps) => {
       editor.setTheme(props.theme);
       editor.setBlocks(props.blocks);
       editor.setBlocksReadyOnly(props.blocks);
-      editor.setTheme({ ...props.theme, nebulaform_branding: props.subscription.plan !== "pro" });
+
+      const primaryColor =
+        props.theme.custom_primary_color.trim() !== "" ? props.theme.custom_primary_color : fallbackColor;
+
+      editor.setTheme({
+        ...props.theme,
+        nebulaform_branding: props.subscription.plan !== "pro",
+        custom_primary_color: primaryColor,
+      });
       return null;
     },
   });
