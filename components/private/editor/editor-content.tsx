@@ -5,7 +5,15 @@ import useEditorStore from "@/stores/editor";
 import { EBlock, ETheme } from "@/utils/entities";
 import { TBlock, TColor } from "@/utils/types";
 import { Reorder, useDragControls } from "framer-motion";
-import { Edit2Icon, GripVerticalIcon, PlusIcon, SettingsIcon, Trash2Icon } from "lucide-react";
+import {
+  BlocksIcon,
+  CheckCircle2Icon,
+  Edit2Icon,
+  GripVerticalIcon,
+  PlusIcon,
+  Settings2Icon,
+  Trash2Icon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import AddBlock from "../blocks/add-block";
 import CheckBoxesDesign from "../blocks/design/checkboxes-design";
@@ -52,9 +60,30 @@ const EditorContent = () => {
           </AddBlock>
           <EditorFormSettings>
             <Button variant={"outline"} size={"icon"} className="w-8 h-8">
-              <SettingsIcon className="w-4 h-4" />
+              <Settings2Icon className="w-4 h-4" />
             </Button>
           </EditorFormSettings>
+          <div className="border-t my-1 w-full"></div>
+          <Button
+            onClick={() => {
+              editor.setView("blocks");
+              editor.setToolView("properties");
+            }}
+            variant={editor.view === "blocks" ? "secondary" : "ghost"}
+            size={"icon"}
+            className="w-8 h-8">
+            <BlocksIcon className="w-4 h-4" />
+          </Button>
+          <Button
+            onClick={() => {
+              editor.setView("success");
+              editor.setToolView("properties");
+            }}
+            variant={editor.view === "success" ? "secondary" : "ghost"}
+            size={"icon"}
+            className="w-8 h-8">
+            <CheckCircle2Icon className="w-4 h-4" />
+          </Button>
         </div>
       )}
       <EditorCanvas />

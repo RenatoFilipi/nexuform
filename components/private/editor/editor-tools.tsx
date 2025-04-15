@@ -87,7 +87,7 @@ const ToolProperties = () => {
 
   return (
     <div className="flex flex-col w-full">
-      <div className="flex w-full justify-center items-center p-4 gap-3">
+      <div className="w-full justify-center items-center p-4 gap-3 hidden">
         {enabledViews.map((x) => {
           return (
             <button

@@ -11,6 +11,7 @@ import { createClient } from "@/utils/supabase/client";
 import { TBlock, TSetState, TSubmissionStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { saveAs } from "file-saver";
+import { CalendarIcon, ClockIcon, DownloadIcon, Loader2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Papa from "papaparse";
 import { useState } from "react";
@@ -74,8 +75,34 @@ const Body = ({
   const t = useTranslations("app");
   const supabase = createClient();
   const { subscription, locale } = useUserStore();
-  const isDesktop = useMedia(minWidth640);
   const isAllowedToExport = subscription.plan === "pro";
+
+  const getBlockType = (type: TBlock): string => {
+    switch (type) {
+      case "short_text":
+        return t("label_short_text");
+      case "paragraph_text":
+        return t("label_paragraph_text");
+      case "checkboxes":
+        return t("label_checkboxes");
+      case "multiple_choice":
+        return t("label_multiple_choice");
+      case "dropdown_menu":
+        return t("label_dropdown_menu");
+      case "number_input":
+        return t("label_number_input");
+      case "email_address":
+        return t("label_email_address");
+      case "star_rating":
+        return t("label_star_rating");
+      case "custom_scale":
+        return t("label_custom_scale");
+      case "date_picker":
+        return t("label_date_picker");
+      default:
+        return "--";
+    }
+  };
 
   const query = useQuery({
     queryKey: [`submissionData`, submission.id],
@@ -113,83 +140,90 @@ const Body = ({
   };
 
   return (
-    <div className="h-full overflow-y-auto flex flex-col gap-4">
-      <div className="flex flex-col overflow-y-auto flex-1 gap-4">
-        {isDesktop && (
-          <div className="flex flex-col gap-2">
-            <div className="flex justify-between items-center gap-4">
-              <span className="text-base font-medium">{submission.identifier}</span>
-              <SubmissionStatusBadge status={submission.status as TSubmissionStatus} uppercase />
+    <div className="h-full flex flex-col gap-6">
+      {/* Header Section */}
+      <div className="space-y-4">
+        <div className="flex flex-col gap-3">
+          <div className="flex justify-between items-start gap-4">
+            <div>
+              <h2 className="text-lg font-semibold text-foreground">{submission.identifier}</h2>
+              <p className="text-sm text-muted-foreground">{formatDateRelativeToNow(submission.created_at, locale)}</p>
             </div>
-            <div className="flex justify-start items-center gap-3">
-              <Badge variant={"info"}>{formatTime(submission.completion_time ?? 0, 2)}</Badge>
-              <Badge variant={"info"}>
-                {new Date(submission.created_at).toLocaleString()} (
-                {formatDateRelativeToNow(submission.created_at, locale)})
-              </Badge>
-            </div>
+            <SubmissionStatusBadge status={submission.status as TSubmissionStatus} uppercase />
           </div>
-        )}
-        {!isDesktop && (
-          <div className="flex flex-col gap-2 justify-center items-start mt-4">
-            <div className="flex justify-center items-start w-full flex-col gap-2">
-              <span className="text-sm">{submission.identifier}</span>
-              <SubmissionStatusBadge status={submission.status as TSubmissionStatus} uppercase />
-            </div>
-            <div className="flex w-full justify-start items-center gap-2">
-              <Badge variant={"info"}>{formatTime(submission.completion_time ?? 0, 2)}</Badge>
-              <Badge variant={"info"}>
-                {new Date(submission.created_at).toLocaleString()} (
-                {formatDateRelativeToNow(submission.created_at, locale)})
-              </Badge>
-            </div>
+          <div className="flex flex-wrap gap-2">
+            <Badge variant="primary" className="flex items-center gap-1">
+              <ClockIcon className="h-3 w-3" />
+              {formatTime(submission.completion_time ?? 0, 2)}
+            </Badge>
+            <Badge variant="primary" className="flex items-center gap-1">
+              <CalendarIcon className="h-3 w-3" />
+              {new Date(submission.created_at).toLocaleString(locale)}
+            </Badge>
           </div>
-        )}
-        <Separator />
-        <div className="flex-1 flex flex-col overflow-y-auto gap-6">
-          {query.data?.collections.map((coll, i) => {
-            const { question, answer, type } = coll;
-            return (
-              <div key={i} className="flex flex-col gap-1">
-                <div className="flex justify-start items-center gap-2">
-                  <span className="font-medium text-sm text-foreground">{question}</span>
-                </div>
-                {answer.trim() !== "" ? (
-                  <span className="text-xs text-foreground/70">{answer}</span>
-                ) : (
-                  <div className="flex justify-center items-center py-2 mt-2 border border-dashed">
-                    <span className="text-xs text-foreground/80">{t("label_no_answer")}</span>
-                  </div>
-                )}
-              </div>
-            );
-          })}
         </div>
+        <Separator />
       </div>
-      <div className="flex justify-between items-center flex-col-reverse sm:flex-row gap-4">
-        <Button variant={"outline"} size={"sm"} className="w-full sm:w-fit" onClick={() => setState(false)}>
-          {t("label_close")}
-        </Button>
-        <div className="flex justify-center sm:justify-end items-center gap-3 w-full flex-col-reverse sm:flex-row">
-          {isAllowedToExport && (
-            <Button
-              onClick={() => {
-                exportOneSubmissionToCSV(submission, query.data?.collections ?? []);
-              }}
-              variant={"secondary"}
-              size={"sm"}
-              className="w-full sm:w-fit">
-              {t("label_csv_export")}
-            </Button>
-          )}
-          {!isAllowedToExport && (
-            <ManageSubscription>
-              <Button variant={"secondary"} size={"sm"} className="w-full sm:w-fit">
+      {/* Answers Section */}
+      <div className="flex-1 overflow-y-auto space-y-6 pr-2">
+        {query.isLoading ? (
+          <div className="flex justify-center items-center h-32">
+            <Loader2Icon className="h-6 w-6 animate-spin" />
+          </div>
+        ) : query.error ? (
+          <div className="flex justify-center items-center h-32 text-destructive">{t("err_generic")}</div>
+        ) : (
+          query.data?.collections.map((coll, i) => (
+            <div key={i} className="space-y-2">
+              <div className="font-medium text-foreground flex items-center gap-2 justify-start">
+                <div className="flex justify-center items-center gap-2">
+                  <div className="flex-shrink-0 mt-1 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+                    <span className="text-xs font-medium text-primary">{i + 1}</span>
+                  </div>
+                  <span className="text-sm font-semibold">{coll.question}</span>
+                </div>
+                <span className="text-xs text-foreground/70 hidden">({getBlockType(coll.type)})</span>
+              </div>
+              {coll.answer.trim() !== "" ? (
+                <div className="bg-muted/30 rounded p-3">
+                  <p className="text-xs whitespace-pre-wrap text-foreground/70">{coll.answer}</p>
+                </div>
+              ) : (
+                <div className="border border-dashed rounded-lg p-4 text-center">
+                  <p className="text-sm text-muted-foreground">{t("label_no_answer")}</p>
+                </div>
+              )}
+            </div>
+          ))
+        )}
+      </div>
+      {/* Footer Actions */}
+      <div className="space-y-3">
+        <div className="flex flex-col-reverse sm:flex-row justify-between gap-3">
+          <Button variant="outline" size={"sm"} onClick={() => setState(false)} className="w-full sm:w-auto">
+            {t("label_close")}
+          </Button>
+          <div className="flex flex-col-reverse sm:flex-row gap-3 w-full sm:w-auto">
+            {isAllowedToExport ? (
+              <Button
+                onClick={() => exportOneSubmissionToCSV(submission, query.data?.collections ?? [])}
+                variant="secondary"
+                size={"sm"}
+                className="w-full sm:w-auto"
+                disabled={!query.data}>
+                <DownloadIcon className="w-4 h-4 mr-2" />
                 {t("label_csv_export")}
               </Button>
-            </ManageSubscription>
-          )}
-          <FormSubmissionStatus submission={submission} setState={setState} />
+            ) : (
+              <ManageSubscription>
+                <Button variant="secondary" className="w-full sm:w-auto">
+                  {t("label_csv_export")}
+                </Button>
+              </ManageSubscription>
+            )}
+
+            <FormSubmissionStatus submission={submission} setState={setState} />
+          </div>
         </div>
       </div>
     </div>
