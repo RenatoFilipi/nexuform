@@ -1,8 +1,9 @@
-import EditorWrapper from "@/components/private/editor/v2/editor-wrapper";
-import ErrorUI from "@/components/private/shared/error-ui";
-import SubscriptionUI from "@/components/private/shared/subscription-ui";
+import EditorWrapper from "@/components/private/editor/editor-wrapper";
+import ErrorUI from "@/components/private/utils/error-ui";
+import SubscriptionUI from "@/components/private/utils/subscription-ui";
 import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
+import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
@@ -50,3 +51,7 @@ const Editor = async ({ params }: { params: Promise<{ slug: string }> }) => {
 };
 
 export default Editor;
+
+export const metadata: Metadata = {
+  title: "Editor",
+};

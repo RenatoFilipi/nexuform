@@ -20,7 +20,7 @@ import NumberInputDesign from "../private/blocks/design/number-input-design";
 import ParagraphTextDesign from "../private/blocks/design/paragraph-text-design";
 import ShortTextDesign from "../private/blocks/design/short-text-design";
 import StarRatingDesign from "../private/blocks/design/star-rating-design";
-import PoweredBy from "../shared/powered-by";
+import PoweredByBadge from "../shared/powered-by-badge";
 import SubmissionSuccess from "./submission-success";
 
 interface IBlockComponent {
@@ -174,7 +174,7 @@ const SubmissionGroup = () => {
           <ModeToggle2 />
           {form.nebulaform_branding && (
             <Link href="/">
-              <PoweredBy version="default" />
+              <PoweredByBadge version="default" />
             </Link>
           )}
         </div>

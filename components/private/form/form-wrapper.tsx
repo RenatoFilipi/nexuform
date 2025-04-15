@@ -5,10 +5,9 @@ import useUserStore from "@/stores/user";
 import { paginationFrom, paginationTo } from "@/utils/constants";
 import { EBlock, EForm, EFormAnalytics, EIntegration, EProfile, ESubmission, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
-import { BarChartIcon, PlugIcon, SendIcon, SettingsIcon } from "lucide-react";
+import { BarChartIcon, SendIcon, SettingsIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import FormIntegrations from "./form-integrations";
 import FormOverview from "./form-overview";
 import FormSettings from "./form-settings";
 import FormSubmissions from "./form-submissions";
@@ -55,12 +54,6 @@ const FormWrapper = ({
       icon: SendIcon,
       view: "submissions",
       enabled: true,
-    },
-    {
-      label: t("nav_integrations"),
-      icon: PlugIcon,
-      view: "integrations",
-      enabled: false,
     },
     {
       label: t("nav_settings"),
@@ -123,7 +116,6 @@ const FormWrapper = ({
       <div className="px-3 sm:px-20 lg:px-52 py-4 sm:py-4 flex justify-center flex-1 items-start overflow-y-auto">
         {view === "overview" && <FormOverview />}
         {view === "submissions" && <FormSubmissions />}
-        {view === "integrations" && <FormIntegrations />}
         {view === "settings" && <FormSettings />}
       </div>
     </div>

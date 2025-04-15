@@ -1,7 +1,8 @@
 import CheckoutSuccess from "@/components/private/checkout/checkout-success";
-import ErrorUI from "@/components/private/shared/error-ui";
+import ErrorUI from "@/components/private/utils/error-ui";
 import { stripe } from "@/lib/stripe";
 import { createClient } from "@/utils/supabase/server";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 const CheckoutResult = async ({ searchParams }: { searchParams: Promise<{ [key: string]: string | undefined }> }) => {
@@ -23,3 +24,7 @@ const CheckoutResult = async ({ searchParams }: { searchParams: Promise<{ [key: 
 };
 
 export default CheckoutResult;
+
+export const metadata: Metadata = {
+  title: "Checkout result",
+};

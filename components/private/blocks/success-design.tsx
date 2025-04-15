@@ -74,12 +74,12 @@ const SuccessDesign = ({ brand, preview, color, description, title }: IProps) =>
               asChild={!preview}>
               {preview ? (
                 <>
-                  <Brand type="logo" className="w-5 h-5 fill-white" />
+                  <Brand type="logo" className="w-4 h-4 fill-white" />
                   <span className="">{t("access_cta")}</span>
                 </>
               ) : (
                 <Link href={"/signup"} className="flex items-center gap-2">
-                  <Brand type="logo" className="w-5 h-5 fill-white" />
+                  <Brand type="logo" className="w-4 h-4 fill-white" />
                   <span className="">{t("access_cta")}</span>
                 </Link>
               )}

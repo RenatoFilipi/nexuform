@@ -2,7 +2,7 @@ import { ArrowUpRightIcon, BadgeCheckIcon, SparklesIcon, ZapIcon } from "lucide-
 
 type TVersion = "default" | "minimal" | "highlight" | "gradient" | "premium";
 
-const PoweredBy = ({ version = "default" }: { version?: TVersion }) => {
+const PoweredByBadge = ({ version = "default" }: { version?: TVersion }) => {
   if (version === "minimal") {
     return (
       <div className="inline-flex items-center gap-1 bg-transparent hover:bg-foreground/5 transition-colors rounded px-2 py-1 w-fit">
@@ -47,4 +47,4 @@ const PoweredBy = ({ version = "default" }: { version?: TVersion }) => {
   );
 };
 
-export default PoweredBy;
+export default PoweredByBadge;

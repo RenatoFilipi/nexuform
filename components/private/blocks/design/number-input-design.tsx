@@ -15,6 +15,33 @@ const NumberInputDesign = ({
   const { name, description, max_char, min_char, required, id, position, placeholder } = block;
   const [value, setValue] = useState("");
 
+  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setValue(newValue);
+    onValueChange(newValue, block.id);
+  };
+
+  const enforceMinMax = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const input = e.target as HTMLInputElement;
+    const value = parseFloat(input.value);
+
+    // Se o valor não for um número válido, não fazemos nada
+    if (isNaN(value)) return;
+
+    // Aplica max_char apenas se não for null
+    if (max_char !== null && max_char !== undefined && value > max_char) {
+      input.value = max_char.toString();
+      setValue(max_char.toString());
+      onValueChange(max_char.toString(), block.id);
+    }
+    // Aplica min_char apenas se não for null
+    else if (min_char !== null && min_char !== undefined && value < min_char) {
+      input.value = min_char.toString();
+      setValue(min_char.toString());
+      onValueChange(min_char.toString(), block.id);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4 w-full">
       <div className="grid gap-1">
@@ -30,10 +57,8 @@ const NumberInputDesign = ({
         <Input
           value={value}
           placeholder={placeholder ?? ""}
-          onChange={(e) => {
-            setValue(e.target.value);
-            onValueChange(e.target.value, block.id);
-          }}
+          onChange={handleValueChange}
+          onKeyUp={enforceMinMax}
           id={id}
           style={
             {
@@ -48,8 +73,8 @@ const NumberInputDesign = ({
             focus-visible:ring-offset-2
           "
           type="number"
-          min={min_char ?? 1}
-          max={max_char ?? 256}
+          min={min_char ?? undefined}
+          max={max_char ?? undefined}
         />
       </div>
     </div>

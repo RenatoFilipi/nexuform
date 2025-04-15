@@ -1,4 +1,4 @@
-import FormNotAvailableUI from "@/components/private/shared/form-not-available-ui";
+import FormNotAvailableUI from "@/components/private/utils/form-not-available-ui";
 import SubmissionWrapper from "@/components/s/submission-wrapper";
 import { isSubmissionsLimitReached, isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";

@@ -1,8 +1,9 @@
 import DashboardWrapper from "@/components/private/dashboard/dashboard-wrapper";
-import ErrorUI from "@/components/private/shared/error-ui";
-import SubscriptionUI from "@/components/private/shared/subscription-ui";
+import ErrorUI from "@/components/private/utils/error-ui";
+import SubscriptionUI from "@/components/private/utils/subscription-ui";
 import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
+import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
@@ -43,3 +44,7 @@ const Forms = async () => {
 };
 
 export default Forms;
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+};

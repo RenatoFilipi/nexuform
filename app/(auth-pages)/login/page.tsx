@@ -4,6 +4,7 @@ import Nav from "@/components/public/core/nav";
 import AuthPanel from "@/components/public/landing/auth-panel";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -35,3 +36,7 @@ const Login = () => {
 };
 
 export default Login;
+
+export const metadata: Metadata = {
+  title: "Login",
+};

@@ -1,8 +1,9 @@
 import AnalyticsWrapper from "@/components/private/analytics/analytics-wrapper";
-import ErrorUI from "@/components/private/shared/error-ui";
-import UpgradeToProUI from "@/components/private/shared/upgrade-to-pro-ui";
+import ErrorUI from "@/components/private/utils/error-ui";
+import UpgradeToProUI from "@/components/private/utils/upgrade-to-pro-ui";
 import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 const Analytics = async () => {
@@ -49,3 +50,7 @@ const Analytics = async () => {
 };
 
 export default Analytics;
+
+export const metadata: Metadata = {
+  title: "Analytics",
+};

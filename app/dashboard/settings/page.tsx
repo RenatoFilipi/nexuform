@@ -1,6 +1,7 @@
 import SettingsWrapper from "@/components/private/settings/settings-wrapper";
-import ErrorUI from "@/components/private/shared/error-ui";
+import ErrorUI from "@/components/private/utils/error-ui";
 import { createClient } from "@/utils/supabase/server";
+import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
@@ -46,3 +47,7 @@ const Settings = async () => {
 };
 
 export default Settings;
+
+export const metadata: Metadata = {
+  title: "Settings",
+};

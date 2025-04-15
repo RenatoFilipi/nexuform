@@ -53,9 +53,8 @@ const CustomScaleDesign = ({
                   flex 
                   items-center 
                   justify-center 
-                  gap-2 
-                  rounded-md 
-                  border-2 
+                  gap-2
+                  border
                   border-muted 
                   bg-popover 
                   h-14 

@@ -8,13 +8,7 @@ import { Inter } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
 
-//const figtree = Figtree({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Nebulaform",
-  authors: [{ name: "Renato Filipi" }],
-};
 
 export default async function RootLayout({
   children,
@@ -26,18 +20,11 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      {/* <head>
-        <script src="https://unpkg.com/react-scan/dist/auto.global.js" async />
-      </head> */}
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
           <QueryProvider>
             <NuqsAdapter>
-              <ThemeProvider
-                attribute="class"
-                defaultTheme="system"
-                enableSystem
-                disableTransitionOnChange>
+              <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
                 {children}
                 <Toaster richColors expand position="bottom-right" />
               </ThemeProvider>
@@ -48,3 +35,11 @@ export default async function RootLayout({
     </html>
   );
 }
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Nebulaform",
+    default: "Nebulaform",
+  },
+  authors: [{ name: "Renato Filipi" }],
+};
