@@ -1,7 +1,9 @@
+import ModeToggle2 from "@/components/core/mode-toggle2";
+import PoweredBy from "@/components/shared/powered-by";
 import { Button } from "@/components/ui/button";
 import useEditorStore from "@/stores/editor";
 import { EBlock, ETheme } from "@/utils/entities";
-import { TBlock } from "@/utils/types";
+import { TBlock, TColor } from "@/utils/types";
 import { Reorder, useDragControls } from "framer-motion";
 import { Edit2Icon, GripVerticalIcon, PlusIcon, SettingsIcon, Trash2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -16,6 +18,7 @@ import NumberInputDesign from "../../blocks/design/number-input-design";
 import ParagraphTextDesign from "../../blocks/design/paragraph-text-design";
 import ShortTextDesign from "../../blocks/design/short-text-design";
 import StarRatingDesign from "../../blocks/design/star-rating-design";
+import SuccessDesign from "../../blocks/success-design";
 import EditorFormSettings from "../editor-form-settings";
 
 interface IBlockComponent {
@@ -60,36 +63,48 @@ const EditorContent = () => {
 };
 const EditorCanvas = () => {
   const t = useTranslations("app");
-  const editor = useEditorStore();
-  const empty = editor.blocks.length <= 0;
+  const { blocks, view, form, theme } = useEditorStore();
+  const empty = blocks.length <= 0;
 
-  if (empty) {
+  if (!empty && view === "blocks") {
     return (
-      <div className="flex justify-center items-center w-full h-full p-8">
-        <div className="flex flex-col items-center justify-center h-full w-full p-8 rounded-lg border-2 border-dashed bg-muted/5">
-          <div className="flex flex-col items-center max-w-md text-center space-y-6">
-            <div className="rounded-full bg-primary/5 p-3">
-              <PlusIcon className="h-7 w-7 text-primary" />
-            </div>
-            <div className="space-y-2">
-              <h3 className="text-xl font-semibold">{t("label_start_form")}</h3>
-              <p className="text-sm text-muted-foreground">{t("desc_start_form")}</p>
-            </div>
-            <AddBlock>
-              <Button size={"sm"} variant={"secondary"}>
-                <PlusIcon className="w-4 h-4 mr-2" />
-                {t("label_first_block")}
-              </Button>
-            </AddBlock>
-          </div>
-        </div>
+      <div className="flex p-4 sm:p-8 w-full justify-center items-center flex-col sm:w-[650px]">
+        <EditorGroup />
       </div>
     );
   }
-
+  if (!empty && view === "success") {
+    return (
+      <div className="flex justify-center items-center w-full h-full">
+        <SuccessDesign
+          brand={form.nebulaform_branding}
+          color={theme.custom_primary_color as TColor}
+          preview
+          title={form.success_title}
+          description={form.success_description}
+        />
+      </div>
+    );
+  }
   return (
-    <div className="flex p-4 sm:p-8 w-full justify-center items-center flex-col">
-      <EditorGroup />
+    <div className="flex justify-center items-center w-full h-full p-8">
+      <div className="flex flex-col items-center justify-center h-full w-full p-8 rounded-lg border-2 border-dashed bg-muted/5">
+        <div className="flex flex-col items-center max-w-md text-center space-y-6">
+          <div className="rounded-full bg-primary/5 p-3">
+            <PlusIcon className="h-7 w-7 text-primary" />
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-xl font-semibold">{t("label_start_form")}</h3>
+            <p className="text-sm text-muted-foreground">{t("desc_start_form")}</p>
+          </div>
+          <AddBlock>
+            <Button size={"sm"} variant={"secondary"}>
+              <PlusIcon className="w-4 h-4 mr-2" />
+              {t("label_first_block")}
+            </Button>
+          </AddBlock>
+        </div>
+      </div>
     </div>
   );
 };
@@ -105,12 +120,12 @@ const EditorGroup = () => {
   };
 
   return (
-    <div className="flex flex-col gap-8 w-full sm:w-fit">
-      <Reorder.Group
-        axis="y"
-        values={blocks}
-        onReorder={handleReorder}
-        className="flex flex-col sm:w-[600px] gap-2 w-full">
+    <div className="flex flex-col gap-6 w-full">
+      <div className="flex flex-col gap-2 px-3 justify-center items-start">
+        <h1 className="text-2xl font-bold">{form.name}</h1>
+        <p className="text-sm text-foreground/80">{form.description}</p>
+      </div>
+      <Reorder.Group axis="y" values={blocks} onReorder={handleReorder} className="flex flex-col gap-2 w-full">
         {blocks.map((block) => {
           const Component = COMPONENT_MAP[block.type as TBlock];
           if (!Component) return null;
@@ -121,12 +136,16 @@ const EditorGroup = () => {
           );
         })}
       </Reorder.Group>
-      <div className="flex justify-center items-center w-full px-3">
+      <div className="flex justify-center items-center w-full px-3 flex-col gap-6">
         <button
           style={{ backgroundColor: theme.custom_primary_color }}
           className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 text-white w-full">
           {form.submit_text}
         </button>
+        <div className="flex justify-between items-center w-full gap-2 h-14">
+          <ModeToggle2 />
+          {form.nebulaform_branding && <PoweredBy version="default" />}
+        </div>
       </div>
     </div>
   );

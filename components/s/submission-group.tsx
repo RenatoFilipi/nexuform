@@ -1,14 +1,15 @@
 import useSubmissionStore from "@/stores/submission";
-import { EAnswer, EBlock } from "@/utils/entities";
-import { formatTime, isValidEmail } from "@/utils/functions";
-import { IDesign } from "@/utils/interfaces";
+import { EAnswer, EBlock, ETheme } from "@/utils/entities";
+import { isValidEmail } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
-import { TAppState } from "@/utils/types";
+import { TAppState, TBlock } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { LoaderIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
+import ModeToggle2 from "../core/mode-toggle2";
 import CheckBoxesDesign from "../private/blocks/design/checkboxes-design";
 import CustomScaleDesign from "../private/blocks/design/custom-scale-design";
 import DatePickerDesign from "../private/blocks/design/date-picker-design";
@@ -19,106 +20,33 @@ import NumberInputDesign from "../private/blocks/design/number-input-design";
 import ParagraphTextDesign from "../private/blocks/design/paragraph-text-design";
 import ShortTextDesign from "../private/blocks/design/short-text-design";
 import StarRatingDesign from "../private/blocks/design/star-rating-design";
+import PoweredBy from "../shared/powered-by";
 import SubmissionSuccess from "./submission-success";
 
-const design: IDesign[] = [
-  {
-    label: "slate",
-    tw_class: "bg-slate-500 hover:bg-slate-600 text-white",
-  },
-  {
-    label: "gray",
-    tw_class: "bg-gray-500 hover:bg-gray-600 text-white",
-  },
-  {
-    label: "zinc",
-    tw_class: "bg-zinc-500 hover:bg-zinc-600 text-white",
-  },
-  {
-    label: "neutral",
-    tw_class: "bg-neutral-500 hover:bg-neutral-600 text-white",
-  },
-  {
-    label: "stone",
-    tw_class: "bg-stone-500 hover:bg-stone-600 text-white",
-  },
-  {
-    label: "red",
-    tw_class: "bg-red-500 hover:bg-red-600 text-white",
-  },
-  {
-    label: "orange",
-    tw_class: "bg-orange-500 hover:bg-orange-600 text-white",
-  },
-  {
-    label: "amber",
-    tw_class: "bg-amber-500 hover:bg-amber-600 text-black",
-  },
-  {
-    label: "yellow",
-    tw_class: "bg-yellow-500 hover:bg-yellow-600 text-black",
-  },
-  {
-    label: "lime",
-    tw_class: "bg-lime-500 hover:bg-lime-600 text-black",
-  },
-  {
-    label: "green",
-    tw_class: "bg-green-500 hover:bg-green-600 text-white",
-  },
-  {
-    label: "emerald",
-    tw_class: "bg-emerald-500 hover:bg-emerald-600 text-white",
-  },
-  {
-    label: "teal",
-    tw_class: "bg-teal-500 hover:bg-teal-600 text-white",
-  },
-  {
-    label: "cyan",
-    tw_class: "bg-cyan-500 hover:bg-cyan-600 text-white",
-  },
-  {
-    label: "sky",
-    tw_class: "bg-sky-500 hover:bg-sky-600 text-white",
-  },
-  {
-    label: "blue",
-    tw_class: "bg-blue-500 hover:bg-blue-600 text-white",
-  },
-  {
-    label: "indigo",
-    tw_class: "bg-indigo-500 hover:bg-indigo-600 text-white",
-  },
-  {
-    label: "violet",
-    tw_class: "bg-violet-500 hover:bg-violet-600 text-white",
-  },
-  {
-    label: "purple",
-    tw_class: "bg-purple-500 hover:bg-purple-600 text-white",
-  },
-  {
-    label: "fuchsia",
-    tw_class: "bg-fuchsia-500 hover:bg-fuchsia-600 text-white",
-  },
-  {
-    label: "pink",
-    tw_class: "bg-pink-500 hover:bg-pink-600 text-white",
-  },
-  {
-    label: "rose",
-    tw_class: "bg-rose-500 hover:bg-rose-600 text-white",
-  },
-];
+interface IBlockComponent {
+  block: EBlock;
+  theme: ETheme;
+  onValueChange: (value: string, blockId: string) => void;
+}
+const COMPONENT_MAP: Record<TBlock, React.ComponentType<IBlockComponent>> = {
+  short_text: ShortTextDesign,
+  paragraph_text: ParagraphTextDesign,
+  multiple_choice: MultipleChoiceDesign,
+  checkboxes: CheckBoxesDesign,
+  dropdown_menu: DropdownMenuDesign,
+  number_input: NumberInputDesign,
+  email_address: EmailAddressDesign,
+  star_rating: StarRatingDesign,
+  custom_scale: CustomScaleDesign,
+  date_picker: DatePickerDesign,
+};
 
 const SubmissionGroup = () => {
   const t = useTranslations("s");
-  const { form, theme, blocks, submission, answers, setAnswers } = useSubmissionStore();
   const supabase = createClient();
+  const { form, theme, blocks, submission, answers, setAnswers } = useSubmissionStore();
   const [appState, setAppState] = useState<TAppState>("idle");
   const [submissionState, setSubmissionState] = useState<TAppState>("idle");
-  const currentColor = design.find((x) => x.label === theme.primary_color) ?? design[0];
   const [time, setTime] = useState(0);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -212,64 +140,44 @@ const SubmissionGroup = () => {
 
   if (appState === "success")
     return (
-      <div className="flex justify-center items-center sm:w-[650px] h-dvh w-full">
+      <div className="flex justify-center items-center h-dvh w-full">
         <SubmissionSuccess />
       </div>
     );
 
   return (
-    <div
-      className={`${
-        theme.width === "centered" ? "sm:w-[650px]" : "w-full"
-      }  flex flex-col gap-6 w-full rounded bg-background relative p-4 my-4`}>
-      <span className="hidden">{formatTime(time)}</span>
-      <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-6 sm:w-[620px] my-10 px-4 sm:px-0 min-h-dvh">
+      <div className="flex flex-col gap-2 justify-center items-start">
         <h1 className="text-2xl font-bold">{form.name}</h1>
         <p className="text-sm text-foreground/80">{form.description}</p>
       </div>
-      <div className="flex flex-col justify-center items-center gap-14 w-full">
+      <div className="flex flex-col gap-2 w-full">
         {blocks.map((block) => {
-          switch (block.type) {
-            case "short_text":
-              return <ShortTextDesign key={block.id} block={block} theme={theme} onValueChange={onValueChange} />;
-            case "paragraph_text":
-              return <ParagraphTextDesign key={block.id} block={block} theme={theme} onValueChange={onValueChange} />;
-            case "checkboxes":
-              return <CheckBoxesDesign key={block.id} block={block} theme={theme} onValueChange={onValueChange} />;
-            case "multiple_choice":
-              return <MultipleChoiceDesign key={block.id} block={block} theme={theme} onValueChange={onValueChange} />;
-            case "dropdown_menu":
-              return <DropdownMenuDesign key={block.id} block={block} theme={theme} onValueChange={onValueChange} />;
-            case "number_input":
-              return <NumberInputDesign key={block.id} block={block} theme={theme} onValueChange={onValueChange} />;
-            case "email_address":
-              return <EmailAddressDesign key={block.id} block={block} theme={theme} onValueChange={onValueChange} />;
-            case "star_rating":
-              return <StarRatingDesign key={block.id} block={block} theme={theme} onValueChange={onValueChange} />;
-            case "custom_scale":
-              return <CustomScaleDesign key={block.id} block={block} theme={theme} onValueChange={onValueChange} />;
-            case "date_picker":
-              return <DatePickerDesign key={block.id} block={block} theme={theme} onValueChange={onValueChange} />;
-          }
+          const Component = COMPONENT_MAP[block.type as TBlock];
+          if (!Component) return null;
+          return (
+            <div key={block.id} className="py-3">
+              <Component block={block} theme={theme} onValueChange={onValueChange} />
+            </div>
+          );
         })}
       </div>
-      <div className="flex flex-col gap-4 sm:gap-8">
-        <div className="flex justify-end items-center w-full">
-          <button
-            disabled={submissionState === "loading"}
-            onClick={onSubmit}
-            style={{ backgroundColor: theme.custom_primary_color }}
-            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 text-white w-full">
-            {submissionState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />} {form.submit_text}
-          </button>
+      <div className="flex justify-center items-center w-full flex-col gap-6">
+        <button
+          disabled={submissionState === "loading"}
+          onClick={onSubmit}
+          style={{ backgroundColor: theme.custom_primary_color }}
+          className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 text-white w-full">
+          {submissionState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />} {form.submit_text}
+        </button>
+        <div className="flex justify-between items-center w-full gap-2 h-1/4">
+          <ModeToggle2 />
+          {form.nebulaform_branding && (
+            <Link href="/">
+              <PoweredBy version="default" />
+            </Link>
+          )}
         </div>
-        {form.nebulaform_branding && (
-          <div className="flex justify-center items-center w-full">
-            <span className="flex justify-center items-center gap-2 bg-foreground/5 w-full py-2 rounded sm:w-fit px-6">
-              <span className="text-foreground text-sm font-medium">{t("label_powered")}</span>
-            </span>
-          </div>
-        )}
       </div>
     </div>
   );

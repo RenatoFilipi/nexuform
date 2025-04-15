@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -13,10 +12,10 @@ import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
 import { blockViewSettings } from "@/utils/constants";
 import { getBlockName } from "@/utils/functions";
-import { TBlock, TToolView } from "@/utils/types";
+import { TBlock, TEditorView, TToolView } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { Reorder } from "framer-motion";
-import { CircleHelpIcon, PlusIcon, XIcon } from "lucide-react";
+import { BlocksIcon, CheckCircle2Icon, CircleHelpIcon, PlusIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import ColorPicker from "../../shared/color-picker";
@@ -63,7 +62,12 @@ const EditorTools = () => {
 };
 const ToolProperties = () => {
   const t = useTranslations("app");
-  const { form, setForm } = useEditorStore();
+  const { form, setForm, setView, view } = useEditorStore();
+  const views = [
+    { label: t("label_blocks"), view: "blocks", enabled: true, icon: BlocksIcon },
+    { label: t("label_success"), view: "success", enabled: true, icon: CheckCircle2Icon },
+  ];
+  const enabledViews = views.filter((x) => x.enabled);
 
   const onSetName = (value: string) => {
     setForm({ ...form, name: value });
@@ -82,53 +86,76 @@ const ToolProperties = () => {
   };
 
   return (
-    <div className="flex flex-col justify-start items-center w-full p-5 gap-6 overflow-y-auto">
-      <div className="grid gap-3 w-full">
-        <div className="grid gap-1">
-          <Label className="">{t("label_form_name")}</Label>
-          <p className="text-xs text-foreground/60 hidden">{t("desc_form_name")}</p>
-        </div>
-        <Input
-          type="text"
-          placeholder={t("placeholder_form_name")}
-          value={form.name}
-          onChange={(e) => onSetName(e.target.value)}
-        />
+    <div className="flex flex-col w-full">
+      <div className="flex w-full justify-center items-center p-4 gap-3">
+        {enabledViews.map((x) => {
+          return (
+            <button
+              key={x.view}
+              onClick={() => setView(x.view as TEditorView)}
+              className={`${
+                x.view === view ? "bg-secondary text-background shadow-sm font-medium border-primary" : ""
+              } border rounded-md w-full py-1.5 text-sm font-normal transition-all duration-150 ease-in-out flex justify-center items-center gap-2`}>
+              <x.icon className={`w-4 h-4`} />
+              {x.label}
+            </button>
+          );
+        })}
       </div>
-      <div className="grid gap-3 w-full">
-        <div className="grid gap-1">
-          <Label>
-            {t("label_form_desc")} ({t("label_optional")})
-          </Label>
-          <p className="text-xs text-foreground/60 hidden">{t("desc_form_desc")}</p>
+      {view === "blocks" && (
+        <div className="flex flex-col justify-start items-center w-full p-5 gap-6 overflow-y-auto">
+          <div className="grid gap-3 w-full">
+            <div className="grid gap-1">
+              <Label className="">{t("label_form_name")}</Label>
+              <p className="text-xs text-foreground/60 hidden">{t("desc_form_name")}</p>
+            </div>
+            <Input
+              type="text"
+              placeholder={t("placeholder_form_name")}
+              value={form.name}
+              onChange={(e) => onSetName(e.target.value)}
+            />
+          </div>
+          <div className="grid gap-3 w-full">
+            <div className="grid gap-1">
+              <Label>
+                {t("label_form_desc")} ({t("label_optional")})
+              </Label>
+              <p className="text-xs text-foreground/60 hidden">{t("desc_form_desc")}</p>
+            </div>
+            <Textarea
+              placeholder={t("placeholder_form_desc")}
+              value={form.description ?? ""}
+              onChange={(e) => onSetDescription(e.target.value)}
+            />
+          </div>
+          <div className="grid gap-3 w-full">
+            <div className="grid gap-1">
+              <Label>{t("label_submit_text")}</Label>
+              <p className="text-xs text-foreground/60 hidden">{t("desc_submit_text")}</p>
+            </div>
+            <Input type="text" value={form.submit_text} onChange={(e) => onSetSubmitText(e.target.value)} />
+          </div>
         </div>
-        <Textarea
-          placeholder={t("placeholder_form_desc")}
-          value={form.description ?? ""}
-          onChange={(e) => onSetDescription(e.target.value)}
-        />
-      </div>
-      <div className="grid gap-3 w-full">
-        <div className="grid gap-1">
-          <Label>{t("label_submit_text")}</Label>
-          <p className="text-xs text-foreground/60 hidden">{t("desc_submit_text")}</p>
+      )}
+      {view === "success" && (
+        <div className="flex flex-col justify-start items-center w-full p-5 gap-6 overflow-y-auto">
+          <div className="grid gap-3 w-full">
+            <div className="grid gap-1">
+              <Label>{t("label_success_title")}</Label>
+              <p className="text-xs text-foreground/60 hidden">{t("desc_success_title")}</p>
+            </div>
+            <Input type="text" value={form.success_title} onChange={(e) => onSetSuccessTitle(e.target.value)} />
+          </div>
+          <div className="grid gap-3 w-full">
+            <div className="grid gap-1">
+              <Label>{t("label_success_desc")}</Label>
+              <p className="text-xs text-foreground/60 hidden">{t("desc_success_desc")}</p>
+            </div>
+            <Textarea value={form.success_description} onChange={(e) => onSetSuccessDescription(e.target.value)} />
+          </div>
         </div>
-        <Input type="text" value={form.submit_text} onChange={(e) => onSetSubmitText(e.target.value)} />
-      </div>
-      <div className="grid gap-3 w-full">
-        <div className="grid gap-1">
-          <Label>{t("label_success_title")}</Label>
-          <p className="text-xs text-foreground/60 hidden">{t("desc_success_title")}</p>
-        </div>
-        <Input type="text" value={form.success_title} onChange={(e) => onSetSuccessTitle(e.target.value)} />
-      </div>
-      <div className="grid gap-3 w-full">
-        <div className="grid gap-1">
-          <Label>{t("label_success_desc")}</Label>
-          <p className="text-xs text-foreground/60 hidden">{t("desc_success_desc")}</p>
-        </div>
-        <Textarea value={form.success_description} onChange={(e) => onSetSuccessDescription(e.target.value)} />
-      </div>
+      )}
     </div>
   );
 };
@@ -170,21 +197,6 @@ const ToolStyles = () => {
         </div>
         <Switch checked={theme.uppercase_block_name} onCheckedChange={onSetUppercaseBlockName} />
       </div>
-      <div className="justify-between items-start w-full sm:gap-4 flex-col hidden">
-        <div className="grid gap-1">
-          <Label>{t("label_form_width")}</Label>
-          <p className="text-xs text-foreground/60 hidden">{t("desc_form_width")}</p>
-        </div>
-        <Select onValueChange={onSetWidth} defaultValue={theme.width}>
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="centered">{t("label_centered")}</SelectItem>
-            <SelectItem value="full">{t("label_full_width")}</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
       <div className="flex justify-between items-center w-full">
         <div className="flex justify-center items-center gap-2">
           <div className="grid gap-1">
@@ -200,7 +212,10 @@ const ToolStyles = () => {
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">
           <AccordionTrigger className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 pt-0">
-            {t("label_primary_color")}
+            <div className="flex justify-center items-center gap-3">
+              {t("label_primary_color")}
+              <div className="w-8 h-4 rounded-md" style={{ backgroundColor: theme.custom_primary_color }}></div>
+            </div>
           </AccordionTrigger>
           <AccordionContent>
             <ColorPicker

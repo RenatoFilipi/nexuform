@@ -537,7 +537,7 @@ const NavEditor = () => {
       </div>
       {active && (
         <div className="flex justify-center items-center gap-4">
-          <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
+          <Button size={"xs"} variant={"outline"} onClick={onSave} disabled={appState === "loading"}>
             {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
             {t("label_save_form")}
           </Button>

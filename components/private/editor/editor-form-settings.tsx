@@ -233,7 +233,7 @@ const DeleteSettings = () => {
   const { form } = useEditorStore();
 
   return (
-    <div className="flex justify-center items-center w-full border border-destructive/30 rounded p-8 bg-destructive/5">
+    <div className="flex justify-center items-center w-full border rounded p-8">
       <div className="flex flex-col justify-center items-center gap-4">
         <Badge variant="destructive" className="px-3 py-1 font-medium uppercase tracking-wider flex items-center gap-2">
           <AlertTriangleIcon className="h-3.5 w-3.5" />

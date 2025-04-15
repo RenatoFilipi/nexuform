@@ -8,7 +8,7 @@ const SubmissionSuccess = () => {
   return (
     <SuccessDesign
       brand={form.nebulaform_branding}
-      color={theme.primary_color as TColor}
+      color={theme.custom_primary_color as TColor}
       preview={false}
       title={form.success_title}
       description={form.success_description}

@@ -3,37 +3,11 @@
 import Brand from "@/components/core/brand";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { IDesign } from "@/utils/interfaces";
 import { TColor } from "@/utils/types";
 import { CheckIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { twMerge } from "tailwind-merge";
 
-const design: IDesign[] = [
-  { label: "slate", tw_class: "bg-slate-500/10 text-slate-500" },
-  { label: "gray", tw_class: "bg-gray-500/10 text-gray-500" },
-  { label: "zinc", tw_class: "bg-zinc-500/10 text-zinc-500" },
-  { label: "neutral", tw_class: "bg-neutral-500/10 text-neutral-500" },
-  { label: "stone", tw_class: "bg-stone-500/10 text-stone-500" },
-  { label: "red", tw_class: "bg-red-500/10 text-red-500" },
-  { label: "orange", tw_class: "bg-orange-500/10 text-orange-500" },
-  { label: "amber", tw_class: "bg-amber-500/10 text-amber-500" },
-  { label: "yellow", tw_class: "bg-yellow-500/10 text-yellow-500" },
-  { label: "lime", tw_class: "bg-lime-500/10 text-lime-500" },
-  { label: "green", tw_class: "bg-green-500/10 text-green-500" },
-  { label: "emerald", tw_class: "bg-emerald-500/10 text-emerald-500" },
-  { label: "teal", tw_class: "bg-teal-500/10 text-teal-500" },
-  { label: "cyan", tw_class: "bg-cyan-500/10 text-cyan-500" },
-  { label: "sky", tw_class: "bg-sky-500/10 text-sky-500" },
-  { label: "blue", tw_class: "bg-blue-500/10 text-blue-500" },
-  { label: "indigo", tw_class: "bg-indigo-500/10 text-indigo-500" },
-  { label: "violet", tw_class: "bg-violet-500/10 text-violet-500" },
-  { label: "purple", tw_class: "bg-purple-500/10 text-purple-500" },
-  { label: "fuchsia", tw_class: "bg-fuchsia-500/10 text-fuchsia-500" },
-  { label: "pink", tw_class: "bg-pink-500/10 text-pink-500" },
-  { label: "rose", tw_class: "bg-rose-500/10 text-rose-500" },
-];
 interface IProps {
   brand: boolean;
   preview: boolean;
@@ -44,39 +18,69 @@ interface IProps {
 
 const SuccessDesign = ({ brand, preview, color, description, title }: IProps) => {
   const t = useTranslations("app");
-  const currentColor = design.find((x) => x.label === color) ?? design[0];
+  const lightenColor = (hex: string, percent: number) => {
+    const num = parseInt(hex.replace("#", ""), 16);
+    const amt = Math.round(2.55 * percent);
+    const R = (num >> 16) + amt;
+    const G = ((num >> 8) & 0x00ff) + amt;
+    const B = (num & 0x0000ff) + amt;
+
+    return `#${(
+      0x1000000 +
+      (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 +
+      (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 +
+      (B < 255 ? (B < 1 ? 0 : B) : 255)
+    )
+      .toString(16)
+      .slice(1)}`;
+  };
+  const lighterColor = lightenColor(color, 20);
 
   return (
-    <div className="flex justify-center items-center w-full">
-      <Card className="flex flex-col gap-10 p-4 w-full border-transparent sm:w-fit">
+    <div className="flex justify-center items-center min-h-[calc(100vh-4rem)] w-full p-4">
+      <Card className="flex flex-col gap-8 p-8 w-full sm:max-w-md border-transparent">
         <div className="flex flex-col justify-center items-center gap-6">
-          <div className={twMerge(currentColor.tw_class, "rounded-full p-3")}>
-            <CheckIcon className="w-10 h-10" />
+          <div className="relative">
+            <div
+              className="absolute inset-0 rounded-full blur-md opacity-30 animate-pulse"
+              style={{ backgroundColor: color }}
+            />
+            <div
+              className="relative flex items-center justify-center w-16 h-16 rounded-full"
+              style={{ backgroundColor: color }}>
+              <CheckIcon className="w-8 h-8 text-white stroke-[3]" />
+            </div>
           </div>
-          <div className="flex flex-col justify-center items-center gap-1">
-            <h1 className="text-2xl font-bold text-center">{title}</h1>
-            <p className="text-center text-base text-foreground/60">{description}</p>
+          <div className="flex flex-col justify-center items-center gap-3 text-center">
+            <h1
+              className="text-3xl font-bold bg-clip-text text-transparent"
+              style={{
+                backgroundImage: `linear-gradient(to right, ${color}, ${lighterColor})`,
+              }}>
+              {title}
+            </h1>
+            <p className="text-center text-base text-foreground/80 leading-relaxed">{description}</p>
           </div>
         </div>
         {brand && (
-          <div className="flex justify-center items-center gap-4 flex-col">
+          <div className="flex justify-center items-center gap-5 flex-col mt-4">
             <div className="text-center">
-              <span className="font-medium text-sm text-foreground/70">{t("success_cta")}</span>
+              <span className="font-semibold text-sm text-foreground/70">{t("success_cta")}</span>
             </div>
             <Button
               size="default"
-              variant={"secondary"}
-              className="flex items-center justify-center gap-2 w-full sm:w-fit"
+              className="flex items-center justify-center gap-2 w-full group transition-all text-white"
+              style={{ backgroundColor: color }}
               asChild={!preview}>
               {preview ? (
                 <>
-                  <Brand type="logo" className="w-4 h-4 fill-background" />
-                  {t("access_cta")}
+                  <Brand type="logo" className="w-5 h-5 fill-white" />
+                  <span className="">{t("access_cta")}</span>
                 </>
               ) : (
-                <Link href={"/signup"}>
-                  <Brand type="logo" className="w-4 h-4 fill-background" />
-                  {t("access_cta")}
+                <Link href={"/signup"} className="flex items-center gap-2">
+                  <Brand type="logo" className="w-5 h-5 fill-white" />
+                  <span className="">{t("access_cta")}</span>
                 </Link>
               )}
             </Button>

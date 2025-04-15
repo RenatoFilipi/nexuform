@@ -357,7 +357,7 @@ export const blockViewSettings: IBlockViewSettings[] = [
     showRequired: true,
   },
 ];
-export const tailwindColors = [
+export const templateColors = [
   // Slate
   "#f8fafc",
   "#f1f5f9",

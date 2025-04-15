@@ -15,6 +15,7 @@ import { TFormStatus } from "@/utils/types";
 import { MoreHorizontalIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import FormShare from "../form/form-share";
 import FormDelete from "../shared/form-delete";
 
 const DashboardFormCard = ({ form }: { form: EForm }) => {
@@ -51,6 +52,11 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
               onSelect={(e) => e.preventDefault()}>
               {t("label_view")}
             </DropdownMenuItem>
+            <FormShare form={form}>
+              <DropdownMenuItem className="cursor-pointer hover:bg-accent" onSelect={(e) => e.preventDefault()}>
+                {t("label_share")}
+              </DropdownMenuItem>
+            </FormShare>
             <DropdownMenuItem
               className="cursor-pointer hover:bg-accent"
               onClick={() => router.push(`/dashboard/editor/${id}`)}

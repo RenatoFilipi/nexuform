@@ -93,7 +93,7 @@ const CustomForm = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full border h-56 gap-4 flex-col p-6 rounded-lg bg-background hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md group">
+    <div className="flex justify-center items-center w-full border h-60 gap-4 flex-col p-6 rounded-lg bg-background hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md group">
       <div className="p-3 rounded-full bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors">
         <PlusIcon className="w-7 h-7 text-blue-500" />
       </div>
@@ -113,7 +113,7 @@ const CustomForm = () => {
 const TemplateForm = ({ setView }: { setView: TSetState<TView> }) => {
   const t = useTranslations("app");
   return (
-    <div className="flex justify-center items-center w-full border h-56 gap-4 flex-col p-6 rounded-lg bg-background hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md group">
+    <div className="flex justify-center items-center w-full border h-60 gap-4 flex-col p-6 rounded-lg bg-background hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md group">
       <div className="p-3 rounded-full bg-orange-500/10 group-hover:bg-orange-500/20 transition-colors">
         <HexagonIcon className="w-7 h-7 text-orange-500" />
       </div>
@@ -193,28 +193,42 @@ const PreviewCard = (props: { template: ETemplate }) => {
 
   if (query.isPending)
     return (
-      <div className="flex border p-4 flex-col justify-between items-start h-36 rounded-lg bg-muted/30 animate-pulse">
-        <div className="w-full space-y-2">
-          <div className="h-5 w-3/4 rounded bg-muted" />
-          <div className="h-4 w-1/2 rounded bg-muted" />
+      <div className="flex flex-col justify-between p-5 h-44 rounded-xl bg-gradient-to-br from-muted/20 to-muted/10 border border-muted/30 animate-pulse overflow-hidden">
+        <div className="space-y-3 w-full">
+          <div className="h-6 w-4/5 rounded-lg bg-muted/50" />
+          <div className="h-4 w-3/5 rounded-lg bg-muted/40" />
         </div>
-        <div className="h-8 w-24 rounded bg-muted" />
+        <div className="flex justify-between items-end w-full">
+          <div className="h-7 w-20 rounded-lg bg-muted/30" />
+          <div className="h-9 w-28 rounded-lg bg-muted/40" />
+        </div>
       </div>
     );
 
   return (
-    <div className="flex border p-4 flex-col justify-between items-start h-40 rounded-lg bg-background hover:border-primary/50 transition-all duration-200 group hover:shadow-sm">
-      <div className="flex justify-between items-start w-full">
-        <span className="text-sm line-clamp-2 group-hover:text-primary transition-colors">{name}</span>
-        <div className="flex justify-center items-center gap-2">
-          <Badge variant={"primary"} className="whitespace-nowrap">
+    <div className="group relative flex flex-col justify-between p-5 h-44 rounded bg-card border border-muted hover:border-primary/30 transition-all duration-300 hover:shadow-md overflow-hidden hover:bg-gradient-to-br hover:from-card hover:to-card/70">
+      {/* Glow effect on hover */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute -left-10 -top-10 w-32 h-32 rounded-full bg-primary/10 blur-xl" />
+      </div>
+
+      <div className="flex flex-col gap-3 w-full z-10">
+        <h3 className="text-base font-medium line-clamp-2 text-foreground group-hover:text-primary transition-colors duration-200">
+          {name}
+        </h3>
+        <div className="flex justify-between items-center">
+          <Badge variant="primary" className="px-3 py-1 font-normal">
             <span className="first-letter:uppercase">{query.data?.category}</span>
           </Badge>
         </div>
       </div>
-      <div className="flex justify-end items-center w-full">
+
+      <div className="flex justify-end items-end w-full z-10">
         <NewPreview template={props.template}>
-          <Button variant={"outline"} size={"sm"} className="group-hover:border-primary group-hover:text-primary">
+          <Button
+            variant="outline"
+            size="sm"
+            className="border-muted/70 bg-background/80 backdrop-blur-sm group-hover:border-primary group-hover:text-primary group-hover:bg-primary/10 transition-all duration-200 shadow-sm">
             <BookDashedIcon className="w-4 h-4 mr-2" />
             {t("label_preview")}
           </Button>
