@@ -2,12 +2,14 @@
 
 import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
-import { fallbackColor } from "@/utils/constants";
+import { fallbackColor, minWidth640 } from "@/utils/constants";
 import { EBlock, EForm, EProfile, ESubscription, ETheme } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { LoaderIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useMedia } from "react-use";
 import EditorContent from "./editor-content";
+import EditorContentMobile from "./editor-content-mobile";
 import EditorTools from "./editor-tools";
 
 interface IProps {
@@ -24,6 +26,7 @@ const EditorWrapper = (props: IProps) => {
   const t = useTranslations("app");
   const editor = useEditorStore();
   const user = useUserStore();
+  const isDesktop = useMedia(minWidth640);
 
   const query = useQuery({
     queryKey: ["editorData"],
@@ -57,10 +60,15 @@ const EditorWrapper = (props: IProps) => {
         </div>
       )}
       {query.isError && <div className="flex justify-center items-center w-full">{t("err_generic")}</div>}
-      {!query.isPending && !query.isError && (
+      {!query.isPending && !query.isError && isDesktop && (
         <div className="flex w-full flex-1">
           <EditorContent />
           <EditorTools />
+        </div>
+      )}
+      {!query.isPending && !query.isError && !isDesktop && (
+        <div className="flex justify-center items-center w-full">
+          <EditorContentMobile />
         </div>
       )}
     </div>
