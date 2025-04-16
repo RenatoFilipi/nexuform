@@ -11,7 +11,7 @@ import { createClient } from "@/utils/supabase/client";
 import { TBlock, TSetState, TSubmissionStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { saveAs } from "file-saver";
-import { CalendarIcon, ClockIcon, DownloadIcon, Loader2Icon } from "lucide-react";
+import { CalendarIcon, ClockIcon, DownloadIcon, LoaderIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Papa from "papaparse";
 import { useState } from "react";
@@ -168,7 +168,7 @@ const Body = ({
       <div className="flex-1 overflow-y-auto space-y-6 pr-2">
         {query.isLoading ? (
           <div className="flex justify-center items-center h-32">
-            <Loader2Icon className="h-6 w-6 animate-spin" />
+            <LoaderIcon className="h-6 w-6 animate-spin" />
           </div>
         ) : query.error ? (
           <div className="flex justify-center items-center h-32 text-destructive">{t("err_generic")}</div>

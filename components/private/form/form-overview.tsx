@@ -50,22 +50,26 @@ const FormOverview = () => {
           <CardTemplate
             name={t("label_total_views")}
             value={totalViews}
-            icon={<EyeIcon className="w-4 h-4 text-primary" />}
+            icon={<EyeIcon className="w-4 h-4 text-blue-600 dark:text-blue-400" />}
+            iconBg="bg-blue-100 dark:bg-blue-900/30"
           />
           <CardTemplate
             name={t("label_total_submissions")}
             value={totalSubmissions}
-            icon={<SendIcon className="w-4 h-4 text-primary" />}
+            icon={<SendIcon className="w-4 h-4 text-green-600 dark:text-green-400" />}
+            iconBg="bg-green-100 dark:bg-green-900/30"
           />
           <CardTemplate
             name={t("label_completion_rate")}
             value={averageCompletionRate}
-            icon={<VoteIcon className="w-4 h-4 text-primary" />}
+            icon={<VoteIcon className="w-4 h-4 text-purple-600 dark:text-purple-400" />}
+            iconBg="bg-purple-100 dark:bg-purple-900/30"
           />
           <CardTemplate
             name={t("label_avg_completion_time")}
             value={averageCompletionTime}
-            icon={<TimerIcon className="w-4 h-4 text-primary" />}
+            icon={<TimerIcon className="w-4 h-4 text-orange-600 dark:text-orange-400" />}
+            iconBg="bg-orange-100 dark:bg-orange-900/30"
           />
         </div>
         <FormSubmissionsActivityChart />
@@ -74,16 +78,24 @@ const FormOverview = () => {
   );
 };
 
-const CardTemplate = ({ name, value, icon }: { name: string; value: string; icon: React.ReactNode }) => {
+const CardTemplate = ({
+  name,
+  value,
+  icon,
+  iconBg = "bg-primary/10 dark:bg-primary/20",
+}: {
+  name: string;
+  value: string;
+  icon: React.ReactNode;
+  iconBg?: string;
+}) => {
   return (
-    <Card className="p-4 flex flex-col gap-3 hover:shadow-sm transition-shadow duration-200 group">
+    <Card className="p-4 flex flex-col gap-3 hover:shadow-sm transition-shadow duration-200 group dark:bg-neutral-900/50">
       <div className="flex justify-between items-center w-full">
-        <span className="text-xs text-foreground/70 font-medium">{name}</span>
-        <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
-          {icon}
-        </div>
+        <span className="text-xs text-foreground/70 font-medium dark:text-neutral-400">{name}</span>
+        <div className={`p-2 rounded-lg ${iconBg} group-hover:opacity-80 transition-colors`}>{icon}</div>
       </div>
-      <span className="text-xl font-medium">{value}</span>
+      <span className="text-xl font-medium dark:text-white">{value}</span>
     </Card>
   );
 };
