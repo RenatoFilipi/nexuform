@@ -67,7 +67,7 @@ const EditorWrapper = (props: IProps) => {
         </div>
       )}
       {!query.isPending && !query.isError && !isDesktop && (
-        <div className="flex justify-center items-center w-full">
+        <div className="flex w-full flex-1">
           <EditorContentMobile />
         </div>
       )}

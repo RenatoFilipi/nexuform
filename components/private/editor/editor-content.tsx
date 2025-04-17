@@ -50,11 +50,12 @@ const COMPONENT_MAP: Record<TBlock, React.ComponentType<IBlockComponent>> = {
 };
 const EditorContent = () => {
   const editor = useEditorStore();
+  const hasBlocks = editor.blocks.length > 0;
   const { setTheme, theme } = useTheme();
 
   return (
     <div className="w-full flex justify-center items-start overflow-y-auto relative">
-      {editor.blocks.length > 0 && (
+      {hasBlocks && (
         <div className="p-2 flex justify-center items-center fixed mt-12 left-2 top-2 rounded flex-col gap-3">
           <AddBlock>
             <Button variant={"outline"} size={"icon"} className="w-8 h-8">
