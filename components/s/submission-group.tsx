@@ -9,7 +9,6 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
-import ModeToggle2 from "../core/mode-toggle2";
 import CheckBoxesDesign from "../private/blocks/design/checkboxes-design";
 import CustomScaleDesign from "../private/blocks/design/custom-scale-design";
 import DatePickerDesign from "../private/blocks/design/date-picker-design";
@@ -146,7 +145,7 @@ const SubmissionGroup = () => {
     );
 
   return (
-    <div className="flex flex-col gap-6 sm:w-[620px] my-10 px-4 sm:px-0 min-h-dvh">
+    <div className="flex flex-col gap-6 sm:w-[620px] w-full my-10 px-4 sm:px-0 min-h-dvh">
       <div className="flex flex-col gap-2 justify-center items-start">
         <h1 className="text-2xl font-bold">{form.name}</h1>
         <p className="text-sm text-foreground/80">{form.description}</p>
@@ -170,8 +169,7 @@ const SubmissionGroup = () => {
           className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 text-white w-full">
           {submissionState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />} {form.submit_text}
         </button>
-        <div className="flex justify-between items-center w-full gap-2 h-1/4">
-          <ModeToggle2 />
+        <div className="flex justify-center sm:justify-end items-center w-full gap-2 h-1/4">
           {form.nebulaform_branding && (
             <Link href="/">
               <PoweredByBadge version="default" />

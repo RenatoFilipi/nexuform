@@ -55,7 +55,7 @@ const SubmissionWrapper = ({ form, theme, blocks }: { form: EForm; theme: ETheme
   }
 
   return (
-    <div className="flex justify-center items-start min-h-dvh flex-1 border-t-foreground/5">
+    <div className="flex justify-center items-start min-h-dvh flex-1 border-t-foreground/5 w-full">
       {b.length > 0 && <SubmissionGroup />}
     </div>
   );

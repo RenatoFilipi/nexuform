@@ -1,4 +1,3 @@
-import ModeToggle2 from "@/components/core/mode-toggle2";
 import PoweredByBadge from "@/components/shared/powered-by-badge";
 import { Button } from "@/components/ui/button";
 import useEditorStore from "@/stores/editor";
@@ -10,11 +9,14 @@ import {
   CheckCircle2Icon,
   Edit2Icon,
   GripVerticalIcon,
+  MoonIcon,
   PlusIcon,
   Settings2Icon,
+  SunIcon,
   Trash2Icon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTheme } from "next-themes";
 import AddBlock from "../blocks/add-block";
 import CheckBoxesDesign from "../blocks/design/checkboxes-design";
 import CustomScaleDesign from "../blocks/design/custom-scale-design";
@@ -48,6 +50,7 @@ const COMPONENT_MAP: Record<TBlock, React.ComponentType<IBlockComponent>> = {
 };
 const EditorContent = () => {
   const editor = useEditorStore();
+  const { setTheme, theme } = useTheme();
 
   return (
     <div className="w-full flex justify-center items-start overflow-y-auto relative">
@@ -83,6 +86,25 @@ const EditorContent = () => {
             size={"icon"}
             className="w-8 h-8">
             <CheckCircle2Icon className="w-4 h-4" />
+          </Button>
+          <div className="border-t my-1 w-full"></div>
+          <Button
+            onClick={() => {
+              setTheme("light");
+            }}
+            variant={theme === "light" ? "secondary" : "ghost"}
+            size={"icon"}
+            className="w-8 h-8">
+            <SunIcon className="w-4 h-4" />
+          </Button>
+          <Button
+            onClick={() => {
+              setTheme("dark");
+            }}
+            variant={theme === "dark" ? "secondary" : "ghost"}
+            size={"icon"}
+            className="w-8 h-8">
+            <MoonIcon className="w-4 h-4" />
           </Button>
         </div>
       )}
@@ -171,8 +193,7 @@ const EditorGroup = () => {
           className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 text-white w-full">
           {form.submit_text}
         </button>
-        <div className="flex justify-between items-center w-full gap-2 h-14">
-          <ModeToggle2 />
+        <div className="flex justify-center sm:justify-end items-center w-full gap-2 h-14">
           {form.nebulaform_branding && <PoweredByBadge version="default" />}
         </div>
       </div>
