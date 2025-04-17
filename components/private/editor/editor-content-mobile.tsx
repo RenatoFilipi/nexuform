@@ -3,16 +3,17 @@ import { Button } from "@/components/ui/button";
 import useEditorStore from "@/stores/editor";
 import { EBlock, ETheme } from "@/utils/entities";
 import { TBlock } from "@/utils/types";
+import { Reorder, useDragControls } from "framer-motion";
 import {
   CalendarIcon,
   CheckCircleIcon,
   CheckSquareIcon,
   ChevronDownIcon,
-  CircleHelpIcon,
   EqualIcon,
   GripVertical,
   HashIcon,
   MailIcon,
+  PenIcon,
   Pencil,
   PlusIcon,
   ScaleIcon,
@@ -34,6 +35,7 @@ import ParagraphTextDesign from "../blocks/design/paragraph-text-design";
 import ShortTextDesign from "../blocks/design/short-text-design";
 import StarRatingDesign from "../blocks/design/star-rating-design";
 import EditorFormSettings from "./editor-form-settings";
+import EditorToolsMobile from "./editor-tools-mobile";
 
 interface IBlockComponent {
   block: EBlock;
@@ -52,7 +54,6 @@ const COMPONENT_MAP: Record<TBlock, React.ComponentType<IBlockComponent>> = {
   custom_scale: CustomScaleDesign,
   date_picker: DatePickerDesign,
 };
-
 const EditorContentMobile = () => {
   const editor = useEditorStore();
   const t = useTranslations("app");
@@ -79,7 +80,7 @@ const EditorContentMobile = () => {
   }
 
   return (
-    <div className="flex w-full p-4 gap-4 flex-col h-full justify-start">
+    <div className="flex w-full px-4 pb-4 pt-4 gap-4 flex-col h-full justify-start">
       <EditorControls />
       {editor.preview && <EditorPreview />}
       {!editor.preview && (
@@ -100,80 +101,114 @@ const EditorCanvas = () => {
 };
 const EditorGroup = () => {
   const editor = useEditorStore();
+
+  const handleReorder = (newOrder: EBlock[]) => {
+    const updatedBlocks = newOrder.map((block, index) => ({
+      ...block,
+      position: index + 1,
+    }));
+    editor.setBlocks(updatedBlocks);
+  };
+
   return (
-    <div>
+    <Reorder.Group axis="y" values={editor.blocks} onReorder={handleReorder} className="flex flex-col w-full gap-2">
       {editor.blocks.map((block) => {
         return <EditorBlock key={block.id} block={block} />;
       })}
-    </div>
+    </Reorder.Group>
   );
 };
 const EditorBlock = ({ block }: { block: EBlock }) => {
+  const t = useTranslations("app");
   const editor = useEditorStore();
-  const getBlockIcon = (type: TBlock) => {
-    switch (type) {
-      case "short_text":
-        return <EqualIcon className="w-4 h-4 text-gray-500 mr-2" />;
-      case "paragraph_text":
-        return <TextIcon className="w-4 h-4 text-gray-500 mr-2" />;
-      case "multiple_choice":
-        return <CheckCircleIcon className="w-4 h-4 text-gray-500 mr-2" />;
-      case "checkboxes":
-        return <CheckSquareIcon className="w-4 h-4 text-gray-500 mr-2" />;
-      case "dropdown_menu":
-        return <ChevronDownIcon className="w-4 h-4 text-gray-500 mr-2" />;
-      case "number_input":
-        return <HashIcon className="w-4 h-4 text-gray-500 mr-2" />;
-      case "email_address":
-        return <MailIcon className="w-4 h-4 text-gray-500 mr-2" />;
-      case "star_rating":
-        return <StarIcon className="w-4 h-4 text-gray-500 mr-2" />;
-      case "custom_scale":
-        return <ScaleIcon className="w-4 h-4 text-gray-500 mr-2" />;
-      case "date_picker":
-        return <CalendarIcon className="w-4 h-4 text-gray-500 mr-2" />;
-      default:
-        return <CircleHelpIcon className="w-4 h-4 text-gray-500 mr-2" />;
-    }
+  const dragControls = useDragControls();
+  const getBlock: Record<TBlock, { name: string; icon: any }> = {
+    short_text: {
+      name: t("label_short_text"),
+      icon: EqualIcon,
+    },
+    paragraph_text: {
+      name: t("label_paragraph_text"),
+      icon: TextIcon,
+    },
+    multiple_choice: {
+      name: t("label_multiple_choice"),
+      icon: CheckCircleIcon,
+    },
+    checkboxes: {
+      name: t("label_checkboxes"),
+      icon: CheckSquareIcon,
+    },
+    dropdown_menu: {
+      name: t("label_dropdown_menu"),
+      icon: ChevronDownIcon,
+    },
+    number_input: {
+      name: t("label_number_input"),
+      icon: HashIcon,
+    },
+    email_address: {
+      name: t("label_email_address"),
+      icon: MailIcon,
+    },
+    star_rating: {
+      name: t("label_star_rating"),
+      icon: StarIcon,
+    },
+    custom_scale: {
+      name: t("label_custom_scale"),
+      icon: ScaleIcon,
+    },
+    date_picker: {
+      name: t("label_date_picker"),
+      icon: CalendarIcon,
+    },
   };
-
+  const b = getBlock[block.type as TBlock];
   const onRemoveBlock = () => {
     editor.removeBlock(block.id);
   };
+  const onSelectBlock = () => {
+    editor.setBlockView(block);
+    editor.setToolView("block");
+  };
 
   return (
-    <div className="relative bg-white rounded-lg shadow-sm border border-gray-200 p-3 mb-2">
-      {/* Block header with type and actions */}
+    <Reorder.Item
+      value={block}
+      dragListener={false}
+      dragControls={dragControls}
+      className="relative rounded-lg shadow-sm border p-3 mb-2 bg-background">
       <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center">
-          {getBlockIcon(block.type as TBlock)}
-          <span className="text-xs font-medium text-gray-500 uppercase">{block.type.replace("_", " ")}</span>
-          {block.required && <span className="ml-2 text-xs text-red-500">* Required</span>}
+        <div className="flex items-center gap-2">
+          {<b.icon className="w-4 h-4 text-primary" />}
+          <span className="text-xs font-medium uppercase text-foreground/70">{b.name}</span>
+          {block.required && <span className="text-sm text-red-500">*</span>}
         </div>
-
         <div className="flex space-x-1">
-          {/* Move button (drag handle) */}
-          <button className="p-1 text-gray-400 hover:text-gray-600">
-            <GripVertical className="w-4 h-4" />
+          <button
+            onPointerDown={(e) => {
+              e.preventDefault();
+              dragControls.start(e);
+            }}
+            className="p-1 text-gray-400 hover:text-gray-600">
+            <GripVertical className="w-5 h-5" />
           </button>
-
-          {/* Edit button */}
-          <button className="p-1 text-gray-400 hover:text-blue-500">
-            <Pencil className="w-4 h-4" />
-          </button>
-
-          {/* Remove button */}
+          <EditorToolsMobile>
+            <button onClick={onSelectBlock} className="p-1 text-gray-400 hover:text-blue-500">
+              <Pencil className="w-5 h-5" />
+            </button>
+          </EditorToolsMobile>
           <button onClick={onRemoveBlock} className="p-1 text-gray-400 hover:text-red-500">
-            <Trash2 className="w-4 h-4" />
+            <Trash2 className="w-5 h-5" />
           </button>
         </div>
       </div>
-      {/* Block content */}
       <div className="mb-1">
-        <h3 className="text-sm font-medium text-gray-800">{block.name}</h3>
-        {block.description && <p className="text-xs text-gray-500 mt-1">{block.description}</p>}
+        <h3 className="text-sm font-semibold text-foreground/80">{block.name}</h3>
+        {block.description && <p className="text-xs mt-1 text-foreground/50">{block.description}</p>}
       </div>
-    </div>
+    </Reorder.Item>
   );
 };
 const EditorPreview = () => {
@@ -181,7 +216,7 @@ const EditorPreview = () => {
 
   return (
     <div className="flex w-full overflow-y-auto h-dvh flex-col gap-4">
-      <div className="flex flex-col gap-2 px-3 justify-center items-center">
+      <div className="flex flex-col gap-2 justify-center items-center">
         <h1 className="text-2xl font-bold">{editor.form.name}</h1>
         <p className="text-sm text-foreground/80">{editor.form.description}</p>
       </div>
@@ -222,8 +257,8 @@ const EditorControls = () => {
               editor.setView("blocks");
             }}
             key={control.label}
-            className={`relative w-full flex justify-center items-center h-full hover:bg-foreground/5`}>
-            <div>{control.label}</div>
+            className={`relative w-full flex justify-center items-center h-full hover:bg-foreground/5 border`}>
+            <span className="text-sm">{control.label}</span>
             {control.preview === editor.preview && <div className="bg-primary bottom-0 w-full h-0.5 absolute"></div>}
           </button>
         );
@@ -232,18 +267,29 @@ const EditorControls = () => {
   );
 };
 const EditorTools = () => {
+  const editor = useEditorStore();
+
+  const onSelectTools = () => {
+    editor.setToolView("properties");
+  };
+
   return (
     <div className="flex justify-evenly items-center w-full h-10 gap-4">
-      <AddBlock>
-        <Button variant={"outline"} className="w-full">
-          <PlusIcon />
-        </Button>
-      </AddBlock>
       <EditorFormSettings>
-        <Button variant={"outline"} className="w-full">
-          <SettingsIcon />
+        <Button variant={"ghost"} className="w-full">
+          <SettingsIcon className="w-4 h-4" />
         </Button>
       </EditorFormSettings>
+      <AddBlock>
+        <Button variant={"ghost"} className="w-full">
+          <PlusIcon className="w-4 h-4" />
+        </Button>
+      </AddBlock>
+      <EditorToolsMobile>
+        <Button onClick={onSelectTools} variant={"ghost"} className="w-full">
+          <PenIcon className="w-4 h-4" />
+        </Button>
+      </EditorToolsMobile>
     </div>
   );
 };

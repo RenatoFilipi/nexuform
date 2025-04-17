@@ -12,10 +12,10 @@ import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
 import { blockViewSettings } from "@/utils/constants";
 import { getBlockName } from "@/utils/functions";
-import { TBlock, TEditorView, TToolView } from "@/utils/types";
+import { TBlock, TToolView } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { Reorder } from "framer-motion";
-import { BlocksIcon, CheckCircle2Icon, CircleHelpIcon, PlusIcon, XIcon } from "lucide-react";
+import { CircleHelpIcon, PlusIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import ColorPicker from "../../shared/utils/color-picker";
@@ -26,7 +26,6 @@ const EditorTools = () => {
   const views = [
     { label: t("label_properties"), view: "properties", enabled: true },
     { label: t("label_styles"), view: "styles", enabled: true },
-    { label: t("label_reorder"), view: "reorder", enabled: false },
   ];
   const enabledViews = views.filter((x) => x.enabled);
   const isEditingBlock = editor.toolView === "block";
@@ -62,12 +61,7 @@ const EditorTools = () => {
 };
 const ToolProperties = () => {
   const t = useTranslations("app");
-  const { form, setForm, setView, view } = useEditorStore();
-  const views = [
-    { label: t("label_blocks"), view: "blocks", enabled: true, icon: BlocksIcon },
-    { label: t("label_success"), view: "success", enabled: true, icon: CheckCircle2Icon },
-  ];
-  const enabledViews = views.filter((x) => x.enabled);
+  const { form, setForm, view } = useEditorStore();
 
   const onSetName = (value: string) => {
     setForm({ ...form, name: value });
@@ -87,21 +81,6 @@ const ToolProperties = () => {
 
   return (
     <div className="flex flex-col w-full">
-      <div className="w-full justify-center items-center p-4 gap-3 hidden">
-        {enabledViews.map((x) => {
-          return (
-            <button
-              key={x.view}
-              onClick={() => setView(x.view as TEditorView)}
-              className={`${
-                x.view === view ? "bg-secondary text-background shadow-sm font-medium border-primary" : ""
-              } border rounded-md w-full py-1.5 text-sm font-normal transition-all duration-150 ease-in-out flex justify-center items-center gap-2`}>
-              <x.icon className={`w-4 h-4`} />
-              {x.label}
-            </button>
-          );
-        })}
-      </div>
       {view === "blocks" && (
         <div className="flex flex-col justify-start items-center w-full p-5 gap-6 overflow-y-auto">
           <div className="grid gap-3 w-full">
