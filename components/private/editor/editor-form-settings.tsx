@@ -24,7 +24,7 @@ import { useState } from "react";
 import { useMedia } from "react-use";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
 import FormStatus from "../form/form-status";
-import FormDelete from "../shared/form-delete";
+import FormDelete from "../shared/form/form-delete";
 
 const EditorFormSettings = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations("app");

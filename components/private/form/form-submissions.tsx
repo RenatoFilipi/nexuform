@@ -1,6 +1,6 @@
 "use client";
 
-import SubmissionStatusBadge from "@/components/shared/submission-status-badge";
+import SubmissionStatusBadge from "@/components/shared/badges/submission-status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";

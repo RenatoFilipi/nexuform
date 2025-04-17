@@ -1,5 +1,3 @@
-import Brand from "@/components/core/brand";
-import ModeToggle2 from "@/components/core/mode-toggle2";
 import Nav from "@/components/public/core/nav";
 import Cta from "@/components/public/landing/cta";
 import Faq from "@/components/public/landing/faq";
@@ -7,6 +5,8 @@ import Features from "@/components/public/landing/features";
 import Hero from "@/components/public/landing/hero";
 import HowItWorks from "@/components/public/landing/how-it-works";
 import Pricing from "@/components/public/landing/pricing";
+import Brand from "@/components/shared/core/brand";
+import ModeToggle2 from "@/components/shared/core/mode-toggle2";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { getTranslations } from "next-intl/server";

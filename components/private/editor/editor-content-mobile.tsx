@@ -1,4 +1,4 @@
-import WipUI from "../utils/wip-ui";
+import WipUI from "../../shared/utils/wip-ui";
 
 const EditorContentMobile = () => {
   return (

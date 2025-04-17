@@ -5,7 +5,7 @@ import { getCurrentPlan } from "@/utils/functions";
 import { TPlan } from "@/utils/types";
 import { LayersIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import ManageSubscription from "../shared/manage-subscription";
+import ManageSubscription from "../shared/subscription/manage-subscription";
 import DashboardFormCard from "./dashboard-form-card";
 import DashboardNewForm from "./dashboard-new-form";
 

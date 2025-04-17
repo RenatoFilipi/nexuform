@@ -1,5 +1,5 @@
-import Brand from "@/components/core/brand";
 import GridPattern from "@/components/magicui/animated-grid-pattern";
+import Brand from "@/components/shared/core/brand";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 

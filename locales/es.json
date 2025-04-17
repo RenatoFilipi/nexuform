@@ -347,7 +347,10 @@
     "label_category_data": "Datos",
     "label_category_rating": "Calificación",
     "label_no_options_added": "No hay opciones añadidas",
-    "label_download_qrcode": "Descargar código QR"
+    "label_download_qrcode": "Descargar código QR",
+    "label_light": "Claro",
+    "label_dark": "Oscuro",
+    "label_system": "Sistema"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

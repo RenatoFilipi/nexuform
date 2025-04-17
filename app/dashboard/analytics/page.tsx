@@ -1,6 +1,6 @@
 import AnalyticsWrapper from "@/components/private/analytics/analytics-wrapper";
-import ErrorUI from "@/components/private/utils/error-ui";
-import UpgradeToProUI from "@/components/private/utils/upgrade-to-pro-ui";
+import UpgradeToProUI from "@/components/private/shared/subscription/upgrade-to-pro-ui";
+import ErrorUI from "@/components/shared/utils/error-ui";
 import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";

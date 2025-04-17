@@ -28,7 +28,7 @@ import { CheckIcon, RocketIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useMedia } from "react-use";
-import CheckoutStripe from "../checkout/checkout-stripe";
+import CheckoutStripe from "../../checkout/checkout-stripe";
 import CancelSubscription from "./cancel-subscription";
 
 const ManageSubscription = ({ children }: { children: React.ReactNode }) => {

@@ -4,7 +4,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/compon
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
-import ModeToggle2 from "../../core/mode-toggle2";
+import ModeToggle2 from "../../shared/core/mode-toggle2";
 
 const Nav = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations("landing");

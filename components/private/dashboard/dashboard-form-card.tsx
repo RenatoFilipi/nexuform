@@ -1,4 +1,4 @@
-import FormStatusBadge from "@/components/shared/form-status-badge";
+import FormStatusBadge from "@/components/shared/badges/form-status-badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -16,7 +16,7 @@ import { MoreHorizontalIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import FormShare from "../form/form-share";
-import FormDelete from "../shared/form-delete";
+import FormDelete from "../shared/form/form-delete";
 
 const DashboardFormCard = ({ form }: { form: EForm }) => {
   const t = useTranslations("app");

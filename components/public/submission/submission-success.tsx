@@ -1,6 +1,6 @@
 import useSubmissionStore from "@/stores/submission";
 import { TColor } from "@/utils/types";
-import SuccessDesign from "../private/blocks/success-design";
+import SuccessDesign from "../../private/blocks/success-design";
 
 const SubmissionSuccess = () => {
   const { form, theme } = useSubmissionStore();

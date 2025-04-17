@@ -4,10 +4,10 @@ import { TAppState, TSetState } from "@/utils/types";
 import { CheckIcon, FrownIcon, Loader2Icon, SmileIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { ReactNode, useState } from "react";
-import { Button } from "../ui/button";
-import { Textarea } from "../ui/textarea";
+import { Button } from "../../../ui/button";
+import { Textarea } from "../../../ui/textarea";
 
-const Feedback = ({ children }: { children: ReactNode }) => {
+const FeedbackForm = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -112,4 +112,4 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   );
 };
 
-export default Feedback;
+export default FeedbackForm;

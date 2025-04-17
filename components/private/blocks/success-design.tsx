@@ -1,6 +1,6 @@
 "use client";
 
-import Brand from "@/components/core/brand";
+import Brand from "@/components/shared/core/brand";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { TColor } from "@/utils/types";

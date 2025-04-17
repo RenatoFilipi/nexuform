@@ -4,8 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useState } from "react";
-import { Label } from "../ui/label";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { Label } from "../../ui/label";
+import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
 
 const ModeToggle2 = () => {
   const { setTheme, theme } = useTheme();

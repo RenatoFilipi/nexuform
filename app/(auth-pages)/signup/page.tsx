@@ -1,7 +1,7 @@
-import { default as Brand } from "@/components/core/brand";
 import SignupForm from "@/components/public/auth/signup-form";
 import Nav from "@/components/public/core/nav";
 import AuthPanel from "@/components/public/landing/auth-panel";
+import { default as Brand } from "@/components/shared/core/brand";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { Metadata } from "next";

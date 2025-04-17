@@ -6,7 +6,7 @@ import { EProfile, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { WalletIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import ManageSubscription from "../shared/manage-subscription";
+import ManageSubscription from "./manage-subscription";
 
 const SubscriptionUI = ({
   email,

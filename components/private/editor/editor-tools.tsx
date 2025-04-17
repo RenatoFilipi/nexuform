@@ -18,7 +18,7 @@ import { Reorder } from "framer-motion";
 import { BlocksIcon, CheckCircle2Icon, CircleHelpIcon, PlusIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import ColorPicker from "../shared/color-picker";
+import ColorPicker from "../../shared/utils/color-picker";
 
 const EditorTools = () => {
   const t = useTranslations("app");

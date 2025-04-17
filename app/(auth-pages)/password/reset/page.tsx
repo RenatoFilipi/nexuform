@@ -1,7 +1,7 @@
-import Brand from "@/components/core/brand";
 import ResetPasswordForm from "@/components/public/auth/reset-password-form";
 import Nav from "@/components/public/core/nav";
 import AuthPanel from "@/components/public/landing/auth-panel";
+import Brand from "@/components/shared/core/brand";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { Metadata } from "next";

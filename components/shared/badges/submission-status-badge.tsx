@@ -1,6 +1,6 @@
 import { TSubmissionStatus } from "@/utils/types";
 import { useTranslations } from "next-intl";
-import { Badge } from "../ui/badge";
+import { Badge } from "../../ui/badge";
 
 const SubmissionStatusBadge = ({ status, uppercase = false }: { status: TSubmissionStatus; uppercase?: boolean }) => {
   const t = useTranslations("app");

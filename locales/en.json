@@ -347,7 +347,10 @@
     "label_category_data": "Data",
     "label_category_rating": "Rating",
     "label_no_options_added": "No options added",
-    "label_download_qrcode": "Download QR code"
+    "label_download_qrcode": "Download QR code",
+    "label_light": "Light",
+    "label_dark": "Dark",
+    "label_system": "System"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

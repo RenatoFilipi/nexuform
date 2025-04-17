@@ -1,4 +1,4 @@
-import Brand from "@/components/core/brand";
+import Brand from "@/components/shared/core/brand";
 import { supportEmail } from "@/utils/envs";
 import Link from "next/link";
 

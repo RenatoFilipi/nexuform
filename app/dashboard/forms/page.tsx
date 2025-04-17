@@ -1,6 +1,6 @@
 import DashboardWrapper from "@/components/private/dashboard/dashboard-wrapper";
-import ErrorUI from "@/components/private/utils/error-ui";
-import SubscriptionUI from "@/components/private/utils/subscription-ui";
+import SubscriptionUI from "@/components/private/shared/subscription/subscription-ui";
+import ErrorUI from "@/components/shared/utils/error-ui";
 import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";

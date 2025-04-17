@@ -1,4 +1,4 @@
-import SubmissionStatusBadge from "@/components/shared/submission-status-badge";
+import SubmissionStatusBadge from "@/components/shared/badges/submission-status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -17,7 +17,7 @@ import Papa from "papaparse";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
-import ManageSubscription from "../shared/manage-subscription";
+import ManageSubscription from "../shared/subscription/manage-subscription";
 import FormSubmissionStatus from "./form-submission-status";
 
 const FormSubmissionDetails = ({

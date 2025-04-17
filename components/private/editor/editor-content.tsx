@@ -1,4 +1,4 @@
-import PoweredByBadge from "@/components/shared/powered-by-badge";
+import PoweredByBadge from "@/components/shared/badges/powered-by-badge";
 import { Button } from "@/components/ui/button";
 import useEditorStore from "@/stores/editor";
 import { EBlock, ETheme } from "@/utils/entities";

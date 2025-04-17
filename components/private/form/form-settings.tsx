@@ -17,7 +17,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import FormDelete from "../shared/form-delete";
+import FormDelete from "../shared/form/form-delete";
 import FormStatus from "./form-status";
 
 type TView = "general" | "status" | "delete";

@@ -1,4 +1,4 @@
-import Nav from "@/components/private/shared/nav";
+import Nav from "@/components/private/shared/core/nav";
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   return (

@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@/components/core/theme-provider";
+import { ThemeProvider } from "@/components/shared/core/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import QueryProvider from "@/lib/query-provider";
 import type { Metadata } from "next";

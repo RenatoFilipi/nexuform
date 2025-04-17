@@ -1,7 +1,8 @@
 "use client";
 
 import { signOutAction } from "@/app/actions/auth";
-import FormStatusBadge from "@/components/shared/form-status-badge";
+import FeedbackForm from "@/components/private/shared/core/feedback-form";
+import FormStatusBadge from "@/components/shared/badges/form-status-badge";
 import { Badge } from "@/components/ui/badge";
 import {
   Drawer,
@@ -44,10 +45,9 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import { toast } from "sonner";
-import { default as Brand } from "../../core/brand";
-import Feedback from "../../core/feedback";
-import { Avatar, AvatarFallback } from "../../ui/avatar";
-import { Button } from "../../ui/button";
+import { default as Brand } from "../../../shared/core/brand";
+import { Avatar, AvatarFallback } from "../../../ui/avatar";
+import { Button } from "../../../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -55,8 +55,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../../ui/dropdown-menu";
-import ManageSubscription from "./manage-subscription";
+} from "../../../ui/dropdown-menu";
+import ManageSubscription from "../subscription/manage-subscription";
 
 const Nav = () => {
   const pathname = usePathname();
@@ -341,12 +341,12 @@ const NavApp = () => {
       </div>
       <div className="hidden sm:flex justify-center items-center gap-4">
         <div className="flex justify-center items-center gap-3">
-          <Feedback>
+          <FeedbackForm>
             <Button variant={"outline"} size={"xs"}>
               <MessageSquareCodeIcon className="w-4 h-4 mr-2" />
               {t("fb_label")}
             </Button>
-          </Feedback>
+          </FeedbackForm>
         </div>
         <AvatarAppMenu>
           <Avatar className="cursor-pointer w-8 h-8">

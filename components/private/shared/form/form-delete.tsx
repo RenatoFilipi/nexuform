@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
 import { ReactNode, useState, useTransition } from "react";
 import { useMedia } from "react-use";
 import { toast } from "sonner";
-import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
+import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../../ui/drawer";
 
 const FormDelete = ({ children, formId, formName }: { children: ReactNode; formId: string; formName: string }) => {
   const t = useTranslations("app");

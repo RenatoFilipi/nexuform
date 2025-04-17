@@ -9,17 +9,17 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
-import CheckBoxesDesign from "../private/blocks/design/checkboxes-design";
-import CustomScaleDesign from "../private/blocks/design/custom-scale-design";
-import DatePickerDesign from "../private/blocks/design/date-picker-design";
-import DropdownMenuDesign from "../private/blocks/design/dropdown-menu-design";
-import EmailAddressDesign from "../private/blocks/design/email-address-design";
-import MultipleChoiceDesign from "../private/blocks/design/multiple-choice-design";
-import NumberInputDesign from "../private/blocks/design/number-input-design";
-import ParagraphTextDesign from "../private/blocks/design/paragraph-text-design";
-import ShortTextDesign from "../private/blocks/design/short-text-design";
-import StarRatingDesign from "../private/blocks/design/star-rating-design";
-import PoweredByBadge from "../shared/powered-by-badge";
+import CheckBoxesDesign from "../../private/blocks/design/checkboxes-design";
+import CustomScaleDesign from "../../private/blocks/design/custom-scale-design";
+import DatePickerDesign from "../../private/blocks/design/date-picker-design";
+import DropdownMenuDesign from "../../private/blocks/design/dropdown-menu-design";
+import EmailAddressDesign from "../../private/blocks/design/email-address-design";
+import MultipleChoiceDesign from "../../private/blocks/design/multiple-choice-design";
+import NumberInputDesign from "../../private/blocks/design/number-input-design";
+import ParagraphTextDesign from "../../private/blocks/design/paragraph-text-design";
+import ShortTextDesign from "../../private/blocks/design/short-text-design";
+import StarRatingDesign from "../../private/blocks/design/star-rating-design";
+import PoweredByBadge from "../../shared/badges/powered-by-badge";
 import SubmissionSuccess from "./submission-success";
 
 interface IBlockComponent {

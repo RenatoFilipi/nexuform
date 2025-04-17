@@ -7,7 +7,7 @@ import { getCurrentPlan, getDaysDifference } from "@/utils/functions";
 import { TPlan } from "@/utils/types";
 import { CalendarIcon, CrownIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import ManageSubscription from "../shared/manage-subscription";
+import ManageSubscription from "../shared/subscription/manage-subscription";
 
 const SettingsBilling = () => {
   const t = useTranslations("app");
