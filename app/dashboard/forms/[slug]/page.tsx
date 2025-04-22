@@ -72,7 +72,6 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
       submissions={submissions.data}
       formAnalytics={formsAnalytics.data}
       subscription={subscriptions.data}
-      integrations={[]}
     />
   );
 };

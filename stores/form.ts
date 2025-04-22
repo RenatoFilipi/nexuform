@@ -1,5 +1,5 @@
 import { day, paginationFrom, paginationTo } from "@/utils/constants";
-import { EBlock, EForm, EFormAnalytics, EIntegration, ESubmission } from "@/utils/entities";
+import { EBlock, EForm, EFormAnalytics, ESubmission } from "@/utils/entities";
 import { IFormFilters, IPagination } from "@/utils/interfaces";
 import { create } from "zustand";
 
@@ -11,7 +11,6 @@ interface form {
   formAnalytics: EFormAnalytics;
   filters: IFormFilters;
   pagination: IPagination;
-  integrations: EIntegration[];
   forms: EForm[];
   setForm: (payload: EForm) => void;
   setBlocks: (payload: EBlock[]) => void;
@@ -20,7 +19,6 @@ interface form {
   setFormAnalytics: (payload: EFormAnalytics) => void;
   setFilters: (payload: IFormFilters) => void;
   setPagination: (payload: IPagination) => void;
-  setIntegrations: (payload: EIntegration[]) => void;
   setForms: (payload: EForm[]) => void;
   reset: () => void;
 }
@@ -62,7 +60,6 @@ const useFormStore = create<form>((set) => ({
   overviewSubmissions: [],
   filters: { from, to, sort: "ascending", status: "all" },
   pagination: { from: paginationFrom, to: paginationTo },
-  integrations: [],
   forms: [],
   setForm: (payload) => set({ form: payload }),
   setBlocks: (payload) => set({ blocks: payload }),
@@ -71,7 +68,6 @@ const useFormStore = create<form>((set) => ({
   setFilters: (payload) => set({ filters: payload }),
   setOverviewSubmissions: (payload) => set({ overviewSubmissions: payload }),
   setPagination: (payload) => set({ pagination: payload }),
-  setIntegrations: (payload) => set({ integrations: payload }),
   setForms: (payload) => set({ forms: payload }),
   reset: () =>
     set({
@@ -106,7 +102,6 @@ const useFormStore = create<form>((set) => ({
         avg_completion_time: null,
       },
       pagination: { from: paginationFrom, to: paginationTo },
-      integrations: [],
       forms: [],
     }),
 }));

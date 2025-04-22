@@ -3,7 +3,7 @@
 import useFormStore from "@/stores/form";
 import useUserStore from "@/stores/user";
 import { paginationFrom, paginationTo } from "@/utils/constants";
-import { EBlock, EForm, EFormAnalytics, EIntegration, EProfile, ESubmission, ESubscription } from "@/utils/entities";
+import { EBlock, EForm, EFormAnalytics, EProfile, ESubmission, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { BarChartIcon, SendIcon, SettingsIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -23,7 +23,6 @@ interface Props {
   profile: EProfile;
   subscription: ESubscription;
   email: string;
-  integrations: EIntegration[];
   locale: string;
   forms: EForm[];
 }
@@ -37,7 +36,6 @@ const FormWrapper = ({
   subscription,
   email,
   overviewSubmissions,
-  integrations,
   locale,
   forms,
 }: Props) => {
@@ -80,7 +78,6 @@ const FormWrapper = ({
       formStore.setOverviewSubmissions(overviewSubmissions);
       formStore.setSubmissions(submissions);
       formStore.setBlocks(blocks);
-      formStore.setIntegrations(integrations);
       formStore.setPagination({ from: paginationFrom, to: paginationTo });
       formStore.setForms(forms);
       return null;

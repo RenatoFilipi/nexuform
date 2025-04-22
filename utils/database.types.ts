@@ -279,167 +279,6 @@ export type Database = {
           },
         ]
       }
-      integrations: {
-        Row: {
-          active: boolean
-          created_at: string
-          form_id: string
-          gs_api_key: string | null
-          gs_data_range: string | null
-          gs_id: string | null
-          gs_name: string | null
-          id: string
-          name: string
-          profile_id: string
-          slack_bot_icon_emoji: string | null
-          slack_bot_name: string | null
-          slack_channel: string | null
-          slack_webhook_url: string | null
-          type: string
-          updated_at: string
-        }
-        Insert: {
-          active?: boolean
-          created_at?: string
-          form_id: string
-          gs_api_key?: string | null
-          gs_data_range?: string | null
-          gs_id?: string | null
-          gs_name?: string | null
-          id?: string
-          name?: string
-          profile_id: string
-          slack_bot_icon_emoji?: string | null
-          slack_bot_name?: string | null
-          slack_channel?: string | null
-          slack_webhook_url?: string | null
-          type?: string
-          updated_at?: string
-        }
-        Update: {
-          active?: boolean
-          created_at?: string
-          form_id?: string
-          gs_api_key?: string | null
-          gs_data_range?: string | null
-          gs_id?: string | null
-          gs_name?: string | null
-          id?: string
-          name?: string
-          profile_id?: string
-          slack_bot_icon_emoji?: string | null
-          slack_bot_name?: string | null
-          slack_channel?: string | null
-          slack_webhook_url?: string | null
-          type?: string
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "integrations_form_id_fkey"
-            columns: ["form_id"]
-            isOneToOne: false
-            referencedRelation: "forms"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "integrations_profile_id_fkey"
-            columns: ["profile_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      invoices: {
-        Row: {
-          amount: number
-          created_at: string
-          currency: string
-          due_date: string | null
-          id: string
-          invoice_date: string
-          payment_method: string | null
-          status: string
-          subscription_id: string
-          transaction_id: string | null
-          user_id: string
-        }
-        Insert: {
-          amount?: number
-          created_at?: string
-          currency?: string
-          due_date?: string | null
-          id?: string
-          invoice_date?: string
-          payment_method?: string | null
-          status?: string
-          subscription_id: string
-          transaction_id?: string | null
-          user_id: string
-        }
-        Update: {
-          amount?: number
-          created_at?: string
-          currency?: string
-          due_date?: string | null
-          id?: string
-          invoice_date?: string
-          payment_method?: string | null
-          status?: string
-          subscription_id?: string
-          transaction_id?: string | null
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "invoices_subscription_id_fkey"
-            columns: ["subscription_id"]
-            isOneToOne: false
-            referencedRelation: "subscriptions"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "invoices_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      notifications: {
-        Row: {
-          created_at: string
-          id: string
-          profile_id: string
-          read_at: string | null
-          type: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          profile_id: string
-          read_at?: string | null
-          type?: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          profile_id?: string
-          read_at?: string | null
-          type?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "notifications_profile_id_fkey"
-            columns: ["profile_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       organizations: {
         Row: {
           created_at: string
@@ -601,36 +440,42 @@ export type Database = {
           billing_interval: string
           created_at: string
           due_date: string
+          forms: number
           id: string
           plan: string
           profile_id: string
           start_date: string
           status: string
           stripe_subscription_id: string | null
+          submissions: number
           updated_at: string
         }
         Insert: {
           billing_interval?: string
           created_at?: string
           due_date?: string
+          forms?: number
           id?: string
           plan?: string
           profile_id: string
           start_date?: string
           status?: string
           stripe_subscription_id?: string | null
+          submissions?: number
           updated_at?: string
         }
         Update: {
           billing_interval?: string
           created_at?: string
           due_date?: string
+          forms?: number
           id?: string
           plan?: string
           profile_id?: string
           start_date?: string
           status?: string
           stripe_subscription_id?: string | null
+          submissions?: number
           updated_at?: string
         }
         Relationships: [
@@ -654,7 +499,7 @@ export type Database = {
         }
         Insert: {
           category?: string
-          created_at: string
+          created_at?: string
           id?: string
           is_premium?: boolean
           is_public?: boolean
@@ -787,57 +632,6 @@ export type Database = {
             columns: ["form_id"]
             isOneToOne: false
             referencedRelation: "forms"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      usages: {
-        Row: {
-          created_at: string
-          due_date: string
-          forms: number
-          id: string
-          profile_id: string
-          start_date: string
-          submissions: number
-          subscription_id: string
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          due_date?: string
-          forms?: number
-          id?: string
-          profile_id: string
-          start_date?: string
-          submissions?: number
-          subscription_id: string
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          due_date?: string
-          forms?: number
-          id?: string
-          profile_id?: string
-          start_date?: string
-          submissions?: number
-          subscription_id?: string
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "usages_profile_id_fkey"
-            columns: ["profile_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "usages_subscription_id_fkey"
-            columns: ["subscription_id"]
-            isOneToOne: false
-            referencedRelation: "subscriptions"
             referencedColumns: ["id"]
           },
         ]

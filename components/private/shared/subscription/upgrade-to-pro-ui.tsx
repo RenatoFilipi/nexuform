@@ -34,7 +34,7 @@ const UpgradeToProUI = ({
   if (query.isPending) return null;
 
   return (
-    <div className="flex flex-col items-center justify-center h-full px-4 py-6 sm:px-6 lg:px-36 mt-36 w-full">
+    <div className="flex flex-col items-center justify-center h-dvh px-4 py-6 sm:px-6 w-full">
       <div className="flex flex-col justify-center items-center gap-4">
         <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/10">
           <CrownIcon className="w-6 h-6 text-primary" />
