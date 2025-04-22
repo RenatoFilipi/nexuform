@@ -1,9 +1,9 @@
 "use client";
 
 import ColorPicker from "@/components/shared/utils/color-picker";
-import WipUI from "@/components/shared/utils/wip-ui";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -11,7 +11,12 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
-import { TToolView } from "@/utils/types";
+import { blockViewSettings } from "@/utils/constants";
+import { getBlockName } from "@/utils/functions";
+import { TBlock, TSetState, TToolView } from "@/utils/types";
+import { useQuery } from "@tanstack/react-query";
+import { Reorder } from "framer-motion";
+import { PlusIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -35,7 +40,7 @@ const EditorToolsMobile = ({ children }: { children: React.ReactNode }) => {
           <SheetDescription></SheetDescription>
         </SheetHeader>
         <div className="flex h-full">
-          {isEditingBlock && <ToolBlock />}
+          {isEditingBlock && <ToolBlock setState={setOpen} />}
           {!isEditingBlock && (
             <div className="flex flex-col w-full gap-6 h-full flex-1">
               <div className="h-12 w-full border-b flex justify-center">
@@ -206,10 +211,330 @@ const ToolStyles = () => {
     </div>
   );
 };
-const ToolBlock = () => {
+const ToolBlock = ({ setState }: { setState: TSetState<boolean> }) => {
+  const t = useTranslations("app");
+  const editor = useEditorStore();
+  const user = useUserStore();
+  const block = editor.blocks.find((x) => x.id === editor.blockView.id)!;
+  const [input, setInput] = useState("");
+  const [options, setOptions] = useState<string[]>([]);
+  const isIdentifierAvailable = editor.blocks.some((e) => e.is_identifier === true && e.id !== block.id);
+
+  const query = useQuery({
+    queryKey: ["blockSettingsData", block.id],
+    queryFn: async () => {
+      setOptions([]);
+      const blockType = editor.blockView.type as TBlock;
+      const blockName = await getBlockName(blockType, user.locale);
+      const blockSettings = blockViewSettings.find((x) => x.block === blockType)!;
+      setOptions(editor.blockView.options ?? []);
+      return { blockName, blockSettings };
+    },
+  });
+  const onClose = () => {
+    setState(false);
+  };
+  const onAddOption = () => {
+    const trimmedInput = input.trim();
+    if (!trimmedInput) {
+      return;
+    }
+
+    const isDuplicate = options.some((option) => option.toLowerCase() === trimmedInput.toLowerCase());
+
+    if (isDuplicate) {
+      return;
+    }
+
+    const newOptions = [...options, trimmedInput];
+    setOptions(newOptions);
+    editor.updateBlock(block.id, { ...block, options: newOptions });
+    setInput("");
+  };
+  const onDeleteOption = (value: string) => {
+    const newOptions = options.filter((opt) => opt !== value);
+    setOptions(newOptions);
+    editor.updateBlock(block.id, { ...block, options: newOptions });
+  };
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      onAddOption();
+    }
+  };
+  const onReorder = (newOptions: string[]) => {
+    setOptions(newOptions);
+    editor.updateBlock(block.id, { ...block, options: newOptions });
+  };
+
+  if (query.isPending || !query.data) return null;
+
   return (
-    <div className="flex justify-center items-center w-full flex-1 border">
-      <WipUI context="Mobile Tool block" />
+    <div className="flex flex-col w-full">
+      <div className="flex justify-between items-center w-full h-12">
+        <span className="font-semibold text-sm">{query.data.blockName}</span>
+        <Button onClick={onClose} variant={"ghost"} size={"icon"} className="w-8 h-8">
+          <XIcon className="w-5 h-5" />
+        </Button>
+      </div>
+      <div className="flex flex-col justify-start items-center w-full gap-6 overflow-y-auto">
+        {/* required */}
+        {query.data.blockSettings.showRequired && (
+          <div className="flex justify-between items-center w-full">
+            <div className="grid gap-1">
+              <Label>{t("label_block_required")}</Label>
+            </div>
+            <Switch
+              id="required"
+              checked={block.required}
+              onCheckedChange={(checked: boolean) => {
+                editor.updateBlock(block.id, { ...block, required: checked });
+              }}
+            />
+          </div>
+        )}
+        {/* name */}
+        {query.data.blockSettings.showName && (
+          <div className="grid gap-3 w-full">
+            <div className="grid gap-1">
+              <Label className="">{t("label_block_name")}</Label>
+            </div>
+            <Input
+              type="text"
+              id="name"
+              value={block.name}
+              onChange={(e) => {
+                editor.updateBlock(block.id, { ...block, name: e.target.value });
+              }}
+            />
+          </div>
+        )}
+        {/* description */}
+        {query.data.blockSettings.showDescription && (
+          <div className="grid gap-3 w-full">
+            <div className="grid gap-1">
+              <Label className="">{t("label_block_desc")}</Label>
+            </div>
+            <Textarea
+              id="description"
+              value={block.description ?? ""}
+              onChange={(e) => {
+                editor.updateBlock(block.id, { ...block, description: e.target.value });
+              }}
+            />
+          </div>
+        )}
+        {/* placeholder */}
+        {query.data.blockSettings.showPlaceholder && (
+          <div className="grid gap-3 w-full">
+            <div className="grid gap-1">
+              <Label className="">{t("label_block_placeholder")}</Label>
+            </div>
+            <Input
+              type="text"
+              id="placeholder"
+              value={block.placeholder ?? ""}
+              onChange={(e) => {
+                editor.updateBlock(block.id, { ...block, placeholder: e.target.value });
+              }}
+            />
+          </div>
+        )}
+        {/* min char */}
+        {query.data.blockSettings.showMinChar && (
+          <div className="grid gap-3 w-full">
+            <Label htmlFor="min-character-limit">{t("label_block_min")}</Label>
+            <Input
+              type="number"
+              id="min-character-limit"
+              value={block.min_char ?? 1}
+              onChange={(e) => {
+                editor.updateBlock(block.id, {
+                  ...block,
+                  min_char: Number(e.target.value),
+                });
+              }}
+            />
+          </div>
+        )}
+        {/* max char */}
+        {query.data.blockSettings.showMaxChar && (
+          <div className="grid gap-3 w-full">
+            <div className="grid gap-1">
+              <Label className="">{t("label_block_max")}</Label>
+            </div>
+            <Input
+              type="number"
+              id="max-character-limit"
+              value={block.max_char ?? 100}
+              onChange={(e) => {
+                editor.updateBlock(block.id, {
+                  ...block,
+                  max_char: Number(e.target.value),
+                });
+              }}
+            />
+          </div>
+        )}
+        {/* show char limit */}
+        {query.data.blockSettings.showChar && (
+          <div className="flex justify-between items-center w-full">
+            <div className="grid gap-1">
+              <Label>{t("label_block_show_char")}</Label>
+            </div>
+            <Switch
+              id="show-character-limit"
+              checked={block.show_char ?? false}
+              onCheckedChange={(checked: boolean) => {
+                editor.updateBlock(block.id, { ...block, show_char: checked });
+              }}
+            />
+          </div>
+        )}
+        {/* options */}
+        {query.data.blockSettings.showOptions && (
+          <div className="grid gap-3 w-full">
+            <div className="grid gap-1">
+              <Label className="">{t("label_block_options")}</Label>
+            </div>
+            <div className="flex flex-col gap-3">
+              <div className="flex gap-2 items-stretch">
+                <Input
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  className="flex-1"
+                />
+                <Button
+                  size="icon"
+                  variant="default"
+                  onClick={onAddOption}
+                  disabled={!input.trim()}
+                  className="shrink-0">
+                  <PlusIcon className="w-4 h-4" />
+                </Button>
+              </div>
+
+              {options.length > 0 ? (
+                <Reorder.Group axis="y" values={options} onReorder={onReorder} className="flex flex-col gap-2 pr-1">
+                  {options.map((opt) => (
+                    <Reorder.Item
+                      key={opt}
+                      value={opt}
+                      className="group flex items-center justify-between bg-foreground/5 hover:bg-foreground/10 transition-colors p-2 rounded cursor-grab active:cursor-grabbing">
+                      <span className="text-sm truncate max-w-[70%]">{opt}</span>
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => onDeleteOption(opt)}
+                          className="opacity-0 group-hover:opacity-100 transition-opacity text-foreground/50 hover:text-foreground/80">
+                          <XIcon className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </Reorder.Item>
+                  ))}
+                </Reorder.Group>
+              ) : (
+                <div className="text-center text-sm text-muted-foreground py-4 rounded border border-dashed">
+                  {t("label_no_options_added")}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+        {/* identifier */}
+        {query.data.blockSettings.showIsIdentifier && (
+          <div className="flex justify-between items-center w-full">
+            <div className="grid gap-1">
+              <div className="flex justify-start items-center gap-2">
+                <Label htmlFor="identifier">{t("label_mark_identifier")}</Label>
+              </div>
+            </div>
+            <Switch
+              id="identifier"
+              disabled={isIdentifierAvailable}
+              checked={block.is_identifier}
+              onCheckedChange={(checked: boolean) => {
+                editor.updateBlock(block.id, { ...block, is_identifier: checked });
+              }}
+            />
+          </div>
+        )}
+        {/* min date */}
+        {query.data.blockSettings.showMinDate && (
+          <div className="grid gap-3 w-full">
+            <Label htmlFor="min-date">{t("label_block_min")}</Label>
+            <Input
+              type="date"
+              id="min-date"
+              value={block.min_date ?? ""}
+              onChange={(e) => {
+                editor.updateBlock(block.id, {
+                  ...block,
+                  min_date: e.target.value,
+                });
+              }}
+            />
+          </div>
+        )}
+        {/* max date */}
+        {query.data.blockSettings.showMaxDate && (
+          <div className="grid gap-3 w-full">
+            <Label htmlFor="max-date">{t("label_block_max")}</Label>
+            <Input
+              type="date"
+              id="max-date"
+              value={block.max_date ?? ""}
+              onChange={(e) => {
+                editor.updateBlock(block.id, {
+                  ...block,
+                  max_date: e.target.value,
+                });
+              }}
+            />
+          </div>
+        )}
+        {/* rating */}
+        {query.data.blockSettings.showRating && (
+          <div className="grid gap-3 w-full">
+            <div className="grid gap-1">
+              <Label htmlFor="max-rating">{t("label_max_rating")}</Label>
+            </div>
+            <Input
+              type="number"
+              id="max-rating"
+              value={block.rating ?? 5}
+              onChange={(e) => {
+                editor.updateBlock(block.id, {
+                  ...block,
+                  rating: Number(e.target.value),
+                });
+              }}
+            />
+          </div>
+        )}
+        {/* max scale */}
+        {query.data.blockSettings.showMaxScale && (
+          <div className="grid gap-3 w-full">
+            <div className="grid gap-1">
+              <Label htmlFor="max-scaling">{t("label_max_scale")}</Label>
+            </div>
+            <Input
+              type="number"
+              id="max-scale"
+              min={2}
+              max={10}
+              value={block.max_scale ?? 5}
+              onChange={(e) => {
+                const target = Number(e.target.value);
+                if (target > 10) return;
+                editor.updateBlock(block.id, {
+                  ...block,
+                  max_scale: target,
+                });
+              }}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
