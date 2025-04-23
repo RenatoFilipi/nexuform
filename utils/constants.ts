@@ -36,7 +36,7 @@ export const planSettings = {
     submissions: proSubmissions,
   },
 };
-export const fallbackColor = "#1c1917";
+export const fallbackColor = "#7C3AED";
 export const designTemplate: IDesign[] = [
   { label: "slate", tw_class: "" },
   { label: "gray", tw_class: "" },

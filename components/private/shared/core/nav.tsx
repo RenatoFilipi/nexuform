@@ -391,6 +391,7 @@ const NavApp = () => {
 };
 const NavEditor = () => {
   const t = useTranslations("app");
+  const appTheme = useTheme();
   const { form, theme, blocks, blocksReadyOnly } = useEditorStore();
   const { subscription } = useUserStore();
   const queryClient = useQueryClient();
@@ -520,7 +521,27 @@ const NavEditor = () => {
       </div>
       {active && (
         <div className="flex justify-center items-center gap-4">
-          <Button size={"xs"} variant={"outline"} onClick={onSave} disabled={appState === "loading"}>
+          <div className="flex justify-center items-center gap-2">
+            <Button
+              onClick={() => {
+                appTheme.setTheme("light");
+              }}
+              variant={appTheme.theme === "light" ? "secondary" : "ghost"}
+              size={"icon"}
+              className="w-7 h-7">
+              <SunIcon className="w-4 h-4" />
+            </Button>
+            <Button
+              onClick={() => {
+                appTheme.setTheme("dark");
+              }}
+              variant={appTheme.theme === "dark" ? "secondary" : "ghost"}
+              size={"icon"}
+              className="w-7 h-7">
+              <MoonIcon className="w-4 h-4" />
+            </Button>
+          </div>
+          <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
             {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
             {t("label_save_form")}
           </Button>

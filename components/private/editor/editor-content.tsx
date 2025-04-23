@@ -4,17 +4,7 @@ import useEditorStore from "@/stores/editor";
 import { EBlock, ETheme } from "@/utils/entities";
 import { TBlock, TColor } from "@/utils/types";
 import { Reorder, useDragControls } from "framer-motion";
-import {
-  BlocksIcon,
-  CheckCircle2Icon,
-  Edit2Icon,
-  GripVerticalIcon,
-  MoonIcon,
-  PlusIcon,
-  Settings2Icon,
-  SunIcon,
-  Trash2Icon,
-} from "lucide-react";
+import { BlocksIcon, CheckCircle2Icon, Edit2Icon, GripVerticalIcon, PlusIcon, Trash2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import AddBlock from "../blocks/add-block";
@@ -29,7 +19,6 @@ import ParagraphTextDesign from "../blocks/design/paragraph-text-design";
 import ShortTextDesign from "../blocks/design/short-text-design";
 import StarRatingDesign from "../blocks/design/star-rating-design";
 import SuccessDesign from "../blocks/success-design";
-import EditorFormSettings from "./editor-form-settings";
 
 interface IBlockComponent {
   block: EBlock;
@@ -62,11 +51,6 @@ const EditorContent = () => {
               <PlusIcon className="w-4 h-4" />
             </Button>
           </AddBlock>
-          <EditorFormSettings>
-            <Button variant={"outline"} size={"icon"} className="w-8 h-8">
-              <Settings2Icon className="w-4 h-4" />
-            </Button>
-          </EditorFormSettings>
           <div className="border-t my-1 w-full"></div>
           <Button
             onClick={() => {
@@ -87,25 +71,6 @@ const EditorContent = () => {
             size={"icon"}
             className="w-8 h-8">
             <CheckCircle2Icon className="w-4 h-4" />
-          </Button>
-          <div className="border-t my-1 w-full"></div>
-          <Button
-            onClick={() => {
-              setTheme("light");
-            }}
-            variant={theme === "light" ? "secondary" : "ghost"}
-            size={"icon"}
-            className="w-8 h-8">
-            <SunIcon className="w-4 h-4" />
-          </Button>
-          <Button
-            onClick={() => {
-              setTheme("dark");
-            }}
-            variant={theme === "dark" ? "secondary" : "ghost"}
-            size={"icon"}
-            className="w-8 h-8">
-            <MoonIcon className="w-4 h-4" />
           </Button>
         </div>
       )}

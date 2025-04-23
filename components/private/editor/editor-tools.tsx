@@ -12,13 +12,15 @@ import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
 import { blockViewSettings } from "@/utils/constants";
 import { getBlockName } from "@/utils/functions";
-import { TBlock, TToolView } from "@/utils/types";
+import { TBlock, TFormStatus, TToolView } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { Reorder } from "framer-motion";
-import { CircleHelpIcon, PlusIcon, XIcon } from "lucide-react";
+import { AlertTriangleIcon, CircleHelpIcon, PlusIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import ColorPicker from "../../shared/utils/color-picker";
+import FormStatus from "../form/form-status";
+import FormDelete from "../shared/form/form-delete";
 
 const EditorTools = () => {
   const t = useTranslations("app");
@@ -26,6 +28,7 @@ const EditorTools = () => {
   const views = [
     { label: t("label_properties"), view: "properties", enabled: true },
     { label: t("label_styles"), view: "styles", enabled: true },
+    { label: t("label_settings"), view: "settings", enabled: true },
   ];
   const enabledViews = views.filter((x) => x.enabled);
   const isEditingBlock = editor.toolView === "block";
@@ -53,6 +56,7 @@ const EditorTools = () => {
           <div className="flex flex-1 overflow-y-auto">
             {editor.toolView === "properties" && <ToolProperties />}
             {editor.toolView === "styles" && <ToolStyles />}
+            {editor.toolView === "settings" && <ToolSettings />}
           </div>
         </div>
       )}
@@ -535,6 +539,42 @@ const ToolBlock = () => {
           </div>
         )}
       </div>
+    </div>
+  );
+};
+const ToolSettings = () => {
+  const t = useTranslations("app");
+  const { form, setForm } = useEditorStore();
+
+  const onSetStatus = (value: string) => {
+    setForm({ ...form, status: value });
+  };
+
+  return (
+    <div className="flex justify-start items-center w-full h-full flex-col p-5 gap-6 overflow-y-auto pt-0">
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="item-1">
+          <AccordionTrigger>{t("label_status")}</AccordionTrigger>
+          <AccordionContent className="flex flex-col gap-4">
+            <p className="text-xs text-foreground/70">{t("desc_status")}</p>
+            <FormStatus status={form.status as TFormStatus} onStatusChange={onSetStatus} />
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="item-2">
+          <AccordionTrigger>{t("label_danger_zone")}</AccordionTrigger>
+          <AccordionContent className="flex flex-col gap-4">
+            <p className="text-xs text-foreground/70">{t("desc_danger_zone")}</p>
+            <div className="flex justify-end items-center">
+              <FormDelete formId={form.id} formName={form.name}>
+                <Button variant={"destructive_outline"} size={"sm"} className="w-full sm:w-fit">
+                  <AlertTriangleIcon className="h-4 w-4 mr-2" />
+                  {t("label_continue")}
+                </Button>
+              </FormDelete>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 };
