@@ -56,8 +56,8 @@
     "label_share": "Compartir",
     "label_editor": "Editor",
     "label_no_data": "No hay datos disponibles",
-    "label_submission": "envío",
-    "label_submissions": "envíos",
+    "label_submission": "Envío",
+    "label_submissions": "Envíos",
     "label_no_submissions_change": "Sin cambios en los envíos",
     "label_form_share": "Comparte Tu Formulario",
     "desc_form_share": "Haz que tu formulario sea accesible para otros y comienza a recopilar respuestas.",
@@ -350,7 +350,8 @@
     "label_download_qrcode": "Descargar código QR",
     "label_light": "Claro",
     "label_dark": "Oscuro",
-    "label_system": "Sistema"
+    "label_system": "Sistema",
+    "label_billing": "Facturación"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

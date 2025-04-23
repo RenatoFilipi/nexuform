@@ -56,8 +56,8 @@
     "label_share": "Compartilhar",
     "label_editor": "Editor",
     "label_no_data": "Nenhum dado disponível",
-    "label_submission": "submissão",
-    "label_submissions": "submissões",
+    "label_submission": "Submissão",
+    "label_submissions": "Submissões",
     "label_no_submissions_change": "Sem alteração nas submissões",
     "label_form_share": "Compartilhe Seu Formulário",
     "desc_form_share": "Torne seu formulário acessível para outras pessoas e comece a coletar respostas.",
@@ -350,7 +350,8 @@
     "label_download_qrcode": "Baixar código QR",
     "label_light": "Claro",
     "label_dark": "Escuro",
-    "label_system": "Sistema"
+    "label_system": "Sistema",
+    "label_billing": "Cobrança"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

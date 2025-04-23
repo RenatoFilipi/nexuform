@@ -40,7 +40,7 @@ const SettingsWrapper = ({
       label: t("nav_billing_and_usage"),
       icon: CreditCardIcon,
       view: "billing",
-      enabled: true,
+      enabled: false,
     },
     {
       label: t("nav_password"),

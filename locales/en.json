@@ -56,8 +56,8 @@
     "label_share": "Share",
     "label_editor": "Editor",
     "label_no_data": "No data available",
-    "label_submission": "submission",
-    "label_submissions": "submissions",
+    "label_submission": "Submission",
+    "label_submissions": "Submissions",
     "label_no_submissions_change": "No change in submissions",
     "label_form_share": "Share Your Form",
     "desc_form_share": "Make your form accessible to others and start collecting responses.",
@@ -350,7 +350,8 @@
     "label_download_qrcode": "Download QR code",
     "label_light": "Light",
     "label_dark": "Dark",
-    "label_system": "System"
+    "label_system": "System",
+    "label_billing": "Billing"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

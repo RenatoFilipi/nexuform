@@ -26,6 +26,7 @@ import {
   BirdIcon,
   ChartNoAxesColumnIcon,
   ChevronsUpDownIcon,
+  CreditCardIcon,
   HelpingHandIcon,
   InboxIcon,
   LoaderIcon,
@@ -204,6 +205,14 @@ const AvatarAppMenu = ({ children }: { children: React.ReactNode }) => {
         </DropdownMenuItem>
         <DropdownMenuItem className="py-0">
           <Button variant={"ghost"} size={"sm"} asChild className="flex justify-between w-full items-center p-0">
+            <a href={"/dashboard/settings/billing"}>
+              {t("label_billing")}
+              <CreditCardIcon className="w-4 h-4" />
+            </a>
+          </Button>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="py-0">
+          <Button variant={"ghost"} size={"sm"} asChild className="flex justify-between w-full items-center p-0">
             <a href={"/dashboard/help"}>
               {t("nav_help")}
               <HelpingHandIcon className="w-4 h-4" />
@@ -299,10 +308,10 @@ const NavApp = () => {
     },
     {
       id: 4,
-      name: "Billing",
+      name: t("label_billing"),
       path: "/dashboard/settings/billing",
-      icon: BirdIcon,
-      enabled: true,
+      icon: CreditCardIcon,
+      enabled: false,
     },
   ];
 
