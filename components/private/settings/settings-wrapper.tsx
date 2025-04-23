@@ -3,56 +3,18 @@
 import useUserStore from "@/stores/user";
 import { EProfile, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
-import { CreditCardIcon, KeyRoundIcon, UserIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useQueryState } from "nuqs";
-import { useState } from "react";
-import SettingsAccount from "./settings-account";
-import SettingsBilling from "./settings-billing";
-import SettingsPassword from "./settings-password";
+import SettingsAccount2 from "./settings-account-2";
 
-type TView = "account" | "billing" | "password";
-
-const SettingsWrapper = ({
-  profile,
-  subscription,
-  formsCount,
-  submissionsCount,
-  email,
-  locale,
-}: {
+interface IProps {
   profile: EProfile;
   subscription: ESubscription;
   formsCount: number;
   submissionsCount: number;
   email: string;
   locale: string;
-}) => {
-  const t = useTranslations("app");
-  const views = [
-    {
-      label: t("nav_account"),
-      icon: UserIcon,
-      view: "account",
-      enabled: true,
-    },
-    {
-      label: t("nav_billing_and_usage"),
-      icon: CreditCardIcon,
-      view: "billing",
-      enabled: false,
-    },
-    {
-      label: t("nav_password"),
-      icon: KeyRoundIcon,
-      view: "password",
-      enabled: true,
-    },
-  ];
+}
 
-  const [resource] = useQueryState("resource");
-  const [view, setView] = useState<TView>("account");
-  const enabledViews = views.filter((x) => x.enabled);
+const SettingsWrapper = ({ profile, subscription, formsCount, submissionsCount, email, locale }: IProps) => {
   const user = useUserStore();
 
   const query = useQuery({
@@ -64,7 +26,6 @@ const SettingsWrapper = ({
       user.setFormsCount(formsCount);
       user.setSubmissionsCount(submissionsCount);
       user.setEmail(email);
-      if (resource && resource === "update-password") setView("password");
       return null;
     },
     refetchOnWindowFocus: false,
@@ -74,26 +35,8 @@ const SettingsWrapper = ({
 
   return (
     <div className="flex-1 mt-12 mb-12 sm:mb-0 flex flex-col">
-      <div className="border-b h-10 flex justify-start items-center gap-1 px-2 sm:px-6 overflow-x-auto">
-        {enabledViews.map((v) => {
-          return (
-            <button
-              onClick={() => setView(v.view as TView)}
-              key={v.view}
-              className={`${
-                v.view === view ? "font-medium text-foreground" : "text-foreground/60"
-              } text-xs flex justify-center items-center px-2 hover:bg-foreground/5 relative rounded gap-2 h-full`}>
-              <v.icon className={`${v.view === view ? "text-primary" : "text-foreground/60"} w-4 h-4`} />
-              {v.label}
-              {v.view === view && <div className="bg-foreground/70 bottom-0 w-full h-0.5 absolute"></div>}
-            </button>
-          );
-        })}
-      </div>
       <div className="px-3 sm:px-20 lg:px-72 pt-8 flex justify-center flex-1 items-start overflow-y-auto">
-        {view === "account" && <SettingsAccount />}
-        {view === "billing" && <SettingsBilling />}
-        {view === "password" && <SettingsPassword />}
+        <SettingsAccount2 />
       </div>
     </div>
   );

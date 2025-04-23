@@ -106,7 +106,7 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
       name: t("label_billing"),
       path: "/dashboard/settings/billing",
       icon: CreditCardIcon,
-      enabled: false,
+      enabled: true,
     },
   ];
 
