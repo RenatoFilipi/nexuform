@@ -1,6 +1,7 @@
 import BillingWrapper from "@/components/private/billing/billing-wrapper";
 import ErrorUI from "@/components/shared/utils/error-ui";
 import { createClient } from "@/utils/supabase/server";
+import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
@@ -46,3 +47,7 @@ const Billing = async () => {
 };
 
 export default Billing;
+
+export const metadata: Metadata = {
+  title: "Billing",
+};

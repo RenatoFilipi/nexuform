@@ -351,7 +351,11 @@
     "label_light": "Claro",
     "label_dark": "Escuro",
     "label_system": "Sistema",
-    "label_billing": "Cobrança"
+    "label_billing": "Cobrança",
+    "label_billing_cycle": "Ciclo de cobrança",
+    "label_renews": "Renova em",
+    "label_on_date": "Em {date}",
+    "label_available": "Disponível"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

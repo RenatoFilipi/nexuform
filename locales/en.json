@@ -351,7 +351,11 @@
     "label_light": "Light",
     "label_dark": "Dark",
     "label_system": "System",
-    "label_billing": "Billing"
+    "label_billing": "Billing",
+    "label_billing_cycle": "Billing cycle",
+    "label_renews": "Renews on",
+    "label_on_date": "On {date}",
+    "label_available": "Available"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

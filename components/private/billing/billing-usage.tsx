@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import useUserStore from "@/stores/user";
+import { getDaysDifference } from "@/utils/functions";
+import { AlertTriangle, CalendarIcon, FileText, RefreshCwIcon, Send, Settings, ZapIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import ManageSubscription from "../shared/subscription/manage-subscription";
 
@@ -18,11 +20,10 @@ const BillingUsage = () => {
   const formsLimit = user.formsCount >= user.subscription.forms;
   const submissionsLimit = user.submissionsCount >= user.subscription.submissions;
 
-  const formsUsage = (100 * user.formsCount) / user.subscription.forms;
-  const submissionsUsage = (100 * user.submissionsCount) / user.subscription.submissions;
+  const formsUsage = Math.min(100, (100 * user.formsCount) / user.subscription.forms);
+  const submissionsUsage = Math.min(100, (100 * user.submissionsCount) / user.subscription.submissions);
 
-  console.log(user.formsCount);
-  console.log(user.subscription.forms);
+  const remainingDays = getDaysDifference(new Date(), new Date(user.subscription.due_date));
 
   const planName = (plan: string) =>
     ({
@@ -33,20 +34,63 @@ const BillingUsage = () => {
 
   return (
     <div className="w-full flex flex-col gap-6">
-      <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
-        <div className="flex justify-between w-full items-center gap-4 sm:justify-start">
-          <h1 className="text-sm font-bold">{planName(user.subscription.plan)}</h1>
-          <Badge variant={"gray"} className="flex justify-center items-center gap-2 text-xs">
-            <span>{startDate}</span>-<span>{dueDate}</span>
-          </Badge>
+      <div className="flex flex-col gap-6">
+        <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
+          <div className="flex items-center gap-4 w-full sm:w-auto">
+            <div className="flex flex-col gap-1">
+              <h1 className="text-2xl font-bold tracking-tight">{t("label_billing_and_usage")}</h1>
+              <p className="text-sm text-muted-foreground">{t("desc_billing_and_usage")}</p>
+            </div>
+          </div>
         </div>
-        <ManageSubscription>
-          <Button variant="outline" size="sm" className="w-full sm:w-auto self-end">
-            {t("label_manage_sub")}
-          </Button>
-        </ManageSubscription>
+        <div className="relative overflow-hidden rounded-xl border bg-background p-6 shadow-sm">
+          <div className="absolute right-0 top-0 h-full w-1 bg-primary" />
+          <div className="flex flex-col gap-6">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                  <ZapIcon className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold tracking-tight">{planName(user.subscription.plan)}</h2>
+                  <p className="text-sm text-foreground/70">{t("label_plan")}</p>
+                </div>
+              </div>
+            </div>
+            <div className="h-px w-full bg-border" />
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <h3 className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+                  <CalendarIcon className="h-4 w-4" />
+                  {t("label_billing_cycle")}
+                </h3>
+                <p className="text-sm">
+                  {startDate} - {dueDate}
+                </p>
+              </div>
+              <div className="space-y-2">
+                <h3 className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+                  <RefreshCwIcon className="h-4 w-4" />
+                  {t("label_renews")}
+                </h3>
+                <div className="flex justify-center items-center w-fit gap-2">
+                  <p className="text-sm">{dueDate}</p>-
+                  <p className="text-sm">{t("label_n_days_remaining", { n: remainingDays })}</p>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-end">
+              <ManageSubscription>
+                <Button variant="outline" size="sm" className="w-full sm:w-auto gap-2">
+                  <Settings className="h-4 w-4" />
+                  {t("label_manage_sub")}
+                </Button>
+              </ManageSubscription>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="flex justify-between items-center gap-6 flex-col sm:flex-row">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <UsageCard
           limit={formsLimit}
           count={user.formsCount}
@@ -55,6 +99,7 @@ const BillingUsage = () => {
           label={t("label_forms")}
           labelUsage={t("label_all_time")}
           labelAvailable={t("label_forms_included")}
+          icon={<FileText className="h-5 w-5 text-primary" />}
         />
         <UsageCard
           limit={submissionsLimit}
@@ -64,12 +109,12 @@ const BillingUsage = () => {
           label={t("label_submissions")}
           labelUsage={t("label_monthly_usage")}
           labelAvailable={t("label_submissions_included")}
+          icon={<Send className="h-5 w-5 text-primary" />}
         />
       </div>
     </div>
   );
 };
-
 const UsageCard = ({
   label,
   limit,
@@ -78,6 +123,7 @@ const UsageCard = ({
   usage,
   labelAvailable,
   labelUsage,
+  icon,
 }: {
   limit: boolean;
   label: string;
@@ -86,25 +132,57 @@ const UsageCard = ({
   available: number;
   labelAvailable: string;
   labelUsage: string;
+  icon?: React.ReactNode;
 }) => {
   const t = useTranslations("app");
+  const rawValue = 100 - Math.min(usage);
+  const usagePercentage = rawValue % 1 === 0 ? rawValue.toString() : rawValue.toFixed(1);
 
   return (
-    <Card className="flex flex-col gap-2 w-full p-4">
-      <div className="flex justify-start items-center gap-4">
-        <h2 className="font-semibold">{label}</h2>
-        {limit && <Badge variant={"warning"}>{t("label_limit_reached")}</Badge>}
-      </div>
-      <div className="flex flex-col gap-2">
-        <div className="flex justify-between items-center w-full">
-          <span className="text-xs text-foreground/80">{labelUsage}</span>
-          <span className="text-xs text-foreground/80">{count}</span>
+    <Card className="relative w-full p-6 transition-all hover:shadow-md rounded-xl border bg-gradient-to-br from-background to-muted/50 overflow-hidden">
+      {limit && (
+        <div className="absolute inset-0 bg-gradient-to-r from-destructive/5 to-transparent pointer-events-none" />
+      )}
+      <div className="flex flex-col gap-5">
+        {/* Header */}
+        <div className="flex justify-between items-start">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-lg bg-primary/10">{icon}</div>
+            <div>
+              <h2 className="font-semibold text-lg tracking-tight">{label}</h2>
+              <p className="text-xs text-foreground/70">
+                {available.toLocaleString()} {labelAvailable}
+              </p>
+            </div>
+          </div>
+          {limit && (
+            <Badge variant={"destructive"} className="animate-pulse gap-1.5 px-2.5 py-1">
+              <AlertTriangle className="h-3.5 w-3.5" />
+              <span>{t("label_limit_reached")}</span>
+            </Badge>
+          )}
         </div>
-        <Progress value={usage} />
+        {/* Usage bar */}
+        <div className="space-y-4">
+          <div className="flex justify-between items-center w-full">
+            <span className="text-sm text-foreground/70">{labelUsage}</span>
+            <span className="text-sm font-medium">
+              <span className={limit ? "text-destructive" : "text-primary"}>{count.toLocaleString()}</span>
+              {" / "}
+              {available.toLocaleString()}
+            </span>
+          </div>
+
+          <div className="space-y-1.5">
+            <Progress value={usage} className="h-2.5" />
+            <div className="flex justify-between items-center">
+              <span className="text-xs text-foreground/70">
+                {usagePercentage}% {t("label_available")}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
-      <p className="text-sm font-semibold">
-        {available} {labelAvailable}
-      </p>
     </Card>
   );
 };

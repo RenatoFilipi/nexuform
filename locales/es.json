@@ -351,7 +351,11 @@
     "label_light": "Claro",
     "label_dark": "Oscuro",
     "label_system": "Sistema",
-    "label_billing": "Facturación"
+    "label_billing": "Facturación",
+    "label_billing_cycle": "Ciclo de facturación",
+    "label_renews": "Renueva el",
+    "label_on_date": "El {date}",
+    "label_available": "Disponible"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",
