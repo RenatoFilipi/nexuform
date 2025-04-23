@@ -23,7 +23,6 @@ import { createClient } from "@/utils/supabase/client";
 import { TAppState, TFormStatus, TPlan, TSetState } from "@/utils/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  BirdIcon,
   ChartNoAxesColumnIcon,
   ChevronsUpDownIcon,
   CreditCardIcon,
@@ -104,10 +103,10 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
     },
     {
       id: 5,
-      name: "Billing",
+      name: t("label_billing"),
       path: "/dashboard/settings/billing",
-      icon: BirdIcon,
-      enabled: true,
+      icon: CreditCardIcon,
+      enabled: false,
     },
   ];
 

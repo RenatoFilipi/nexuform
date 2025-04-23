@@ -57,7 +57,7 @@ const FormWrapper = ({
       label: t("nav_settings"),
       icon: SettingsIcon,
       view: "settings",
-      enabled: true,
+      enabled: false,
     },
   ];
   const formStore = useFormStore();
