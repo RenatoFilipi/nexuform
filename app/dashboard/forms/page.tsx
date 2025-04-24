@@ -32,6 +32,10 @@ const Forms = async () => {
     .order("created_at", { ascending: true });
   if (forms.error) return <ErrorUI email={email} />;
 
+  const formIds = forms.data.map((x) => x.id);
+  const submissionLogs = await supabase.from("submission_logs").select("*").eq("form_id", formIds);
+  if (submissionLogs.error) return <ErrorUI email={email} />;
+
   return (
     <DashboardWrapper
       locale={locale}
@@ -39,6 +43,7 @@ const Forms = async () => {
       forms={forms.data}
       profile={profiles.data}
       subscription={subscriptions.data}
+      submissionLogs={submissionLogs.data}
     />
   );
 };

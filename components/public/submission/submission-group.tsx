@@ -133,6 +133,10 @@ const SubmissionGroup = () => {
       return;
     }
 
+    await supabase
+      .from("submission_logs")
+      .insert({ form_id: form.id, submission_id: submission.id, profile_id: form.owner_id });
+
     setAppState("success");
     setSubmissionState("idle");
   };

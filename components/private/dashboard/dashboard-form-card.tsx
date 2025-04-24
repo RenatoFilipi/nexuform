@@ -35,7 +35,6 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
           </span>
           <FormStatusBadge status={status as TFormStatus} />
         </div>
-
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -74,7 +73,6 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-
       <div className="flex justify-between items-center w-full">
         <span className="text-xs text-muted-foreground">
           {t("label_last_updated")} {formatDateRelativeToNow(updated_at, user.locale)}

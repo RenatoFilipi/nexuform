@@ -13,3 +13,4 @@ export type ESubscription = Tables<"subscriptions">;
 export type ETemplate = Tables<"templates">;
 export type ETemplate_block = Tables<"templates_blocks">;
 export type ETheme = Tables<"themes">;
+export type ESubmission_log = Tables<"submission_logs">;
