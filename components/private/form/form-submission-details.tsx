@@ -216,7 +216,7 @@ const Body = ({
               </Button>
             ) : (
               <ManageSubscription>
-                <Button variant="secondary" className="w-full sm:w-auto">
+                <Button variant="secondary" className="w-full sm:w-auto" size={"sm"}>
                   {t("label_csv_export")}
                 </Button>
               </ManageSubscription>

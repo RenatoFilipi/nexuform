@@ -16,6 +16,7 @@ import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
+import ManageSubscription from "../shared/subscription/manage-subscription";
 import NewPreview from "./new-preview";
 
 interface IProps {
@@ -81,6 +82,8 @@ const CustomForm = () => {
   const t = useTranslations("app");
   const [isPending, startTransition] = useTransition();
   const user = useUserStore();
+  const dashboard = useDashboardStore();
+  const limitReached = dashboard.forms.length >= user.subscription.forms;
 
   const onNewForm = async () => {
     startTransition(async () => {
@@ -98,33 +101,55 @@ const CustomForm = () => {
         <PlusIcon className="w-7 h-7 text-blue-500" />
       </div>
       <p className="text-sm text-center text-foreground/70">{t("desc_custom")}</p>
-      <Button
-        disabled={isPending}
-        variant={"outline"}
-        size={"sm"}
-        onClick={onNewForm}
-        className="mt-2 group-hover:border-primary group-hover:text-primary">
-        {isPending && <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />}
-        {t("label_create_form_scratch")}
-      </Button>
+      {limitReached && (
+        <ManageSubscription>
+          <Button variant={"outline"} size={"sm"} className="mt-2 group-hover:border-primary group-hover:text-primary">
+            {t("label_create_form_scratch")}
+          </Button>
+        </ManageSubscription>
+      )}
+      {!limitReached && (
+        <Button
+          disabled={isPending}
+          variant={"outline"}
+          size={"sm"}
+          onClick={onNewForm}
+          className="mt-2 group-hover:border-primary group-hover:text-primary">
+          {isPending && <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />}
+          {t("label_create_form_scratch")}
+        </Button>
+      )}
     </div>
   );
 };
 const TemplateForm = ({ setView }: { setView: TSetState<TView> }) => {
   const t = useTranslations("app");
+  const user = useUserStore();
+  const dashboard = useDashboardStore();
+  const limitReached = dashboard.forms.length >= user.subscription.forms;
+
   return (
     <div className="flex justify-center items-center w-full border h-60 gap-4 flex-col p-6 rounded-lg bg-background hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md group">
       <div className="p-3 rounded-full bg-orange-500/10 group-hover:bg-orange-500/20 transition-colors">
         <HexagonIcon className="w-7 h-7 text-orange-500" />
       </div>
       <p className="text-sm text-center text-foreground/70">{t("desc_templates")}</p>
-      <Button
-        variant={"outline"}
-        size={"sm"}
-        onClick={() => setView("templates")}
-        className="mt-2 group-hover:border-primary group-hover:text-primary">
-        {t("label_create_form_template")}
-      </Button>
+      {limitReached && (
+        <ManageSubscription>
+          <Button variant={"outline"} size={"sm"} className="mt-2 group-hover:border-primary group-hover:text-primary">
+            {t("label_create_form_template")}
+          </Button>
+        </ManageSubscription>
+      )}
+      {!limitReached && (
+        <Button
+          variant={"outline"}
+          size={"sm"}
+          onClick={() => setView("templates")}
+          className="mt-2 group-hover:border-primary group-hover:text-primary">
+          {t("label_create_form_template")}
+        </Button>
+      )}
     </div>
   );
 };

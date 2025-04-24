@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 import { createTranslator } from "use-intl/core";
 import { day, planSettings } from "./constants";
 import { ESubscription } from "./entities";
-import { basicSubmissions, freeTrialSubmissions, proSubmissions } from "./envs";
 import { TBlock, TIntegrationCategory, TIntegrations, TPlan, TTemplateCategory } from "./types";
 
 export const uuid = () => {
@@ -131,16 +130,7 @@ export const getIntegrationCategory = (type: TIntegrationCategory) => {
   return integrationCategory[type] || "Unknown Category";
 };
 export const isSubmissionsLimitReached = (subscription: ESubscription, submissions: number) => {
-  switch (subscription.plan) {
-    case "free_trial":
-      return submissions > freeTrialSubmissions;
-    case "basic":
-      return submissions > basicSubmissions;
-    case "pro":
-      return submissions > proSubmissions;
-    default:
-      return true;
-  }
+  return submissions >= subscription.submissions;
 };
 export const blockName = (type: TBlock) => {
   switch (type) {

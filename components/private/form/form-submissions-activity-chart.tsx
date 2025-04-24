@@ -15,7 +15,6 @@ interface IChartData {
   day: string;
   submission: number;
 }
-
 const CHART_CONFIG: ChartConfig = {
   submission: {
     label: "Submissions",
@@ -33,7 +32,6 @@ const hasDataReducer = (state: boolean, action: HasDataAction): boolean => {
       return state;
   }
 };
-
 const FormSubmissionsActivityChart: React.FC = () => {
   const t = useTranslations("app");
   const isDesktop = useMedia(minWidth640);
@@ -88,7 +86,7 @@ const FormSubmissionsActivityChart: React.FC = () => {
   if (isPending) return null;
 
   return (
-    <div className="flex flex-col justify-between gap-4 relative border rounded p-4">
+    <div className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit">
       <div className="flex flex-col justify-center items-center sm:items-start">
         <div className="flex justify-between items-center gap-4 w-full">
           <div className="flex justify-center items-center gap-3">
@@ -107,7 +105,7 @@ const FormSubmissionsActivityChart: React.FC = () => {
           {!hasData && <Badge variant="warning">{t("label_no_data")}</Badge>}
         </div>
       </div>
-      <ChartContainer config={CHART_CONFIG}>
+      <ChartContainer config={CHART_CONFIG} className="sm:max-h-[280px]">
         <ComposedChart accessibilityLayer data={chartData}>
           <CartesianGrid vertical={false} />
           <XAxis
@@ -131,7 +129,6 @@ const FormSubmissionsActivityChart: React.FC = () => {
     </div>
   );
 };
-
 const BadgeDay = ({ submissionDifference }: { submissionDifference: number }) => {
   const t = useTranslations("app");
 

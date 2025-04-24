@@ -111,7 +111,7 @@ const CardTemplate = ({ plan }: { plan: IPlan }) => {
   const currentPlan = plan.type === subscription.plan && subscription.status !== "canceled";
 
   return (
-    <div className={`relative flex flex-col items-center p-4 bg-background border-2 rounded-lg`}>
+    <div className={`relative flex flex-col items-center p-4 bg-background border rounded-lg`}>
       <div className="flex flex-col w-full gap-3">
         <div className="flex justify-between items-center gap-2">
           <h3 className="font-semibold">{plan.name}</h3>
@@ -125,7 +125,7 @@ const CardTemplate = ({ plan }: { plan: IPlan }) => {
         </div>
         <div className="w-full">
           <CheckoutStripe plan={plan.type}>
-            <Button disabled={currentPlan} className="w-full" size="sm">
+            <Button disabled={currentPlan} className="w-full" size="sm" variant={"secondary"}>
               {currentPlan ? t("label_current_plan") : plan.ctaButton}
             </Button>
           </CheckoutStripe>

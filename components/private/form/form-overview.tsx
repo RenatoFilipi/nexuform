@@ -50,22 +50,22 @@ const FormOverview = () => {
           <CardTemplate
             name={t("label_total_views")}
             value={totalViews}
-            icon={<EyeIcon className="w-5 h-5 text-foreground" />}
+            icon={<EyeIcon className="w-4 h-4 text-foreground" />}
           />
           <CardTemplate
             name={t("label_total_submissions")}
             value={totalSubmissions}
-            icon={<SendIcon className="w-5 h-5 text-foreground" />}
+            icon={<SendIcon className="w-4 h-4 text-foreground" />}
           />
           <CardTemplate
             name={t("label_completion_rate")}
             value={averageCompletionRate}
-            icon={<VoteIcon className="w-5 h-5 text-foreground" />}
+            icon={<VoteIcon className="w-4 h-4 text-foreground" />}
           />
           <CardTemplate
             name={t("label_avg_completion_time")}
             value={averageCompletionTime}
-            icon={<TimerIcon className="w-5 h-5 text-foreground" />}
+            icon={<TimerIcon className="w-4 h-4 text-foreground" />}
           />
         </div>
         <FormSubmissionsActivityChart />
@@ -76,12 +76,12 @@ const FormOverview = () => {
 
 const CardTemplate = ({ name, value, icon }: { name: string; value: string; icon: React.ReactNode }) => {
   return (
-    <Card className="p-4 flex flex-col gap-3 hover:shadow-sm transition-shadow duration-200 group dark:bg-neutral-900/50">
+    <Card className="p-4 justify-between flex flex-col gap-3 w-full">
       <div className="flex justify-between items-center w-full">
-        <span className="text-sm text-foreground/70 font-medium dark:text-neutral-400">{name}</span>
-        <div className={`p-2 rounded-lg group-hover:opacity-80 transition-colors`}>{icon}</div>
+        <span className="text-sm text-foreground/70">{name}</span>
+        <div className="flex justify-center items-center p-2 bg-foreground/5 rounded">{icon}</div>
       </div>
-      <span className="text-xl font-medium dark:text-white">{value}</span>
+      <span className="text-base font-bold">{value}</span>
     </Card>
   );
 };

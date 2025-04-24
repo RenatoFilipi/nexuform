@@ -145,7 +145,7 @@ const SubmissionGroup = () => {
     );
 
   return (
-    <div className="flex flex-col gap-6 sm:w-[620px] w-full my-10 px-4 sm:px-0 min-h-dvh">
+    <div className="flex flex-col gap-6 sm:w-[620px] w-full mt-10 px-4 sm:px-0 min-h-dvh">
       <div className="flex flex-col gap-2 justify-center items-start">
         <h1 className="text-2xl font-bold">{form.name}</h1>
         <p className="text-sm text-foreground/80">{form.description}</p>

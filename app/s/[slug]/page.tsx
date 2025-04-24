@@ -7,68 +7,45 @@ const S = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
   const supabase = await createClient();
 
-  const { data: form, error: formError } = await supabase.from("forms").select("*").eq("public_url", slug).single();
+  const forms = await supabase.from("forms").select("*").eq("public_url", slug).single();
 
-  if (formError) {
+  if (forms.error) return <FormNotAvailableUI />;
+
+  if (forms.data.status !== "published") return <FormNotAvailableUI />;
+
+  const subscriptions = await supabase.from("subscriptions").select("*").eq("profile_id", forms.data.owner_id).single();
+
+  if (subscriptions.error) {
+    console.log(subscriptions.error);
     return <FormNotAvailableUI />;
   }
-  if (form.status !== "published") {
-    return <FormNotAvailableUI />;
-  }
+  const active = isSubscriptionActive(subscriptions.data);
+  if (!active) return <FormNotAvailableUI />;
 
-  const { data: subscription, error: subscriptionError } = await supabase
-    .from("subscriptions")
-    .select("*")
-    .eq("profile_id", form.owner_id)
-    .single();
+  const formsIds = await supabase.from("forms").select("id").eq("owner_id", subscriptions.data.profile_id);
+  if (formsIds.error) return <FormNotAvailableUI />;
 
-  if (subscriptionError) {
-    return <FormNotAvailableUI />;
-  }
+  const idsArray = formsIds.data.map((x) => x.id);
+  const startDate = subscriptions.data.start_date;
+  const dueDate = subscriptions.data.due_date;
 
-  const active = isSubscriptionActive(subscription);
-  if (!active) {
-    return <FormNotAvailableUI />;
-  }
-
-  const { data: formsData, error: formsDataError } = await supabase
-    .from("forms")
-    .select("id")
-    .eq("owner_id", subscription.profile_id);
-
-  if (formsDataError) {
-    return <FormNotAvailableUI />;
-  }
-
-  const idsArray = formsData.map((x) => x.id);
-  const startDate = subscription.start_date;
-  const dueDate = subscription.due_date;
-
-  const { count: submissionsCount, error: submissionsError } = await supabase
+  const submissions = await supabase
     .from("submissions")
     .select("*", { count: "exact", head: true })
     .in("form_id", idsArray)
     .gte("created_at", startDate)
     .lte("created_at", dueDate);
 
-  if (submissionsError || submissionsCount === null) {
-    return <FormNotAvailableUI />;
-  }
-  const limitReached = isSubmissionsLimitReached(subscription, submissionsCount);
+  if (submissions.error || submissions.count === null) return <FormNotAvailableUI />;
+
+  const limitReached = isSubmissionsLimitReached(subscriptions.data, submissions.count);
   if (limitReached) return <FormNotAvailableUI />;
 
-  const { data: formAnalytics, error: formAnalyticsError } = await supabase
-    .from("forms_analytics")
-    .select("*")
-    .eq("form_id", form.id)
-    .single();
+  const formAnalytics = await supabase.from("forms_analytics").select("*").eq("form_id", forms.data.id).single();
 
-  if (formAnalyticsError) {
-    return <FormNotAvailableUI />;
-  }
-
-  const updatedTotalViews = formAnalytics.total_views + 1;
-  const updatedCompletionRate = (formAnalytics.total_submissions / updatedTotalViews) * 100;
+  if (formAnalytics.error) return <FormNotAvailableUI />;
+  const updatedTotalViews = formAnalytics.data.total_views + 1;
+  const updatedCompletionRate = (formAnalytics.data.total_submissions / updatedTotalViews) * 100;
 
   await supabase
     .from("forms_analytics")
@@ -76,25 +53,20 @@ const S = async ({ params }: { params: Promise<{ slug: string }> }) => {
       total_views: updatedTotalViews,
       avg_completion_rate: updatedCompletionRate,
     })
-    .eq("id", formAnalytics.id);
+    .eq("id", formAnalytics.data.id);
 
-  const { data: theme, error: themeError } = await supabase.from("themes").select("*").eq("form_id", form.id).single();
+  const themes = await supabase.from("themes").select("*").eq("form_id", forms.data.id).single();
 
-  if (themeError) {
-    return <FormNotAvailableUI />;
-  }
-
-  const { data: blocks, error: blocksError } = await supabase
+  if (themes.error) return <FormNotAvailableUI />;
+  const blocks = await supabase
     .from("blocks")
     .select("*")
-    .eq("form_id", form.id)
+    .eq("form_id", forms.data.id)
     .order("position", { ascending: true });
 
-  if (blocksError) {
-    return <FormNotAvailableUI />;
-  }
+  if (blocks.error) return <FormNotAvailableUI />;
 
-  return <SubmissionWrapper form={form} theme={theme} blocks={blocks} />;
+  return <SubmissionWrapper form={forms.data} theme={themes.data} blocks={blocks.data} />;
 };
 
 export default S;

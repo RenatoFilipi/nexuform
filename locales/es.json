@@ -260,6 +260,7 @@
     "feat_priority_support": "Soporte prioritario (tiempo de respuesta de 12h)",
     "feat_remove_branding": "Eliminar marca",
     "feat_data_export": "Exportación de datos (CSV)",
+    "feat_forms_templates": "Plantillas de formularios",
     "feat_premium_templates": "Plantillas premium",
     "feat_premium_analytics": "Análisis premium",
     "feat_email_notifications": "Notificaciones por correo electrónico",
@@ -357,7 +358,8 @@
     "label_on_date": "El {date}",
     "label_available": "Disponible",
     "label_account_settings": "Configuración de la cuenta",
-    "desc_account_settings": "Administra tu información personal, seguridad y preferencias de la cuenta"
+    "desc_account_settings": "Administra tu información personal, seguridad y preferencias de la cuenta",
+    "label_free_trial_ends": "Prueba gratis finaliza el"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

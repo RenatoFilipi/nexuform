@@ -6,7 +6,16 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import useUserStore from "@/stores/user";
 import { getDaysDifference } from "@/utils/functions";
-import { AlertTriangle, CalendarIcon, FileText, RefreshCwIcon, Send, Settings, ZapIcon } from "lucide-react";
+import {
+  AlertTriangle,
+  CalendarIcon,
+  CalendarX2Icon,
+  FileText,
+  RefreshCwIcon,
+  Send,
+  Settings,
+  ZapIcon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import ManageSubscription from "../shared/subscription/manage-subscription";
 
@@ -24,6 +33,8 @@ const BillingUsage = () => {
   const submissionsUsage = Math.min(100, (100 * user.submissionsCount) / user.subscription.submissions);
 
   const remainingDays = getDaysDifference(new Date(), new Date(user.subscription.due_date));
+
+  const isFreeTrial = user.subscription.plan === "free_trial";
 
   const planName = (plan: string) =>
     ({
@@ -59,20 +70,30 @@ const BillingUsage = () => {
             </div>
             <div className="h-px w-full bg-border" />
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {!isFreeTrial && (
+                <div className="space-y-2">
+                  <h3 className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+                    <CalendarIcon className="h-4 w-4" />
+                    {t("label_billing_cycle")}
+                  </h3>
+                  <p className="text-sm">
+                    {startDate} - {dueDate}
+                  </p>
+                </div>
+              )}
               <div className="space-y-2">
-                <h3 className="flex items-center gap-2 text-sm font-medium text-foreground/70">
-                  <CalendarIcon className="h-4 w-4" />
-                  {t("label_billing_cycle")}
-                </h3>
-                <p className="text-sm">
-                  {startDate} - {dueDate}
-                </p>
-              </div>
-              <div className="space-y-2">
-                <h3 className="flex items-center gap-2 text-sm font-medium text-foreground/70">
-                  <RefreshCwIcon className="h-4 w-4" />
-                  {t("label_renews")}
-                </h3>
+                {isFreeTrial && (
+                  <h3 className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+                    <CalendarX2Icon className="h-4 w-4" />
+                    {t("label_free_trial_ends")}
+                  </h3>
+                )}
+                {!isFreeTrial && (
+                  <h3 className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+                    <RefreshCwIcon className="h-4 w-4" />
+                    {t("label_renews")}
+                  </h3>
+                )}
                 <div className="flex justify-center items-center w-fit gap-2">
                   <p className="text-sm">{dueDate}</p>-
                   <p className="text-sm">{t("label_n_days_remaining", { n: remainingDays })}</p>
