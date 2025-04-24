@@ -355,7 +355,9 @@
     "label_billing_cycle": "Ciclo de facturación",
     "label_renews": "Renueva el",
     "label_on_date": "El {date}",
-    "label_available": "Disponible"
+    "label_available": "Disponible",
+    "label_account_settings": "Configuración de la cuenta",
+    "desc_account_settings": "Administra tu información personal, seguridad y preferencias de la cuenta"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

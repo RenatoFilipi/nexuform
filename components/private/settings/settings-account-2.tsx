@@ -1,9 +1,7 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
 import useUserStore from "@/stores/user";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
@@ -21,15 +19,10 @@ const SettingsAccount2 = () => {
   return (
     <div className="space-y-6 w-full">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Configurações da Conta</h1>
-        <p className="text-muted-foreground text-sm">
-          Gerencie suas informações pessoais, segurança e preferências de conta
-        </p>
+        <h1 className="font-bold tracking-tight">{t("label_account_settings")}</h1>
+        <p className="text-xs text-foreground/70">{t("desc_account_settings")}</p>
       </div>
-
-      <Separator />
-
-      <div className="space-y-8">
+      <div className="flex flex-col gap-8 pb-10">
         <AccountProfile />
         <AccountPassword />
         <AccountDelete />
@@ -83,8 +76,8 @@ const AccountProfile = () => {
         <div className="flex items-center gap-3">
           <User2Icon className="w-5 h-5 text-primary" />
           <div>
-            <CardTitle>{t("label_profile_info")}</CardTitle>
-            <CardDescription>{t("desc_profile_info")}</CardDescription>
+            <CardTitle className="text-base">{t("label_profile_info")}</CardTitle>
+            <CardDescription className="text-xs">{t("desc_profile_info")}</CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -120,7 +113,12 @@ const AccountProfile = () => {
               />
             </div>
             <div className="flex justify-end">
-              <Button disabled={appState === "loading"} type="submit" className="w-full md:w-auto">
+              <Button
+                variant={"secondary"}
+                size={"sm"}
+                disabled={appState === "loading"}
+                type="submit"
+                className="w-full md:w-auto">
                 {appState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
                 {t("label_save_profile")}
               </Button>
@@ -176,8 +174,8 @@ const AccountPassword = () => {
         <div className="flex items-center gap-3">
           <LockIcon className="w-5 h-5 text-primary" />
           <div>
-            <CardTitle>{t("label_password")}</CardTitle>
-            <CardDescription>{t("desc_password")}</CardDescription>
+            <CardTitle className="text-base">{t("label_password")}</CardTitle>
+            <CardDescription className="text-xs">{t("desc_password")}</CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -212,7 +210,12 @@ const AccountPassword = () => {
               )}
             />
             <div className="flex justify-end">
-              <Button type="submit" className="w-full md:w-auto" disabled={appState === "loading"}>
+              <Button
+                variant={"secondary"}
+                size={"sm"}
+                type="submit"
+                className="w-full md:w-auto"
+                disabled={appState === "loading"}>
                 {appState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
                 {t("label_update_password")}
               </Button>
@@ -233,20 +236,16 @@ const AccountDelete = () => {
           <Trash2Icon className="w-5 h-5 text-destructive" />
           <div>
             <div className="flex items-center gap-3">
-              <CardTitle>{t("label_delete_account")}</CardTitle>
-              <Badge variant={"destructive"}>{t("label_danger_zone")}</Badge>
+              <CardTitle className="text-base">{t("label_delete_account")}</CardTitle>
             </div>
-            <CardDescription>{t("desc_delete_account")}</CardDescription>
+            <CardDescription className="text-xs">{t("desc_delete_account")}</CardDescription>
           </div>
         </div>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
-            Esta ação é permanente e não pode ser desfeita. Todos os seus dados serão removidos.
-          </p>
           <SettingsAccountDelete>
-            <Button variant={"destructive"} className="w-full md:w-auto">
+            <Button variant={"destructive"} size={"sm"} className="w-full md:w-auto">
               {t("label_delete_account")}
             </Button>
           </SettingsAccountDelete>

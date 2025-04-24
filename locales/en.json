@@ -355,7 +355,9 @@
     "label_billing_cycle": "Billing cycle",
     "label_renews": "Renews on",
     "label_on_date": "On {date}",
-    "label_available": "Available"
+    "label_available": "Available",
+    "label_account_settings": "Configurações da conta",
+    "desc_account_settings": "Gerencie suas informações pessoais, segurança e preferências da conta"
   },
   "s": {
     "err_required_all": "Answer all required questions.",
