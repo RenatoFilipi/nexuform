@@ -177,7 +177,7 @@ const FormSubmissions = () => {
               <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/10">
                 <SendIcon className="w-6 h-6 text-primary" />
               </div>
-              <span className="text-sm text-foreground/70">{t("label_no_submission")}</span>
+              <span className="text-sm text-muted-foreground">{t("label_no_submission")}</span>
             </div>
           )}
           {!noSubmission && (
@@ -221,7 +221,7 @@ const FormSubmissions = () => {
               <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/10">
                 <SendIcon className="w-6 h-6 text-primary" />
               </div>
-              <span className="text-sm text-foreground/70">{t("label_no_submission")}</span>
+              <span className="text-sm text-muted-foreground">{t("label_no_submission")}</span>
             </div>
           )}
           {!noSubmission && (

@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { minWidth640 } from "@/utils/constants";
 import { EForm } from "@/utils/entities";
 import { TSetState } from "@/utils/types";
-import { ArrowRightIcon, CopyIcon, DownloadIcon, ExternalLinkIcon, LoaderIcon, Share2Icon } from "lucide-react";
+import { CopyIcon, DownloadIcon, ExternalLinkIcon, LoaderIcon, PenIcon, Share2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { QRCodeSVG } from "qrcode.react";
@@ -60,8 +60,6 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
 
   const downloadQRCode = () => {
     setIsGenerating(true);
-
-    // Temporizador para garantir que o estado seja atualizado antes da captura
     setTimeout(() => {
       if (qrCodeRef.current) {
         const svg = qrCodeRef.current.querySelector("svg");
@@ -70,22 +68,17 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d");
           const img = new Image();
-
           img.onload = () => {
             canvas.width = img.width;
             canvas.height = img.height;
             ctx?.drawImage(img, 0, 0);
-
-            // Trigger download
             const pngFile = canvas.toDataURL("image/png");
             const downloadLink = document.createElement("a");
             downloadLink.download = `qrcode-${new Date().getTime()}.png`;
             downloadLink.href = pngFile;
             downloadLink.click();
-
             setIsGenerating(false);
           };
-
           img.src = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgData)))}`;
         }
       }
@@ -95,18 +88,18 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
   return (
     <div className="flex flex-col gap-6 h-full overflow-y-auto">
       {form.status !== "published" && (
-        <div className="flex items-center flex-col justify-center gap-4 px-4 py-8 border h-full rounded-lg">
+        <div className="flex items-center flex-col justify-center gap-4 px-4 py-8 h-full rounded-lg">
           <div className="flex justify-center items-center p-2 bg-warning/10 rounded">
-            <Share2Icon className="w-8 h-8 text-warning" />
+            <Share2Icon className="w-6 h-6 text-warning" />
           </div>
           <div className="flex flex-col justify-center items-center gap-6">
             <div className="flex justify-center items-center flex-col gap-1">
-              <h3 className="text-base font-medium">{t("label_not_public")}</h3>
-              <p className="text-xs text-foreground/70 text-center">{t("desc_not_public")}</p>
+              <h3 className="text-lg font-medium">{t("label_not_public")}</h3>
+              <p className="text-sm text-muted-foreground text-center">{t("desc_not_public")}</p>
             </div>
             <div className="flex justify-end items-center">
               <Button variant="secondary" size="sm">
-                <ArrowRightIcon className="w-4 h-4 mr-2" />
+                <PenIcon className="w-4 h-4 mr-2" />
                 <Link href={`/dashboard/editor/${form.id}`}>{t("nav_editor")}</Link>
               </Button>
             </div>

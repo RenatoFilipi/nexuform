@@ -3,7 +3,7 @@
 import useUserStore from "@/stores/user";
 import { EProfile, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
-import SettingsAccount2 from "./settings-account-2";
+import SettingsAccount from "./settings-account";
 
 interface IProps {
   profile: EProfile;
@@ -34,7 +34,7 @@ const SettingsWrapper = ({ profile, subscription, formsCount, email, locale }: I
   return (
     <div className="flex-1 mt-12 mb-12 sm:mb-0 flex flex-col">
       <div className="px-3 sm:px-20 lg:px-72 pt-8 flex justify-center flex-1 items-start overflow-y-auto">
-        <SettingsAccount2 />
+        <SettingsAccount />
       </div>
     </div>
   );

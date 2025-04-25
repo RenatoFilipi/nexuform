@@ -1,5 +1,5 @@
 import { TFormStatus } from "@/utils/types";
-import { BookDashedIcon, GlobeIcon, MonitorOffIcon } from "lucide-react";
+import { DraftingCompassIcon, PauseCircleIcon, RocketIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface IProps {
@@ -14,22 +14,22 @@ const FormStatus = ({ status, onStatusChange }: IProps) => {
       status: "draft",
       label: t("label_draft"),
       description: t("desc_draft"),
-      icon: BookDashedIcon,
-      color: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200",
+      icon: DraftingCompassIcon,
+      color: "bg-amber-100 text-amber-600 dark:bg-amber-900/40 dark:text-amber-300",
     },
     {
       status: "published",
       label: t("label_published"),
       description: t("desc_published"),
-      icon: GlobeIcon,
-      color: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200",
+      icon: RocketIcon,
+      color: "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-300",
     },
     {
       status: "inactive",
       label: t("label_inactive"),
       description: t("desc_inactive"),
-      icon: MonitorOffIcon,
-      color: "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
+      icon: PauseCircleIcon,
+      color: "bg-slate-100 text-slate-600 dark:bg-slate-800/80 dark:text-slate-300",
     },
   ];
 
@@ -44,15 +44,15 @@ const FormStatus = ({ status, onStatusChange }: IProps) => {
           } border p-4 flex gap-4 h-full w-full rounded`}>
           <div className="flex items-center justify-center">
             <div
-              className={`p-2 rounded-full ${statusItem.color} ${
-                status === statusItem.status ? "opacity-100" : "opacity-70"
+              className={`p-2 rounded ${statusItem.color} ${
+                status === statusItem.status ? "opacity-100" : "opacity-60"
               }`}>
               <statusItem.icon className="w-4 h-4" />
             </div>
           </div>
           <div className="flex flex-col justify-center items-start gap-1">
             <span className="font-semibold text-sm">{statusItem.label}</span>
-            <span className="text-xs text-foreground/70 text-start">{statusItem.description}</span>
+            <span className="text-xs text-muted-foreground text-start">{statusItem.description}</span>
           </div>
         </button>
       ))}

@@ -45,8 +45,8 @@ const EditorTools = () => {
                   onClick={() => editor.setToolView(v.view as TToolView)}
                   key={v.view}
                   className={`${
-                    v.view === editor.toolView ? "font-medium text-foreground" : "text-foreground/60"
-                  } text-sm flex justify-center items-center px-4 hover:bg-foreground/5 relative rounded gap-2 h-full`}>
+                    v.view === editor.toolView ? "font-medium text-foreground" : "text-muted-foreground"
+                  } text-xs flex justify-center items-center px-4 hover:bg-foreground/5 relative rounded gap-2 h-full`}>
                   <div className="truncate">{v.label}</div>
                   {v.view === editor.toolView && <div className="bg-primary bottom-0 w-full h-0.5 absolute"></div>}
                 </button>
@@ -152,9 +152,6 @@ const ToolStyles = () => {
   };
   const onSetUppercaseBlockName = (value: boolean) => {
     setTheme({ ...theme, uppercase_block_name: value });
-  };
-  const onSetWidth = (value: string) => {
-    setTheme({ ...theme, width: value });
   };
   const onSetCustomPrimaryColor = (value: string) => {
     setTheme({ ...theme, custom_primary_color: value });
@@ -556,14 +553,14 @@ const ToolSettings = () => {
         <AccordionItem value="item-1">
           <AccordionTrigger>{t("label_status")}</AccordionTrigger>
           <AccordionContent className="flex flex-col gap-4">
-            <p className="text-xs text-foreground/70">{t("desc_status")}</p>
+            <p className="text-xs text-muted-foreground">{t("desc_status")}</p>
             <FormStatus status={form.status as TFormStatus} onStatusChange={onSetStatus} />
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-2">
           <AccordionTrigger>{t("label_danger_zone")}</AccordionTrigger>
           <AccordionContent className="flex flex-col gap-4">
-            <p className="text-xs text-foreground/70">{t("desc_danger_zone")}</p>
+            <p className="text-xs text-muted-foreground">{t("desc_danger_zone")}</p>
             <div className="flex justify-end items-center">
               <FormDelete formId={form.id} formName={form.name}>
                 <Button variant={"destructive_outline"} size={"sm"} className="w-full sm:w-fit">

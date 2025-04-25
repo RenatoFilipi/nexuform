@@ -25,7 +25,7 @@ const ShortTextDesign = ({
             {name} {required && <span className="text-red-500">*</span>}
           </h1>
         </div>
-        <span className="text-xs text-foreground/80">{description}</span>
+        <span className="text-xs text-muted-foreground">{description}</span>
       </div>
       <div className="flex flex-col">
         <Input

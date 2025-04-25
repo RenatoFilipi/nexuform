@@ -49,7 +49,7 @@ const AnalyticsSubmissionsByFormChart = () => {
 
   if (!formSubmissions?.length) {
     return (
-      <div className="border flex flex-col items-center justify-center rounded-lg p-6 bg-muted/20 gap-3">
+      <div className="border flex flex-col items-center justify-center rounded-lg p-6 gap-3">
         <div className="p-2 rounded bg-primary/10">
           <SendIcon className="w-5 h-5 text-primary" />
         </div>

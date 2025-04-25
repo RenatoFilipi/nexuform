@@ -115,7 +115,7 @@ const FilteredEmptyUI = () => {
   const t = useTranslations("app");
   return (
     <div className="flex h-full flex-1 justify-center items-center">
-      <span className="text-sm text-foreground/70">{t("label_no_form_search")}</span>
+      <span className="text-sm text-muted-foreground">{t("label_no_form_search")}</span>
     </div>
   );
 };
@@ -130,7 +130,7 @@ const EmptyUI = () => {
           </div>
           <div className="flex justify-center items-center flex-col">
             <span className="text-lg font-medium">{t("label_no_forms")}</span>
-            <span className="text-sm text-center text-foreground/70">{t("desc_no_forms")}</span>
+            <span className="text-sm text-center text-muted-foreground">{t("desc_no_forms")}</span>
           </div>
           <div className="flex w-full justify-center items-center mt-2">
             <NewFormButton />

@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import useFormStore from "@/stores/form";
 import { formatDecimal, formatTime } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
-import { ArrowRightIcon, EyeIcon, SendIcon, Share2Icon, TimerIcon, VoteIcon } from "lucide-react";
+import { EyeIcon, PenIcon, SendIcon, Share2Icon, TimerIcon, VoteIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import FormShare from "./form-share";
@@ -26,7 +26,7 @@ const FormOverview = () => {
       <div className="flex justify-between items-center flex-col sm:flex-row w-full gap-4">
         <div className="flex sm:justify-start justify-between items-center gap-3 w-full">
           <div className="flex justify-start items-center gap-2">
-            <h1 className="font-medium text-sm truncate max-w-[240px]">{form.name}</h1>
+            <h1 className="font-semibold text-base truncate max-w-[240px]">{form.name}</h1>
           </div>
           <FormStatusBadge status={form.status as TFormStatus} />
         </div>
@@ -39,7 +39,7 @@ const FormOverview = () => {
           </FormShare>
           <Button variant="secondary" size="sm" asChild>
             <Link href={`/dashboard/editor/${form.id}`} className="w-full sm:w-fit">
-              <ArrowRightIcon className="w-4 h-4 mr-2" />
+              <PenIcon className="w-4 h-4 mr-2" />
               {t("label_editor")}
             </Link>
           </Button>

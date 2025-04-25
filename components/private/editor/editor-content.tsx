@@ -6,7 +6,6 @@ import { TBlock, TColor } from "@/utils/types";
 import { Reorder, useDragControls } from "framer-motion";
 import { BlocksIcon, CheckCircle2Icon, Edit2Icon, GripVerticalIcon, PlusIcon, Trash2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useTheme } from "next-themes";
 import AddBlock from "../blocks/add-block";
 import CheckBoxesDesign from "../blocks/design/checkboxes-design";
 import CustomScaleDesign from "../blocks/design/custom-scale-design";
@@ -40,7 +39,6 @@ const COMPONENT_MAP: Record<TBlock, React.ComponentType<IBlockComponent>> = {
 const EditorContent = () => {
   const editor = useEditorStore();
   const hasBlocks = editor.blocks.length > 0;
-  const { setTheme, theme } = useTheme();
 
   return (
     <div className="w-full flex justify-center items-start overflow-y-auto relative">
@@ -107,7 +105,7 @@ const EditorCanvas = () => {
     <div className="flex justify-center items-center w-full h-full p-8">
       <div className="flex flex-col items-center justify-center h-full w-full p-8 rounded-lg border-2 border-dashed bg-muted/5">
         <div className="flex flex-col items-center max-w-md text-center space-y-6">
-          <div className="rounded-full bg-primary/5 p-3">
+          <div className="rounded-full bg-primary/10 p-3">
             <PlusIcon className="h-7 w-7 text-primary" />
           </div>
           <div className="space-y-2">

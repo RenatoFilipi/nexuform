@@ -9,7 +9,6 @@ import { BarChartIcon, SendIcon, SettingsIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import FormOverview from "./form-overview";
-import FormSettings from "./form-settings";
 import FormSubmissions from "./form-submissions";
 
 type TView = "overview" | "submissions" | "integrations" | "settings";
@@ -96,9 +95,9 @@ const FormWrapper = ({
               onClick={() => setView(v.view as TView)}
               key={v.view}
               className={`${
-                v.view === view ? "font-medium text-foreground" : "text-foreground/60"
+                v.view === view ? "font-medium text-foreground" : "text-muted-foreground"
               } text-xs flex justify-center items-center px-2 hover:bg-foreground/5 relative rounded gap-2 h-full`}>
-              <v.icon className={`${v.view === view ? "text-primary" : "text-foreground/60"} w-4 h-4`} />
+              <v.icon className={`${v.view === view ? "text-primary" : "text-muted-foreground"} w-4 h-4`} />
               <div className="truncate">{v.label}</div>
               {v.view === "submissions" && notReviewedSubmissions > 0 && (
                 <span className="inline-flex items-center justify-center w-4 h-4 text-xs font-semibold text-yellow-600 bg-yellow-600/20 rounded-full">
@@ -113,7 +112,6 @@ const FormWrapper = ({
       <div className="px-3 sm:px-20 lg:px-52 py-4 sm:py-4 flex justify-center flex-1 items-start overflow-y-auto">
         {view === "overview" && <FormOverview />}
         {view === "submissions" && <FormSubmissions />}
-        {view === "settings" && <FormSettings />}
       </div>
     </div>
   );

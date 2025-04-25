@@ -11,7 +11,7 @@ import { getFormCategoryName } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState, TTemplateCategory } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { BookDashedIcon, ChevronLeftIcon, HexagonIcon, LoaderIcon, PlusIcon } from "lucide-react";
+import { BookDashedIcon, ChevronLeftIcon, ChevronRightIcon, HexagonIcon, LoaderIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { useState, useTransition } from "react";
@@ -45,7 +45,6 @@ const NewWrapper = (props: IProps) => {
       dashboard.setForms(props.forms);
       return null;
     },
-    refetchOnWindowFocus: false,
   });
   useQuery({
     queryKey: [error],
@@ -55,7 +54,6 @@ const NewWrapper = (props: IProps) => {
       }
       return null;
     },
-    refetchOnWindowFocus: false,
   });
 
   if (query.isPending) return null;
@@ -65,8 +63,8 @@ const NewWrapper = (props: IProps) => {
       {view === "none" && (
         <div className="flex flex-col gap-6 sm:gap-10">
           <div className="grid gap-1">
-            <span className="font-semibold">{t("label_create_form")}</span>
-            <p className="text-xs text-foreground/70">{t("desc_create_form")}</p>
+            <span className="font-semibold text-lg">{t("label_create_form")}</span>
+            <p className="text-xs text-muted-foreground">{t("desc_create_form")}</p>
           </div>
           <div className="grid sm:grid-cols-2 gap-4 sm:gap-8">
             <CustomForm />
@@ -100,7 +98,7 @@ const CustomForm = () => {
       <div className="p-3 rounded-full bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors">
         <PlusIcon className="w-7 h-7 text-blue-500" />
       </div>
-      <p className="text-sm text-center text-foreground/70">{t("desc_custom")}</p>
+      <p className="text-sm text-center group-hover:text-foreground text-muted-foreground">{t("desc_custom")}</p>
       {limitReached && (
         <ManageSubscription>
           <Button variant={"outline"} size={"sm"} className="mt-2 group-hover:border-primary group-hover:text-primary">
@@ -133,7 +131,7 @@ const TemplateForm = ({ setView }: { setView: TSetState<TView> }) => {
       <div className="p-3 rounded-full bg-orange-500/10 group-hover:bg-orange-500/20 transition-colors">
         <HexagonIcon className="w-7 h-7 text-orange-500" />
       </div>
-      <p className="text-sm text-center text-foreground/70">{t("desc_templates")}</p>
+      <p className="text-sm text-center group-hover:text-foreground text-muted-foreground">{t("desc_templates")}</p>
       {limitReached && (
         <ManageSubscription>
           <Button variant={"outline"} size={"sm"} className="mt-2 group-hover:border-primary group-hover:text-primary">
@@ -148,6 +146,7 @@ const TemplateForm = ({ setView }: { setView: TSetState<TView> }) => {
           onClick={() => setView("templates")}
           className="mt-2 group-hover:border-primary group-hover:text-primary">
           {t("label_create_form_template")}
+          <ChevronRightIcon className="w-4 h-4 ml-2" />
         </Button>
       )}
     </div>
@@ -171,12 +170,12 @@ const TemplateList = ({ setView }: { setView: TSetState<TView> }) => {
   return (
     <div className="flex flex-col gap-6 sm:gap-10 flex-1 min-h-full">
       <div className="flex justify-start items-center gap-2">
-        <Button variant={"ghost"} size={"icon"} onClick={() => setView("none")}>
+        <Button variant={"ghost"} size={"icon"} className="" onClick={() => setView("none")}>
           <ChevronLeftIcon />
         </Button>
         <div className="grid gap-1">
-          <span className="font-semibold">{t("label_templates")}</span>
-          <p className="text-xs text-foreground/70">{t("desc_templates")}</p>
+          <span className="font-semibold text-lg">{t("label_templates")}</span>
+          <p className="text-xs text-muted-foreground">{t("desc_templates")}</p>
         </div>
       </div>
       {query.isPending && (

@@ -182,7 +182,7 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
                 <ChevronLeftIcon className="w-4 h-4 mr-2" />
                 {t("label_go_back")}
               </Button>
-              <Button variant={"default"} size={"sm"} disabled={appState === "loading"} onClick={onCreate}>
+              <Button variant={"secondary"} size={"sm"} disabled={appState === "loading"} onClick={onCreate}>
                 {appState === "loading" && <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />}
                 {t("label_use_template")}
               </Button>

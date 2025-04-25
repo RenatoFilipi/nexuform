@@ -520,30 +520,28 @@ const NavEditor = () => {
       </div>
       {active && (
         <div className="flex justify-center items-center gap-4">
-          <div className="flex justify-center items-center gap-2">
-            <Button
-              onClick={() => {
-                appTheme.setTheme("light");
-              }}
-              variant={appTheme.theme === "light" ? "secondary" : "ghost"}
-              size={"icon"}
-              className="w-7 h-7">
-              <SunIcon className="w-4 h-4" />
-            </Button>
-            <Button
-              onClick={() => {
-                appTheme.setTheme("dark");
-              }}
-              variant={appTheme.theme === "dark" ? "secondary" : "ghost"}
-              size={"icon"}
-              className="w-7 h-7">
-              <MoonIcon className="w-4 h-4" />
-            </Button>
-          </div>
           <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
             {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
             {t("label_save_form")}
           </Button>
+          <RadioGroup value={appTheme.theme} onValueChange={appTheme.setTheme} className="flex gap-1">
+            <div>
+              <RadioGroupItem value="light" id="light" className="peer sr-only" />
+              <Label
+                htmlFor="light"
+                className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
+                <SunIcon className="w-3 h-3" />
+              </Label>
+            </div>
+            <div>
+              <RadioGroupItem value="dark" id="dark" className="peer sr-only" />
+              <Label
+                htmlFor="dark"
+                className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
+                <MoonIcon className="w-3 h-3" />
+              </Label>
+            </div>
+          </RadioGroup>
         </div>
       )}
     </div>
