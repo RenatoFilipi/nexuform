@@ -39,7 +39,7 @@ const PoweredByBadge = ({ version = "default" }: { version?: TVersion }) => {
     );
   }
   return (
-    <div className="inline-flex items-center gap-2 bg-foreground/10 hover:bg-foreground/15 transition-colors rounded px-4 py-1.5 border border-foreground/5 shadow-sm w-fit">
+    <div className="inline-flex items-center gap-2 bg-foreground/5 hover:bg-foreground/10 transition-colors rounded px-4 py-1.5 border border-foreground/5 shadow-sm w-fit">
       <span className="text-foreground/80 text-sm font-medium">Powered by</span>
       <span className="text-foreground font-bold">Nebulaform</span>
       <ArrowUpRightIcon className="w-4 h-4" />

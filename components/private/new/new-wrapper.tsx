@@ -212,47 +212,25 @@ const PreviewCard = (props: { template: ETemplate }) => {
       return { category: value };
     },
     staleTime: 60 * minute,
-    refetchOnWindowFocus: false,
   });
 
-  if (query.isPending)
-    return (
-      <div className="flex flex-col justify-between p-5 h-44 rounded-xl bg-gradient-to-br from-muted/20 to-muted/10 border border-muted/30 animate-pulse overflow-hidden">
-        <div className="space-y-3 w-full">
-          <div className="h-6 w-4/5 rounded-lg bg-muted/50" />
-          <div className="h-4 w-3/5 rounded-lg bg-muted/40" />
-        </div>
-        <div className="flex justify-between items-end w-full">
-          <div className="h-7 w-20 rounded-lg bg-muted/30" />
-          <div className="h-9 w-28 rounded-lg bg-muted/40" />
-        </div>
-      </div>
-    );
+  if (query.isPending) return null;
 
   return (
-    <div className="group relative flex flex-col justify-between p-5 h-44 rounded bg-card border border-muted hover:border-primary/30 transition-all duration-300 hover:shadow-md overflow-hidden hover:bg-gradient-to-br hover:from-card hover:to-card/70">
-      {/* Glow effect on hover */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <div className="absolute -left-10 -top-10 w-32 h-32 rounded-full bg-primary/10 blur-xl" />
-      </div>
-
-      <div className="flex flex-col gap-3 w-full z-10">
-        <h3 className="text-base font-medium line-clamp-2 text-foreground group-hover:text-primary transition-colors duration-200">
+    <div className="group relative flex flex-col justify-between p-5 h-44 rounded-lg bg-card border border-muted/50 hover:border-primary transition-all duration-200 overflow-hidden">
+      <div className="flex flex-col gap-3 w-full">
+        <h3 className="text-sm font-medium line-clamp-2 text-foreground group-hover:text-primary transition-colors duration-200">
           {name}
         </h3>
         <div className="flex justify-between items-center">
-          <Badge variant="primary" className="px-3 py-1 font-normal">
+          <Badge variant="default">
             <span className="first-letter:uppercase">{query.data?.category}</span>
           </Badge>
         </div>
       </div>
-
-      <div className="flex justify-end items-end w-full z-10">
+      <div className="flex justify-between items-end w-full">
         <NewPreview template={props.template}>
-          <Button
-            variant="outline"
-            size="sm"
-            className="border-muted/70 bg-background/80 backdrop-blur-sm group-hover:border-primary group-hover:text-primary group-hover:bg-primary/10 transition-all duration-200 shadow-sm">
+          <Button variant="outline" size="sm" className="">
             <BookDashedIcon className="w-4 h-4 mr-2" />
             {t("label_preview")}
           </Button>

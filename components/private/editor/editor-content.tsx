@@ -2,9 +2,9 @@ import PoweredByBadge from "@/components/shared/badges/powered-by-badge";
 import { Button } from "@/components/ui/button";
 import useEditorStore from "@/stores/editor";
 import { EBlock, ETheme } from "@/utils/entities";
-import { TBlock, TColor } from "@/utils/types";
+import { TBlock, TColor, TEditorView } from "@/utils/types";
 import { Reorder, useDragControls } from "framer-motion";
-import { BlocksIcon, CheckCircle2Icon, Edit2Icon, GripVerticalIcon, PlusIcon, Trash2Icon } from "lucide-react";
+import { Edit2Icon, GripVerticalIcon, PartyPopperIcon, PlusIcon, SquareStackIcon, Trash2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import AddBlock from "../blocks/add-block";
 import CheckBoxesDesign from "../blocks/design/checkboxes-design";
@@ -40,6 +40,11 @@ const EditorContent = () => {
   const editor = useEditorStore();
   const hasBlocks = editor.blocks.length > 0;
 
+  const pages = [
+    { view: "blocks", icon: SquareStackIcon },
+    { view: "success", icon: PartyPopperIcon },
+  ];
+
   return (
     <div className="w-full flex justify-center items-start overflow-y-auto relative">
       {hasBlocks && (
@@ -49,27 +54,33 @@ const EditorContent = () => {
               <PlusIcon className="w-4 h-4" />
             </Button>
           </AddBlock>
-          <div className="border-t my-1 w-full"></div>
-          <Button
-            onClick={() => {
-              editor.setView("blocks");
-              editor.setToolView("properties");
-            }}
-            variant={editor.view === "blocks" ? "secondary" : "ghost"}
-            size={"icon"}
-            className="w-8 h-8">
-            <BlocksIcon className="w-4 h-4" />
-          </Button>
-          <Button
-            onClick={() => {
-              editor.setView("success");
-              editor.setToolView("properties");
-            }}
-            variant={editor.view === "success" ? "secondary" : "ghost"}
-            size={"icon"}
-            className="w-8 h-8">
-            <CheckCircle2Icon className="w-4 h-4" />
-          </Button>
+          <div className="border-t my-1 w-full border-foreground/30"></div>
+          <div className="flex flex-col gap-2">
+            {pages.map((page) => {
+              const isActive = page.view === editor.view;
+              return (
+                <button
+                  className={`
+                p-2 rounded-md transition-all
+                ${
+                  isActive
+                    ? "bg-primary/10 text-primary shadow-sm"
+                    : "text-muted-foreground/90 hover:bg-muted hover:text-foreground"
+                }
+                flex items-center justify-center
+                relative
+                group rounded
+              `}
+                  onClick={() => {
+                    editor.setView(page.view as TEditorView);
+                    editor.setToolView("properties");
+                  }}
+                  key={page.view}>
+                  {<page.icon className="w-4 h-4" />}
+                </button>
+              );
+            })}
+          </div>
         </div>
       )}
       <EditorCanvas />
@@ -103,7 +114,7 @@ const EditorCanvas = () => {
   }
   return (
     <div className="flex justify-center items-center w-full h-full p-8">
-      <div className="flex flex-col items-center justify-center h-full w-full p-8 rounded-lg border-2 border-dashed bg-muted/5">
+      <div className="flex flex-col items-center justify-center h-full w-full p-8 rounded-lg bg-muted/5">
         <div className="flex flex-col items-center max-w-md text-center space-y-6">
           <div className="rounded-full bg-primary/10 p-3">
             <PlusIcon className="h-7 w-7 text-primary" />

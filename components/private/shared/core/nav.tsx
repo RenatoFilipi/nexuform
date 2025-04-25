@@ -18,7 +18,7 @@ import useEditorStore from "@/stores/editor";
 import useFormStore from "@/stores/form";
 import useUserStore from "@/stores/user";
 import { minWidth640 } from "@/utils/constants";
-import { getCurrentPlan, isSubscriptionActive } from "@/utils/functions";
+import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState, TFormStatus, TPlan, TSetState } from "@/utils/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -56,7 +56,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../../ui/dropdown-menu";
-import ManageSubscription from "../subscription/manage-subscription";
 
 const Nav = () => {
   const pathname = usePathname();
@@ -175,104 +174,7 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
     </DropdownMenu>
   );
 };
-const AvatarAppMenu = ({ children }: { children: React.ReactNode }) => {
-  const t = useTranslations("app");
-  const user = useUserStore();
-  const { setTheme, theme } = useTheme();
-  const showPlan = user.subscription.status !== "canceled";
 
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
-      <DropdownMenuContent className="mr-4 min-w-52 text-foreground/80">
-        {user.email !== "" && (
-          <>
-            <DropdownMenuLabel className="flex justify-center items-center gap-4">
-              {user.email}
-              {showPlan && <PlanBadge plan={user.subscription.plan as TPlan} />}
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-          </>
-        )}
-        <DropdownMenuItem className="py-0">
-          <Button variant={"ghost"} size={"sm"} asChild className="flex justify-between w-full items-center p-0">
-            <a href={"/dashboard/settings"}>
-              {t("label_settings")}
-              <Settings2Icon className="w-4 h-4" />
-            </a>
-          </Button>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="py-0">
-          <Button variant={"ghost"} size={"sm"} asChild className="flex justify-between w-full items-center p-0">
-            <a href={"/dashboard/settings/billing"}>
-              {t("label_billing")}
-              <CreditCardIcon className="w-4 h-4" />
-            </a>
-          </Button>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="py-0">
-          <Button variant={"ghost"} size={"sm"} asChild className="flex justify-between w-full items-center p-0">
-            <a href={"/dashboard/help"}>
-              {t("nav_help")}
-              <HelpingHandIcon className="w-4 h-4" />
-            </a>
-          </Button>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex flex-row justify-between items-center">
-          {t("label_theme")}
-          <RadioGroup value={theme} onValueChange={setTheme} className="flex gap-1">
-            <div>
-              <RadioGroupItem value="system" id="system" className="peer sr-only" />
-              <Label
-                htmlFor="system"
-                className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
-                <MonitorIcon className="w-3 h-3" />
-              </Label>
-            </div>
-            <div>
-              <RadioGroupItem value="light" id="light" className="peer sr-only" />
-              <Label
-                htmlFor="light"
-                className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
-                <SunIcon className="w-3 h-3" />
-              </Label>
-            </div>
-            <div>
-              <RadioGroupItem value="dark" id="dark" className="peer sr-only" />
-              <Label
-                htmlFor="dark"
-                className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
-                <MoonIcon className="w-3 h-3" />
-              </Label>
-            </div>
-          </RadioGroup>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem className="py-0">
-          <Button
-            onClick={signOutAction}
-            variant={"ghost"}
-            size={"sm"}
-            className="flex justify-between w-full items-center p-0">
-            {t("label_logout")}
-            <LogOutIcon className="w-4 h-4" />
-          </Button>
-        </DropdownMenuItem>
-        {user.subscription.plan === "free_trial" ||
-          (!showPlan && (
-            <div className="flex flex-col">
-              <DropdownMenuSeparator />
-              <ManageSubscription>
-                <Button size={"sm"} variant={"secondary"} className="m-1">
-                  {t("label_upgrade")}
-                </Button>
-              </ManageSubscription>
-            </div>
-          ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-};
 const NavApp = () => {
   const { slug } = useParams<{ slug: string }>();
   const t = useTranslations("app");
@@ -589,49 +491,146 @@ const ChangeForm = ({ children }: { children: React.ReactNode }) => {
 const ChangeFormBody = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const store = useFormStore();
-  const user = useUserStore();
-  const currentPlan = getCurrentPlan(user.subscription.plan as TPlan);
-  const mustUpgrade = user.formsCount >= currentPlan.forms;
-  const isDesktop = useMedia(minWidth640);
 
   return (
-    <div className="flex flex-col gap-4 w-full justify-between h-full">
-      <div className="flex flex-col gap-4 h-full">
-        <span className="text-sm font-medium">{t("label_forms")}</span>
-        <div className="flex flex-col w-full h-full gap-2">
-          {store.forms.map((x) => {
-            return (
-              <a
-                key={x.id}
-                href={`/dashboard/forms/${x.id}`}
-                className={`${
+    <div className="flex flex-col gap-5 w-full h-full">
+      {/* Header */}
+      <div className="flex flex-col gap-1">
+        <h3 className="text-sm font-medium text-foreground">{t("label_forms")}</h3>
+      </div>
+      {/* Forms List */}
+      <div className="flex-1 overflow-y-auto pr-1 custom-scrollbar">
+        <div className="flex flex-col gap-2">
+          {store.forms.map((x) => (
+            <a
+              key={x.id}
+              href={`/dashboard/forms/${x.id}`}
+              className={`
+                group relative flex items-center justify-between rounded-lg p-2 transition-all
+                ${
                   store.form.id === x.id
-                    ? "pointer-events-none border-foreground/20 font-semibold"
-                    : "border-transparent hover:border-foreground/20"
-                } flex justify-between items-center rounded border px-2 py-2`}>
-                <span className="truncate text-xs">{x.name}</span>
-                <FormStatusBadge status={x.status as TFormStatus} />
-              </a>
-            );
-          })}
+                    ? "bg-accent/50 border border-accent cursor-default"
+                    : "hover:bg-accent/30 border border-transparent hover:border-accent/30"
+                }
+              `}>
+              <div className="flex-1 min-w-0">
+                <p
+                  className={`text-sm truncate ${
+                    store.form.id === x.id ? "font-medium text-foreground" : "text-foreground/90"
+                  }`}>
+                  {x.name}
+                </p>
+                <p className="text-xs text-muted-foreground truncate">{new Date(x.created_at).toLocaleDateString()}</p>
+              </div>
+              <FormStatusBadge status={x.status as TFormStatus} />
+            </a>
+          ))}
         </div>
       </div>
-      <div className="flex w-full justify-between items-center flex-col-reverse sm:flex-row gap-2">
+      {/* Action Buttons */}
+      <div className="flex flex-col-reverse sm:flex-row gap-3 pt-2 border-t border-muted/20">
         <Button
-          variant={"outline"}
-          size={isDesktop ? "xs" : "sm"}
+          variant="outline"
+          size="sm"
           onClick={() => setState(false)}
-          className="w-full sm:w-fit">
+          className="w-full sm:w-24 hover:bg-muted/50">
           {t("label_close")}
         </Button>
-        <Button size={isDesktop ? "xs" : "sm"} variant={"secondary"} className="w-full sm:w-fit" asChild>
-          <Link href={"/dashboard/forms/new"}>
+        <Button size="sm" variant="secondary" asChild>
+          <Link href="/dashboard/forms/new">
             <PlusIcon className="w-4 h-4 mr-2" />
             {t("label_create_form")}
           </Link>
         </Button>
       </div>
     </div>
+  );
+};
+const AvatarAppMenu = ({ children }: { children: React.ReactNode }) => {
+  const t = useTranslations("app");
+  const user = useUserStore();
+  const { setTheme, theme } = useTheme();
+  const showPlan = user.subscription.status !== "canceled";
+
+  const options = [
+    { label: t("label_settings"), icon: Settings2Icon, path: "/dashboard/settings" },
+    { label: t("label_billing"), icon: CreditCardIcon, path: "/dashboard/settings/billing" },
+    { label: t("nav_help"), icon: HelpingHandIcon, path: "/dashboard/help" },
+  ];
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
+      <DropdownMenuContent className="mr-4 w-64 rounded" align="end" sideOffset={8}>
+        {/* User Info Section */}
+        {user.email !== "" && (
+          <>
+            <DropdownMenuLabel className="flex flex-col px-3 py-2.5">
+              <div className="flex items-center gap-3">
+                <div className="flex-1 min-w-0">
+                  <p className="font-medium text-foreground truncate">{user.email}</p>
+                </div>
+              </div>
+              {showPlan && (
+                <div className="mt-2">
+                  <PlanBadge plan={user.subscription.plan as TPlan} />
+                </div>
+              )}
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator className="bg-gradient-to-r from-transparent via-muted/30 to-transparent h-[1px]" />
+          </>
+        )}
+        {/* Menu Items */}
+        <div className="space-y-1 p-1">
+          {options.map((opt) => {
+            return (
+              <DropdownMenuItem key={opt.path} className="rounded-lg hover:bg-accent/50 focus:bg-accent/50">
+                <a href={opt.path} className="flex justify-between items-center gap-2 w-full">
+                  <span className="">{opt.label}</span>
+                  <opt.icon className="w-4 h-4 text-muted-foreground" />
+                </a>
+              </DropdownMenuItem>
+            );
+          })}
+        </div>
+        {/* Theme Selector */}
+        <DropdownMenuSeparator className="bg-gradient-to-r from-transparent via-muted/30 to-transparent h-[1px]" />
+        <div className="w-full flex justify-between items-center px-2">
+          <span className="text-sm">{t("label_theme")}</span>
+          <div className="flex items-center gap-1 p-1 rounded-lg">
+            <Button
+              variant="ghost"
+              size="sm"
+              className={`h-8 w-8 p-0 ${theme === "system" ? "bg-accent" : ""}`}
+              onClick={() => setTheme("system")}>
+              <MonitorIcon className="w-3.5 h-3.5" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className={`h-8 w-8 p-0 ${theme === "light" ? "bg-accent" : ""}`}
+              onClick={() => setTheme("light")}>
+              <SunIcon className="w-3.5 h-3.5" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className={`h-8 w-8 p-0 ${theme === "dark" ? "bg-accent" : ""}`}
+              onClick={() => setTheme("dark")}>
+              <MoonIcon className="w-3.5 h-3.5" />
+            </Button>
+          </div>
+        </div>
+        {/* Logout */}
+        <DropdownMenuSeparator className="bg-gradient-to-r from-transparent via-muted/30 to-transparent h-[1px]" />
+        <DropdownMenuItem className="">
+          <Button onClick={signOutAction} variant="ghost" size="sm" className="w-full justify-between gap-3 px-2">
+            <span>{t("label_logout")}</span>
+            <LogOutIcon className="w-4 h-4" />
+          </Button>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 export default Nav;

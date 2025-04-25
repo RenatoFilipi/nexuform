@@ -2,6 +2,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { fallbackColor } from "@/utils/constants";
 import { EBlock, ETheme } from "@/utils/entities";
 import { useState } from "react";
+import BlockHeaderDesign from "../block-header-design";
 
 const DropdownMenuDesign = ({
   block,
@@ -17,15 +18,14 @@ const DropdownMenuDesign = ({
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      <div className="grid gap-1">
-        <div className="flex gap-2">
-          {theme.numeric_blocks && <span className="">{position}.</span>}
-          <h1 className={`${theme.uppercase_block_name && "uppercase"} text-sm font-semibold`}>
-            {name} {required && <span className="text-red-500">*</span>}
-          </h1>
-        </div>
-        <span className="text-xs text-muted-foreground">{description}</span>
-      </div>
+      <BlockHeaderDesign
+        numeric={theme.numeric_blocks}
+        uppercase={theme.uppercase_block_name}
+        name={name}
+        description={description}
+        required={required}
+        position={position}
+      />
       {options && options.length >= 1 && (
         <Select
           onValueChange={(e) => {
