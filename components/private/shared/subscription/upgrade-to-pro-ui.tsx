@@ -28,7 +28,6 @@ const UpgradeToProUI = ({
       user.setSubscription(subscription);
       return null;
     },
-    refetchOnWindowFocus: false,
   });
 
   if (query.isPending) return null;
@@ -42,11 +41,12 @@ const UpgradeToProUI = ({
         <div className="text-center flex flex-col justify-center items-center gap-6">
           <div className="text-center flex flex-col justify-center items-center gap-1">
             <h2 className="text-lg font-medium">{t("label_upgrade_pro")}</h2>
-            <p className="text-sm text-foreground/70">{t("desc_upgrade_pro")}</p>
+            <p className="text-sm text-muted-foreground">{t("desc_upgrade_pro")}</p>
           </div>
           <div className="flex justify-center items-center w-fit">
             <CheckoutStripe plan="pro">
-              <Button variant={"secondary"} size={"xs"}>
+              <Button variant={"outline"} size={"sm"}>
+                <CrownIcon className="w-4 h-4 mr-2 text-amber-500" />
                 {t("label_upgrade_pro")}
               </Button>
             </CheckoutStripe>

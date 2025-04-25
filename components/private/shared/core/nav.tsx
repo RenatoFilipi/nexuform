@@ -87,6 +87,13 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
       enabled: true,
     },
     {
+      id: 5,
+      name: t("label_billing"),
+      path: "/dashboard/settings/billing",
+      icon: CreditCardIcon,
+      enabled: true,
+    },
+    {
       id: 3,
       name: t("nav_settings"),
       path: "/dashboard/settings",
@@ -100,13 +107,6 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
       icon: HelpingHandIcon,
       enabled: true,
     },
-    {
-      id: 5,
-      name: t("label_billing"),
-      path: "/dashboard/settings/billing",
-      icon: CreditCardIcon,
-      enabled: true,
-    },
   ];
 
   // app
@@ -118,6 +118,7 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
           <span className="font-medium">{user.email}</span>
           {user.subscription.plan === "" ? null : <PlanBadge plan={user.subscription.plan as TPlan} />}
         </div>
+        <DropdownMenuSeparator className="bg-gradient-to-r from-transparent via-muted/30 to-transparent h-[1px]" />
         <div className="flex flex-col">
           {linksMobile.map((link) => {
             if (link.enabled)
@@ -128,9 +129,9 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
                   href={link.path}
                   className={`${
                     isActive(link.path) ? "bg-foreground text-background" : ""
-                  } p-2 text-sm flex justify-start items-center`}>
-                  <link.icon className="w-4 h-4 mr-2" />
+                  } p-2 text-sm flex justify-between items-center`}>
                   {link.name}
+                  <link.icon className="w-4 h-4 mr-2" />
                 </Link>
               );
           })}
@@ -165,6 +166,7 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
               </div>
             </RadioGroup>
           </div>
+          <DropdownMenuSeparator className="bg-gradient-to-r from-transparent via-muted/30 to-transparent h-[1px]" />
           <Button variant={"ghost"} size={"sm"} className="flex justify-between" onClick={signOutAction}>
             {t("label_logout")}
             <LogOutIcon className="w-4 h-4" />
@@ -174,7 +176,6 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
     </DropdownMenu>
   );
 };
-
 const NavApp = () => {
   const { slug } = useParams<{ slug: string }>();
   const t = useTranslations("app");
@@ -553,8 +554,8 @@ const AvatarAppMenu = ({ children }: { children: React.ReactNode }) => {
   const showPlan = user.subscription.status !== "canceled";
 
   const options = [
-    { label: t("label_settings"), icon: Settings2Icon, path: "/dashboard/settings" },
     { label: t("label_billing"), icon: CreditCardIcon, path: "/dashboard/settings/billing" },
+    { label: t("label_settings"), icon: Settings2Icon, path: "/dashboard/settings" },
     { label: t("nav_help"), icon: HelpingHandIcon, path: "/dashboard/help" },
   ];
 
