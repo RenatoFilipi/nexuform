@@ -8,17 +8,23 @@ import { LoaderIcon } from "lucide-react";
 import { useTransition } from "react";
 import SubmissionGroup from "./submission-group";
 
-const SubmissionWrapper = ({ form, theme, blocks }: { form: EForm; theme: ETheme; blocks: EBlock[] }) => {
-  const { setForm, setTheme, setBlocks, blocks: b, setSubmission, setAnswers } = useSubmissionStore();
+interface IProps {
+  form: EForm;
+  theme: ETheme;
+  blocks: EBlock[];
+}
+
+const SubmissionWrapper = ({ form, theme, blocks }: IProps) => {
+  const s = useSubmissionStore();
   const [isPending, startTransition] = useTransition();
 
   useQuery({
     queryKey: ["SubmissionData"],
     queryFn: () => {
       startTransition(() => {
-        setForm(form);
-        setTheme(theme);
-        setBlocks(blocks);
+        s.setForm(form);
+        s.setTheme(theme);
+        s.setBlocks(blocks);
         const submission: ESubmission = {
           id: uuid(),
           created_at: new Date().toISOString(),
@@ -38,8 +44,8 @@ const SubmissionWrapper = ({ form, theme, blocks }: { form: EForm; theme: ETheme
             value: "",
           };
         });
-        setSubmission(submission);
-        setAnswers(answers);
+        s.setSubmission(submission);
+        s.setAnswers(answers);
       });
       return null;
     },
@@ -56,7 +62,7 @@ const SubmissionWrapper = ({ form, theme, blocks }: { form: EForm; theme: ETheme
 
   return (
     <div className="flex justify-center items-start min-h-dvh flex-1 border-t-foreground/5 w-full">
-      {b.length > 0 && <SubmissionGroup />}
+      {s.blocks.length > 0 && <SubmissionGroup />}
     </div>
   );
 };

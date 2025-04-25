@@ -34,7 +34,6 @@ const AnalyticsWrapper = ({ forms, formsAnalytics, profile, subscription, email,
       analytics.setSubmissions(submissions);
       return null;
     },
-    refetchOnWindowFocus: false,
   });
 
   if (query.isPending) return null;

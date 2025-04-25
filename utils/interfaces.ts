@@ -64,10 +64,11 @@ export interface IFormTemplate {
   blocks: EBlock[];
   pro: boolean;
 }
-export interface ISubmissionsByForm {
+export interface FormSubmission {
   formId: string;
   name: string;
   count: number;
+  percentage: number;
 }
 
 export interface IPlan {

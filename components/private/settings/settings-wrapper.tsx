@@ -9,12 +9,11 @@ interface IProps {
   profile: EProfile;
   subscription: ESubscription;
   formsCount: number;
-  submissionsCount: number;
   email: string;
   locale: string;
 }
 
-const SettingsWrapper = ({ profile, subscription, formsCount, submissionsCount, email, locale }: IProps) => {
+const SettingsWrapper = ({ profile, subscription, formsCount, email, locale }: IProps) => {
   const user = useUserStore();
 
   const query = useQuery({
@@ -24,7 +23,6 @@ const SettingsWrapper = ({ profile, subscription, formsCount, submissionsCount, 
       user.setProfile(profile);
       user.setSubscription(subscription);
       user.setFormsCount(formsCount);
-      user.setSubmissionsCount(submissionsCount);
       user.setEmail(email);
       return null;
     },

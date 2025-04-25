@@ -22,18 +22,6 @@ const Settings = async () => {
   const forms = await supabase.from("forms").select("id").eq("owner_id", userId);
   if (forms.error) return <ErrorUI email={email} />;
 
-  const idsArray = forms.data.map((x) => x.id);
-  const startDate = subscriptions.data.start_date;
-  const dueDate = subscriptions.data.due_date;
-
-  const submissions = await supabase
-    .from("submissions")
-    .select("*", { count: "exact", head: true })
-    .in("form_id", idsArray)
-    .gte("created_at", startDate)
-    .lte("created_at", dueDate);
-  if (submissions.error) return <ErrorUI email={email} />;
-
   return (
     <SettingsWrapper
       locale={locale}
@@ -41,7 +29,6 @@ const Settings = async () => {
       profile={profiles.data}
       subscription={subscriptions.data}
       formsCount={forms.data.length}
-      submissionsCount={submissions.count ?? 0}
     />
   );
 };

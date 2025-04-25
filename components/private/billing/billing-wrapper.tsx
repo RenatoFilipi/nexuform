@@ -1,7 +1,7 @@
 "use client";
 
 import useUserStore from "@/stores/user";
-import { EProfile, ESubscription } from "@/utils/entities";
+import { EProfile, ESubmission_log, ESubscription } from "@/utils/entities";
 import { IPlan } from "@/utils/interfaces";
 import { getPlans } from "@/utils/plans";
 import { useQuery } from "@tanstack/react-query";
@@ -13,7 +13,7 @@ interface IProps {
   email: string;
   locale: string;
   formsCount: number;
-  submissionsCount: number;
+  submissionLogs: ESubmission_log[];
 }
 
 const BillingWrapper = (props: IProps) => {
@@ -27,7 +27,7 @@ const BillingWrapper = (props: IProps) => {
       user.setProfile(props.profile);
       user.setSubscription(props.subscription);
       user.setFormsCount(props.formsCount);
-      user.setSubmissionsCount(props.submissionsCount);
+      user.setSubmissionLogs(props.submissionLogs);
       const plans: IPlan[] = (await getPlans(props.locale)).filter((x) => x.type !== "free_trial");
       return { plans };
     },

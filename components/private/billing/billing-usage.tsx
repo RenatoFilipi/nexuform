@@ -10,7 +10,7 @@ import {
   AlertTriangle,
   CalendarIcon,
   CalendarX2Icon,
-  FileText,
+  LayersIcon,
   RefreshCwIcon,
   Send,
   Settings,
@@ -27,10 +27,10 @@ const BillingUsage = () => {
   const dueDate = new Date(user.subscription.due_date).toLocaleDateString();
 
   const formsLimit = user.formsCount >= user.subscription.forms;
-  const submissionsLimit = user.submissionsCount >= user.subscription.submissions;
+  const submissionsLimit = user.submissionLogs.length >= user.subscription.submissions;
 
   const formsUsage = Math.min(100, (100 * user.formsCount) / user.subscription.forms);
-  const submissionsUsage = Math.min(100, (100 * user.submissionsCount) / user.subscription.submissions);
+  const submissionsUsage = Math.min(100, (100 * user.submissionLogs.length) / user.subscription.submissions);
 
   const remainingDays = getDaysDifference(new Date(), new Date(user.subscription.due_date));
 
@@ -45,16 +45,38 @@ const BillingUsage = () => {
 
   return (
     <div className="w-full flex flex-col gap-6">
-      <div className="flex flex-col gap-6">
-        <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
-          <div className="flex items-center gap-4 w-full sm:w-auto">
-            <div className="flex flex-col gap-1">
-              <h1 className="text-2xl font-bold tracking-tight">{t("label_billing_and_usage")}</h1>
-              <p className="text-sm text-muted-foreground">{t("desc_billing_and_usage")}</p>
-            </div>
+      <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
+        <div className="flex items-center gap-4 w-full sm:w-auto">
+          <div className="flex flex-col gap-1">
+            <h1 className="text-2xl font-bold tracking-tight">{t("label_billing_and_usage")}</h1>
+            <p className="text-sm text-muted-foreground">{t("desc_billing_and_usage")}</p>
           </div>
         </div>
-        <div className="relative overflow-hidden rounded-xl border bg-background p-6 shadow-sm">
+      </div>
+      <div className="flex w-full gap-6 flex-col">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
+          <UsageCard
+            limit={formsLimit}
+            count={user.formsCount}
+            usage={formsUsage}
+            available={user.subscription.forms}
+            label={t("label_forms")}
+            labelUsage={t("label_all_time")}
+            labelAvailable={t("label_forms_included")}
+            icon={<LayersIcon className="h-5 w-5 text-primary" />}
+          />
+          <UsageCard
+            limit={submissionsLimit}
+            count={user.submissionLogs.length}
+            usage={submissionsUsage}
+            available={user.subscription.submissions}
+            label={t("label_submissions")}
+            labelUsage={t("label_monthly_usage")}
+            labelAvailable={t("label_submissions_included")}
+            icon={<Send className="h-5 w-5 text-primary" />}
+          />
+        </div>
+        <div className="relative overflow-hidden rounded-xl border bg-background p-6 shadow-sm w-full">
           <div className="absolute right-0 top-0 h-full w-1 bg-primary" />
           <div className="flex flex-col gap-6">
             <div className="flex items-start justify-between gap-4">
@@ -111,28 +133,6 @@ const BillingUsage = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <UsageCard
-          limit={formsLimit}
-          count={user.formsCount}
-          usage={formsUsage}
-          available={user.subscription.forms}
-          label={t("label_forms")}
-          labelUsage={t("label_all_time")}
-          labelAvailable={t("label_forms_included")}
-          icon={<FileText className="h-5 w-5 text-primary" />}
-        />
-        <UsageCard
-          limit={submissionsLimit}
-          count={user.submissionsCount}
-          usage={submissionsUsage}
-          available={user.subscription.submissions}
-          label={t("label_submissions")}
-          labelUsage={t("label_monthly_usage")}
-          labelAvailable={t("label_submissions_included")}
-          icon={<Send className="h-5 w-5 text-primary" />}
-        />
-      </div>
     </div>
   );
 };
@@ -165,7 +165,6 @@ const UsageCard = ({
         <div className="absolute inset-0 bg-gradient-to-r from-destructive/5 to-transparent pointer-events-none" />
       )}
       <div className="flex flex-col gap-5">
-        {/* Header */}
         <div className="flex justify-between items-start">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-lg bg-primary/10">{icon}</div>
@@ -183,7 +182,6 @@ const UsageCard = ({
             </Badge>
           )}
         </div>
-        {/* Usage bar */}
         <div className="space-y-4">
           <div className="flex justify-between items-center w-full">
             <span className="text-sm text-foreground/70">{labelUsage}</span>
@@ -194,7 +192,7 @@ const UsageCard = ({
             </span>
           </div>
 
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             <Progress value={usage} className="h-2.5" />
             <div className="flex justify-between items-center">
               <span className="text-xs text-foreground/70">

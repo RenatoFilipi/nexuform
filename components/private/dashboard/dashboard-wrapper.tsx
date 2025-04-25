@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import useDashboardStore from "@/stores/dashboard";
 import useUserStore from "@/stores/user";
-import { EForm, EProfile, ESubmission_log, ESubscription } from "@/utils/entities";
+import { EForm, EProfile, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { LayersIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -20,7 +20,6 @@ interface IProps {
   subscription: ESubscription;
   email: string;
   locale: string;
-  submissionLogs: ESubmission_log[];
 }
 
 const DashboardWrapper = (props: IProps) => {
@@ -57,7 +56,6 @@ const DashboardWrapper = (props: IProps) => {
       user.setEmail(props.email);
       user.setLocale(props.locale);
       dashboard.setForms(props.forms);
-      dashboard.setSubmissionLogs(props.submissionLogs);
       return null;
     },
     refetchOnWindowFocus: false,
