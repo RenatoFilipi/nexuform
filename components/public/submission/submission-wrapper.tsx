@@ -32,7 +32,7 @@ const SubmissionWrapper = ({ form, theme, blocks }: IProps) => {
           form_id: form.id,
           identifier: nanoid(),
           status: "not_reviewed",
-          completion_time: null,
+          completion_time: 0,
         };
         const answers: EAnswer[] = blocks.map((blo) => {
           return {
