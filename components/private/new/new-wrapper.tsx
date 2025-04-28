@@ -11,7 +11,15 @@ import { getFormCategoryName } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState, TTemplateCategory } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { BookDashedIcon, ChevronLeftIcon, ChevronRightIcon, HexagonIcon, LoaderIcon, PlusIcon } from "lucide-react";
+import {
+  ArrowUpRightIcon,
+  BookDashedIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  HexagonIcon,
+  LoaderIcon,
+  PlusIcon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { useState, useTransition } from "react";
@@ -34,6 +42,7 @@ const NewWrapper = (props: IProps) => {
   const user = useUserStore();
   const dashboard = useDashboardStore();
   const [error] = useQueryState("error");
+  const [isPending, startTransition] = useTransition();
 
   const query = useQuery({
     queryKey: ["newData"],
@@ -55,7 +64,15 @@ const NewWrapper = (props: IProps) => {
       return null;
     },
   });
-
+  const onNewScratchForm = async () => {
+    startTransition(async () => {
+      const formData = new FormData();
+      formData.append("name", t("label_untitled_form"));
+      formData.append("description", "");
+      formData.append("userId", user.profile.id);
+      await createFormAction(formData);
+    });
+  };
   if (query.isPending) return null;
 
   return (
@@ -67,88 +84,47 @@ const NewWrapper = (props: IProps) => {
             <p className="text-xs text-muted-foreground">{t("desc_create_form")}</p>
           </div>
           <div className="grid sm:grid-cols-2 gap-4 sm:gap-8">
-            <CustomForm />
-            <TemplateForm setView={setView} />
+            <CardNew
+              icon={
+                <div className="p-3 rounded bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors">
+                  <PlusIcon className="w-7 h-7 text-blue-500" />
+                </div>
+              }
+              description={t("desc_custom")}
+              action={
+                <Button
+                  disabled={isPending}
+                  variant={"outline"}
+                  size={"sm"}
+                  onClick={onNewScratchForm}
+                  className="mt-2 group-hover:border-primary group-hover:text-primary">
+                  {isPending && <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />}
+                  {t("label_create_form_scratch")}
+                </Button>
+              }
+            />
+            <CardNew
+              icon={
+                <div className="p-3 rounded bg-orange-500/10 group-hover:bg-orange-500/20 transition-colors">
+                  <HexagonIcon className="w-7 h-7 text-orange-500" />
+                </div>
+              }
+              description={t("desc_templates")}
+              action={
+                <Button
+                  variant={"outline"}
+                  size={"sm"}
+                  onClick={() => setView("templates")}
+                  className="mt-2 group-hover:border-primary group-hover:text-primary">
+                  {t("label_create_form_template")}
+                  <ChevronRightIcon className="w-4 h-4 ml-2" />
+                </Button>
+              }
+            />
           </div>
         </div>
       )}
       {view === "templates" && <TemplateList setView={setView} />}
-    </div>
-  );
-};
-const CustomForm = () => {
-  const t = useTranslations("app");
-  const [isPending, startTransition] = useTransition();
-  const user = useUserStore();
-  const dashboard = useDashboardStore();
-  const limitReached = dashboard.forms.length >= user.subscription.forms;
-
-  const onNewForm = async () => {
-    startTransition(async () => {
-      const formData = new FormData();
-      formData.append("name", t("label_untitled_form"));
-      formData.append("description", "");
-      formData.append("userId", user.profile.id);
-      await createFormAction(formData);
-    });
-  };
-
-  return (
-    <div className="flex justify-center items-center w-full border h-60 gap-4 flex-col p-6 rounded-lg bg-background hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md group">
-      <div className="p-3 rounded-full bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors">
-        <PlusIcon className="w-7 h-7 text-blue-500" />
-      </div>
-      <p className="text-sm text-center group-hover:text-foreground text-muted-foreground">{t("desc_custom")}</p>
-      {limitReached && (
-        <ManageSubscription>
-          <Button variant={"outline"} size={"sm"} className="mt-2 group-hover:border-primary group-hover:text-primary">
-            {t("label_create_form_scratch")}
-          </Button>
-        </ManageSubscription>
-      )}
-      {!limitReached && (
-        <Button
-          disabled={isPending}
-          variant={"outline"}
-          size={"sm"}
-          onClick={onNewForm}
-          className="mt-2 group-hover:border-primary group-hover:text-primary">
-          {isPending && <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />}
-          {t("label_create_form_scratch")}
-        </Button>
-      )}
-    </div>
-  );
-};
-const TemplateForm = ({ setView }: { setView: TSetState<TView> }) => {
-  const t = useTranslations("app");
-  const user = useUserStore();
-  const dashboard = useDashboardStore();
-  const limitReached = dashboard.forms.length >= user.subscription.forms;
-
-  return (
-    <div className="flex justify-center items-center w-full border h-60 gap-4 flex-col p-6 rounded-lg bg-background hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md group">
-      <div className="p-3 rounded-full bg-orange-500/10 group-hover:bg-orange-500/20 transition-colors">
-        <HexagonIcon className="w-7 h-7 text-orange-500" />
-      </div>
-      <p className="text-sm text-center group-hover:text-foreground text-muted-foreground">{t("desc_templates")}</p>
-      {limitReached && (
-        <ManageSubscription>
-          <Button variant={"outline"} size={"sm"} className="mt-2 group-hover:border-primary group-hover:text-primary">
-            {t("label_create_form_template")}
-          </Button>
-        </ManageSubscription>
-      )}
-      {!limitReached && (
-        <Button
-          variant={"outline"}
-          size={"sm"}
-          onClick={() => setView("templates")}
-          className="mt-2 group-hover:border-primary group-hover:text-primary">
-          {t("label_create_form_template")}
-          <ChevronRightIcon className="w-4 h-4 ml-2" />
-        </Button>
-      )}
     </div>
   );
 };
@@ -192,7 +168,7 @@ const TemplateList = ({ setView }: { setView: TSetState<TView> }) => {
         <div className="flex flex-col gap-6">
           <div className="grid sm:grid-cols-3 gap-6">
             {query.data.templates.map((template) => {
-              return <PreviewCard key={template.id} template={template} />;
+              return <Preview key={template.id} template={template} />;
             })}
           </div>
         </div>
@@ -200,7 +176,7 @@ const TemplateList = ({ setView }: { setView: TSetState<TView> }) => {
     </div>
   );
 };
-const PreviewCard = (props: { template: ETemplate }) => {
+const Preview = (props: { template: ETemplate }) => {
   const user = useUserStore();
   const t = useTranslations("app");
   const { category, name } = props.template;
@@ -236,6 +212,36 @@ const PreviewCard = (props: { template: ETemplate }) => {
           </Button>
         </NewPreview>
       </div>
+    </div>
+  );
+};
+const CardNew = ({
+  action,
+  description,
+  icon,
+}: {
+  icon: React.ReactNode;
+  description: string;
+  action: React.ReactNode;
+}) => {
+  const t = useTranslations("app");
+  const user = useUserStore();
+  const dashboard = useDashboardStore();
+  const limitReached = dashboard.forms.length >= user.subscription.forms;
+
+  return (
+    <div className="flex justify-center items-center w-full border h-60 gap-4 flex-col p-6 rounded-lg bg-background hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md group">
+      {icon}
+      <p className="text-sm text-center group-hover:text-foreground text-muted-foreground">{description}</p>
+      {limitReached && (
+        <ManageSubscription>
+          <Button variant={"outline"} size={"sm"} className="mt-2 group-hover:border-primary group-hover:text-primary">
+            {t("label_manage_sub")}
+            <ArrowUpRightIcon className="w-4 h-4 ml-2" />
+          </Button>
+        </ManageSubscription>
+      )}
+      {!limitReached && action}
     </div>
   );
 };

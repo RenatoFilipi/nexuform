@@ -58,7 +58,6 @@ const DashboardWrapper = (props: IProps) => {
       dashboard.setForms(props.forms);
       return null;
     },
-    refetchOnWindowFocus: false,
   });
 
   const onSort = (value: string) => {
@@ -125,8 +124,8 @@ const EmptyUI = () => {
     <div className="flex justify-center items-center h-full flex-1 flex-col gap-4">
       <div className="border pb-20 flex flex-col justify-center items-center gap-6 border-none">
         <div className="flex flex-col justify-center items-center gap-4">
-          <div className="flex justify-center items-center p-2 bg-foreground/5 rounded">
-            <LayersIcon className="w-6 h-6 text-primary" />
+          <div className="flex justify-center items-center p-3 bg-foreground/5 rounded">
+            <LayersIcon className="w-7 h-7 text-primary" />
           </div>
           <div className="flex justify-center items-center flex-col">
             <span className="text-lg font-medium">{t("label_no_forms")}</span>

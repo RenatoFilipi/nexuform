@@ -399,6 +399,7 @@ export type Database = {
       }
       submission_logs: {
         Row: {
+          completion_time: number
           created_at: string
           form_id: string
           id: string
@@ -407,6 +408,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          completion_time?: number
           created_at?: string
           form_id: string
           id?: string
@@ -415,6 +417,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          completion_time?: number
           created_at?: string
           form_id?: string
           id?: string
@@ -434,7 +437,7 @@ export type Database = {
       }
       submissions: {
         Row: {
-          completion_time: number | null
+          completion_time: number
           created_at: string
           form_id: string
           id: string
@@ -443,7 +446,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
-          completion_time?: number | null
+          completion_time?: number
           created_at?: string
           form_id: string
           id?: string
@@ -452,7 +455,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
-          completion_time?: number | null
+          completion_time?: number
           created_at?: string
           form_id?: string
           id?: string
@@ -667,6 +670,35 @@ export type Database = {
             columns: ["form_id"]
             isOneToOne: false
             referencedRelation: "forms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      view_logs: {
+        Row: {
+          created_at: string
+          form_id: string
+          id: string
+          profile_id: string
+        }
+        Insert: {
+          created_at?: string
+          form_id?: string
+          id?: string
+          profile_id?: string
+        }
+        Update: {
+          created_at?: string
+          form_id?: string
+          id?: string
+          profile_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "view_logs_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
