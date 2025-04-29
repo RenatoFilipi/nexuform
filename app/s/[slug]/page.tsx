@@ -47,6 +47,9 @@ const S = async ({ params }: { params: Promise<{ slug: string }> }) => {
       avg_completion_rate: updatedCompletionRate,
     })
     .eq("id", formAnalytics.data.id);
+
+  await supabase.from("view_logs").insert([{ form_id: forms.data.id, profile_id: forms.data.owner_id }]);
+
   const themes = await supabase.from("themes").select("*").eq("form_id", forms.data.id).single();
   if (themes.error) return <FormNotAvailableUI />;
 

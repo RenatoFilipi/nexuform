@@ -3,7 +3,16 @@
 import useFormStore from "@/stores/form";
 import useUserStore from "@/stores/user";
 import { paginationFrom, paginationTo } from "@/utils/constants";
-import { EBlock, EForm, EFormAnalytics, EProfile, ESubmission, ESubscription } from "@/utils/entities";
+import {
+  EBlock,
+  EForm,
+  EFormAnalytics,
+  EProfile,
+  ESubmission,
+  ESubmissionLog,
+  ESubscription,
+  EViewLog,
+} from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { BarChartIcon, SendIcon, SettingsIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -13,7 +22,7 @@ import FormSubmissions from "./form-submissions";
 
 type TView = "overview" | "submissions" | "integrations" | "settings";
 
-interface Props {
+interface IProps {
   overviewSubmissions: ESubmission[];
   submissions: ESubmission[];
   blocks: EBlock[];
@@ -24,6 +33,8 @@ interface Props {
   email: string;
   locale: string;
   forms: EForm[];
+  submissionLogs: ESubmissionLog[];
+  viewLogs: EViewLog[];
 }
 
 const FormWrapper = ({
@@ -37,7 +48,9 @@ const FormWrapper = ({
   overviewSubmissions,
   locale,
   forms,
-}: Props) => {
+  viewLogs,
+  submissionLogs,
+}: IProps) => {
   const t = useTranslations("app");
   const views = [
     {
@@ -79,6 +92,8 @@ const FormWrapper = ({
       formStore.setBlocks(blocks);
       formStore.setPagination({ from: paginationFrom, to: paginationTo });
       formStore.setForms(forms);
+      formStore.setSubmissionLogs(submissionLogs);
+      formStore.setViewLogs(viewLogs);
       return null;
     },
     refetchOnWindowFocus: false,

@@ -49,7 +49,6 @@ const SubmissionWrapper = ({ form, theme, blocks }: IProps) => {
       });
       return null;
     },
-    refetchOnWindowFocus: false,
   });
 
   if (isPending) {
@@ -61,7 +60,7 @@ const SubmissionWrapper = ({ form, theme, blocks }: IProps) => {
   }
 
   return (
-    <div className="flex justify-center items-start min-h-dvh flex-1 border-t-foreground/5 w-full">
+    <div className="flex justify-center items-start flex-1 border-t-foreground/5 w-full">
       {s.blocks.length > 0 && <SubmissionGroup />}
     </div>
   );

@@ -60,6 +60,20 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const formsAnalytics = await supabase.from("forms_analytics").select("*").eq("form_id", form.id).single();
   if (formsAnalytics.error) return <ErrorUI email={email} />;
 
+  const submissionLogs = await supabase
+    .from("submission_logs")
+    .select("*")
+    .eq("form_id", slug)
+    .gte("created_at", new Date(Date.now() - 30 * day).toISOString());
+  if (submissionLogs.error) return <ErrorUI email={email} />;
+
+  const viewLogs = await supabase
+    .from("view_logs")
+    .select("*")
+    .eq("form_id", slug)
+    .gte("created_at", new Date(Date.now() - 30 * day).toISOString());
+  if (viewLogs.error) return <ErrorUI email={email} />;
+
   return (
     <FormWrapper
       locale={locale}
@@ -72,6 +86,8 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
       submissions={submissions.data}
       formAnalytics={formsAnalytics.data}
       subscription={subscriptions.data}
+      submissionLogs={submissionLogs.data}
+      viewLogs={viewLogs.data}
     />
   );
 };

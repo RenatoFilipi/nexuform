@@ -1,4 +1,4 @@
-import { EForm, EProfile, ESubmission_log, ESubscription } from "@/utils/entities";
+import { EForm, EProfile, ESubmissionLog, ESubscription, EViewLog } from "@/utils/entities";
 import { create } from "zustand";
 
 interface user {
@@ -8,14 +8,16 @@ interface user {
   email: string;
   locale: string;
   forms: EForm[];
-  submissionLogs: ESubmission_log[];
+  submissionLogs: ESubmissionLog[];
+  viewLogs: EViewLog[];
   setProfile: (payload: EProfile) => void;
   setSubscription: (payload: ESubscription) => void;
   setFormsCount: (payload: number) => void;
   setEmail: (payload: string) => void;
   setLocale: (payload: string) => void;
   setForms: (payload: EForm[]) => void;
-  setSubmissionLogs: (paylaod: ESubmission_log[]) => void;
+  setSubmissionLogs: (paylaod: ESubmissionLog[]) => void;
+  setViewLogs: (paylaod: EViewLog[]) => void;
 }
 
 const useUserStore = create<user>((set) => ({
@@ -51,6 +53,7 @@ const useUserStore = create<user>((set) => ({
   locale: "",
   forms: [],
   submissionLogs: [],
+  viewLogs: [],
   setProfile: (payload) => set({ profile: payload }),
   setSubscription: (payload) => set({ subscription: payload }),
   setFormsCount: (payload) => set({ formsCount: payload }),
@@ -58,6 +61,7 @@ const useUserStore = create<user>((set) => ({
   setLocale: (payload) => set({ locale: payload }),
   setForms: (payload) => set({ forms: payload }),
   setSubmissionLogs: (payload) => set({ submissionLogs: payload }),
+  setViewLogs: (payload) => set({ viewLogs: payload }),
   reset: () =>
     set({
       profile: {
@@ -90,6 +94,7 @@ const useUserStore = create<user>((set) => ({
       formsCount: 0,
       email: "",
       submissionLogs: [],
+      viewLogs: [],
     }),
 }));
 

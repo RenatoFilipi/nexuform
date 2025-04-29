@@ -1,5 +1,5 @@
 import { day, paginationFrom, paginationTo } from "@/utils/constants";
-import { EBlock, EForm, EFormAnalytics, ESubmission } from "@/utils/entities";
+import { EBlock, EForm, EFormAnalytics, ESubmission, ESubmissionLog, EViewLog } from "@/utils/entities";
 import { IFormFilters, IPagination } from "@/utils/interfaces";
 import { create } from "zustand";
 
@@ -12,6 +12,8 @@ interface form {
   filters: IFormFilters;
   pagination: IPagination;
   forms: EForm[];
+  submissionLogs: ESubmissionLog[];
+  viewLogs: EViewLog[];
   setForm: (payload: EForm) => void;
   setBlocks: (payload: EBlock[]) => void;
   setSubmissions: (payload: ESubmission[]) => void;
@@ -20,6 +22,8 @@ interface form {
   setFilters: (payload: IFormFilters) => void;
   setPagination: (payload: IPagination) => void;
   setForms: (payload: EForm[]) => void;
+  setSubmissionLogs: (paylaod: ESubmissionLog[]) => void;
+  setViewLogs: (paylaod: EViewLog[]) => void;
   reset: () => void;
 }
 
@@ -61,6 +65,8 @@ const useFormStore = create<form>((set) => ({
   filters: { from, to, sort: "ascending", status: "all" },
   pagination: { from: paginationFrom, to: paginationTo },
   forms: [],
+  submissionLogs: [],
+  viewLogs: [],
   setForm: (payload) => set({ form: payload }),
   setBlocks: (payload) => set({ blocks: payload }),
   setSubmissions: (payload) => set({ submissions: payload }),
@@ -69,6 +75,8 @@ const useFormStore = create<form>((set) => ({
   setOverviewSubmissions: (payload) => set({ overviewSubmissions: payload }),
   setPagination: (payload) => set({ pagination: payload }),
   setForms: (payload) => set({ forms: payload }),
+  setSubmissionLogs: (payload) => set({ submissionLogs: payload }),
+  setViewLogs: (payload) => set({ viewLogs: payload }),
   reset: () =>
     set({
       form: {
@@ -103,6 +111,8 @@ const useFormStore = create<form>((set) => ({
       },
       pagination: { from: paginationFrom, to: paginationTo },
       forms: [],
+      submissionLogs: [],
+      viewLogs: [],
     }),
 }));
 

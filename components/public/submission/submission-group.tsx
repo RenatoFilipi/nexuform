@@ -1,3 +1,4 @@
+import ModeToggle2 from "@/components/shared/core/mode-toggle2";
 import useSubmissionStore from "@/stores/submission";
 import { EAnswer, EBlock, ETheme } from "@/utils/entities";
 import { isValidEmail } from "@/utils/functions";
@@ -149,7 +150,7 @@ const SubmissionGroup = () => {
     );
 
   return (
-    <div className="flex flex-col gap-6 sm:w-[620px] w-full mt-10 px-4 sm:px-0 min-h-dvh">
+    <div className="flex flex-col gap-6 sm:w-[620px] w-full mt-10 px-4 sm:px-0">
       <div className="flex flex-col gap-2 justify-center items-start">
         <h1 className="text-2xl font-bold">{form.name}</h1>
         <p className="text-sm text-foreground/80">{form.description}</p>
@@ -165,7 +166,7 @@ const SubmissionGroup = () => {
           );
         })}
       </div>
-      <div className="flex justify-center items-center w-full flex-col gap-6">
+      <div className="flex justify-center items-center w-full flex-col gap-6 mb-10">
         <button
           disabled={submissionState === "loading"}
           onClick={onSubmit}
@@ -173,7 +174,8 @@ const SubmissionGroup = () => {
           className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 text-white w-full">
           {submissionState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />} {form.submit_text}
         </button>
-        <div className="flex justify-center sm:justify-end items-center w-full gap-2 h-1/4">
+        <div className="flex justify-between sm:justify-between items-center w-full gap-2 h-1/4">
+          <ModeToggle2 />
           {form.nebulaform_branding && (
             <Link href="/">
               <PoweredByBadge version="default" />

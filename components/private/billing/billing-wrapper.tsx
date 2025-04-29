@@ -1,7 +1,7 @@
 "use client";
 
 import useUserStore from "@/stores/user";
-import { EProfile, ESubmission_log, ESubscription } from "@/utils/entities";
+import { EProfile, ESubmissionLog, ESubscription } from "@/utils/entities";
 import { IPlan } from "@/utils/interfaces";
 import { getPlans } from "@/utils/plans";
 import { useQuery } from "@tanstack/react-query";
@@ -13,7 +13,7 @@ interface IProps {
   email: string;
   locale: string;
   formsCount: number;
-  submissionLogs: ESubmission_log[];
+  submissionLogs: ESubmissionLog[];
 }
 
 const BillingWrapper = (props: IProps) => {
