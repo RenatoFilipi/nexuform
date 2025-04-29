@@ -89,7 +89,7 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
     <div className="flex flex-col gap-6 h-full overflow-y-auto">
       {form.status !== "published" && (
         <div className="flex items-center flex-col justify-center gap-4 px-4 py-8 h-full rounded-lg">
-          <div className="flex justify-center items-center p-2 bg-warning/10 rounded">
+          <div className="flex justify-center items-center p-2 bg-foreground/5 rounded">
             <Share2Icon className="w-6 h-6 text-warning" />
           </div>
           <div className="flex flex-col justify-center items-center gap-6">

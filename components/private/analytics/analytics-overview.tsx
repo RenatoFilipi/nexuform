@@ -22,22 +22,22 @@ const AnalyticsOverview = () => {
       <AnalyticsCard
         name={t("label_total_views")}
         value={totalViews.toString()}
-        icon={<EyeIcon className="w-4 h-4" />}
+        icon={<EyeIcon className="w-4 h-4 text-primary" />}
       />
       <AnalyticsCard
         name={t("label_total_submissions")}
         value={totalSubmissions.toString()}
-        icon={<SendIcon className="w-4 h-4" />}
+        icon={<SendIcon className="w-4 h-4 text-primary" />}
       />
       <AnalyticsCard
         name={t("label_completion_rate")}
         value={totalViews > 0 ? `${formatDecimal(completionRate)}%` : "--"}
-        icon={<VoteIcon className="w-4 h-4" />}
+        icon={<VoteIcon className="w-4 h-4 text-primary" />}
       />
       <AnalyticsCard
         name={t("label_avg_completion_time")}
         value={totalSubmissions > 0 ? formatTime(avgCompletionTime, 1) : "--"}
-        icon={<TimerIcon className="w-4 h-4" />}
+        icon={<TimerIcon className="w-4 h-4 text-primary" />}
       />
     </div>
   );

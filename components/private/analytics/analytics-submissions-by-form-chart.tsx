@@ -50,7 +50,7 @@ const AnalyticsSubmissionsByFormChart = () => {
   if (!formSubmissions?.length) {
     return (
       <div className="border flex flex-col items-center justify-center rounded-lg p-6 gap-3">
-        <div className="p-2 rounded bg-primary/10">
+        <div className="p-2 rounded bg-primary/5">
           <SendIcon className="w-5 h-5 text-primary" />
         </div>
         <span className="text-sm text-muted-foreground">{t("label_no_submission")}</span>

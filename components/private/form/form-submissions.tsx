@@ -174,8 +174,8 @@ const FormSubmissions = () => {
           </Table>
           {noSubmission && (
             <div className="flex w-full justify-center items-center flex-col gap-4 py-20">
-              <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/10">
-                <SendIcon className="w-6 h-6 text-primary" />
+              <div className="flex justify-center items-center p-2 w-fit rounded bg-foreground/5">
+                <SendIcon className="w-5 h-5 text-primary" />
               </div>
               <span className="text-sm text-muted-foreground">{t("label_no_submission")}</span>
             </div>
