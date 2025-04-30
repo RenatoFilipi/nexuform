@@ -1,42 +1,43 @@
 import { Card } from "@/components/ui/card";
-import useAnalyticsStore from "@/stores/analytics";
-import { formatDecimal, formatTime } from "@/utils/functions";
+import useGlobalStore from "@/stores/global";
+import { formatDecimal, formatTime, getAverageCompletionRate, getAverageCompletionTime } from "@/utils/functions";
 import { EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 const AnalyticsOverview = () => {
   const t = useTranslations("app");
-  const { formsAnalytics } = useAnalyticsStore();
+  const global = useGlobalStore();
 
-  const totalViews = formsAnalytics.reduce((sum, form) => sum + (form.total_views || 0), 0);
-  const totalSubmissions = formsAnalytics.reduce((sum, form) => sum + (form.total_submissions || 0), 0);
-  const completionRate = totalViews > 0 ? (totalSubmissions / totalViews) * 100 : 0;
-  const totalCompletionTime = formsAnalytics.reduce(
-    (sum, form) => sum + (form.avg_completion_time || 0) * (form.total_submissions || 0),
-    0
+  const totalViews = global.viewLogs.length.toString();
+  const totalSubmissions = global.submissionLogs.length.toString();
+  const avgCompletionTime = formatTime(
+    getAverageCompletionTime(global.submissionLogs.map((x) => x.completion_time)),
+    1
   );
-  const avgCompletionTime = totalSubmissions > 0 ? totalCompletionTime / totalSubmissions : 0;
+  const avgCompletionRate = `${formatDecimal(
+    getAverageCompletionRate(global.viewLogs.length, global.submissionLogs.length)
+  )}%`;
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
       <AnalyticsCard
         name={t("label_total_views")}
-        value={totalViews.toString()}
+        value={totalViews}
         icon={<EyeIcon className="w-4 h-4 text-primary" />}
       />
       <AnalyticsCard
         name={t("label_total_submissions")}
-        value={totalSubmissions.toString()}
+        value={totalSubmissions}
         icon={<SendIcon className="w-4 h-4 text-primary" />}
       />
       <AnalyticsCard
         name={t("label_completion_rate")}
-        value={totalViews > 0 ? `${formatDecimal(completionRate)}%` : "--"}
+        value={avgCompletionRate}
         icon={<VoteIcon className="w-4 h-4 text-primary" />}
       />
       <AnalyticsCard
         name={t("label_avg_completion_time")}
-        value={totalSubmissions > 0 ? formatTime(avgCompletionTime, 1) : "--"}
+        value={avgCompletionTime}
         icon={<TimerIcon className="w-4 h-4 text-primary" />}
       />
     </div>

@@ -31,20 +31,21 @@ const Analytics = async () => {
   if (forms.error) return <ErrorUI email={email} />;
 
   const formIds = forms.data.map((x) => x.id);
-  const submissions = await supabase.from("submissions").select("*").in("form_id", formIds);
-  if (submissions.error) return <ErrorUI email={email} />;
 
-  const formsAnalytics = await supabase.from("forms_analytics").select("*").eq("profile_id", userId);
-  if (formsAnalytics.error) return <ErrorUI email={email} />;
+  const submissionLogs = await supabase.from("submission_logs").select("*").eq("profile_id", userId);
+  if (submissionLogs.error) return <ErrorUI email={email} />;
+
+  const viewLogs = await supabase.from("view_logs").select("*").eq("profile_id", userId);
+  if (viewLogs.error) return <ErrorUI email={email} />;
 
   return (
     <AnalyticsWrapper
       email={email}
       profile={profiles.data}
       subscription={subscriptions.data}
+      submissionLogs={submissionLogs.data}
+      viewLogs={viewLogs.data}
       forms={forms.data}
-      formsAnalytics={formsAnalytics.data}
-      submissions={submissions.data}
     />
   );
 };

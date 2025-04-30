@@ -1,27 +1,26 @@
 "use client";
 
-import useAnalyticsStore from "@/stores/analytics";
+import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
-import { EForm, EFormAnalytics, EProfile, ESubmission, ESubscription } from "@/utils/entities";
+import { EForm, EProfile, ESubmissionLog, ESubscription, EViewLog } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import AnalyticsOverview from "./analytics-overview";
 import AnalyticsSubmissionsActivityChart from "./analytics-submissions-activity-chart";
-import AnalyticsSubmissionsByFormChart from "./analytics-submissions-by-form-chart";
 
 interface Props {
   email: string;
   profile: EProfile;
   subscription: ESubscription;
+  submissionLogs: ESubmissionLog[];
+  viewLogs: EViewLog[];
   forms: EForm[];
-  formsAnalytics: EFormAnalytics[];
-  submissions: ESubmission[];
 }
 
-const AnalyticsWrapper = ({ forms, formsAnalytics, profile, subscription, email, submissions }: Props) => {
+const AnalyticsWrapper = ({ profile, subscription, email, viewLogs, submissionLogs, forms }: Props) => {
   const t = useTranslations("app");
   const user = useUserStore();
-  const analytics = useAnalyticsStore();
+  const global = useGlobalStore();
 
   const query = useQuery({
     queryKey: ["analyticsData"],
@@ -29,9 +28,9 @@ const AnalyticsWrapper = ({ forms, formsAnalytics, profile, subscription, email,
       user.setProfile(profile);
       user.setSubscription(subscription);
       user.setEmail(email);
-      analytics.setForms(forms);
-      analytics.setFormAnalytics(formsAnalytics);
-      analytics.setSubmissions(submissions);
+      global.setSubmissionLogs(submissionLogs);
+      global.setViewLogs(viewLogs);
+      global.setForms(forms);
       return null;
     },
   });
@@ -46,7 +45,6 @@ const AnalyticsWrapper = ({ forms, formsAnalytics, profile, subscription, email,
       <div className="grid gap-6">
         <AnalyticsOverview />
         <div className="grid sm:grid-cols-2 gap-6">
-          <AnalyticsSubmissionsByFormChart />
           <AnalyticsSubmissionsActivityChart />
         </div>
       </div>
