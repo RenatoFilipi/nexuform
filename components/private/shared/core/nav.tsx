@@ -23,6 +23,7 @@ import { createClient } from "@/utils/supabase/client";
 import { TAppState, TFormStatus, TPlan, TSetState } from "@/utils/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  ArrowUpRightIcon,
   ChartNoAxesColumnIcon,
   ChevronsUpDownIcon,
   CreditCardIcon,
@@ -185,6 +186,7 @@ const NavApp = () => {
   const userStore = useUserStore();
   const avatarName = userStore.email.slice(0, 2);
   const isActive = (path: string) => path === pathname;
+  const isFreeTrial = userStore.subscription.plan === "free_trial";
 
   const links = [
     {
@@ -266,6 +268,14 @@ const NavApp = () => {
       </div>
       <div className="hidden sm:flex justify-center items-center gap-4">
         <div className="flex justify-center items-center gap-3">
+          {isFreeTrial && (
+            <Button variant={"outline"} size={"xs"} asChild>
+              <Link href={"/dashboard/settings/billing"}>
+                <ArrowUpRightIcon className="w-4 h-4 mr-2" />
+                {t("label_upgrade_now")}
+              </Link>
+            </Button>
+          )}
           <FeedbackForm>
             <Button variant={"outline"} size={"xs"}>
               <MessageSquareCodeIcon className="w-4 h-4 mr-2" />

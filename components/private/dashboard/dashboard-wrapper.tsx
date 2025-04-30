@@ -2,15 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import useDashboardStore from "@/stores/dashboard";
+import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
 import { EForm, EProfile, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { LayersIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useQueryState } from "nuqs";
 import { useMemo, useState } from "react";
 import DashboardFormCard from "./dashboard-form-card";
 
@@ -22,89 +20,74 @@ interface IProps {
   locale: string;
 }
 
-const DashboardWrapper = (props: IProps) => {
+const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProps) => {
   const t = useTranslations("app");
-  const [sortBy, setSortBy] = useQueryState("sort-by");
-  const [value, setValue] = useState("");
-  const user = useUserStore();
-  const dashboard = useDashboardStore();
-  const filteredForms = useMemo(() => {
-    let result = [...dashboard.forms];
-    if (value) {
-      const searchTerm = value.toLowerCase();
-      result = result.filter(
-        (form) => form.name.toLowerCase().includes(searchTerm) || form.description?.toLowerCase().includes(searchTerm)
-      );
-    }
-    if (sortBy === "name") {
-      result.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (sortBy === "date") {
-      result.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-    }
+  const [searchValue, setSearchValue] = useState("");
 
-    return result;
-  }, [dashboard.forms, value, sortBy]);
-  const empty = dashboard.forms.length <= 0 && value === "";
-  const filteredEmpty = filteredForms.length <= 0 && value !== "";
+  const user = useUserStore();
+  const global = useGlobalStore();
 
   const query = useQuery({
     queryKey: ["dashboardData"],
     queryFn: () => {
-      user.setFormsCount(props.forms.length);
-      user.setProfile(props.profile);
-      user.setSubscription(props.subscription);
-      user.setEmail(props.email);
-      user.setLocale(props.locale);
-      dashboard.setForms(props.forms);
+      user.setFormsCount(forms.length);
+      user.setProfile(profile);
+      user.setSubscription(subscription);
+      user.setEmail(email);
+      user.setLocale(locale);
+      global.setForms(forms);
       return null;
     },
   });
 
-  const onSort = (value: string) => {
-    setSortBy(value);
-  };
+  const filteredForms = useMemo(() => {
+    let result = [...global.forms];
+    if (searchValue) {
+      const searchTerm = searchValue.toLowerCase();
+      result = result.filter(
+        (form) => form.name.toLowerCase().includes(searchTerm) || form.description?.toLowerCase().includes(searchTerm)
+      );
+    }
+    return result;
+  }, [global.forms, searchValue]);
+
+  const isEmpty = global.forms.length === 0;
+  const isFilteredEmpty = filteredForms.length === 0 && searchValue !== "";
+  const hasForms = !isEmpty && !isFilteredEmpty;
 
   if (query.isPending) return null;
 
   return (
     <div className="flex-1 mt-12 mb-12 sm:mb-0 flex flex-col gap-6 sm:gap-10 px-3 sm:px-20 lg:px-52 py-4 sm:py-8">
       <div className="flex justify-between items-center flex-col sm:flex-row gap-3">
-        <div className="flex justify-between items-center w-full">
+        <div className="flex justify-between items-center w-full sm:w-fit">
           <h1 className="text-xl font-medium">{t("label_forms")}</h1>
           <div className="flex sm:hidden">
             <NewFormButton />
           </div>
         </div>
-        <div className="flex justify-center items-center gap-4 flex-col sm:flex-row w-full">
+        <div className="flex justify-center items-center gap-4 flex-col sm:flex-row w-full sm:w-fit">
           <div className="flex gap-4 w-full">
             <Input
               type="search"
               placeholder={t("label_search_forms")}
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              className="sm:w-[250px]"
             />
-            <Select defaultValue={sortBy ?? ""} onValueChange={onSort}>
-              <SelectTrigger>
-                <SelectValue placeholder={t("label_sortby")} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="name">{t("label_sortby_name")}</SelectItem>
-                <SelectItem value="date">{t("label_sortby_date")}</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
           <div className="hidden sm:flex">
             <NewFormButton />
           </div>
         </div>
       </div>
-      {filteredEmpty && <FilteredEmptyUI />}
-      {empty && <EmptyUI />}
-      {!empty && (
+      {isFilteredEmpty && <FilteredEmptyUI />}
+      {isEmpty && <EmptyUI />}
+      {hasForms && (
         <div className="overflow-y-auto grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredForms.map((form) => {
-            return <DashboardFormCard key={form.id} form={form} />;
-          })}
+          {filteredForms.map((form) => (
+            <DashboardFormCard key={form.id} form={form} />
+          ))}
         </div>
       )}
     </div>
@@ -142,8 +125,8 @@ const EmptyUI = () => {
 const NewFormButton = () => {
   const t = useTranslations("app");
   return (
-    <Button size={"sm"} variant={"secondary"} asChild>
-      <Link href={"/dashboard/forms/new"}>
+    <Button size="sm" variant="secondary" asChild>
+      <Link href="/dashboard/forms/new">
         <PlusIcon className="w-4 h-4 mr-2" />
         {t("label_create_form")}
       </Link>

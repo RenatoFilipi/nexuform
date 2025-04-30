@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import useFormStore from "@/stores/form";
+import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
 import { minWidth640, paginationRange } from "@/utils/constants";
 import { ESubmission } from "@/utils/entities";
@@ -35,74 +35,75 @@ const FormSubmissions = () => {
   const supabase = createClient();
   const isDesktop = useMedia(minWidth640);
   const { locale } = useUserStore();
-  const { submissions, blocks, setPagination, pagination, form, setSubmissions } = useFormStore();
+  const global = useGlobalStore();
   const [appState, setAppState] = useState<TAppState>("idle");
   const [filterStatus, setFilterStatus] = useState("all");
-  const [ls, setSl] = useState<ESubmission[]>(submissions);
-  const disabledPrevious = appState === "loading" || pagination.from <= 0;
-  const disabledNext = appState === "loading" || submissions.length <= paginationRange;
-  const noSubmission = submissions.length <= 0;
+  const [ls, setSl] = useState<ESubmission[]>(global.submissions);
+  const disabledPrevious = appState === "loading" || global.submissionPagination.from <= 0;
+  const disabledNext = appState === "loading" || global.submissions.length <= paginationRange;
+  const noSubmission = global.submissions.length <= 0;
 
   const onPreviousData = async () => {
     setAppState("loading");
     const range = paginationRange;
-    const from = pagination.from - range;
-    const to = pagination.to - range;
-    const { data, error } = await supabase
+    const from = global.submissionPagination.from - range;
+    const to = global.submissionPagination.to - range;
+
+    const submissions = await supabase
       .from("submissions")
       .select("*")
       .range(from, to)
-      .eq("form_id", form.id)
+      .eq("form_id", global.form.id)
       .order("created_at", { ascending: false });
 
-    if (error) {
+    if (submissions.error) {
       toast.error(t("err_fetch_submissions"));
       setAppState("idle");
       return;
     }
-
-    setSubmissions(data);
-    setPagination({ from, to });
+    global.setSubmissions(submissions.data);
+    global.setSubmissionPagination({ from, to });
     setAppState("idle");
   };
   const onNextData = async () => {
     setAppState("loading");
     const range = paginationRange;
-    const from = pagination.from + range;
-    const to = pagination.to + range;
+    const from = global.submissionPagination.from + range;
+    const to = global.submissionPagination.to + range;
 
-    const { data, error } = await supabase
+    const submissions = await supabase
       .from("submissions")
       .select("*")
       .range(from, to)
-      .eq("form_id", form.id)
+      .eq("form_id", global.form.id)
       .order("created_at", { ascending: false });
 
-    if (error) {
+    if (submissions.error) {
       toast.error(t("err_fetch_submissions"));
       setAppState("idle");
       return;
     }
 
-    setSubmissions(data);
-    setPagination({ from, to });
+    global.setSubmissions(submissions.data);
+    global.setSubmissionPagination({ from, to });
     setAppState("idle");
   };
   const onFilter = (value: string) => {
     setFilterStatus(value);
   };
   useQuery({
-    queryKey: [filterStatus, submissions],
+    queryKey: [filterStatus, global.submissions],
     queryFn: () => {
       if (filterStatus === "all") {
-        setSl(submissions);
+        setSl(global.submissions);
         return null;
       }
-      const fs = submissions.filter((x) => x.status === filterStatus);
+      const fs = global.submissions.filter((x) => x.status === filterStatus);
       setSl(fs);
       return null;
     },
   });
+
   return (
     <div className="flex flex-col w-full gap-4 overflow-y-auto">
       <div className="flex justify-between items-center flex-col sm:flex-row gap-4 w-full">
@@ -160,7 +161,7 @@ const FormSubmissions = () => {
                     </TableCell>
                     <TableCell className="py-2">{formatTime(submission.completion_time ?? 0, 2)}</TableCell>
                     <TableCell className="text-right py-2  ">
-                      <SubmissionDetails blocks={blocks} submission={submission}>
+                      <SubmissionDetails blocks={global.blocks} submission={submission}>
                         <Button variant={"outline"} size={"xs"} className="">
                           <ReceiptTextIcon className="w-4 h-4" />
                         </Button>
@@ -200,7 +201,7 @@ const FormSubmissions = () => {
           <div className="flex flex-col gap-2">
             {ls.map((submission) => {
               return (
-                <FormSubmissionDetails key={submission.id} blocks={blocks} submission={submission}>
+                <FormSubmissionDetails key={submission.id} blocks={global.blocks} submission={submission}>
                   <Card className="flex flex-col border cursor-pointer p-2 gap-6">
                     <div className="flex justify-between items-center">
                       <span className="text-sm font-semibold">{submission.identifier}</span>

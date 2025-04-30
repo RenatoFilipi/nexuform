@@ -73,8 +73,8 @@ const Body = ({
 }) => {
   const t = useTranslations("app");
   const supabase = createClient();
-  const { subscription, locale } = useUserStore();
-  const isAllowedToExport = subscription.plan === "pro";
+  const user = useUserStore();
+  const isAllowedToExport = user.subscription.plan === "pro";
 
   const getBlockType = (type: TBlock): string => {
     switch (type) {
@@ -102,7 +102,6 @@ const Body = ({
         return "--";
     }
   };
-
   const query = useQuery({
     queryKey: [`submissionData`, submission.id],
     queryFn: async () => {
@@ -116,7 +115,7 @@ const Body = ({
 
         if (block.type === "date_picker") {
           const date = new Date(targetAnswer.value);
-          const formattedAnswer = new Intl.DateTimeFormat(locale).format(date);
+          const formattedAnswer = new Intl.DateTimeFormat(user.locale).format(date);
           return { question: block.name, answer: formattedAnswer, type: block.type as TBlock };
         }
         return { question: block.name, answer: targetAnswer.value, type: block.type as TBlock };
@@ -128,7 +127,6 @@ const Body = ({
     gcTime: 10 * minute,
     refetchOnWindowFocus: false,
   });
-
   const exportOneSubmissionToCSV = (submission: ESubmission, collection: { question: string; answer: string }[]) => {
     const csvData = [{ question: "Identifier", answer: submission.identifier }, ...collection];
     const csv = Papa.unparse(csvData);
@@ -146,7 +144,9 @@ const Body = ({
           <div className="flex justify-between items-start gap-4">
             <div>
               <h2 className="text-lg font-semibold text-foreground">{submission.identifier}</h2>
-              <p className="text-sm text-muted-foreground">{formatDateRelativeToNow(submission.created_at, locale)}</p>
+              <p className="text-sm text-muted-foreground">
+                {formatDateRelativeToNow(submission.created_at, user.locale)}
+              </p>
             </div>
             <SubmissionStatusBadge status={submission.status as TSubmissionStatus} uppercase />
           </div>
@@ -157,7 +157,7 @@ const Body = ({
             </Badge>
             <Badge variant="primary" className="flex items-center gap-1">
               <CalendarIcon className="h-3 w-3" />
-              {new Date(submission.created_at).toLocaleString(locale)}
+              {new Date(submission.created_at).toLocaleString(user.locale)}
             </Badge>
           </div>
         </div>

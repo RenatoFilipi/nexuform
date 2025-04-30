@@ -6,7 +6,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import useFormStore from "@/stores/form";
+import useGlobalStore from "@/stores/global";
 import { ESubmission } from "@/utils/entities";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState, TSetState, TSubmissionStatus } from "@/utils/types";
@@ -19,7 +19,7 @@ const FormSubmissionStatus = ({ submission, setState }: { submission: ESubmissio
   const t = useTranslations("app");
   const supabase = createClient();
   const [appState, setAppState] = useState<TAppState>("idle");
-  const { submissions, setSubmissions } = useFormStore();
+  const global = useGlobalStore();
 
   const options = [
     {
@@ -67,10 +67,10 @@ const FormSubmissionStatus = ({ submission, setState }: { submission: ESubmissio
     }
 
     const updatedSubmission = { ...submission, status };
-    const updatedSubmissions = submissions.map((oldSubmission) =>
+    const updatedSubmissions = global.submissions.map((oldSubmission) =>
       oldSubmission.id === updatedSubmission.id ? updatedSubmission : oldSubmission
     );
-    setSubmissions(updatedSubmissions);
+    global.setSubmissions(updatedSubmissions);
     toast.success(t("suc_update_submission"));
     setAppState("idle");
     setState(false);

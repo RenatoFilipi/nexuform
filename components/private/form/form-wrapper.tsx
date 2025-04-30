@@ -1,6 +1,7 @@
 "use client";
 
 import useFormStore from "@/stores/form";
+import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
 import { paginationFrom, paginationTo } from "@/utils/constants";
 import {
@@ -73,18 +74,19 @@ const FormWrapper = ({
     },
   ];
   const formStore = useFormStore();
-  const userStore = useUserStore();
+  const user = useUserStore();
+  const global = useGlobalStore();
   const [view, setView] = useState<TView>("overview");
   const enabledViews = views.filter((x) => x.enabled);
-  const notReviewedSubmissions = formStore.submissions.filter((x) => x.status === "not_reviewed").length;
+  const notReviewedSubmissions = global.submissions.filter((x) => x.status === "not_reviewed").length;
 
   const query = useQuery({
     queryKey: ["formData"],
     queryFn: () => {
-      userStore.setEmail(email);
-      userStore.setProfile(profile);
-      userStore.setSubscription(subscription);
-      userStore.setLocale(locale);
+      user.setEmail(email);
+      user.setProfile(profile);
+      user.setSubscription(subscription);
+      user.setLocale(locale);
       formStore.setForm(form);
       formStore.setFormAnalytics(formAnalytics);
       formStore.setOverviewSubmissions(overviewSubmissions);
@@ -94,6 +96,12 @@ const FormWrapper = ({
       formStore.setForms(forms);
       formStore.setSubmissionLogs(submissionLogs);
       formStore.setViewLogs(viewLogs);
+      global.setForm(form);
+      global.setSubmissions(submissions);
+      global.setForms(forms);
+      global.setSubmissionLogs(submissionLogs);
+      global.setViewLogs(viewLogs);
+      global.setBlocks(blocks);
       return null;
     },
   });

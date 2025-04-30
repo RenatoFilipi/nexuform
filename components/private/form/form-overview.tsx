@@ -3,41 +3,46 @@
 import FormStatusBadge from "@/components/shared/badges/form-status-badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import useFormStore from "@/stores/form";
+import useGlobalStore from "@/stores/global";
 import { formatDecimal, formatTime, getAverageCompletionRate, getAverageCompletionTime } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
 import { EyeIcon, PenIcon, SendIcon, Share2Icon, TimerIcon, VoteIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import FormShare from "./form-share";
-import FormSubmissionsActivityChart2 from "./form-submissions-activity-chart2";
+import FormSubmissionsActivityChart from "./form-submissions-activity-chart";
 
 const FormOverview = () => {
   const t = useTranslations("app");
-  const { form, submissionLogs, viewLogs } = useFormStore();
-  const totalViews = viewLogs.length.toString();
-  const totalSubmissions = submissionLogs.length.toString();
-  const avgCompletionTime = formatTime(getAverageCompletionTime(submissionLogs.map((x) => x.completion_time)), 1);
-  const avgCompletionRate = `${formatDecimal(getAverageCompletionRate(viewLogs.length, submissionLogs.length))}%`;
+  const global = useGlobalStore();
+  const totalViews = global.viewLogs.length.toString();
+  const totalSubmissions = global.submissionLogs.length.toString();
+  const avgCompletionTime = formatTime(
+    getAverageCompletionTime(global.submissionLogs.map((x) => x.completion_time)),
+    1
+  );
+  const avgCompletionRate = `${formatDecimal(
+    getAverageCompletionRate(global.viewLogs.length, global.submissionLogs.length)
+  )}%`;
 
   return (
     <div className="w-full h-full flex-1 flex flex-col gap-4">
       <div className="flex justify-between items-center flex-col sm:flex-row w-full gap-4">
         <div className="flex sm:justify-start justify-between items-center gap-3 w-full">
           <div className="flex justify-start items-center gap-2">
-            <h1 className="font-semibold text-base truncate max-w-[240px]">{form.name}</h1>
+            <h1 className="font-semibold text-base truncate max-w-[240px]">{global.form.name}</h1>
           </div>
-          <FormStatusBadge status={form.status as TFormStatus} />
+          <FormStatusBadge status={global.form.status as TFormStatus} />
         </div>
         <div className="flex justify-center items-center gap-4 w-full sm:justify-end">
-          <FormShare form={form}>
+          <FormShare form={global.form}>
             <Button variant="outline" size="sm" className="w-full sm:w-fit">
               <Share2Icon className="w-4 h-4 mr-2" />
               {t("label_share")}
             </Button>
           </FormShare>
           <Button variant="outline" size="sm" asChild>
-            <Link href={`/dashboard/editor/${form.id}`} className="w-full sm:w-fit">
+            <Link href={`/dashboard/editor/${global.form.id}`} className="w-full sm:w-fit">
               <PenIcon className="w-4 h-4 mr-2" />
               {t("label_editor")}
             </Link>
@@ -67,7 +72,7 @@ const FormOverview = () => {
             icon={<TimerIcon className="w-4 h-4 text-foreground" />}
           />
         </div>
-        <FormSubmissionsActivityChart2 />
+        <FormSubmissionsActivityChart />
       </div>
     </div>
   );
