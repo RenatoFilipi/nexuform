@@ -15,7 +15,7 @@ import { EBlock, ETemplate, ETheme } from "@/utils/entities";
 import { nanoid, uuid } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState, TBlock } from "@/utils/types";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { ChevronLeftIcon, LoaderIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -68,7 +68,6 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
   const router = useRouter();
   const user = useUserStore();
   const [appState, setAppState] = useState<TAppState>("idle");
-  const queryClient = useQueryClient();
 
   const query = useQuery({
     queryKey: ["templateBlocks", template.id],
@@ -159,7 +158,6 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
       }
 
       toast.success(t("suc_form_create"));
-      queryClient.invalidateQueries({ queryKey: ["analyticsData"] });
       router.push(`/dashboard/editor/${forms.data.id}`);
     } catch (error) {
       toast.error((error as Error).message || t("err_generic"));

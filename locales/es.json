@@ -359,7 +359,8 @@
     "label_available": "Disponible",
     "label_account_settings": "Configuración de la cuenta",
     "desc_account_settings": "Administra tu información personal, seguridad y preferencias de la cuenta",
-    "label_free_trial_ends": "Prueba gratis finaliza el"
+    "label_free_trial_ends": "Prueba gratis finaliza el",
+    "label_views": "Vistas"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

@@ -588,7 +588,7 @@ const AvatarAppMenu = ({ children }: { children: React.ReactNode }) => {
               <DropdownMenuItem key={opt.path} className="rounded-lg hover:bg-accent/50 focus:bg-accent/50">
                 <a href={opt.path} className="flex justify-between items-center gap-2 w-full">
                   <span className="">{opt.label}</span>
-                  <opt.icon className="w-4 h-4 text-muted-foreground" />
+                  <opt.icon className="w-4 h-4" />
                 </a>
               </DropdownMenuItem>
             );
@@ -624,7 +624,7 @@ const AvatarAppMenu = ({ children }: { children: React.ReactNode }) => {
         </div>
         {/* Logout */}
         <DropdownMenuSeparator className="bg-gradient-to-r from-transparent via-muted/30 to-transparent h-[1px]" />
-        <DropdownMenuItem className="">
+        <DropdownMenuItem className="space-y-1 p-1">
           <Button onClick={signOutAction} variant="ghost" size="sm" className="w-full justify-between gap-3 px-2">
             <span>{t("label_logout")}</span>
             <LogOutIcon className="w-4 h-4" />

@@ -87,7 +87,7 @@ const AnalyticsSubmissionsActivityChart = () => {
               onClick={() => setDays(opt.value)}
               variant="outline"
               size="xs"
-              className={days === opt.value ? "bg-foreground/5" : ""}>
+              className={days === opt.value ? "bg-foreground/10" : ""}>
               {opt.label}
             </Button>
           ))}
@@ -111,7 +111,7 @@ const AnalyticsSubmissionsActivityChart = () => {
               animationDuration={300}
               dataKey={formMap[formId] || formId}
               stroke={getColor(index)}
-              strokeWidth={3}
+              strokeWidth={2}
             />
           ))}
         </LineChart>

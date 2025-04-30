@@ -15,7 +15,6 @@ import useDashboardStore from "@/stores/dashboard";
 import { minWidth640 } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState } from "@/utils/types";
-import { useQueryClient } from "@tanstack/react-query";
 import { AlertCircleIcon, LoaderIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -65,7 +64,6 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
   const router = useRouter();
   const [value, setValue] = useState("");
   const dashboard = useDashboardStore();
-  const queryClient = useQueryClient();
   const matches = formName.trim().toLowerCase() === value.trim().toLowerCase();
 
   const onDeleteForm = () => {
@@ -75,7 +73,6 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
         toast.error(t("err_generic"));
         return;
       }
-      queryClient.invalidateQueries({ queryKey: ["analyticsData"] });
       toast.success(t("suc_form_delete"));
       router.push("/dashboard/forms");
       dashboard.setForms(dashboard.forms.filter((x) => x.id !== formId));

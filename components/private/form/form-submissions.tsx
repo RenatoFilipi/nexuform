@@ -102,7 +102,6 @@ const FormSubmissions = () => {
       setSl(fs);
       return null;
     },
-    refetchOnWindowFocus: false,
   });
   return (
     <div className="flex flex-col w-full gap-4 overflow-y-auto">
@@ -141,9 +140,9 @@ const FormSubmissions = () => {
             <TableHeader>
               <TableRow>
                 <TableHead>{t("col_identifier")}</TableHead>
+                <TableHead>{t("col_status")}</TableHead>
                 <TableHead>{t("col_sent_in")}</TableHead>
                 <TableHead>{t("col_completion_time")}</TableHead>
-                <TableHead>{t("col_status")}</TableHead>
                 <TableHead className="text-right">{t("col_actions")}</TableHead>
               </TableRow>
             </TableHeader>
@@ -153,13 +152,13 @@ const FormSubmissions = () => {
                   <TableRow key={submission.id} className="text-xs text-foreground/80">
                     <TableCell className="p-0 pl-4 py-2 font-semibold">{submission.identifier}</TableCell>
                     <TableCell className="py-2">
+                      <SubmissionStatusBadge status={submission.status as TSubmissionStatus} />
+                    </TableCell>
+                    <TableCell className="py-2">
                       <span className="">{new Date(submission.created_at).toLocaleString()}</span>
                       <span className="ml-2">({formatDateRelativeToNow(submission.created_at, locale)})</span>
                     </TableCell>
                     <TableCell className="py-2">{formatTime(submission.completion_time ?? 0, 2)}</TableCell>
-                    <TableCell className="py-2  ">
-                      <SubmissionStatusBadge status={submission.status as TSubmissionStatus} />
-                    </TableCell>
                     <TableCell className="text-right py-2  ">
                       <SubmissionDetails blocks={blocks} submission={submission}>
                         <Button variant={"outline"} size={"xs"} className="">

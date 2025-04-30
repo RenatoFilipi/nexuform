@@ -10,7 +10,7 @@ import { EForm, EProfile, ESubscription, ETemplate } from "@/utils/entities";
 import { getFormCategoryName } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState, TTemplateCategory } from "@/utils/types";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import {
   ArrowUpRightIcon,
   BookDashedIcon,
@@ -42,7 +42,6 @@ const NewWrapper = (props: IProps) => {
   const user = useUserStore();
   const dashboard = useDashboardStore();
   const [error] = useQueryState("error");
-  const queryClient = useQueryClient();
   const [isPending, startTransition] = useTransition();
 
   const query = useQuery({
@@ -71,7 +70,6 @@ const NewWrapper = (props: IProps) => {
       formData.append("name", t("label_untitled_form"));
       formData.append("description", "");
       formData.append("userId", user.profile.id);
-      queryClient.invalidateQueries({ queryKey: ["analyticsData"] });
       await createFormAction(formData);
     });
   };

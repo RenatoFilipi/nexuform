@@ -359,7 +359,8 @@
     "label_available": "Disponível",
     "label_account_settings": "Configurações da conta",
     "desc_account_settings": "Gerencie suas informações pessoais, segurança e preferências da conta",
-    "label_free_trial_ends": "Teste grátis termina em"
+    "label_free_trial_ends": "Teste grátis termina em",
+    "label_views": "Visualizações"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

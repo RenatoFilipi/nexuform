@@ -4,22 +4,21 @@ import FormStatusBadge from "@/components/shared/badges/form-status-badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import useFormStore from "@/stores/form";
-import { formatDecimal, formatTime } from "@/utils/functions";
+import { formatDecimal, formatTime, getAverageCompletionRate, getAverageCompletionTime } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
 import { EyeIcon, PenIcon, SendIcon, Share2Icon, TimerIcon, VoteIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import FormShare from "./form-share";
-import FormSubmissionsActivityChart from "./form-submissions-activity-chart";
+import FormSubmissionsActivityChart2 from "./form-submissions-activity-chart2";
 
 const FormOverview = () => {
   const t = useTranslations("app");
-  const { formAnalytics, form } = useFormStore();
-  const { total_submissions, total_views, avg_completion_rate, avg_completion_time } = formAnalytics;
-  const totalViews = total_views === 0 ? "--" : total_views.toString();
-  const totalSubmissions = total_submissions === 0 ? "--" : total_submissions.toString();
-  const averageCompletionRate = avg_completion_rate !== null ? `${formatDecimal(avg_completion_rate)}%` : "--";
-  const averageCompletionTime = avg_completion_time !== null ? `${formatTime(avg_completion_time, 1)}` : "--";
+  const { form, submissionLogs, viewLogs } = useFormStore();
+  const totalViews = viewLogs.length.toString();
+  const totalSubmissions = submissionLogs.length.toString();
+  const avgCompletionTime = formatTime(getAverageCompletionTime(submissionLogs.map((x) => x.completion_time)), 1);
+  const avgCompletionRate = `${formatDecimal(getAverageCompletionRate(viewLogs.length, submissionLogs.length))}%`;
 
   return (
     <div className="w-full h-full flex-1 flex flex-col gap-4">
@@ -37,7 +36,7 @@ const FormOverview = () => {
               {t("label_share")}
             </Button>
           </FormShare>
-          <Button variant="secondary" size="sm" asChild>
+          <Button variant="outline" size="sm" asChild>
             <Link href={`/dashboard/editor/${form.id}`} className="w-full sm:w-fit">
               <PenIcon className="w-4 h-4 mr-2" />
               {t("label_editor")}
@@ -59,16 +58,16 @@ const FormOverview = () => {
           />
           <CardTemplate
             name={t("label_completion_rate")}
-            value={averageCompletionRate}
+            value={avgCompletionRate}
             icon={<VoteIcon className="w-4 h-4 text-primary" />}
           />
           <CardTemplate
             name={t("label_avg_completion_time")}
-            value={averageCompletionTime}
+            value={avgCompletionTime}
             icon={<TimerIcon className="w-4 h-4 text-primary" />}
           />
         </div>
-        <FormSubmissionsActivityChart />
+        <FormSubmissionsActivityChart2 />
       </div>
     </div>
   );

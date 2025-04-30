@@ -136,7 +136,7 @@ const SubmissionGroup = () => {
 
     await supabase
       .from("submission_logs")
-      .insert({ form_id: form.id, submission_id: submission.id, profile_id: form.owner_id });
+      .insert({ form_id: form.id, submission_id: submission.id, profile_id: form.owner_id, completion_time: time });
 
     setAppState("success");
     setSubmissionState("idle");

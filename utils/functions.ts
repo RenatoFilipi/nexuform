@@ -231,3 +231,13 @@ export const getFormCategoryName = async (category: TTemplateCategory, locale: s
       return "Unknown";
   }
 };
+export const getAverageCompletionTime = (numbers: number[]) => {
+  if (numbers.length === 0) return 0;
+  const sum = numbers.reduce((t, n) => t + n, 0);
+  return sum / numbers.length;
+};
+export const getAverageCompletionRate = (views: number, submissions: number) => {
+  if (views <= 0) return 0;
+  const rate = (submissions / views) * 100;
+  return Math.round(rate * 100) / 100;
+};

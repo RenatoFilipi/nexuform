@@ -96,7 +96,6 @@ const FormWrapper = ({
       formStore.setViewLogs(viewLogs);
       return null;
     },
-    refetchOnWindowFocus: false,
   });
 
   if (query.isPending) return null;
