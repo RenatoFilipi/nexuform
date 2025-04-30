@@ -19,11 +19,11 @@ interface IChartData {
 const CHART_CONFIG: ChartConfig = {
   submissions: {
     label: "Submissions",
-    color: "#00D3F3",
+    color: "#FF6467",
   },
   views: {
     label: "Views",
-    color: "#7C3AED",
+    color: "#51A2FF",
   },
 } as ChartConfig;
 
@@ -140,7 +140,7 @@ const FormSubmissionsActivityChart2: React.FC = () => {
             name={viewKey}
             type={curveType}
             dataKey="views"
-            stroke="#7C3AED"
+            stroke="#51A2FF"
             strokeWidth={2}
             dot={true}
             activeDot={{ r: 6 }}
@@ -150,7 +150,7 @@ const FormSubmissionsActivityChart2: React.FC = () => {
             name={subKey}
             type={curveType}
             dataKey="submissions"
-            stroke="#00D3F3"
+            stroke="#FF6467"
             strokeWidth={2}
             dot={true}
             activeDot={{ r: 6 }}

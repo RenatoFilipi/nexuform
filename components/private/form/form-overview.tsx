@@ -49,22 +49,22 @@ const FormOverview = () => {
           <CardTemplate
             name={t("label_total_views")}
             value={totalViews}
-            icon={<EyeIcon className="w-4 h-4 text-primary" />}
+            icon={<EyeIcon className="w-4 h-4 text-foreground" />}
           />
           <CardTemplate
             name={t("label_total_submissions")}
             value={totalSubmissions}
-            icon={<SendIcon className="w-4 h-4 text-primary" />}
+            icon={<SendIcon className="w-4 h-4 text-foreground" />}
           />
           <CardTemplate
             name={t("label_completion_rate")}
             value={avgCompletionRate}
-            icon={<VoteIcon className="w-4 h-4 text-primary" />}
+            icon={<VoteIcon className="w-4 h-4 text-foreground" />}
           />
           <CardTemplate
             name={t("label_avg_completion_time")}
             value={avgCompletionTime}
-            icon={<TimerIcon className="w-4 h-4 text-primary" />}
+            icon={<TimerIcon className="w-4 h-4 text-foreground" />}
           />
         </div>
         <FormSubmissionsActivityChart2 />

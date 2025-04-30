@@ -1,7 +1,6 @@
 import SubmissionStatusBadge from "@/components/shared/badges/submission-status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import useUserStore from "@/stores/user";
 import { minWidth640, minute } from "@/utils/constants";
@@ -162,10 +161,9 @@ const Body = ({
             </Badge>
           </div>
         </div>
-        <Separator />
       </div>
       {/* Answers Section */}
-      <div className="flex-1 overflow-y-auto space-y-6 pr-2">
+      <div className="flex-1 overflow-y-auto space-y-6">
         {query.isLoading ? (
           <div className="flex justify-center items-center h-32">
             <LoaderIcon className="h-6 w-6 animate-spin" />
@@ -177,15 +175,15 @@ const Body = ({
             <div key={i} className="space-y-2">
               <div className="font-medium text-foreground flex items-center gap-2 justify-start">
                 <div className="flex justify-center items-center gap-2">
-                  <div className="flex-shrink-0 mt-1 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-xs font-medium text-primary">{i + 1}</span>
+                  <div className="flex-shrink-0 mt-1 w-5 h-5 rounded bg-foreground/10 flex items-center justify-center">
+                    <span className="text-xs font-medium text-foreground">{i + 1}</span>
                   </div>
                   <span className="text-sm font-semibold">{coll.question}</span>
                 </div>
                 <span className="text-xs text-foreground/70 hidden">({getBlockType(coll.type)})</span>
               </div>
               {coll.answer.trim() !== "" ? (
-                <div className="bg-muted/30 rounded p-3">
+                <div className="bg-foreground/5 rounded-sm p-3">
                   <p className="text-xs whitespace-pre-wrap text-foreground/70">{coll.answer}</p>
                 </div>
               ) : (
