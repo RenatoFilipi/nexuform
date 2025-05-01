@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import AnalyticsOverview from "./analytics-overview";
 import AnalyticsSubmissionsActivityChart from "./analytics-submissions-activity-chart";
+import AnalyticsSubmissionsByFormChart from "./analytics-submissions-by-form-chart";
 
 interface Props {
   email: string;

@@ -1,8 +1,10 @@
-import { useTranslations } from "next-intl";
+"use client";
+
+import useGlobalStore from "@/stores/global";
 
 const AnalyticsSubmissionsByFormChart = () => {
-  const t = useTranslations("app");
-  return <div></div>;
+  const global = useGlobalStore();
+  return <></>;
 };
 
 export default AnalyticsSubmissionsByFormChart;

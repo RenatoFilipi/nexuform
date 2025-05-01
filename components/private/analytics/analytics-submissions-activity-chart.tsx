@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import useAnalyticsStore from "@/stores/analytics";
+import useGlobalStore from "@/stores/global";
 import { format, subDays } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
@@ -13,22 +13,17 @@ interface IChartData {
 
 const CHART_CONFIG: ChartConfig = {} as ChartConfig;
 
-const colors = [
-  "hsl(259, 78%, 58%)",
-  "hsl(265, 80%, 50%)",
-  "hsl(270, 75%, 45%)",
-  "hsl(275, 85%, 65%)",
-  "hsl(280, 70%, 55%)",
-  "hsl(285, 60%, 40%)",
-  "hsl(290, 75%, 60%)",
-  "hsl(295, 85%, 70%)",
-  "hsl(300, 65%, 50%)",
-  "hsl(305, 80%, 55%)",
-];
+const generateDistinctColors = (count: number) => {
+  const hueStep = 360 / Math.max(count, 1);
+  return Array.from({ length: count }, (_, i) => {
+    const hue = Math.round(i * hueStep) % 360;
+    return `hsl(${hue}, 75%, 55%)`;
+  });
+};
 
 const AnalyticsSubmissionsActivityChart = () => {
   const t = useTranslations("app");
-  const { submissions, forms } = useAnalyticsStore();
+  const global = useGlobalStore();
   const [days, setDays] = useState<number>(7);
 
   const options = [
@@ -45,18 +40,20 @@ const AnalyticsSubmissionsActivityChart = () => {
   );
 
   const formMap = useMemo(() => {
-    return forms.reduce((acc, form) => {
+    return global.forms.reduce((acc, form) => {
       acc[form.id] = form.name;
       return acc;
     }, {} as Record<string, string>);
-  }, [forms]);
+  }, [global.forms]);
 
-  const formIds = useMemo(() => forms.map((f) => f.id), [forms]);
+  const formIds = useMemo(() => global.forms.map((f) => f.id), [global.forms]);
+
+  const colors = useMemo(() => generateDistinctColors(formIds.length), [formIds.length]);
 
   const data = useMemo(() => {
     const grouped: Record<string, Record<string, number>> = {};
 
-    submissions.forEach(({ created_at, form_id }) => {
+    global.submissionLogs.forEach(({ created_at, form_id }) => {
       const date = format(new Date(created_at), "dd/MM");
       if (!grouped[date]) grouped[date] = {};
       if (!grouped[date][form_id]) grouped[date][form_id] = 0;
@@ -70,10 +67,28 @@ const AnalyticsSubmissionsActivityChart = () => {
       });
       return entry;
     });
-  }, [submissions, lastNDays, formIds, formMap]);
+  }, [global.submissionLogs, lastNDays, formIds, formMap]);
 
-  const getColor = (index: number) => {
-    return colors[index % colors.length];
+  const getColor = (index: number) => colors[index % colors.length];
+
+  const CustomTooltipContent = (props: any) => {
+    const { payload, label } = props;
+    return (
+      <ChartTooltipContent
+        {...props}
+        indicator="dot"
+        formatter={(value: any, name: any, item: any) => {
+          const index = formIds.findIndex((id) => formMap[id] === name || id === name);
+          return [
+            value,
+            <span key={name} style={{ color: getColor(index) }}>
+              {name}
+            </span>,
+          ];
+        }}
+        labelFormatter={(label) => label}
+      />
+    );
   };
 
   return (
@@ -103,7 +118,7 @@ const AnalyticsSubmissionsActivityChart = () => {
             axisLine={false}
             tickFormatter={(value) => value.slice(0, 5)}
           />
-          <ChartTooltip cursor={true} content={<ChartTooltipContent indicator="dot" />} />
+          <ChartTooltip cursor={true} content={<CustomTooltipContent />} />
           {formIds.map((formId, index) => (
             <Line
               key={formId}
@@ -112,6 +127,8 @@ const AnalyticsSubmissionsActivityChart = () => {
               dataKey={formMap[formId] || formId}
               stroke={getColor(index)}
               strokeWidth={2}
+              dot={{ r: 3, fill: getColor(index) }}
+              activeDot={{ r: 5, fill: getColor(index) }}
             />
           ))}
         </LineChart>
