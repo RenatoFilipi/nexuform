@@ -534,6 +534,8 @@ export type Database = {
           is_premium: boolean
           is_public: boolean
           name: string
+          name_es: string | null
+          name_pt: string | null
         }
         Insert: {
           category?: string
@@ -542,6 +544,8 @@ export type Database = {
           is_premium?: boolean
           is_public?: boolean
           name?: string
+          name_es?: string | null
+          name_pt?: string | null
         }
         Update: {
           category?: string
@@ -550,6 +554,8 @@ export type Database = {
           is_premium?: boolean
           is_public?: boolean
           name?: string
+          name_es?: string | null
+          name_pt?: string | null
         }
         Relationships: []
       }
@@ -557,6 +563,8 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
+          description_es: string | null
+          description_pt: string | null
           id: string
           is_identifier: boolean
           max_char: number | null
@@ -566,8 +574,14 @@ export type Database = {
           min_date: string | null
           min_scale: number | null
           name: string
+          name_es: string | null
+          name_pt: string | null
           options: string[] | null
+          options_es: string[] | null
+          options_pt: string[] | null
           placeholder: string | null
+          placeholder_es: string | null
+          placeholder_pt: string | null
           position: number
           rating: number | null
           required: boolean
@@ -578,6 +592,8 @@ export type Database = {
         Insert: {
           created_at?: string
           description?: string | null
+          description_es?: string | null
+          description_pt?: string | null
           id?: string
           is_identifier?: boolean
           max_char?: number | null
@@ -587,8 +603,14 @@ export type Database = {
           min_date?: string | null
           min_scale?: number | null
           name?: string
+          name_es?: string | null
+          name_pt?: string | null
           options?: string[] | null
+          options_es?: string[] | null
+          options_pt?: string[] | null
           placeholder?: string | null
+          placeholder_es?: string | null
+          placeholder_pt?: string | null
           position?: number
           rating?: number | null
           required?: boolean
@@ -599,6 +621,8 @@ export type Database = {
         Update: {
           created_at?: string
           description?: string | null
+          description_es?: string | null
+          description_pt?: string | null
           id?: string
           is_identifier?: boolean
           max_char?: number | null
@@ -608,8 +632,14 @@ export type Database = {
           min_date?: string | null
           min_scale?: number | null
           name?: string
+          name_es?: string | null
+          name_pt?: string | null
           options?: string[] | null
+          options_es?: string[] | null
+          options_pt?: string[] | null
           placeholder?: string | null
+          placeholder_es?: string | null
+          placeholder_pt?: string | null
           position?: number
           rating?: number | null
           required?: boolean
