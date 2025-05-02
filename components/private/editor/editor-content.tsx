@@ -64,7 +64,7 @@ const EditorContent = () => {
                 p-2 rounded-md transition-all
                 ${
                   isActive
-                    ? "bg-primary/10 text-primary shadow-sm"
+                    ? "bg-foreground/10 text-foreground shadow-sm"
                     : "text-muted-foreground/90 hover:bg-muted hover:text-foreground"
                 }
                 flex items-center justify-center
@@ -114,7 +114,7 @@ const EditorCanvas = () => {
   }
   return (
     <div className="flex justify-center items-center w-full h-full p-8">
-      <div className="flex flex-col items-center justify-center h-full w-full p-8 rounded-lg bg-muted/5">
+      <div className="flex flex-col items-center justify-center h-full w-full p-4">
         <div className="flex flex-col items-center max-w-md text-center space-y-6">
           <div className="rounded-full bg-primary/10 p-3">
             <PlusIcon className="h-7 w-7 text-primary" />

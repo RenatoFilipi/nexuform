@@ -360,7 +360,8 @@
     "label_account_settings": "Configurações da conta",
     "desc_account_settings": "Gerencie suas informações pessoais, segurança e preferências da conta",
     "label_free_trial_ends": "Free trial ends on",
-    "label_views": "Views"
+    "label_views": "Views",
+    "label_conversion": "conversion"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

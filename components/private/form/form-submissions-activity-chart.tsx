@@ -19,7 +19,7 @@ interface IChartData {
 const CHART_CONFIG: ChartConfig = {
   submissions: {
     label: "Submissions",
-    color: "#FF6467",
+    color: "#ffa500",
   },
   views: {
     label: "Views",
@@ -148,7 +148,7 @@ const FormSubmissionsActivityChart = () => {
             name={subKey}
             type={curveType}
             dataKey="submissions"
-            stroke="#FF6467"
+            stroke="#ffa500"
             strokeWidth={2}
             dot={true}
             activeDot={{ r: 6 }}

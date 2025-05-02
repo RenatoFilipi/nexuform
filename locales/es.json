@@ -360,7 +360,8 @@
     "label_account_settings": "Configuración de la cuenta",
     "desc_account_settings": "Administra tu información personal, seguridad y preferencias de la cuenta",
     "label_free_trial_ends": "Prueba gratis finaliza el",
-    "label_views": "Vistas"
+    "label_views": "Vistas",
+    "label_conversion": "conversión"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

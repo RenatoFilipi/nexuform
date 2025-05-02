@@ -20,7 +20,6 @@ const generateDistinctColors = (count: number) => {
     return `hsl(${hue}, 75%, 55%)`;
   });
 };
-
 const AnalyticsSubmissionsActivityChart = () => {
   const t = useTranslations("app");
   const global = useGlobalStore();
@@ -92,7 +91,7 @@ const AnalyticsSubmissionsActivityChart = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 border rounded p-4">
+    <div className="flex flex-col gap-4 border rounded p-4 h-fit">
       <div className="flex justify-between items-center">
         <span className="text-sm font-semibold">{t("label_activity")}</span>
         <div className="flex justify-center items-center gap-3">

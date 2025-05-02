@@ -263,9 +263,9 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
                           <h3 className="text-foreground/70">
                             {categoryLabels[category as keyof typeof categoryLabels]}
                           </h3>
-                          <div className="flex flex-col">
+                          <div className="flex flex-col gap-2">
                             {blocks.map((block, index) => (
-                              <div key={index}>
+                              <div key={index} className="">
                                 <RadioGroupItem value={block.type} id={block.type} className="peer sr-only" />
                                 <Label
                                   htmlFor={block.type}
@@ -277,8 +277,8 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
                                     {block.icon}
                                   </div>
                                   <div className="flex flex-col gap-1">
-                                    <span className="text-xs">{block.name}</span>
-                                    <p className="text-xs text-foreground/70 font-normal hidden">{block.description}</p>
+                                    <span className="text-sm">{block.name}</span>
+                                    <p className="text-xs text-muted-foreground font-normal">{block.description}</p>
                                   </div>
                                 </Label>
                               </div>

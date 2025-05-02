@@ -19,7 +19,7 @@ const AnalyticsOverview = () => {
   )}%`;
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+    <div className="grid grid-cols-2 sm:grid-rows-3 sm:grid-cols-2 gap-2 sm:gap-6">
       <AnalyticsCard
         name={t("label_total_views")}
         value={totalViews}
@@ -48,10 +48,10 @@ const AnalyticsCard = ({ name, value, icon }: { name: string; value: string; ico
   return (
     <Card className="p-4 justify-between flex flex-col gap-3 w-full">
       <div className="flex justify-between items-center w-full">
-        <span className="text-sm text-foreground/70">{name}</span>
+        <span className="text-sm">{name}</span>
         <div className="flex justify-center items-center p-2 bg-foreground/5 rounded">{icon}</div>
       </div>
-      <span className="text-base font-bold">{value}</span>
+      <span className="text-lg font-bold">{value}</span>
     </Card>
   );
 };

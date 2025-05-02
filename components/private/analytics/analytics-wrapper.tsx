@@ -43,10 +43,13 @@ const AnalyticsWrapper = ({ profile, subscription, email, viewLogs, submissionLo
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-medium">{t("label_analytics")}</h1>
       </div>
-      <div className="grid gap-6">
-        <AnalyticsOverview />
-        <div className="grid sm:grid-cols-2 gap-6">
+      <div className="flex flex-col gap-6">
+        <div className="grid gap-6 sm:grid-cols-2">
+          <AnalyticsOverview />
           <AnalyticsSubmissionsActivityChart />
+        </div>
+        <div className="flex w-full">
+          <AnalyticsSubmissionsByFormChart />
         </div>
       </div>
     </div>
