@@ -3,7 +3,6 @@
 import Brand from "@/components/shared/core/brand";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { TColor } from "@/utils/types";
 import { CheckIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -11,7 +10,7 @@ import Link from "next/link";
 interface IProps {
   brand: boolean;
   preview: boolean;
-  color: TColor;
+  color: string;
   title: string;
   description: string;
 }

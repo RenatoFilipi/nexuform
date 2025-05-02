@@ -3,9 +3,8 @@ import { enUS, es, ptBR } from "date-fns/locale";
 import { customAlphabet } from "nanoid";
 import { redirect } from "next/navigation";
 import { createTranslator } from "use-intl/core";
-import { day, planSettings } from "./constants";
 import { ESubscription } from "./entities";
-import { TBlock, TIntegrationCategory, TIntegrations, TPlan, TTemplateCategory } from "./types";
+import { TBlock, TTemplateCategory } from "./types";
 
 export const uuid = () => {
   const uuid = self.crypto.randomUUID();
@@ -62,72 +61,13 @@ export const formatDecimal = (num: number, decimals: number = 1): string => {
   }
   return num.toFixed(decimals);
 };
-export const calculateAverageCompletionTime = (times: number[]): number => {
-  const total = times.reduce((sum, time) => sum + time, 0);
-  return total / times.length;
-};
-export const getDateRange = (days: number) => {
-  const now = new Date().toISOString();
-  return {
-    from: new Date(Date.now() - days * 24 * day).toISOString(),
-    to: now,
-  };
-};
 export const getDaysDifference = (startDate: Date, endDate: Date) => {
   return differenceInDays(endDate, startDate);
-};
-export const getCurrentPlan = (plan: TPlan) => {
-  switch (plan) {
-    case "free_trial": {
-      return planSettings.freeTrial;
-    }
-    case "basic": {
-      return planSettings.basic;
-    }
-    case "pro": {
-      return planSettings.pro;
-    }
-    default:
-      return planSettings.freeTrial;
-  }
 };
 export const isSubscriptionActive = (subscription: ESubscription) => {
   const now = new Date();
   const dueDate = new Date(subscription.due_date);
   return subscription.status === "active" && dueDate >= now;
-};
-export const getIntegrationName = (type: TIntegrations) => {
-  const integrationNames: Record<TIntegrations, string> = {
-    google_sheets: "Google Sheets",
-    zapier: "Zapier",
-    slack: "Slack",
-    google_drive: "Google Drive",
-    notion: "Notion",
-    trello: "Trello",
-    airtable: "Airtable",
-    webhooks: "Webhooks",
-    discord: "Discord",
-    mailchimp: "Mailchimp",
-    hubspot: "HubSpot",
-    salesforce: "Salesforce",
-    sendgrid: "SendGrid",
-    twilio: "Twilio",
-  };
-
-  return integrationNames[type] || "Unknown Integration";
-};
-export const getIntegrationCategory = (type: TIntegrationCategory) => {
-  const integrationCategory: Record<TIntegrationCategory, string> = {
-    automation: "Automation",
-    communication: "Communication",
-    crm: "CRM",
-    database: "Database",
-    email_marketing: "Email Marketing",
-    notifications: "Notifications",
-    storage: "Storage",
-  };
-
-  return integrationCategory[type] || "Unknown Category";
 };
 export const isSubmissionsLimitReached = (subscription: ESubscription, submissions: number) => {
   return submissions >= subscription.submissions;

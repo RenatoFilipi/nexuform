@@ -2,7 +2,7 @@ import PoweredByBadge from "@/components/shared/badges/powered-by-badge";
 import { Button } from "@/components/ui/button";
 import useEditorStore from "@/stores/editor";
 import { EBlock, ETheme } from "@/utils/entities";
-import { TBlock, TColor, TEditorView } from "@/utils/types";
+import { TBlock, TEditorView } from "@/utils/types";
 import { Reorder, useDragControls } from "framer-motion";
 import { Edit2Icon, GripVerticalIcon, PartyPopperIcon, PlusIcon, SquareStackIcon, Trash2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -104,7 +104,7 @@ const EditorCanvas = () => {
       <div className="flex justify-center items-center w-full h-full">
         <SuccessDesign
           brand={form.nebulaform_branding}
-          color={theme.custom_primary_color as TColor}
+          color={theme.custom_primary_color}
           preview
           title={form.success_title}
           description={form.success_description}
