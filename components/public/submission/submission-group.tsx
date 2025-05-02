@@ -1,5 +1,5 @@
 import ModeToggle2 from "@/components/shared/core/mode-toggle2";
-import useSubmissionStore from "@/stores/submission";
+import usePublicStore from "@/stores/public";
 import { EAnswer, EBlock, ETheme } from "@/utils/entities";
 import { isValidEmail } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
@@ -44,7 +44,7 @@ const COMPONENT_MAP: Record<TBlock, React.ComponentType<IBlockComponent>> = {
 const SubmissionGroup = () => {
   const t = useTranslations("s");
   const supabase = createClient();
-  const { form, theme, blocks, submission, answers, setAnswers } = useSubmissionStore();
+  const { form, theme, blocks, submission, answers, setAnswers } = usePublicStore();
   const [appState, setAppState] = useState<TAppState>("idle");
   const [submissionState, setSubmissionState] = useState<TAppState>("idle");
   const [time, setTime] = useState(0);

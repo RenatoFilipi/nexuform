@@ -3,7 +3,7 @@
 import { createFormAction } from "@/app/actions/form";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import useDashboardStore from "@/stores/dashboard";
+import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
 import { minute } from "@/utils/constants";
 import { EForm, EProfile, ESubscription, ETemplate } from "@/utils/entities";
@@ -40,7 +40,7 @@ const NewWrapper = (props: IProps) => {
   const [view, setView] = useState<TView>("none");
   const t = useTranslations("app");
   const user = useUserStore();
-  const dashboard = useDashboardStore();
+  const global = useGlobalStore();
   const [error] = useQueryState("error");
   const [isPending, startTransition] = useTransition();
 
@@ -51,7 +51,7 @@ const NewWrapper = (props: IProps) => {
       user.setEmail(props.email);
       user.setProfile(props.profile);
       user.setSubscription(props.subscription);
-      dashboard.setForms(props.forms);
+      global.setForms(props.forms);
       return null;
     },
   });
@@ -226,8 +226,8 @@ const CardNew = ({
 }) => {
   const t = useTranslations("app");
   const user = useUserStore();
-  const dashboard = useDashboardStore();
-  const limitReached = dashboard.forms.length >= user.subscription.forms;
+  const global = useGlobalStore();
+  const limitReached = global.forms.length >= user.subscription.forms;
 
   return (
     <div className="flex justify-center items-center w-full border h-60 gap-4 flex-col p-6 rounded-lg bg-background hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md group">

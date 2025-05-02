@@ -1,9 +1,9 @@
-import useSubmissionStore from "@/stores/submission";
+import usePublicStore from "@/stores/public";
 import { TColor } from "@/utils/types";
 import SuccessDesign from "../../private/blocks/success-design";
 
 const SubmissionSuccess = () => {
-  const { form, theme } = useSubmissionStore();
+  const { form, theme } = usePublicStore();
 
   return (
     <SuccessDesign

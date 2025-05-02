@@ -15,7 +15,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import useEditorStore from "@/stores/editor";
-import useFormStore from "@/stores/form";
+import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
 import { minWidth640 } from "@/utils/constants";
 import { isSubscriptionActive } from "@/utils/functions";
@@ -180,13 +180,13 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
 const NavApp = () => {
   const { slug } = useParams<{ slug: string }>();
   const t = useTranslations("app");
-  const editorStore = useEditorStore();
-  const formStore = useFormStore();
+  const editor = useEditorStore();
+  const global = useGlobalStore();
   const pathname = usePathname();
-  const userStore = useUserStore();
-  const avatarName = userStore.email.slice(0, 2);
+  const user = useUserStore();
+  const avatarName = user.email.slice(0, 2);
   const isActive = (path: string) => path === pathname;
-  const isFreeTrial = userStore.subscription.plan === "free_trial";
+  const isFreeTrial = user.subscription.plan === "free_trial";
 
   const links = [
     {
@@ -222,7 +222,7 @@ const NavApp = () => {
   const query = useQuery({
     queryKey: ["editorResetData"],
     queryFn: () => {
-      editorStore.reset();
+      editor.reset();
       return null;
     },
   });
@@ -239,9 +239,9 @@ const NavApp = () => {
             </Link>
           </Button>
         </div>
-        {slug && formStore.form.id !== "" && (
+        {slug && global.form.id !== "" && (
           <div className="flex justify-center items-center gap-1">
-            <span className="text-xs font-medium">{formStore.form.name}</span>
+            <span className="text-xs font-medium">{global.form.name}</span>
             <ChangeForm>
               <button className="flex justify-center items-center p-1 hover:bg-foreground/5 rounded">
                 <ChevronsUpDownIcon className="w-4 h-4" />
@@ -501,7 +501,7 @@ const ChangeForm = ({ children }: { children: React.ReactNode }) => {
 };
 const ChangeFormBody = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
-  const store = useFormStore();
+  const global = useGlobalStore();
 
   return (
     <div className="flex flex-col gap-5 w-full h-full">
@@ -512,14 +512,14 @@ const ChangeFormBody = ({ setState }: { setState: TSetState<boolean> }) => {
       {/* Forms List */}
       <div className="flex-1 overflow-y-auto pr-1 custom-scrollbar">
         <div className="flex flex-col gap-2">
-          {store.forms.map((x) => (
+          {global.forms.map((x) => (
             <a
               key={x.id}
               href={`/dashboard/forms/${x.id}`}
               className={`
                 group relative flex items-center justify-between rounded-lg p-2 transition-all
                 ${
-                  store.form.id === x.id
+                  global.form.id === x.id
                     ? "bg-accent/50 border border-accent cursor-default"
                     : "hover:bg-accent/30 border border-transparent hover:border-accent/30"
                 }
@@ -527,7 +527,7 @@ const ChangeFormBody = ({ setState }: { setState: TSetState<boolean> }) => {
               <div className="flex-1 min-w-0">
                 <p
                   className={`text-sm truncate ${
-                    store.form.id === x.id ? "font-medium text-foreground" : "text-foreground/90"
+                    global.form.id === x.id ? "font-medium text-foreground" : "text-foreground/90"
                   }`}>
                   {x.name}
                 </p>

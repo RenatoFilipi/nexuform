@@ -98,7 +98,7 @@ const Body = ({ setState, form }: { setState: TSetState<boolean>; form: EForm })
               <p className="text-sm text-muted-foreground text-center">{t("desc_not_public")}</p>
             </div>
             <div className="flex justify-end items-center">
-              <Button variant="secondary" size="sm">
+              <Button variant="outline" size="sm">
                 <PenIcon className="w-4 h-4 mr-2" />
                 <Link href={`/dashboard/editor/${form.id}`}>{t("nav_editor")}</Link>
               </Button>

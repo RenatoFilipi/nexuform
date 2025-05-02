@@ -1,6 +1,5 @@
 "use client";
 
-import useFormStore from "@/stores/form";
 import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
 import { paginationFrom, paginationTo } from "@/utils/constants";
@@ -73,7 +72,6 @@ const FormWrapper = ({
       enabled: false,
     },
   ];
-  const formStore = useFormStore();
   const user = useUserStore();
   const global = useGlobalStore();
   const [view, setView] = useState<TView>("overview");
@@ -87,21 +85,13 @@ const FormWrapper = ({
       user.setProfile(profile);
       user.setSubscription(subscription);
       user.setLocale(locale);
-      formStore.setForm(form);
-      formStore.setFormAnalytics(formAnalytics);
-      formStore.setOverviewSubmissions(overviewSubmissions);
-      formStore.setSubmissions(submissions);
-      formStore.setBlocks(blocks);
-      formStore.setPagination({ from: paginationFrom, to: paginationTo });
-      formStore.setForms(forms);
-      formStore.setSubmissionLogs(submissionLogs);
-      formStore.setViewLogs(viewLogs);
       global.setForm(form);
       global.setSubmissions(submissions);
       global.setForms(forms);
       global.setSubmissionLogs(submissionLogs);
       global.setViewLogs(viewLogs);
       global.setBlocks(blocks);
+      global.setSubmissionPagination({ from: paginationFrom, to: paginationTo });
       return null;
     },
   });

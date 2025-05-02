@@ -1,6 +1,6 @@
 "use client";
 
-import useSubmissionStore from "@/stores/submission";
+import usePublicStore from "@/stores/public";
 import { EAnswer, EBlock, EForm, ESubmission, ETheme } from "@/utils/entities";
 import { nanoid, uuid } from "@/utils/functions";
 import { useQuery } from "@tanstack/react-query";
@@ -15,7 +15,7 @@ interface IProps {
 }
 
 const SubmissionWrapper = ({ form, theme, blocks }: IProps) => {
-  const s = useSubmissionStore();
+  const s = usePublicStore();
   const [isPending, startTransition] = useTransition();
 
   useQuery({

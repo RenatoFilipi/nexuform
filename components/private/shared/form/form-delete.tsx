@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import useDashboardStore from "@/stores/dashboard";
+import useGlobalStore from "@/stores/global";
 import { minWidth640 } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState } from "@/utils/types";
@@ -63,7 +63,7 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
   const supabase = createClient();
   const router = useRouter();
   const [value, setValue] = useState("");
-  const dashboard = useDashboardStore();
+  const global = useGlobalStore();
   const matches = formName.trim().toLowerCase() === value.trim().toLowerCase();
 
   const onDeleteForm = () => {
@@ -75,7 +75,7 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
       }
       toast.success(t("suc_form_delete"));
       router.push("/dashboard/forms");
-      dashboard.setForms(dashboard.forms.filter((x) => x.id !== formId));
+      global.setForms(global.forms.filter((x) => x.id !== formId));
       setState(false);
     });
   };

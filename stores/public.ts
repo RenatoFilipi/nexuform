@@ -15,7 +15,7 @@ interface submission {
   reset: () => void;
 }
 
-const useSubmissionStore = create<submission>((set) => ({
+const usePublicStore = create<submission>((set) => ({
   form: {
     id: "",
     created_at: "",
@@ -106,4 +106,4 @@ const useSubmissionStore = create<submission>((set) => ({
     }),
 }));
 
-export default useSubmissionStore;
+export default usePublicStore;
