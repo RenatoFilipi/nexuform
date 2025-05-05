@@ -459,7 +459,9 @@
     "label_go_back_login": "Voltar para o login",
     "err_update_password": "Código inválido ou expirado.",
     "label_suc_update_password": "Senha Atualizada",
-    "desc_suc_update_password": "Sua senha foi atualizada com sucesso. Use a nova senha para acessar sua conta."
+    "desc_suc_update_password": "Sua senha foi atualizada com sucesso. Use a nova senha para acessar sua conta.",
+    "label_login_into": "Entrar no { platform }",
+    "label_signup_into": "Cadastrar-se no { platform }"
   },
   "landing": {
     "nav_features": "Recursos",

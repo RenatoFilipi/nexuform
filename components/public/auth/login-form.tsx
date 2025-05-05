@@ -1,6 +1,7 @@
 "use client";
 
 import { signInAction } from "@/app/actions/auth";
+import Brand from "@/components/shared/core/brand";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -56,14 +57,19 @@ const LoginForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-6 justify-center items-center">
-        <div className="flex justify-start w-full flex-col gap-2">
-          <h1 className="text-xl font-medium">{t("label_login")}</h1>
-          <span className="text-sm text-foreground/80">
-            {t("desc_signup")}{" "}
-            <Link href={"/signup"} className="hover:underline text-info dark:text-blue-500">
-              {t("label_signup")}
-            </Link>
-          </span>
+        <div className="flex w-full flex-col justify-center gap-4">
+          <div className="flex justify-center items-center">
+            <Brand type="logo" className="fill-foreground w-12 h-12" />
+          </div>
+          <div className="flex justify-center w-full flex-col gap-2 items-center">
+            <h1 className="text-2xl font-medium">{t("label_login_into", { platform: "Nebulaform" })}</h1>
+            <span className="text-sm text-muted-foreground">
+              {t("desc_signup")}{" "}
+              <Link href={"/signup"} className="hover:underline text-info dark:text-blue-500">
+                {t("label_signup")}
+              </Link>
+            </span>
+          </div>
         </div>
         <div className="flex flex-col gap-3 w-full">
           <FormField
@@ -121,7 +127,7 @@ const LoginForm = () => {
           </div>
         </div>
         <div className="flex flex-col w-full gap-4">
-          <Button disabled={isPending} variant="secondary" type="submit" size="sm" className="w-full">
+          <Button disabled={isPending} variant="default" type="submit" size="sm" className="w-full">
             {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
             {t("submit_login")}
           </Button>

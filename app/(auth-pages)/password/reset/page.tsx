@@ -1,6 +1,5 @@
 import ResetPasswordForm from "@/components/public/auth/reset-password-form";
 import Nav from "@/components/public/core/nav";
-import AuthPanel from "@/components/public/landing/auth-panel";
 import Brand from "@/components/shared/core/brand";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
@@ -11,7 +10,6 @@ import { Suspense } from "react";
 const Reset = () => {
   return (
     <div className="min-h-dvh flex">
-      <AuthPanel />
       <div className="flex-1 flex justify-center items-center w-full relative">
         <div className="fixed top-0 flex sm:hidden w-full justify-between items-center px-3 h-14">
           <Link href={"/"} className="flex justify-center items-center">

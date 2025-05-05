@@ -458,7 +458,9 @@
     "label_go_back_login": "Go back to login",
     "err_update_password": "Invalid or expired code.",
     "label_suc_update_password": "Password Updated",
-    "desc_suc_update_password": "Your password has been successfully updated. Use your new password to access your account."
+    "desc_suc_update_password": "Your password has been successfully updated. Use your new password to access your account.",
+    "label_login_into": "Login into { platform }",
+    "label_signup_into": "Sign up into { platform }"
   },
   "landing": {
     "nav_features": "Features",

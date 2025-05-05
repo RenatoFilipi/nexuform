@@ -459,7 +459,9 @@
     "label_go_back_login": "Volver al inicio de sesión",
     "err_update_password": "Código inválido o expirado.",
     "label_suc_update_password": "Contraseña Actualizada",
-    "desc_suc_update_password": "Tu contraseña ha sido actualizada con éxito. Usa tu nueva contraseña para acceder a tu cuenta."
+    "desc_suc_update_password": "Tu contraseña ha sido actualizada con éxito. Usa tu nueva contraseña para acceder a tu cuenta.",
+    "label_login_into": "Iniciar sesión en { platform }",
+    "label_signup_into": "Registrarse en { platform }"
   },
   "landing": {
     "nav_features": "Características",
