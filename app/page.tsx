@@ -8,12 +8,15 @@ import Pricing from "@/components/public/landing/pricing";
 import Brand from "@/components/shared/core/brand";
 import ModeToggle2 from "@/components/shared/core/mode-toggle2";
 import { Button } from "@/components/ui/button";
+import { getPlans } from "@/utils/plans";
 import { Menu } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import Link from "next/link";
 
 const Home = async () => {
   const t = await getTranslations("landing");
+  const locale = await getLocale();
+  const plans = await getPlans(locale);
 
   const urls = [
     { name: t("nav_features"), url: "features" },
@@ -59,7 +62,7 @@ const Home = async () => {
         <Hero />
         <Features />
         <HowItWorks />
-        <Pricing />
+        <Pricing plans={plans} />
         <Faq />
         <Cta />
       </div>

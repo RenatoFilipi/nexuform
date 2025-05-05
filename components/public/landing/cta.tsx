@@ -1,8 +1,6 @@
 "use client";
 
-import GridPattern from "@/components/magicui/animated-grid-pattern";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { ArrowRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -13,21 +11,8 @@ const Cta = () => {
   return (
     <section className="relative w-full overflow-hidden py-24 sm:py-32 flex justify-center items-center px-4 sm:px-8">
       <div className="absolute inset-0 -z-10">
-        <GridPattern
-          width={15}
-          height={15}
-          x={-1}
-          y={-1}
-          strokeDasharray={"4 2"}
-          className={cn(
-            "text-primary/10 dark:text-primary/5",
-            "[mask-image:radial-gradient(ellipse_at_center,white,transparent_70%)]"
-          )}
-          maxOpacity={0.2}
-        />
         <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/90 dark:from-primary/90 dark:to-primary/70" />
       </div>
-
       <div className="max-w-7xl w-full mx-auto flex flex-col items-center text-center gap-6 z-10">
         <div className="max-w-3xl space-y-4">
           <h2 className="text-3xl sm:text-4xl md:text-4xl font-bold tracking-tight text-background dark:text-background">
@@ -35,7 +20,6 @@ const Cta = () => {
           </h2>
           <p className="text-lg text-background/90 dark:text-background/80 sm:text-xl">{t("cta_subheadline")}</p>
         </div>
-
         <Button
           asChild
           size="lg"

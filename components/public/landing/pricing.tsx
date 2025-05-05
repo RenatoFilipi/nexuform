@@ -1,16 +1,14 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { IPlan } from "@/utils/interfaces";
-import { getPlans } from "@/utils/plans";
 import { CheckIcon, RocketIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { getLocale, getTranslations } from "next-intl/server";
 import Link from "next/link";
 
-const Pricing = async () => {
-  const t = await getTranslations("landing");
-  const locale = await getLocale();
-  const plans = await getPlans(locale);
+const Pricing = ({ plans }: { plans: IPlan[] }) => {
+  const t = useTranslations("landing");
 
   return (
     <section
@@ -21,7 +19,7 @@ const Pricing = async () => {
           <Badge className="text-primary border-primary/30 bg-primary/10 dark:bg-primary/20 dark:border-primary/50 px-3 py-1.5 text-sm font-medium uppercase">
             {t("nav_pricing")}
           </Badge>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">{t("pricing_headline")}</h2>
+          <h2 className="text-4xl font-bold tracking-tight">{t("pricing_headline")}</h2>
           <p className="text-lg text-muted-foreground dark:text-muted-foreground/80">{t("pricing_subheadline")}</p>
         </div>
 
