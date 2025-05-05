@@ -1,7 +1,6 @@
 "use client";
 
 import { signInAction } from "@/app/actions/auth";
-import Brand from "@/components/shared/core/brand";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -15,6 +14,7 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import FormHeader from "./form-header";
 
 const LoginForm = () => {
   const t = useTranslations("auth");
@@ -57,20 +57,12 @@ const LoginForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-6 justify-center items-center">
-        <div className="flex w-full flex-col justify-center gap-4">
-          <div className="flex justify-center items-center">
-            <Brand type="logo" className="fill-foreground w-12 h-12" />
-          </div>
-          <div className="flex justify-center w-full flex-col gap-2 items-center">
-            <h1 className="text-2xl font-medium">{t("label_login_into", { platform: "Nebulaform" })}</h1>
-            <span className="text-sm text-muted-foreground">
-              {t("desc_signup")}{" "}
-              <Link href={"/signup"} className="hover:underline text-info dark:text-blue-500">
-                {t("label_signup")}
-              </Link>
-            </span>
-          </div>
-        </div>
+        <FormHeader
+          title={t("label_login_into", { platform: "Nebulaform" })}
+          desc={t("desc_signup")}
+          path="/signup"
+          link={t("label_signup")}
+        />
         <div className="flex flex-col gap-3 w-full">
           <FormField
             control={form.control}
