@@ -30,7 +30,7 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
         <div
           className="flex flex-col gap-2 cursor-pointer w-full"
           onClick={() => router.push(`/dashboard/forms/${id}`)}>
-          <span className="text-base font-medium truncate max-w-[220px] group-hover:text-primary transition-colors">
+          <span className="text-base font-medium truncate max-w-[270px] group-hover:text-primary transition-colors">
             {name}
           </span>
           <FormStatusBadge status={status as TFormStatus} />

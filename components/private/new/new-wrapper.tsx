@@ -11,15 +11,7 @@ import { getFormCategoryName } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState, TTemplateCategory } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import {
-  ArrowUpRightIcon,
-  BookDashedIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  HexagonIcon,
-  LoaderIcon,
-  PlusIcon,
-} from "lucide-react";
+import { ArrowUpRightIcon, ChevronLeftIcon, ChevronRightIcon, HexagonIcon, LoaderIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { useState, useTransition } from "react";
@@ -130,6 +122,7 @@ const NewWrapper = (props: IProps) => {
 };
 const TemplateList = ({ setView }: { setView: TSetState<TView> }) => {
   const t = useTranslations("app");
+  const user = useUserStore();
   const supabase = createClient();
 
   const query = useQuery({
@@ -137,10 +130,32 @@ const TemplateList = ({ setView }: { setView: TSetState<TView> }) => {
     queryFn: async () => {
       const { data, error } = await supabase.from("templates").select("*").eq("is_public", true);
       if (error) throw error;
-      return { templates: data };
+      const { locale } = user;
+      console.log(JSON.stringify(data));
+      const templatesWithLocalizedNames = data.map((template) => {
+        const localizedName =
+          locale === "pt" && template.name_pt
+            ? template.name_pt
+            : locale === "es" && template.name_es
+            ? template.name_es
+            : template.name;
+
+        const localizedDescription =
+          locale === "pt" && template.description_pt
+            ? template.description_pt
+            : locale === "es" && template.description_es
+            ? template.description_es
+            : template.description;
+
+        return {
+          ...template,
+          name: localizedName,
+          description: localizedDescription,
+        };
+      });
+      return { templates: templatesWithLocalizedNames };
     },
     staleTime: 60 * minute,
-    refetchOnWindowFocus: false,
   });
 
   return (
@@ -166,7 +181,7 @@ const TemplateList = ({ setView }: { setView: TSetState<TView> }) => {
       )}
       {!query.isPending && !query.isError && query.data && (
         <div className="flex flex-col gap-6">
-          <div className="grid sm:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 gap-6">
             {query.data.templates.map((template) => {
               return <Preview key={template.id} template={template} />;
             })}
@@ -179,7 +194,7 @@ const TemplateList = ({ setView }: { setView: TSetState<TView> }) => {
 const Preview = (props: { template: ETemplate }) => {
   const user = useUserStore();
   const t = useTranslations("app");
-  const { category, name } = props.template;
+  const { category, name, description } = props.template;
 
   const query = useQuery({
     queryKey: ["previewCardData", category],
@@ -193,21 +208,20 @@ const Preview = (props: { template: ETemplate }) => {
   if (query.isPending) return null;
 
   return (
-    <div className="group relative flex flex-col justify-between p-5 h-44 rounded-lg bg-card border border-muted/50 hover:border-primary transition-all duration-200 overflow-hidden">
+    <div className="group relative flex flex-col justify-between p-5 h-44 rounded-lg bg-card border hover:border-primary transition-all duration-200 overflow-hidden">
       <div className="flex flex-col gap-3 w-full">
-        <h3 className="text-sm font-medium line-clamp-2 text-foreground group-hover:text-primary transition-colors duration-200">
+        <h3 className="text-base font-medium line-clamp-2 text-foreground group-hover:text-primary transition-colors duration-200">
           {name}
         </h3>
-        <div className="flex justify-between items-center">
-          <Badge variant="default">
-            <span className="first-letter:uppercase">{query.data?.category}</span>
-          </Badge>
-        </div>
+        <p className="text-muted-foreground text-sm group-hover:text-foreground">{description}</p>
       </div>
-      <div className="flex justify-between items-end w-full">
+      <div className="flex justify-between items-center">
+        <Badge variant="gray">
+          <span className="first-letter:uppercase">{query.data?.category}</span>
+        </Badge>
         <NewPreview template={props.template}>
-          <Button variant="outline" size="sm" className="">
-            <BookDashedIcon className="w-4 h-4 mr-2" />
+          <Button variant="outline" size="sm">
+            <ArrowUpRightIcon className="w-4 h-4 mr-2 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
             {t("label_preview")}
           </Button>
         </NewPreview>

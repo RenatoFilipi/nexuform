@@ -357,11 +357,14 @@
     "label_renews": "Renews on",
     "label_on_date": "On {date}",
     "label_available": "Available",
-    "label_account_settings": "Configurações da conta",
-    "desc_account_settings": "Gerencie suas informações pessoais, segurança e preferências da conta",
+    "label_account_settings": "Account Settings",
+    "desc_account_settings": "Manage your personal information, security, and account preferences",
     "label_free_trial_ends": "Free trial ends on",
     "label_views": "Views",
-    "label_conversion": "conversion"
+    "label_conversion": "conversion",
+    "label_success_form": "Form Submitted Successfully!",
+    "desc_success_form": "Thank you for submitting your form. We have received your information and will process it shortly.",
+    "label_submit_form": "Submit form"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

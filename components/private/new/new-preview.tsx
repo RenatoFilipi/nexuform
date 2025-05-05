@@ -74,10 +74,32 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
     queryFn: async () => {
       const { data, error } = await supabase.from("templates_blocks").select("*").eq("template_id", template.id);
       if (error) throw error;
+      const { locale } = user;
+
       const blocks: EBlock[] = data.map((x) => {
+        const localizeField = (
+          field: string | null,
+          field_es: string | null,
+          field_pt: string | null
+        ): string | null => {
+          if (locale === "pt" && field_pt !== null) return field_pt;
+          if (locale === "es" && field_es !== null) return field_es;
+          return field;
+        };
+
+        const localizeArrayField = (
+          field: string[] | null,
+          field_es: string[] | null,
+          field_pt: string[] | null
+        ): string[] | null => {
+          if (locale === "pt" && field_pt !== null) return field_pt;
+          if (locale === "es" && field_es !== null) return field_es;
+          return field;
+        };
+
         return {
           created_at: x.created_at,
-          description: x.description,
+          description: localizeField(x.description, x.description_es, x.description_pt),
           form_id: "",
           id: x.id,
           is_identifier: x.is_identifier,
@@ -87,9 +109,9 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
           min_char: x.min_char,
           min_date: x.min_date,
           min_scale: x.min_scale,
-          name: x.name,
-          options: x.options,
-          placeholder: x.placeholder,
+          name: localizeField(x.name, x.name_es, x.name_pt) || x.name,
+          options: localizeArrayField(x.options, x.options_es, x.options_pt),
+          placeholder: localizeField(x.placeholder, x.placeholder_es, x.placeholder_pt),
           position: x.position,
           rating: x.rating,
           required: x.required,
@@ -98,6 +120,7 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
           updated_at: x.created_at,
         };
       });
+
       return { blocks, template };
     },
     staleTime: 60 * minute,
@@ -117,6 +140,9 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
             description: "",
             owner_id: user.profile.id,
             public_url: nanoid(20, true, true),
+            success_title: t("label_success_form"),
+            success_description: t("desc_success_form"),
+            submit_text: t("label_submit_form"),
           },
         ])
         .select("*")
@@ -175,7 +201,7 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
           <AlertDialogDescription></AlertDialogDescription>
         </AlertDialogHeader>
         <div className="flex flex-col w-full justify-start items-center h-full overflow-y-auto">
-          <div className="flex justify-between items-center w-full p-4">
+          <div className="flex justify-between items-center w-full py-3 px-6">
             <h1 className="font-medium">{template.name}</h1>
             <div className="flex justify-center items-center gap-4">
               <Button onClick={() => setOpen(false)} variant={"outline"} size={"sm"} disabled={appState === "loading"}>
@@ -207,6 +233,7 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
   );
 };
 const BlocksGroup = ({ blocks, template }: { blocks: EBlock[]; template: ETemplate }) => {
+  const t = useTranslations("app");
   return (
     <div className="flex w-full border h-full overflow-y-auto justify-center items-start px-4 sm:px-0">
       <div className="flex flex-col gap-6 w-full py-10 overflow-y-auto sm:w-[650px] px-1">
@@ -228,7 +255,7 @@ const BlocksGroup = ({ blocks, template }: { blocks: EBlock[]; template: ETempla
           <button
             style={{ backgroundColor: defaultTheme.custom_primary_color }}
             className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 text-white w-full">
-            Submit
+            {t("label_submit_form")}
           </button>
         </div>
       </div>

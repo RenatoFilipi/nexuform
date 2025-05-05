@@ -361,7 +361,10 @@
     "desc_account_settings": "Gerencie suas informações pessoais, segurança e preferências da conta",
     "label_free_trial_ends": "Teste grátis termina em",
     "label_views": "Visualizações",
-    "label_conversion": "conversão"
+    "label_conversion": "conversão",
+    "label_success_form": "Formulário enviado com sucesso!",
+    "desc_success_form": "Obrigado por enviar seu formulário. Recebemos suas informações e as processaremos em breve.",
+    "label_submit_form": "Enviar formulário"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

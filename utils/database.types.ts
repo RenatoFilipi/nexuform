@@ -530,6 +530,9 @@ export type Database = {
         Row: {
           category: string
           created_at: string
+          description: string | null
+          description_es: string | null
+          description_pt: string | null
           id: string
           is_premium: boolean
           is_public: boolean
@@ -540,6 +543,9 @@ export type Database = {
         Insert: {
           category?: string
           created_at?: string
+          description?: string | null
+          description_es?: string | null
+          description_pt?: string | null
           id?: string
           is_premium?: boolean
           is_public?: boolean
@@ -550,6 +556,9 @@ export type Database = {
         Update: {
           category?: string
           created_at?: string
+          description?: string | null
+          description_es?: string | null
+          description_pt?: string | null
           id?: string
           is_premium?: boolean
           is_public?: boolean

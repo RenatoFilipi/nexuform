@@ -241,7 +241,7 @@ const NavApp = () => {
         </div>
         {slug && global.form.id !== "" && (
           <div className="flex justify-center items-center gap-1">
-            <span className="text-xs font-medium">{global.form.name}</span>
+            <span className="text-xs font-medium truncate max-w-[200px]">{global.form.name}</span>
             <ChangeForm>
               <button className="flex justify-center items-center p-1 hover:bg-foreground/5 rounded">
                 <ChevronsUpDownIcon className="w-4 h-4" />
