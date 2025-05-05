@@ -13,7 +13,7 @@ import { formatDateRelativeToNow, formatTime } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState, TSubmissionStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronLeftIcon, ChevronRightIcon, FilterIcon, ReceiptTextIcon, SendIcon, XIcon } from "lucide-react";
+import { ArrowUpRightIcon, ChevronLeftIcon, ChevronRightIcon, FilterIcon, SendIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useMedia } from "react-use";
@@ -163,7 +163,7 @@ const FormSubmissions = () => {
                     <TableCell className="text-right py-2  ">
                       <SubmissionDetails blocks={global.blocks} submission={submission}>
                         <Button variant={"outline"} size={"xs"} className="">
-                          <ReceiptTextIcon className="w-4 h-4" />
+                          <ArrowUpRightIcon className="w-4 h-4" />
                         </Button>
                       </SubmissionDetails>
                     </TableCell>

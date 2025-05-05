@@ -5,8 +5,9 @@ import useUserStore from "@/stores/user";
 import { EProfile, ESubscription } from "@/utils/entities";
 import { supportEmail } from "@/utils/envs";
 import { useQuery } from "@tanstack/react-query";
-import { CopyIcon } from "lucide-react";
+import { CopyIcon, MailIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 interface Props {
   subscription: ESubscription;
@@ -26,30 +27,41 @@ const HelpWrapper = ({ email, profile, subscription }: Props) => {
       userStore.setSubscription(subscription);
       return null;
     },
-    refetchOnWindowFocus: false,
   });
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(supportEmail);
+    toast.success(t("label_link_copied"));
+  };
 
   if (query.isPending) return null;
 
   return (
-    <div className="flex-1 mt-12 mb-12 sm:mb-0 flex flex-col">
-      <div className="flex justify-center items-center h-full flex-1 flex-col gap-8 px-4">
-        <div className="flex justify-center items-center gap-2 flex-col">
-          <h1 className="text-2xl font-semibold">{t("label_help")}</h1>
-          <span className="text-sm text-foreground/70 text-center">{t("desc_help")}</span>
+    <div className="flex-1 flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md mx-auto space-y-8">
+        <div className="text-center space-y-2">
+          <MailIcon className="mx-auto h-12 w-12 text-primary" />
+          <h1 className="text-3xl font-bold tracking-tight">{t("label_help")}</h1>
+          <p className="text-muted-foreground">{t("desc_help")}</p>
         </div>
-        <div
-          className="flex justify-center items-center gap-4 bg-foreground text-background px-4 py-2
-         rounded border">
-          <span>{supportEmail}</span>
-          <Button
-            variant={"ghost"}
-            size={"xs"}
-            onClick={() => {
-              navigator.clipboard.writeText(supportEmail);
-            }}>
-            {t("label_copy")} <CopyIcon className="w-4 h-4 ml-2" />
-          </Button>
+
+        <div className="space-y-6 bg-card p-6 rounded-lg border shadow-sm">
+          <div className="space-y-2">
+            <h2 className="text-lg font-medium">{t("label_contact_support")}</h2>
+            <p className="text-sm text-muted-foreground">{t("desc_contact_support")}</p>
+          </div>
+
+          <div className="flex items-center justify-between bg-accent/50 p-3 rounded-md">
+            <span className="font-mono text-sm truncate">{supportEmail}</span>
+            <Button variant="outline" size="sm" onClick={handleCopyEmail} className="shrink-0">
+              <CopyIcon className="h-4 w-4 mr-2" />
+              {t("label_copy")}
+            </Button>
+          </div>
+
+          <div className="pt-4 border-t">
+            <p className="text-sm text-muted-foreground">{t("label_response_time_info")}</p>
+          </div>
         </div>
       </div>
     </div>

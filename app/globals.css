@@ -20,13 +20,13 @@
     --secondary-foreground: 0 0% 100%;
     --accent: 0 0% 94.62%;
     --accent-foreground: 0 0% 5%;
-    --destructive: 1 83% 56%;
+    --destructive: 6 89% 55%; /* 9D201E converted to HSL */
     --destructive-foreground: 0 0% 100%;
-    --success: 124 61% 57%;
+    --success: 110 79% 46%; /* 94C631 converted to HSL */
     --success-foreground: 0 0% 0%;
-    --warning: 42 95% 50%;
+    --warning: 42 85% 53%; /* F8AA14 converted to HSL */
     --warning-foreground: 0 0% 0%;
-    --info: 234 100% 59%;
+    --info: 219 100% 27%; /* 005388 converted to HSL */
     --info-foreground: 0 0% 100%;
     --ring: 0 0% 85.1%;
     --radius: 0.3rem;
@@ -64,13 +64,13 @@
     --secondary-foreground: 0 0% 0%;
     --accent: 24.68 0% 18.46%;
     --accent-foreground: 0 0% 98%;
-    --destructive: 0.97 100% 60.53%;
+    --destructive: 6 89% 55%; /* 9D201E converted to HSL */
     --destructive-foreground: 0 0% 100%;
-    --success: 157 100% 25%;
+    --success: 110 79% 46%; /* 94C631 converted to HSL */
     --success-foreground: 0 0% 100%;
-    --warning: 42 95% 50%;
+    --warning: 42 85% 53%; /* F8AA14 converted to HSL */
     --warning-foreground: 19 100% 85%;
-    --info: 237 100% 25%;
+    --info: 219 100% 27%; /* 005388 converted to HSL */
     --info-foreground: 237 100% 85%;
     --ring: 255 4.35% 18.04%;
     --chart-1: 210 60% 40%;
@@ -101,17 +101,16 @@
     @apply bg-background text-foreground;
   }
 }
-
 @theme inline {
   @keyframes shine {
-  0% {
-    background-position: 0% 0%;
+    0% {
+      background-position: 0% 0%;
     }
-  50% {
-    background-position: 100% 100%;
+    50% {
+      background-position: 100% 100%;
     }
-  to {
-    background-position: 0% 0%;
+    to {
+      background-position: 0% 0%;
     }
   }
 }

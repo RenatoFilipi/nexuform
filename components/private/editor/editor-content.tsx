@@ -54,7 +54,7 @@ const EditorContent = () => {
               <PlusIcon className="w-4 h-4" />
             </Button>
           </AddBlock>
-          <div className="border-t my-1 w-full border-foreground/30"></div>
+
           <div className="flex flex-col gap-2">
             {pages.map((page) => {
               const isActive = page.view === editor.view;

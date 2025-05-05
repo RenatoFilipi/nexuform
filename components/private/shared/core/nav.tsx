@@ -26,8 +26,8 @@ import {
   ArrowUpRightIcon,
   ChartNoAxesColumnIcon,
   ChevronsUpDownIcon,
+  CircleHelpIcon,
   CreditCardIcon,
-  HelpingHandIcon,
   InboxIcon,
   LoaderIcon,
   LogOutIcon,
@@ -105,7 +105,7 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
       id: 4,
       name: t("nav_help"),
       path: "/dashboard/help",
-      icon: HelpingHandIcon,
+      icon: CircleHelpIcon,
       enabled: true,
     },
   ];
@@ -566,7 +566,7 @@ const AvatarAppMenu = ({ children }: { children: React.ReactNode }) => {
   const options = [
     { label: t("label_billing"), icon: CreditCardIcon, path: "/dashboard/settings/billing" },
     { label: t("label_settings"), icon: Settings2Icon, path: "/dashboard/settings" },
-    { label: t("nav_help"), icon: HelpingHandIcon, path: "/dashboard/help" },
+    { label: t("nav_help"), icon: CircleHelpIcon, path: "/dashboard/help" },
   ];
 
   return (

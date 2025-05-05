@@ -151,11 +151,11 @@ const Body = ({
             <SubmissionStatusBadge status={submission.status as TSubmissionStatus} uppercase />
           </div>
           <div className="flex flex-wrap gap-2">
-            <Badge variant="primary" className="flex items-center gap-1">
+            <Badge variant="info" className="flex items-center gap-1">
               <ClockIcon className="h-3 w-3" />
               {formatTime(submission.completion_time ?? 0, 2)}
             </Badge>
-            <Badge variant="primary" className="flex items-center gap-1">
+            <Badge variant="info" className="flex items-center gap-1">
               <CalendarIcon className="h-3 w-3" />
               {new Date(submission.created_at).toLocaleString(user.locale)}
             </Badge>

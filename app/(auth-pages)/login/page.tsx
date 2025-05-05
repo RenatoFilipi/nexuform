@@ -1,3 +1,4 @@
+import AuthPanel from "@/components/public/auth/auth-panel";
 import LoginForm from "@/components/public/auth/login-form";
 import Nav from "@/components/public/core/nav";
 import Brand from "@/components/shared/core/brand";
@@ -26,6 +27,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <AuthPanel />
     </div>
   );
 };

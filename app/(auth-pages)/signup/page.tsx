@@ -1,3 +1,4 @@
+import AuthPanel from "@/components/public/auth/auth-panel";
 import SignupForm from "@/components/public/auth/signup-form";
 import Nav from "@/components/public/core/nav";
 import { default as Brand } from "@/components/shared/core/brand";
@@ -24,6 +25,7 @@ const Signup = () => {
           <SignupForm />
         </div>
       </div>
+      <AuthPanel />
     </div>
   );
 };

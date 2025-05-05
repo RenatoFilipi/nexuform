@@ -1,9 +1,10 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import useGlobalStore from "@/stores/global";
-import { TrendingDownIcon, TrendingUpIcon } from "lucide-react";
+import { TrendingDown, TrendingUp } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface IFormItemProps {
@@ -16,47 +17,68 @@ interface IFormItemProps {
 const AnalyticsSubmissionsByFormChart = () => {
   const t = useTranslations("app");
   const { forms, viewLogs, submissionLogs } = useGlobalStore();
+
+  // Process data
   const viewsCountMap = new Map<string, number>();
   const submissionsCountMap = new Map<string, number>();
 
   viewLogs.forEach((log) => {
-    const count = viewsCountMap.get(log.form_id) || 0;
-    viewsCountMap.set(log.form_id, count + 1);
+    viewsCountMap.set(log.form_id, (viewsCountMap.get(log.form_id) || 0) + 1);
   });
+
   submissionLogs.forEach((log) => {
-    const count = submissionsCountMap.get(log.form_id) || 0;
-    submissionsCountMap.set(log.form_id, count + 1);
+    submissionsCountMap.set(log.form_id, (submissionsCountMap.get(log.form_id) || 0) + 1);
   });
+
   const formData = forms.map((form) => ({
     formId: form.id,
     formName: form.name,
     views: viewsCountMap.get(form.id) || 0,
     submissions: submissionsCountMap.get(form.id) || 0,
   }));
+
   const hasForms = formData.length > 0;
+  const totalViews = formData.reduce((sum, form) => sum + form.views, 0);
+  const totalSubmissions = formData.reduce((sum, form) => sum + form.submissions, 0);
+  const overallConversion = totalViews > 0 ? Math.round((totalSubmissions / totalViews) * 100) : 0;
 
   return (
-    <div className="space-y-4 w-full">
-      <h2 className="text-xl font-bold mb-4">{t("label_forms")}</h2>
-      {!hasForms && <p className="text-muted-foreground">{t("label_no_forms")}</p>}
-      {hasForms && (
-        <div className="grid gap-6 w-full">
-          {formData.map((form) => (
-            <FormItem
-              key={form.formId}
-              formId={form.formId}
-              formName={form.formName}
-              views={form.views}
-              submissions={form.submissions}
-            />
-          ))}
+    <Card className="border-none shadow-sm w-full">
+      <CardHeader className="pb-3 px-0">
+        <div className="flex justify-between items-center">
+          <CardTitle className="text-lg font-semibold">{t("label_forms")}</CardTitle>
+          <div className="flex items-center gap-2 text-sm">
+            <span className="text-muted-foreground">{t("label_conversion")}:</span>
+            <span className="font-medium">{overallConversion}%</span>
+          </div>
         </div>
-      )}
-    </div>
+      </CardHeader>
+      <CardContent className="space-y-6 p-0">
+        {!hasForms && (
+          <div className="border border-dashed rounded-lg flex flex-col items-center justify-center p-8 gap-2">
+            <p className="text-muted-foreground text-sm">{t("label_no_forms")}</p>
+          </div>
+        )}
+
+        {hasForms && (
+          <div className="grid gap-4">
+            {formData.map((form) => (
+              <FormItem
+                key={form.formId}
+                formId={form.formId}
+                formName={form.formName}
+                views={form.views}
+                submissions={form.submissions}
+              />
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 
-const FormItem = ({ formId, formName, views, submissions }: IFormItemProps) => {
+const FormItem = ({ formName, views, submissions }: IFormItemProps) => {
   const t = useTranslations("app");
   const conversionRate = views > 0 ? Math.round((submissions / views) * 100) : 0;
 
@@ -64,40 +86,49 @@ const FormItem = ({ formId, formName, views, submissions }: IFormItemProps) => {
     if (conversionRate >= 50)
       return {
         variant: "success" as const,
-        icon: <TrendingUpIcon className="h-3 w-3 mr-1" />,
+        icon: <TrendingUp className="h-3 w-3" />,
+        trend: "up",
       };
     if (conversionRate <= 20)
       return {
         variant: "destructive" as const,
-        icon: <TrendingDownIcon className="h-3 w-3 mr-1" />,
+        icon: <TrendingDown className="h-3 w-3" />,
+        trend: "down",
       };
     return {
       variant: "default" as const,
       icon: null,
+      trend: "neutral",
     };
   };
 
   const badgeConfig = getBadgeConfig();
 
   return (
-    <div className="p-4 border rounded-lg space-y-3">
-      <div className="flex justify-between items-center">
-        <h3 className="font-semibold text-sm">{formName}</h3>
-        <Badge variant={badgeConfig.variant} className="gap-1">
-          {badgeConfig.icon}
-          {conversionRate}% {t("label_conversion")}
-        </Badge>
-      </div>
-      <Progress value={conversionRate} className="h-2" />
-      <div className="flex justify-between text-sm">
-        <div className="text-muted-foreground font-semibold text-xs">
-          <span>{t("label_views")}:</span> {views}
+    <div className="group p-4 border rounded-lg hover:shadow-sm transition-shadow">
+      <div className="flex justify-between items-start gap-4 mb-3">
+        <h3 className="font-medium text-sm line-clamp-2">{formName}</h3>
+
+        <div className="flex items-center gap-2">
+          <Badge variant={badgeConfig.variant} className="px-2 py-1 flex gap-2">
+            {badgeConfig.icon}
+            {conversionRate}%
+          </Badge>
         </div>
-        <div className="text-muted-foreground font-semibold text-xs">
-          <span>{t("label_submissions")}:</span> {submissions}
+      </div>
+      <Progress value={conversionRate} className="h-1.5 mb-2" />
+      <div className="flex justify-between text-xs">
+        <div className="flex items-center gap-2">
+          <span className="text-muted-foreground">{t("label_views")}:</span>
+          <span className="font-medium">{views.toLocaleString()}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-muted-foreground">{t("label_submissions")}:</span>
+          <span className="font-medium">{submissions.toLocaleString()}</span>
         </div>
       </div>
     </div>
   );
 };
+
 export default AnalyticsSubmissionsByFormChart;

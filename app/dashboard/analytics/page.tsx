@@ -30,8 +30,6 @@ const Analytics = async () => {
     .order("created_at", { ascending: true });
   if (forms.error) return <ErrorUI email={email} />;
 
-  const formIds = forms.data.map((x) => x.id);
-
   const submissionLogs = await supabase.from("submission_logs").select("*").eq("profile_id", userId);
   if (submissionLogs.error) return <ErrorUI email={email} />;
 

@@ -1,20 +1,31 @@
 import Brand from "@/components/shared/core/brand";
 import Link from "next/link";
 
-const FormHeader = ({ title, desc, link, path }: { title: string; desc: string; link: string; path: string }) => {
+interface FormHeaderProps {
+  title: string;
+  desc: string;
+  link: string;
+  path: string;
+}
+
+const FormHeader = ({ title, desc, link, path }: FormHeaderProps) => {
   return (
-    <div className="flex w-full flex-col justify-center gap-4">
-      <Link href={"/"} className="flex justify-center items-center">
-        <Brand type="logo" className="fill-foreground w-12 h-12" />
+    <div className="flex w-full flex-col items-center gap-6">
+      <Link href="/" className="group flex justify-center items-center">
+        <div className="flex justify-center items-center p-4 rounded-2xl bg-primary/10 dark:bg-primary/20 group-hover:bg-primary/15 dark:group-hover:bg-primary/25 transition-colors duration-300">
+          <Brand type="logo" className="fill-primary w-10 h-10 group-hover:rotate-6 transition-transform" />
+        </div>
       </Link>
-      <div className="flex justify-center w-full flex-col gap-2 items-center">
-        <h1 className="text-2xl font-medium">{title}</h1>
-        <span className="text-sm text-muted-foreground">
+      <div className="text-center space-y-2 max-w-md">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">{title}</h1>
+        <p className="text-muted-foreground">
           {desc}{" "}
-          <Link href={path} className="hover:underline text-info dark:text-blue-500">
+          <Link
+            href={path}
+            className="font-medium text-info dark:text-blue-500 underline-offset-4 hover:underline transition-colors">
             {link}
           </Link>
-        </span>
+        </p>
       </div>
     </div>
   );
