@@ -368,7 +368,11 @@
     "label_analytics_warning": "Data includes both active and deleted forms. Historical metrics may not reflect the current scenario.",
     "label_contact_support": "Contact Support",
     "desc_contact_support": "Reach out to us via email for assistance",
-    "label_response_time_info": "We typically respond within 24 hours"
+    "label_response_time_info": "We typically respond within 24 hours",
+    "label_views_by_form": "Views by form",
+    "label_unavailable": "Unavailable",
+    "label_completion_rate_by_form": "Completion rate by form",
+    "label_completion_time_by_form": "Completion time by form"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

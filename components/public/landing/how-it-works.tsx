@@ -21,16 +21,16 @@ const HowItWorks = () => {
       description: t("step2_desc"),
       icon: DatabaseIcon,
       details: [t("step2_topic1"), t("step2_topic2"), t("step2_topic3")],
-      color: "from-purple-400 to-purple-600",
-      bgColor: "bg-purple-100/80 dark:bg-purple-900/20",
+      color: "from-green-400 to-green-600",
+      bgColor: "bg-green-100/80 dark:bg-green-900/20",
     },
     {
       title: t("step3_label"),
       description: t("step3_desc"),
       icon: BarChartIcon,
       details: [t("step3_topic1"), t("step3_topic2"), t("step3_topic3")],
-      color: "from-green-400 to-green-600",
-      bgColor: "bg-green-100/80 dark:bg-green-900/20",
+      color: "from-purple-400 to-purple-600",
+      bgColor: "bg-purple-100/80 dark:bg-purple-900/20",
     },
   ];
 

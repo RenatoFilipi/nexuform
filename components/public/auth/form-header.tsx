@@ -12,8 +12,8 @@ const FormHeader = ({ title, desc, link, path }: FormHeaderProps) => {
   return (
     <div className="flex w-full flex-col items-center gap-6">
       <Link href="/" className="group flex justify-center items-center">
-        <div className="flex justify-center items-center p-4 rounded-2xl bg-primary/10 dark:bg-primary/20 group-hover:bg-primary/15 dark:group-hover:bg-primary/25 transition-colors duration-300">
-          <Brand type="logo" className="fill-primary w-10 h-10 group-hover:rotate-6 transition-transform" />
+        <div className="flex justify-center items-center p-4 rounded-2xl bg-gradient-to-br from-primary/40 to-primary">
+          <Brand type="logo" className="fill-white w-10 h-10 group-hover:rotate-6 transition-transform" />
         </div>
       </Link>
       <div className="text-center space-y-2 max-w-md">

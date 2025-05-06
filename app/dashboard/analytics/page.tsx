@@ -30,10 +30,12 @@ const Analytics = async () => {
     .order("created_at", { ascending: true });
   if (forms.error) return <ErrorUI email={email} />;
 
-  const submissionLogs = await supabase.from("submission_logs").select("*").eq("profile_id", userId);
+  const formIds = forms.data.map((x) => x.id);
+
+  const submissionLogs = await supabase.from("submission_logs").select("*").in("form_id", formIds);
   if (submissionLogs.error) return <ErrorUI email={email} />;
 
-  const viewLogs = await supabase.from("view_logs").select("*").eq("profile_id", userId);
+  const viewLogs = await supabase.from("view_logs").select("*").in("form_id", formIds);
   if (viewLogs.error) return <ErrorUI email={email} />;
 
   return (

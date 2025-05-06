@@ -368,7 +368,11 @@
     "label_analytics_warning": "Los datos incluyen formularios activos y eliminados. Las métricas históricas pueden no reflejar el escenario actual.",
     "label_contact_support": "Contactar al Soporte",
     "desc_contact_support": "Escríbenos por correo electrónico para asistencia",
-    "label_response_time_info": "Normalmente respondemos en 24 horas"
+    "label_response_time_info": "Normalmente respondemos en 24 horas",
+    "label_views_by_form": "Vistas por formulario",
+    "label_unavailable": "No disponible",
+    "label_completion_rate_by_form": "Tasa de completación por formulario",
+    "label_completion_time_by_form": "Tiempo de completación por formulario"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

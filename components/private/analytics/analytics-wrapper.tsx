@@ -45,7 +45,7 @@ const AnalyticsWrapper = ({ profile, subscription, email, viewLogs, submissionLo
         <div className="flex justify-between items-center gap-2">
           <h1 className="text-xl font-medium">{t("label_analytics")}</h1>
         </div>
-        <div className="flex justify-start items-center gap-2 bg-warning/15 p-2 rounded">
+        <div className="flex justify-start items-center gap-2 bg-warning/15 p-2 rounded hidden">
           <AlertTriangleIcon className="w-7 h-7 sm:w-3 sm:h-3 text-warning" />
           <span className="text-xs">{t("label_analytics_warning")}</span>
         </div>
