@@ -372,7 +372,9 @@
     "label_views_by_form": "Vistas por formulario",
     "label_unavailable": "No disponible",
     "label_completion_rate_by_form": "Tasa de completación por formulario",
-    "label_completion_time_by_form": "Tiempo de completación por formulario"
+    "label_completion_time_by_form": "Tiempo de completación por formulario",
+    "label_billing_warning": "El uso mensual también incluye envíos de formularios, incluso aquellos que han sido desactivados o eliminados.",
+    "label_save_publish_form": "Guardar y publicar"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

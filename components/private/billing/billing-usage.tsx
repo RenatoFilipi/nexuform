@@ -4,12 +4,15 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import useUserStore from "@/stores/user";
 import { getDaysDifference } from "@/utils/functions";
 import {
+  AlertCircleIcon,
   AlertTriangle,
   CalendarIcon,
   CalendarX2Icon,
+  CircleHelpIcon,
   LayersIcon,
   RefreshCwIcon,
   Send,
@@ -63,6 +66,7 @@ const BillingUsage = () => {
             label={t("label_forms")}
             labelUsage={t("label_all_time")}
             labelAvailable={t("label_forms_included")}
+            showBillingWarning={false}
             icon={<LayersIcon className="h-5 w-5 text-primary" />}
           />
           <UsageCard
@@ -73,6 +77,7 @@ const BillingUsage = () => {
             label={t("label_submissions")}
             labelUsage={t("label_monthly_usage")}
             labelAvailable={t("label_submissions_included")}
+            showBillingWarning
             icon={<Send className="h-5 w-5 text-primary" />}
           />
         </div>
@@ -145,6 +150,7 @@ const UsageCard = ({
   labelAvailable,
   labelUsage,
   icon,
+  showBillingWarning,
 }: {
   limit: boolean;
   label: string;
@@ -154,6 +160,7 @@ const UsageCard = ({
   labelAvailable: string;
   labelUsage: string;
   icon?: React.ReactNode;
+  showBillingWarning: boolean;
 }) => {
   const t = useTranslations("app");
   const rawValue = 100 - Math.min(usage);
@@ -184,9 +191,16 @@ const UsageCard = ({
         </div>
         <div className="space-y-4">
           <div className="flex justify-between items-center w-full">
-            <span className="text-sm text-foreground/70">{labelUsage}</span>
+            <div className="flex justify-center items-center gap-2">
+              <span className="text-sm text-foreground/70">{labelUsage}</span>
+              {showBillingWarning && (
+                <WarningTooltip>
+                  <CircleHelpIcon className="w-4 h-4 text-foreground/70" />
+                </WarningTooltip>
+              )}
+            </div>
             <span className="text-sm font-medium">
-              <span className={limit ? "text-destructive" : "text-primary"}>{count.toLocaleString()}</span>
+              <span className={limit ? "text-destructive" : ""}>{count.toLocaleString()}</span>
               {" / "}
               {available.toLocaleString()}
             </span>
@@ -203,6 +217,21 @@ const UsageCard = ({
         </div>
       </div>
     </Card>
+  );
+};
+
+const WarningTooltip = ({ children }: { children: React.ReactNode }) => {
+  const t = useTranslations("app");
+  return (
+    <TooltipProvider delayDuration={0}>
+      <Tooltip>
+        <TooltipTrigger asChild>{children}</TooltipTrigger>
+        <TooltipContent className="flex justify-center items-center gap-2">
+          <AlertCircleIcon className="w-4 h-4 text-warning" />
+          <p className="text-xs">{t("label_billing_warning")}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 

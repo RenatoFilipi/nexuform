@@ -311,6 +311,7 @@ const NavEditor = () => {
   const router = useRouter();
   const [appState, setAppState] = useState<TAppState>("idle");
   const active = isSubscriptionActive(subscription);
+  const isFreeTrial = subscription.plan === "free_trial";
 
   const onSave = async () => {
     try {
@@ -433,10 +434,6 @@ const NavEditor = () => {
       </div>
       {active && (
         <div className="flex justify-center items-center gap-4">
-          <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
-            {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
-            {t("label_save_form")}
-          </Button>
           <RadioGroup value={appTheme.theme} onValueChange={appTheme.setTheme} className="flex gap-1">
             <div>
               <RadioGroupItem value="light" id="light" className="peer sr-only" />
@@ -455,6 +452,20 @@ const NavEditor = () => {
               </Label>
             </div>
           </RadioGroup>
+          <div className="flex justify-center items-center gap-2">
+            {isFreeTrial && (
+              <Button variant={"outline"} size={"xs"} asChild>
+                <Link href={"/dashboard/settings/billing"}>
+                  <ArrowUpRightIcon className="w-4 h-4 mr-2" />
+                  {t("label_upgrade_now")}
+                </Link>
+              </Button>
+            )}
+            <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
+              {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
+              {t("label_save_form")}
+            </Button>
+          </div>
         </div>
       )}
     </div>
@@ -643,5 +654,8 @@ const AvatarAppMenu = ({ children }: { children: React.ReactNode }) => {
       </DropdownMenuContent>
     </DropdownMenu>
   );
+};
+const SaveFormButton = () => {
+  return <div></div>;
 };
 export default Nav;

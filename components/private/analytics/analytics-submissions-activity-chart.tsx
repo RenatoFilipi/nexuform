@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import useGlobalStore from "@/stores/global";
+import { fallbackColor } from "@/utils/constants";
+import { generateDistinctColors } from "@/utils/functions";
 import { format, subDays } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
@@ -13,13 +15,6 @@ interface IChartData {
 
 const CHART_CONFIG: ChartConfig = {} as ChartConfig;
 
-const generateDistinctColors = (count: number) => {
-  const hueStep = 360 / Math.max(count, 1);
-  return Array.from({ length: count }, (_, i) => {
-    const hue = Math.round(i * hueStep) % 360;
-    return `hsl(${hue}, 75%, 55%)`;
-  });
-};
 const AnalyticsSubmissionsActivityChart = () => {
   const t = useTranslations("app");
   const global = useGlobalStore();
@@ -47,7 +42,7 @@ const AnalyticsSubmissionsActivityChart = () => {
 
   const formIds = useMemo(() => global.forms.map((f) => f.id), [global.forms]);
 
-  const colors = useMemo(() => generateDistinctColors(formIds.length), [formIds.length]);
+  const colors = useMemo(() => generateDistinctColors(fallbackColor, formIds.length), [formIds.length]);
 
   const data = useMemo(() => {
     const grouped: Record<string, Record<string, number>> = {};
