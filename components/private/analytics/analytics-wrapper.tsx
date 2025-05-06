@@ -4,7 +4,6 @@ import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
 import { EForm, EProfile, ESubmissionLog, ESubscription, EViewLog } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
-import { AlertTriangleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import AnalyticsOverview from "./analytics-overview";
 import AnalyticsSubmissionsActivityChart from "./analytics-submissions-activity-chart";
@@ -44,10 +43,6 @@ const AnalyticsWrapper = ({ profile, subscription, email, viewLogs, submissionLo
       <div className="flex flex-col gap-2">
         <div className="flex justify-between items-center gap-2">
           <h1 className="text-xl font-medium">{t("label_analytics")}</h1>
-        </div>
-        <div className="flex justify-start items-center gap-2 bg-warning/15 p-2 rounded hidden">
-          <AlertTriangleIcon className="w-7 h-7 sm:w-3 sm:h-3 text-warning" />
-          <span className="text-xs">{t("label_analytics_warning")}</span>
         </div>
       </div>
       <div className="flex flex-col gap-6">

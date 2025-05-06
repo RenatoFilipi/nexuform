@@ -10,6 +10,7 @@ import { getDaysDifference } from "@/utils/functions";
 import {
   AlertCircleIcon,
   AlertTriangle,
+  AlertTriangleIcon,
   CalendarIcon,
   CalendarX2Icon,
   CircleHelpIcon,
@@ -38,6 +39,7 @@ const BillingUsage = () => {
   const remainingDays = getDaysDifference(new Date(), new Date(user.subscription.due_date));
 
   const isFreeTrial = user.subscription.plan === "free_trial";
+  const isCancelled = user.subscription.status === "canceled";
 
   const planName = (plan: string) =>
     ({
@@ -81,62 +83,79 @@ const BillingUsage = () => {
             icon={<Send className="h-5 w-5 text-primary" />}
           />
         </div>
-        <div className="relative overflow-hidden rounded-xl border bg-background p-6 shadow-sm w-full">
-          <div className="absolute right-0 top-0 h-full w-1 bg-primary" />
-          <div className="flex flex-col gap-6">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                  <ZapIcon className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <h2 className="text-xl font-semibold tracking-tight">{planName(user.subscription.plan)}</h2>
-                  <p className="text-sm text-foreground/70">{t("label_plan")}</p>
+        {isCancelled && (
+          <div className="border rounded-lg bg-background/50 p-6 flex justify-center items-center flex-col gap-6 text-center w-full mx-auto shadow-sm">
+            <div className="space-y-3">
+              <AlertTriangleIcon className="h-6 w-6 mx-auto text-warning" />
+              <h3 className="text-lg font-medium">{t("label_sub_cancelled")}</h3>
+              <p className="text-muted-foreground text-sm">{t("desc_sub_cancelled")}</p>
+            </div>
+            <ManageSubscription>
+              <Button className="gap-2" variant="outline" size={"sm"}>
+                <Settings className="h-4 w-4" />
+                {t("label_manage_sub")}
+              </Button>
+            </ManageSubscription>
+          </div>
+        )}
+        {!isCancelled && (
+          <div className="relative overflow-hidden rounded-xl border bg-background p-6 shadow-sm w-full">
+            <div className="absolute right-0 top-0 h-full w-1 bg-primary" />
+            <div className="flex flex-col gap-6">
+              <div className="flex items-center justify-start gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                    <ZapIcon className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-semibold tracking-tight">{planName(user.subscription.plan)}</h2>
+                    <p className="text-sm text-foreground/70">{t("label_plan")}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="h-px w-full bg-border" />
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {!isFreeTrial && (
-                <div className="space-y-2">
-                  <h3 className="flex items-center gap-2 text-sm font-medium text-foreground/70">
-                    <CalendarIcon className="h-4 w-4" />
-                    {t("label_billing_cycle")}
-                  </h3>
-                  <p className="text-sm">
-                    {startDate} - {dueDate}
-                  </p>
-                </div>
-              )}
-              <div className="space-y-2">
-                {isFreeTrial && (
-                  <h3 className="flex items-center gap-2 text-sm font-medium text-foreground/70">
-                    <CalendarX2Icon className="h-4 w-4" />
-                    {t("label_free_trial_ends")}
-                  </h3>
-                )}
+              <div className="h-px w-full bg-border" />
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {!isFreeTrial && (
-                  <h3 className="flex items-center gap-2 text-sm font-medium text-foreground/70">
-                    <RefreshCwIcon className="h-4 w-4" />
-                    {t("label_renews")}
-                  </h3>
+                  <div className="space-y-2">
+                    <h3 className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+                      <CalendarIcon className="h-4 w-4" />
+                      {t("label_billing_cycle")}
+                    </h3>
+                    <p className="text-sm">
+                      {startDate} - {dueDate}
+                    </p>
+                  </div>
                 )}
-                <div className="flex justify-center items-center w-fit gap-2">
-                  <p className="text-sm">{dueDate}</p>-
-                  <p className="text-sm">{t("label_n_days_remaining", { n: remainingDays })}</p>
+                <div className="space-y-2">
+                  {isFreeTrial && (
+                    <h3 className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+                      <CalendarX2Icon className="h-4 w-4" />
+                      {t("label_free_trial_ends")}
+                    </h3>
+                  )}
+                  {!isFreeTrial && (
+                    <h3 className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+                      <RefreshCwIcon className="h-4 w-4" />
+                      {t("label_renews")}
+                    </h3>
+                  )}
+                  <div className="flex justify-center items-center w-fit gap-2">
+                    <p className="text-sm">{dueDate}</p>-
+                    <p className="text-sm">{t("label_n_days_remaining", { n: remainingDays })}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="flex justify-end">
-              <ManageSubscription>
-                <Button variant="outline" size="sm" className="w-full sm:w-auto gap-2">
-                  <Settings className="h-4 w-4" />
-                  {t("label_manage_sub")}
-                </Button>
-              </ManageSubscription>
+              <div className="flex justify-end">
+                <ManageSubscription>
+                  <Button variant="outline" size="sm" className="w-full sm:w-auto gap-2">
+                    <Settings className="h-4 w-4" />
+                    {t("label_manage_sub")}
+                  </Button>
+                </ManageSubscription>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

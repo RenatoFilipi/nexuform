@@ -181,6 +181,60 @@ export const POST = async (req: Request) => {
         console.log("🟢 Assinatura atualizada no Supabase com sucesso");
         break;
       }
+      case "customer.subscription.updated": {
+        const subscription = event.data.object as Stripe.Subscription;
+        const customerId = subscription.customer as string;
+        const profile = await getProfileByStripeCustomerId(customerId);
+        const planName = getPlanName(subscription.items.data[0].price.id);
+        const planConfig = getPlanConfig(planName);
+
+        const { error: updateError } = await supabase
+          .from("subscriptions")
+          .update({
+            plan: planName,
+            status: subscription.status,
+            start_date: formatDate(subscription.current_period_start),
+            due_date: formatDate(subscription.current_period_end),
+            forms: planConfig.forms,
+            submissions: planConfig.submissions,
+            updated_at: new Date().toISOString(),
+          })
+          .eq("profile_id", profile.id);
+
+        if (updateError) {
+          console.error(`❌ Erro ao atualizar assinatura: ${updateError.message}`);
+          throw updateError;
+        }
+      }
+      case "invoice.paid": {
+        const invoice = event.data.object as Stripe.Invoice;
+
+        if (invoice.billing_reason === "subscription_cycle") {
+          const subscription = await stripe.subscriptions.retrieve(invoice.subscription as string);
+          const profile = await getProfileByStripeCustomerId(invoice.customer as string);
+
+          await supabase
+            .from("subscriptions")
+            .update({
+              due_date: formatDate(subscription.current_period_end),
+              updated_at: new Date().toISOString(),
+            })
+            .eq("profile_id", profile.id);
+        }
+        break;
+      }
+      case "invoice.payment_failed": {
+        const invoice = event.data.object as Stripe.Invoice;
+        const profile = await getProfileByStripeCustomerId(invoice.customer as string);
+
+        await supabase
+          .from("subscriptions")
+          .update({
+            status: "past_due",
+          })
+          .eq("profile_id", profile.id);
+        break;
+      }
       default:
         console.log(`🔔 Tipo de evento não tratado: ${event.type}`);
     }

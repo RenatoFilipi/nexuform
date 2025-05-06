@@ -373,8 +373,10 @@
     "label_unavailable": "No disponible",
     "label_completion_rate_by_form": "Tasa de completación por formulario",
     "label_completion_time_by_form": "Tiempo de completación por formulario",
-    "label_billing_warning": "El uso mensual también incluye envíos de formularios, incluso aquellos que han sido desactivados o eliminados.",
-    "label_save_publish_form": "Guardar y publicar"
+    "label_billing_warning": "Dentro del ciclo de suscripción, el uso mensual también incluye envíos de formularios, incluso aquellos que han sido desactivados o eliminados.",
+    "label_save_publish_form": "Guardar y publicar",
+    "label_sub_cancelled": "Suscripción Cancelada",
+    "desc_sub_cancelled": "Tu suscripción ha sido cancelada. Actualiza tu plan para seguir utilizando nuestros servicios."
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

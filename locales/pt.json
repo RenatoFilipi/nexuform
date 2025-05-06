@@ -373,8 +373,10 @@
     "label_unavailable": "Indisponível",
     "label_completion_rate_by_form": "Taxa de conclusão por formulário",
     "label_completion_time_by_form": "Tempo de conclusão por formulário",
-    "label_billing_warning": "O uso mensal também inclui envios de formulários, mesmo aqueles que foram desativados ou excluídos.",
-    "label_save_publish_form": "Salvar e publicar"
+    "label_billing_warning": "Dentro do ciclo de assinatura, o uso mensal também inclui envios de formulários, mesmo aqueles que foram desativados ou excluídos.",
+    "label_save_publish_form": "Salvar e publicar",
+    "label_sub_cancelled": "Assinatura Cancelada",
+    "desc_sub_cancelled": "Sua assinatura foi cancelada. Atualize seu plano para continuar usando nossos serviços."
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",
