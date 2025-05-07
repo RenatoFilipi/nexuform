@@ -1,75 +1,61 @@
 import Brand from "@/components/shared/core/brand";
 import { supportEmail } from "@/utils/envs";
+import { privacyLastUpdatedAt, privacyTopics } from "@/utils/legal";
 import Link from "next/link";
-
-const topics = [
-  {
-    title: "Information Collection",
-    description:
-      "We may collect personal information, such as your name, email address, and usage data, when you use our services. This information is collected to provide and improve our services.",
-  },
-  {
-    title: "Use of Information",
-    description:
-      "The data we collect is used to personalize your experience, improve our offerings, and communicate with you about updates or promotional content. We will never sell your information to third parties.",
-  },
-  {
-    title: "Data Security",
-    description:
-      "We implement appropriate security measures to protect your information from unauthorized access, alteration, or disclosure. However, no data transmission over the internet can be guaranteed to be completely secure.",
-  },
-  {
-    title: "Cookies",
-    description:
-      "Our website may use cookies to enhance your experience. You can disable cookies through your browser settings, but this may limit the functionality of our services.",
-  },
-  {
-    title: "Third-Party Services",
-    description:
-      "We may use third-party services to help provide our services. These services may collect information as outlined in their respective privacy policies.",
-  },
-  {
-    title: "Your Rights",
-    description:
-      "You have the right to access, update, or delete your personal information. If you have concerns or requests, please contact us at support@nebulaform.com.",
-  },
-  {
-    title: "Changes to Privacy Policy",
-    description:
-      "We may update this Privacy Policy from time to time. Any changes will be posted on this page, and significant changes will be communicated to you.",
-  },
-];
 
 const Privacy = () => {
   return (
-    <div className="flex flex-col w-full min-h-dvh px-4 sm:px-8 lg:px-16 py-8 bg-foreground/5">
-      <div className="flex justify-center items-center py-4 gap-4">
+    <div className="flex flex-col w-full min-h-dvh px-4 sm:px-8 lg:px-16 py-8 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">
+      <div className="flex justify-center items-center py-8 gap-4">
         <Link href={"/"} className="flex justify-center items-center">
-          <Brand type="logo_text" className="h-8 fill-foreground" />
+          <Brand type="logo_text" className="h-10 fill-foreground dark:fill-gray-100" />
         </Link>
       </div>
-      <div className="max-w-3xl mx-auto shadow rounded-lg p-6 bg-background">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold">Privacy Policy</h1>
-          <p className="mt-2 text-foreground/80">
-            Your privacy is important to us at NebulaForm. This Privacy Policy explains how we collect, use, and protect
-            your personal information when you use our services.
+
+      <div className="max-w-4xl mx-auto rounded-xl p-8 bg-white shadow-lg border border-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:shadow-gray-900/30">
+        <div className="mb-10 text-center">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Privacy Policy</h1>
+          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            Last Updated: {privacyLastUpdatedAt}
           </p>
         </div>
-        {topics.map((topic, index) => (
-          <div key={index} className="mb-6">
-            <h2 className="text-xl font-medium">{topic.title}</h2>
-            <p className="mt-2 text-foreground/80">{topic.description}</p>
+
+        <div className="mb-8 p-6 bg-blue-50 rounded-lg border border-blue-100 dark:bg-blue-900/20 dark:border-blue-800/50">
+          <p className="text-blue-800 dark:text-blue-200">
+            At NebulaForm, we're committed to protecting your privacy. This policy explains what data we collect, how we
+            use it, and your rights regarding your personal information when using our form builder platform.
+          </p>
+        </div>
+
+        {privacyTopics.map((topic, index) => (
+          <div key={index} className="mb-10">
+            <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4 pb-2 border-b border-gray-200 dark:border-gray-700">
+              {topic.title}
+            </h2>
+            <div className="space-y-3 text-gray-700 dark:text-gray-300">
+              {topic.description.map((paragraph, pIndex) => (
+                <p key={pIndex} className={paragraph ? "" : "mt-4"}>
+                  {paragraph}
+                </p>
+              ))}
+            </div>
           </div>
         ))}
-        <div className="mt-6">
-          <p className="text-foreground/80 text-xs">
-            By using NebulaForm, you consent to the terms of this Privacy Policy and our data practices. For questions
-            or concerns, please reach out to{" "}
-            <a href="mailto:support@nebulaform.com" className="text-blue-600 hover:underline">
-              {supportEmail}
-            </a>
-            .
+
+        <div className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-700">
+          <h3 className="text-xl font-medium text-gray-800 dark:text-gray-100 mb-4">Contact Us</h3>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            For any privacy-related questions or to exercise your data rights, please contact our Data Protection
+            Officer at:
+          </p>
+          <a
+            href={`mailto:${supportEmail}`}
+            className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors dark:bg-blue-700 dark:hover:bg-blue-600">
+            {supportEmail}
+          </a>
+          <p className="mt-8 text-sm text-gray-500 dark:text-gray-400">
+            By using NebulaForm, you acknowledge you've read and understood this Privacy Policy. Thank you for trusting
+            us with your data.
           </p>
         </div>
       </div>
