@@ -66,23 +66,59 @@ const Home = async () => {
         <Faq />
         <Cta />
       </div>
-      <footer className="flex justify-center items-center w-full h-16">
-        <div className="absolute left-4 hidden sm:flex justify-center items-center gap-2">
-          <Link href={"/legal/privacy"} className="text-xs text-foreground/80 hover:underline">
-            {t("label_privacy")}
-          </Link>
-          <Link href={"/legal/terms"} className="text-xs text-foreground/80 hover:underline">
-            {t("label_terms")}
-          </Link>
+      <footer className="w-full bg-gradient-to-b from-background to-foreground/5 py-8 px-6 sm:px-8 border-t border-foreground/10">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Brand column */}
+          <div className="space-y-4">
+            <Link href="/" className="flex items-center gap-2">
+              <span className="text-2xl font-bold bg-gradient-to-r from-primary to-foreground bg-clip-text text-transparent">
+                Nebulaform
+              </span>
+            </Link>
+            <p className="text-sm text-foreground/70">{t("footer_cta")}</p>
+          </div>
+          <div className="hidden sm:flex"></div>
+          {/* Links columns */}
+          <div className="space-y-4">
+            <h3 className="text-sm font-semibold text-foreground/90 uppercase tracking-wider">Product</h3>
+            <nav className="space-y-2">
+              {urls.map((item) => (
+                <Link
+                  key={item.name}
+                  href={`#${item.url}`}
+                  className="text-sm text-foreground/70 hover:text-primary transition-colors block">
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+          </div>
+          <div className="space-y-4">
+            <h3 className="text-sm font-semibold text-foreground/90 uppercase tracking-wider">Legal</h3>
+            <nav className="space-y-2">
+              <Link
+                href="/legal/privacy"
+                className="text-sm text-foreground/70 hover:text-primary transition-colors block">
+                {t("label_privacy")}
+              </Link>
+              <Link
+                href="/legal/terms"
+                className="text-sm text-foreground/70 hover:text-primary transition-colors block">
+                {t("label_terms")}
+              </Link>
+            </nav>
+            <div className="pt-2">
+              <ModeToggle2 />
+            </div>
+          </div>
         </div>
-        <span className="text-xs text-foreground/80 sm:text-center">
-          © 2025{" "}
-          <Link href="/" className="hover:underline">
-            Nebulaform.
-          </Link>
-        </span>
-        <div className="absolute right-4 hidden sm:flex">
-          <ModeToggle2 />
+        {/* Bottom copyright */}
+        <div className="max-w-6xl mx-auto mt-12 pt-6 border-t border-foreground/10 flex flex-col sm:flex-row justify-between items-center">
+          <p className="text-xs text-foreground/60">© 2025 Nebulaform.</p>
+          <div className="flex space-x-6 mt-4 sm:mt-0">
+            <Link href="/legal/cookies" className="text-xs text-foreground/60 hover:text-primary transition-colors">
+              {t("nav_cookies")}
+            </Link>
+          </div>
         </div>
       </footer>
     </div>

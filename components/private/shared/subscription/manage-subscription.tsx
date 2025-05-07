@@ -78,7 +78,6 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       setLocalPlans(await getPlans(userStore.locale));
       return null;
     },
-    refetchOnWindowFocus: false,
   });
 
   if (query.isPending) return null;

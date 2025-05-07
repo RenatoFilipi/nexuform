@@ -1,7 +1,6 @@
 "use client";
 
 import { CancelSubscriptionAction } from "@/app/actions/auth";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -11,11 +10,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import useUserStore from "@/stores/user";
-import { plans } from "@/utils/plans";
+import { getPlans } from "@/utils/plans";
 import { TSetState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { LoaderIcon, XIcon } from "lucide-react";
+import { AlertTriangleIcon, LoaderIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { useState, useTransition } from "react";
@@ -42,8 +42,7 @@ const CancelSubscription = ({ children }: { children: React.ReactNode }) => {
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const [isPending, startTransition] = useTransition();
-  const { subscription } = useUserStore();
-  const targetPlan = plans.find((x) => x.type === subscription.plan);
+  const { subscription, locale } = useUserStore();
   const [success] = useQueryState("success");
   const [error] = useQueryState("error");
 
@@ -57,6 +56,15 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     refetchOnWindowFocus: false,
   });
 
+  const query = useQuery({
+    queryKey: ["cancelSubData"],
+    queryFn: async () => {
+      const plans = await getPlans(locale);
+      const plan = plans.find((x) => x.type === subscription.plan);
+      return { plan };
+    },
+  });
+
   const onCancelSubscription = async () => {
     startTransition(async () => {
       const formData = new FormData();
@@ -66,6 +74,8 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       }
     });
   };
+
+  if (query.isPending) return null;
 
   if (!subscription) {
     return (
@@ -89,13 +99,14 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
             {t("label_sub_next")}: <strong>{new Date(subscription.due_date).toLocaleDateString()}</strong>
           </p>
         </div>
-        <div className="flex flex-col gap-2 bg-foreground text-background p-4 rounded">
-          <span className="">{t("label_sub_cancel_alert")}:</span>
+        <Separator />
+        <div className="flex flex-col gap-2 bg-foreground/5 p-4">
+          <span className="font-semibold">{t("label_sub_cancel_alert")}:</span>
           <div className="text-sm">
-            {targetPlan?.features.map((feat) => (
+            {query.data?.plan?.features.map((feat) => (
               <div key={feat.description} className="flex items-center gap-2">
                 <XIcon className="w-5 h-5 text-destructive" />{" "}
-                <span>
+                <span className="text-sm">
                   {feat.description} {feat.comingSoon && `(${t("label_soon")})`}
                 </span>
               </div>
@@ -104,23 +115,25 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <Alert variant="destructive" className="p-4 bg-red-100">
-          <AlertDescription className="text-sm font-semibold">{t("label_sub_cancel_warning_feats")}.</AlertDescription>
-        </Alert>
+        <div className="flex justify-center items-center w-full py-10 border-2 border-dashed rounded flex-col gap-4 bg-foreground">
+          <span className="text-destructive text-sm flex justify-center items-center gap-2">
+            <AlertTriangleIcon className="w-4 h-4" /> {t("label_sub_cancel_warning_feats")}.
+          </span>
+          <Button
+            disabled={isPending}
+            onClick={() => {
+              onCancelSubscription();
+            }}
+            variant="destructive"
+            size="xs">
+            {isPending && <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />}
+            {t("label_sub_cancel_confirm")}
+          </Button>
+        </div>
         <div className="flex flex-col gap-4">
           <div className="flex gap-4 justify-between w-full">
             <Button onClick={() => setState(false)} variant="outline" size="sm">
               {t("label_close")}
-            </Button>
-            <Button
-              disabled={isPending}
-              onClick={() => {
-                onCancelSubscription();
-              }}
-              variant="destructive"
-              size="sm">
-              {isPending && <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />}
-              {t("label_sub_cancel_confirm")}
             </Button>
           </div>
         </div>

@@ -63,7 +63,7 @@ export const plans: IPlan[] = [
       { description: "Premium analytics", comingSoon: true },
       { description: "Email notifications", comingSoon: true },
       { description: "Premium integrations", comingSoon: true },
-      { description: "More to come", comingSoon: false },
+      // { description: "More to come", comingSoon: false },
     ],
     ctaButton: "Choose Pro Plan",
   },
