@@ -97,7 +97,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
         <Button disabled={isPending} variant={"outline"} size={"sm"} onClick={() => setState(false)}>
           {t("label_cancel")}
         </Button>
-        <Button disabled={email !== value} onClick={onDeleteAccount} variant={"destructive"} size={"sm"}>
+        <Button disabled={email !== value || isPending} onClick={onDeleteAccount} variant={"destructive"} size={"sm"}>
           {isPending && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
           {t("label_delete_personal_account")}
         </Button>

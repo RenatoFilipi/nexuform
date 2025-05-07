@@ -88,17 +88,17 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
       enabled: true,
     },
     {
-      id: 5,
-      name: t("label_billing"),
-      path: "/dashboard/settings/billing",
-      icon: CreditCardIcon,
-      enabled: true,
-    },
-    {
       id: 3,
       name: t("nav_settings"),
       path: "/dashboard/settings",
       icon: Settings2Icon,
+      enabled: true,
+    },
+    {
+      id: 5,
+      name: t("label_billing"),
+      path: "/dashboard/settings/billing",
+      icon: CreditCardIcon,
       enabled: true,
     },
     {
@@ -575,8 +575,8 @@ const AvatarAppMenu = ({ children }: { children: React.ReactNode }) => {
   const showPlan = user.subscription.status !== "canceled";
 
   const options = [
-    { label: t("label_billing"), icon: CreditCardIcon, path: "/dashboard/settings/billing" },
     { label: t("label_settings"), icon: Settings2Icon, path: "/dashboard/settings" },
+    { label: t("label_billing"), icon: CreditCardIcon, path: "/dashboard/settings/billing" },
     { label: t("nav_help"), icon: CircleHelpIcon, path: "/dashboard/help" },
   ];
 
@@ -654,8 +654,5 @@ const AvatarAppMenu = ({ children }: { children: React.ReactNode }) => {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-};
-const SaveFormButton = () => {
-  return <div></div>;
 };
 export default Nav;

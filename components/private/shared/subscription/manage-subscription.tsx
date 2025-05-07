@@ -69,7 +69,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const userStore = useUserStore();
   const [localPlans, setLocalPlans] = useState<IPlan[]>([]);
   const filteredPlans = localPlans.filter((x) => x.type !== "free_trial");
-  const showCancelButton = userStore.subscription.plan !== "free_trial";
+  const showCancelButton = userStore.subscription.status !== "canceled" && userStore.subscription.plan !== "free_trial";
 
   const query = useQuery({
     queryKey: ["manageSubData"],
