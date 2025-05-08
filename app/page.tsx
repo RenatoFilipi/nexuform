@@ -8,6 +8,7 @@ import Pricing from "@/components/public/landing/pricing";
 import Brand from "@/components/shared/core/brand";
 import ModeToggle2 from "@/components/shared/core/mode-toggle2";
 import { Button } from "@/components/ui/button";
+import { appName } from "@/utils/envs";
 import { getPlans } from "@/utils/plans";
 import { Menu } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
@@ -30,7 +31,7 @@ const Home = async () => {
       <div className="flex fixed top-0 w-full justify-between sm:justify-evenly sm:px-20 px-3 h-14 bg-background/80 z-20 backdrop-blur-lg items-center">
         <div className="flex justify-center items-center gap-8">
           <Link href={"/"} className="flex justify-center items-center">
-            <Brand type="primary_logo_text" className="h-7 fill-foreground" />
+            <Brand type="primary_logo_text" className="h-5 fill-foreground" />
           </Link>
         </div>
         <div className="hidden sm:flex justify-center items-center gap-6">
@@ -71,9 +72,7 @@ const Home = async () => {
           {/* Brand column */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl font-bold bg-gradient-to-r from-primary to-foreground bg-clip-text text-transparent">
-                Nebulaform
-              </span>
+              <Brand type="logo" className="h-4 fill-primary" />
             </Link>
             <p className="text-sm text-foreground/70">{t("footer_cta")}</p>
           </div>
@@ -113,7 +112,7 @@ const Home = async () => {
         </div>
         {/* Bottom copyright */}
         <div className="max-w-6xl mx-auto mt-12 pt-6 border-t border-foreground/10 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-xs text-foreground/60">© 2025 Nebulaform.</p>
+          <p className="text-xs text-foreground/60">© 2025 {appName}.</p>
           <div className="flex space-x-6 mt-4 sm:mt-0">
             <Link href="/legal/cookies" className="text-xs text-foreground/60 hover:text-primary transition-colors">
               {t("nav_cookies")}

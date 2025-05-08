@@ -4,6 +4,7 @@ import { signUpAction } from "@/app/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { appName } from "@/utils/envs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { EyeIcon, EyeOffIcon, LoaderIcon, MailIcon } from "lucide-react";
@@ -69,7 +70,7 @@ const SignupForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-6 justify-center items-center">
         <FormHeader
-          title={t("label_signup_into", { platform: "Nebulaform" })}
+          title={t("label_signup_into", { platform: appName })}
           desc={t("desc_login")}
           path="/login"
           link={t("label_login")}
@@ -138,7 +139,7 @@ const SignupForm = () => {
                 ),
               })}
             </p>
-            <Button disabled={isPending} variant={"default"} type="submit" size={"sm"} className="w-full">
+            <Button disabled={isPending} variant={"secondary"} type="submit" size={"sm"} className="w-full">
               {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
               {t("label_signup")}
             </Button>

@@ -1,4 +1,5 @@
 import Brand from "@/components/shared/core/brand";
+import { appName } from "@/utils/envs";
 import { cookieTypes, cookiesLastUpdatedAt, managementOptions } from "@/utils/legal";
 import Link from "next/link";
 
@@ -21,9 +22,8 @@ const Cookies = () => {
 
         <div className="mb-8 p-6 bg-blue-50 rounded-lg border border-blue-100 dark:bg-blue-900/20 dark:border-blue-800/50">
           <p className="text-blue-800 dark:text-blue-200">
-            This Cookie Policy explains how NebulaForm uses cookies and similar technologies when you use our website
-            and services. By continuing to use our site, you consent to our use of cookies in accordance with this
-            policy.
+            This Cookie Policy explains how {appName} uses cookies and similar technologies when you use our website and
+            services. By continuing to use our site, you consent to our use of cookies in accordance with this policy.
           </p>
         </div>
 

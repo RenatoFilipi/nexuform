@@ -12,7 +12,7 @@ import useUserStore from "@/stores/user";
 import { EForm } from "@/utils/entities";
 import { formatDateRelativeToNow } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
-import { MoreHorizontalIcon } from "lucide-react";
+import { ArrowUpRightIcon, BarChartIcon, MoreHorizontalIcon, PenIcon, Share2Icon, TrashIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import FormShare from "../form/form-share";
@@ -46,28 +46,34 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-48" align="end">
             <DropdownMenuItem
-              className="cursor-pointer hover:bg-accent"
+              className="cursor-pointer hover:bg-accent flex justify-between items-center"
               onClick={() => router.push(`/dashboard/forms/${id}`)}
               onSelect={(e) => e.preventDefault()}>
-              {t("label_view")}
+              {t("nav_overview")}
+              <BarChartIcon className="w-4 h-4" />
             </DropdownMenuItem>
             <FormShare form={form}>
-              <DropdownMenuItem className="cursor-pointer hover:bg-accent" onSelect={(e) => e.preventDefault()}>
+              <DropdownMenuItem
+                className="cursor-pointer hover:bg-accent flex justify-between items-center"
+                onSelect={(e) => e.preventDefault()}>
                 {t("label_share")}
+                <Share2Icon className="w-4 h-4" />
               </DropdownMenuItem>
             </FormShare>
             <DropdownMenuItem
-              className="cursor-pointer hover:bg-accent"
+              className="cursor-pointer hover:bg-accent flex justify-between items-center"
               onClick={() => router.push(`/dashboard/editor/${id}`)}
               onSelect={(e) => e.preventDefault()}>
               {t("label_edit")}
+              <PenIcon className="w-4 h-4" />
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <FormDelete formId={id} formName={name}>
               <DropdownMenuItem
-                className="cursor-pointer text-destructive hover:bg-destructive/5 focus:text-destructive"
+                className="cursor-pointer text-destructive hover:bg-destructive/5 focus:text-destructive flex justify-between items-center"
                 onSelect={(e) => e.preventDefault()}>
                 {t("label_delete")}
+                <TrashIcon className="w-4 h-4" />
               </DropdownMenuItem>
             </FormDelete>
           </DropdownMenuContent>
@@ -82,6 +88,7 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
           size="sm"
           className="text-xs h-7 opacity-0 group-hover:opacity-100 transition-opacity"
           onClick={() => router.push(`/dashboard/editor/${id}`)}>
+          <ArrowUpRightIcon className="w-4 h-4 mr-2" />
           {t("label_edit")}
         </Button>
       </div>

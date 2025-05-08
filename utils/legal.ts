@@ -1,4 +1,4 @@
-import { supportEmail } from "./envs";
+import { appName, supportEmail } from "./envs";
 
 export const privacyLastUpdatedAt = new Date().toLocaleDateString("en-US", {
   year: "numeric",
@@ -9,7 +9,7 @@ export const privacyTopics = [
   {
     title: "1. Information We Collect",
     description: [
-      "When you use NebulaForm, we may collect:",
+      `When you use ${appName}, we may collect:`,
       "- Personal information (name, email address, company details)",
       "- Form data you create and responses you collect",
       "- Usage data (features used, time spent, interactions)",
@@ -45,7 +45,7 @@ export const privacyTopics = [
   {
     title: "4. Cookies & Tracking Technologies",
     description: [
-      "NebulaForm uses cookies to:",
+      `${appName} uses cookies to:`,
       "• Remember user preferences and settings",
       "• Analyze product usage patterns",
       "• Deliver personalized experiences",
@@ -97,7 +97,7 @@ export const termsTopics = [
   {
     title: "1. Acceptance of Terms",
     description: [
-      "By accessing or using NebulaForm's services, you confirm that:",
+      `By accessing or using ${appName}'s services, you confirm that:`,
       "✓ You have read and understood these Terms",
       "✓ You agree to be legally bound by them",
       "✓ You are at least 18 years old or have parental consent",
@@ -122,7 +122,7 @@ export const termsTopics = [
   {
     title: "3. Intellectual Property Rights",
     description: [
-      "All rights to NebulaForm are reserved, including:",
+      `All rights to ${appName} are reserved, including:`,
       "🔹 Software, code, and platform architecture",
       "🔹 Branding, logos, and visual assets",
       "🔹 Documentation and knowledge base content",

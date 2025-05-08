@@ -1,4 +1,5 @@
 import Brand from "@/components/shared/core/brand";
+import { appName } from "@/utils/envs";
 import { termsLastUpdatedAt, termsTopics } from "@/utils/legal";
 import Link from "next/link";
 
@@ -21,7 +22,7 @@ const Terms = () => {
 
         <div className="mb-8 p-6 bg-blue-50 rounded-lg border border-blue-100 dark:bg-blue-900/20 dark:border-blue-800/50">
           <p className="text-blue-800 dark:text-blue-200">
-            Welcome to NebulaForm! These Terms govern your use of our form builder platform. Please read them carefully
+            Welcome to {appName}! These Terms govern your use of our form builder platform. Please read them carefully
             as they affect your legal rights.
           </p>
         </div>
@@ -52,8 +53,8 @@ const Terms = () => {
             legal@nebulaform.com
           </a>
           <p className="mt-8 text-sm text-gray-500 dark:text-gray-400">
-            By using NebulaForm, you acknowledge that you have read, understood, and agreed to be bound by these Terms
-            of Service.
+            By using {appName}, you acknowledge that you have read, understood, and agreed to be bound by these Terms of
+            Service.
           </p>
         </div>
       </div>

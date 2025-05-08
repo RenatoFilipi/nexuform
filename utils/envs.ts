@@ -12,3 +12,4 @@ export const proForms = Number(process.env.NEXT_PUBLIC_PLAN_PRO_FORMS)!;
 export const proSubmissions = Number(process.env.NEXT_PUBLIC_PLAN_PRO_SUBMISSIONS)!;
 
 export const supportEmail = process.env.NEXT_PUBLIC_SUPPORT_EMAIL!;
+export const appName = process.env.NEXT_PUBLIC_APP_NAME!;

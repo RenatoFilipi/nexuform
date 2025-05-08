@@ -36,7 +36,7 @@ export const planSettings = {
     submissions: proSubmissions,
   },
 };
-export const fallbackColor = "#7C3AED";
+export const fallbackColor = "#02C7AA";
 export const blockViewSettings: IBlockViewSettings[] = [
   {
     block: "short_text",

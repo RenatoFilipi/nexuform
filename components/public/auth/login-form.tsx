@@ -4,6 +4,7 @@ import { signInAction } from "@/app/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { appName } from "@/utils/envs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { EyeIcon, EyeOffIcon, LoaderIcon, MailIcon } from "lucide-react";
@@ -58,7 +59,7 @@ const LoginForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-6 justify-center items-center">
         <FormHeader
-          title={t("label_login_into", { platform: "Nebulaform" })}
+          title={t("label_login_into", { platform: appName })}
           desc={t("desc_signup")}
           path="/signup"
           link={t("label_signup")}
@@ -112,14 +113,14 @@ const LoginForm = () => {
               )}
             />
             <div className="flex justify-start items-center w-full">
-              <Link href={"/password/reset"} className="text-sm hover:underline text-info dark:text-blue-500">
+              <Link href={"/password/reset"} className="text-sm hover:underline text-blue-600">
                 {t("label_forgot_password")}
               </Link>
             </div>
           </div>
         </div>
         <div className="flex flex-col w-full gap-4">
-          <Button disabled={isPending} variant="default" type="submit" size="sm" className="w-full">
+          <Button disabled={isPending} variant="secondary" type="submit" size="sm" className="w-full">
             {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
             {t("submit_login")}
           </Button>
