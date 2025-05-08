@@ -10,6 +10,5 @@ export const basicSubmissions = Number(process.env.NEXT_PUBLIC_PLAN_BASIC_SUBMIS
 export const proPricing = Number(process.env.NEXT_PUBLIC_PLAN_PRO_PRICING)!;
 export const proForms = Number(process.env.NEXT_PUBLIC_PLAN_PRO_FORMS)!;
 export const proSubmissions = Number(process.env.NEXT_PUBLIC_PLAN_PRO_SUBMISSIONS)!;
-
-export const supportEmail = process.env.NEXT_PUBLIC_SUPPORT_EMAIL!;
 export const appName = process.env.NEXT_PUBLIC_APP_NAME!;
+export const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL!;

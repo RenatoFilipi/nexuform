@@ -1,4 +1,4 @@
-import { appName, supportEmail } from "./envs";
+import { appName, contactEmail } from "./envs";
 
 export const privacyLastUpdatedAt = new Date().toLocaleDateString("en-US", {
   year: "numeric",
@@ -73,7 +73,7 @@ export const privacyTopics = [
       "→ Export your form data at any time",
       "→ Object to specific data processing",
       "",
-      `To exercise these rights, contact us at ${supportEmail}.`,
+      `To exercise these rights, contact us at ${contactEmail}.`,
     ],
   },
   {
@@ -184,7 +184,7 @@ export const termsTopics = [
       "Any disputes will be resolved in [Jurisdiction] courts.",
       "",
       "For questions about these terms, contact:",
-      "legal@nebulaform.com",
+      `${contactEmail}`,
     ],
   },
 ];

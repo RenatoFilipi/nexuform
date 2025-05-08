@@ -376,7 +376,10 @@
     "label_billing_warning": "Within the subscription cycle, monthly usage also includes form submissions, even those that have been disabled or deleted.",
     "label_save_publish_form": "Save and publish",
     "label_sub_cancelled": "Subscription Cancelled",
-    "desc_sub_cancelled": "Your subscription has been cancelled. Update your plan to continue using our services."
+    "desc_sub_cancelled": "Your subscription has been cancelled. Update your plan to continue using our services.",
+    "label_cancel_anytime": "Cancel anytime",
+    "desc_current_plan": "You're currently on the { subscription } plan",
+    "desc_manage_sub2": "Manage or upgrade your subscription anytime."
   },
   "s": {
     "err_required_all": "Answer all required questions.",

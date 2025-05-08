@@ -4,9 +4,11 @@ import ErrorUI from "@/components/shared/utils/error-ui";
 import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
+import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 const Analytics = async () => {
+  const locale = await getLocale();
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   if (!data.user) return redirect("/login");
@@ -21,7 +23,7 @@ const Analytics = async () => {
 
   const active = isSubscriptionActive(subscriptions.data);
   if (!active || subscriptions.data.plan !== "pro")
-    return <UpgradeToProUI email={email} profile={profiles.data} subscription={subscriptions.data} />;
+    return <UpgradeToProUI email={email} profile={profiles.data} subscription={subscriptions.data} locale={locale} />;
 
   const forms = await supabase
     .from("forms")

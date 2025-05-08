@@ -11,6 +11,7 @@ import {
   AlertCircleIcon,
   AlertTriangle,
   AlertTriangleIcon,
+  ArrowUpRightIcon,
   CalendarIcon,
   CalendarX2Icon,
   CircleHelpIcon,
@@ -84,18 +85,24 @@ const BillingUsage = () => {
           />
         </div>
         {isCancelled && (
-          <div className="border rounded-lg bg-background/50 p-6 flex justify-center items-center flex-col gap-6 text-center w-full mx-auto shadow-sm">
-            <div className="space-y-3">
-              <AlertTriangleIcon className="h-6 w-6 mx-auto text-warning" />
-              <h3 className="text-lg font-medium">{t("label_sub_cancelled")}</h3>
-              <p className="text-muted-foreground text-sm">{t("desc_sub_cancelled")}</p>
+          <div className="border rounded-lg bg-background/50 p-6 flex flex-col md:flex-row gap-8 w-full mx-auto shadow-sm">
+            <div className="md:w-2/3 flex flex-col justify-center">
+              <div className="flex flex-col md:flex-row gap-4 items-center text-center md:text-left">
+                <AlertTriangleIcon className="h-6 w-6 flex-shrink-0 text-warning" />
+                <div className="space-y-2">
+                  <h3 className="text-lg font-medium">{t("label_sub_cancelled")}</h3>
+                  <p className="text-muted-foreground text-sm">{t("desc_sub_cancelled")}</p>
+                </div>
+              </div>
             </div>
-            <ManageSubscription>
-              <Button className="gap-2" variant="outline" size={"sm"}>
-                <Settings className="h-4 w-4" />
-                {t("label_manage_sub")}
-              </Button>
-            </ManageSubscription>
+            <div className="md:w-1/3 flex flex-col justify-center items-center md:items-end">
+              <ManageSubscription>
+                <Button className="gap-2 w-full md:w-auto" variant="outline" size="sm">
+                  <ArrowUpRightIcon className="h-4 w-4" />
+                  {t("label_manage_sub")}
+                </Button>
+              </ManageSubscription>
+            </div>
           </div>
         )}
         {!isCancelled && (

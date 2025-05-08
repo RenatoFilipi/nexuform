@@ -376,7 +376,10 @@
     "label_billing_warning": "Dentro do ciclo de assinatura, o uso mensal também inclui envios de formulários, mesmo aqueles que foram desativados ou excluídos.",
     "label_save_publish_form": "Salvar e publicar",
     "label_sub_cancelled": "Assinatura Cancelada",
-    "desc_sub_cancelled": "Sua assinatura foi cancelada. Atualize seu plano para continuar usando nossos serviços."
+    "desc_sub_cancelled": "Sua assinatura foi cancelada. Atualize seu plano para continuar usando nossos serviços.",
+    "label_cancel_anytime": "Cancele a qualquer momento",
+    "desc_current_plan": "Você está atualmente no plano { subscription }",
+    "desc_manage_sub2": "Gerencie ou atualize sua assinatura a qualquer momento."
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

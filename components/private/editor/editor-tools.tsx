@@ -156,7 +156,7 @@ const ToolStyles = () => {
   const onSetCustomPrimaryColor = (value: string) => {
     setTheme({ ...theme, custom_primary_color: value });
   };
-  const onSetNebulaformBranding = (value: boolean) => {
+  const onSetAppBranding = (value: boolean) => {
     if (user.subscription.plan !== "pro") return;
     setTheme({ ...theme, app_branding: value });
   };
@@ -187,7 +187,7 @@ const ToolStyles = () => {
             <span className="text-xs text-foreground/60 hidden">{t("desc_app_branding")}</span>
           </div>
         </div>
-        <Switch checked={theme.app_branding} onCheckedChange={onSetNebulaformBranding} />
+        <Switch checked={theme.app_branding} onCheckedChange={onSetAppBranding} />
       </div>
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">

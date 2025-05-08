@@ -1,5 +1,5 @@
 import Brand from "@/components/shared/core/brand";
-import { appName } from "@/utils/envs";
+import { appName, contactEmail } from "@/utils/envs";
 import { cookieTypes, cookiesLastUpdatedAt, managementOptions } from "@/utils/legal";
 import Link from "next/link";
 
@@ -95,9 +95,9 @@ const Cookies = () => {
             If you have any questions about our use of cookies, please contact us at:
           </p>
           <a
-            href="mailto:privacy@nebulaform.com"
+            href={`mailto:${contactEmail}`}
             className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors dark:bg-blue-700 dark:hover:bg-blue-600">
-            privacy@nebulaform.com
+            {contactEmail}
           </a>
           <p className="mt-8 text-sm text-gray-500 dark:text-gray-400">
             We may update this Cookie Policy from time to time to reflect changes in technology, legislation, or our

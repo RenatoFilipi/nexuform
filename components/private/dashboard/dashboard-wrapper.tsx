@@ -107,7 +107,7 @@ const EmptyUI = () => {
     <div className="flex justify-center items-center h-full flex-1 flex-col gap-4">
       <div className="border pb-20 flex flex-col justify-center items-center gap-6 border-none">
         <div className="flex flex-col justify-center items-center gap-4">
-          <div className="flex justify-center items-center p-3 bg-foreground/5 rounded">
+          <div className="flex justify-center items-center p-3 bg-primary/5 rounded">
             <LayersIcon className="w-7 h-7 text-primary" />
           </div>
           <div className="flex justify-center items-center flex-col">

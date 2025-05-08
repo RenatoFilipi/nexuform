@@ -1,5 +1,5 @@
 import Brand from "@/components/shared/core/brand";
-import { appName } from "@/utils/envs";
+import { appName, contactEmail } from "@/utils/envs";
 import { termsLastUpdatedAt, termsTopics } from "@/utils/legal";
 import Link from "next/link";
 
@@ -48,9 +48,9 @@ const Terms = () => {
             For any questions regarding these Terms of Service, please contact:
           </p>
           <a
-            href="mailto:legal@nebulaform.com"
+            href={`"mailto:${contactEmail}"`}
             className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors dark:bg-blue-700 dark:hover:bg-blue-600">
-            legal@nebulaform.com
+            {contactEmail}
           </a>
           <p className="mt-8 text-sm text-gray-500 dark:text-gray-400">
             By using {appName}, you acknowledge that you have read, understood, and agreed to be bound by these Terms of

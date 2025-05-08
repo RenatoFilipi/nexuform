@@ -1,6 +1,7 @@
 import { ThemeProvider } from "@/components/shared/core/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import QueryProvider from "@/lib/query-provider";
+import { appName } from "@/utils/envs";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
@@ -38,8 +39,8 @@ export default async function RootLayout({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Nebulaform",
-    default: "Nebulaform",
+    template: `%s | ${appName}`,
+    default: appName,
   },
   authors: [{ name: "Renato Filipi" }],
 };

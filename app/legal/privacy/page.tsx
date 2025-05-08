@@ -1,5 +1,5 @@
 import Brand from "@/components/shared/core/brand";
-import { appName, supportEmail } from "@/utils/envs";
+import { appName, contactEmail } from "@/utils/envs";
 import { privacyLastUpdatedAt, privacyTopics } from "@/utils/legal";
 import Link from "next/link";
 
@@ -49,9 +49,9 @@ const Privacy = () => {
             Officer at:
           </p>
           <a
-            href={`mailto:${supportEmail}`}
+            href={`mailto:${contactEmail}`}
             className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors dark:bg-blue-700 dark:hover:bg-blue-600">
-            {supportEmail}
+            {contactEmail}
           </a>
           <p className="mt-8 text-sm text-gray-500 dark:text-gray-400">
             By using {appName}, you acknowledge you&apos;ve read and understood this Privacy Policy. Thank you for

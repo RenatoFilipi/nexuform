@@ -376,7 +376,10 @@
     "label_billing_warning": "Dentro del ciclo de suscripción, el uso mensual también incluye envíos de formularios, incluso aquellos que han sido desactivados o eliminados.",
     "label_save_publish_form": "Guardar y publicar",
     "label_sub_cancelled": "Suscripción Cancelada",
-    "desc_sub_cancelled": "Tu suscripción ha sido cancelada. Actualiza tu plan para seguir utilizando nuestros servicios."
+    "desc_sub_cancelled": "Tu suscripción ha sido cancelada. Actualiza tu plan para seguir utilizando nuestros servicios.",
+    "label_cancel_anytime": "Cancela en cualquier momento",
+    "desc_current_plan": "Actualmente estás en el plan { subscription }",
+    "desc_manage_sub2": "Administra o actualiza tu suscripción en cualquier momento."
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

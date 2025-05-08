@@ -242,3 +242,16 @@ export const generateDistinctColors = (baseColor: string, count: number) => {
     return `hsl(${hue}, 75%, 55%)`;
   });
 };
+
+export const getPlanName = (value: string) => {
+  switch (value) {
+    case "free_trial":
+      return "Free Trial";
+    case "basic":
+      return "Basic";
+    case "pro":
+      return "Pro";
+    default:
+      return "Custom";
+  }
+};

@@ -1,6 +1,6 @@
 <h1 align="center">
-  <img src="./public//logo.svg" height="300" width="300" alt="Nebulaform" /><br>
-  Nebulaform
+  <img src="./public//logo.svg" height="300" width="300" alt="Nexuform" /><br>
+  Nexuform
 </h1>
 
 <p align="center">
