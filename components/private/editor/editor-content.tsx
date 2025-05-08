@@ -103,7 +103,7 @@ const EditorCanvas = () => {
     return (
       <div className="flex justify-center items-center w-full h-full">
         <SuccessDesign
-          brand={form.nebulaform_branding}
+          brand={theme.app_branding}
           color={theme.custom_primary_color}
           preview
           title={form.success_title}
@@ -166,10 +166,10 @@ const EditorGroup = () => {
         <button
           style={{ backgroundColor: theme.custom_primary_color }}
           className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 text-white w-full">
-          {form.submit_text}
+          {form.submit_label}
         </button>
         <div className="flex justify-center sm:justify-end items-center w-full gap-2 h-14">
-          {form.nebulaform_branding && <PoweredByBadge version="default" />}
+          {theme.app_branding && <PoweredByBadge version="default" />}
         </div>
       </div>
     </div>

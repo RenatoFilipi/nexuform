@@ -172,11 +172,11 @@ const SubmissionGroup = () => {
           onClick={onSubmit}
           style={{ backgroundColor: theme.custom_primary_color }}
           className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 text-white w-full">
-          {submissionState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />} {form.submit_text}
+          {submissionState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />} {form.submit_label}
         </button>
         <div className="flex justify-between sm:justify-between items-center w-full gap-2 h-1/4">
           <ModeToggle2 />
-          {form.nebulaform_branding && (
+          {theme.app_branding && (
             <Link href="/">
               <PoweredByBadge version="default" />
             </Link>

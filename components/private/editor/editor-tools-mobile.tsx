@@ -72,7 +72,7 @@ const EditorToolsMobile = ({ children }: { children: React.ReactNode }) => {
 
 const ToolProperties = () => {
   const t = useTranslations("app");
-  const { form, setForm, view } = useEditorStore();
+  const { form, setForm, view, setTheme } = useEditorStore();
 
   const onSetName = (value: string) => {
     setForm({ ...form, name: value });
@@ -81,7 +81,7 @@ const ToolProperties = () => {
     setForm({ ...form, description: value });
   };
   const onSetSubmitText = (value: string) => {
-    setForm({ ...form, submit_text: value });
+    setForm({ ...form, submit_label: value });
   };
   const onSetSuccessTitle = (value: string) => {
     setForm({ ...form, success_title: value });
@@ -122,7 +122,7 @@ const ToolProperties = () => {
           <Label>{t("label_submit_text")}</Label>
           <p className="text-xs text-foreground/60 hidden">{t("desc_submit_text")}</p>
         </div>
-        <Input type="text" value={form.submit_text} onChange={(e) => onSetSubmitText(e.target.value)} />
+        <Input type="text" value={form.submit_label} onChange={(e) => onSetSubmitText(e.target.value)} />
       </div>
       <div className="grid gap-3 w-full">
         <div className="grid gap-1">
@@ -143,7 +143,7 @@ const ToolProperties = () => {
 };
 const ToolStyles = () => {
   const t = useTranslations("app");
-  const { theme, setTheme, form, setForm } = useEditorStore();
+  const { theme, setTheme } = useEditorStore();
   const user = useUserStore();
 
   const onSetNumericBlocks = (value: boolean) => {
@@ -152,15 +152,12 @@ const ToolStyles = () => {
   const onSetUppercaseBlockName = (value: boolean) => {
     setTheme({ ...theme, uppercase_block_name: value });
   };
-  const onSetWidth = (value: string) => {
-    setTheme({ ...theme, width: value });
-  };
   const onSetCustomPrimaryColor = (value: string) => {
     setTheme({ ...theme, custom_primary_color: value });
   };
   const onSetNebulaformBranding = (value: boolean) => {
     if (user.subscription.plan !== "pro") return;
-    setForm({ ...form, nebulaform_branding: value });
+    setTheme({ ...theme, app_branding: value });
   };
 
   return (
@@ -183,13 +180,13 @@ const ToolStyles = () => {
         <div className="flex justify-center items-center gap-2">
           <div className="grid gap-1">
             <div className="flex justify-start items-center gap-2">
-              <Label>{t("label_nebula_branding")}</Label>
+              <Label>{t("label_app_branding")}</Label>
               {user.subscription.plan !== "pro" && <Badge variant={"pink"}>Pro</Badge>}
             </div>
-            <span className="text-xs text-foreground/60 hidden">{t("desc_nebula_branding")}</span>
+            <span className="text-xs text-foreground/60 hidden">{t("desc_app_branding")}</span>
           </div>
         </div>
-        <Switch checked={form.nebulaform_branding} onCheckedChange={onSetNebulaformBranding} />
+        <Switch checked={theme.app_branding} onCheckedChange={onSetNebulaformBranding} />
       </div>
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">

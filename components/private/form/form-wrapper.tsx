@@ -3,16 +3,7 @@
 import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
 import { paginationFrom, paginationTo } from "@/utils/constants";
-import {
-  EBlock,
-  EForm,
-  EFormAnalytics,
-  EProfile,
-  ESubmission,
-  ESubmissionLog,
-  ESubscription,
-  EViewLog,
-} from "@/utils/entities";
+import { EBlock, EForm, EProfile, ESubmission, ESubmissionLog, ESubscription, EViewLog } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { BarChartIcon, SendIcon, SettingsIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -23,11 +14,9 @@ import FormSubmissions from "./form-submissions";
 type TView = "overview" | "submissions" | "integrations" | "settings";
 
 interface IProps {
-  overviewSubmissions: ESubmission[];
   submissions: ESubmission[];
   blocks: EBlock[];
   form: EForm;
-  formAnalytics: EFormAnalytics;
   profile: EProfile;
   subscription: ESubscription;
   email: string;
@@ -41,11 +30,9 @@ const FormWrapper = ({
   submissions,
   blocks,
   form,
-  formAnalytics,
   profile,
   subscription,
   email,
-  overviewSubmissions,
   locale,
   forms,
   viewLogs,

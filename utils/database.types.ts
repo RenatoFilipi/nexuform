@@ -170,16 +170,12 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
-          email_notifications: boolean
-          email_notifications_to: string[] | null
           id: string
           name: string
-          nebulaform_branding: boolean
-          new_submission_notification: boolean
           owner_id: string
           public_url: string
           status: string
-          submit_text: string
+          submit_label: string
           success_description: string
           success_title: string
           updated_at: string
@@ -187,16 +183,12 @@ export type Database = {
         Insert: {
           created_at?: string
           description?: string | null
-          email_notifications?: boolean
-          email_notifications_to?: string[] | null
           id?: string
           name?: string
-          nebulaform_branding?: boolean
-          new_submission_notification?: boolean
           owner_id?: string
           public_url?: string
           status?: string
-          submit_text?: string
+          submit_label?: string
           success_description?: string
           success_title?: string
           updated_at?: string
@@ -204,16 +196,12 @@ export type Database = {
         Update: {
           created_at?: string
           description?: string | null
-          email_notifications?: boolean
-          email_notifications_to?: string[] | null
           id?: string
           name?: string
-          nebulaform_branding?: boolean
-          new_submission_notification?: boolean
           owner_id?: string
           public_url?: string
           status?: string
-          submit_text?: string
+          submit_label?: string
           success_description?: string
           success_title?: string
           updated_at?: string
@@ -222,57 +210,6 @@ export type Database = {
           {
             foreignKeyName: "forms_owner_id_fkey"
             columns: ["owner_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      forms_analytics: {
-        Row: {
-          avg_completion_rate: number | null
-          avg_completion_time: number | null
-          created_at: string
-          form_id: string
-          id: string
-          profile_id: string
-          total_submissions: number
-          total_views: number
-          updated_at: string
-        }
-        Insert: {
-          avg_completion_rate?: number | null
-          avg_completion_time?: number | null
-          created_at?: string
-          form_id: string
-          id?: string
-          profile_id: string
-          total_submissions?: number
-          total_views?: number
-          updated_at?: string
-        }
-        Update: {
-          avg_completion_rate?: number | null
-          avg_completion_time?: number | null
-          created_at?: string
-          form_id?: string
-          id?: string
-          profile_id?: string
-          total_submissions?: number
-          total_views?: number
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "forms_analytics_form_id_fkey"
-            columns: ["form_id"]
-            isOneToOne: false
-            referencedRelation: "forms"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "forms_analytics_profile_id_fkey"
-            columns: ["profile_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
@@ -355,47 +292,6 @@ export type Database = {
           website?: string | null
         }
         Relationships: []
-      }
-      profiles_analytics: {
-        Row: {
-          avg_completion_rate: number | null
-          created_at: string
-          id: string
-          profile_id: string
-          total_forms_created: number
-          total_forms_responses: number
-          total_forms_views: number
-          updated_at: string
-        }
-        Insert: {
-          avg_completion_rate?: number | null
-          created_at?: string
-          id?: string
-          profile_id: string
-          total_forms_created?: number
-          total_forms_responses?: number
-          total_forms_views?: number
-          updated_at?: string
-        }
-        Update: {
-          avg_completion_rate?: number | null
-          created_at?: string
-          id?: string
-          profile_id?: string
-          total_forms_created?: number
-          total_forms_responses?: number
-          total_forms_views?: number
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "profile_analytics_profile_id_fkey"
-            columns: ["profile_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
       }
       submission_logs: {
         Row: {
@@ -668,40 +564,34 @@ export type Database = {
       }
       themes: {
         Row: {
+          app_branding: boolean
           created_at: string
           custom_primary_color: string
           form_id: string
           id: string
-          nebulaform_branding: boolean
           numeric_blocks: boolean
-          primary_color: string
           updated_at: string
           uppercase_block_name: boolean
-          width: string
         }
         Insert: {
+          app_branding?: boolean
           created_at?: string
           custom_primary_color?: string
           form_id: string
           id?: string
-          nebulaform_branding?: boolean
           numeric_blocks?: boolean
-          primary_color?: string
           updated_at?: string
           uppercase_block_name?: boolean
-          width?: string
         }
         Update: {
+          app_branding?: boolean
           created_at?: string
           custom_primary_color?: string
           form_id?: string
           id?: string
-          nebulaform_branding?: boolean
           numeric_blocks?: boolean
-          primary_color?: string
           updated_at?: string
           uppercase_block_name?: boolean
-          width?: string
         }
         Relationships: [
           {

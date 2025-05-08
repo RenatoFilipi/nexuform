@@ -37,11 +37,9 @@ const defaultTheme: ETheme = {
   form_id: "",
   created_at: "",
   updated_at: "",
-  nebulaform_branding: false,
+  app_branding: false,
   numeric_blocks: false,
-  primary_color: "slate",
   uppercase_block_name: false,
-  width: "centered",
   custom_primary_color: "#713AED",
 };
 interface IBlockComponent {
@@ -142,7 +140,7 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
             public_url: nanoid(20, true, true),
             success_title: t("label_success_form"),
             success_description: t("desc_success_form"),
-            submit_text: t("label_submit_form"),
+            submit_label: t("label_submit_form"),
           },
         ])
         .select("*")

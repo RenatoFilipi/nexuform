@@ -231,10 +231,10 @@ const EditorPreview = () => {
         <button
           style={{ backgroundColor: editor.theme.custom_primary_color }}
           className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 text-white w-full">
-          {editor.form.submit_text}
+          {editor.form.submit_label}
         </button>
         <div className="flex justify-center sm:justify-end items-center w-full gap-2 h-14">
-          {editor.form.nebulaform_branding && <PoweredByBadge version="default" />}
+          {editor.theme.app_branding && <PoweredByBadge version="default" />}
         </div>
       </div>
     </div>

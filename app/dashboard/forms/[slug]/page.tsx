@@ -50,16 +50,6 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .order("created_at", { ascending: false });
   if (submissions.error) return <ErrorUI email={email} />;
 
-  const overviewSubmissions = await supabase
-    .from("submissions")
-    .select("*")
-    .eq("form_id", slug)
-    .gte("created_at", new Date(Date.now() - 30 * day).toISOString());
-  if (overviewSubmissions.error) return <ErrorUI email={email} />;
-
-  const formsAnalytics = await supabase.from("forms_analytics").select("*").eq("form_id", form.id).single();
-  if (formsAnalytics.error) return <ErrorUI email={email} />;
-
   const submissionLogs = await supabase
     .from("submission_logs")
     .select("*")
@@ -82,9 +72,7 @@ const Form = async ({ params }: { params: Promise<{ slug: string }> }) => {
       form={form}
       forms={forms.data}
       blocks={blocks.data}
-      overviewSubmissions={overviewSubmissions.data}
       submissions={submissions.data}
-      formAnalytics={formsAnalytics.data}
       subscription={subscriptions.data}
       submissionLogs={submissionLogs.data}
       viewLogs={viewLogs.data}

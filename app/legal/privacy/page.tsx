@@ -22,8 +22,8 @@ const Privacy = () => {
 
         <div className="mb-8 p-6 bg-blue-50 rounded-lg border border-blue-100 dark:bg-blue-900/20 dark:border-blue-800/50">
           <p className="text-blue-800 dark:text-blue-200">
-            At NebulaForm, we're committed to protecting your privacy. This policy explains what data we collect, how we
-            use it, and your rights regarding your personal information when using our form builder platform.
+            At NebulaForm, we&apos;re committed to protecting your privacy. This policy explains what data we collect,
+            how we use it, and your rights regarding your personal information when using our form builder platform.
           </p>
         </div>
 
@@ -54,8 +54,8 @@ const Privacy = () => {
             {supportEmail}
           </a>
           <p className="mt-8 text-sm text-gray-500 dark:text-gray-400">
-            By using NebulaForm, you acknowledge you've read and understood this Privacy Policy. Thank you for trusting
-            us with your data.
+            By using NebulaForm, you acknowledge you&apos;ve read and understood this Privacy Policy. Thank you for
+            trusting us with your data.
           </p>
         </div>
       </div>

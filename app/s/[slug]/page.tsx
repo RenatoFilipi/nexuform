@@ -34,20 +34,6 @@ const S = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const limitReached = isSubmissionsLimitReached(subscriptions.data, submissionLogs.data.length);
   if (limitReached) return <FormNotAvailableUI />;
 
-  const formAnalytics = await supabase.from("forms_analytics").select("*").eq("form_id", forms.data.id).single();
-  if (formAnalytics.error) return <FormNotAvailableUI />;
-
-  const updatedTotalViews = formAnalytics.data.total_views + 1;
-  const updatedCompletionRate = (formAnalytics.data.total_submissions / updatedTotalViews) * 100;
-
-  await supabase
-    .from("forms_analytics")
-    .update({
-      total_views: updatedTotalViews,
-      avg_completion_rate: updatedCompletionRate,
-    })
-    .eq("id", formAnalytics.data.id);
-
   await supabase.from("view_logs").insert([{ form_id: forms.data.id, profile_id: forms.data.owner_id }]);
 
   const themes = await supabase.from("themes").select("*").eq("form_id", forms.data.id).single();

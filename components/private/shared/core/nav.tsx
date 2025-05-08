@@ -339,11 +339,9 @@ const NavEditor = () => {
           name: form.name,
           description: form.description,
           status: newStatus,
-          submit_text: form.submit_text,
-          nebulaform_branding: form.nebulaform_branding,
+          submit_label: form.submit_label,
           success_title: form.success_title,
           success_description: form.success_description,
-          new_submission_notification: form.new_submission_notification,
         })
         .eq("id", form.id);
 
@@ -359,11 +357,9 @@ const NavEditor = () => {
       const { error } = await supabase
         .from("themes")
         .update({
-          primary_color: theme.primary_color,
           numeric_blocks: theme.numeric_blocks,
-          nebulaform_branding: theme.nebulaform_branding,
+          app_branding: theme.app_branding,
           uppercase_block_name: theme.uppercase_block_name,
-          width: theme.width,
           custom_primary_color: theme.custom_primary_color,
         })
         .eq("id", theme.id);

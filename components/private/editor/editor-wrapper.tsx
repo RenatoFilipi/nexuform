@@ -39,14 +39,14 @@ const EditorWrapper = (props: IProps) => {
       editor.setTheme(props.theme);
       editor.setBlocks(props.blocks);
       editor.setBlocksReadyOnly(props.blocks);
-
       const primaryColor =
         props.theme.custom_primary_color.trim() !== "" ? props.theme.custom_primary_color : fallbackColor;
-
+      let appBranding = true;
+      if (props.subscription.plan === "pro") appBranding = props.theme.app_branding;
       editor.setTheme({
         ...props.theme,
-        nebulaform_branding: props.subscription.plan !== "pro",
         custom_primary_color: primaryColor,
+        app_branding: appBranding,
       });
       return null;
     },
