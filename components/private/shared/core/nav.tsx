@@ -29,7 +29,6 @@ import {
   CircleHelpIcon,
   CreditCardIcon,
   InboxIcon,
-  LoaderIcon,
   LogOutIcon,
   Menu,
   MessageSquareCodeIcon,
@@ -57,6 +56,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../../ui/dropdown-menu";
+import EditorSaveForm from "../../editor/editor-save-form";
 
 const Nav = () => {
   const pathname = usePathname();
@@ -457,10 +457,15 @@ const NavEditor = () => {
                 </Link>
               </Button>
             )}
-            <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
+            {/* <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
               {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
               {t("label_save_form")}
-            </Button>
+            </Button> */}
+            <EditorSaveForm>
+              <Button size={"sm"} variant={"secondary"}>
+                {t("label_save_form")}
+              </Button>
+            </EditorSaveForm>
           </div>
         </div>
       )}

@@ -379,7 +379,12 @@
     "desc_sub_cancelled": "Sua assinatura foi cancelada. Atualize seu plano para continuar usando nossos serviços.",
     "label_cancel_anytime": "Cancele a qualquer momento",
     "desc_current_plan": "Você está atualmente no plano { subscription }",
-    "desc_manage_sub2": "Gerencie ou atualize sua assinatura a qualquer momento."
+    "desc_manage_sub2": "Gerencie ou atualize sua assinatura a qualquer momento.",
+    "desc_save_options": "Escolha como deseja salvar seu formulário",
+    "label_save_only": "Salvar Rascunho",
+    "desc_save_only": "Salve seu progresso sem publicar",
+    "label_save_publish": "Salvar & Publicar",
+    "desc_save_publish": "Salve e torne este formulário publicamente disponível"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

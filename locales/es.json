@@ -379,7 +379,12 @@
     "desc_sub_cancelled": "Tu suscripción ha sido cancelada. Actualiza tu plan para seguir utilizando nuestros servicios.",
     "label_cancel_anytime": "Cancela en cualquier momento",
     "desc_current_plan": "Actualmente estás en el plan { subscription }",
-    "desc_manage_sub2": "Administra o actualiza tu suscripción en cualquier momento."
+    "desc_manage_sub2": "Administra o actualiza tu suscripción en cualquier momento.",
+    "desc_save_options": "Elige cómo quieres guardar tu formulario",
+    "label_save_only": "Guardar Borrador",
+    "desc_save_only": "Guarde su progreso sin publicar",
+    "label_save_publish": "Guardar y Publicar",
+    "desc_save_publish": "Guarda y haz este formulario disponible públicamente"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

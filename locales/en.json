@@ -379,7 +379,12 @@
     "desc_sub_cancelled": "Your subscription has been cancelled. Update your plan to continue using our services.",
     "label_cancel_anytime": "Cancel anytime",
     "desc_current_plan": "You're currently on the { subscription } plan",
-    "desc_manage_sub2": "Manage or upgrade your subscription anytime."
+    "desc_manage_sub2": "Manage or upgrade your subscription anytime.",
+    "desc_save_options": "Choose how you want to save your form",
+    "label_save_only": "Save Draft",
+    "desc_save_only": "Save your progress without publishing",
+    "label_save_publish": "Save & Publish",
+    "desc_save_publish": "Save and make this form publicly available"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

@@ -128,12 +128,12 @@ const SignupForm = () => {
             <p className="text-xs text-foreground/80">
               {t.rich("label_signup_consent", {
                 terms: (chunks) => (
-                  <Link href="/legal/terms" className="text-info hover:underline dark:text-blue-500">
+                  <Link href="/legal/terms" className="text-blue-600 hover:underline">
                     {chunks}
                   </Link>
                 ),
                 privacy: (chunks) => (
-                  <Link href="/legal/privacy" className="text-info hover:underline dark:text-blue-500">
+                  <Link href="/legal/privacy" className="text-blue-600 hover:underline">
                     {chunks}
                   </Link>
                 ),
