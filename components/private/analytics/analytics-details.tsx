@@ -10,7 +10,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import useGlobalStore from "@/stores/global";
 import { minWidth640 } from "@/utils/constants";
 import { formatDecimal, formatTime, getAverageCompletionRate, getAverageCompletionTime } from "@/utils/functions";
-import { AlertTriangleIcon, DatabaseIcon } from "lucide-react";
+import { AlertTriangleIcon, DatabaseIcon, EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { useMedia } from "react-use";
@@ -82,7 +82,10 @@ const TotalViews = () => {
 
   return (
     <div className="h-full flex flex-col gap-6">
-      <div className="px-1">
+      <div className="flex justify-start items-center gap-4">
+        <div className="flex justify-center items-center p-2 bg-foreground/5 rounded">
+          <EyeIcon className="w-4 h-4 text-primary" />
+        </div>
         <h1 className="font-semibold text-base text-foreground/90">{t("label_views_by_form")}</h1>
       </div>
       {empty && <NoDataUI />}
@@ -141,7 +144,10 @@ const TotalSubmissions = () => {
 
   return (
     <div className="h-full flex flex-col gap-6">
-      <div className="px-1">
+      <div className="flex  justify-start items-center gap-4">
+        <div className="flex justify-center items-center p-2 bg-foreground/5 rounded">
+          <SendIcon className="w-4 h-4 text-primary" />
+        </div>
         <h1 className="font-semibold text-base text-foreground/90">{t("label_submissions_by_form")}</h1>
       </div>
       {empty && <NoDataUI />}
@@ -210,7 +216,10 @@ const CompletionRate = () => {
 
   return (
     <div className="h-full flex flex-col gap-6">
-      <div className="px-1">
+      <div className="flex justify-start items-center gap-4">
+        <div className="flex justify-center items-center p-2 bg-foreground/5 rounded">
+          <VoteIcon className="w-4 h-4 text-primary" />
+        </div>
         <h1 className="font-semibold text-base text-foreground/90">{t("label_completion_rate_by_form")}</h1>
       </div>
       {empty && <NoDataUI />}
@@ -280,13 +289,14 @@ const CompletionTime = () => {
 
     return result;
   }, [submissionLogs, forms]);
-
-  console.log(completionTimes);
   const empty = completionTimes.length <= 0;
 
   return (
     <div className="h-full flex flex-col gap-6">
-      <div className="px-1">
+      <div className="flex justify-start items-center gap-4">
+        <div className="flex justify-center items-center p-2 bg-foreground/5 rounded">
+          <TimerIcon className="w-4 h-4 text-primary" />
+        </div>
         <h1 className="font-semibold text-base text-foreground/90">{t("label_completion_time_by_form")}</h1>
       </div>
       {empty && <NoDataUI />}

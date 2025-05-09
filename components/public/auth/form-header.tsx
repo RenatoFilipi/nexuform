@@ -10,17 +10,22 @@ interface FormHeaderProps {
 
 const FormHeader = ({ title, desc, link, path }: FormHeaderProps) => {
   return (
-    <div className="flex w-full flex-col items-center gap-6">
+    <div className="flex w-full flex-col items-center gap-8 px-4 py-8 bg-gradient-to-b from-gray-100 via-white to-gray-50 rounded-xl shadow-lg">
+      {/* Logo Section with hover effect */}
       <Link href="/" className="group flex justify-center items-center">
-        <div className="flex justify-center items-center p-4 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/30">
-          <Brand type="logo" className="fill-primary w-10 h-10 group-hover:rotate-6 transition-transform" />
+        <div className="flex justify-center items-center p-4 rounded-full bg-gradient-to-br from-primary/10 to-primary/40 hover:scale-110 transition-transform duration-300">
+          <Brand type="logo" className="fill-primary w-12 h-12 group-hover:rotate-12 transition-transform" />
         </div>
       </Link>
-      <div className="text-center space-y-2 max-w-md">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">{title}</h1>
-        <p className="text-muted-foreground">
+
+      {/* Title and Description */}
+      <div className="text-center space-y-3 max-w-lg">
+        <h1 className="text-4xl font-extrabold text-foreground leading-tight tracking-tight">{title}</h1>
+        <p className="text-muted-foreground text-lg">
           {desc}{" "}
-          <Link href={path} className="font-medium text-blue-600 underline-offset-4 hover:underline transition-colors">
+          <Link
+            href={path}
+            className="font-semibold text-blue-600 underline-offset-2 hover:underline transition-colors duration-200">
             {link}
           </Link>
         </p>

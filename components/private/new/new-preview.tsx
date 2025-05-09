@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import useUserStore from "@/stores/user";
-import { minute } from "@/utils/constants";
+import { fallbackColor, minute } from "@/utils/constants";
 import { EBlock, ETemplate, ETheme } from "@/utils/entities";
 import { nanoid, uuid } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
@@ -40,7 +40,7 @@ const defaultTheme: ETheme = {
   app_branding: false,
   numeric_blocks: false,
   uppercase_block_name: false,
-  custom_primary_color: "#713AED",
+  custom_primary_color: fallbackColor,
 };
 interface IBlockComponent {
   block: EBlock;

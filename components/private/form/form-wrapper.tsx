@@ -11,7 +11,7 @@ import { useState } from "react";
 import FormOverview from "./form-overview";
 import FormSubmissions from "./form-submissions";
 
-type TView = "overview" | "submissions" | "integrations" | "settings";
+type TView = "overview" | "submissions" | "share";
 
 interface IProps {
   submissions: ESubmission[];

@@ -46,12 +46,12 @@ const AnalyticsWrapper = ({ profile, subscription, email, viewLogs, submissionLo
         </div>
       </div>
       <div className="flex flex-col gap-6">
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="">
           <AnalyticsOverview />
-          <AnalyticsSubmissionsActivityChart />
         </div>
-        <div className="flex w-full">
+        <div className="grid sm:grid-cols-2 gap-6">
           <AnalyticsSubmissionsByFormChart />
+          <AnalyticsSubmissionsActivityChart />
         </div>
       </div>
     </div>

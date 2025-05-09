@@ -30,6 +30,7 @@ const SettingsAccount = () => {
     </div>
   );
 };
+
 const AccountProfile = () => {
   const t = useTranslations("app");
   const supabase = createClient();
@@ -114,8 +115,8 @@ const AccountProfile = () => {
             </div>
             <div className="flex justify-end">
               <Button
-                variant={"secondary"}
-                size={"sm"}
+                variant="secondary"
+                size="sm"
                 disabled={appState === "loading"}
                 type="submit"
                 className="w-full md:w-auto">
@@ -129,6 +130,7 @@ const AccountProfile = () => {
     </Card>
   );
 };
+
 const AccountPassword = () => {
   const t = useTranslations("app");
   const supabase = createClient();
@@ -211,8 +213,8 @@ const AccountPassword = () => {
             />
             <div className="flex justify-end">
               <Button
-                variant={"secondary"}
-                size={"sm"}
+                variant="secondary"
+                size="sm"
                 type="submit"
                 className="w-full md:w-auto"
                 disabled={appState === "loading"}>
@@ -226,6 +228,7 @@ const AccountPassword = () => {
     </Card>
   );
 };
+
 const AccountDelete = () => {
   const t = useTranslations("app");
 
@@ -235,9 +238,7 @@ const AccountDelete = () => {
         <div className="flex items-center gap-3">
           <Trash2Icon className="w-5 h-5 text-destructive" />
           <div>
-            <div className="flex items-center gap-3">
-              <CardTitle className="text-base">{t("label_delete_account")}</CardTitle>
-            </div>
+            <CardTitle className="text-base">{t("label_delete_account")}</CardTitle>
             <CardDescription className="text-xs">{t("desc_delete_account")}</CardDescription>
           </div>
         </div>
@@ -245,7 +246,7 @@ const AccountDelete = () => {
       <CardContent>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <SettingsAccountDelete>
-            <Button variant={"destructive"} size={"sm"} className="w-full md:w-auto">
+            <Button variant="destructive" size="sm" className="w-full md:w-auto">
               {t("label_delete_account")}
             </Button>
           </SettingsAccountDelete>

@@ -1,17 +1,16 @@
+import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
-
 const badgeVariants = cva(
-  "inline-flex items-center rounded border px-2.5 py-0.5 text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium tracking-wider transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
   {
     variants: {
       variant: {
         default:
           "inline-flex items-center rounded-md bg-foreground/5 px-2 py-1 text-xs font-medium text-foreground/80 dark:bg-foreground/20 dark:text-foreground",
         primary:
-          "inline-flex items-center rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary dark:bg-primary/20",
+          "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary border border-primary/20 dark:border-primary/30 mb-6 hover:bg-primary/20 transition-colors duration-200",
         success:
           "inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-500",
         warning:

@@ -21,7 +21,7 @@ const AnalyticsOverview = () => {
   )}%`;
 
   return (
-    <div className="grid grid-cols-2 gap-2 sm:gap-6">
+    <div className="grid sm:grid-cols-4 gap-2 sm:gap-6">
       <AnalyticsCard
         name={t("label_total_views")}
         value={totalViews}
@@ -72,8 +72,8 @@ const AnalyticsCard = ({
       <div className="flex justify-between items-center">
         <span className="text-lg font-bold">{value}</span>
         <AnalyticsDetails view={view}>
-          <Button variant={"outline"} size={"icon"} className="opacity-0 group-hover:opacity-100 transition-opacity">
-            <ArrowUpRightIcon className="w-5 h-5" />
+          <Button variant={"outline"} size={"icon"} className="w-8 h-8">
+            <ArrowUpRightIcon className="w-4 h-4" />
           </Button>
         </AnalyticsDetails>
       </div>
