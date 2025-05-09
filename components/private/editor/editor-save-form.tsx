@@ -32,7 +32,7 @@ const EditorSaveForm = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col min-w-[650px] h-[85%]">
+        <DialogContent className="flex flex-col min-w-[650px] h-[55%]">
           <DialogHeader className="text-left">
             <DialogTitle>{t("label_save_form")}</DialogTitle>
             <DialogDescription>{t("desc_save_options")}</DialogDescription>
@@ -66,141 +66,164 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const queryClient = useQueryClient();
   const hasNoBlocks = blocks.length <= 0;
 
-  const onSave = async (status: string) => {
+  const handleSave = async (status: string) => {
+    if (appState === "loading") return;
+
     try {
       setAppState("loading");
 
-      await onSaveForm(status);
-      await onSaveTheme();
-      await onSaveBlocks();
+      // Execute all save operations in sequence
+      await Promise.all([saveForm(status), saveTheme(), saveBlocks()]);
 
       toast.success(t("suc_update_form"));
       queryClient.invalidateQueries({ queryKey: ["submissionData"] });
       router.push(`/dashboard/forms/${form.id}`);
     } catch (error) {
+      console.error("Save operation failed:", error);
       toast.error((error as Error).message || t("err_generic"));
     } finally {
       setAppState("idle");
     }
   };
-  const onSaveForm = async (status: string) => {
-    try {
-      const { error } = await supabase
-        .from("forms")
-        .update({
-          name: form.name,
-          description: form.description,
-          status: status,
-          submit_label: form.submit_label,
-          success_title: form.success_title,
-          success_description: form.success_description,
-        })
-        .eq("id", form.id);
+  const saveForm = async (status: string) => {
+    const { error } = await supabase
+      .from("forms")
+      .update({
+        name: form.name,
+        description: form.description,
+        status: status,
+        submit_label: form.submit_label,
+        success_title: form.success_title,
+        success_description: form.success_description,
+      })
+      .eq("id", form.id);
 
-      if (error) {
-        throw new Error(t("err_generic"));
-      }
-    } catch (error) {
-      throw error;
+    if (error) {
+      throw new Error(t("err_generic"));
     }
   };
-  const onSaveTheme = async () => {
-    try {
-      const { error } = await supabase
-        .from("themes")
-        .update({
-          numeric_blocks: theme.numeric_blocks,
-          app_branding: theme.app_branding,
-          uppercase_block_name: theme.uppercase_block_name,
-          custom_primary_color: theme.custom_primary_color,
-        })
-        .eq("id", theme.id);
+  const saveTheme = async () => {
+    const { error } = await supabase
+      .from("themes")
+      .update({
+        numeric_blocks: theme.numeric_blocks,
+        app_branding: theme.app_branding,
+        uppercase_block_name: theme.uppercase_block_name,
+        custom_primary_color: theme.custom_primary_color,
+      })
+      .eq("id", theme.id);
 
-      if (error) {
-        throw new Error(t("err_generic"));
-      }
-    } catch (error) {
-      throw error;
+    if (error) {
+      throw new Error(t("err_generic"));
     }
   };
-  const onSaveBlocks = async () => {
-    try {
-      const elementsBefore = blocksReadyOnly;
-      const elementsAfter = blocks;
+  const saveBlocks = async () => {
+    const elementsBefore = blocksReadyOnly;
+    const elementsAfter = blocks;
 
-      const beforeIds = new Set(elementsBefore.map((x) => x.id));
-      const afterIds = new Set(elementsAfter.map((x) => x.id));
+    // Identify changes between versions
+    const beforeIds = new Set(elementsBefore.map((x) => x.id));
+    const afterIds = new Set(elementsAfter.map((x) => x.id));
 
-      const modifiedElements = elementsAfter.filter((after) => {
-        if (!beforeIds.has(after.id)) return false;
-        const before = elementsBefore.find((x) => x.id === after.id);
-        return JSON.stringify(before) !== JSON.stringify(after);
-      });
+    const modifiedElements = elementsAfter.filter((after) => {
+      const before = elementsBefore.find((x) => x.id === after.id);
+      return before && JSON.stringify(before) !== JSON.stringify(after);
+    });
 
-      const newElements = elementsAfter.filter((x) => !beforeIds.has(x.id));
-      const removedElements = elementsBefore.filter((x) => !afterIds.has(x.id));
+    const newElements = elementsAfter.filter((x) => !beforeIds.has(x.id));
+    const removedElements = elementsBefore.filter((x) => !afterIds.has(x.id));
 
-      const elementsToUpsert = [...modifiedElements, ...newElements];
+    // Process changes in a single transaction if possible
+    const upsertPromises = [];
+    const deletePromises = [];
 
-      if (elementsToUpsert.length > 0) {
-        const { error: upsertError } = await supabase.from("blocks").upsert(elementsToUpsert);
+    if (modifiedElements.length > 0 || newElements.length > 0) {
+      upsertPromises.push(supabase.from("blocks").upsert([...modifiedElements, ...newElements]));
+    }
 
-        if (upsertError) {
-          throw new Error(t("err_generic"));
-        }
-      }
+    if (removedElements.length > 0) {
+      deletePromises.push(...removedElements.map((x) => supabase.from("blocks").delete().eq("id", x.id)));
+    }
 
-      if (removedElements.length > 0) {
-        const deletePromises = removedElements.map((x) => supabase.from("blocks").delete().eq("id", x.id));
+    // Execute all operations in parallel
+    const results = await Promise.all([...upsertPromises, ...deletePromises]);
 
-        const deleteResults = await Promise.all(deletePromises);
-
-        const hasError = deleteResults.some(({ error }) => error);
-        if (hasError) {
-          throw new Error(t("err_generic"));
-        }
-      }
-    } catch (error) {
-      console.error("Error saving blocks:", error);
-      throw error;
+    // Check for errors
+    const hasError = results.some((result) => result.error);
+    if (hasError) {
+      throw new Error(t("err_generic"));
     }
   };
+
+  const saveOptions = [
+    {
+      label: t("label_save_form"),
+      description: "",
+      icon: <SaveIcon className="h-6 w-6 text-primary" />,
+      onClick: () => handleSave(form.status),
+      disabled: appState === "loading",
+      variant: "default",
+    },
+    {
+      label: t("label_save_publish"),
+      description: t("desc_save_publish"),
+      icon: <UploadIcon className="h-6 w-6 text-primary" />,
+      onClick: () => handleSave("published"),
+      disabled: appState === "loading" || hasNoBlocks,
+      variant: "publish",
+      warning: hasNoBlocks ? (
+        <Alert className="p-1 mt-2" variant="warning">
+          <AlertDescription>{t("label_editor_no_blocks_warn")}</AlertDescription>
+        </Alert>
+      ) : null,
+    },
+  ];
 
   return (
-    <div className="flex flex-col h-full gap-6">
-      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <button
-          disabled={appState === "loading"}
-          className="border rounded-lg p-6 flex flex-col items-center justify-center gap-4 text-center hover:bg-muted/50 transition-colors cursor-pointer"
-          onClick={() => onSave(form.status)}>
-          <div className="p-3 rounded-full bg-primary/10">
-            <SaveIcon className="h-6 w-6 text-primary" />
-          </div>
-          <div className="space-y-1">
-            <h3 className="font-medium">{t("label_save_form")}</h3>
-          </div>
-        </button>
-        {/* Save and Publish Option */}
-        <button
-          disabled={appState === "loading"}
-          className="border rounded-lg p-6 flex flex-col items-center justify-center gap-4 text-center hover:bg-muted/50 transition-colors cursor-pointer"
-          onClick={() => onSave("published")}>
-          <div className="p-3 rounded-full bg-primary/10">
-            <UploadIcon className="h-6 w-6 text-primary" />
-          </div>
-          <div className="space-y-1">
-            <h3 className="font-medium">{t("label_save_publish")}</h3>
-            <p className="text-sm text-muted-foreground">{t("desc_save_publish")}</p>
-            {hasNoBlocks && (
-              <Alert className="p-1" variant={"warning"}>
-                <AlertDescription>No blocks to publish this form.</AlertDescription>
-              </Alert>
+    <div className="flex flex-col h-full gap-8">
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6">
+        {saveOptions.map((option, index) => (
+          <button
+            key={index}
+            disabled={option.disabled}
+            className={`${
+              option.disabled
+                ? "opacity-60 cursor-not-allowed"
+                : "hover:shadow-md hover:border-primary/30 cursor-pointer"
+            }
+ relative border rounded-xl p-6 flex flex-col items-center justify-center gap-4 text-center 
+          hover:bg-muted/20 transition-all duration-300 cursor-pointer group overflow-hidden bg-background
+        `}
+            onClick={option.onClick}>
+            {/* Efeito de hover sutil */}
+            {!option.disabled && (
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             )}
-          </div>
-        </button>
+
+            <div
+              className={`p-4 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors ${
+                option.disabled ? "" : "group-hover:scale-105"
+              } transition-transform`}>
+              {option.icon}
+            </div>
+
+            <div className="space-y-2">
+              <h3 className="font-medium text-lg">{option.label}</h3>
+              {option.description && (
+                <p className="text-sm text-muted-foreground/80 leading-relaxed">{option.description}</p>
+              )}
+            </div>
+          </button>
+        ))}
       </div>
-      <div className="flex justify-start gap-2">
-        <Button disabled={appState === "loading"} onClick={() => setState(false)} variant={"outline"} size={"sm"}>
+
+      <div className="flex justify-start gap-3 pt-2">
+        <Button
+          disabled={appState === "loading"}
+          onClick={() => setState(false)}
+          variant="outline"
+          size="sm"
+          className="border-2 hover:border-primary/50 transition-colors">
           {t("label_close")}
         </Button>
       </div>

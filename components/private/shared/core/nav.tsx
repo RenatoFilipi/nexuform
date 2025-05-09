@@ -29,6 +29,7 @@ import {
   CircleHelpIcon,
   CreditCardIcon,
   InboxIcon,
+  LoaderIcon,
   LogOutIcon,
   Menu,
   MessageSquareCodeIcon,
@@ -56,7 +57,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../../ui/dropdown-menu";
-import EditorSaveForm from "../../editor/editor-save-form";
 
 const Nav = () => {
   const pathname = usePathname();
@@ -313,24 +313,24 @@ const NavEditor = () => {
   const active = isSubscriptionActive(subscription);
   const isFreeTrial = subscription.plan === "free_trial";
 
-  const onSave = async () => {
+  const handleSave = async () => {
+    if (appState === "loading") return;
     try {
       setAppState("loading");
 
-      await onSaveForm();
-      await onSaveTheme();
-      await onSaveBlocks();
-
+      // Execute all save operations in sequence
+      await Promise.all([saveForm(), saveTheme(), saveBlocks()]);
       toast.success(t("suc_update_form"));
       queryClient.invalidateQueries({ queryKey: ["submissionData"] });
       router.push(`/dashboard/forms/${form.id}`);
     } catch (error) {
+      console.error("Save operation failed:", error);
       toast.error((error as Error).message || t("err_generic"));
     } finally {
       setAppState("idle");
     }
   };
-  const onSaveForm = async () => {
+  const saveForm = async () => {
     try {
       const newStatus = blocks.length <= 0 ? "draft" : form.status;
       const { error } = await supabase
@@ -352,65 +352,56 @@ const NavEditor = () => {
       throw error;
     }
   };
-  const onSaveTheme = async () => {
-    try {
-      const { error } = await supabase
-        .from("themes")
-        .update({
-          numeric_blocks: theme.numeric_blocks,
-          app_branding: theme.app_branding,
-          uppercase_block_name: theme.uppercase_block_name,
-          custom_primary_color: theme.custom_primary_color,
-        })
-        .eq("id", theme.id);
+  const saveTheme = async () => {
+    const { error } = await supabase
+      .from("themes")
+      .update({
+        numeric_blocks: theme.numeric_blocks,
+        app_branding: theme.app_branding,
+        uppercase_block_name: theme.uppercase_block_name,
+        custom_primary_color: theme.custom_primary_color,
+      })
+      .eq("id", theme.id);
 
-      if (error) {
-        throw new Error(t("err_generic"));
-      }
-    } catch (error) {
-      throw error;
+    if (error) {
+      throw new Error(t("err_generic"));
     }
   };
-  const onSaveBlocks = async () => {
-    try {
-      const elementsBefore = blocksReadyOnly;
-      const elementsAfter = blocks;
+  const saveBlocks = async () => {
+    const elementsBefore = blocksReadyOnly;
+    const elementsAfter = blocks;
 
-      const beforeIds = new Set(elementsBefore.map((x) => x.id));
-      const afterIds = new Set(elementsAfter.map((x) => x.id));
+    // Identify changes between versions
+    const beforeIds = new Set(elementsBefore.map((x) => x.id));
+    const afterIds = new Set(elementsAfter.map((x) => x.id));
 
-      const modifiedElements = elementsAfter.filter((after) => {
-        if (!beforeIds.has(after.id)) return false;
-        const before = elementsBefore.find((x) => x.id === after.id);
-        return JSON.stringify(before) !== JSON.stringify(after);
-      });
+    const modifiedElements = elementsAfter.filter((after) => {
+      const before = elementsBefore.find((x) => x.id === after.id);
+      return before && JSON.stringify(before) !== JSON.stringify(after);
+    });
 
-      const newElements = elementsAfter.filter((x) => !beforeIds.has(x.id));
-      const removedElements = elementsBefore.filter((x) => !afterIds.has(x.id));
+    const newElements = elementsAfter.filter((x) => !beforeIds.has(x.id));
+    const removedElements = elementsBefore.filter((x) => !afterIds.has(x.id));
 
-      const elementsToUpsert = [...modifiedElements, ...newElements];
+    // Process changes in a single transaction if possible
+    const upsertPromises = [];
+    const deletePromises = [];
 
-      if (elementsToUpsert.length > 0) {
-        const { error: upsertError } = await supabase.from("blocks").upsert(elementsToUpsert);
+    if (modifiedElements.length > 0 || newElements.length > 0) {
+      upsertPromises.push(supabase.from("blocks").upsert([...modifiedElements, ...newElements]));
+    }
 
-        if (upsertError) {
-          throw new Error(t("err_generic"));
-        }
-      }
+    if (removedElements.length > 0) {
+      deletePromises.push(...removedElements.map((x) => supabase.from("blocks").delete().eq("id", x.id)));
+    }
 
-      if (removedElements.length > 0) {
-        const deletePromises = removedElements.map((x) => supabase.from("blocks").delete().eq("id", x.id));
+    // Execute all operations in parallel
+    const results = await Promise.all([...upsertPromises, ...deletePromises]);
 
-        const deleteResults = await Promise.all(deletePromises);
-
-        const hasError = deleteResults.some(({ error }) => error);
-        if (hasError) {
-          throw new Error(t("err_generic"));
-        }
-      }
-    } catch (error) {
-      console.error("Error saving blocks:", error);
-      throw error;
+    // Check for errors
+    const hasError = results.some((result) => result.error);
+    if (hasError) {
+      throw new Error(t("err_generic"));
     }
   };
 
@@ -457,15 +448,10 @@ const NavEditor = () => {
                 </Link>
               </Button>
             )}
-            {/* <Button size={"xs"} variant={"secondary"} onClick={onSave} disabled={appState === "loading"}>
+            <Button size={"xs"} variant={"secondary"} onClick={handleSave} disabled={appState === "loading"}>
               {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
               {t("label_save_form")}
-            </Button> */}
-            <EditorSaveForm>
-              <Button size={"sm"} variant={"secondary"}>
-                {t("label_save_form")}
-              </Button>
-            </EditorSaveForm>
+            </Button>
           </div>
         </div>
       )}

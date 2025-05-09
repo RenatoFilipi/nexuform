@@ -384,7 +384,8 @@
     "label_save_only": "Salvar Rascunho",
     "desc_save_only": "Salve seu progresso sem publicar",
     "label_save_publish": "Salvar & Publicar",
-    "desc_save_publish": "Salve e torne este formulário publicamente disponível"
+    "desc_save_publish": "Salve e torne este formulário publicamente disponível",
+    "label_editor_no_blocks_warn": "Você não pode publicar um formulário sem blocos. Adicione pelo menos um bloco para continuar."
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

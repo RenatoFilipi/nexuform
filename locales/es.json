@@ -384,7 +384,8 @@
     "label_save_only": "Guardar Borrador",
     "desc_save_only": "Guarde su progreso sin publicar",
     "label_save_publish": "Guardar y Publicar",
-    "desc_save_publish": "Guarda y haz este formulario disponible públicamente"
+    "desc_save_publish": "Guarda y haz este formulario disponible públicamente",
+    "label_editor_no_blocks_warn": "No puedes publicar un formulario sin bloques. Por favor añade al menos un bloque para continuar."
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",
