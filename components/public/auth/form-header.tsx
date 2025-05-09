@@ -10,7 +10,7 @@ interface FormHeaderProps {
 
 const FormHeader = ({ title, desc, link, path }: FormHeaderProps) => {
   return (
-    <div className="flex w-full flex-col items-center gap-8 px-4 py-8 bg-gradient-to-b from-gray-100 via-white to-gray-50 rounded-xl shadow-lg">
+    <div className="flex w-full flex-col items-center gap-8">
       {/* Logo Section with hover effect */}
       <Link href="/" className="group flex justify-center items-center">
         <div className="flex justify-center items-center p-4 rounded-full bg-gradient-to-br from-primary/10 to-primary/40 hover:scale-110 transition-transform duration-300">
@@ -20,8 +20,8 @@ const FormHeader = ({ title, desc, link, path }: FormHeaderProps) => {
 
       {/* Title and Description */}
       <div className="text-center space-y-3 max-w-lg">
-        <h1 className="text-4xl font-extrabold text-foreground leading-tight tracking-tight">{title}</h1>
-        <p className="text-muted-foreground text-lg">
+        <h1 className="text-2xl font-extrabold text-foreground leading-tight tracking-tight">{title}</h1>
+        <p className="text-muted-foreground text-sm">
           {desc}{" "}
           <Link
             href={path}

@@ -1,14 +1,16 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
 import { paginationFrom, paginationTo } from "@/utils/constants";
 import { EBlock, EForm, EProfile, ESubmission, ESubmissionLog, ESubscription, EViewLog } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
-import { BarChartIcon, SendIcon, SettingsIcon } from "lucide-react";
+import { BarChartIcon, SendIcon, Share2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import FormOverview from "./form-overview";
+import FormShare from "./form-share";
 import FormSubmissions from "./form-submissions";
 
 type TView = "overview" | "submissions" | "share";
@@ -53,17 +55,17 @@ const FormWrapper = ({
       enabled: true,
     },
     {
-      label: t("nav_settings"),
-      icon: SettingsIcon,
-      view: "settings",
-      enabled: false,
+      label: t("label_share"),
+      icon: Share2Icon,
+      view: "share",
+      enabled: true,
     },
   ];
   const user = useUserStore();
   const global = useGlobalStore();
   const [view, setView] = useState<TView>("overview");
   const enabledViews = views.filter((x) => x.enabled);
-  const notReviewedSubmissions = global.submissions.filter((x) => x.status === "not_reviewed").length;
+  const totalSubmisssions = global.submissions.length;
 
   const query = useQuery({
     queryKey: ["formData"],
@@ -98,10 +100,8 @@ const FormWrapper = ({
               } text-xs flex justify-center items-center px-2 hover:bg-foreground/5 relative rounded gap-2 h-full`}>
               <v.icon className={`${v.view === view ? "text-primary" : "text-muted-foreground"} w-4 h-4`} />
               <div className="truncate">{v.label}</div>
-              {v.view === "submissions" && notReviewedSubmissions > 0 && (
-                <span className="inline-flex items-center justify-center w-4 h-4 text-xs font-semibold text-yellow-600 bg-yellow-600/20 rounded-full">
-                  {notReviewedSubmissions}
-                </span>
+              {v.view === "submissions" && totalSubmisssions > 0 && (
+                <Badge variant={"primary"}>{totalSubmisssions}</Badge>
               )}
               {v.view === view && <div className="bg-foreground/70 bottom-0 w-full h-0.5 absolute"></div>}
             </button>
@@ -111,6 +111,7 @@ const FormWrapper = ({
       <div className="px-3 sm:px-20 lg:px-52 py-4 sm:py-4 flex justify-center flex-1 items-start overflow-y-auto">
         {view === "overview" && <FormOverview />}
         {view === "submissions" && <FormSubmissions />}
+        {view === "share" && <FormShare />}
       </div>
     </div>
   );

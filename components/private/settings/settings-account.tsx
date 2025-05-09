@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import useUserStore from "@/stores/user";
@@ -18,11 +17,11 @@ const SettingsAccount = () => {
   const t = useTranslations("app");
   return (
     <div className="space-y-6 w-full">
-      <div>
+      <div className="">
         <h1 className="font-semibold text-lg tracking-tight">{t("label_account_settings")}</h1>
         <p className="text-xs text-muted-foreground">{t("desc_account_settings")}</p>
       </div>
-      <div className="flex flex-col gap-8 pb-10">
+      <div className="flex flex-col gap-6 pb-10">
         <AccountProfile />
         <AccountPassword />
         <AccountDelete />
@@ -30,7 +29,6 @@ const SettingsAccount = () => {
     </div>
   );
 };
-
 const AccountProfile = () => {
   const t = useTranslations("app");
   const supabase = createClient();
@@ -72,17 +70,13 @@ const AccountProfile = () => {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center gap-3">
-          <User2Icon className="w-5 h-5 text-primary" />
-          <div>
-            <CardTitle className="text-base">{t("label_profile_info")}</CardTitle>
-            <CardDescription className="text-xs">{t("desc_profile_info")}</CardDescription>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent>
+    <div className="flex flex-col gap-4">
+      <SettingsHeader
+        icon={<User2Icon className="w-5 h-5 text-primary" />}
+        name={t("label_profile_info")}
+        desc={t("desc_profile_info")}
+      />
+      <div>
         <Form {...profileHandler}>
           <form onSubmit={profileHandler.handleSubmit(onProfileSubmit)} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -115,7 +109,7 @@ const AccountProfile = () => {
             </div>
             <div className="flex justify-end">
               <Button
-                variant="secondary"
+                variant="default"
                 size="sm"
                 disabled={appState === "loading"}
                 type="submit"
@@ -126,11 +120,10 @@ const AccountProfile = () => {
             </div>
           </form>
         </Form>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
-
 const AccountPassword = () => {
   const t = useTranslations("app");
   const supabase = createClient();
@@ -171,17 +164,13 @@ const AccountPassword = () => {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center gap-3">
-          <LockIcon className="w-5 h-5 text-primary" />
-          <div>
-            <CardTitle className="text-base">{t("label_password")}</CardTitle>
-            <CardDescription className="text-xs">{t("desc_password")}</CardDescription>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent>
+    <div className="flex flex-col gap-4">
+      <SettingsHeader
+        icon={<LockIcon className="w-5 h-5 text-primary" />}
+        name={t("label_password")}
+        desc={t("desc_password")}
+      />
+      <div>
         <Form {...passwordHandler}>
           <form onSubmit={passwordHandler.handleSubmit(onPasswordSubmit)} className="space-y-4">
             <FormField
@@ -213,7 +202,7 @@ const AccountPassword = () => {
             />
             <div className="flex justify-end">
               <Button
-                variant="secondary"
+                variant="default"
                 size="sm"
                 type="submit"
                 className="w-full md:w-auto"
@@ -224,35 +213,39 @@ const AccountPassword = () => {
             </div>
           </form>
         </Form>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
-
 const AccountDelete = () => {
   const t = useTranslations("app");
 
   return (
-    <Card className="border-destructive/50">
-      <CardHeader>
-        <div className="flex items-center gap-3">
-          <Trash2Icon className="w-5 h-5 text-destructive" />
-          <div>
-            <CardTitle className="text-base">{t("label_delete_account")}</CardTitle>
-            <CardDescription className="text-xs">{t("desc_delete_account")}</CardDescription>
-          </div>
+    <div className="border-2 border-destructive/50 flex justify-center items-center px-4 py-10 flex-col gap-6 rounded border-dashed">
+      <div className="flex flex-col justify-center items-center gap-2">
+        <span className="text-base font-semibold">{t("label_delete_account")}</span>
+        <p className="text-xs text-muted-foreground">{t("desc_delete_account")}</p>
+      </div>
+      <SettingsAccountDelete>
+        <Button variant="destructive_outline" size="sm" className="w-full md:w-auto">
+          <Trash2Icon className="w-4 h-4 mr-2" />
+          {t("label_delete_account")}
+        </Button>
+      </SettingsAccountDelete>
+    </div>
+  );
+};
+const SettingsHeader = ({ desc, icon, name }: { icon: React.ReactNode; name: string; desc: string }) => {
+  return (
+    <div className="flex">
+      <div className="flex items-center gap-3">
+        <div className="flex justify-center items-center p-2 bg-primary/10 rounded">{icon}</div>
+        <div>
+          <span className="text-base font-semibold">{name}</span>
+          <p className="text-xs text-muted-foreground">{desc}</p>
         </div>
-      </CardHeader>
-      <CardContent>
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <SettingsAccountDelete>
-            <Button variant="destructive" size="sm" className="w-full md:w-auto">
-              {t("label_delete_account")}
-            </Button>
-          </SettingsAccountDelete>
-        </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

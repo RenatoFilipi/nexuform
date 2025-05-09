@@ -1,3 +1,4 @@
+import AuthPanel from "@/components/public/auth/auth-panel";
 import ResetPasswordForm from "@/components/public/auth/reset-password-form";
 import Nav from "@/components/public/core/nav";
 import Brand from "@/components/shared/core/brand";
@@ -5,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
-import { Suspense } from "react";
 
 const Reset = () => {
   return (
@@ -23,12 +23,11 @@ const Reset = () => {
         </div>
         <div className="w-full flex justify-center items-center">
           <div className="flex flex-col items-center justify-center w-full sm:max-w-[450px] gap-6 sm:p-0 px-12">
-            <Suspense>
-              <ResetPasswordForm />
-            </Suspense>
+            <ResetPasswordForm />
           </div>
         </div>
       </div>
+      <AuthPanel />
     </div>
   );
 };

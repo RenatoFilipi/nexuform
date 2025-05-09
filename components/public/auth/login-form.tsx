@@ -114,7 +114,6 @@ const LoginForm = () => {
             </FormItem>
           )}
         />
-
         {/* Forgot Password */}
         <div className="text-sm text-right">
           <Link href="/password/reset" className="text-blue-600 hover:underline">

@@ -230,7 +230,7 @@ const NavApp = () => {
   if (query.isPending) return null;
 
   return (
-    <div className="h-12 flex items-center px-3 justify-between z-10 bg-background fixed w-full">
+    <div className="h-12 flex items-center px-6 justify-between z-10 bg-background fixed w-full">
       <div className="flex justify-center items-center gap-4 h-full">
         <div className="flex justify-center items-center gap-2">
           <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
@@ -318,7 +318,6 @@ const NavEditor = () => {
     try {
       setAppState("loading");
 
-      // Execute all save operations in sequence
       await Promise.all([saveForm(), saveTheme(), saveBlocks()]);
       toast.success(t("suc_update_form"));
       queryClient.invalidateQueries({ queryKey: ["submissionData"] });
@@ -406,7 +405,7 @@ const NavEditor = () => {
   };
 
   return (
-    <div className="h-12 flex justify-between items-center w-full bg-background border-b px-3 z-20 fixed">
+    <div className="h-12 flex justify-between items-center w-full bg-background border-b px-6 z-20 fixed">
       <div className="flex justify-center items-center gap-1">
         <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
           <Link href={"/dashboard/forms"}>

@@ -24,12 +24,9 @@ const ResetPasswordForm = () => {
   useQuery({
     queryKey: [error],
     queryFn: () => {
-      if (error !== null) {
-        toast.error(error);
-      }
+      if (error !== null) toast.error(error);
       return null;
     },
-    refetchOnWindowFocus: false,
   });
   const formSchema = z.object({
     email: z.string().email(t("required_email")),
@@ -52,14 +49,14 @@ const ResetPasswordForm = () => {
   if (success) {
     return (
       <div className="flex flex-col justify-center items-center gap-6">
-        <div className="flex justify-center items-center p-2 rounded-xl bg-success/20">
-          <CheckIcon className="w-10 h-10 text-success" />
+        <div className="flex justify-center items-center p-2 rounded-full bg-primary/20">
+          <CheckIcon className="w-10 h-10 text-primary" />
         </div>
         <div className="flex flex-col justify-center items-center text-center gap-2">
           <h1 className="font-semibold text-xl">{t("label_suc_request_password")}</h1>
           <span className="text-foreground/70 text-sm">{t("desc_suc_request_password")}</span>
         </div>
-        <Button variant={"secondary"} size={"sm"} className="w-full" asChild>
+        <Button variant={"default"} size={"sm"} className="w-full" asChild>
           <Link href={"/login"}>{t("label_go_back_login")}</Link>
         </Button>
       </div>
@@ -93,11 +90,16 @@ const ResetPasswordForm = () => {
             )}
           />
         </div>
-        <div className="flex flex-col w-full gap-4">
-          <Button disabled={isPending} variant="secondary" type="submit" size="sm" className="w-full">
+        <div className="flex flex-col w-full gap-6">
+          <Button disabled={isPending} variant="default" type="submit" size="sm" className="w-full">
             {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
             {t("label_reset_password")}
           </Button>
+          <div className="flex justify-center items-center w-full">
+            <Link href={"/login"} className="hover:underline text-blue-600 text-sm">
+              {t("label_go_back_login")}
+            </Link>
+          </div>
         </div>
       </form>
     </Form>

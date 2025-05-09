@@ -15,7 +15,7 @@ import { TFormStatus } from "@/utils/types";
 import { ArrowUpRightIcon, BarChartIcon, MoreHorizontalIcon, PenIcon, Share2Icon, TrashIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import FormShare from "../form/form-share";
+import FormGlobalShare from "../form/form-modal-share";
 import FormDelete from "../shared/form/form-delete";
 
 const DashboardFormCard = ({ form }: { form: EForm }) => {
@@ -52,14 +52,14 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
               {t("nav_overview")}
               <BarChartIcon className="w-4 h-4" />
             </DropdownMenuItem>
-            <FormShare form={form}>
+            <FormGlobalShare form={form}>
               <DropdownMenuItem
                 className="cursor-pointer hover:bg-accent flex justify-between items-center"
                 onSelect={(e) => e.preventDefault()}>
                 {t("label_share")}
                 <Share2Icon className="w-4 h-4" />
               </DropdownMenuItem>
-            </FormShare>
+            </FormGlobalShare>
             <DropdownMenuItem
               className="cursor-pointer hover:bg-accent flex justify-between items-center"
               onClick={() => router.push(`/dashboard/editor/${id}`)}

@@ -10,7 +10,7 @@ const badgeVariants = cva(
         default:
           "inline-flex items-center rounded-md bg-foreground/5 px-2 py-1 text-xs font-medium text-foreground/80 dark:bg-foreground/20 dark:text-foreground",
         primary:
-          "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary border border-primary/20 dark:border-primary/30 mb-6 hover:bg-primary/20 transition-colors duration-200",
+          "inline-flex items-center rounded-md bg-primary/5 px-2 py-1 text-xs font-medium text-primary/80 dark:bg-primary/20 dark:text-primary",
         success:
           "inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-500",
         warning:
