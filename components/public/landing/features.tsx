@@ -1,6 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
 import { BarChartIcon, BlocksIcon, DatabaseIcon, HexagonIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -11,80 +12,159 @@ const Features = () => {
       title: t("feat1_headline"),
       description: t("feat1_subheadline"),
       icon: BlocksIcon,
-      color: "from-blue-400 to-blue-600",
+      color: "from-sky-400 to-blue-600",
       borderColor: "border-blue-400/20",
+      accent: "bg-blue-500",
     },
     {
       title: t("feat2_headline"),
       description: t("feat2_subheadline"),
       icon: BarChartIcon,
-      color: "from-purple-400 to-purple-600",
+      color: "from-violet-400 to-purple-600",
       borderColor: "border-purple-400/20",
+      accent: "bg-purple-500",
     },
     {
       title: t("feat3_headline"),
       description: t("feat3_subheadline"),
       icon: DatabaseIcon,
-      color: "from-green-400 to-green-600",
+      color: "from-emerald-400 to-green-600",
       borderColor: "border-green-400/20",
+      accent: "bg-green-500",
     },
     {
       title: t("feat4_headline"),
       description: t("feat4_subheadline"),
       icon: HexagonIcon,
-      color: "from-orange-400 to-orange-600",
+      color: "from-amber-400 to-orange-600",
       borderColor: "border-orange-400/20",
+      accent: "bg-orange-500",
     },
   ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    },
+  };
 
   return (
     <section
       id="features"
-      className="relative py-24 px-4 sm:px-6 lg:px-8 bg-background dark:bg-gradient-to-b dark:from-background dark:to-muted/5 overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none hidden">
-        <div className="absolute -right-20 -top-20 w-96 h-96 rounded-full bg-primary/10 blur-3xl" />
-        <div className="absolute -left-20 -bottom-20 w-96 h-96 rounded-full bg-primary/10  blur-3xl" />
+      className="relative py-28 px-4 sm:px-6 lg:px-8 bg-background dark:bg-gradient-to-b dark:from-background dark:to-muted/10 overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          initial={{ x: "-10%", y: "20%" }}
+          animate={{ x: "10%", y: "30%" }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "linear",
+          }}
+          className="absolute w-[600px] h-[600px] rounded-full bg-blue-500/5 blur-3xl"
+        />
+        <motion.div
+          initial={{ x: "60%", y: "-10%" }}
+          animate={{ x: "50%", y: "-20%" }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "linear",
+          }}
+          className="absolute w-[500px] h-[500px] rounded-full bg-purple-500/5 blur-3xl"
+        />
       </div>
+
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-5">
-          <Badge className="bg-primary/10 text-primary border-primary/20 dark:bg-primary/20 dark:border-primary/30 px-4 py-1.5 text-sm font-medium shadow-sm">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center max-w-3xl mx-auto mb-20 space-y-5">
+          <Badge className="bg-primary/10 text-primary border-primary/20 dark:bg-primary/20 dark:border-primary/30 px-4 py-2 text-sm font-medium shadow-sm hover:bg-primary/20 transition-colors">
             {t("nav_features")}
           </Badge>
-          <h2 className="text-4xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
+          <h2 className="text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80">
             {t("feat_headline")}
           </h2>
-          <p className="text-xl text-muted-foreground/90 dark:text-muted-foreground">{t("feat_subheadline")}</p>
-        </div>
+          <p className="text-xl text-muted-foreground/90 dark:text-muted-foreground/70 leading-relaxed">
+            {t("feat_subheadline")}
+          </p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature, index) => (
-            <div
-              key={index}
-              className={`group relative overflow-hidden rounded-2xl border ${feature.borderColor} bg-background/70 dark:bg-muted/5 p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 backdrop-blur-sm`}>
-              {/* Animated background gradient */}
+            <motion.div key={index} variants={itemVariants} whileHover={{ y: -8 }} className="group relative">
               <div
-                className={`absolute inset-0 bg-gradient-to-br opacity-0 ${feature.color} group-hover:opacity-10 transition-opacity duration-500`}
-              />
-
-              {/* Glow effect */}
-              <div
-                className={`absolute -inset-px rounded-2xl bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-500`}
-              />
-
-              <div className="relative z-10 space-y-5">
-                <div
-                  className={`inline-flex items-center justify-center p-4 rounded-xl bg-gradient-to-br ${feature.color} text-white shadow-lg`}>
-                  <feature.icon className="h-6 w-6" />
+                className={`relative overflow-hidden rounded-2xl border ${feature.borderColor} bg-background/80 dark:bg-muted/5 p-8 transition-all duration-300 hover:shadow-xl backdrop-blur-sm h-full`}>
+                {/* Animated accent bar */}
+                <div className={`h-1.5 ${feature.accent} w-full absolute top-0 left-0 overflow-hidden`}>
+                  <motion.div
+                    initial={{ x: "-100%" }}
+                    whileInView={{ x: "100%" }}
+                    transition={{
+                      duration: 2,
+                      delay: index * 0.2,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                    className="absolute inset-0 bg-white/30 w-full"
+                  />
                 </div>
-                <h3 className="text-xl font-semibold tracking-tight">{feature.title}</h3>
-                <p className="text-muted-foreground/90 dark:text-muted-foreground leading-relaxed">
-                  {feature.description}
-                </p>
+
+                {/* Floating gradient background */}
+                <div
+                  className={`absolute -right-10 -top-10 w-32 h-32 rounded-full ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
+                />
+
+                {/* Glow effect */}
+                <div
+                  className={`absolute -inset-px rounded-2xl ${feature.color} opacity-0 group-hover:opacity-15 blur-lg transition-opacity duration-500`}
+                />
+
+                <div className="relative z-10 space-y-6">
+                  <div className="flex items-center gap-4">
+                    <div
+                      className={`p-3 rounded-xl bg-gradient-to-br ${feature.color} text-white shadow-lg flex-shrink-0`}>
+                      <feature.icon className="h-6 w-6" />
+                    </div>
+                    <h3 className="text-xl font-semibold tracking-tight text-foreground">{feature.title}</h3>
+                  </div>
+                  <motion.p
+                    whileHover={{ x: 2 }}
+                    className="text-muted-foreground/90 dark:text-muted-foreground/80 leading-relaxed text-left">
+                    {feature.description}
+                  </motion.p>
+                </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
