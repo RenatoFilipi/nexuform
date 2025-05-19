@@ -65,7 +65,6 @@ const FormWrapper = ({
   const global = useGlobalStore();
   const [view, setView] = useState<TView>("overview");
   const enabledViews = views.filter((x) => x.enabled);
-  const totalSubmisssions = global.submissions.length;
 
   const query = useQuery({
     queryKey: ["formData"],
@@ -100,9 +99,6 @@ const FormWrapper = ({
               } text-xs flex justify-center items-center px-2 hover:bg-foreground/5 relative rounded gap-2 h-full`}>
               <v.icon className={`${v.view === view ? "text-primary" : "text-muted-foreground"} w-4 h-4`} />
               <div className="truncate">{v.label}</div>
-              {v.view === "submissions" && totalSubmisssions > 0 && (
-                <Badge variant={"primary"}>{totalSubmisssions}</Badge>
-              )}
               {v.view === view && <div className="bg-foreground/70 bottom-0 w-full h-0.5 absolute"></div>}
             </button>
           );

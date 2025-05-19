@@ -1,4 +1,4 @@
-import Nav from "@/components/public/core/nav";
+import Navbar from "@/components/public/core/navbar";
 import Cta from "@/components/public/landing/cta";
 import Faq from "@/components/public/landing/faq";
 import Features from "@/components/public/landing/features";
@@ -6,59 +6,16 @@ import Footer from "@/components/public/landing/footer";
 import Hero from "@/components/public/landing/hero";
 import HowItWorks from "@/components/public/landing/how-it-works";
 import Pricing from "@/components/public/landing/pricing";
-import Brand from "@/components/shared/core/brand";
-import { Button } from "@/components/ui/button";
 import { getPlans } from "@/utils/plans";
-import { Menu } from "lucide-react";
-import { getLocale, getTranslations } from "next-intl/server";
-import Link from "next/link";
+import { getLocale } from "next-intl/server";
 
 const Home = async () => {
-  const t = await getTranslations("landing");
   const locale = await getLocale();
   const plans = await getPlans(locale);
 
-  const urls = [
-    { name: t("nav_features"), url: "features" },
-    { name: t("nav_htw"), url: "how-it-works" },
-    { name: t("nav_pricing"), url: "pricing" },
-    { name: t("nav_faq"), url: "faq" },
-  ];
-
   return (
     <div className="min-h-dvh flex flex-col relative">
-      <div className="flex fixed top-0 w-full justify-between sm:justify-evenly sm:px-20 px-3 h-14 bg-background/80 z-20 backdrop-blur-lg items-center">
-        <div className="flex justify-center items-center gap-8">
-          <Link href="/" className="flex justify-center items-center">
-            <Brand type="primary_logo_text" className="h-5 fill-foreground" />
-          </Link>
-        </div>
-        <div className="hidden sm:flex justify-center items-center gap-6">
-          {urls.map((url) => (
-            <Link
-              key={url.url}
-              href={`#${url.url}`}
-              className="text-xs text-foreground hover:text-primary transition-colors">
-              {url.name}
-            </Link>
-          ))}
-        </div>
-        <div className="hidden sm:flex justify-center items-center gap-4">
-          <Button variant="outline" size="sm" asChild>
-            <Link href="/login">{t("label_login")}</Link>
-          </Button>
-          <Button variant="secondary" size="sm" asChild>
-            <Link href="/signup">{t("label_get_started")}</Link>
-          </Button>
-        </div>
-        <div className="flex sm:hidden">
-          <Nav>
-            <Button variant="ghost" size="icon">
-              <Menu className="w-6 h-6" />
-            </Button>
-          </Nav>
-        </div>
-      </div>
+      <Navbar />
       <div className="relative flex flex-col justify-center items-center px-0 flex-1 gap-14">
         <Hero />
         <Features />

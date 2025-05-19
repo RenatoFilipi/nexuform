@@ -216,7 +216,7 @@ const Preview = (props: { template: ETemplate }) => {
         <p className="text-muted-foreground text-sm group-hover:text-foreground">{description}</p>
       </div>
       <div className="flex justify-between items-center">
-        <Badge variant="gray">
+        <Badge variant="primary">
           <span className="first-letter:uppercase">{query.data?.category}</span>
         </Badge>
         <NewPreview template={props.template}>
