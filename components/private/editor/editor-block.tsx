@@ -16,7 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { EBlock } from "@/utils/entities";
 import { useTranslations } from "next-intl";
 import type { JSX } from "react";
-import BlockSettings from "./block-settings";
+import BlockSettings from "./editor-block-settings";
 
 const icons: { [key in TBlock]: JSX.Element } = {
   short_text: <EqualIcon className="w-4 h-4" />,
@@ -31,7 +31,7 @@ const icons: { [key in TBlock]: JSX.Element } = {
   date_picker: <CalendarIcon className="w-4 h-4" />,
 };
 
-const Block = ({ block }: { block: EBlock }) => {
+const EditorBlock = ({ block }: { block: EBlock }) => {
   const t = useTranslations("app");
 
   return (
@@ -54,4 +54,4 @@ const Block = ({ block }: { block: EBlock }) => {
   );
 };
 
-export default Block;
+export default EditorBlock;

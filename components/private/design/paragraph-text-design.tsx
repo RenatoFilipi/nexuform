@@ -1,10 +1,10 @@
-import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { fallbackColor } from "@/utils/constants";
 import { EBlock, ETheme } from "@/utils/entities";
 import { useState } from "react";
-import BlockHeaderDesign from "../block-header-design";
+import BlockHeaderDesign from "./block-header-design";
 
-const ShortTextDesign = ({
+const ParagraphTextDesign = ({
   block,
   theme,
   onValueChange,
@@ -27,8 +27,8 @@ const ShortTextDesign = ({
         required={required}
         position={position}
       />
-      <div className="flex flex-col">
-        <Input
+      <div className="">
+        <Textarea
           value={value}
           placeholder={placeholder ?? ""}
           onChange={(e) => {
@@ -36,7 +36,6 @@ const ShortTextDesign = ({
             setValue(e.target.value);
             onValueChange(e.target.value, block.id);
           }}
-          type="text"
           id={id}
           style={
             {
@@ -65,4 +64,4 @@ const ShortTextDesign = ({
   );
 };
 
-export default ShortTextDesign;
+export default ParagraphTextDesign;

@@ -3,7 +3,7 @@ import { fallbackColor } from "@/utils/constants";
 import { EBlock, ETheme } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import BlockHeaderDesign from "../block-header-design";
+import BlockHeaderDesign from "./block-header-design";
 
 const CheckBoxesDesign = ({
   block,

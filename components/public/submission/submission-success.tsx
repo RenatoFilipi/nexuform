@@ -1,5 +1,5 @@
 import usePublicStore from "@/stores/public";
-import SuccessDesign from "../../private/blocks/success-design";
+import SuccessDesign from "../../private/design/success-design";
 
 const SubmissionSuccess = () => {
   const { form, theme } = usePublicStore();

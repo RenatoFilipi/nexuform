@@ -3,7 +3,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { fallbackColor } from "@/utils/constants";
 import { EBlock, ETheme } from "@/utils/entities";
 import { twMerge } from "tailwind-merge";
-import BlockHeaderDesign from "../block-header-design";
+import BlockHeaderDesign from "./block-header-design";
 
 const MultipleChoiceDesign = ({
   block,

@@ -31,7 +31,7 @@ import ParagraphTextSettings from "./settings/paragraph-text-settings";
 import ShortTextSettings from "./settings/short-text-settings";
 import StarRatingSettings from "./settings/star-rating-settings";
 
-const BlockSettings = ({ children, block }: { children: React.ReactNode; block: EBlock }) => {
+const EditorBlockSettings = ({ children, block }: { children: React.ReactNode; block: EBlock }) => {
   const t = useTranslations("app");
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
@@ -64,7 +64,6 @@ const BlockSettings = ({ children, block }: { children: React.ReactNode; block: 
     </Drawer>
   );
 };
-
 const Body = ({ block, setState }: { block: EBlock; setState: TSetState<boolean> }) => {
   switch (block.type) {
     case "short_text": {
@@ -101,5 +100,4 @@ const Body = ({ block, setState }: { block: EBlock; setState: TSetState<boolean>
       return null;
   }
 };
-
-export default BlockSettings;
+export default EditorBlockSettings;

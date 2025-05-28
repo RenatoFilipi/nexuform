@@ -1,6 +1,6 @@
 import Rating from "@/components/ui/rating";
 import { EBlock, ETheme } from "@/utils/entities";
-import BlockHeaderDesign from "../block-header-design";
+import BlockHeaderDesign from "./block-header-design";
 
 const StarRatingDesign = ({
   block,

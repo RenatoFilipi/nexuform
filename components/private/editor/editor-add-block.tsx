@@ -38,7 +38,7 @@ import { useMedia } from "react-use";
 import { z } from "zod";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
 
-const AddBlock = ({ children }: { children: React.ReactNode }) => {
+const EditorAddBlock = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations("app");
   const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
@@ -71,7 +71,6 @@ const AddBlock = ({ children }: { children: React.ReactNode }) => {
     </Drawer>
   );
 };
-
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const editor = useEditorStore();
@@ -310,5 +309,4 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     </div>
   );
 };
-
-export default AddBlock;
+export default EditorAddBlock;

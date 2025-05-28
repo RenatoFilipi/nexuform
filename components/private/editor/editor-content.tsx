@@ -6,18 +6,18 @@ import { TBlock, TEditorView } from "@/utils/types";
 import { Reorder, useDragControls } from "framer-motion";
 import { Edit2Icon, GripVerticalIcon, PartyPopperIcon, PlusIcon, SquareStackIcon, Trash2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import AddBlock from "../blocks/add-block";
-import CheckBoxesDesign from "../blocks/design/checkboxes-design";
-import CustomScaleDesign from "../blocks/design/custom-scale-design";
-import DatePickerDesign from "../blocks/design/date-picker-design";
-import DropdownMenuDesign from "../blocks/design/dropdown-menu-design";
-import EmailAddressDesign from "../blocks/design/email-address-design";
-import MultipleChoiceDesign from "../blocks/design/multiple-choice-design";
-import NumberInputDesign from "../blocks/design/number-input-design";
-import ParagraphTextDesign from "../blocks/design/paragraph-text-design";
-import ShortTextDesign from "../blocks/design/short-text-design";
-import StarRatingDesign from "../blocks/design/star-rating-design";
-import SuccessDesign from "../blocks/success-design";
+import CheckBoxesDesign from "../design/checkboxes-design";
+import CustomScaleDesign from "../design/custom-scale-design";
+import DatePickerDesign from "../design/date-picker-design";
+import DropdownMenuDesign from "../design/dropdown-menu-design";
+import EmailAddressDesign from "../design/email-address-design";
+import MultipleChoiceDesign from "../design/multiple-choice-design";
+import NumberInputDesign from "../design/number-input-design";
+import ParagraphTextDesign from "../design/paragraph-text-design";
+import ShortTextDesign from "../design/short-text-design";
+import StarRatingDesign from "../design/star-rating-design";
+import SuccessDesign from "../design/success-design";
+import EditorAddBlock from "./editor-add-block";
 
 interface IBlockComponent {
   block: EBlock;
@@ -49,11 +49,11 @@ const EditorContent = () => {
     <div className="w-full flex justify-center items-start overflow-y-auto relative">
       {hasBlocks && (
         <div className="p-2 flex justify-center items-center fixed mt-12 left-2 top-2 rounded flex-col gap-3">
-          <AddBlock>
+          <EditorAddBlock>
             <Button variant={"outline"} size={"icon"} className="w-8 h-8">
               <PlusIcon className="w-4 h-4" />
             </Button>
-          </AddBlock>
+          </EditorAddBlock>
 
           <div className="flex flex-col gap-2">
             {pages.map((page) => {
@@ -123,12 +123,12 @@ const EditorCanvas = () => {
             <h3 className="text-xl font-semibold">{t("label_start_form")}</h3>
             <p className="text-sm text-muted-foreground">{t("desc_start_form")}</p>
           </div>
-          <AddBlock>
+          <EditorAddBlock>
             <Button size={"sm"} variant={"secondary"}>
               <PlusIcon className="w-4 h-4 mr-2" />
               {t("label_first_block")}
             </Button>
-          </AddBlock>
+          </EditorAddBlock>
         </div>
       </div>
     </div>

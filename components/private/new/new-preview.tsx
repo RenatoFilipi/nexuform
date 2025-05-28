@@ -21,16 +21,16 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import CheckBoxesDesign from "../blocks/design/checkboxes-design";
-import CustomScaleDesign from "../blocks/design/custom-scale-design";
-import DatePickerDesign from "../blocks/design/date-picker-design";
-import DropdownMenuDesign from "../blocks/design/dropdown-menu-design";
-import EmailAddressDesign from "../blocks/design/email-address-design";
-import MultipleChoiceDesign from "../blocks/design/multiple-choice-design";
-import NumberInputDesign from "../blocks/design/number-input-design";
-import ParagraphTextDesign from "../blocks/design/paragraph-text-design";
-import ShortTextDesign from "../blocks/design/short-text-design";
-import StarRatingDesign from "../blocks/design/star-rating-design";
+import CheckBoxesDesign from "../design/checkboxes-design";
+import CustomScaleDesign from "../design/custom-scale-design";
+import DatePickerDesign from "../design/date-picker-design";
+import DropdownMenuDesign from "../design/dropdown-menu-design";
+import EmailAddressDesign from "../design/email-address-design";
+import MultipleChoiceDesign from "../design/multiple-choice-design";
+import NumberInputDesign from "../design/number-input-design";
+import ParagraphTextDesign from "../design/paragraph-text-design";
+import ShortTextDesign from "../design/short-text-design";
+import StarRatingDesign from "../design/star-rating-design";
 
 const defaultTheme: ETheme = {
   id: "",

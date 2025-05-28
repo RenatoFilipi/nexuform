@@ -2,7 +2,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { fallbackColor } from "@/utils/constants";
 import { EBlock, ETheme } from "@/utils/entities";
 import { useState } from "react";
-import BlockHeaderDesign from "../block-header-design";
+import BlockHeaderDesign from "./block-header-design";
 
 const DropdownMenuDesign = ({
   block,

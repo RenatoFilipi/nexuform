@@ -23,17 +23,17 @@ import {
   Trash2,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import AddBlock from "../blocks/add-block";
-import CheckBoxesDesign from "../blocks/design/checkboxes-design";
-import CustomScaleDesign from "../blocks/design/custom-scale-design";
-import DatePickerDesign from "../blocks/design/date-picker-design";
-import DropdownMenuDesign from "../blocks/design/dropdown-menu-design";
-import EmailAddressDesign from "../blocks/design/email-address-design";
-import MultipleChoiceDesign from "../blocks/design/multiple-choice-design";
-import NumberInputDesign from "../blocks/design/number-input-design";
-import ParagraphTextDesign from "../blocks/design/paragraph-text-design";
-import ShortTextDesign from "../blocks/design/short-text-design";
-import StarRatingDesign from "../blocks/design/star-rating-design";
+import CheckBoxesDesign from "../design/checkboxes-design";
+import CustomScaleDesign from "../design/custom-scale-design";
+import DatePickerDesign from "../design/date-picker-design";
+import DropdownMenuDesign from "../design/dropdown-menu-design";
+import EmailAddressDesign from "../design/email-address-design";
+import MultipleChoiceDesign from "../design/multiple-choice-design";
+import NumberInputDesign from "../design/number-input-design";
+import ParagraphTextDesign from "../design/paragraph-text-design";
+import ShortTextDesign from "../design/short-text-design";
+import StarRatingDesign from "../design/star-rating-design";
+import EditorAddBlock from "./editor-add-block";
 import EditorFormSettings from "./editor-form-settings";
 import EditorToolsMobile from "./editor-tools-mobile";
 
@@ -69,12 +69,12 @@ const EditorContentMobile = () => {
           <h3 className="text-xl font-semibold">{t("label_start_form")}</h3>
           <p className="text-sm text-muted-foreground">{t("desc_start_form")}</p>
         </div>
-        <AddBlock>
+        <EditorAddBlock>
           <Button size={"sm"} variant={"secondary"}>
             <PlusIcon className="w-4 h-4 mr-2" />
             {t("label_first_block")}
           </Button>
-        </AddBlock>
+        </EditorAddBlock>
       </div>
     );
   }
@@ -280,11 +280,11 @@ const EditorTools = () => {
           <SettingsIcon className="w-4 h-4" />
         </Button>
       </EditorFormSettings>
-      <AddBlock>
+      <EditorAddBlock>
         <Button variant={"ghost"} className="w-full">
           <PlusIcon className="w-4 h-4" />
         </Button>
-      </AddBlock>
+      </EditorAddBlock>
       <EditorToolsMobile>
         <Button onClick={onSelectTools} variant={"ghost"} className="w-full">
           <PenIcon className="w-4 h-4" />
