@@ -496,6 +496,8 @@
     "cta_subheadline": "Start your free trial today.",
     "cta_get_started": "Get started for free",
     "nav_cookies": "Cookie Policy",
-    "footer_cta": "Speed that generates data."
+    "footer_cta": "Speed that generates data.",
+    "label_product": "Product",
+    "label_legal": "Legal"
   }
 }

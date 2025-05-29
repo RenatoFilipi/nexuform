@@ -44,7 +44,7 @@ const Cta = () => {
           <Button
             asChild
             size="lg"
-            className="mt-6 px-8 py-6 text-base font-medium bg-background text-foreground hover:bg-background/90 dark:bg-background dark:text-foreground dark:hover:bg-background/80 shadow-xl hover:shadow-primary/30 transition-all duration-300 rounded-xl">
+            className="mt-6 px-8 py-6 text-base font-medium bg-background text-foreground hover:bg-background/90 dark:bg-background dark:text-foreground dark:hover:bg-background/80 shadow-xl hover:shadow-primary/30 transition-all duration-300">
             <Link href={"/signup"}>
               {t("cta_get_started")} <ArrowRightIcon className="w-4 h-4 ml-2" />
             </Link>

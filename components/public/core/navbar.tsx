@@ -30,7 +30,7 @@ const Navbar = () => {
   return (
     <div
       className={`flex fixed top-0 w-full sm:px-20 px-3 bg-background/80 z-20 backdrop-blur-lg items-center justify-center flex-col min-h-14`}>
-      <div className="w-full flex justify-between sm:justify-evenly h-14 items-center">
+      <div className="w-full flex justify-between sm:justify-around h-14 items-center">
         <div className="flex justify-center items-center gap-8">
           <Link href="/" className="flex justify-center items-center">
             <Brand type="primary_logo_text" className="h-5 fill-foreground" />

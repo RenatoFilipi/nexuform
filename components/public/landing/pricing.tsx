@@ -80,17 +80,15 @@ const CardTemplate = ({ plan }: { plan: IPlan }) => {
 
   return (
     <div
-      className={`relative flex flex-col h-full p-8 rounded-2xl border bg-background/80 dark:bg-muted/5 backdrop-blur-sm transition-all hover:shadow-xl ${
+      className={`relative flex flex-col h-full p-8 rounded-lg border bg-background/80 dark:bg-muted/5 backdrop-blur-sm transition-all hover:shadow-xl ${
         plan.isMostPopular
           ? "border-primary/50 dark:border-primary/50 shadow-lg dark:shadow-primary/15 ring-1 ring-primary/10 dark:ring-primary/20"
           : "border-muted-foreground/20 hover:border-muted-foreground/30 dark:border-muted/30"
       }`}>
       {/* Most popular badge */}
       {plan.isMostPopular && (
-        <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-          <Badge
-            variant="default"
-            className="bg-primary text-primary-foreground shadow-lg dark:shadow-primary/20 flex items-center gap-1.5 px-4 py-1.5">
+        <div className="absolute top-3 left-1/2 transform -translate-x-1/2">
+          <Badge variant="primary" className="bg-primary text-primary-foreground flex items-center gap-1.5 px-4 py-1.5">
             <ZapIcon className="h-3.5 w-3.5 fill-current" />
             {t("pricing_most_popular")}
           </Badge>
@@ -129,7 +127,7 @@ const CardTemplate = ({ plan }: { plan: IPlan }) => {
             asChild
             size="lg"
             className="w-full py-6 text-base font-medium"
-            variant={plan.isMostPopular ? "default" : "outline"}>
+            variant={plan.isMostPopular ? "default" : "secondary"}>
             <Link href="/signup">
               <span className="flex items-center gap-2">
                 {plan.type === "free_trial" ? <RocketIcon className="h-5 w-5" /> : <CheckIcon className="h-5 w-5" />}
@@ -156,7 +154,7 @@ const CardTemplate = ({ plan }: { plan: IPlan }) => {
                 </div>
               )}
               <span
-                className={`text-base ${
+                className={`text-sm ${
                   feature.comingSoon
                     ? "text-muted-foreground dark:text-muted-foreground/70"
                     : "text-foreground dark:text-foreground/90"

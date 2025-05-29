@@ -8,6 +8,7 @@ import Link from "next/link";
 
 const Footer = () => {
   const t = useTranslations("landing");
+  const currentYear = new Date().getFullYear();
 
   const urls = [
     { name: t("nav_features"), url: "features" },
@@ -32,7 +33,9 @@ const Footer = () => {
 
         {/* Product Links */}
         <div>
-          <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide mb-3">Product</h3>
+          <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide mb-3">
+            {t("label_product")}
+          </h3>
           <ul className="space-y-2">
             {urls.map((item) => (
               <li key={item.name}>
@@ -48,7 +51,7 @@ const Footer = () => {
 
         {/* Legal + Mode Toggle */}
         <div>
-          <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide mb-3">Legal</h3>
+          <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide mb-3">{t("label_legal")}</h3>
           <ul className="space-y-2">
             <li>
               <Link
@@ -64,6 +67,13 @@ const Footer = () => {
                 {t("label_terms")}
               </Link>
             </li>
+            <li>
+              <Link
+                href="/legal/cookies"
+                className="text-sm text-foreground/60 hover:text-primary transition-colors duration-200">
+                {t("nav_cookies")}
+              </Link>
+            </li>
           </ul>
           <div className="mt-4">
             <ModeToggle2 />
@@ -73,12 +83,9 @@ const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="max-w-6xl mx-auto mt-12 pt-6 border-t border-foreground/10 flex flex-col sm:flex-row justify-between items-center gap-4">
-        <p className="text-xs text-foreground/50">&copy; 2025 {appName}.</p>
-        <Link
-          href="/legal/cookies"
-          className="text-xs text-foreground/50 hover:text-primary transition-colors duration-200">
-          {t("nav_cookies")}
-        </Link>
+        <p className="text-xs text-foreground/50">
+          &copy; {currentYear} {appName}.
+        </p>
       </div>
     </footer>
   );

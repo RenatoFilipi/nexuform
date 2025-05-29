@@ -496,6 +496,8 @@
     "cta_subheadline": "Comienza tu prueba gratuita hoy.",
     "cta_get_started": "Comienza gratis",
     "nav_cookies": "Política de Cookies",
-    "footer_cta": "Velocidad que genera datos."
+    "footer_cta": "Velocidad que genera datos.",
+    "label_product": "Producto",
+    "label_legal": "Legal"
   }
 }
