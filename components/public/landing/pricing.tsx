@@ -36,21 +36,9 @@ const Pricing = ({ plans }: { plans: IPlan[] }) => {
   return (
     <section
       id="pricing"
-      className="relative py-16 sm:py-28 lg:py-36 bg-background dark:bg-gradient-to-b dark:from-background dark:to-muted/10 px-4 sm:px-6 overflow-hidden">
+      className="relative py-16 sm:py-28 lg:py-36 bg-background dark:bg-gradient-to-b dark:from-background dark:to-muted/10 px-4 sm:px-6 overflow-hidden w-full">
       {/* Background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          initial={{ x: "-10%", y: "20%" }}
-          animate={{ x: "10%", y: "30%" }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "linear",
-          }}
-          className="absolute w-[600px] h-[600px] rounded-full bg-primary/5 blur-3xl"
-        />
-      </div>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto flex flex-col justify-center items-center gap-10 relative z-10">
         <motion.div

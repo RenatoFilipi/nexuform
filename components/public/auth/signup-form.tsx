@@ -69,7 +69,7 @@ const SignupForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-md mx-auto flex flex-col gap-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-md mx-auto flex flex-col gap-4">
         <FormHeader
           title={t("label_signup_into", { platform: appName })}
           desc={t("desc_login")}

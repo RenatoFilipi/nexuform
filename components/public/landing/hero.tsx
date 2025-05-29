@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { ArrowRightIcon, CreditCardIcon, RocketIcon } from "lucide-react";
+import { ArrowRightIcon, ClockIcon, CreditCardIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
@@ -45,29 +45,26 @@ const Hero = () => {
     </div>
   );
 };
-
 const BgDesign = () => (
   <div className="absolute top-0 left-0 w-full h-full z-0 overflow-hidden">
     <div className="absolute -bottom-[300px] w-full h-[850px] rounded-full dark:bg-primary/30 bg-primary/15 blur-3xl animate-float-delay" />
   </div>
 );
-
 const CtaBadge = () => {
   const t = useTranslations("landing");
   return (
     <motion.div
-      className="flex border border-primary/15 py-1.5 px-2.5 rounded bg-primary/5"
+      className="flex border-primary/15 py-1.5 px-2.5 rounded bg-primary/5"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4, duration: 0.4 }}>
       <span className="text-primary text-sm font-medium flex justify-center items-center gap-2">
-        <RocketIcon className="w-4 h-4" />
+        <ClockIcon className="w-4 h-4" />
         {t("hero_badge")}
       </span>
     </motion.div>
   );
 };
-
 const CtaActions = () => {
   const t = useTranslations("landing");
   return (
@@ -89,7 +86,6 @@ const CtaActions = () => {
     </motion.div>
   );
 };
-
 const CtaImage = () => {
   return (
     <motion.div
@@ -109,5 +105,4 @@ const CtaImage = () => {
     </motion.div>
   );
 };
-
 export default Hero;

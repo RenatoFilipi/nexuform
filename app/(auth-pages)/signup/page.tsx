@@ -1,4 +1,4 @@
-import AuthPanel from "@/components/public/auth/auth-panel";
+import AuthPanelUI from "@/components/public/auth/auth-panel-ui";
 import SignupForm from "@/components/public/auth/signup-form";
 import { Metadata } from "next";
 
@@ -10,7 +10,7 @@ const Signup = () => {
           <SignupForm />
         </div>
       </div>
-      <AuthPanel />
+      <AuthPanelUI />
     </div>
   );
 };

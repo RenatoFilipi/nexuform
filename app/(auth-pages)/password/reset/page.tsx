@@ -1,4 +1,4 @@
-import AuthPanel from "@/components/public/auth/auth-panel";
+import AuthPanelUI from "@/components/public/auth/auth-panel-ui";
 import ResetPasswordForm from "@/components/public/auth/reset-password-form";
 import { Metadata } from "next";
 
@@ -12,7 +12,7 @@ const Reset = () => {
           </div>
         </div>
       </div>
-      <AuthPanel />
+      <AuthPanelUI />
     </div>
   );
 };

@@ -55,14 +55,13 @@ const LoginForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-md flex flex-col gap-6 mx-auto">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-md flex flex-col gap-4 mx-auto">
         <FormHeader
           title={t("label_login_into", { platform: appName })}
           desc={t("desc_signup")}
           path="/signup"
           link={t("label_signup")}
         />
-
         {/* Email Field */}
         <FormField
           control={form.control}
@@ -85,7 +84,6 @@ const LoginForm = () => {
             </FormItem>
           )}
         />
-
         {/* Password Field */}
         <FormField
           control={form.control}
@@ -120,7 +118,6 @@ const LoginForm = () => {
             {t("label_forgot_password")}
           </Link>
         </div>
-
         {/* Submit Button */}
         <Button type="submit" variant="default" size="sm" className="w-full" disabled={isPending}>
           {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}

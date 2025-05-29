@@ -63,33 +63,9 @@ const HowItWorks = () => {
   return (
     <section
       id="how-it-works"
-      className="relative py-28 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/10 dark:from-background dark:to-muted/5 overflow-hidden">
+      className="relative py-28 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/10 dark:from-background dark:to-muted/5 overflow-hidden w-full">
       {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          initial={{ x: "-20%", y: "-20%" }}
-          animate={{ x: "-10%", y: "-10%" }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "linear",
-          }}
-          className="absolute w-[500px] h-[500px] rounded-full bg-blue-500/5 blur-3xl"
-        />
-        <motion.div
-          initial={{ x: "80%", y: "60%" }}
-          animate={{ x: "70%", y: "50%" }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "linear",
-          }}
-          className="absolute w-[600px] h-[600px] rounded-full bg-purple-500/5 blur-3xl"
-        />
-      </div>
-
+      <div className="absolute inset-0 overflow-hidden pointer-events-none"></div>
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

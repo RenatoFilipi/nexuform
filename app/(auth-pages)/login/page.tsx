@@ -1,4 +1,4 @@
-import AuthPanel from "@/components/public/auth/auth-panel";
+import AuthPanelUI from "@/components/public/auth/auth-panel-ui";
 import LoginForm from "@/components/public/auth/login-form";
 import { Metadata } from "next";
 
@@ -12,7 +12,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <AuthPanel />
+      <AuthPanelUI />
     </div>
   );
 };
