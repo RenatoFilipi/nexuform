@@ -11,6 +11,9 @@ import { useMedia } from "react-use";
 import { CartesianGrid, ComposedChart, Legend, Line, XAxis } from "recharts";
 import { CurveType } from "recharts/types/shape/Curve";
 
+const submissionColor = "#02C7AA";
+const viewColor = "#CC67DD";
+
 interface IChartData {
   day: string;
   submissions: number;
@@ -19,11 +22,11 @@ interface IChartData {
 const CHART_CONFIG: ChartConfig = {
   submissions: {
     label: "Submissions",
-    color: "#ffa500",
+    color: submissionColor,
   },
   views: {
     label: "Views",
-    color: "#51A2FF",
+    color: viewColor,
   },
 } as ChartConfig;
 
@@ -138,7 +141,7 @@ const FormSubmissionsActivityChart = () => {
             name={viewKey}
             type={curveType}
             dataKey="views"
-            stroke="#51A2FF"
+            stroke={viewColor}
             strokeWidth={2}
             dot={true}
             activeDot={{ r: 6 }}
@@ -148,7 +151,7 @@ const FormSubmissionsActivityChart = () => {
             name={subKey}
             type={curveType}
             dataKey="submissions"
-            stroke="#ffa500"
+            stroke={submissionColor}
             strokeWidth={2}
             dot={true}
             activeDot={{ r: 6 }}

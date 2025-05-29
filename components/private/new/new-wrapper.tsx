@@ -131,7 +131,6 @@ const TemplateList = ({ setView }: { setView: TSetState<TView> }) => {
       const { data, error } = await supabase.from("templates").select("*").eq("is_public", true);
       if (error) throw error;
       const { locale } = user;
-      console.log(JSON.stringify(data));
       const templatesWithLocalizedNames = data.map((template) => {
         const localizedName =
           locale === "pt" && template.name_pt
@@ -208,7 +207,7 @@ const Preview = (props: { template: ETemplate }) => {
   if (query.isPending) return null;
 
   return (
-    <div className="group relative flex flex-col justify-between p-5 h-44 rounded-lg bg-card border hover:border-primary transition-all duration-200 overflow-hidden">
+    <div className="group relative flex flex-col justify-between p-5 min-h-44 rounded-lg bg-card border hover:border-primary transition-all duration-200 overflow-hidden">
       <div className="flex flex-col gap-3 w-full">
         <h3 className="text-base font-medium line-clamp-2 text-foreground group-hover:text-primary transition-colors duration-200">
           {name}
