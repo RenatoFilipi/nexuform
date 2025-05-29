@@ -14,7 +14,7 @@ import {
   getAverageCompletionTime,
 } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
-import { EyeIcon, PenIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
+import { ArrowUpRightIcon, EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import FormSubmissionsActivityChart from "./form-submissions-activity-chart";
@@ -46,10 +46,10 @@ const FormOverview = () => {
             <FormStatusBadge status={global.form.status as TFormStatus} />
           </div>
           <div className="flex justify-center items-center gap-4 w-full sm:justify-end">
-            <Button variant="outline" size="sm" asChild>
+            <Button variant="secondary" size="sm" asChild>
               <Link href={`/dashboard/editor/${global.form.id}`} className="w-full sm:w-fit">
-                <PenIcon className="w-4 h-4 mr-2" />
-                {t("label_editor")}
+                <ArrowUpRightIcon className="w-4 h-4 mr-2" />
+                {t("nav_editor")}
               </Link>
             </Button>
           </div>

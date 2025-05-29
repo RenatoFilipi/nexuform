@@ -268,20 +268,20 @@ const NavApp = () => {
       </div>
       <div className="hidden sm:flex justify-center items-center gap-4">
         <div className="flex justify-center items-center gap-3">
-          {isFreeTrial && (
-            <Button variant={"outline"} size={"xs"} asChild>
-              <Link href={"/dashboard/settings/billing"}>
-                <ArrowUpRightIcon className="w-4 h-4 mr-2" />
-                {t("label_upgrade_now")}
-              </Link>
-            </Button>
-          )}
           <FeedbackForm>
             <Button variant={"outline"} size={"xs"}>
               <MessageSquareCodeIcon className="w-4 h-4 mr-2" />
               {t("fb_label")}
             </Button>
           </FeedbackForm>
+          {isFreeTrial && (
+            <Button variant={"secondary"} size={"xs"} asChild>
+              <Link href={"/dashboard/settings/billing"}>
+                <ArrowUpRightIcon className="w-4 h-4 mr-2" />
+                {t("label_upgrade_now")}
+              </Link>
+            </Button>
+          )}
         </div>
         <AvatarAppMenu>
           <Avatar className="cursor-pointer w-8 h-8">
@@ -466,7 +466,7 @@ const PlanBadge = ({ plan }: { plan: TPlan }) => {
     custom: "Custom",
   };
 
-  return <Badge variant="plan">{planLabels[plan] || "Custom"}</Badge>;
+  return <Badge variant="primary">{planLabels[plan] || "Custom"}</Badge>;
 };
 const ChangeForm = ({ children }: { children: React.ReactNode }) => {
   const isDesktop = useMedia(minWidth640);

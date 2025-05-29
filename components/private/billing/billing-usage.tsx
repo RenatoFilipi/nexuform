@@ -106,8 +106,8 @@ const BillingUsage = () => {
           </div>
         )}
         {!isCancelled && (
-          <div className="relative overflow-hidden rounded-xl border bg-background p-6 shadow-sm w-full">
-            <div className="absolute right-0 top-0 h-full w-1 bg-primary" />
+          <div className="relative overflow-hidden rounded border bg-background p-6 shadow-sm w-full">
+            <div className="absolute right-0 top-0 h-full w-1 bg-primary hidden" />
             <div className="flex flex-col gap-6">
               <div className="flex items-center justify-start gap-4">
                 <div className="flex items-center gap-3">
@@ -193,7 +193,7 @@ const UsageCard = ({
   const usagePercentage = rawValue % 1 === 0 ? rawValue.toString() : rawValue.toFixed(1);
 
   return (
-    <Card className="relative w-full p-6 transition-all hover:shadow-md rounded-xl border bg-gradient-to-br from-background to-muted/50 overflow-hidden">
+    <Card className="relative w-full p-6 transition-all hover:shadow-md rounded border bg-gradient-to-br from-background to-muted/50 overflow-hidden">
       {limit && (
         <div className="absolute inset-0 bg-gradient-to-r from-destructive/5 to-transparent pointer-events-none" />
       )}

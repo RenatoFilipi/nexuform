@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -35,7 +37,7 @@ const FormShare = () => {
             ctx?.drawImage(img, 0, 0);
             const pngFile = canvas.toDataURL("image/png");
             const downloadLink = document.createElement("a");
-            downloadLink.download = `qrcode-${new Date().getTime()}.png`;
+            downloadLink.download = `form-${global.form.name}-qrcode.png`.replace(/\s+/g, "-");
             downloadLink.href = pngFile;
             downloadLink.click();
             setIsGenerating(false);
@@ -49,42 +51,43 @@ const FormShare = () => {
   return (
     <div className="flex items-center justify-center w-full sm:mt-14">
       <div className="w-full max-w-4xl">
-        <div className="flex flex-col overflow-hidden">
+        <div className="flex flex-col overflow-hidden rounded border border-muted-foreground/20 bg-background/50 shadow-sm">
           {!isPublished && (
             <div className="flex flex-col items-center justify-center text-center p-10 space-y-8">
               <div className="relative group">
-                <div className="absolute -inset-2 rounded-full bg-warning/20 blur-lg group-hover:opacity-80 transition-opacity"></div>
-                <div className="relative flex justify-center items-center p-4 w-fit rounded-xl bg-gradient-to-br from-warning/10 to-warning/5 backdrop-blur-sm border border-warning/20">
+                <div className="relative flex justify-center items-center p-3 w-fit rounded bg-gradient-to-br from-warning/10 to-warning/5 border border-warning/20">
                   <Share2Icon className="w-8 h-8 text-warning" />
                 </div>
               </div>
+
               <div className="space-y-3">
-                <h3 className="text-xl font-bold tracking-tight ">{t("label_not_public")}</h3>
+                <h3 className="text-xl font-bold tracking-tight">{t("label_not_public")}</h3>
                 <p className="text-muted-foreground/90 max-w-md text-sm">{t("desc_not_public")}</p>
               </div>
+
               <Button variant="secondary" size="sm" asChild className="group">
-                <Link
-                  href={`/dashboard/editor/${global.form.id}`}
-                  className="flex items-center gap-2 transition-all group-hover:gap-3">
-                  <ArrowUpRightIcon className="w-5 h-5 transition-transform group-hover:-translate-y-0.5" />
+                <Link href={`/dashboard/editor/${global.form.id}`} className="flex items-center gap-2">
+                  <ArrowUpRightIcon className="w-5 h-5" />
                   {t("nav_editor")}
                 </Link>
               </Button>
             </div>
           )}
+
           {isPublished && (
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid md:grid-cols-2 gap-0 divide-y md:divide-y-0 md:divide-x divide-muted-foreground/10">
               {/* Link Sharing Section */}
               <div className="p-8 space-y-6">
                 <div className="space-y-2">
                   <Label className="text-sm font-semibold">{t("label_link_share")}</Label>
                   <p className="text-xs text-muted-foreground/80">{t("desc_link_share")}</p>
                 </div>
+
                 <div className="flex items-center gap-2">
                   <Input
                     value={fullUrl}
                     readOnly
-                    className="text-sm flex-1 font-mono bg-muted/50 border-muted-foreground/20 hover:bg-muted/70 transition-colors"
+                    className="text-sm flex-1 font-mono bg-muted/30 border-muted-foreground/20"
                   />
                   <div className="flex gap-1">
                     <Button
@@ -116,23 +119,12 @@ const FormShare = () => {
                   <Label className="text-sm font-semibold">{t("label_qr_share")}</Label>
                   <p className="text-xs text-muted-foreground/80">{t("desc_qr_share")}</p>
                 </div>
+
                 <div className="flex flex-col items-center gap-6">
-                  <div
-                    ref={qrCodeRef}
-                    className="bg-white p-4 rounded-xl shadow-md border border-muted-foreground/10 hover:shadow-lg transition-shadow">
-                    <QRCodeSVG
-                      value={fullUrl}
-                      size={180}
-                      level="H"
-                      bgColor="transparent"
-                      fgColor="hsl(var(--primary))"
-                    />
+                  <div ref={qrCodeRef} className="bg-white p-4 rounded-xl shadow-sm border border-muted-foreground/10">
+                    <QRCodeSVG value={fullUrl} size={170} level="H" includeMargin={false} />
                   </div>
-                  <Button
-                    onClick={downloadQRCode}
-                    disabled={isGenerating}
-                    className="w-full gap-2 group"
-                    variant="outline">
+                  <Button onClick={downloadQRCode} disabled={isGenerating} className="w-full gap-2" variant="outline">
                     {isGenerating ? (
                       <LoaderIcon className="w-5 h-5 animate-spin" />
                     ) : (
