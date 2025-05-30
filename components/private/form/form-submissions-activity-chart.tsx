@@ -11,8 +11,8 @@ import { useMedia } from "react-use";
 import { CartesianGrid, ComposedChart, Legend, Line, XAxis } from "recharts";
 import { CurveType } from "recharts/types/shape/Curve";
 
-const submissionColor = "#02C7AA";
-const viewColor = "#CC67DD";
+const submissionColor = "#38bdf8";
+const viewColor = "#fb923c";
 
 interface IChartData {
   day: string;

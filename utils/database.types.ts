@@ -172,6 +172,7 @@ export type Database = {
           description: string | null
           id: string
           name: string
+          org_id: string
           owner_id: string
           public_url: string
           status: string
@@ -185,6 +186,7 @@ export type Database = {
           description?: string | null
           id?: string
           name?: string
+          org_id?: string
           owner_id?: string
           public_url?: string
           status?: string
@@ -198,6 +200,7 @@ export type Database = {
           description?: string | null
           id?: string
           name?: string
+          org_id?: string
           owner_id?: string
           public_url?: string
           status?: string
@@ -207,6 +210,13 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "forms_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "forms_owner_id_fkey"
             columns: ["owner_id"]

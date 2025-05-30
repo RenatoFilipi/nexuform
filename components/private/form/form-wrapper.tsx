@@ -86,8 +86,9 @@ const FormWrapper = ({
   if (query.isPending) return null;
 
   return (
-    <div className="flex-1 mt-12 mb-12 sm:mb-0 flex flex-col h-dvh">
-      <div className="border-b h-10 flex justify-start items-center gap-1 px-2 sm:px-6 overflow-x-auto">
+    <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col h-dvh">
+      {/* Nav */}
+      <div className="border-b h-10 flex justify-start items-center gap-2 px-2 sm:px-8 overflow-x-auto">
         {enabledViews.map((v) => {
           return (
             <button
@@ -95,7 +96,7 @@ const FormWrapper = ({
               key={v.view}
               className={`${
                 v.view === view ? "font-medium text-foreground" : "text-muted-foreground"
-              } text-xs flex justify-center items-center px-2 hover:bg-foreground/5 relative rounded gap-2 h-full`}>
+              } text-sm flex justify-center items-center px-2 hover:bg-foreground/5 relative rounded gap-2 h-full`}>
               <v.icon className={`${v.view === view ? "text-primary" : "text-muted-foreground"} w-4 h-4`} />
               <div className="truncate">{v.label}</div>
               {v.view === view && <div className="bg-foreground/70 bottom-0 w-full h-0.5 absolute"></div>}
@@ -103,7 +104,8 @@ const FormWrapper = ({
           );
         })}
       </div>
-      <div className="px-3 sm:px-20 lg:px-52 py-4 sm:py-4 flex justify-center flex-1 items-start overflow-y-auto">
+      {/* Content */}
+      <div className="px-3 sm:px-20 lg:px-52 py-6 sm:py-6 flex justify-center flex-1 items-start overflow-y-auto">
         {view === "overview" && <FormOverview />}
         {view === "submissions" && <FormSubmissions />}
         {view === "share" && <FormShare />}

@@ -12,7 +12,7 @@ import useUserStore from "@/stores/user";
 import { EForm } from "@/utils/entities";
 import { formatDateRelativeToNow } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
-import { ArrowUpRightIcon, BarChartIcon, MoreHorizontalIcon, PenIcon, Share2Icon, TrashIcon } from "lucide-react";
+import { BarChartIcon, MoreHorizontalIcon, PenIcon, Share2Icon, TrashIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import FormGlobalShare from "../form/form-modal-share";
@@ -83,14 +83,6 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
         <span className="text-xs text-muted-foreground">
           {t("label_last_updated")} {formatDateRelativeToNow(updated_at, user.locale)}
         </span>
-        <Button
-          variant="outline"
-          size="sm"
-          className="text-xs h-7 opacity-0 group-hover:opacity-100 transition-opacity"
-          onClick={() => router.push(`/dashboard/editor/${id}`)}>
-          <ArrowUpRightIcon className="w-4 h-4 mr-2" />
-          {t("label_edit")}
-        </Button>
       </div>
     </Card>
   );

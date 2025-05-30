@@ -58,7 +58,7 @@ const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProp
   if (query.isPending) return null;
 
   return (
-    <div className="flex-1 mt-12 mb-12 sm:mb-0 flex flex-col gap-6 sm:gap-10 px-3 sm:px-20 lg:px-52 py-4 sm:py-8">
+    <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-6 sm:gap-10 px-3 sm:px-20 lg:px-52 py-4 sm:py-8">
       <div className="flex justify-between items-center flex-col sm:flex-row gap-3">
         <div className="flex justify-between items-center w-full sm:w-fit">
           <h1 className="text-xl font-medium">{t("label_forms")}</h1>
@@ -105,10 +105,10 @@ const EmptyUI = () => {
   const t = useTranslations("app");
   return (
     <div className="flex justify-center items-center h-full flex-1 flex-col gap-4">
-      <div className="border pb-20 flex flex-col justify-center items-center gap-6 border-none">
+      <div className="flex flex-col justify-center items-center gap-6 pb-20">
         <div className="flex flex-col justify-center items-center gap-4">
-          <div className="flex justify-center items-center p-3 bg-primary/5 rounded">
-            <LayersIcon className="w-7 h-7 text-primary" />
+          <div className="flex justify-center items-center p-3 bg-primary/10 rounded">
+            <LayersIcon className="w-6 h-6 text-primary" />
           </div>
           <div className="flex justify-center items-center flex-col">
             <span className="text-lg font-medium">{t("label_no_forms")}</span>

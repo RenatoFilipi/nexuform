@@ -1,7 +1,6 @@
 "use client";
 
 import FormStatusBadge from "@/components/shared/badges/form-status-badge";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import useGlobalStore from "@/stores/global";
@@ -32,7 +31,6 @@ const FormOverview = () => {
   const avgCompletionRate = `${formatDecimal(
     getAverageCompletionRate(global.viewLogs.length, global.submissionLogs.length)
   )}%`;
-  const notReviewedSubmissions = global.submissions.filter((x) => x.status === "not_reviewed").length;
   const updatedAt = formatDateRelativeToNow(global.form.updated_at, user.locale);
 
   return (
@@ -59,12 +57,12 @@ const FormOverview = () => {
         </span>
       </div>
       <div className="gap-6 grid sm:grid-cols-2">
-        <div className="grid grid-cols-2 sm:grid-rows-4 sm:grid-cols-2 gap-2 sm:gap-6">
+        <div className="grid grid-cols-2 sm:grid-rows-2 sm:grid-cols-2 gap-2 sm:gap-6">
           <CardTemplate
             name={t("label_total_views")}
             content={
               <div>
-                <span className="text-lg font-bold">{totalViews}</span>
+                <span className="text-base font-bold">{totalViews}</span>
               </div>
             }
             icon={<EyeIcon className="w-4 h-4 text-primary" />}
@@ -73,12 +71,7 @@ const FormOverview = () => {
             name={t("label_total_submissions")}
             content={
               <div className="flex justify-between items-center">
-                <span className="text-lg font-bold">{totalSubmissions}</span>
-                {notReviewedSubmissions > 0 && (
-                  <Badge variant={"warning"}>
-                    {t("label_not_reviewed")}: {notReviewedSubmissions}
-                  </Badge>
-                )}
+                <span className="text-base font-bold">{totalSubmissions}</span>
               </div>
             }
             icon={<SendIcon className="w-4 h-4 text-primary" />}
@@ -87,7 +80,7 @@ const FormOverview = () => {
             name={t("label_completion_rate")}
             content={
               <div>
-                <span className="text-lg font-bold">{avgCompletionRate}</span>
+                <span className="text-base font-bold">{avgCompletionRate}</span>
               </div>
             }
             icon={<VoteIcon className="w-4 h-4 text-primary" />}
@@ -96,7 +89,7 @@ const FormOverview = () => {
             name={t("label_avg_completion_time")}
             content={
               <div>
-                <span className="text-lg font-bold">{avgCompletionTime}</span>
+                <span className="text-base font-bold">{avgCompletionTime}</span>
               </div>
             }
             icon={<TimerIcon className="w-4 h-4 text-primary" />}
@@ -112,8 +105,8 @@ const CardTemplate = ({ name, icon, content }: { name: string; icon: React.React
   return (
     <Card className="p-4 justify-between flex flex-col gap-3 w-full">
       <div className="flex justify-between items-center w-full">
-        <span className="text-sm text-foreground/70">{name}</span>
-        <div className="flex justify-center items-center p-2 bg-foreground/5 rounded">{icon}</div>
+        <span className="text-xs">{name}</span>
+        <div className="flex justify-center items-center p-2 bg-primary/10 rounded">{icon}</div>
       </div>
       {content}
     </Card>

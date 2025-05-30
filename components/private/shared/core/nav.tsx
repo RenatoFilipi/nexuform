@@ -38,6 +38,7 @@ import {
   PlusIcon,
   Settings2Icon,
   SunIcon,
+  ZapIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
@@ -184,9 +185,10 @@ const NavApp = () => {
   const global = useGlobalStore();
   const pathname = usePathname();
   const user = useUserStore();
-  const avatarName = user.email.slice(0, 2);
+  const avatarName = user.email.slice(0, 1);
   const isActive = (path: string) => path === pathname;
   const isFreeTrial = user.subscription.plan === "free_trial";
+  const isViewingForm = slug && global.form.id !== "";
 
   const links = [
     {
@@ -210,15 +212,7 @@ const NavApp = () => {
       icon: Settings2Icon,
       enabled: false,
     },
-    {
-      id: 4,
-      name: t("label_billing"),
-      path: "/dashboard/settings/billing",
-      icon: CreditCardIcon,
-      enabled: false,
-    },
   ];
-
   const query = useQuery({
     queryKey: ["editorResetData"],
     queryFn: () => {
@@ -230,18 +224,19 @@ const NavApp = () => {
   if (query.isPending) return null;
 
   return (
-    <div className="h-12 flex items-center px-6 justify-between z-10 bg-background fixed w-full">
+    <div
+      className={`${
+        !isViewingForm ? "border-b" : ""
+      } h-14 flex items-center px-8 justify-between z-10 bg-background fixed w-full`}>
       <div className="flex justify-center items-center gap-4 h-full">
-        <div className="flex justify-center items-center gap-2">
-          <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
-            <Link href={"/dashboard/forms"}>
-              <Brand type="logo" className="h-5 fill-foreground" />
-            </Link>
-          </Button>
-        </div>
-        {slug && global.form.id !== "" && (
+        <Button variant={"ghost"} size={"icon"} className="h-8 w-8" asChild>
+          <Link href={"/dashboard/forms"}>
+            <Brand type="logo" className="h-5 fill-foreground" />
+          </Link>
+        </Button>
+        {isViewingForm && (
           <div className="flex justify-center items-center gap-1">
-            <span className="text-xs font-medium truncate max-w-[200px]">{global.form.name}</span>
+            <span className="text-sm font-medium truncate max-w-[200px]">{global.form.name}</span>
             <ChangeForm>
               <button className="flex justify-center items-center p-1 hover:bg-foreground/5 rounded">
                 <ChevronsUpDownIcon className="w-4 h-4" />
@@ -257,9 +252,9 @@ const NavApp = () => {
                   key={link.id}
                   href={link.path}
                   className={`${
-                    isActive(link.path) ? "text-foreground/100 font-medium bg-foreground/5" : "text-foreground/70"
-                  } text-xs flex justify-center items-center px-2 py-2 rounded hover:bg-foreground/5 relative gap-2`}>
-                  <link.icon className={`${isActive(link.path) ? "text-primary" : "text-foreground/70"} w-4 h-4`} />
+                    isActive(link.path) ? "text-foreground/100 font-medium bg-foreground/5" : "text-muted-foreground"
+                  } text-sm flex justify-center items-center px-2 py-2 rounded hover:bg-foreground/5 relative gap-2`}>
+                  <link.icon className={`${isActive(link.path) ? "text-primary" : "text-muted-foreground"} w-4 h-4`} />
                   {link.name}
                 </Link>
               );
@@ -269,24 +264,24 @@ const NavApp = () => {
       <div className="hidden sm:flex justify-center items-center gap-4">
         <div className="flex justify-center items-center gap-3">
           <FeedbackForm>
-            <Button variant={"outline"} size={"xs"}>
+            <Button variant={"outline"} size={"sm"}>
               <MessageSquareCodeIcon className="w-4 h-4 mr-2" />
               {t("fb_label")}
             </Button>
           </FeedbackForm>
           {isFreeTrial && (
-            <Button variant={"secondary"} size={"xs"} asChild>
+            <Button variant={"outline"} size={"sm"} asChild>
               <Link href={"/dashboard/settings/billing"}>
-                <ArrowUpRightIcon className="w-4 h-4 mr-2" />
+                <ZapIcon className="w-4 h-4 mr-2" />
                 {t("label_upgrade_now")}
               </Link>
             </Button>
           )}
         </div>
         <AvatarAppMenu>
-          <Avatar className="cursor-pointer w-8 h-8">
-            <AvatarFallback className="bg-foreground/5">
-              <span className="first-letter:uppercase text-xs">{avatarName}</span>
+          <Avatar className="cursor-pointer w-9 h-9">
+            <AvatarFallback className="bg-foreground hover:bg-foreground/70 transition">
+              <span className="first-letter:uppercase text-xs font-bold text-background">{avatarName}</span>
             </AvatarFallback>
           </Avatar>
         </AvatarAppMenu>

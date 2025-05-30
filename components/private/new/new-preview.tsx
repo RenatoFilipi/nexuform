@@ -199,19 +199,30 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
           <AlertDialogDescription></AlertDialogDescription>
         </AlertDialogHeader>
         <div className="flex flex-col w-full justify-start items-center h-full overflow-y-auto">
-          <div className="flex justify-between items-center w-full py-3 px-6">
-            <h1 className="font-medium">{template.name}</h1>
-            <div className="flex justify-center items-center gap-4">
-              <Button onClick={() => setOpen(false)} variant={"outline"} size={"sm"} disabled={appState === "loading"}>
+          <div className="flex flex-wrap justify-between items-center w-full py-4 px-6 bg-background">
+            <h1 className="text-base font-semibold tracking-tight text-foreground">{template.name}</h1>
+            <div className="flex flex-wrap gap-2 sm:gap-4 items-center mt-2 sm:mt-0">
+              <Button
+                onClick={() => setOpen(false)}
+                variant="outline"
+                size="sm"
+                className=""
+                disabled={appState === "loading"}>
                 <ChevronLeftIcon className="w-4 h-4 mr-2" />
                 {t("label_go_back")}
               </Button>
-              <Button variant={"secondary"} size={"sm"} disabled={appState === "loading"} onClick={onCreate}>
+              <Button
+                variant="secondary"
+                size="sm"
+                disabled={appState === "loading"}
+                onClick={onCreate}
+                className="transition">
                 {appState === "loading" && <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />}
                 {t("label_use_template")}
               </Button>
             </div>
           </div>
+
           {query.isPending && (
             <div className="flex justify-center items-center flex-1">
               <LoaderIcon className="w-7 h-7 animate-spin" />

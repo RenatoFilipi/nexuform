@@ -68,7 +68,7 @@ const NewWrapper = (props: IProps) => {
   if (query.isPending) return null;
 
   return (
-    <div className="flex-1 mt-12 mb-12 sm:mb-0 flex flex-col gap-6 sm:gap-10 px-3 sm:px-20 lg:px-52 py-4 sm:py-8">
+    <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-6 sm:gap-10 px-3 sm:px-20 lg:px-52 py-4 sm:py-8">
       {view === "none" && (
         <div className="flex flex-col gap-6 sm:gap-10">
           <div className="grid gap-1">
@@ -79,7 +79,7 @@ const NewWrapper = (props: IProps) => {
             <CardNew
               icon={
                 <div className="p-3 rounded bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors">
-                  <PlusIcon className="w-7 h-7 text-blue-500" />
+                  <PlusIcon className="w-6 h-6 text-blue-500" />
                 </div>
               }
               description={t("desc_custom")}
@@ -98,7 +98,7 @@ const NewWrapper = (props: IProps) => {
             <CardNew
               icon={
                 <div className="p-3 rounded bg-orange-500/10 group-hover:bg-orange-500/20 transition-colors">
-                  <HexagonIcon className="w-7 h-7 text-orange-500" />
+                  <HexagonIcon className="w-6 h-6 text-orange-500" />
                 </div>
               }
               description={t("desc_templates")}
@@ -159,15 +159,18 @@ const TemplateList = ({ setView }: { setView: TSetState<TView> }) => {
 
   return (
     <div className="flex flex-col gap-6 sm:gap-10 flex-1 min-h-full">
-      <div className="flex justify-start items-center gap-2">
-        <Button variant={"ghost"} size={"icon"} className="" onClick={() => setView("none")}>
-          <ChevronLeftIcon />
-        </Button>
-        <div className="grid gap-1">
-          <span className="font-semibold text-lg">{t("label_templates")}</span>
-          <p className="text-xs text-muted-foreground">{t("desc_templates")}</p>
+      <div className="flex flex-col gap-4">
+        <div className="flex justify-start items-center gap-2">
+          <Button variant={"ghost"} size={"icon"} className="" onClick={() => setView("none")}>
+            <ChevronLeftIcon />
+          </Button>
+          <div className="grid gap-1">
+            <span className="font-semibold text-lg">{t("label_templates")}</span>
+            <p className="text-xs text-muted-foreground">{t("desc_templates")}</p>
+          </div>
         </div>
       </div>
+
       {query.isPending && (
         <div className="flex justify-center items-center flex-1">
           <LoaderIcon className="w-7 h-7 animate-spin" />

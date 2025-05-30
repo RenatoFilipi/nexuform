@@ -26,7 +26,7 @@
     --success-foreground: 0 0% 0%;
     --warning: 42 85% 53%; /* F8AA14 converted to HSL */
     --warning-foreground: 0 0% 0%;
-    --info: 219 100% 27%; /* 005388 converted to HSL */
+    --info: 229 93% 42%;
     --info-foreground: 0 0% 100%;
     --ring: 0 0% 85.1%;
     --radius: 0.3rem;
@@ -51,7 +51,7 @@
     --background: 0 0% 11.76%;
     --foreground: 0 0% 98%;
     --muted: 260 0% 18.46%;
-    --muted-foreground: 260 2.31% 61.89%;
+    --muted-foreground: 260 0% 62%;
     --popover: 0 0% 11.76%;
     --popover-foreground: 0 0% 98%;
     --card: 0 0% 11.76%;
@@ -70,8 +70,8 @@
     --success-foreground: 0 0% 100%;
     --warning: 42 85% 53%; /* F8AA14 converted to HSL */
     --warning-foreground: 19 100% 85%;
-    --info: 219 100% 27%; /* 005388 converted to HSL */
-    --info-foreground: 237 100% 85%;
+    --info: 229 93% 42%;
+    --info-foreground: 235 93% 79%;
     --ring: 255 4.35% 18.04%;
     --chart-1: 210 60% 40%;
     --chart-2: 190 50% 45%;

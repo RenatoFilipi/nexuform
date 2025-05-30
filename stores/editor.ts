@@ -38,6 +38,7 @@ const useEditorStore = create<editor>((set) => ({
     public_url: "",
     success_title: "",
     success_description: "",
+    org_id: "",
   },
   theme: {
     id: "",
@@ -109,6 +110,7 @@ const useEditorStore = create<editor>((set) => ({
         public_url: "",
         success_title: "",
         success_description: "",
+        org_id: "",
       },
       theme: {
         id: "",

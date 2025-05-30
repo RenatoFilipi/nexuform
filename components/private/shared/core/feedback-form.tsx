@@ -82,7 +82,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     );
 
   return (
-    <div className=" flex flex-col justify-between gap-3">
+    <div className="flex flex-col justify-between gap-3">
       <div className="flex flex-col">
         <Textarea value={value} onChange={(e) => setValue(e.target.value)} placeholder={t("fb_placeholder")} />
       </div>
