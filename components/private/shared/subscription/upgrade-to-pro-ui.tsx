@@ -4,6 +4,7 @@ import CheckoutStripe from "@/components/private/checkout/checkout-stripe";
 import { Button } from "@/components/ui/button";
 import useUserStore from "@/stores/user";
 import { EProfile, ESubscription } from "@/utils/entities";
+import { proPricing } from "@/utils/envs";
 import { getPlans } from "@/utils/plans";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRightIcon, CheckIcon, GemIcon } from "lucide-react";
@@ -73,7 +74,7 @@ const UpgradeToProUI = ({
             <div className="flex flex-col items-center gap-8 p-6 rounded-lg bg-muted-foreground/5">
               <div className="text-center">
                 <div className="flex items-end justify-center gap-1">
-                  <span className="text-4xl font-bold">$9</span>
+                  <span className="text-4xl font-bold">${proPricing}</span>
                   <span className="text-muted-foreground">/{t("label_per_month")}</span>
                 </div>
               </div>
