@@ -2,20 +2,33 @@
 
 import FormStatusBadge from "@/components/shared/badges/form-status-badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
+import { EForm, EProfile, ESubmissionLog, ESubscription, EViewLog } from "@/utils/entities";
 import { formatDecimal, formatTime, getAverageCompletionRate, getAverageCompletionTime } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
+import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRightIcon, EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import FormSubmissionsActivityChart from "./form-submissions-activity-chart";
+import OverviewActivityChart from "./overview-activity-chart";
+import OverviewCard from "./overview-card";
 
-const FormOverview = () => {
+interface IProps {
+  profile: EProfile;
+  subscription: ESubscription;
+  email: string;
+  locale: string;
+  submissionLogs: ESubmissionLog[];
+  viewLogs: EViewLog[];
+  form: EForm;
+}
+
+const OverviewWrapper = (props: IProps) => {
   const t = useTranslations("app");
-  const global = useGlobalStore();
   const user = useUserStore();
+  const global = useGlobalStore();
+
   const totalViews = global.viewLogs.length.toString();
   const totalSubmissions = global.submissionLogs.length.toString();
   const avgCompletionTime = formatTime(
@@ -25,34 +38,43 @@ const FormOverview = () => {
   const avgCompletionRate = `${formatDecimal(
     getAverageCompletionRate(global.viewLogs.length, global.submissionLogs.length)
   )}%`;
-  //const updatedAt = formatDateRelativeToNow(global.form.updated_at, user.locale);
+
+  const query = useQuery({
+    queryKey: ["formData2"],
+    queryFn: () => {
+      user.setEmail(props.email);
+      user.setProfile(props.profile);
+      user.setSubscription(props.subscription);
+      user.setLocale(props.locale);
+      global.setForm(props.form);
+      global.setSubmissionLogs(props.submissionLogs);
+      global.setViewLogs(props.viewLogs);
+      return null;
+    },
+  });
+
+  if (query.isPending) return null;
 
   return (
     <div className="w-full h-full flex-1 flex flex-col gap-4">
-      <div className="flex flex-col justify-center items-start">
-        <div className="flex justify-between items-center flex-col sm:flex-row w-full gap-4">
-          <div className="flex sm:justify-start justify-between items-center gap-3 w-full">
-            <div className="flex justify-start items-center gap-2">
-              <h1 className="font-semibold text-base truncate max-w-[240px]">{global.form.name}</h1>
-            </div>
-            <FormStatusBadge status={global.form.status as TFormStatus} />
-          </div>
-          <div className="flex justify-center items-center gap-4 w-full sm:justify-end">
-            <Button variant="secondary" size="sm" asChild>
-              <Link href={`/dashboard/editor/${global.form.id}`} className="w-full sm:w-fit">
-                <ArrowUpRightIcon className="w-4 h-4 mr-2" />
-                {t("nav_editor")}
-              </Link>
-            </Button>
-          </div>
+      {/* header */}
+      <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
+        <div className="flex justify-between items-center gap-4 w-full sm:w-fit">
+          <h1 className="font-semibold text-base truncate max-w-[240px]">{global.form.name}</h1>
+          <FormStatusBadge status={global.form.status as TFormStatus} />
         </div>
-        {/* <span className="text-xs text-muted-foreground hidden sm:flex">
-          {t("label_last_updated")} {updatedAt}
-        </span> */}
+        <Button variant="secondary" size="sm" asChild>
+          <Link href={`/dashboard/editor/${global.form.id}`} className="w-full sm:w-fit">
+            <ArrowUpRightIcon className="w-4 h-4 mr-2" />
+            {t("nav_editor")}
+          </Link>
+        </Button>
       </div>
+      {/* content */}
       <div className="gap-6 grid sm:grid-cols-2">
+        {/* cards */}
         <div className="grid grid-cols-2 sm:grid-rows-2 sm:grid-cols-2 gap-2 sm:gap-6">
-          <CardTemplate
+          <OverviewCard
             name={t("label_total_views")}
             content={
               <div>
@@ -61,7 +83,7 @@ const FormOverview = () => {
             }
             icon={<EyeIcon className="w-4 h-4 text-primary" />}
           />
-          <CardTemplate
+          <OverviewCard
             name={t("label_total_submissions")}
             content={
               <div className="flex justify-between items-center">
@@ -70,7 +92,7 @@ const FormOverview = () => {
             }
             icon={<SendIcon className="w-4 h-4 text-primary" />}
           />
-          <CardTemplate
+          <OverviewCard
             name={t("label_completion_rate")}
             content={
               <div>
@@ -79,7 +101,7 @@ const FormOverview = () => {
             }
             icon={<VoteIcon className="w-4 h-4 text-primary" />}
           />
-          <CardTemplate
+          <OverviewCard
             name={t("label_avg_completion_time")}
             content={
               <div>
@@ -89,22 +111,11 @@ const FormOverview = () => {
             icon={<TimerIcon className="w-4 h-4 text-primary" />}
           />
         </div>
-        <FormSubmissionsActivityChart />
+        {/* chart */}
+        <OverviewActivityChart />
       </div>
     </div>
   );
 };
 
-const CardTemplate = ({ name, icon, content }: { name: string; icon: React.ReactNode; content: React.ReactNode }) => {
-  return (
-    <Card className="p-4 justify-between flex flex-col gap-3 w-full">
-      <div className="flex justify-between items-center w-full">
-        <span className="text-xs">{name}</span>
-        <div className="flex justify-center items-center p-2 bg-primary/10 rounded">{icon}</div>
-      </div>
-      {content}
-    </Card>
-  );
-};
-
-export default FormOverview;
+export default OverviewWrapper;

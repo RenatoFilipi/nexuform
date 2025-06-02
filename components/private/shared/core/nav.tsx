@@ -25,7 +25,6 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ArrowUpRightIcon,
   ChartNoAxesColumnIcon,
-  ChevronsUpDownIcon,
   CircleHelpIcon,
   CreditCardIcon,
   InboxIcon,
@@ -188,7 +187,7 @@ const NavApp = () => {
   const avatarName = user.email.slice(0, 1);
   const isActive = (path: string) => path === pathname;
   const isFreeTrial = user.subscription.plan === "free_trial";
-  const isViewingForm = slug && global.form.id !== "";
+  const isViewingForm = slug;
 
   const links = [
     {
@@ -234,7 +233,7 @@ const NavApp = () => {
             <Brand type="logo" className="h-5 fill-foreground" />
           </Link>
         </Button>
-        {isViewingForm && (
+        {/* {isViewingForm && (
           <div className="flex justify-center items-center gap-1">
             <span className="text-sm font-medium truncate max-w-[200px]">{global.form.name}</span>
             <ChangeForm>
@@ -243,7 +242,7 @@ const NavApp = () => {
               </button>
             </ChangeForm>
           </div>
-        )}
+        )} */}
         <div className="hidden sm:flex justify-center items-center gap-2 h-full">
           {links.map((link) => {
             if (link.enabled)
