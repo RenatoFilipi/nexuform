@@ -15,7 +15,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 
-const FormSubmissionStatus = ({ submission, setState }: { submission: ESubmission; setState: TSetState<boolean> }) => {
+const SubmissionStatus = ({ submission, setState }: { submission: ESubmission; setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const supabase = createClient();
   const [appState, setAppState] = useState<TAppState>("idle");
@@ -118,5 +118,4 @@ const FormSubmissionStatus = ({ submission, setState }: { submission: ESubmissio
     </div>
   );
 };
-
-export default FormSubmissionStatus;
+export default SubmissionStatus;

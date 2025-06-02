@@ -14,7 +14,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import { toast } from "sonner";
-import FormSubmissionDetails from "../form-submission-details";
+import { default as FormSubmissionDetails, default as SubmissionDetails } from "./submission-details";
 
 const SubmissionsList = () => {
   const t = useTranslations("app");
@@ -154,11 +154,11 @@ const SubmissionsList = () => {
                       </div>
                     </TableCell>
                     <TableCell className="text-right py-3">
-                      <FormSubmissionDetails blocks={global.blocks} submission={submission}>
+                      <SubmissionDetails blocks={global.blocks} submission={submission}>
                         <Button variant={"outline"} size={"icon"} className="">
                           <ArrowUpRightIcon className="w-5 h-5" />
                         </Button>
-                      </FormSubmissionDetails>
+                      </SubmissionDetails>
                     </TableCell>
                   </TableRow>
                 );

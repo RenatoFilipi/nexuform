@@ -15,11 +15,11 @@ import { useTranslations } from "next-intl";
 import Papa from "papaparse";
 import { useState } from "react";
 import { useMedia } from "react-use";
-import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
-import ManageSubscription from "../shared/subscription/manage-subscription";
-import FormSubmissionStatus from "./form-submission-status";
+import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../../ui/drawer";
+import ManageSubscription from "../../shared/subscription/manage-subscription";
+import FormSubmissionStatus from "./submission-status";
 
-const FormSubmissionDetails = ({
+const SubmissionDetails = ({
   children,
   submission,
   blocks,
@@ -61,7 +61,6 @@ const FormSubmissionDetails = ({
     </Drawer>
   );
 };
-
 const Body = ({
   setState,
   submission,
@@ -227,5 +226,4 @@ const Body = ({
     </div>
   );
 };
-
-export default FormSubmissionDetails;
+export default SubmissionDetails;
