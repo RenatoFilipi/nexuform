@@ -4,7 +4,6 @@ import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
 import { EBlock, EForm, EProfile, ESubmission, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
 import SubmissionsList from "./submissions-list";
 
 interface IProps {
@@ -18,7 +17,6 @@ interface IProps {
 }
 
 const SubmissionsWrapper = (props: IProps) => {
-  const t = useTranslations("app");
   const user = useUserStore();
   const global = useGlobalStore();
 

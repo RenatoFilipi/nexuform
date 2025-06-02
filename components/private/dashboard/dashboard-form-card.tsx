@@ -12,10 +12,9 @@ import useUserStore from "@/stores/user";
 import { EForm } from "@/utils/entities";
 import { formatDateRelativeToNow } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
-import { BarChartIcon, MoreHorizontalIcon, PenIcon, Share2Icon, TrashIcon } from "lucide-react";
+import { BarChartIcon, MoreHorizontalIcon, PenIcon, SendIcon, Share2Icon, TrashIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import FormGlobalShare from "../form/form-modal-share";
 import FormDelete from "../shared/form/form-delete";
 
 const DashboardFormCard = ({ form }: { form: EForm }) => {
@@ -23,6 +22,12 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
   const router = useRouter();
   const { id, name, status, updated_at } = form;
   const user = useUserStore();
+  const options = [
+    { name: t("nav_overview"), icon: BarChartIcon, url: `/dashboard/forms/${id}/overview` },
+    { name: t("nav_submissions"), icon: SendIcon, url: `/dashboard/forms/${id}/submissions` },
+    { name: t("label_share"), icon: Share2Icon, url: `/dashboard/forms/${id}/share` },
+    { name: t("label_edit"), icon: PenIcon, url: `/dashboard/editor/${id}` },
+  ];
 
   return (
     <Card className="flex flex-col h-48 p-5 justify-between border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm">
@@ -45,28 +50,18 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-48" align="end">
-            <DropdownMenuItem
-              className="cursor-pointer hover:bg-accent flex justify-between items-center"
-              onClick={() => router.push(`/dashboard/forms/${id}`)}
-              onSelect={(e) => e.preventDefault()}>
-              {t("nav_overview")}
-              <BarChartIcon className="w-4 h-4" />
-            </DropdownMenuItem>
-            <FormGlobalShare form={form}>
-              <DropdownMenuItem
-                className="cursor-pointer hover:bg-accent flex justify-between items-center"
-                onSelect={(e) => e.preventDefault()}>
-                {t("label_share")}
-                <Share2Icon className="w-4 h-4" />
-              </DropdownMenuItem>
-            </FormGlobalShare>
-            <DropdownMenuItem
-              className="cursor-pointer hover:bg-accent flex justify-between items-center"
-              onClick={() => router.push(`/dashboard/editor/${id}`)}
-              onSelect={(e) => e.preventDefault()}>
-              {t("label_edit")}
-              <PenIcon className="w-4 h-4" />
-            </DropdownMenuItem>
+            {options.map((opt) => {
+              return (
+                <DropdownMenuItem
+                  key={opt.name}
+                  className="cursor-pointer hover:bg-accent flex justify-between items-center"
+                  onClick={() => router.push(opt.url)}
+                  onSelect={(e) => e.preventDefault()}>
+                  {opt.name}
+                  <opt.icon className="w-4 h-4" />
+                </DropdownMenuItem>
+              );
+            })}
             <DropdownMenuSeparator />
             <FormDelete formId={id} formName={name}>
               <DropdownMenuItem

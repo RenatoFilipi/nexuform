@@ -73,7 +73,6 @@ const FormShare = () => {
               </Button>
             </div>
           )}
-
           {isPublished && (
             <div className="grid md:grid-cols-2 gap-0 divide-y md:divide-y-0 md:divide-x divide-muted-foreground/10">
               {/* Link Sharing Section */}
