@@ -25,12 +25,6 @@ const nextConfig = {
         destination: "/",
         permanent: true,
       },
-      // Novo redirecionamento dinâmico
-      {
-        source: "/dashboard/:slug",
-        destination: "/dashboard/:slug/overview",
-        permanent: true,
-      },
     ];
   },
   devIndicators: false,
