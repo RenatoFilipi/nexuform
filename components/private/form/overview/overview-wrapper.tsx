@@ -19,9 +19,9 @@ interface IProps {
   subscription: ESubscription;
   email: string;
   locale: string;
+  form: EForm;
   submissionLogs: ESubmissionLog[];
   viewLogs: EViewLog[];
-  form: EForm;
 }
 
 const OverviewWrapper = (props: IProps) => {
@@ -40,7 +40,7 @@ const OverviewWrapper = (props: IProps) => {
   )}%`;
 
   const query = useQuery({
-    queryKey: ["formData2"],
+    queryKey: ["formOverviewData"],
     queryFn: () => {
       user.setEmail(props.email);
       user.setProfile(props.profile);

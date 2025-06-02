@@ -61,5 +61,5 @@ const Overview = async ({ params }: { params: Promise<{ slug: string }> }) => {
 export default Overview;
 
 export const metadata: Metadata = {
-  title: "Form",
+  title: "Overview",
 };
