@@ -1,6 +1,7 @@
 import AccountWrapper from "@/components/private/settings/account/account-wrapper";
 import ErrorUI from "@/components/shared/utils/error-ui";
 import { createClient } from "@/utils/supabase/server";
+import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
@@ -22,3 +23,7 @@ const Account = async () => {
 };
 
 export default Account;
+
+export const metadata: Metadata = {
+  title: "Account",
+};

@@ -58,7 +58,7 @@ const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProp
   if (query.isPending) return null;
 
   return (
-    <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-6 sm:gap-10 px-3 sm:px-20 lg:px-52 py-4 sm:py-8">
+    <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-6 sm:gap-10 px-3 sm:px-20 lg:px-64 py-4 sm:py-8">
       <div className="flex justify-between items-center flex-col sm:flex-row gap-3">
         <div className="flex justify-between items-center w-full sm:w-fit">
           <h1 className="text-xl font-medium">{t("label_forms")}</h1>
@@ -67,7 +67,7 @@ const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProp
           </div>
         </div>
         <div className="flex justify-center items-center gap-4 flex-col sm:flex-row w-full sm:w-fit">
-          <div className="flex gap-4 w-full">
+          <div className="gap-4 w-full hidden">
             <Input
               type="search"
               placeholder={t("label_search_forms")}

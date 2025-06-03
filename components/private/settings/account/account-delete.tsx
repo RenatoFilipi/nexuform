@@ -23,7 +23,7 @@ import { useQueryState } from "nuqs";
 import { ReactNode, useState, useTransition } from "react";
 import { toast } from "sonner";
 
-const SettingsAccountDelete = ({ children }: { children: ReactNode }) => {
+const AccountDelete = ({ children }: { children: ReactNode }) => {
   const t = useTranslations("app");
   const [open, setOpen] = useState(false);
   const [error] = useQueryState("error");
@@ -58,7 +58,6 @@ const SettingsAccountDelete = ({ children }: { children: ReactNode }) => {
     </AlertDialog>
   );
 };
-
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const [isPending, startTransition] = useTransition();
@@ -105,5 +104,4 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     </div>
   );
 };
-
-export default SettingsAccountDelete;
+export default AccountDelete;

@@ -1,4 +1,4 @@
-import BillingWrapper from "@/components/private/billing/billing-wrapper";
+import BillingWrapper from "@/components/private/settings/billing/billing-wrapper";
 import ErrorUI from "@/components/shared/utils/error-ui";
 import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";

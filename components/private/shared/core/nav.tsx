@@ -77,7 +77,7 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
     {
       id: 3,
       name: t("nav_settings"),
-      path: "/dashboard/settings",
+      path: "/dashboard/settings/account",
       icon: Settings2Icon,
       enabled: true,
     },

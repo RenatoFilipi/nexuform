@@ -46,8 +46,8 @@ const ShareWrapper = (props: IProps) => {
     return (
       <div className="flex flex-col items-center justify-center text-center p-10 space-y-8">
         <div className="relative group">
-          <div className="relative flex justify-center items-center p-3 w-fit rounded bg-info/10">
-            <Share2Icon className="w-6 h-6 text-info" />
+          <div className="relative flex justify-center items-center p-3 w-fit rounded bg-primary/10">
+            <Share2Icon className="w-6 h-6 text-primary" />
           </div>
         </div>
         <div className="space-y-3">

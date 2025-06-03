@@ -22,7 +22,7 @@ import {
   ZapIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import ManageSubscription from "../shared/subscription/manage-subscription";
+import ManageSubscription from "../../shared/subscription/manage-subscription";
 
 const BillingUsage = () => {
   const t = useTranslations("app");
@@ -54,36 +54,12 @@ const BillingUsage = () => {
       <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
         <div className="flex items-center gap-4 w-full sm:w-auto">
           <div className="flex flex-col gap-1">
-            <h1 className="text-2xl font-bold tracking-tight">{t("label_billing_and_usage")}</h1>
+            <h1 className="text-lg font-semibold tracking-tight">{t("label_billing_and_usage")}</h1>
             <p className="text-sm text-muted-foreground">{t("desc_billing_and_usage")}</p>
           </div>
         </div>
       </div>
       <div className="flex w-full gap-6 flex-col">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
-          <UsageCard
-            limit={formsLimit}
-            count={user.formsCount}
-            usage={formsUsage}
-            available={user.subscription.forms}
-            label={t("label_forms")}
-            labelUsage={t("label_all_time")}
-            labelAvailable={t("label_forms_included")}
-            showBillingWarning={false}
-            icon={<LayersIcon className="h-5 w-5 text-primary" />}
-          />
-          <UsageCard
-            limit={submissionsLimit}
-            count={user.submissionLogs.length}
-            usage={submissionsUsage}
-            available={user.subscription.submissions}
-            label={t("label_submissions")}
-            labelUsage={t("label_monthly_usage")}
-            labelAvailable={t("label_submissions_included")}
-            showBillingWarning
-            icon={<Send className="h-5 w-5 text-primary" />}
-          />
-        </div>
         {isCancelled && (
           <div className="border rounded-lg bg-background/50 p-6 flex flex-col md:flex-row gap-8 w-full mx-auto shadow-sm">
             <div className="md:w-2/3 flex flex-col justify-center">
@@ -163,6 +139,30 @@ const BillingUsage = () => {
             </div>
           </div>
         )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
+          <UsageCard
+            limit={formsLimit}
+            count={user.formsCount}
+            usage={formsUsage}
+            available={user.subscription.forms}
+            label={t("label_forms")}
+            labelUsage={t("label_all_time")}
+            labelAvailable={t("label_forms_included")}
+            showBillingWarning={false}
+            icon={<LayersIcon className="h-5 w-5 text-primary" />}
+          />
+          <UsageCard
+            limit={submissionsLimit}
+            count={user.submissionLogs.length}
+            usage={submissionsUsage}
+            available={user.subscription.submissions}
+            label={t("label_submissions")}
+            labelUsage={t("label_monthly_usage")}
+            labelAvailable={t("label_submissions_included")}
+            showBillingWarning
+            icon={<Send className="h-5 w-5 text-primary" />}
+          />
+        </div>
       </div>
     </div>
   );
@@ -245,7 +245,6 @@ const UsageCard = ({
     </Card>
   );
 };
-
 const WarningTooltip = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations("app");
   return (

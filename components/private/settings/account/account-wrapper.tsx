@@ -15,7 +15,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import SettingsAccountDelete from "../settings-account-delete";
+import AccountDelete from "./account-delete";
 
 interface IProps {
   profile: EProfile;
@@ -44,20 +44,20 @@ const AccountWrapper = (props: IProps) => {
   return (
     <div className="flex flex-col gap-8 mb-14">
       {/* header */}
-      <div className="">
+      <div className="flex flex-col gap-1">
         <h1 className="font-semibold text-lg tracking-tight">{t("label_account_settings")}</h1>
-        <p className="text-xs text-muted-foreground">{t("desc_account_settings")}</p>
+        <p className="text-sm text-muted-foreground">{t("desc_account_settings")}</p>
       </div>
       {/* content */}
       <div className="flex flex-col gap-8">
-        <AccountProfile />
-        <AccountPassword />
-        <AccountDelete />
+        <Profile />
+        <Password />
+        <Delete />
       </div>
     </div>
   );
 };
-const SettingsHeader = ({ desc, icon, name }: { icon: React.ReactNode; name: string; desc: string }) => {
+const Header = ({ desc, icon, name }: { icon: React.ReactNode; name: string; desc: string }) => {
   return (
     <div className="flex items-start gap-4 border-gray-100 dark:border-gray-800">
       <div className="p-3 rounded bg-primary-50 text-primary-600 dark:text-primary-400 bg-primary/10">{icon}</div>
@@ -68,7 +68,7 @@ const SettingsHeader = ({ desc, icon, name }: { icon: React.ReactNode; name: str
     </div>
   );
 };
-const AccountProfile = () => {
+const Profile = () => {
   const t = useTranslations("app");
   const supabase = createClient();
   const [appState, setAppState] = useState<TAppState>("idle");
@@ -110,7 +110,7 @@ const AccountProfile = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <SettingsHeader
+      <Header
         icon={<User2Icon className="w-5 h-5 text-primary" />}
         name={t("label_profile_info")}
         desc={t("desc_profile_info")}
@@ -163,7 +163,7 @@ const AccountProfile = () => {
     </div>
   );
 };
-const AccountPassword = () => {
+const Password = () => {
   const t = useTranslations("app");
   const supabase = createClient();
   const [appState, setAppState] = useState<TAppState>("idle");
@@ -224,7 +224,7 @@ const AccountPassword = () => {
 
   return (
     <div className="space-y-6">
-      <SettingsHeader
+      <Header
         icon={<LockIcon className="w-5 h-5 text-primary" />}
         name={t("label_password")}
         desc={t("desc_password")}
@@ -303,7 +303,7 @@ const AccountPassword = () => {
     </div>
   );
 };
-const AccountDelete = () => {
+const Delete = () => {
   const t = useTranslations("app");
 
   return (
@@ -319,15 +319,14 @@ const AccountDelete = () => {
       </div>
 
       <div className="flex justify-center">
-        <SettingsAccountDelete>
+        <AccountDelete>
           <Button variant="destructive" size="sm" className="w-full md:w-auto">
             <Trash2Icon className="w-4 h-4 mr-2" />
             {t("label_delete_account")}
           </Button>
-        </SettingsAccountDelete>
+        </AccountDelete>
       </div>
     </div>
   );
 };
-
 export default AccountWrapper;
