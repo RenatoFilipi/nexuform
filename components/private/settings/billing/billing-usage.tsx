@@ -73,7 +73,7 @@ const BillingUsage = () => {
             </div>
             <div className="md:w-1/3 flex flex-col justify-center items-center md:items-end">
               <ManageSubscription>
-                <Button className="gap-2 w-full md:w-auto" variant="outline" size="sm">
+                <Button className="gap-2 w-full md:w-auto" variant="secondary" size="sm">
                   <ArrowUpRightIcon className="h-4 w-4" />
                   {t("label_manage_sub")}
                 </Button>
@@ -130,7 +130,7 @@ const BillingUsage = () => {
               </div>
               <div className="flex justify-end">
                 <ManageSubscription>
-                  <Button variant="outline" size="sm" className="w-full sm:w-auto gap-2">
+                  <Button variant="secondary" size="sm" className="w-full sm:w-auto gap-2">
                     <Settings className="h-4 w-4" />
                     {t("label_manage_sub")}
                   </Button>

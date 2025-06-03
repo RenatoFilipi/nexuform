@@ -388,7 +388,14 @@
     "label_editor_no_blocks_warn": "You cannot publish a form without any blocks. Please add at least one block to proceed.",
     "label_password_weak": "Weak",
     "label_password_medium": "Medium",
-    "label_password_strong": "Strong"
+    "label_password_strong": "Strong",
+    "label_quick_tips": "Quick Tips",
+    "label_tip_publish_to_share": "Publish the form to enable sharing options",
+    "label_tip_configure_privacy": "Configure privacy settings in the editor",
+    "label_tip_manage_access": "Manage access by link or specific users",
+    "label_tip_restrict_access": "Set custom access rules for your form",
+    "label_next_steps": "Next Steps",
+    "label_configure_sharing": "Configure Sharing"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

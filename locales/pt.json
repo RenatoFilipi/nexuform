@@ -388,7 +388,14 @@
     "label_editor_no_blocks_warn": "Você não pode publicar um formulário sem blocos. Adicione pelo menos um bloco para continuar.",
     "label_password_weak": "Fraco",
     "label_password_medium": "Médio",
-    "label_password_strong": "Forte"
+    "label_password_strong": "Forte",
+    "label_quick_tips": "Dicas Rápidas",
+    "label_tip_publish_to_share": "Publique o formulário para habilitar opções de compartilhamento",
+    "label_tip_configure_privacy": "Configure as configurações de privacidade no editor",
+    "label_tip_manage_access": "Gerencie o acesso por link ou por usuários específicos",
+    "label_tip_restrict_access": "Defina regras de acesso personalizadas para seu formulário",
+    "label_next_steps": "Próximos Passos",
+    "label_configure_sharing": "Configurar Compartilhamento"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",
