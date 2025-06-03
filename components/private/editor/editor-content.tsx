@@ -4,7 +4,17 @@ import useEditorStore from "@/stores/editor";
 import { EBlock, ETheme } from "@/utils/entities";
 import { TBlock, TEditorView } from "@/utils/types";
 import { Reorder, useDragControls } from "framer-motion";
-import { Edit2Icon, GripVerticalIcon, PartyPopperIcon, PlusIcon, SquareStackIcon, Trash2Icon } from "lucide-react";
+import {
+  CheckCircleIcon,
+  ComponentIcon,
+  Edit2Icon,
+  GripVerticalIcon,
+  PaletteIcon,
+  PlusIcon,
+  SettingsIcon,
+  Share2Icon,
+  Trash2Icon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import CheckBoxesDesign from "../design/checkboxes-design";
 import CustomScaleDesign from "../design/custom-scale-design";
@@ -41,30 +51,29 @@ const EditorContent = () => {
   const hasBlocks = editor.blocks.length > 0;
 
   const pages = [
-    { view: "blocks", icon: SquareStackIcon },
-    { view: "success", icon: PartyPopperIcon },
+    { view: "blocks", icon: ComponentIcon },
+    { view: "success", icon: CheckCircleIcon },
   ];
 
   return (
     <div className="w-full flex justify-center items-start overflow-y-auto relative">
       {hasBlocks && (
-        <div className="p-2 flex justify-center items-center fixed mt-12 left-2 top-2 rounded flex-col gap-3">
+        <div className="p-2 flex justify-center items-center fixed mt-16 left-2 top-2 rounded flex-col gap-4">
           <EditorAddBlock>
-            <Button variant={"outline"} size={"icon"} className="w-8 h-8">
+            <Button variant={"outline"} size={"icon"} className="w-10 h-10">
               <PlusIcon className="w-4 h-4" />
             </Button>
           </EditorAddBlock>
-
           <div className="flex flex-col gap-2">
             {pages.map((page) => {
               const isActive = page.view === editor.view;
               return (
                 <button
                   className={`
-                p-2 rounded-md transition-all
+                rounded-md transition-all w-10 h-10
                 ${
                   isActive
-                    ? "bg-foreground/10 text-foreground shadow-sm"
+                    ? "bg-foreground/5 text-foreground shadow-sm"
                     : "text-muted-foreground/90 hover:bg-muted hover:text-foreground"
                 }
                 flex items-center justify-center
@@ -92,6 +101,29 @@ const EditorCanvas = () => {
   const { blocks, view, form, theme } = useEditorStore();
   const empty = blocks.length <= 0;
 
+  const tips = [
+    {
+      icon: <PlusIcon className="h-4 w-4" />,
+      title: t("label_tips_form"),
+      description: t("desc_tips_form"),
+    },
+    {
+      icon: <PaletteIcon className="h-4 w-4" />,
+      title: t("label_tips_design"),
+      description: t("desc_tips_design"),
+    },
+    {
+      icon: <SettingsIcon className="h-4 w-4" />,
+      title: t("label_tips_settings"),
+      description: t("desc_tips_settings"),
+    },
+    {
+      icon: <Share2Icon className="h-4 w-4" />,
+      title: t("label_tips_share"),
+      description: t("desc_tips_share"),
+    },
+  ];
+
   if (!empty && view === "blocks") {
     return (
       <div className="flex p-4 sm:p-8 w-full justify-center items-center flex-col sm:w-[650px]">
@@ -114,10 +146,11 @@ const EditorCanvas = () => {
   }
   return (
     <div className="flex justify-center items-center w-full h-full p-8">
-      <div className="flex flex-col items-center justify-center h-full w-full p-4">
+      <div className="flex flex-col items-center justify-center h-full w-full p-4 gap-14">
+        {/* Add button */}
         <div className="flex flex-col items-center max-w-md text-center space-y-6">
-          <div className="rounded-full bg-primary/10 p-3">
-            <PlusIcon className="h-7 w-7 text-primary" />
+          <div className="rounded bg-primary/10 p-3">
+            <PlusIcon className="h-6 w-6 text-primary" />
           </div>
           <div className="space-y-2">
             <h3 className="text-xl font-semibold">{t("label_start_form")}</h3>
@@ -129,6 +162,28 @@ const EditorCanvas = () => {
               {t("label_first_block")}
             </Button>
           </EditorAddBlock>
+        </div>
+        {/* Tips Cards Section */}
+        <div className="w-full max-w-4xl flex-col gap-8 hidden">
+          <h3 className="text-base text-center">{t("desc_blocks")}</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {tips.map((tip, index) => (
+              <div
+                key={index}
+                className="group relative bg-background rounded-lg border border-border/50 p-6 hover:border-primary/30 transition-all duration-200 hover:shadow-lg">
+                <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative z-10 flex flex-col gap-4">
+                  <div className="flex justify-center items-center p-2 bg-primary/10 w-fit h-fit rounded text-primary">
+                    {tip.icon}
+                  </div>
+                  <div className="flex flex-col">
+                    <h4 className="font-medium mb-2">{tip.title}</h4>
+                    <p className="text-sm text-muted-foreground">{tip.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

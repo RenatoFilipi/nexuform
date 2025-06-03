@@ -16,7 +16,7 @@ const Home = async () => {
   return (
     <div className="min-h-dvh flex flex-col relative">
       <Navbar />
-      <div className="relative flex flex-col justify-center items-center px-0 flex-1">
+      <div className="relative flex flex-col justify-center items-center px-0 flex-1 gap-10">
         <Hero />
         <Features />
         <HowItWorks />

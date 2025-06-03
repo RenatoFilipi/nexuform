@@ -12,7 +12,6 @@ import { createClient } from "@/utils/supabase/client";
 import { TAppState, TPlan } from "@/utils/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  ArrowUpRightIcon,
   ChartNoAxesColumnIcon,
   CircleHelpIcon,
   CreditCardIcon,
@@ -285,7 +284,6 @@ const NavEditor = () => {
   const router = useRouter();
   const [appState, setAppState] = useState<TAppState>("idle");
   const active = isSubscriptionActive(subscription);
-  const isFreeTrial = subscription.plan === "free_trial";
 
   const handleSave = async () => {
     if (appState === "loading") return;
@@ -295,7 +293,7 @@ const NavEditor = () => {
       await Promise.all([saveForm(), saveTheme(), saveBlocks()]);
       toast.success(t("suc_update_form"));
       queryClient.invalidateQueries({ queryKey: ["submissionData"] });
-      router.push(`/dashboard/forms/${form.id}`);
+      router.push(`/dashboard/forms/${form.id}/overview`);
     } catch (error) {
       console.error("Save operation failed:", error);
       toast.error((error as Error).message || t("err_generic"));
@@ -379,15 +377,15 @@ const NavEditor = () => {
   };
 
   return (
-    <div className="h-12 flex justify-between items-center w-full bg-background border-b px-6 z-20 fixed">
-      <div className="flex justify-center items-center gap-1">
+    <div className="h-14 flex justify-between items-center w-full bg-background border-b px-4 sm:px-8 z-20 fixed">
+      <div className="flex justify-center items-center gap-2">
         <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
           <Link href={"/dashboard/forms"}>
-            <Brand type="logo" className="h-5 fill-foreground" />
+            <Brand type="logo" className="h-4 fill-foreground" />
           </Link>
         </Button>
         <div className="hidden sm:flex justify-center items-center gap-2">
-          <span className="text-sm font-medium truncate max-w-[280px] hover:bg-foreground/5 py-1 px-2 flex justify-center items-center rounded">
+          <span className="text-sm font-semibold truncate max-w-[280px] hover:bg-foreground/5 py-1 px-2 flex justify-center items-center rounded">
             {form.name}
           </span>
         </div>
@@ -413,15 +411,7 @@ const NavEditor = () => {
             </div>
           </RadioGroup>
           <div className="flex justify-center items-center gap-2">
-            {isFreeTrial && (
-              <Button variant={"outline"} size={"xs"} asChild>
-                <Link href={"/dashboard/settings/billing"}>
-                  <ArrowUpRightIcon className="w-4 h-4 mr-2" />
-                  {t("label_upgrade_now")}
-                </Link>
-              </Button>
-            )}
-            <Button size={"xs"} variant={"secondary"} onClick={handleSave} disabled={appState === "loading"}>
+            <Button size={"sm"} variant={"secondary"} onClick={handleSave} disabled={appState === "loading"}>
               {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
               {t("label_save_form")}
             </Button>

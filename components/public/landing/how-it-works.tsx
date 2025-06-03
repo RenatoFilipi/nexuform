@@ -43,146 +43,116 @@ const HowItWorks = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.15,
       },
     },
   };
 
   const cardVariants = {
-    hidden: { y: 30, opacity: 0, scale: 0.95 },
+    hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
-      scale: 1,
       transition: {
-        duration: 0.5,
+        duration: 0.4,
         ease: [0.16, 1, 0.3, 1],
       },
     },
     hover: {
-      y: -10,
-      scale: 1.02,
+      y: -6,
       transition: {
-        duration: 0.3,
-        ease: "easeOut",
+        duration: 0.2,
       },
     },
   };
 
   const listItemVariants = {
-    hidden: { x: -10, opacity: 0 },
+    hidden: { opacity: 0, x: -8 },
     visible: (i: number) => ({
-      x: 0,
       opacity: 1,
+      x: 0,
       transition: {
-        delay: i * 0.1,
+        delay: i * 0.08,
         duration: 0.3,
       },
     }),
-    hover: {
-      x: 5,
-      transition: { duration: 0.2 },
-    },
   };
 
   return (
-    <section
-      id="how-it-works"
-      className="relative py-28 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/10 dark:from-background dark:to-muted/5 overflow-hidden w-full">
-      <div className="max-w-7xl mx-auto relative z-10">
+    <section id="how-it-works" className="relative py-20 px-4 sm:px-6 lg:px-8 bg-background">
+      <div className="max-w-6xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="text-center max-w-3xl mx-auto mb-20 space-y-5">
-          <Badge className="bg-primary/10 text-primary border-primary/20 dark:bg-primary/20 dark:border-primary/30 px-4 py-2 text-sm font-medium shadow-sm hover:bg-primary/20 transition-colors">
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+          <Badge className="text-primary border-primary/30 dark:border-primary/50 px-3 py-1 text-xs">
             {t("nav_htw")}
           </Badge>
-          <h2 className="text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80">
-            {t("htw_headline")}
-          </h2>
-          <p className="text-xl text-muted-foreground/90 dark:text-muted-foreground/70 leading-relaxed">
-            {t("htw_subheadline")}
-          </p>
+          <h2 className="text-3xl font-bold tracking-tight text-foreground">{t("htw_headline")}</h2>
+          <p className="text-muted-foreground/80 leading-relaxed">{t("htw_subheadline")}</p>
         </motion.div>
 
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {steps.map((step, index) => (
-            <motion.div key={step.title} variants={cardVariants} whileHover="hover" custom={index} className="h-full">
-              <Card className="h-full overflow-hidden border border-muted/20 dark:border-muted/30 bg-background/90 dark:bg-muted/5 backdrop-blur-sm transition-all duration-300 group shadow-lg hover:shadow-xl dark:hover:shadow-purple-500/10">
-                {/* Gradient accent header */}
-                <div className={`h-2 ${step.accent} w-full relative overflow-hidden`}>
+            <motion.div key={step.title} variants={cardVariants} whileHover="hover" className="h-full">
+              <Card className="h-full overflow-hidden border border-muted/20 dark:border-muted/30 bg-background/90 dark:bg-muted/5 group transition-all">
+                {/* Accent bar */}
+                <div className={`h-1.5 ${step.accent} w-full relative overflow-hidden`}>
                   <motion.div
                     initial={{ x: "-100%" }}
                     whileInView={{ x: "100%" }}
                     transition={{
-                      duration: 2.5,
-                      delay: index * 0.3,
+                      duration: 2,
+                      delay: index * 0.2,
                       repeat: Infinity,
                       ease: "linear",
                     }}
-                    className="absolute inset-0 bg-white/30 w-full"
+                    className="absolute inset-0 bg-white/30"
                   />
                 </div>
 
-                <div className={`p-8 ${step.bgColor} transition-colors duration-500 relative`}>
-                  {/* Animated floating gradient */}
-                  <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 0.1 }}
-                    whileHover={{ opacity: 0.2 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    className={`absolute -right-4 -top-4 w-24 h-24 rounded-full ${step.color} blur-xl`}
-                  />
-
-                  <div className="flex items-start gap-5 relative z-10">
+                <div className={`p-6 ${step.bgColor} transition-colors duration-300`}>
+                  <div className="flex items-start gap-4">
                     <motion.div
-                      initial={{ scale: 0.9, opacity: 0.8 }}
-                      whileInView={{ scale: 1, opacity: 1 }}
-                      transition={{ duration: 0.4, delay: index * 0.2 }}
-                      className={`p-4 rounded-xl bg-gradient-to-br ${step.color} text-white shadow-lg flex-shrink-0`}>
-                      <step.icon className="h-6 w-6" />
+                      initial={{ scale: 0.9 }}
+                      whileInView={{ scale: 1 }}
+                      transition={{ duration: 0.3 }}
+                      className={`p-3 rounded-lg bg-gradient-to-br ${step.color} text-white shadow-sm`}>
+                      <step.icon className="h-5 w-5" />
                     </motion.div>
                     <div>
-                      <h3 className="text-2xl font-bold text-foreground dark:text-foreground">
+                      <h3 className="text-lg font-semibold text-foreground">
                         <span className={`text-transparent bg-clip-text bg-gradient-to-r ${step.color}`}>
                           {index + 1}.
                         </span>{" "}
                         {step.title}
                       </h3>
-                      <p className="text-muted-foreground dark:text-muted-foreground mt-2 text-sm leading-relaxed">
-                        {step.description}
-                      </p>
+                      <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">{step.description}</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-8 space-y-5 bg-background/90 dark:bg-muted/5">
-                  <ul className="space-y-4">
+                <div className="p-6 space-y-4">
+                  <ul className="space-y-3">
                     {step.details.map((detail, i) => (
                       <motion.li
                         key={detail}
                         variants={listItemVariants}
                         initial="hidden"
                         whileInView="visible"
-                        whileHover="hover"
                         custom={i}
-                        className="flex items-start gap-4">
-                        <div
-                          className={`flex-shrink-0 mt-1 p-1.5 rounded-full ${step.bgColor} group-hover:bg-gradient-to-br ${step.color} transition-all duration-300`}>
-                          <CheckIcon
-                            className={`h-4 w-4 ${
-                              i === 0 ? step.color.split(" ")[0].replace("from-", "text-") : "text-muted-foreground"
-                            } group-hover:text-white transition-colors duration-300`}
-                          />
+                        className="flex items-start gap-3">
+                        <div className={`flex-shrink-0 mt-0.5 p-1 rounded-full ${step.bgColor}`}>
+                          <CheckIcon className="h-3.5 w-3.5 text-muted-foreground" />
                         </div>
-                        <p className="text-foreground/90 dark:text-foreground/80 text-base leading-relaxed">{detail}</p>
+                        <p className="text-sm text-foreground/90 dark:text-foreground/80 leading-relaxed">{detail}</p>
                       </motion.li>
                     ))}
                   </ul>

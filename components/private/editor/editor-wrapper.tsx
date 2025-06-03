@@ -53,7 +53,7 @@ const EditorWrapper = (props: IProps) => {
   });
 
   return (
-    <div className="flex w-full flex-1 gap-4 relative pt-12 max-h-dvh overflow-hidden">
+    <div className="flex w-full flex-1 gap-4 relative pt-14 max-h-dvh overflow-hidden">
       {query.isPending && (
         <div className="flex justify-center items-center w-full">
           <LoaderIcon className="w-6 h-6 animate-spin" />

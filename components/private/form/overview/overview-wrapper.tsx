@@ -56,11 +56,11 @@ const OverviewWrapper = (props: IProps) => {
   if (query.isPending) return null;
 
   return (
-    <div className="w-full h-full flex-1 flex flex-col gap-4">
+    <div className="w-full h-full flex-1 flex flex-col gap-6">
       {/* header */}
       <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
         <div className="flex justify-between items-center gap-4 w-full sm:w-fit">
-          <h1 className="font-semibold text-base truncate max-w-[240px]">{global.form.name}</h1>
+          <h1 className="font-semibold text-lg sm:text-xl truncate sm:max-w-[290px]">{global.form.name}</h1>
           <FormStatusBadge status={global.form.status as TFormStatus} />
         </div>
         <Button variant="secondary" size="sm" asChild>

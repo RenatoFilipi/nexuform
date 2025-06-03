@@ -99,147 +99,159 @@ const SubmissionsList = () => {
   };
 
   return (
-    <div className="flex flex-col w-full gap-8">
+    <div className="flex flex-col w-full gap-4">
       <div>
-        <div className="flex justify-start items-center gap-2 w-full overflow-x-auto">
-          {statusButtons.map((x) => {
-            return (
-              <Button
-                key={x.status}
-                variant={"outline"}
-                size={"sm"}
-                className={`${
-                  status === x.status ? "bg-foreground/10 text-foreground font-semibold" : "text-muted-foreground"
-                } flex justify-center items-center gap-2 w-full sm:w-fit`}
-                onClick={() => setStatus(x.status)}>
-                {x.icon}
-                {x.label}
-              </Button>
-            );
-          })}
-        </div>
+        <span className="font-semibold text-lg sm:text-xl">{t("label_submissions")}</span>
       </div>
-      {isDesktop && (
-        <div className="flex flex-col gap-4">
-          <Table className="border">
-            <TableHeader>
-              <TableRow>
-                <TableHead>{t("col_identifier")}</TableHead>
-                <TableHead>{t("col_status")}</TableHead>
-                <TableHead>{t("col_sent_in")}</TableHead>
-                <TableHead>{t("col_completion_time")}</TableHead>
-                <TableHead className="text-right">{t("col_actions")}</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredSubmissions.map((submission) => {
-                return (
-                  <TableRow key={submission.id} className="text-xs text-foreground/80 hover:bg-transparent">
-                    <TableCell className="p-0 pl-4 font-semibold">{submission.identifier}</TableCell>
-                    <TableCell className="py-3">
-                      <SubmissionStatusBadge status={submission.status as TSubmissionStatus} />
-                    </TableCell>
-                    <TableCell className="py-3">
-                      <div className="flex flex-col justify-center items-start">
-                        <span className="font-semibold">{new Date(submission.created_at).toLocaleString()}</span>
-                        <span className="text-muted-foreground">
-                          {formatDateRelativeToNow(submission.created_at, user.locale)}
-                        </span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="py-3">
-                      <div className="flex justify-start items-center gap-1">
-                        <ClockIcon className="w-3 h-3 text-muted-foreground" />
-                        <span className="font-semibold">{formatTime(submission.completion_time ?? 0, 2)}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-right py-3">
-                      <SubmissionDetails blocks={global.blocks} submission={submission}>
-                        <Button variant={"outline"} size={"icon"} className="">
-                          <ArrowUpRightIcon className="w-5 h-5" />
-                        </Button>
-                      </SubmissionDetails>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-          {noSubmission && (
-            <div className="flex w-full justify-center items-center flex-col gap-4 py-20">
-              <div className="flex justify-center items-center p-3 w-fit rounded bg-primary/10">
-                <SendIcon className="w-6 h-6 text-primary" />
-              </div>
-              <span className="text-sm text-muted-foreground">{t("label_no_submission")}</span>
-            </div>
-          )}
-          {!noSubmission && (
-            <div className="flex w-full justify-end items-center gap-4">
-              <div className="flex justify-center items-center gap-4">
-                <Button disabled={disabledPrevious} onClick={onPreviousData} variant={"outline"} size={"sm"}>
-                  <ChevronLeftIcon className="w-4 h-4 mr-2" />
-                  {t("label_previous")}
-                </Button>
-                <Button disabled={disabledNext} onClick={onNextData} variant={"outline"} size={"sm"}>
-                  {t("label_next")}
-                  <ChevronRightIcon className="w-4 h-4 ml-2" />
-                </Button>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-      {!isDesktop && (
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            {filteredSubmissions.map((submission) => {
+      <div className="flex flex-col w-full gap-6">
+        <div>
+          <div className="flex justify-start items-center gap-2 w-full overflow-x-auto">
+            {statusButtons.map((x) => {
               return (
-                <FormSubmissionDetails key={submission.id} blocks={global.blocks} submission={submission}>
-                  <Card className="flex flex-col border cursor-pointer p-4 gap-6">
-                    <div className="flex justify-between items-center">
-                      <span className="text-base font-semibold">{submission.identifier}</span>
-                      <SubmissionStatusBadge status={submission.status as TSubmissionStatus} />
-                    </div>
-                    <div className="text-foreground/70 flex justify-start flex-col">
-                      <span className="font-semibold text-xs">{new Date(submission.created_at).toLocaleString()}</span>
-                      <span className="text-muted-foreground text-xs">
-                        {formatDateRelativeToNow(submission.created_at)}
-                      </span>
-                    </div>
-                  </Card>
-                </FormSubmissionDetails>
+                <Button
+                  key={x.status}
+                  variant={"outline"}
+                  size={"sm"}
+                  className={`${
+                    status === x.status ? "bg-foreground/10 text-foreground font-semibold" : "text-muted-foreground"
+                  } flex justify-center items-center gap-2 w-full sm:w-fit`}
+                  onClick={() => setStatus(x.status)}>
+                  {x.icon}
+                  {x.label}
+                </Button>
               );
             })}
           </div>
-          {noSubmission && (
-            <div className="flex w-full justify-center items-center flex-col gap-4 py-2">
-              <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/10">
-                <SendIcon className="w-6 h-6 text-primary" />
-              </div>
-              <span className="text-sm text-muted-foreground">{t("label_no_submission")}</span>
-            </div>
-          )}
-          {!noSubmission && (
-            <div className="flex w-full justify-center items-center gap-4">
-              <div className="flex justify-center items-center gap-4 w-full">
-                <Button
-                  disabled={disabledPrevious}
-                  onClick={onPreviousData}
-                  variant={"outline"}
-                  size={"sm"}
-                  className="w-full">
-                  <ChevronLeftIcon className="w-4 h-4 mr-2" />
-                  {t("label_previous")}
-                </Button>
-                <Button disabled={disabledNext} onClick={onNextData} variant={"outline"} size={"sm"} className="w-full">
-                  {t("label_next")}
-                  <ChevronRightIcon className="w-4 h-4 ml-2" />
-                </Button>
-              </div>
-            </div>
-          )}
         </div>
-      )}
+        {isDesktop && (
+          <div className="flex flex-col gap-4">
+            <Table className="border">
+              <TableHeader>
+                <TableRow>
+                  <TableHead>{t("col_identifier")}</TableHead>
+                  <TableHead>{t("col_status")}</TableHead>
+                  <TableHead>{t("col_sent_in")}</TableHead>
+                  <TableHead>{t("col_completion_time")}</TableHead>
+                  <TableHead className="text-right">{t("col_actions")}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredSubmissions.map((submission) => {
+                  return (
+                    <TableRow key={submission.id} className="text-xs text-foreground/80 hover:bg-transparent">
+                      <TableCell className="p-0 pl-4 font-semibold">{submission.identifier}</TableCell>
+                      <TableCell className="py-3">
+                        <SubmissionStatusBadge status={submission.status as TSubmissionStatus} />
+                      </TableCell>
+                      <TableCell className="py-3">
+                        <div className="flex flex-col justify-center items-start">
+                          <span className="font-semibold">{new Date(submission.created_at).toLocaleString()}</span>
+                          <span className="text-muted-foreground">
+                            {formatDateRelativeToNow(submission.created_at, user.locale)}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="py-3">
+                        <div className="flex justify-start items-center gap-1">
+                          <ClockIcon className="w-3 h-3 text-muted-foreground" />
+                          <span className="font-semibold">{formatTime(submission.completion_time ?? 0, 2)}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-right py-3">
+                        <SubmissionDetails blocks={global.blocks} submission={submission}>
+                          <Button variant={"outline"} size={"icon"} className="">
+                            <ArrowUpRightIcon className="w-5 h-5" />
+                          </Button>
+                        </SubmissionDetails>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+            {noSubmission && (
+              <div className="flex w-full justify-center items-center flex-col gap-4 py-20">
+                <div className="flex justify-center items-center p-3 w-fit rounded bg-primary/10">
+                  <SendIcon className="w-6 h-6 text-primary" />
+                </div>
+                <span className="text-sm text-muted-foreground">{t("label_no_submission")}</span>
+              </div>
+            )}
+            {!noSubmission && (
+              <div className="flex w-full justify-end items-center gap-4">
+                <div className="flex justify-center items-center gap-4">
+                  <Button disabled={disabledPrevious} onClick={onPreviousData} variant={"outline"} size={"sm"}>
+                    <ChevronLeftIcon className="w-4 h-4 mr-2" />
+                    {t("label_previous")}
+                  </Button>
+                  <Button disabled={disabledNext} onClick={onNextData} variant={"outline"} size={"sm"}>
+                    {t("label_next")}
+                    <ChevronRightIcon className="w-4 h-4 ml-2" />
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+        {!isDesktop && (
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
+              {filteredSubmissions.map((submission) => {
+                return (
+                  <FormSubmissionDetails key={submission.id} blocks={global.blocks} submission={submission}>
+                    <Card className="flex flex-col border cursor-pointer p-4 gap-6">
+                      <div className="flex justify-between items-center">
+                        <span className="text-base font-semibold">{submission.identifier}</span>
+                        <SubmissionStatusBadge status={submission.status as TSubmissionStatus} />
+                      </div>
+                      <div className="text-foreground/70 flex justify-start flex-col">
+                        <span className="font-semibold text-xs">
+                          {new Date(submission.created_at).toLocaleString()}
+                        </span>
+                        <span className="text-muted-foreground text-xs">
+                          {formatDateRelativeToNow(submission.created_at)}
+                        </span>
+                      </div>
+                    </Card>
+                  </FormSubmissionDetails>
+                );
+              })}
+            </div>
+            {noSubmission && (
+              <div className="flex w-full justify-center items-center flex-col gap-4 py-2">
+                <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/10">
+                  <SendIcon className="w-6 h-6 text-primary" />
+                </div>
+                <span className="text-sm text-muted-foreground">{t("label_no_submission")}</span>
+              </div>
+            )}
+            {!noSubmission && (
+              <div className="flex w-full justify-center items-center gap-4">
+                <div className="flex justify-center items-center gap-4 w-full">
+                  <Button
+                    disabled={disabledPrevious}
+                    onClick={onPreviousData}
+                    variant={"outline"}
+                    size={"sm"}
+                    className="w-full">
+                    <ChevronLeftIcon className="w-4 h-4 mr-2" />
+                    {t("label_previous")}
+                  </Button>
+                  <Button
+                    disabled={disabledNext}
+                    onClick={onNextData}
+                    variant={"outline"}
+                    size={"sm"}
+                    className="w-full">
+                    {t("label_next")}
+                    <ChevronRightIcon className="w-4 h-4 ml-2" />
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
