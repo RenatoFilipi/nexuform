@@ -1,36 +1,27 @@
 "use client";
 
-import { BarChartIcon, SendIcon, Share2Icon } from "lucide-react";
+import { CircleUserIcon, CreditCard } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const FormNav = () => {
+const SettingsNav = () => {
   const t = useTranslations("app");
   const pathname = usePathname();
-  const pathSegments = pathname.split("/");
-  const formId = pathSegments[pathSegments.length - 2];
-
   const isActive = (path: string) => pathname.endsWith(path);
 
   const views = [
     {
-      name: t("nav_overview"),
-      icon: BarChartIcon,
+      name: t("nav_account"),
+      icon: CircleUserIcon,
       enabled: true,
-      path: `/dashboard/forms/${formId}/overview`,
+      path: `/dashboard/settings/account`,
     },
     {
-      name: t("nav_submissions"),
-      icon: SendIcon,
+      name: t("nav_billing_and_usage"),
+      icon: CreditCard,
       enabled: true,
-      path: `/dashboard/forms/${formId}/submissions`,
-    },
-    {
-      name: t("label_share"),
-      icon: Share2Icon,
-      enabled: true,
-      path: `/dashboard/forms/${formId}/share`,
+      path: `/dashboard/settings/billing`,
     },
   ];
 
@@ -54,4 +45,4 @@ const FormNav = () => {
   );
 };
 
-export default FormNav;
+export default SettingsNav;

@@ -64,7 +64,7 @@ const ShareWrapper = (props: IProps) => {
     );
 
   return (
-    <div className="grid">
+    <div className="flex flex-col gap-10">
       <ShareLink />
       <ShareQrCode />
     </div>
@@ -78,7 +78,7 @@ const ShareLink = () => {
   const fullUrl = `${protocol}://${window.location.host}/s/${global.form.public_url}`;
 
   return (
-    <div className="p-8 space-y-6">
+    <div className="space-y-6">
       <div className="space-y-2">
         <Label className="text-base font-semibold">{t("label_link_share")}</Label>
         <p className="text-xs text-muted-foreground/80">{t("desc_link_share")}</p>
@@ -147,7 +147,7 @@ const ShareQrCode = () => {
   };
 
   return (
-    <div className="p-8 space-y-6">
+    <div className="space-y-6">
       <div className="space-y-2">
         <Label className="text-base font-semibold">{t("label_qr_share")}</Label>
         <p className="text-xs text-muted-foreground/80">{t("desc_qr_share")}</p>

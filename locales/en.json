@@ -385,7 +385,10 @@
     "desc_save_only": "Save your progress without publishing",
     "label_save_publish": "Save & Publish",
     "desc_save_publish": "Save and make this form publicly available",
-    "label_editor_no_blocks_warn": "You cannot publish a form without any blocks. Please add at least one block to proceed."
+    "label_editor_no_blocks_warn": "You cannot publish a form without any blocks. Please add at least one block to proceed.",
+    "label_password_weak": "Weak",
+    "label_password_medium": "Medium",
+    "label_password_strong": "Strong"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

@@ -2,25 +2,14 @@
 
 import { signOutAction } from "@/app/actions/auth";
 import FeedbackForm from "@/components/private/shared/core/feedback-form";
-import FormStatusBadge from "@/components/shared/badges/form-status-badge";
-import { Badge } from "@/components/ui/badge";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+import PlanBadge from "@/components/shared/badges/plan-badge";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import useEditorStore from "@/stores/editor";
-import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
-import { minWidth640 } from "@/utils/constants";
 import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
-import { TAppState, TFormStatus, TPlan, TSetState } from "@/utils/types";
+import { TAppState, TPlan } from "@/utils/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ArrowUpRightIcon,
@@ -34,7 +23,6 @@ import {
   MessageSquareCodeIcon,
   MonitorIcon,
   MoonIcon,
-  PlusIcon,
   Settings2Icon,
   SunIcon,
   ZapIcon,
@@ -42,9 +30,8 @@ import {
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { useMedia } from "react-use";
 import { toast } from "sonner";
 import { default as Brand } from "../../../shared/core/brand";
 import { Avatar, AvatarFallback } from "../../../ui/avatar";
@@ -178,16 +165,19 @@ const NavAppMobile = ({ children }: { children: React.ReactNode }) => {
   );
 };
 const NavApp = () => {
-  const { slug } = useParams<{ slug: string }>();
   const t = useTranslations("app");
   const editor = useEditorStore();
-  const global = useGlobalStore();
   const pathname = usePathname();
   const user = useUserStore();
   const avatarName = user.email.slice(0, 1);
   const isActive = (path: string) => path === pathname;
   const isFreeTrial = user.subscription.plan === "free_trial";
-  const isViewingForm = slug;
+
+  const noBottomNav =
+    pathname === "/dashboard/forms" ||
+    pathname === "/dashboard/analytics" ||
+    pathname === "/dashboard/help" ||
+    pathname === "/dashboard/forms/new";
 
   const links = [
     {
@@ -207,7 +197,7 @@ const NavApp = () => {
     {
       id: 3,
       name: t("nav_settings"),
-      path: "/dashboard/settings",
+      path: "/dashboard/settings/account",
       icon: Settings2Icon,
       enabled: false,
     },
@@ -225,24 +215,14 @@ const NavApp = () => {
   return (
     <div
       className={`${
-        !isViewingForm ? "border-b" : ""
-      } h-14 flex items-center px-8 justify-between z-10 bg-background fixed w-full`}>
+        noBottomNav ? "border-b" : ""
+      } h-14 flex items-center px-4 sm:px-8 justify-between z-10 bg-background fixed w-full`}>
       <div className="flex justify-center items-center gap-4 h-full">
         <Button variant={"ghost"} size={"icon"} className="h-8 w-8" asChild>
           <Link href={"/dashboard/forms"}>
             <Brand type="logo" className="h-5 fill-foreground" />
           </Link>
         </Button>
-        {/* {isViewingForm && (
-          <div className="flex justify-center items-center gap-1">
-            <span className="text-sm font-medium truncate max-w-[200px]">{global.form.name}</span>
-            <ChangeForm>
-              <button className="flex justify-center items-center p-1 hover:bg-foreground/5 rounded">
-                <ChevronsUpDownIcon className="w-4 h-4" />
-              </button>
-            </ChangeForm>
-          </div>
-        )} */}
         <div className="hidden sm:flex justify-center items-center gap-2 h-full">
           {links.map((link) => {
             if (link.enabled)
@@ -451,103 +431,6 @@ const NavEditor = () => {
     </div>
   );
 };
-const PlanBadge = ({ plan }: { plan: TPlan }) => {
-  const planLabels: Record<TPlan, string> = {
-    free_trial: "Free Trial",
-    basic: "Basic",
-    pro: "Pro",
-    business: "Business",
-    custom: "Custom",
-  };
-
-  return <Badge variant="primary">{planLabels[plan] || "Custom"}</Badge>;
-};
-const ChangeForm = ({ children }: { children: React.ReactNode }) => {
-  const isDesktop = useMedia(minWidth640);
-  const [open, setOpen] = useState(false);
-
-  if (isDesktop) {
-    return (
-      <DropdownMenu open={open} onOpenChange={setOpen}>
-        <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
-        <DropdownMenuContent className="flex w-[300px] p-3">
-          <ChangeFormBody setState={setOpen} />
-        </DropdownMenuContent>
-      </DropdownMenu>
-    );
-  }
-
-  return (
-    <Drawer>
-      <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3 flex flex-col max-h-[60%] h-full">
-        <DrawerHeader className="hidden">
-          <DrawerTitle></DrawerTitle>
-          <DrawerDescription></DrawerDescription>
-        </DrawerHeader>
-        <ChangeFormBody setState={setOpen} />
-      </DrawerContent>
-    </Drawer>
-  );
-};
-const ChangeFormBody = ({ setState }: { setState: TSetState<boolean> }) => {
-  const t = useTranslations("app");
-  const global = useGlobalStore();
-
-  return (
-    <div className="flex flex-col gap-5 w-full h-full">
-      {/* Header */}
-      <div className="flex flex-col gap-1">
-        <h3 className="text-sm font-medium text-foreground">{t("label_forms")}</h3>
-      </div>
-      {/* Forms List */}
-      <div className="flex-1 overflow-y-auto pr-1 custom-scrollbar">
-        <div className="flex flex-col gap-2">
-          {global.forms.map((x) => (
-            <a
-              key={x.id}
-              href={`/dashboard/forms/${x.id}`}
-              className={`
-                group relative flex items-center justify-between rounded-lg p-2 transition-all
-                ${
-                  global.form.id === x.id
-                    ? "bg-accent/50 border border-accent cursor-default"
-                    : "hover:bg-accent/30 border border-transparent hover:border-accent/30"
-                }
-              `}>
-              <div className="flex-1 min-w-0">
-                <p
-                  className={`text-sm truncate ${
-                    global.form.id === x.id ? "font-medium text-foreground" : "text-foreground/90"
-                  }`}>
-                  {x.name}
-                </p>
-                <p className="text-xs text-muted-foreground truncate">{new Date(x.created_at).toLocaleDateString()}</p>
-              </div>
-              <FormStatusBadge status={x.status as TFormStatus} />
-            </a>
-          ))}
-        </div>
-      </div>
-      {/* Action Buttons */}
-      <div className="flex flex-col-reverse sm:flex-row gap-3 pt-2 border-t border-muted/20">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setState(false)}
-          className="w-full sm:w-24 hover:bg-muted/50">
-          {t("label_close")}
-        </Button>
-        <Button size="sm" variant="secondary" asChild>
-          <Link href="/dashboard/forms/new">
-            <PlusIcon className="w-4 h-4 mr-2" />
-            {t("label_create_form")}
-          </Link>
-        </Button>
-      </div>
-    </div>
-  );
-};
 const AvatarAppMenu = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations("app");
   const user = useUserStore();
@@ -555,7 +438,7 @@ const AvatarAppMenu = ({ children }: { children: React.ReactNode }) => {
   const showPlan = user.subscription.status !== "canceled";
 
   const options = [
-    { label: t("label_settings"), icon: Settings2Icon, path: "/dashboard/settings" },
+    { label: t("label_settings"), icon: Settings2Icon, path: "/dashboard/settings/account" },
     { label: t("label_billing"), icon: CreditCardIcon, path: "/dashboard/settings/billing" },
     { label: t("nav_help"), icon: CircleHelpIcon, path: "/dashboard/help" },
   ];
