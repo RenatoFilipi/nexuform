@@ -1,7 +1,7 @@
 import OverviewWrapper from "@/components/private/form/overview/overview-wrapper";
 import SubscriptionUI from "@/components/private/shared/subscription/subscription-ui";
 import ErrorUI from "@/components/shared/utils/error-ui";
-import { day } from "@/utils/constants";
+import { qFinalDate, qInitDate } from "@/utils/constants";
 import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
@@ -35,14 +35,16 @@ const Overview = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .from("submission_logs")
     .select("*")
     .eq("form_id", slug)
-    .gte("created_at", new Date(Date.now() - 30 * day).toISOString());
+    .gte("created_at", qInitDate.toISOString())
+    .lte("created_at", qFinalDate.toISOString());
   if (submissionLogs.error) return <ErrorUI email={email} />;
 
   const viewLogs = await supabase
     .from("view_logs")
     .select("*")
     .eq("form_id", slug)
-    .gte("created_at", new Date(Date.now() - 30 * day).toISOString());
+    .gte("created_at", qInitDate.toISOString())
+    .lte("created_at", qFinalDate.toISOString());
   if (viewLogs.error) return <ErrorUI email={email} />;
 
   return (

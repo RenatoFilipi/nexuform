@@ -13,6 +13,7 @@ import {
   getAverageCompletionRate,
   getAverageCompletionTime,
 } from "@/utils/functions";
+import { createClient } from "@/utils/supabase/client";
 import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRightIcon, EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
@@ -36,6 +37,7 @@ const OverviewWrapper = (props: IProps) => {
   const t = useTranslations("app");
   const user = useUserStore();
   const global = useGlobalStore();
+  const supabase = createClient();
 
   const totalViews = global.viewLogs.length.toString();
   const totalSubmissions = global.submissionLogs.length.toString();
@@ -62,9 +64,26 @@ const OverviewWrapper = (props: IProps) => {
     },
   });
 
-  const onSelectRange = (from: string, to: string) => {
-    console.log(from);
-    console.log(to);
+  const onSelectRange = async (from: string, to: string) => {
+    const fromD = new Date(from).toISOString();
+    const toD = new Date(to).toISOString();
+
+    const submissionLogs = await supabase
+      .from("submission_logs")
+      .select("*")
+      .eq("form_id", global.form.id)
+      .gte("created_at", fromD)
+      .lte("created_at", toD);
+
+    const viewLogs = await supabase
+      .from("view_logs")
+      .select("*")
+      .eq("form_id", global.form.id)
+      .gte("created_at", fromD)
+      .lte("created_at", toD);
+
+    if (!submissionLogs.error) global.setSubmissionLogs(submissionLogs.data);
+    if (!viewLogs.error) global.setViewLogs(viewLogs.data);
   };
 
   if (query.isPending) return null;
