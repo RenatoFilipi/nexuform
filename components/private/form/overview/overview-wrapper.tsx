@@ -62,6 +62,11 @@ const OverviewWrapper = (props: IProps) => {
     },
   });
 
+  const onSelectRange = (from: string, to: string) => {
+    console.log(from);
+    console.log(to);
+  };
+
   if (query.isPending) return null;
 
   return (
@@ -80,7 +85,7 @@ const OverviewWrapper = (props: IProps) => {
               }}
               onChange={(range) => {
                 if (!range) return;
-                console.log("Selected range:", range);
+                onSelectRange(range.from, range.to);
               }}
             />
             <Button variant="secondary" size="sm" asChild>

@@ -398,7 +398,9 @@
     "label_configure_sharing": "Configure Sharing",
     "label_conversion_rate": "Conversion Rate",
     "label_change": "change",
-    "label_no_change": "No change"
+    "label_no_change": "No change",
+    "label_clear": "Clear",
+    "label_apply": "Apply"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

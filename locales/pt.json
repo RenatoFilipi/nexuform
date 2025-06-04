@@ -398,7 +398,9 @@
     "label_configure_sharing": "Configurar Compartilhamento",
     "label_conversion_rate": "Taxa de Conversão",
     "label_change": "variação",
-    "label_no_change": "Sem alteração"
+    "label_no_change": "Sem alteração",
+    "label_clear": "Limpar",
+    "label_apply": "Aplicar"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

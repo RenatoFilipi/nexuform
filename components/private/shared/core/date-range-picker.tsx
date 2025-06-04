@@ -1,10 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { format, subDays } from "date-fns";
+import useUserStore from "@/stores/user";
+import { subDays } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
@@ -16,16 +15,14 @@ interface IProps {
   onChange?: (range: { from: string; to: string } | undefined) => void;
 }
 
-const format1 = "dd MMM yyyy";
-const format2 = "dd-MM-yyyy";
-
-const presets = [
-  { value: 7, name: "7d" },
-  { value: 30, name: "30d" },
-];
-
 const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
   const t = useTranslations("app");
+  const user = useUserStore();
+
+  const presets = [
+    { label: `7 ${t("label_days")}`, value: 7 },
+    { label: `30 ${t("label_days")}`, value: 30 },
+  ];
   const [range, setRange] = React.useState<DateRange | undefined>(
     initialRange
       ? {
@@ -41,10 +38,16 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
   };
 
   const handleSave = () => {
-    if (range?.from && range?.to) {
+    if (range?.from) {
+      const fromDate = new Date(range.from);
+      fromDate.setHours(0, 0, 0, 0);
+
+      const toDate = range.to ? new Date(range.to) : new Date(range.from);
+      toDate.setHours(23, 59, 59, 999);
+
       onChange?.({
-        from: range.from.toISOString(),
-        to: range.to.toISOString(),
+        from: fromDate.toISOString(),
+        to: toDate.toISOString(),
       });
     } else {
       onChange?.(undefined);
@@ -54,12 +57,13 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
 
   const handlePresetSelect = (days: number) => {
     const today = new Date();
+    today.setHours(23, 59, 59, 999);
     const from = subDays(today, days - 1);
-    const to = today;
+    from.setHours(0, 0, 0, 0);
 
     setRange({
       from,
-      to,
+      to: today,
     });
   };
 
@@ -67,47 +71,38 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
     <div className={cn("", className)}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button variant="outline" size="sm" className="justify-start text-left font-normal w-full">
-            <CalendarIcon className="mr-2 h-3 w-3 text-primary" />
+          <Button variant="outline" size="sm" className="justify-between text-left font-normal sm:w-[230px]">
+            <CalendarIcon className="mr-2 h-4 w-4 text-primary" />
             {range?.from ? (
               range.to ? (
-                <span className="text-xs">
-                  {format(range.from, format1)} → {format(range.to, format1)}
+                <span className="">
+                  {new Date(range.from).toLocaleDateString(user.locale)} →{" "}
+                  {new Date(range.to).toLocaleDateString(user.locale)}
                 </span>
               ) : (
-                <span className="text-xs">{format(range.from, format1)}</span>
+                <span className="">{new Date(range.from).toLocaleDateString(user.locale)}</span>
               )
             ) : (
-              <span className="text-xs">Select dates</span>
+              <span className="">-</span>
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-2" align="start">
-          <div className="flex gap-4">
+        <PopoverContent className="w-auto mt-2" align="start">
+          <div className="flex justify-center items-center gap-4">
             {/* Presets column */}
             <div className="flex flex-col gap-2">
-              <div className="grid grid-cols-1 gap-1">
+              <div className="grid grid-cols-1 gap-3">
                 {presets.map((preset) => (
                   <Button
                     key={preset.value}
                     onClick={() => handlePresetSelect(preset.value)}
                     variant="outline"
-                    size="sm"
-                    className={cn(
-                      "h-7 text-xs w-full",
-                      range?.from &&
-                        range.to &&
-                        range.from.getTime() === subDays(new Date(), preset.value - 1).getTime() &&
-                        range.to.getTime() === new Date().getTime()
-                        ? "bg-primary/10 border-primary"
-                        : ""
-                    )}>
-                    {preset.name}
+                    size="sm">
+                    {preset.label}
                   </Button>
                 ))}
               </div>
             </div>
-
             {/* Calendar column */}
             <div className="flex flex-col">
               <Calendar
@@ -120,24 +115,13 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
               />
             </div>
           </div>
-
           <div className="flex flex-col gap-2 mt-2">
-            <div className="grid grid-cols-2 gap-1">
-              <div className="flex flex-col gap-0.5">
-                <Label className="text-xs">From</Label>
-                <Input value={range?.from ? format(range.from, format2) : ""} readOnly className="h-7 text-xs" />
-              </div>
-              <div className="flex flex-col gap-0.5">
-                <Label className="text-xs">To</Label>
-                <Input value={range?.to ? format(range.to, format2) : ""} readOnly className="h-7 text-xs" />
-              </div>
-            </div>
-            <div className="flex justify-end gap-1">
-              <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={() => handleSelect(undefined)}>
-                Clear
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" size="sm" className="" onClick={() => handleSelect(undefined)}>
+                {t("label_clear")}
               </Button>
-              <Button size="sm" className="h-7 text-xs" onClick={handleSave}>
-                Apply
+              <Button variant={"secondary"} size="sm" className="" onClick={handleSave}>
+                {t("label_apply")}
               </Button>
             </div>
           </div>
