@@ -44,11 +44,11 @@ const AnalyticsSubmissionsByFormChart = () => {
 
   return (
     <Card className="border-none shadow-sm w-full">
-      <CardHeader className="pb-3 px-0">
+      <CardHeader className="pb-3 px-0 pt-0">
         <div className="flex justify-between items-center">
           <CardTitle className="text-lg font-semibold">{t("label_forms")}</CardTitle>
           <div className="flex items-center gap-2 text-sm">
-            <span className="text-muted-foreground">{t("label_conversion")}:</span>
+            <span className="text-muted-foreground first-letter:uppercase">{t("label_conversion")}:</span>
             <span className="font-medium">{overallConversion}%</span>
           </div>
         </div>

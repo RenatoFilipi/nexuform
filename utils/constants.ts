@@ -463,3 +463,5 @@ export const templateColors = [
   "#9f1239",
   "#881337",
 ];
+export const qFinalDate = new Date();
+export const qInitDate = new Date(new Date(qFinalDate).setDate(qFinalDate.getDate() - 7));

@@ -4,6 +4,7 @@ import FormStatusBadge from "@/components/shared/badges/form-status-badge";
 import { Button } from "@/components/ui/button";
 import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
+import { qFinalDate, qInitDate } from "@/utils/constants";
 import { EForm, EProfile, ESubmissionLog, ESubscription, EViewLog } from "@/utils/entities";
 import {
   formatDateRelativeToNow,
@@ -17,9 +18,9 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRightIcon, EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import DateRangePicker from "../../shared/core/date-range-picker";
 import OverviewActivityChart from "./overview-activity-chart";
 import OverviewCard from "./overview-card";
-import OverviewConversionRateChart from "./overview-conversion-rate-chart";
 
 interface IProps {
   profile: EProfile;
@@ -66,27 +67,41 @@ const OverviewWrapper = (props: IProps) => {
   return (
     <div className="w-full h-full flex-1 flex flex-col gap-6">
       {/* header */}
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-1">
         <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
           <div className="flex justify-between items-center gap-4 w-full sm:w-fit">
             <h1 className="font-bold text-lg sm:text-xl truncate sm:max-w-[290px]">{global.form.name}</h1>
-            <FormStatusBadge status={global.form.status as TFormStatus} />
           </div>
-          <Button variant="secondary" size="sm" asChild>
-            <Link href={`/dashboard/editor/${global.form.id}`} className="w-full sm:w-fit">
-              <ArrowUpRightIcon className="w-4 h-4 mr-2" />
-              {t("nav_editor")}
-            </Link>
-          </Button>
+          <div className="flex justify-center items-center gap-4">
+            <DateRangePicker
+              initialRange={{
+                from: qInitDate.toISOString(),
+                to: qFinalDate.toISOString(),
+              }}
+              onChange={(range) => {
+                if (!range) return;
+                console.log("Selected range:", range);
+              }}
+            />
+            <Button variant="secondary" size="sm" asChild>
+              <Link href={`/dashboard/editor/${global.form.id}`} className="w-full sm:w-fit">
+                <ArrowUpRightIcon className="w-4 h-4 mr-2" />
+                {t("nav_editor")}
+              </Link>
+            </Button>
+          </div>
         </div>
-        <span className="text-sm text-muted-foreground hidden sm:flex">
-          {t("label_last_updated")} {formatDateRelativeToNow(global.form.updated_at, user.locale)}
-        </span>
+        <div className="flex justify-start items-center gap-3">
+          <FormStatusBadge status={global.form.status as TFormStatus} />
+          <span className="text-sm text-muted-foreground">
+            {t("label_last_updated")} {formatDateRelativeToNow(global.form.updated_at, user.locale)}
+          </span>
+        </div>
       </div>
       {/* content */}
-      <div className="gap-6 grid">
+      <div className="gap-6 grid sm:grid-cols-2">
         {/* cards */}
-        <div className="grid sm:grid-cols-4 sm:gap-6 gap-3">
+        <div className="grid sm:grid-cols-2 sm:gap-6 gap-3">
           <OverviewCard
             name={t("label_total_views")}
             content={
@@ -125,8 +140,8 @@ const OverviewWrapper = (props: IProps) => {
           />
         </div>
         {/* chart */}
-        <div className="grid sm:grid-cols-2 sm:gap-6 gap-3">
-          <OverviewConversionRateChart />
+        <div className="grid">
+          {/* <OverviewConversionRateChart /> */}
           <OverviewActivityChart />
         </div>
       </div>
