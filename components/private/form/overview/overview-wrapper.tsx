@@ -5,7 +5,13 @@ import { Button } from "@/components/ui/button";
 import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
 import { EForm, EProfile, ESubmissionLog, ESubscription, EViewLog } from "@/utils/entities";
-import { formatDecimal, formatTime, getAverageCompletionRate, getAverageCompletionTime } from "@/utils/functions";
+import {
+  formatDateRelativeToNow,
+  formatDecimal,
+  formatTime,
+  getAverageCompletionRate,
+  getAverageCompletionTime,
+} from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRightIcon, EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
@@ -13,6 +19,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import OverviewActivityChart from "./overview-activity-chart";
 import OverviewCard from "./overview-card";
+import OverviewConversionRateChart from "./overview-conversion-rate-chart";
 
 interface IProps {
   profile: EProfile;
@@ -49,6 +56,7 @@ const OverviewWrapper = (props: IProps) => {
       global.setForm(props.form);
       global.setSubmissionLogs(props.submissionLogs);
       global.setViewLogs(props.viewLogs);
+      console.log(props.viewLogs);
       return null;
     },
   });
@@ -58,27 +66,32 @@ const OverviewWrapper = (props: IProps) => {
   return (
     <div className="w-full h-full flex-1 flex flex-col gap-6">
       {/* header */}
-      <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
-        <div className="flex justify-between items-center gap-4 w-full sm:w-fit">
-          <h1 className="font-semibold text-lg sm:text-xl truncate sm:max-w-[290px]">{global.form.name}</h1>
-          <FormStatusBadge status={global.form.status as TFormStatus} />
+      <div className="flex flex-col">
+        <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
+          <div className="flex justify-between items-center gap-4 w-full sm:w-fit">
+            <h1 className="font-bold text-lg sm:text-xl truncate sm:max-w-[290px]">{global.form.name}</h1>
+            <FormStatusBadge status={global.form.status as TFormStatus} />
+          </div>
+          <Button variant="secondary" size="sm" asChild>
+            <Link href={`/dashboard/editor/${global.form.id}`} className="w-full sm:w-fit">
+              <ArrowUpRightIcon className="w-4 h-4 mr-2" />
+              {t("nav_editor")}
+            </Link>
+          </Button>
         </div>
-        <Button variant="secondary" size="sm" asChild>
-          <Link href={`/dashboard/editor/${global.form.id}`} className="w-full sm:w-fit">
-            <ArrowUpRightIcon className="w-4 h-4 mr-2" />
-            {t("nav_editor")}
-          </Link>
-        </Button>
+        <span className="text-sm text-muted-foreground hidden sm:flex">
+          {t("label_last_updated")} {formatDateRelativeToNow(global.form.updated_at, user.locale)}
+        </span>
       </div>
       {/* content */}
-      <div className="gap-6 grid sm:grid-cols-2">
+      <div className="gap-6 grid">
         {/* cards */}
-        <div className="grid grid-cols-2 sm:grid-rows-2 sm:grid-cols-2 gap-2 sm:gap-6">
+        <div className="grid sm:grid-cols-4 sm:gap-6 gap-3">
           <OverviewCard
             name={t("label_total_views")}
             content={
               <div>
-                <span className="text-base font-bold">{totalViews}</span>
+                <span className="text-base font-semibold">{totalViews}</span>
               </div>
             }
             icon={<EyeIcon className="w-4 h-4 text-primary" />}
@@ -87,7 +100,7 @@ const OverviewWrapper = (props: IProps) => {
             name={t("label_total_submissions")}
             content={
               <div className="flex justify-between items-center">
-                <span className="text-base font-bold">{totalSubmissions}</span>
+                <span className="text-base font-semibold">{totalSubmissions}</span>
               </div>
             }
             icon={<SendIcon className="w-4 h-4 text-primary" />}
@@ -96,7 +109,7 @@ const OverviewWrapper = (props: IProps) => {
             name={t("label_completion_rate")}
             content={
               <div>
-                <span className="text-base font-bold">{avgCompletionRate}</span>
+                <span className="text-base font-semibold">{avgCompletionRate}</span>
               </div>
             }
             icon={<VoteIcon className="w-4 h-4 text-primary" />}
@@ -105,14 +118,17 @@ const OverviewWrapper = (props: IProps) => {
             name={t("label_avg_completion_time")}
             content={
               <div>
-                <span className="text-base font-bold">{avgCompletionTime}</span>
+                <span className="text-base font-semibold">{avgCompletionTime}</span>
               </div>
             }
             icon={<TimerIcon className="w-4 h-4 text-primary" />}
           />
         </div>
         {/* chart */}
-        <OverviewActivityChart />
+        <div className="grid sm:grid-cols-2 sm:gap-6 gap-3">
+          <OverviewConversionRateChart />
+          <OverviewActivityChart />
+        </div>
       </div>
     </div>
   );

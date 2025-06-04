@@ -395,7 +395,10 @@
     "label_tip_manage_access": "Gerencie o acesso por link ou por usuários específicos",
     "label_tip_restrict_access": "Defina regras de acesso personalizadas para seu formulário",
     "label_next_steps": "Próximos Passos",
-    "label_configure_sharing": "Configurar Compartilhamento"
+    "label_configure_sharing": "Configurar Compartilhamento",
+    "label_conversion_rate": "Taxa de Conversão",
+    "label_change": "variação",
+    "label_no_change": "Sem alteração"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

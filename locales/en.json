@@ -395,7 +395,10 @@
     "label_tip_manage_access": "Manage access by link or specific users",
     "label_tip_restrict_access": "Set custom access rules for your form",
     "label_next_steps": "Next Steps",
-    "label_configure_sharing": "Configure Sharing"
+    "label_configure_sharing": "Configure Sharing",
+    "label_conversion_rate": "Conversion Rate",
+    "label_change": "change",
+    "label_no_change": "No change"
   },
   "s": {
     "err_required_all": "Answer all required questions.",
