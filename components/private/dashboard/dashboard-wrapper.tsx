@@ -85,7 +85,7 @@ const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProp
       {isFilteredEmpty && <FilteredEmptyUI />}
       {isEmpty && <EmptyUI />}
       {hasForms && (
-        <div className="overflow-y-auto grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2">
+        <div className="overflow-y-auto grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {filteredForms.map((form) => (
             <DashboardFormCard key={form.id} form={form} />
           ))}

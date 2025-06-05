@@ -26,16 +26,16 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
     { name: t("nav_overview"), icon: BarChartIcon, url: `/dashboard/forms/${id}/overview` },
     { name: t("nav_submissions"), icon: SendIcon, url: `/dashboard/forms/${id}/submissions` },
     { name: t("label_share"), icon: Share2Icon, url: `/dashboard/forms/${id}/share` },
-    { name: t("label_edit"), icon: PenIcon, url: `/dashboard/editor/${id}` },
+    { name: t("label_editor"), icon: PenIcon, url: `/dashboard/editor/${id}` },
   ];
 
   return (
-    <Card className="flex flex-col h-48 p-5 justify-between border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm">
+    <Card className="flex flex-col h-44 p-5 justify-between border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm">
       <div className="flex w-full justify-between items-start">
         <div
           className="flex flex-col gap-2 cursor-pointer w-full"
           onClick={() => router.push(`/dashboard/forms/${id}/overview`)}>
-          <span className="text-base font-medium truncate max-w-[270px] group-hover:text-primary transition-colors">
+          <span className="text-sm font-medium truncate max-w-[270px] group-hover:text-primary transition-colors">
             {name}
           </span>
           <FormStatusBadge status={status as TFormStatus} />

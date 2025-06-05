@@ -217,11 +217,13 @@ const NavApp = () => {
         noBottomNav ? "border-b" : ""
       } h-14 flex items-center px-4 sm:px-8 justify-between z-10 bg-background fixed w-full`}>
       <div className="flex justify-center items-center gap-4 h-full">
-        <Button variant={"ghost"} size={"icon"} className="h-8 w-8" asChild>
-          <Link href={"/dashboard/forms"}>
-            <Brand type="logo" className="h-5 fill-foreground" />
-          </Link>
-        </Button>
+        <div className="flex justify-center items-center gap-4">
+          <Button variant={"ghost"} size={"icon"} className="h-8 w-8" asChild>
+            <Link href={"/dashboard/forms"}>
+              <Brand type="logo" className="h-5 fill-foreground" />
+            </Link>
+          </Button>
+        </div>
         <div className="hidden sm:flex justify-center items-center gap-2 h-full">
           {links.map((link) => {
             if (link.enabled)

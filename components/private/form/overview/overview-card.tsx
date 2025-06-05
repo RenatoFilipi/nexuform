@@ -5,7 +5,7 @@ const OverviewCard = ({ name, icon, content }: { name: string; icon: React.React
     <Card className="p-4 justify-between items-center flex gap-3 w-full">
       <div className="flex items-center w-full gap-3">
         <div className="flex justify-center items-center p-2 bg-primary/10 rounded">{icon}</div>
-        <span className="text-xs">{name}</span>
+        <span className="text-xs font-medium">{name}</span>
       </div>
       {content}
     </Card>
