@@ -112,9 +112,14 @@ const ShareWrapper = (props: IProps) => {
     );
 
   return (
-    <div className="flex flex-col gap-10">
-      <ShareLink />
-      <ShareQrCode />
+    <div className="flex flex-col w-full gap-4">
+      <div>
+        <span className="font-semibold text-lg sm:text-xl">{t("label_share")}</span>
+      </div>
+      <div className="grid sm:grid-cols-2 gap-10">
+        <ShareLink />
+        <ShareQrCode />
+      </div>
     </div>
   );
 };
@@ -129,7 +134,7 @@ const ShareLink = () => {
     <div className="space-y-6">
       <div className="space-y-2">
         <Label className="text-base font-semibold">{t("label_link_share")}</Label>
-        <p className="text-xs text-muted-foreground/80">{t("desc_link_share")}</p>
+        <p className="text-xs text-muted-foreground">{t("desc_link_share")}</p>
       </div>
       <div className="flex items-center gap-2">
         <Input value={fullUrl} readOnly className="text-sm flex-1 font-mono bg-muted/30 border-muted-foreground/20" />
@@ -198,7 +203,7 @@ const ShareQrCode = () => {
     <div className="space-y-6">
       <div className="space-y-2">
         <Label className="text-base font-semibold">{t("label_qr_share")}</Label>
-        <p className="text-xs text-muted-foreground/80">{t("desc_qr_share")}</p>
+        <p className="text-xs text-muted-foreground">{t("desc_qr_share")}</p>
       </div>
 
       <div className="flex flex-col items-center gap-6">

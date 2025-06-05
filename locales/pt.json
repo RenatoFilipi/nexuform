@@ -400,7 +400,8 @@
     "label_change": "variação",
     "label_no_change": "Sem alteração",
     "label_clear": "Limpar",
-    "label_apply": "Aplicar"
+    "label_apply": "Aplicar",
+    "label_save": "Salvar"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

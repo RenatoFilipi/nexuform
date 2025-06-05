@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChartIcon, SendIcon, Share2Icon } from "lucide-react";
+import { BarChartIcon, SendIcon, Settings2Icon, Share2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -31,6 +31,12 @@ const FormNav = () => {
       icon: Share2Icon,
       enabled: true,
       path: `/dashboard/forms/${formId}/share`,
+    },
+    {
+      name: t("label_settings"),
+      icon: Settings2Icon,
+      enabled: true,
+      path: `/dashboard/forms/${formId}/settings`,
     },
   ];
 

@@ -400,7 +400,8 @@
     "label_change": "change",
     "label_no_change": "No change",
     "label_clear": "Clear",
-    "label_apply": "Apply"
+    "label_apply": "Apply",
+    "label_save": "Save"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

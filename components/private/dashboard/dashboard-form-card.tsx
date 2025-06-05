@@ -12,7 +12,15 @@ import useUserStore from "@/stores/user";
 import { EForm } from "@/utils/entities";
 import { formatDateRelativeToNow } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
-import { BarChartIcon, MoreHorizontalIcon, PenIcon, SendIcon, Share2Icon, TrashIcon } from "lucide-react";
+import {
+  BarChartIcon,
+  MoreHorizontalIcon,
+  PenIcon,
+  SendIcon,
+  Settings2Icon,
+  Share2Icon,
+  TrashIcon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import FormDelete from "../shared/form/form-delete";
@@ -26,6 +34,7 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
     { name: t("nav_overview"), icon: BarChartIcon, url: `/dashboard/forms/${id}/overview` },
     { name: t("nav_submissions"), icon: SendIcon, url: `/dashboard/forms/${id}/submissions` },
     { name: t("label_share"), icon: Share2Icon, url: `/dashboard/forms/${id}/share` },
+    { name: t("label_settings"), icon: Settings2Icon, url: `/dashboard/forms/${id}/settings` },
     { name: t("label_editor"), icon: PenIcon, url: `/dashboard/editor/${id}` },
   ];
 
@@ -54,7 +63,7 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
               return (
                 <DropdownMenuItem
                   key={opt.name}
-                  className="cursor-pointer hover:bg-accent flex justify-between items-center"
+                  className="cursor-pointer hover:bg-accent flex justify-between items-center text-xs"
                   onClick={() => router.push(opt.url)}
                   onSelect={(e) => e.preventDefault()}>
                   {opt.name}
