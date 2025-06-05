@@ -401,7 +401,8 @@
     "label_no_change": "Sin cambios",
     "label_clear": "Limpiar",
     "label_apply": "Aplicar",
-    "label_save": "Guardar"
+    "label_save": "Guardar",
+    "label_go_to_form": "Ir al formulario"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

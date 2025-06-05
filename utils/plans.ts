@@ -115,6 +115,7 @@ export const getPlans = async (locale: string): Promise<IPlan[]> => {
         { description: t("app.feat_remove_branding"), comingSoon: false },
         { description: t("app.feat_data_export"), comingSoon: false },
         { description: t("app.feat_forms_templates"), comingSoon: false },
+        { description: t("app.feat_premium_analytics"), comingSoon: false },
       ],
       ctaButton: t("app.label_upgrade_now"),
     },

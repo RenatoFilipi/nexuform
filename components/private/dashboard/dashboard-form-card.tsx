@@ -14,6 +14,7 @@ import { formatDateRelativeToNow } from "@/utils/functions";
 import { TFormStatus } from "@/utils/types";
 import {
   BarChartIcon,
+  ExternalLinkIcon,
   MoreHorizontalIcon,
   PenIcon,
   SendIcon,
@@ -28,8 +29,13 @@ import FormDelete from "../shared/form/form-delete";
 const DashboardFormCard = ({ form }: { form: EForm }) => {
   const t = useTranslations("app");
   const router = useRouter();
-  const { id, name, status, updated_at } = form;
+  const { id, name, status, updated_at, public_url } = form;
   const user = useUserStore();
+
+  const isProduction = process.env.NODE_ENV === "production";
+  const protocol = isProduction ? "https" : "http";
+  const fullUrl = `${protocol}://${window.location.host}/s/${public_url}`;
+
   const options = [
     { name: t("nav_overview"), icon: BarChartIcon, url: `/dashboard/forms/${id}/overview` },
     { name: t("nav_submissions"), icon: SendIcon, url: `/dashboard/forms/${id}/submissions` },
@@ -72,9 +78,20 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
               );
             })}
             <DropdownMenuSeparator />
+            <DropdownMenuItem key="goto" asChild>
+              <a
+                href={fullUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cursor-pointer hover:bg-accent flex justify-between items-center text-xs">
+                {t("label_go_to_form")}
+                <ExternalLinkIcon className="w-4 h-4" />
+              </a>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
             <FormDelete formId={id} formName={name}>
               <DropdownMenuItem
-                className="cursor-pointer text-destructive hover:bg-destructive/5 focus:text-destructive flex justify-between items-center"
+                className="cursor-pointer text-destructive hover:bg-destructive/5 focus:text-destructive flex justify-between items-center text-xs"
                 onSelect={(e) => e.preventDefault()}>
                 {t("label_delete")}
                 <TrashIcon className="w-4 h-4" />

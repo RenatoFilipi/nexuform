@@ -401,7 +401,8 @@
     "label_no_change": "No change",
     "label_clear": "Clear",
     "label_apply": "Apply",
-    "label_save": "Save"
+    "label_save": "Save",
+    "label_go_to_form": "Go to form"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

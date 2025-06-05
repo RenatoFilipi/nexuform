@@ -1,7 +1,6 @@
 import OverviewWrapper from "@/components/private/form/overview/overview-wrapper";
 import SubscriptionUI from "@/components/private/shared/subscription/subscription-ui";
 import ErrorUI from "@/components/shared/utils/error-ui";
-import { qFinalDate, qInitDate } from "@/utils/constants";
 import { isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
@@ -31,20 +30,27 @@ const Overview = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const form = await supabase.from("forms").select("*").eq("owner_id", userId).eq("id", slug).select().single();
   if (form.error) return <ErrorUI email={email} />;
 
+  const today = new Date();
+  today.setHours(23, 59, 59, 999);
+
+  const sevenDaysAgo = new Date(today);
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  sevenDaysAgo.setHours(0, 0, 0, 0);
+
   const submissionLogs = await supabase
     .from("submission_logs")
     .select("*")
     .eq("form_id", slug)
-    .gte("created_at", qInitDate.toISOString())
-    .lte("created_at", qFinalDate.toISOString());
+    .gte("created_at", sevenDaysAgo.toISOString())
+    .lte("created_at", today.toISOString());
   if (submissionLogs.error) return <ErrorUI email={email} />;
 
   const viewLogs = await supabase
     .from("view_logs")
     .select("*")
     .eq("form_id", slug)
-    .gte("created_at", qInitDate.toISOString())
-    .lte("created_at", qFinalDate.toISOString());
+    .gte("created_at", sevenDaysAgo.toISOString())
+    .lte("created_at", today.toISOString());
   if (viewLogs.error) return <ErrorUI email={email} />;
 
   return (
