@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
 import { EForm, EProfile, ESubscription } from "@/utils/entities";
@@ -9,7 +8,6 @@ import { useQuery } from "@tanstack/react-query";
 import { LayersIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useMemo, useState } from "react";
 import DashboardFormCard from "./dashboard-form-card";
 
 interface IProps {
@@ -22,13 +20,11 @@ interface IProps {
 
 const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProps) => {
   const t = useTranslations("app");
-  const [searchValue, setSearchValue] = useState("");
-
   const user = useUserStore();
   const global = useGlobalStore();
 
   const query = useQuery({
-    queryKey: ["dashboardData"],
+    queryKey: ["dashboard-page"],
     queryFn: () => {
       user.setFormsCount(forms.length);
       user.setProfile(profile);
@@ -36,26 +32,11 @@ const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProp
       user.setEmail(email);
       user.setLocale(locale);
       global.setForms(forms);
-      global.resetDateControls();
       return null;
     },
   });
 
-  const filteredForms = useMemo(() => {
-    let result = [...global.forms];
-    if (searchValue) {
-      const searchTerm = searchValue.toLowerCase();
-      result = result.filter(
-        (form) => form.name.toLowerCase().includes(searchTerm) || form.description?.toLowerCase().includes(searchTerm)
-      );
-    }
-    return result;
-  }, [global.forms, searchValue]);
-
   const isEmpty = global.forms.length === 0;
-  const isFilteredEmpty = filteredForms.length === 0 && searchValue !== "";
-  const hasForms = !isEmpty && !isFilteredEmpty;
-
   if (query.isPending) return null;
 
   return (
@@ -68,37 +49,19 @@ const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProp
           </div>
         </div>
         <div className="flex justify-center items-center gap-4 flex-col sm:flex-row w-full sm:w-fit">
-          <div className="gap-4 w-full hidden">
-            <Input
-              type="search"
-              placeholder={t("label_search_forms")}
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              className="sm:w-[250px]"
-            />
-          </div>
           <div className="hidden sm:flex">
             <NewFormButton />
           </div>
         </div>
       </div>
-      {isFilteredEmpty && <FilteredEmptyUI />}
       {isEmpty && <EmptyUI />}
-      {hasForms && (
+      {!isEmpty && (
         <div className="overflow-y-auto grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredForms.map((form) => (
+          {global.forms.map((form) => (
             <DashboardFormCard key={form.id} form={form} />
           ))}
         </div>
       )}
-    </div>
-  );
-};
-const FilteredEmptyUI = () => {
-  const t = useTranslations("app");
-  return (
-    <div className="flex h-full flex-1 justify-center items-center">
-      <span className="text-sm text-muted-foreground">{t("label_no_form_search")}</span>
     </div>
   );
 };
