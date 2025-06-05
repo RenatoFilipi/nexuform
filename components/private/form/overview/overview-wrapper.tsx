@@ -59,28 +59,31 @@ const OverviewWrapper = (props: IProps) => {
       global.setForm(props.form);
       global.setSubmissionLogs(props.submissionLogs);
       global.setViewLogs(props.viewLogs);
-      console.log(props.viewLogs);
+      global.setFrom(qInitDate);
+      global.setTo(qFinalDate);
       return null;
     },
   });
 
   const onSelectRange = async (from: string, to: string) => {
-    const fromD = new Date(from).toISOString();
-    const toD = new Date(to).toISOString();
+    const fromD = new Date(from);
+    const toD = new Date(to);
+    global.setFrom(fromD);
+    global.setTo(toD);
 
     const submissionLogs = await supabase
       .from("submission_logs")
       .select("*")
       .eq("form_id", global.form.id)
-      .gte("created_at", fromD)
-      .lte("created_at", toD);
+      .gte("created_at", fromD.toISOString())
+      .lte("created_at", toD.toISOString());
 
     const viewLogs = await supabase
       .from("view_logs")
       .select("*")
       .eq("form_id", global.form.id)
-      .gte("created_at", fromD)
-      .lte("created_at", toD);
+      .gte("created_at", fromD.toISOString())
+      .lte("created_at", toD.toISOString());
 
     if (!submissionLogs.error) global.setSubmissionLogs(submissionLogs.data);
     if (!viewLogs.error) global.setViewLogs(viewLogs.data);
@@ -99,8 +102,8 @@ const OverviewWrapper = (props: IProps) => {
           <div className="flex justify-center items-center gap-4">
             <DateRangePicker
               initialRange={{
-                from: qInitDate.toISOString(),
-                to: qFinalDate.toISOString(),
+                from: global.from.toISOString(),
+                to: global.to.toISOString(),
               }}
               onChange={(range) => {
                 if (!range) return;
@@ -123,9 +126,9 @@ const OverviewWrapper = (props: IProps) => {
         </div>
       </div>
       {/* content */}
-      <div className="gap-6 grid sm:grid-cols-2">
+      <div className="gap-6 grid sm:grid-cols-3">
         {/* cards */}
-        <div className="grid sm:grid-cols-2 sm:gap-6 gap-3">
+        <div className="grid sm:grid-cols-1 col-span-2 sm:col-span-1 sm:gap-6 gap-3">
           <OverviewCard
             name={t("label_total_views")}
             content={
@@ -164,8 +167,7 @@ const OverviewWrapper = (props: IProps) => {
           />
         </div>
         {/* chart */}
-        <div className="grid">
-          {/* <OverviewConversionRateChart /> */}
+        <div className="grid col-span-2">
           <OverviewActivityChart />
         </div>
       </div>

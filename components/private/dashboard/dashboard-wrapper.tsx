@@ -36,6 +36,7 @@ const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProp
       user.setEmail(email);
       user.setLocale(locale);
       global.setForms(forms);
+      global.resetDateControls();
       return null;
     },
   });

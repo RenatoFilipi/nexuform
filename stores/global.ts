@@ -1,4 +1,4 @@
-import { day, paginationFrom, paginationTo } from "@/utils/constants";
+import { paginationFrom, paginationTo, qFinalDate, qInitDate } from "@/utils/constants";
 import { EBlock, EForm, ESubmission, ESubmissionLog, EViewLog } from "@/utils/entities";
 import { IPagination } from "@/utils/interfaces";
 import { create } from "zustand";
@@ -11,6 +11,8 @@ interface global {
   blocks: EBlock[];
   submissions: ESubmission[];
   submissionPagination: IPagination;
+  from: Date;
+  to: Date;
   setForm: (payload: EForm) => void;
   setForms: (payload: EForm[]) => void;
   setSubmissionLogs: (paylaod: ESubmissionLog[]) => void;
@@ -18,10 +20,10 @@ interface global {
   setBlocks: (payload: EBlock[]) => void;
   setSubmissions: (payload: ESubmission[]) => void;
   setSubmissionPagination: (payload: IPagination) => void;
+  setFrom: (payload: Date) => void;
+  setTo: (payload: Date) => void;
+  resetDateControls: () => void;
 }
-
-const to = new Date(Date.now() - 1 * day).toISOString();
-const from = new Date(Date.now() - 24 * day).toISOString();
 
 const useGlobalStore = create<global>((set) => ({
   form: {
@@ -44,6 +46,8 @@ const useGlobalStore = create<global>((set) => ({
   blocks: [],
   submissions: [],
   submissionPagination: { from: paginationFrom, to: paginationTo },
+  from: qFinalDate,
+  to: qInitDate,
   setForm: (payload) => set({ form: payload }),
   setForms: (payload) => set({ forms: payload }),
   setSubmissionLogs: (payload) => set({ submissionLogs: payload }),
@@ -51,6 +55,9 @@ const useGlobalStore = create<global>((set) => ({
   setBlocks: (payload) => set({ blocks: payload }),
   setSubmissions: (payload) => set({ submissions: payload }),
   setSubmissionPagination: (payload) => set({ submissionPagination: payload }),
+  setFrom: (payload) => set({ from: payload }),
+  setTo: (payload) => set({ to: payload }),
+  resetDateControls: () => ({ from: qFinalDate, to: qInitDate }),
 }));
 
 export default useGlobalStore;

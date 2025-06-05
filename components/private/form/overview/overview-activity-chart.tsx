@@ -1,14 +1,10 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import useGlobalStore from "@/stores/global";
-import { minWidth640 } from "@/utils/constants";
-import { format, parseISO, subDays } from "date-fns";
-import { TrendingDownIcon, TrendingUpIcon } from "lucide-react";
+import { getDateDifferenceInDays } from "@/utils/functions";
+import { addDays, format, isWithinInterval, parseISO } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useReducer, useState } from "react";
-import { useMedia } from "react-use";
-import { CartesianGrid, ComposedChart, Legend, Line, XAxis } from "recharts";
+import { CartesianGrid, ComposedChart, Line, XAxis } from "recharts";
 import { CurveType } from "recharts/types/shape/Curve";
 
 const submissionColor = "#38bdf8";
@@ -40,29 +36,28 @@ const hasDataReducer = (state: boolean, action: HasDataAction): boolean => {
       return state;
   }
 };
+
 const OverviewActivityChart = () => {
   const t = useTranslations("app");
-  const isDesktop = useMedia(minWidth640);
   const global = useGlobalStore();
-  const [days, setDays] = useState<number>(7);
   const [chartData, setChartData] = useState<IChartData[]>([]);
   const [hasData, dispatch] = useReducer(hasDataReducer, false);
   const curveType: CurveType = "linear";
   const subKey = t("label_submissions");
   const viewKey = t("label_views");
-  const options = [
-    { label: `7 ${t("label_days")}`, value: 7 },
-    { label: `30 ${t("label_days")}`, value: 30 },
-  ];
-  const lastNDays = useMemo<IChartData[]>(
-    () =>
-      Array.from({ length: days }, (_, i) => ({
-        day: format(subDays(new Date(), i), "dd/MM"),
+
+  // Generate date range based on initDate and finalDate
+  const dateRange = useMemo(() => {
+    const daysCount = getDateDifferenceInDays(global.from, global.to);
+    return Array.from({ length: daysCount }, (_, i) => {
+      const date = addDays(global.from, i);
+      return {
+        day: format(date, "dd/MM"),
         submissions: 0,
         views: 0,
-      })).reverse(),
-    [days]
-  );
+      };
+    });
+  }, [global.from, global.to]);
 
   useEffect(() => {
     if (!global.submissionLogs || !global.viewLogs) return;
@@ -70,21 +65,27 @@ const OverviewActivityChart = () => {
     const submissionCount: Record<string, number> = {};
     const viewCount: Record<string, number> = {};
 
-    // Count submissions per day
+    // Count submissions per day within the date range
     global.submissionLogs.forEach((log) => {
       if (!log?.created_at) return;
-      const day = format(parseISO(log.created_at), "dd/MM");
-      submissionCount[day] = (submissionCount[day] || 0) + 1;
+      const logDate = parseISO(log.created_at);
+      if (isWithinInterval(logDate, { start: global.from, end: global.to })) {
+        const day = format(logDate, "dd/MM");
+        submissionCount[day] = (submissionCount[day] || 0) + 1;
+      }
     });
 
-    // Count views per day
+    // Count views per day within the date range
     global.viewLogs.forEach((log) => {
       if (!log?.created_at) return;
-      const day = format(parseISO(log.created_at), "dd/MM");
-      viewCount[day] = (viewCount[day] || 0) + 1;
+      const logDate = parseISO(log.created_at);
+      if (isWithinInterval(logDate, { start: global.from, end: global.to })) {
+        const day = format(logDate, "dd/MM");
+        viewCount[day] = (viewCount[day] || 0) + 1;
+      }
     });
 
-    const updatedChartData = lastNDays.map((data) => ({
+    const updatedChartData = dateRange.map((data) => ({
       ...data,
       submissions: submissionCount[data.day] || 0,
       views: viewCount[data.day] || 0,
@@ -92,31 +93,28 @@ const OverviewActivityChart = () => {
 
     setChartData(updatedChartData);
     dispatch({ type: "CHECK_DATA", payload: updatedChartData });
-  }, [global.submissionLogs, global.viewLogs, lastNDays]);
+  }, [global.submissionLogs, global.viewLogs, dateRange, global.from, global.to]);
 
-  const todaySubmissions = chartData.find((data) => data.day === format(new Date(), "dd/MM"))?.submissions || 0;
-  const yesterdaySubmissions =
-    chartData.find((data) => data.day === format(subDays(new Date(), 1), "dd/MM"))?.submissions || 0;
-  const submissionDifference = todaySubmissions - yesterdaySubmissions;
+  const legends = [
+    { color: submissionColor, name: subKey },
+    { color: viewColor, name: viewKey },
+  ];
 
   return (
     <div className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit">
-      <div className="flex flex-col justify-center items-center sm:items-start">
-        <div className="flex justify-between items-center gap-4 w-full">
-          <div className="flex justify-center items-center gap-3">
-            {options.map((opt) => (
-              <Button
-                key={opt.value}
-                onClick={() => setDays(opt.value)}
-                variant="outline"
-                size="xs"
-                className={days === opt.value ? "bg-foreground/10" : ""}>
-                {opt.label}
-              </Button>
-            ))}
-          </div>
-          {hasData && isDesktop && <BadgeDay submissionDifference={submissionDifference} />}
-          {!hasData && <Badge variant="warning">{t("label_no_data")}</Badge>}
+      <div className="flex justify-between items-center">
+        <div className="flex justify-center items-center gap-2">
+          <span className="font-semibold text-base">{t("label_activity")}</span>
+        </div>
+        <div className="flex justify-center items-center gap-4">
+          {legends.map((l) => {
+            return (
+              <div key={l.name} className="flex justify-center items-center gap-2">
+                <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: l.color }}></div>
+                <span className="text-sm text-muted-foreground">{l.name}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
       <ChartContainer config={CHART_CONFIG} className="sm:max-h-[280px]">
@@ -128,13 +126,6 @@ const OverviewActivityChart = () => {
             tickMargin={10}
             axisLine={false}
             tickFormatter={(value) => value.slice(0, 5)}
-          />
-          <Legend
-            verticalAlign="top"
-            height={36}
-            formatter={(value) => {
-              return <span className="text-sm text-muted-foreground">{value}</span>;
-            }}
           />
           <ChartTooltip cursor={true} content={<ChartTooltipContent indicator="dot" />} />
           <Line
@@ -159,42 +150,8 @@ const OverviewActivityChart = () => {
           />
         </ComposedChart>
       </ChartContainer>
-      {hasData && !isDesktop && <BadgeDay submissionDifference={submissionDifference} />}
     </div>
   );
 };
-const BadgeDay = ({ submissionDifference }: { submissionDifference: number }) => {
-  const t = useTranslations("app");
 
-  const getBadgeVariant = () => {
-    if (submissionDifference > 0) return "success";
-    if (submissionDifference < 0) return "destructive";
-    return "primary";
-  };
-
-  const getBadgeText = () => {
-    if (submissionDifference !== 0) {
-      return `${submissionDifference > 0 ? "+" : ""} ${submissionDifference} ${
-        submissionDifference === 1 ? t("label_submission") : t("label_submissions")
-      }`;
-    }
-    return t("label_no_submissions_change");
-  };
-
-  const renderIcon = () => {
-    if (submissionDifference > 0) {
-      return <TrendingUpIcon className="text-success w-4 h-4" />;
-    } else if (submissionDifference < 0) {
-      return <TrendingDownIcon className="text-destructive w-4 h-4" />;
-    }
-    return null;
-  };
-
-  return (
-    <Badge variant={getBadgeVariant()} className="flex items-center gap-2 justify-center sm:justify-start">
-      {renderIcon()}
-      {getBadgeText()}
-    </Badge>
-  );
-};
 export default OverviewActivityChart;
