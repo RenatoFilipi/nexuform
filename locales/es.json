@@ -402,7 +402,14 @@
     "label_clear": "Limpiar",
     "label_apply": "Aplicar",
     "label_save": "Guardar",
-    "label_go_to_form": "Ir al formulario"
+    "label_go_to_form": "Ir al formulario",
+    "label_today": "Hoy",
+    "label_last_3_days": "Últimos 3 días",
+    "label_this_week": "Esta semana",
+    "label_this_month": "Este mes",
+    "label_upgrade_for_custom_dates": "Actualiza a Pro para acceder a fechas personalizadas",
+    "label_upgrade_to_pro": "Actualizar a Pro",
+    "last_n_days": "Último{s} {n, plural, =1 {# día} other {# días}}"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

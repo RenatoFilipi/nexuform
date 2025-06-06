@@ -3,11 +3,12 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import useUserStore from "@/stores/user";
-import { subDays } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { endOfMonth, endOfWeek, startOfMonth, startOfToday, startOfWeek, subDays } from "date-fns";
+import { ArrowUpRightIcon, CalendarIcon, GemIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 import { DateRange } from "react-day-picker";
+import CheckoutStripe from "../../checkout/checkout-stripe";
 
 interface IProps {
   className?: string;
@@ -18,11 +19,42 @@ interface IProps {
 const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
   const t = useTranslations("app");
   const user = useUserStore();
+  const isAllowedCustom = user.subscription.plan === "pro";
+  const today = startOfToday();
 
   const presets = [
-    { label: `7 ${t("label_days")}`, value: 7 },
-    { label: `30 ${t("label_days")}`, value: 30 },
+    { label: t("label_today"), value: 1, handler: () => handleToday(), id: "today" },
+    {
+      label: t("last_n_days", {
+        n: 3,
+        s: "s",
+      }),
+      value: 3,
+      handler: () => handlePresetSelect(3),
+      id: "last_3_days",
+    },
+    {
+      label: t("last_n_days", {
+        n: 7,
+        s: "s",
+      }),
+      value: 7,
+      handler: () => handlePresetSelect(7),
+      id: "last_7_days",
+    },
+    {
+      label: t("last_n_days", {
+        n: 30,
+        s: "s",
+      }),
+      value: 30,
+      handler: () => handlePresetSelect(30),
+      id: "last_30_days",
+    },
+    { label: t("label_this_week"), value: 0, handler: () => handleThisWeek(), id: "this_week" },
+    { label: t("label_this_month"), value: 0, handler: () => handleThisMonth(), id: "this_month" },
   ];
+
   const [range, setRange] = React.useState<DateRange | undefined>(
     initialRange
       ? {
@@ -34,6 +66,7 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
   const [open, setOpen] = React.useState(false);
 
   const handleSelect = (newRange: DateRange | undefined) => {
+    if (!isAllowedCustom) return;
     setRange(newRange);
   };
 
@@ -67,6 +100,31 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
     });
   };
 
+  const handleToday = () => {
+    const today = new Date();
+    today.setHours(23, 59, 59, 999);
+    setRange({
+      from: today,
+      to: today,
+    });
+  };
+
+  const handleThisWeek = () => {
+    const today = new Date();
+    setRange({
+      from: startOfWeek(today),
+      to: endOfWeek(today),
+    });
+  };
+
+  const handleThisMonth = () => {
+    const today = new Date();
+    setRange({
+      from: startOfMonth(today),
+      to: endOfMonth(today),
+    });
+  };
+
   return (
     <div className={cn("", className)}>
       <Popover open={open} onOpenChange={setOpen}>
@@ -93,34 +151,45 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
             <div className="flex flex-col gap-2">
               <div className="grid grid-cols-1 gap-3">
                 {presets.map((preset) => (
-                  <Button
-                    key={preset.value}
-                    onClick={() => handlePresetSelect(preset.value)}
-                    variant="outline"
-                    size="sm">
+                  <Button key={preset.id} onClick={preset.handler} variant="outline" size="sm">
                     {preset.label}
                   </Button>
                 ))}
               </div>
             </div>
             {/* Calendar column */}
-            <div className="flex flex-col">
+            <div className="flex flex-col relative">
+              {!isAllowedCustom && (
+                <div className="absolute inset-0 bg-background/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center gap-4 p-4">
+                  <div className="flex justify-center items-center p-4 w-fit rounded-full bg-primary/10">
+                    <GemIcon className="w-8 h-8 text-primary" />
+                  </div>
+                  <p className="text-sm text-center">{t("label_upgrade_for_custom_dates")}</p>
+                  <CheckoutStripe plan="pro">
+                    <Button variant="default" size="sm">
+                      <ArrowUpRightIcon className="w-4 h-4 mr-2" />
+                      {t("label_upgrade_to_pro")}
+                    </Button>
+                  </CheckoutStripe>
+                </div>
+              )}
               <Calendar
                 initialFocus
                 mode="range"
-                defaultMonth={range?.from}
+                defaultMonth={range?.to || today}
                 selected={range}
                 onSelect={handleSelect}
                 numberOfMonths={1}
+                className={!isAllowedCustom ? "opacity-50 pointer-events-none" : ""}
               />
             </div>
           </div>
           <div className="flex flex-col gap-2 mt-2">
             <div className="flex justify-end gap-2">
-              <Button variant="outline" size="sm" className="" onClick={() => handleSelect(undefined)}>
+              <Button variant="outline" size="sm" onClick={() => handleSelect(undefined)}>
                 {t("label_clear")}
               </Button>
-              <Button variant={"secondary"} size="sm" className="" onClick={handleSave}>
+              <Button variant="secondary" size="sm" onClick={handleSave}>
                 {t("label_apply")}
               </Button>
             </div>
