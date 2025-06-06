@@ -1,11 +1,10 @@
-import { Button } from "@/components/ui/button";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import useGlobalStore from "@/stores/global";
 import { fallbackColor } from "@/utils/constants";
-import { generateDistinctColors } from "@/utils/functions";
-import { format, subDays } from "date-fns";
+import { generateDistinctColors, getDateDifferenceInDays } from "@/utils/functions";
+import { addDays, format, isWithinInterval, parseISO } from "date-fns";
 import { useTranslations } from "next-intl";
-import { useMemo, useState } from "react";
+import { useMemo, useReducer } from "react";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
 interface IChartData {
@@ -15,23 +14,34 @@ interface IChartData {
 
 const CHART_CONFIG: ChartConfig = {} as ChartConfig;
 
+type HasDataAction = { type: "CHECK_DATA"; payload: IChartData[] };
+
+const hasDataReducer = (state: boolean, action: HasDataAction): boolean => {
+  switch (action.type) {
+    case "CHECK_DATA":
+      return action.payload.some((item) => {
+        return Object.keys(item).some((key) => key !== "day" && Number(item[key]) > 0);
+      });
+    default:
+      return state;
+  }
+};
+
 const AnalyticsSubmissionsActivityChart = () => {
   const t = useTranslations("app");
   const global = useGlobalStore();
-  const [days, setDays] = useState<number>(7);
+  const [hasData, dispatch] = useReducer(hasDataReducer, false);
 
-  const options = [
-    { label: `7 ${t("label_days")}`, value: 7 },
-    { label: `30 ${t("label_days")}`, value: 30 },
-  ];
-
-  const lastNDays = useMemo<IChartData[]>(
-    () =>
-      Array.from({ length: days }, (_, i) => ({
-        day: format(subDays(new Date(), i), "dd/MM"),
-      })).reverse(),
-    [days]
-  );
+  // Generate date range based on global.from and global.to
+  const dateRange = useMemo(() => {
+    const daysCount = getDateDifferenceInDays(global.from, global.to);
+    return Array.from({ length: daysCount }, (_, i) => {
+      const date = addDays(global.from, i);
+      return {
+        day: format(date, "dd/MM"),
+      };
+    });
+  }, [global.from, global.to]);
 
   const formMap = useMemo(() => {
     return global.forms.reduce((acc, form) => {
@@ -48,25 +58,30 @@ const AnalyticsSubmissionsActivityChart = () => {
     const grouped: Record<string, Record<string, number>> = {};
 
     global.submissionLogs.forEach(({ created_at, form_id }) => {
-      const date = format(new Date(created_at), "dd/MM");
-      if (!grouped[date]) grouped[date] = {};
-      if (!grouped[date][form_id]) grouped[date][form_id] = 0;
-      grouped[date][form_id] += 1;
+      const logDate = parseISO(created_at);
+      if (isWithinInterval(logDate, { start: global.from, end: global.to })) {
+        const day = format(logDate, "dd/MM");
+        if (!grouped[day]) grouped[day] = {};
+        if (!grouped[day][form_id]) grouped[day][form_id] = 0;
+        grouped[day][form_id] += 1;
+      }
     });
 
-    return lastNDays.map((day) => {
-      const entry: IChartData = { day: day.day };
+    const chartData = dateRange.map((dayObj) => {
+      const entry: IChartData = { day: dayObj.day };
       formIds.forEach((formId) => {
-        entry[formMap[formId] || formId] = grouped[day.day]?.[formId] || 0;
+        entry[formMap[formId] || formId] = grouped[dayObj.day]?.[formId] || 0;
       });
       return entry;
     });
-  }, [global.submissionLogs, lastNDays, formIds, formMap]);
+
+    dispatch({ type: "CHECK_DATA", payload: chartData });
+    return chartData;
+  }, [global.submissionLogs, dateRange, formIds, formMap, global.from, global.to]);
 
   const getColor = (index: number) => colors[index % colors.length];
 
   const CustomTooltipContent = (props: any) => {
-    const { payload, label } = props;
     return (
       <ChartTooltipContent
         {...props}
@@ -89,18 +104,6 @@ const AnalyticsSubmissionsActivityChart = () => {
     <div className="flex flex-col gap-4 border rounded p-4 h-fit">
       <div className="flex justify-between items-center">
         <span className="text-sm font-semibold">{t("label_activity")}</span>
-        <div className="flex justify-center items-center gap-3">
-          {options.map((opt) => (
-            <Button
-              key={opt.value}
-              onClick={() => setDays(opt.value)}
-              variant="outline"
-              size="xs"
-              className={days === opt.value ? "bg-foreground/10" : ""}>
-              {opt.label}
-            </Button>
-          ))}
-        </div>
       </div>
       <ChartContainer config={CHART_CONFIG} className="">
         <LineChart accessibilityLayer data={data}>

@@ -1,7 +1,7 @@
 import AnalyticsWrapper from "@/components/private/analytics/analytics-wrapper";
 import UpgradeToProUI from "@/components/private/shared/subscription/upgrade-to-pro-ui";
 import ErrorUI from "@/components/shared/utils/error-ui";
-import { isSubscriptionActive } from "@/utils/functions";
+import { getDateRangeFromToday, isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
@@ -34,10 +34,22 @@ const Analytics = async () => {
 
   const formIds = forms.data.map((x) => x.id);
 
-  const submissionLogs = await supabase.from("submission_logs").select("*").in("form_id", formIds);
+  const dates = getDateRangeFromToday(7);
+
+  const submissionLogs = await supabase
+    .from("submission_logs")
+    .select("*")
+    .in("form_id", formIds)
+    .gte("created_at", dates.startDate.toISOString())
+    .lte("created_at", dates.endDate.toISOString());
   if (submissionLogs.error) return <ErrorUI email={email} />;
 
-  const viewLogs = await supabase.from("view_logs").select("*").in("form_id", formIds);
+  const viewLogs = await supabase
+    .from("view_logs")
+    .select("*")
+    .in("form_id", formIds)
+    .gte("created_at", dates.startDate.toISOString())
+    .lte("created_at", dates.endDate.toISOString());
   if (viewLogs.error) return <ErrorUI email={email} />;
 
   return (
@@ -48,6 +60,7 @@ const Analytics = async () => {
       submissionLogs={submissionLogs.data}
       viewLogs={viewLogs.data}
       forms={forms.data}
+      locale={locale}
     />
   );
 };

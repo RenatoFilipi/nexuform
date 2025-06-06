@@ -3,7 +3,9 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import useUserStore from "@/stores/user";
+import { useQuery } from "@tanstack/react-query";
 import { endOfMonth, endOfWeek, startOfMonth, startOfToday, startOfWeek, subDays } from "date-fns";
+import { enUS, es, pt } from "date-fns/locale";
 import { ArrowUpRightIcon, CalendarIcon, GemIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
@@ -22,6 +24,23 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
   const isAllowedCustom = user.subscription.plan === "pro";
   const today = startOfToday();
 
+  const query = useQuery({
+    queryKey: ["date-range-picker"],
+    queryFn: () => {
+      const getLocale = () => {
+        switch (user.locale) {
+          case "pt":
+            return pt;
+          case "es":
+            return es;
+          default:
+            return enUS;
+        }
+      };
+      const locale = getLocale();
+      return { locale };
+    },
+  });
   const presets = [
     { label: t("label_today"), value: 1, handler: () => handleToday(), id: "today" },
     {
@@ -54,7 +73,6 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
     { label: t("label_this_week"), value: 0, handler: () => handleThisWeek(), id: "this_week" },
     { label: t("label_this_month"), value: 0, handler: () => handleThisMonth(), id: "this_month" },
   ];
-
   const [range, setRange] = React.useState<DateRange | undefined>(
     initialRange
       ? {
@@ -64,12 +82,10 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
       : undefined
   );
   const [open, setOpen] = React.useState(false);
-
   const handleSelect = (newRange: DateRange | undefined) => {
     if (!isAllowedCustom) return;
     setRange(newRange);
   };
-
   const handleSave = () => {
     if (range?.from) {
       const fromDate = new Date(range.from);
@@ -87,7 +103,6 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
     }
     setOpen(false);
   };
-
   const handlePresetSelect = (days: number) => {
     const today = new Date();
     today.setHours(23, 59, 59, 999);
@@ -99,7 +114,6 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
       to: today,
     });
   };
-
   const handleToday = () => {
     const today = new Date();
     today.setHours(23, 59, 59, 999);
@@ -108,7 +122,6 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
       to: today,
     });
   };
-
   const handleThisWeek = () => {
     const today = new Date();
     setRange({
@@ -116,7 +129,6 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
       to: endOfWeek(today),
     });
   };
-
   const handleThisMonth = () => {
     const today = new Date();
     setRange({
@@ -124,6 +136,7 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
       to: endOfMonth(today),
     });
   };
+  if (query.isPending) return null;
 
   return (
     <div className={cn("", className)}>
@@ -145,7 +158,7 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto mt-2" align="start">
+        <PopoverContent className="w-auto mt-2" align="center">
           <div className="flex justify-center items-center gap-4">
             {/* Presets column */}
             <div className="flex flex-col gap-2">
@@ -180,6 +193,7 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
                 selected={range}
                 onSelect={handleSelect}
                 numberOfMonths={1}
+                locale={query.data?.locale}
                 className={!isAllowedCustom ? "opacity-50 pointer-events-none" : ""}
               />
             </div>

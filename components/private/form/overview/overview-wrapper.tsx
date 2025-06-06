@@ -50,7 +50,7 @@ const OverviewWrapper = (props: IProps) => {
   )}%`;
 
   const query = useQuery({
-    queryKey: ["formOverviewData"],
+    queryKey: ["form-overview-data"],
     queryFn: () => {
       const dates = getDateRangeFromToday(7);
       user.setEmail(props.email);

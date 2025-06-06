@@ -122,12 +122,12 @@ const OverviewActivityChart = () => {
           <CartesianGrid vertical={false} />
           <XAxis
             dataKey="day"
-            tickLine={false}
+            tickLine={true}
             tickMargin={10}
             axisLine={false}
             tickFormatter={(value) => value.slice(0, 5)}
           />
-          <ChartTooltip cursor={true} content={<ChartTooltipContent indicator="dot" />} />
+          <ChartTooltip cursor={true} content={<ChartTooltipContent indicator="line" />} />
           <Line
             name={viewKey}
             type={curveType}
