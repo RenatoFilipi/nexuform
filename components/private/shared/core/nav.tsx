@@ -383,7 +383,7 @@ const NavEditor = () => {
       <div className="flex justify-center items-center gap-2">
         <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
           <Link href={"/dashboard/forms"}>
-            <Brand type="logo" className="h-4 fill-foreground" />
+            <Brand type="logo" className="h-5 fill-foreground" />
           </Link>
         </Button>
         <div className="hidden sm:flex justify-center items-center gap-2">

@@ -31,6 +31,7 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
   const router = useRouter();
   const { id, name, status, updated_at, public_url } = form;
   const user = useUserStore();
+  const isPublished = status === "published";
 
   const isProduction = process.env.NODE_ENV === "production";
   const protocol = isProduction ? "https" : "http";
@@ -77,17 +78,21 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
                 </DropdownMenuItem>
               );
             })}
-            <DropdownMenuSeparator />
-            <DropdownMenuItem key="goto" asChild>
-              <a
-                href={fullUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cursor-pointer hover:bg-accent flex justify-between items-center text-xs">
-                {t("label_go_to_form")}
-                <ExternalLinkIcon className="w-4 h-4" />
-              </a>
-            </DropdownMenuItem>
+            {isPublished && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem key="goto" asChild>
+                  <a
+                    href={fullUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="cursor-pointer hover:bg-accent flex justify-between items-center text-xs">
+                    {t("label_go_to_form")}
+                    <ExternalLinkIcon className="w-4 h-4" />
+                  </a>
+                </DropdownMenuItem>
+              </>
+            )}
             <DropdownMenuSeparator />
             <FormDelete formId={id} formName={name}>
               <DropdownMenuItem
