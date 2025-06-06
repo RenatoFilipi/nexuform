@@ -381,7 +381,7 @@ const NavEditor = () => {
   return (
     <div className="h-14 flex justify-between items-center w-full bg-background border-b px-4 sm:px-8 z-20 fixed">
       <div className="flex justify-center items-center gap-2">
-        <Button variant={"ghost"} size={"icon"} className="h-9 w-9" asChild>
+        <Button variant={"ghost"} size={"icon"} className="h-8 w-8" asChild>
           <Link href={"/dashboard/forms"}>
             <Brand type="logo" className="h-5 fill-foreground" />
           </Link>

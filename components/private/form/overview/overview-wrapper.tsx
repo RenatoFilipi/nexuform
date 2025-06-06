@@ -16,7 +16,7 @@ import {
 import { createClient } from "@/utils/supabase/client";
 import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowUpRightIcon, EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
+import { ArrowUpRightIcon, EyeIcon, PenIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import DateRangePicker from "../../shared/core/date-range-picker";
@@ -95,12 +95,12 @@ const OverviewWrapper = (props: IProps) => {
   return (
     <div className="w-full h-full flex-1 flex flex-col gap-6">
       {/* header */}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-4 sm:gap-1">
         <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
-          <div className="flex justify-between items-center gap-4 w-full sm:w-fit">
+          <div className="flex justify-between items-center gap-3 w-full sm:w-fit">
             <h1 className="font-bold text-lg sm:text-xl truncate sm:max-w-[290px]">{global.form.name}</h1>
           </div>
-          <div className="flex justify-center items-center gap-4">
+          <div className="flex justify-between sm:justify-center items-center gap-4 w-full sm:w-fit">
             <DateRangePicker
               initialRange={{
                 from: global.from.toISOString(),
@@ -119,11 +119,14 @@ const OverviewWrapper = (props: IProps) => {
             </Button>
           </div>
         </div>
-        <div className="flex justify-start items-center gap-3">
+        <div className="flex justify-between sm:justify-start items-center gap-4">
           <FormStatusBadge status={global.form.status as TFormStatus} />
-          <span className="text-sm text-muted-foreground">
-            {t("label_last_updated")} {formatDateRelativeToNow(global.form.updated_at, user.locale)}
-          </span>
+          <div className="flex justify-center items-center gap-3">
+            <span className="text-sm text-muted-foreground flex justify-center items-center gap-2">
+              <PenIcon className="w-3 h-3" />
+              {t("label_last_updated")} {formatDateRelativeToNow(global.form.updated_at, user.locale)}
+            </span>
+          </div>
         </div>
       </div>
       {/* content */}

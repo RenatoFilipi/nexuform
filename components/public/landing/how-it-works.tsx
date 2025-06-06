@@ -14,18 +14,18 @@ const HowItWorks = () => {
       description: t("step1_desc"),
       icon: LayersIcon,
       details: [t("step1_topic1"), t("step1_topic2"), t("step1_topic3")],
-      color: "from-sky-400 to-blue-600",
-      bgColor: "bg-sky-100/80 dark:bg-blue-900/20",
-      accent: "bg-blue-500",
+      color: "from-violet-400 to-purple-600",
+      bgColor: "bg-violet-100/80 dark:bg-purple-900/20",
+      accent: "bg-purple-500",
     },
     {
       title: t("step2_label"),
       description: t("step2_desc"),
       icon: DatabaseIcon,
       details: [t("step2_topic1"), t("step2_topic2"), t("step2_topic3")],
-      color: "from-emerald-400 to-green-600",
-      bgColor: "bg-emerald-100/80 dark:bg-green-900/20",
-      accent: "bg-green-500",
+      color: "from-violet-400 to-purple-600",
+      bgColor: "bg-violet-100/80 dark:bg-purple-900/20",
+      accent: "bg-purple-500",
     },
     {
       title: t("step3_label"),
@@ -99,7 +99,7 @@ const HowItWorks = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {steps.map((step, index) => (
             <motion.div key={step.title} variants={cardVariants} whileHover="hover" className="h-full">
               <Card className="h-full overflow-hidden border border-muted/20 dark:border-muted/30 bg-background/90 dark:bg-muted/5 group transition-all">
