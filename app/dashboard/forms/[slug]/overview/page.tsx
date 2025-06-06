@@ -1,7 +1,7 @@
 import OverviewWrapper from "@/components/private/form/overview/overview-wrapper";
 import SubscriptionUI from "@/components/private/shared/subscription/subscription-ui";
 import ErrorUI from "@/components/shared/utils/error-ui";
-import { isSubscriptionActive } from "@/utils/functions";
+import { getDateRangeFromToday, isSubscriptionActive } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
@@ -30,27 +30,22 @@ const Overview = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const form = await supabase.from("forms").select("*").eq("owner_id", userId).eq("id", slug).select().single();
   if (form.error) return <ErrorUI email={email} />;
 
-  const today = new Date();
-  today.setHours(23, 59, 59, 999);
-
-  const sevenDaysAgo = new Date(today);
-  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-  sevenDaysAgo.setHours(0, 0, 0, 0);
+  const dates = getDateRangeFromToday(7);
 
   const submissionLogs = await supabase
     .from("submission_logs")
     .select("*")
     .eq("form_id", slug)
-    .gte("created_at", sevenDaysAgo.toISOString())
-    .lte("created_at", today.toISOString());
+    .gte("created_at", dates.startDate.toISOString())
+    .lte("created_at", dates.endDate.toISOString());
   if (submissionLogs.error) return <ErrorUI email={email} />;
 
   const viewLogs = await supabase
     .from("view_logs")
     .select("*")
     .eq("form_id", slug)
-    .gte("created_at", sevenDaysAgo.toISOString())
-    .lte("created_at", today.toISOString());
+    .gte("created_at", dates.startDate.toISOString())
+    .lte("created_at", dates.endDate.toISOString());
   if (viewLogs.error) return <ErrorUI email={email} />;
 
   return (

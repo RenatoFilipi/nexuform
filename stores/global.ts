@@ -1,5 +1,6 @@
-import { paginationFrom, paginationTo, qFinalDate, qInitDate } from "@/utils/constants";
+import { paginationFrom, paginationTo } from "@/utils/constants";
 import { EBlock, EForm, ESubmission, ESubmissionLog, EViewLog } from "@/utils/entities";
+import { getDateRangeFromToday } from "@/utils/functions";
 import { IPagination } from "@/utils/interfaces";
 import { create } from "zustand";
 
@@ -25,6 +26,8 @@ interface global {
   resetDateControls: () => void;
 }
 
+const dates = getDateRangeFromToday(7);
+
 const useGlobalStore = create<global>((set) => ({
   form: {
     id: "",
@@ -46,8 +49,8 @@ const useGlobalStore = create<global>((set) => ({
   blocks: [],
   submissions: [],
   submissionPagination: { from: paginationFrom, to: paginationTo },
-  from: qFinalDate,
-  to: qInitDate,
+  from: dates.startDate,
+  to: dates.endDate,
   setForm: (payload) => set({ form: payload }),
   setForms: (payload) => set({ forms: payload }),
   setSubmissionLogs: (payload) => set({ submissionLogs: payload }),
@@ -57,7 +60,7 @@ const useGlobalStore = create<global>((set) => ({
   setSubmissionPagination: (payload) => set({ submissionPagination: payload }),
   setFrom: (payload) => set({ from: payload }),
   setTo: (payload) => set({ to: payload }),
-  resetDateControls: () => ({ from: qFinalDate, to: qInitDate }),
+  resetDateControls: () => ({ from: dates.startDate, to: dates.endDate }),
 }));
 
 export default useGlobalStore;

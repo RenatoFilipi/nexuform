@@ -268,3 +268,13 @@ export const getDateDifferenceInDays = (date1: Date, date2: Date): number => {
 
   return Math.abs(diffInMs) / msPerDay + 1;
 };
+export const getDateRangeFromToday = (intervalDays: number): { startDate: Date; endDate: Date } => {
+  const endDate = new Date();
+  endDate.setHours(23, 59, 59, 999);
+
+  const startDate = new Date(endDate);
+  startDate.setDate(startDate.getDate() - (intervalDays - 1));
+  startDate.setHours(0, 0, 0, 0);
+
+  return { startDate, endDate };
+};

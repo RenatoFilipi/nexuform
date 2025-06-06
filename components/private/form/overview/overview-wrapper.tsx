@@ -4,7 +4,6 @@ import FormStatusBadge from "@/components/shared/badges/form-status-badge";
 import { Button } from "@/components/ui/button";
 import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
-import { qFinalDate, qInitDate } from "@/utils/constants";
 import { EForm, EProfile, ESubmissionLog, ESubscription, EViewLog } from "@/utils/entities";
 import {
   formatDateRelativeToNow,
@@ -12,6 +11,7 @@ import {
   formatTime,
   getAverageCompletionRate,
   getAverageCompletionTime,
+  getDateRangeFromToday,
 } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { TFormStatus } from "@/utils/types";
@@ -52,6 +52,7 @@ const OverviewWrapper = (props: IProps) => {
   const query = useQuery({
     queryKey: ["formOverviewData"],
     queryFn: () => {
+      const dates = getDateRangeFromToday(7);
       user.setEmail(props.email);
       user.setProfile(props.profile);
       user.setSubscription(props.subscription);
@@ -59,8 +60,8 @@ const OverviewWrapper = (props: IProps) => {
       global.setForm(props.form);
       global.setSubmissionLogs(props.submissionLogs);
       global.setViewLogs(props.viewLogs);
-      global.setFrom(qInitDate);
-      global.setTo(qFinalDate);
+      global.setFrom(dates.startDate);
+      global.setTo(dates.endDate);
       return null;
     },
   });
