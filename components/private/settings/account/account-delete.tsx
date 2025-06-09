@@ -43,7 +43,7 @@ const AccountDelete = ({ children }: { children: ReactNode }) => {
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogPortal>
-        <AlertDialogOverlay className="" />
+        <AlertDialogOverlay className="backdrop-blur-sm" />
         <AlertDialogContent className="flex flex-col w-full sm:min-w-[650px]">
           <AlertDialogHeader>
             <AlertDialogTitle className="flex justify-start items-center gap-2">

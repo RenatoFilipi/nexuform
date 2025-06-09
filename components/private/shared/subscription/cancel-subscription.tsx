@@ -6,6 +6,7 @@ import {
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogHeader,
+  AlertDialogOverlay,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
@@ -28,13 +29,15 @@ const CancelSubscription = ({ children }: { children: React.ReactNode }) => {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-      <AlertDialogContent className="flex flex-col w-full sm:min-w-[650px] p-6">
-        <AlertDialogHeader className="">
-          <AlertDialogTitle className="">{t("label_sub_cancel")}</AlertDialogTitle>
-          <AlertDialogDescription className="">{t("desc_sub_cancel")}</AlertDialogDescription>
-        </AlertDialogHeader>
-        <Body setState={setOpen} />
-      </AlertDialogContent>
+      <AlertDialogOverlay className="backdrop-blur-sm">
+        <AlertDialogContent className="flex flex-col w-full sm:min-w-[650px] p-6">
+          <AlertDialogHeader className="">
+            <AlertDialogTitle className="">{t("label_sub_cancel")}</AlertDialogTitle>
+            <AlertDialogDescription className="">{t("desc_sub_cancel")}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <Body setState={setOpen} />
+        </AlertDialogContent>
+      </AlertDialogOverlay>
     </AlertDialog>
   );
 };

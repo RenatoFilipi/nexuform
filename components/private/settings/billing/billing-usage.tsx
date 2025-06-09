@@ -18,29 +18,26 @@ import {
   LayersIcon,
   RefreshCwIcon,
   Send,
-  Settings,
+  Settings2Icon,
   ZapIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import CancelSubscription from "../../shared/subscription/cancel-subscription";
 import ManageSubscription from "../../shared/subscription/manage-subscription";
 
 const BillingUsage = () => {
   const t = useTranslations("app");
   const user = useUserStore();
-
   const startDate = new Date(user.subscription.start_date).toLocaleDateString();
   const dueDate = new Date(user.subscription.due_date).toLocaleDateString();
-
   const formsLimit = user.formsCount >= user.subscription.forms;
   const submissionsLimit = user.submissionLogs.length >= user.subscription.submissions;
-
   const formsUsage = Math.min(100, (100 * user.formsCount) / user.subscription.forms);
   const submissionsUsage = Math.min(100, (100 * user.submissionLogs.length) / user.subscription.submissions);
-
   const remainingDays = getDaysDifference(new Date(), new Date(user.subscription.due_date));
-
   const isFreeTrial = user.subscription.plan === "free_trial";
   const isCancelled = user.subscription.status === "canceled";
+  const showCancelButton = user.subscription.status !== "canceled" && user.subscription.plan !== "free_trial";
 
   const planName = (plan: string) =>
     ({
@@ -128,10 +125,18 @@ const BillingUsage = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex justify-end">
+              <div className="flex flex-col-reverse sm:flex-row justify-end gap-4 items-center">
+                {showCancelButton && (
+                  <CancelSubscription>
+                    <Button variant="ghost" size="xs" className="w-full sm:w-auto gap-2 text-muted-foreground">
+                      {t("label_cancel_sub")}
+                    </Button>
+                  </CancelSubscription>
+                )}
+
                 <ManageSubscription>
                   <Button variant="secondary" size="sm" className="w-full sm:w-auto gap-2">
-                    <Settings className="h-4 w-4" />
+                    <Settings2Icon className="h-4 w-4" />
                     {t("label_manage_sub")}
                   </Button>
                 </ManageSubscription>
