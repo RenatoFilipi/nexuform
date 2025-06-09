@@ -120,21 +120,19 @@ const Body = ({
       {/* Header Section */}
       <div className="space-y-4">
         <div className="flex flex-col gap-3">
-          <div className="flex justify-between items-start gap-4">
-            <div>
-              <h2 className="text-lg font-semibold text-foreground">{submission.identifier}</h2>
-              <p className="text-sm text-muted-foreground">
-                {formatDateRelativeToNow(submission.created_at, user.locale)}
-              </p>
-            </div>
-            <SubmissionStatusBadge status={submission.status as TSubmissionStatus} uppercase />
+          <div className="flex justify-start items-center gap-4">
+            <h2 className="text-xl font-bold text-foreground">{submission.identifier}</h2>
+            <p className="text-sm text-muted-foreground">
+              ({formatDateRelativeToNow(submission.created_at, user.locale)})
+            </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Badge variant="info" className="flex items-center gap-1">
+            <SubmissionStatusBadge status={submission.status as TSubmissionStatus} />
+            <Badge variant="primary" className="flex items-center gap-1">
               <ClockIcon className="h-3 w-3" />
               {formatTime(submission.completion_time ?? 0, 2)}
             </Badge>
-            <Badge variant="info" className="flex items-center gap-1">
+            <Badge variant="primary" className="flex items-center gap-1">
               <CalendarIcon className="h-3 w-3" />
               {new Date(submission.created_at).toLocaleString(user.locale)}
             </Badge>

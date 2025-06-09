@@ -40,7 +40,7 @@ const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col w-full max-w-2xl max-h-[90%] overflow-y-auto">
+        <DialogContent className="flex flex-col w-full max-w-2xl max-h-[90%] h-full overflow-y-auto">
           <DialogHeader className="border-b pb-4">
             <DialogTitle className="font-bold tracking-tight">{t("label_manage_sub")}</DialogTitle>
             <DialogDescription>{t("desc_manage_sub")}</DialogDescription>
@@ -64,7 +64,6 @@ const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
     </Drawer>
   );
 };
-
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const userStore = useUserStore();
@@ -122,7 +121,6 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     </div>
   );
 };
-
 const PlanOption = ({ plan, isCurrent, onSelect }: { plan: IPlan; isCurrent: boolean; onSelect: () => void }) => {
   const t = useTranslations("app");
 
@@ -145,7 +143,7 @@ const PlanOption = ({ plan, isCurrent, onSelect }: { plan: IPlan; isCurrent: boo
           </div>
           <div className="text-right">
             <p className="font-bold text-xl">${plan.price}</p>
-            <p className="text-sm text-muted-foreground">{t("label_per_month")}</p>
+            <p className="text-xs text-muted-foreground">{t("label_per_month")}</p>
           </div>
         </div>
         <div className="flex items-center justify-between gap-4">
@@ -157,7 +155,7 @@ const PlanOption = ({ plan, isCurrent, onSelect }: { plan: IPlan; isCurrent: boo
                 ) : (
                   <Check className="w-3.5 h-3.5 text-primary" />
                 )}
-                <span className={feature.comingSoon ? "text-muted-foreground" : ""}>{feature.description}</span>
+                <span className={feature.comingSoon ? "text-muted-foreground" : "text-xs"}>{feature.description}</span>
               </li>
             ))}
           </ul>
@@ -175,7 +173,6 @@ const PlanOption = ({ plan, isCurrent, onSelect }: { plan: IPlan; isCurrent: boo
     </div>
   );
 };
-
 const CheckoutFlow = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) => {
   const t = useTranslations("app");
 
@@ -190,7 +187,6 @@ const CheckoutFlow = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) => 
         </button>
         <div className="w-4"></div>
       </div>
-
       <div className="space-y-6">
         <div className="p-4 rounded-lg bg-muted/50">
           <div className="flex justify-between items-center">
@@ -201,7 +197,6 @@ const CheckoutFlow = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) => 
             <p className="font-bold text-lg">${plan.price}/m</p>
           </div>
         </div>
-
         <div className="space-y-4">
           <h4 className="font-medium">{t("label_payment_details")}</h4>
           <div className="p-4 rounded-lg border flex items-center gap-3">
@@ -214,7 +209,7 @@ const CheckoutFlow = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) => 
         </div>
 
         <CheckoutStripe plan={plan.type}>
-          <Button className="w-full" size="lg">
+          <Button className="w-full" size="lg" variant={"secondary"}>
             {t("label_complete_subscription")}
           </Button>
         </CheckoutStripe>
