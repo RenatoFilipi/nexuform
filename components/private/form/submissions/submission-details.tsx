@@ -19,6 +19,12 @@ import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, Dr
 import ManageSubscription from "../../shared/subscription/manage-subscription";
 import FormSubmissionStatus from "./submission-status";
 
+interface IBlockItem {
+  question: string;
+  answer: string;
+  type: TBlock;
+}
+
 const SubmissionDetails = ({
   children,
   submission,
@@ -75,32 +81,6 @@ const Body = ({
   const user = useUserStore();
   const isAllowedToExport = user.subscription.plan === "pro";
 
-  const getBlockType = (type: TBlock): string => {
-    switch (type) {
-      case "short_text":
-        return t("label_short_text");
-      case "paragraph_text":
-        return t("label_paragraph_text");
-      case "checkboxes":
-        return t("label_checkboxes");
-      case "multiple_choice":
-        return t("label_multiple_choice");
-      case "dropdown_menu":
-        return t("label_dropdown_menu");
-      case "number_input":
-        return t("label_number_input");
-      case "email_address":
-        return t("label_email_address");
-      case "star_rating":
-        return t("label_star_rating");
-      case "custom_scale":
-        return t("label_custom_scale");
-      case "date_picker":
-        return t("label_date_picker");
-      default:
-        return "--";
-    }
-  };
   const query = useQuery({
     queryKey: [`submissionData`, submission.id],
     queryFn: async () => {
@@ -170,28 +150,7 @@ const Body = ({
         ) : query.error ? (
           <div className="flex justify-center items-center h-32 text-destructive">{t("err_generic")}</div>
         ) : (
-          query.data?.collections.map((coll, i) => (
-            <div key={i} className="space-y-2">
-              <div className="font-medium text-foreground flex items-center gap-2 justify-start">
-                <div className="flex justify-center items-center gap-2">
-                  <div className="flex-shrink-0 mt-1 w-5 h-5 rounded bg-foreground/10 flex items-center justify-center">
-                    <span className="text-xs font-medium text-foreground">{i + 1}</span>
-                  </div>
-                  <span className="text-sm font-semibold">{coll.question}</span>
-                </div>
-                <span className="text-xs text-foreground/70 hidden">({getBlockType(coll.type)})</span>
-              </div>
-              {coll.answer.trim() !== "" ? (
-                <div className="bg-foreground/5 rounded-sm p-3">
-                  <p className="text-xs whitespace-pre-wrap text-foreground/70">{coll.answer}</p>
-                </div>
-              ) : (
-                <div className="border border-dashed rounded-lg p-4 text-center">
-                  <p className="text-sm text-muted-foreground">{t("label_no_answer")}</p>
-                </div>
-              )}
-            </div>
-          ))
+          query.data?.collections.map((coll, i) => <BlockItem key={i + 1} {...coll} />)
         )}
       </div>
       {/* Footer Actions */}
@@ -223,6 +182,55 @@ const Body = ({
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+const BlockItem = (props: IBlockItem) => {
+  const t = useTranslations("app");
+
+  const getBlockType = (type: TBlock): string => {
+    switch (type) {
+      case "short_text":
+        return t("label_short_text");
+      case "paragraph_text":
+        return t("label_paragraph_text");
+      case "checkboxes":
+        return t("label_checkboxes");
+      case "multiple_choice":
+        return t("label_multiple_choice");
+      case "dropdown_menu":
+        return t("label_dropdown_menu");
+      case "number_input":
+        return t("label_number_input");
+      case "email_address":
+        return t("label_email_address");
+      case "star_rating":
+        return t("label_star_rating");
+      case "custom_scale":
+        return t("label_custom_scale");
+      case "date_picker":
+        return t("label_date_picker");
+      default:
+        return "--";
+    }
+  };
+  return (
+    <div className="space-y-2">
+      <div className="font-medium text-foreground flex items-center gap-2 justify-start">
+        <div className="flex justify-center items-center gap-2">
+          <span className="text-sm font-semibold">{props.question}</span>
+        </div>
+      </div>
+      {props.answer.trim() !== "" ? (
+        <div className="bg-foreground/5 rounded-sm p-2">
+          <p className="text-xs whitespace-pre-wrap text-muted-foreground">{props.answer}</p>
+        </div>
+      ) : (
+        <div className="border border-dashed rounded-lg p-4 text-center">
+          <p className="text-sm text-muted-foreground">{t("label_no_answer")}</p>
+        </div>
+      )}
     </div>
   );
 };
