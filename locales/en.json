@@ -410,7 +410,18 @@
     "label_upgrade_for_custom_dates": "Upgrade to Pro to access custom dates",
     "label_upgrade_to_pro": "Upgrade to Pro",
     "label_last_n_days": "Last {n, plural, =1 {# day} other {# days}}",
-    "label_view_details": "View details"
+    "label_view_details": "View details",
+    "label_select": "Select",
+    "label_complete_subscription": "Confirm Subscription",
+    "label_payment_details": "Payment method",
+    "desc_secure_payment": "Your payment is secure and encrypted",
+    "label_back_to_plans": "Back to plans",
+    "label_credit_card": "Credit / Debit card",
+    "desc_stripe_payment": "Secure payment processed by Stripe",
+    "label_recurring_subscription": "Recurring monthly subscription",
+    "label_available_plans": "Available Plans",
+    "desc_choose_plan": "Choose the plan that fits your needs",
+    "label_pricing_billed_monthly": "Billed monthly"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

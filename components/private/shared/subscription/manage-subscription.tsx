@@ -24,7 +24,7 @@ import { IPlan } from "@/utils/interfaces";
 import { getPlans } from "@/utils/plans";
 import { TSetState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { CheckIcon, RocketIcon } from "lucide-react";
+import { ArrowRight, Check, CreditCard, Rocket, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useMedia } from "react-use";
@@ -40,9 +40,9 @@ const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col w-full min-w-[650px] h-[90%]">
-          <DialogHeader>
-            <DialogTitle>{t("label_manage_sub")}</DialogTitle>
+        <DialogContent className="flex flex-col w-full max-w-2xl max-h-[90%] overflow-y-auto">
+          <DialogHeader className="border-b pb-4">
+            <DialogTitle className="font-bold tracking-tight">{t("label_manage_sub")}</DialogTitle>
             <DialogDescription>{t("desc_manage_sub")}</DialogDescription>
           </DialogHeader>
           <Body setState={setOpen} />
@@ -54,9 +54,9 @@ const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="flex flex-col p-3 max-h-[90%]">
-        <DrawerHeader>
-          <DrawerTitle>{t("label_manage_sub")}</DrawerTitle>
+      <DrawerContent className="flex flex-col p-4 max-h-[90%]">
+        <DrawerHeader className="text-left border-b pb-4">
+          <DrawerTitle className="font-bold">{t("label_manage_sub")}</DrawerTitle>
           <DrawerDescription>{t("desc_manage_sub")}</DrawerDescription>
         </DrawerHeader>
         <Body setState={setOpen} />
@@ -64,17 +64,18 @@ const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
     </Drawer>
   );
 };
+
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const userStore = useUserStore();
   const [localPlans, setLocalPlans] = useState<IPlan[]>([]);
+  const [selectedPlan, setSelectedPlan] = useState<IPlan | null>(null);
   const filteredPlans = localPlans.filter((x) => x.type !== "free_trial");
   const showCancelButton = userStore.subscription.status !== "canceled" && userStore.subscription.plan !== "free_trial";
 
   const query = useQuery({
     queryKey: ["manageSubData"],
     queryFn: async () => {
-      console.log(userStore.locale);
       setLocalPlans(await getPlans(userStore.locale));
       return null;
     },
@@ -83,69 +84,143 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   if (query.isPending) return null;
 
   return (
-    <div className="flex flex-col gap-6 overflow-y-auto h-full">
-      <div className="grid sm:grid-cols-2 gap-4 overflow-y-auto flex-1">
-        {filteredPlans.map((plan) => (
-          <CardTemplate key={plan.type} plan={plan} />
-        ))}
-      </div>
-      <div className="flex sm:justify-between justify-center items-center gap-4">
-        <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="w-full sm:w-fit">
-          {t("label_close")}
-        </Button>
-        {showCancelButton && (
-          <CancelSubscription>
-            <Button variant="destructive_outline" size="sm" className="w-full sm:w-auto self-end">
-              {t("label_cancel_sub")}
+    <div className="flex flex-col gap-6 overflow-y-auto">
+      {!selectedPlan ? (
+        <>
+          <div className="space-y-1">
+            <h3 className="font-semibold text-lg">{t("label_available_plans")}</h3>
+            <p className="text-sm text-muted-foreground">{t("desc_choose_plan")}</p>
+          </div>
+
+          <div className="flex flex-col overflow-y-auto gap-6 sm:pr-2">
+            {filteredPlans.map((plan) => (
+              <PlanOption
+                key={plan.type}
+                plan={plan}
+                isCurrent={plan.type === userStore.subscription.plan && userStore.subscription.status !== "canceled"}
+                onSelect={() => setSelectedPlan(plan)}
+              />
+            ))}
+          </div>
+
+          <div className="flex gap-4 border-t pt-4">
+            <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="">
+              {t("label_close")}
             </Button>
-          </CancelSubscription>
-        )}
+            {showCancelButton && (
+              <CancelSubscription>
+                <Button variant="destructive_outline" size="sm" className="">
+                  {t("label_cancel_sub")}
+                </Button>
+              </CancelSubscription>
+            )}
+          </div>
+        </>
+      ) : (
+        <CheckoutFlow plan={selectedPlan} onBack={() => setSelectedPlan(null)} />
+      )}
+    </div>
+  );
+};
+
+const PlanOption = ({ plan, isCurrent, onSelect }: { plan: IPlan; isCurrent: boolean; onSelect: () => void }) => {
+  const t = useTranslations("app");
+
+  return (
+    <div
+      className={`relative p-4 rounded-lg border ${
+        plan.isMostPopular ? "border-primary bg-primary/5" : "border-border"
+      }`}>
+      <div className="flex flex-col gap-4">
+        <div className="flex items-start justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <h3 className="font-semibold text-lg">{plan.name}</h3>
+              {plan.isMostPopular && (
+                <Badge variant="green" className="px-2">
+                  {t("label_most_popular")}
+                </Badge>
+              )}
+            </div>
+          </div>
+          <div className="text-right">
+            <p className="font-bold text-xl">${plan.price}</p>
+            <p className="text-sm text-muted-foreground">{t("label_per_month")}</p>
+          </div>
+        </div>
+        <div className="flex items-center justify-between gap-4">
+          <ul className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
+            {plan.features.map((feature, i) => (
+              <li key={i} className="flex items-center gap-1.5">
+                {feature.comingSoon ? (
+                  <Rocket className="w-3.5 h-3.5 text-amber-500" />
+                ) : (
+                  <Check className="w-3.5 h-3.5 text-primary" />
+                )}
+                <span className={feature.comingSoon ? "text-muted-foreground" : ""}>{feature.description}</span>
+              </li>
+            ))}
+          </ul>
+          <Button
+            onClick={onSelect}
+            disabled={isCurrent}
+            size="sm"
+            className="shrink-0"
+            variant={isCurrent ? "outline" : "secondary"}>
+            {isCurrent ? t("label_current_plan") : t("label_select")}
+            {!isCurrent && <ArrowRight className="ml-1 w-4 h-4" />}
+          </Button>
+        </div>
       </div>
     </div>
   );
 };
-const CardTemplate = ({ plan }: { plan: IPlan }) => {
+
+const CheckoutFlow = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) => {
   const t = useTranslations("app");
-  const { subscription } = useUserStore();
-  const currentPlan = plan.type === subscription.plan && subscription.status !== "canceled";
 
   return (
-    <div className={`relative flex flex-col items-center p-4 bg-background border rounded-lg`}>
-      <div className="flex flex-col w-full gap-3">
-        <div className="flex justify-between items-center gap-2">
-          <h3 className="font-semibold">{plan.name}</h3>
-          {plan.isMostPopular && <Badge variant="green">{t("label_most_popular")}</Badge>}
-        </div>
-        <div className="flex w-full">
-          <div className="">
-            <span className="text-primary font-semibold text-lg">${plan.price} </span>
-            <span className="text-xs">/ {t("label_per_month")}</span>
+    <div className="flex flex-col gap-6">
+      <div className="flex items-center justify-between border-b pb-4">
+        <button
+          onClick={onBack}
+          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
+          <X className="w-4 h-4" />
+          {t("label_back_to_plans")}
+        </button>
+        <div className="w-4"></div>
+      </div>
+
+      <div className="space-y-6">
+        <div className="p-4 rounded-lg bg-muted/50">
+          <div className="flex justify-between items-center">
+            <div>
+              <h4 className="font-semibold">{plan.name}</h4>
+              <p className="text-sm text-muted-foreground">{t("label_pricing_billed_monthly")}</p>
+            </div>
+            <p className="font-bold text-lg">${plan.price}/m</p>
           </div>
         </div>
-        <div className="w-full">
-          <CheckoutStripe plan={plan.type}>
-            <Button disabled={currentPlan} className="w-full" size="sm" variant={"secondary"}>
-              {currentPlan ? t("label_current_plan") : plan.ctaButton}
-            </Button>
-          </CheckoutStripe>
+
+        <div className="space-y-4">
+          <h4 className="font-medium">{t("label_payment_details")}</h4>
+          <div className="p-4 rounded-lg border flex items-center gap-3">
+            <CreditCard className="w-5 h-5 text-primary" />
+            <div>
+              <p className="font-medium">{t("label_credit_card")}</p>
+              <p className="text-sm text-muted-foreground">{t("desc_stripe_payment")}</p>
+            </div>
+          </div>
         </div>
+
+        <CheckoutStripe plan={plan.type}>
+          <Button className="w-full" size="lg">
+            {t("label_complete_subscription")}
+          </Button>
+        </CheckoutStripe>
       </div>
-      <div className="flex flex-1 justify-start items-start w-full">
-        <ul className="mt-4 space-y-3 text-left w-full">
-          {plan.features.map((feature, i) => (
-            <li key={i} className="flex items-center gap-2">
-              {feature.comingSoon ? (
-                <RocketIcon className="text-amber-500 w-4 h-4" />
-              ) : (
-                <CheckIcon className={`${plan.isMostPopular ? "text-primary" : "text-primary"} w-4 h-4`} />
-              )}
-              <span className={`${feature.comingSoon ? "text-foreground/80" : "font-semibold"} text-xs`}>
-                {feature.description} {feature.comingSoon && `(${t("label_soon")})`}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
+
+      <p className="text-xs text-muted-foreground text-center">{t("desc_secure_payment")}</p>
     </div>
   );
 };
