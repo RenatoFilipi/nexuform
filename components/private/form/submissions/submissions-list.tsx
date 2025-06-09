@@ -9,7 +9,7 @@ import { formatDateRelativeToNow, formatTime } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState, TSubmissionStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowUpRightIcon, ChevronLeftIcon, ChevronRightIcon, ClockIcon, SendIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon, ClockIcon, SendIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useMedia } from "react-use";
@@ -126,12 +126,12 @@ const SubmissionsList = () => {
         {isDesktop && (
           <div className="flex flex-col gap-4">
             <Table className="border">
-              <TableHeader>
+              <TableHeader className="">
                 <TableRow>
                   <TableHead>{t("col_identifier")}</TableHead>
-                  <TableHead>{t("col_status")}</TableHead>
                   <TableHead>{t("col_sent_in")}</TableHead>
                   <TableHead>{t("col_completion_time")}</TableHead>
+                  <TableHead>{t("col_status")}</TableHead>
                   <TableHead className="text-right">{t("col_actions")}</TableHead>
                 </TableRow>
               </TableHeader>
@@ -140,27 +140,27 @@ const SubmissionsList = () => {
                   return (
                     <TableRow key={submission.id} className="text-xs text-foreground/80 hover:bg-transparent">
                       <TableCell className="p-0 pl-4 font-semibold">{submission.identifier}</TableCell>
-                      <TableCell className="py-3">
-                        <SubmissionStatusBadge status={submission.status as TSubmissionStatus} />
-                      </TableCell>
-                      <TableCell className="py-3">
-                        <div className="flex flex-col justify-center items-start">
+                      <TableCell className="py-1.5">
+                        <div className="flex justify-center items-center gap-2">
                           <span className="font-semibold">{new Date(submission.created_at).toLocaleString()}</span>
                           <span className="text-muted-foreground">
-                            {formatDateRelativeToNow(submission.created_at, user.locale)}
+                            ({formatDateRelativeToNow(submission.created_at, user.locale)})
                           </span>
                         </div>
                       </TableCell>
-                      <TableCell className="py-3">
+                      <TableCell className="py-1.5">
                         <div className="flex justify-start items-center gap-1">
                           <ClockIcon className="w-3 h-3 text-muted-foreground" />
                           <span className="font-semibold">{formatTime(submission.completion_time ?? 0, 2)}</span>
                         </div>
                       </TableCell>
-                      <TableCell className="text-right py-3">
+                      <TableCell className="py-1.5">
+                        <SubmissionStatusBadge status={submission.status as TSubmissionStatus} />
+                      </TableCell>
+                      <TableCell className="text-right py-1.5">
                         <SubmissionDetails blocks={global.blocks} submission={submission}>
-                          <Button variant={"outline"} size={"icon"} className="">
-                            <ArrowUpRightIcon className="w-5 h-5" />
+                          <Button variant={"outline"} size={"xs"} className="">
+                            {t("label_view_details")}
                           </Button>
                         </SubmissionDetails>
                       </TableCell>

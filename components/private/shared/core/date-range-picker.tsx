@@ -44,7 +44,7 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
   const presets = [
     { label: t("label_today"), value: 1, handler: () => handleToday(), id: "today" },
     {
-      label: t("last_n_days", {
+      label: t("label_last_n_days", {
         n: 3,
         s: "s",
       }),
@@ -53,7 +53,7 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
       id: "last_3_days",
     },
     {
-      label: t("last_n_days", {
+      label: t("label_last_n_days", {
         n: 7,
         s: "s",
       }),
@@ -62,7 +62,7 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
       id: "last_7_days",
     },
     {
-      label: t("last_n_days", {
+      label: t("label_last_n_days", {
         n: 30,
         s: "s",
       }),

@@ -409,7 +409,8 @@
     "label_this_month": "Este mês",
     "label_upgrade_for_custom_dates": "Atualize para Pro para acessar datas personalizadas",
     "label_upgrade_to_pro": "Atualizar para Pro",
-    "last_n_days": "Último{s} {n, plural, =1 {# dia} other {# dias}}"
+    "label_last_n_days": "Último{s} {n, plural, =1 {# dia} other {# dias}}",
+    "label_view_details": "Ver detalhes"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

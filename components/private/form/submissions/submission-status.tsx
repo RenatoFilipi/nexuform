@@ -79,7 +79,7 @@ const SubmissionStatus = ({ submission, setState }: { submission: ESubmission; s
   return (
     <div className="inline-flex -space-x-px divide-x divide-primary-foreground/30 shadow-sm shadow-black/5 rtl:space-x-reverse w-full sm:w-fit">
       <Button
-        variant={"default"}
+        variant={"secondary"}
         disabled={appState === "loading"}
         size={"sm"}
         onClick={onSubmissionStatusSubmit}
@@ -90,7 +90,7 @@ const SubmissionStatus = ({ submission, setState }: { submission: ESubmission; s
       <DropdownMenu onOpenChange={(open) => setIsOpen(open)}>
         <DropdownMenuTrigger asChild disabled={appState === "loading"}>
           <Button
-            variant={"default"}
+            variant={"secondary"}
             className="rounded-none shadow-none first:rounded-s-md last:rounded-e-md focus-visible:z-10"
             size="sm"
             aria-label="Options">

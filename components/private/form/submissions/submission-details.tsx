@@ -204,7 +204,7 @@ const Body = ({
             {isAllowedToExport ? (
               <Button
                 onClick={() => exportOneSubmissionToCSV(submission, query.data?.collections ?? [])}
-                variant="secondary"
+                variant="outline"
                 size={"sm"}
                 className="w-full sm:w-auto"
                 disabled={!query.data}>
@@ -213,7 +213,7 @@ const Body = ({
               </Button>
             ) : (
               <ManageSubscription>
-                <Button variant="secondary" className="w-full sm:w-auto" size={"sm"}>
+                <Button variant="outline" className="w-full sm:w-auto" size={"sm"}>
                   {t("label_csv_export")}
                 </Button>
               </ManageSubscription>

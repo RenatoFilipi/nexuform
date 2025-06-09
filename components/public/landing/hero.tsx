@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { ArrowRightIcon, ClockIcon, CreditCardIcon } from "lucide-react";
+import { ArrowRightIcon, ClockIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +11,7 @@ const Hero = () => {
   const t = useTranslations("landing");
 
   return (
-    <div className="relative flex flex-col justify-center items-center gap-6 md:gap-10 min-h-[calc(100dvh-64px)] w-full px-4 overflow-hidden pt-24 pb-6">
+    <div className="relative flex flex-col justify-center items-center gap-6 md:gap-10 min-h-[calc(100dvh-64px)] w-full px-4 overflow-hidden pt-32 pb-6">
       <BgDesign />
       <motion.div
         className="flex justify-center items-center flex-col gap-5 md:gap-10 w-full z-10 relative max-w-6xl mx-auto"
@@ -72,16 +72,16 @@ const CtaActions = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4, duration: 0.4 }}>
-      <Button asChild className="group transition-all hover:shadow-lg hover:shadow-primary/20" size="default">
+      <Button
+        asChild
+        className="group transition-all hover:shadow-lg hover:shadow-primary/20"
+        size="default"
+        variant={"default"}>
         <Link href="/signup">
           {t("hero_get_started")}
           <ArrowRightIcon className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
         </Link>
       </Button>
-      <div className="flex justify-center items-center gap-1.5 text-xs sm:text-sm text-foreground/60">
-        <CreditCardIcon className="w-3.5 h-3.5" />
-        <span className="">{t("hero_no_card")}</span>
-      </div>
     </motion.div>
   );
 };

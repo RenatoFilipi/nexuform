@@ -41,7 +41,7 @@ const FormNav = () => {
   ];
 
   return (
-    <div className="border-b h-10 flex justify-start items-center gap-2 px-2 sm:px-8 overflow-x-auto fixed bg-background w-full z-10">
+    <div className="border-b h-10 flex justify-start items-center gap-2 px-2 sm:px-8 overflow-x-auto fixed bg-background w-full z-10 truncate">
       {views.map((v) => {
         return (
           <Link
