@@ -193,13 +193,13 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-      <AlertDialogContent className="h-dvh min-w-[100%] overflow-y-auto p-0 border-transparent">
+      <AlertDialogContent className="h-[90%] min-w-[80%] overflow-y-auto p-0 border-transparent">
         <AlertDialogHeader className="hidden">
           <AlertDialogTitle></AlertDialogTitle>
           <AlertDialogDescription></AlertDialogDescription>
         </AlertDialogHeader>
         <div className="flex flex-col w-full justify-start items-center h-full overflow-y-auto">
-          <div className="flex flex-wrap justify-between items-center w-full py-4 px-6 bg-background">
+          <div className="flex flex-wrap justify-between items-center w-full p-3 bg-background">
             <h1 className="text-base font-semibold tracking-tight text-foreground">{template.name}</h1>
             <div className="flex flex-wrap gap-2 sm:gap-4 items-center mt-2 sm:mt-0">
               <Button
@@ -222,7 +222,6 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
               </Button>
             </div>
           </div>
-
           {query.isPending && (
             <div className="flex justify-center items-center flex-1">
               <LoaderIcon className="w-7 h-7 animate-spin" />

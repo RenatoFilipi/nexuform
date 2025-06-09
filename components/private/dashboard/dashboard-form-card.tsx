@@ -65,7 +65,7 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
               <MoreHorizontalIcon className="w-5 h-5 text-muted-foreground hover:text-primary" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-48" align="end">
+          <DropdownMenuContent className="w-52" align="end">
             {options.map((opt) => {
               return (
                 <DropdownMenuItem
@@ -73,8 +73,10 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
                   className="cursor-pointer hover:bg-accent flex justify-between items-center text-xs"
                   onClick={() => router.push(opt.url)}
                   onSelect={(e) => e.preventDefault()}>
-                  {opt.name}
-                  <opt.icon className="w-4 h-4" />
+                  <div className="flex justify-start items-center gap-2">
+                    <opt.icon className="w-4 h-4" />
+                    {opt.name}
+                  </div>
                 </DropdownMenuItem>
               );
             })}
@@ -98,8 +100,10 @@ const DashboardFormCard = ({ form }: { form: EForm }) => {
               <DropdownMenuItem
                 className="cursor-pointer text-destructive hover:bg-destructive/5 focus:text-destructive flex justify-between items-center text-xs"
                 onSelect={(e) => e.preventDefault()}>
-                {t("label_delete")}
-                <TrashIcon className="w-4 h-4" />
+                <div className="flex justify-start items-center gap-2">
+                  <TrashIcon className="w-4 h-4" />
+                  {t("label_delete")}
+                </div>
               </DropdownMenuItem>
             </FormDelete>
           </DropdownMenuContent>
