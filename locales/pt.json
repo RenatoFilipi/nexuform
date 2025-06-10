@@ -422,7 +422,8 @@
     "label_available_plans": "Planos Disponíveis",
     "desc_choose_plan": "Escolha o plano que atende às suas necessidades",
     "label_pricing_billed_monthly": "Cobrado mensalmente",
-    "label_desc_no_submission": "Nenhuma submissão recebida ainda. Compartilhe o formulário para ver as respostas aparecerem aqui."
+    "label_desc_no_submission": "Nenhuma submissão recebida ainda. Compartilhe o formulário para ver as respostas aparecerem aqui.",
+    "label_sub_cancel_warning_irreversible": "Esta ação é irreversível! Todos os seus recursos premium serão perdidos imediatamente."
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

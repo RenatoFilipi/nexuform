@@ -30,11 +30,16 @@ const CancelSubscription = ({ children }: { children: React.ReactNode }) => {
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogOverlay className="backdrop-blur-sm">
-        <AlertDialogContent className="flex flex-col w-full sm:min-w-[650px] p-6">
-          <AlertDialogHeader className="">
-            <AlertDialogTitle className="">{t("label_sub_cancel")}</AlertDialogTitle>
-            <AlertDialogDescription className="">{t("desc_sub_cancel")}</AlertDialogDescription>
-          </AlertDialogHeader>
+        <AlertDialogContent className="flex flex-col w-full sm:min-w-[650px] h-[90%] p-0 overflow-y-auto">
+          <div className="bg-destructive/10 p-6 border-b border-destructive/20">
+            <AlertDialogHeader className="text-left">
+              <div className="flex items-center gap-2">
+                <AlertTriangleIcon className="w-5 h-5 text-destructive" />
+                <AlertDialogTitle className="text-destructive">{t("label_sub_cancel")}</AlertDialogTitle>
+              </div>
+              <AlertDialogDescription className="text-destructive/80">{t("desc_sub_cancel")}</AlertDialogDescription>
+            </AlertDialogHeader>
+          </div>
           <Body setState={setOpen} />
         </AlertDialogContent>
       </AlertDialogOverlay>
@@ -82,7 +87,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
 
   if (!subscription) {
     return (
-      <div className="">
+      <div className="p-6">
         <p>{t("label_no_sub_data")}</p>
         <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="mt-4 w-full">
           {t("label_close")}
@@ -92,9 +97,9 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   }
 
   return (
-    <div className="flex flex-col gap-6 h-full">
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-col">
+    <div className="flex flex-col gap-6 h-full p-6 overflow-y-auto">
+      <div className="flex flex-col gap-4 overflow-y-auto">
+        <div className="flex flex-col bg-background p-4 rounded-lg border">
           <p className="text-sm">
             {t("label_sub_start")}: <strong>{new Date(subscription.start_date).toLocaleDateString()}</strong>
           </p>
@@ -103,12 +108,15 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
           </p>
         </div>
         <Separator />
-        <div className="flex flex-col gap-2 bg-foreground/5 p-4">
-          <span className="font-semibold">{t("label_sub_cancel_alert")}:</span>
+        <div className="flex flex-col gap-2 bg-destructive/5 p-4 rounded-lg border border-destructive/20">
+          <div className="flex items-center gap-2 text-destructive">
+            <AlertTriangleIcon className="w-4 h-4" />
+            <span className="font-semibold">{t("label_sub_cancel_alert")}:</span>
+          </div>
           <div className="text-sm">
             {query.data?.plan?.features.map((feat) => (
               <div key={feat.description} className="flex items-center gap-2">
-                <XIcon className="w-5 h-5 text-destructive" />{" "}
+                <XIcon className="w-4 h-4 text-destructive" />{" "}
                 <span className="text-sm">
                   {feat.description} {feat.comingSoon && `(${t("label_soon")})`}
                 </span>
@@ -118,24 +126,33 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <div className="flex justify-center items-center w-full py-10 border-2 border-dashed rounded flex-col gap-4 bg-foreground">
-          <span className="text-destructive text-sm flex justify-center items-center gap-2">
-            <AlertTriangleIcon className="w-4 h-4" /> {t("label_sub_cancel_warning_feats")}.
-          </span>
+        <div className="flex justify-center items-center w-full py-6 border-2 border-destructive rounded-lg flex-col gap-4 bg-destructive/5">
+          <div className="text-center">
+            <span className="text-destructive font-medium flex justify-center items-center gap-2">
+              <AlertTriangleIcon className="w-5 h-5" />
+              {t("label_sub_cancel_warning_feats")}
+            </span>
+            <p className="text-sm text-destructive/80 mt-1">{t("label_sub_cancel_warning_irreversible")}</p>
+          </div>
           <Button
             disabled={isPending}
             onClick={() => {
               onCancelSubscription();
             }}
             variant="destructive"
-            size="xs">
-            {isPending && <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />}
+            size="sm"
+            className="font-bold py-5 px-8">
+            {isPending ? (
+              <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />
+            ) : (
+              <AlertTriangleIcon className="w-4 h-4 mr-2" />
+            )}
             {t("label_sub_cancel_confirm")}
           </Button>
         </div>
         <div className="flex flex-col gap-4">
           <div className="flex gap-4 justify-between w-full">
-            <Button onClick={() => setState(false)} variant="outline" size="sm">
+            <Button onClick={() => setState(false)} variant="outline" size="sm" className="w-full">
               {t("label_close")}
             </Button>
           </div>

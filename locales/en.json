@@ -422,7 +422,8 @@
     "label_available_plans": "Available Plans",
     "desc_choose_plan": "Choose the plan that fits your needs",
     "label_pricing_billed_monthly": "Billed monthly",
-    "label_desc_no_submission": "No submissions received yet. Share the form to see responses appear here."
+    "label_desc_no_submission": "No submissions received yet. Share the form to see responses appear here.",
+    "label_sub_cancel_warning_irreversible": "This action is irreversible! All your premium features will be lost immediately."
   },
   "s": {
     "err_required_all": "Answer all required questions.",

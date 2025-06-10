@@ -422,7 +422,8 @@
     "label_available_plans": "Planes Disponibles",
     "desc_choose_plan": "Elige el plan que se ajuste a tus necesidades",
     "label_pricing_billed_monthly": "Facturado mensualmente",
-    "label_desc_no_submission": "Aún no se han recibido envíos. Comparte el formulario para ver las respuestas aquí."
+    "label_desc_no_submission": "Aún no se han recibido envíos. Comparte el formulario para ver las respuestas aquí.",
+    "label_sub_cancel_warning_irreversible": "¡Esta acción es irreversible! Todos tus funciones premium se perderán inmediatamente."
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",
