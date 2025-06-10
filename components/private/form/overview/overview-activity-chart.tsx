@@ -1,3 +1,4 @@
+import { Card } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import useGlobalStore from "@/stores/global";
 import { getDateDifferenceInDays } from "@/utils/functions";
@@ -101,7 +102,7 @@ const OverviewActivityChart = () => {
   ];
 
   return (
-    <div className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit">
+    <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit">
       <div className="flex justify-between items-center">
         <div className="flex justify-center items-center gap-2">
           <span className="font-semibold text-base">{t("label_activity")}</span>
@@ -150,7 +151,7 @@ const OverviewActivityChart = () => {
           />
         </ComposedChart>
       </ChartContainer>
-    </div>
+    </Card>
   );
 };
 

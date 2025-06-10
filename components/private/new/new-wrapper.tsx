@@ -3,6 +3,7 @@
 import { createFormAction } from "@/app/actions/form";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
 import { minute } from "@/utils/constants";
@@ -246,7 +247,7 @@ const CardNew = ({
   const limitReached = global.forms.length >= user.subscription.forms;
 
   return (
-    <div className="flex justify-center items-center w-full border h-60 gap-4 flex-col p-6 rounded-lg bg-background hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md group">
+    <Card className="flex justify-center items-center w-full border h-60 gap-4 flex-col p-6 rounded-lg hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md group">
       {icon}
       <p className="text-sm text-center group-hover:text-foreground text-muted-foreground">{description}</p>
       {limitReached && (
@@ -258,7 +259,7 @@ const CardNew = ({
         </ManageSubscription>
       )}
       {!limitReached && action}
-    </div>
+    </Card>
   );
 };
 

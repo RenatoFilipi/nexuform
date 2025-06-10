@@ -127,12 +127,15 @@ const SubmissionsList = () => {
         )}
       </div>
       {noSubmission && (
-        <div className="flex w-full justify-center items-center flex-col gap-4 py-20">
+        <Card className="flex w-full justify-center items-center flex-col gap-4 py-36">
           <div className="flex justify-center items-center p-3 w-fit rounded bg-primary/10">
             <SendIcon className="w-6 h-6 text-primary" />
           </div>
-          <span className="text-sm text-muted-foreground">{t("label_no_submission")}</span>
-        </div>
+          <div className="flex flex-col justify-center items-center gap-1 text-center">
+            <h3 className="text-xl font-bold text-foreground">{t("label_no_submission")}</h3>
+            <p className="text-muted-foreground max-w-md text-sm/relaxed">{t("label_desc_no_submission")}</p>
+          </div>
+        </Card>
       )}
       {isDesktop && !noSubmission && (
         <div className="flex flex-col gap-4">
@@ -152,7 +155,7 @@ const SubmissionsList = () => {
                   <TableRow key={submission.id} className="text-xs text-foreground/80 hover:bg-transparent">
                     <TableCell className="p-0 pl-4 font-semibold">{submission.identifier}</TableCell>
                     <TableCell className="py-1.5">
-                      <div className="flex justify-center items-center gap-2">
+                      <div className="flex justify-start items-center gap-2">
                         <span className="font-semibold">{new Date(submission.created_at).toLocaleString()}</span>
                         <span className="text-muted-foreground">
                           ({formatDateRelativeToNow(submission.created_at, user.locale)})

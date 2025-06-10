@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
 import { EForm, EProfile, ESubscription } from "@/utils/entities";
@@ -68,14 +69,14 @@ const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProp
 const EmptyUI = () => {
   const t = useTranslations("app");
   return (
-    <div className="flex justify-center items-center h-full flex-1 flex-col gap-4">
-      <div className="flex flex-col justify-center items-center gap-6 pb-20">
+    <Card className="flex justify-center items-center flex-col gap-4 py-20">
+      <div className="flex flex-col justify-center items-center gap-6">
         <div className="flex flex-col justify-center items-center gap-4">
           <div className="flex justify-center items-center p-3 bg-primary/10 rounded">
             <LayersIcon className="w-6 h-6 text-primary" />
           </div>
           <div className="flex justify-center items-center flex-col">
-            <span className="text-lg font-medium">{t("label_no_forms")}</span>
+            <span className="text-lg font-semibold">{t("label_no_forms")}</span>
             <span className="text-sm text-center text-muted-foreground">{t("desc_no_forms")}</span>
           </div>
           <div className="flex w-full justify-center items-center mt-2">
@@ -83,7 +84,7 @@ const EmptyUI = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 const NewFormButton = () => {
