@@ -10,7 +10,7 @@
     --muted-foreground: 0 0% 45%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 5%;
-    --card: 0 0% 100%;
+    --card: 0 0% 98.15%;
     --card-foreground: 0 0% 5%;
     --border: 0 0% 86.92%;
     --input: 0 0% 85%;
@@ -20,11 +20,11 @@
     --secondary-foreground: 0 0% 100%;
     --accent: 0 0% 94.62%;
     --accent-foreground: 0 0% 5%;
-    --destructive: 6 89% 55%; /* 9D201E converted to HSL */
+    --destructive: 6 89% 55%;
     --destructive-foreground: 0 0% 100%;
-    --success: 110 79% 46%; /* 94C631 converted to HSL */
+    --success: 110 79% 46%;
     --success-foreground: 0 0% 0%;
-    --warning: 42 85% 53%; /* F8AA14 converted to HSL */
+    --warning: 42 85% 53%;
     --warning-foreground: 0 0% 0%;
     --info: 229 93% 42%;
     --info-foreground: 0 0% 100%;
@@ -54,9 +54,9 @@
     --muted-foreground: 260 0% 62%;
     --popover: 0 0% 7.84%;
     --popover-foreground: 0 0% 98%;
-    --card: 0 0% 7.84%;
+    --card: 0 0% 10.59%;
     --card-foreground: 0 0% 98%;
-    --border: 260 0% 23.85%;
+    --border: 260 0% 18.15%;
     --input: 255 0% 29.69%;
     --primary: 260.38 87.44% 73.05%;
     --primary-foreground: 0 0% 0%;
@@ -64,11 +64,11 @@
     --secondary-foreground: 0 0% 0%;
     --accent: 24.68 0% 18.46%;
     --accent-foreground: 0 0% 98%;
-    --destructive: 6 89% 55%; /* 9D201E converted to HSL */
+    --destructive: 6 89% 55%;
     --destructive-foreground: 0 0% 100%;
-    --success: 110 79% 46%; /* 94C631 converted to HSL */
+    --success: 110 79% 46%;
     --success-foreground: 0 0% 100%;
-    --warning: 42 85% 53%; /* F8AA14 converted to HSL */
+    --warning: 42 85% 53%;
     --warning-foreground: 19 100% 85%;
     --info: 229 93% 42%;
     --info-foreground: 235 93% 79%;

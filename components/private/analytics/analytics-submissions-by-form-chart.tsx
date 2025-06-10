@@ -43,7 +43,7 @@ const AnalyticsSubmissionsByFormChart = () => {
   const overallConversion = totalViews > 0 ? Math.round((totalSubmissions / totalViews) * 100) : 0;
 
   return (
-    <Card className="border-none shadow-sm w-full">
+    <Card className="border-none shadow-sm w-full bg-transparent">
       <CardHeader className="pb-3 px-0 pt-0">
         <div className="flex justify-between items-center">
           <CardTitle className="text-lg font-semibold">{t("label_forms")}</CardTitle>

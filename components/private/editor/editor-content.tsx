@@ -253,7 +253,7 @@ const BlockWrapper = ({ children, block }: { children: React.ReactNode; block: E
         block.id === editor.blockView.id && editor.toolView === "block"
           ? "border-2 border-primary dark:border-primary"
           : "border border-transparent"
-      } flex w-full p-3 relative group hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-colors rounded`}>
+      } flex w-full p-3 relative group hover:bg-foreground/10 transition-colors rounded`}>
       {/* Content */}
       <div className="flex-1">{children}</div>
       {/* Action buttons */}
@@ -263,23 +263,17 @@ const BlockWrapper = ({ children, block }: { children: React.ReactNode; block: E
             e.preventDefault();
             dragControls.start(e);
           }}
-          className="cursor-grab active:cursor-grabbing p-1.5 text-gray-600 hover:text-green-600 hover:bg-green-50/50 dark:text-gray-300 dark:hover:text-green-400 dark:hover:bg-green-900/30 rounded transition-colors"
-          title="Reordenar bloco"
-          aria-label="Reordenar bloco">
+          className="cursor-grab active:cursor-grabbing p-1.5 text-gray-600 hover:text-green-600 hover:bg-green-50/50 dark:text-gray-300 dark:hover:text-green-400 dark:hover:bg-green-900/30 rounded transition-colors">
           <GripVerticalIcon className="w-4 h-4" />
         </button>
         <button
           onClick={onSelectBlock}
-          className="p-1.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50/50 dark:text-gray-300 dark:hover:text-blue-400 dark:hover:bg-blue-900/30 rounded transition-colors"
-          title="Editar bloco"
-          aria-label="Editar bloco">
+          className="p-1.5 text-gray-600 hover:text-blue-600 hover:bg-blue-50/50 dark:text-gray-300 dark:hover:text-blue-400 dark:hover:bg-blue-900/30 rounded transition-colors">
           <Edit2Icon className="w-4 h-4" />
         </button>
         <button
           onClick={onRemoveBlock}
-          className="p-1.5 text-gray-600 hover:text-red-600 hover:bg-red-50/50 dark:text-gray-300 dark:hover:text-red-400 dark:hover:bg-red-900/30 rounded transition-colors"
-          title="Deletar bloco"
-          aria-label="Deletar bloco">
+          className="p-1.5 text-gray-600 hover:text-red-600 hover:bg-red-50/50 dark:text-gray-300 dark:hover:text-red-400 dark:hover:bg-red-900/30 rounded transition-colors">
           <Trash2Icon className="w-4 h-4" />
         </button>
       </div>

@@ -7,7 +7,7 @@ import { useEffect, useMemo, useReducer, useState } from "react";
 import { CartesianGrid, ComposedChart, Line, XAxis } from "recharts";
 import { CurveType } from "recharts/types/shape/Curve";
 
-const submissionColor = "#38bdf8";
+const submissionColor = "#2784ad";
 const viewColor = "#fb923c";
 
 interface IChartData {

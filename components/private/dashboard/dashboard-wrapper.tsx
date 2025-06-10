@@ -40,10 +40,10 @@ const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProp
   if (query.isPending) return null;
 
   return (
-    <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-6 sm:gap-10 px-3 sm:px-20 lg:px-64 py-4 sm:py-8">
+    <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-6 sm:gap-10 px-3 sm:px-20 lg:px-56 py-4 sm:py-8">
       <div className="flex justify-between items-center flex-col sm:flex-row gap-3">
         <div className="flex justify-between items-center w-full sm:w-fit">
-          <h1 className="text-xl font-medium">{t("label_forms")}</h1>
+          <h1 className="text-xl font-semibold">{t("label_forms")}</h1>
           <div className="flex sm:hidden">
             <NewFormButton />
           </div>

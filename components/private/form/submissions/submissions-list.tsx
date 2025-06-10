@@ -104,27 +104,37 @@ const SubmissionsList = () => {
         <div className="flex justify-start items-center w-full sm:w-fit">
           <span className="font-semibold text-lg sm:text-xl">{t("label_submissions")}</span>
         </div>
-        <div className="flex w-full sm:w-fit justify-start overflow-x-auto">
-          <div className="flex justify-center items-center gap-2">
-            {statusButtons.map((x) => {
-              return (
-                <Button
-                  key={x.status}
-                  variant={"outline"}
-                  size={"sm"}
-                  className={`${
-                    status === x.status ? "bg-foreground/10 text-foreground font-semibold" : "text-muted-foreground"
-                  } flex justify-center items-center gap-2 w-full sm:w-fit`}
-                  onClick={() => setStatus(x.status)}>
-                  {x.icon}
-                  {x.label}
-                </Button>
-              );
-            })}
+        {!noSubmission && (
+          <div className="flex w-full sm:w-fit justify-start overflow-x-auto">
+            <div className="flex justify-center items-center gap-2">
+              {statusButtons.map((x) => {
+                return (
+                  <Button
+                    key={x.status}
+                    variant={"outline"}
+                    size={"sm"}
+                    className={`${
+                      status === x.status ? "bg-foreground/10 text-foreground font-semibold" : "text-muted-foreground"
+                    } flex justify-center items-center gap-2 w-full sm:w-fit`}
+                    onClick={() => setStatus(x.status)}>
+                    {x.icon}
+                    {x.label}
+                  </Button>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        )}
       </div>
-      {isDesktop && (
+      {noSubmission && (
+        <div className="flex w-full justify-center items-center flex-col gap-4 py-20">
+          <div className="flex justify-center items-center p-3 w-fit rounded bg-primary/10">
+            <SendIcon className="w-6 h-6 text-primary" />
+          </div>
+          <span className="text-sm text-muted-foreground">{t("label_no_submission")}</span>
+        </div>
+      )}
+      {isDesktop && !noSubmission && (
         <div className="flex flex-col gap-4">
           <Table className="border">
             <TableHeader className="">
@@ -170,31 +180,21 @@ const SubmissionsList = () => {
               })}
             </TableBody>
           </Table>
-          {noSubmission && (
-            <div className="flex w-full justify-center items-center flex-col gap-4 py-20">
-              <div className="flex justify-center items-center p-3 w-fit rounded bg-primary/10">
-                <SendIcon className="w-6 h-6 text-primary" />
-              </div>
-              <span className="text-sm text-muted-foreground">{t("label_no_submission")}</span>
+          <div className="flex w-full justify-end items-center gap-4">
+            <div className="flex justify-center items-center gap-4">
+              <Button disabled={disabledPrevious} onClick={onPreviousData} variant={"outline"} size={"sm"}>
+                <ChevronLeftIcon className="w-4 h-4 mr-2" />
+                {t("label_previous")}
+              </Button>
+              <Button disabled={disabledNext} onClick={onNextData} variant={"outline"} size={"sm"}>
+                {t("label_next")}
+                <ChevronRightIcon className="w-4 h-4 ml-2" />
+              </Button>
             </div>
-          )}
-          {!noSubmission && (
-            <div className="flex w-full justify-end items-center gap-4">
-              <div className="flex justify-center items-center gap-4">
-                <Button disabled={disabledPrevious} onClick={onPreviousData} variant={"outline"} size={"sm"}>
-                  <ChevronLeftIcon className="w-4 h-4 mr-2" />
-                  {t("label_previous")}
-                </Button>
-                <Button disabled={disabledNext} onClick={onNextData} variant={"outline"} size={"sm"}>
-                  {t("label_next")}
-                  <ChevronRightIcon className="w-4 h-4 ml-2" />
-                </Button>
-              </div>
-            </div>
-          )}
+          </div>
         </div>
       )}
-      {!isDesktop && (
+      {!isDesktop && !noSubmission && (
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             {filteredSubmissions.map((submission) => {
@@ -216,33 +216,23 @@ const SubmissionsList = () => {
               );
             })}
           </div>
-          {noSubmission && (
-            <div className="flex w-full justify-center items-center flex-col gap-4 py-2">
-              <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/10">
-                <SendIcon className="w-6 h-6 text-primary" />
-              </div>
-              <span className="text-sm text-muted-foreground">{t("label_no_submission")}</span>
+          <div className="flex w-full justify-center items-center gap-4">
+            <div className="flex justify-center items-center gap-4 w-full">
+              <Button
+                disabled={disabledPrevious}
+                onClick={onPreviousData}
+                variant={"outline"}
+                size={"sm"}
+                className="w-full">
+                <ChevronLeftIcon className="w-4 h-4 mr-2" />
+                {t("label_previous")}
+              </Button>
+              <Button disabled={disabledNext} onClick={onNextData} variant={"outline"} size={"sm"} className="w-full">
+                {t("label_next")}
+                <ChevronRightIcon className="w-4 h-4 ml-2" />
+              </Button>
             </div>
-          )}
-          {!noSubmission && (
-            <div className="flex w-full justify-center items-center gap-4">
-              <div className="flex justify-center items-center gap-4 w-full">
-                <Button
-                  disabled={disabledPrevious}
-                  onClick={onPreviousData}
-                  variant={"outline"}
-                  size={"sm"}
-                  className="w-full">
-                  <ChevronLeftIcon className="w-4 h-4 mr-2" />
-                  {t("label_previous")}
-                </Button>
-                <Button disabled={disabledNext} onClick={onNextData} variant={"outline"} size={"sm"} className="w-full">
-                  {t("label_next")}
-                  <ChevronRightIcon className="w-4 h-4 ml-2" />
-                </Button>
-              </div>
-            </div>
-          )}
+          </div>
         </div>
       )}
     </div>

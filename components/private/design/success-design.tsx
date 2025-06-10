@@ -2,7 +2,6 @@
 
 import Brand from "@/components/shared/core/brand";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { CheckIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -37,7 +36,7 @@ const SuccessDesign = ({ brand, preview, color, description, title }: IProps) =>
 
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-4rem)] w-full p-4">
-      <Card className="flex flex-col gap-8 p-8 w-full sm:max-w-md border-transparent">
+      <div className="flex flex-col gap-8 p-8 w-full sm:max-w-md">
         <div className="flex flex-col justify-center items-center gap-6">
           <div className="relative">
             <div
@@ -85,7 +84,7 @@ const SuccessDesign = ({ brand, preview, color, description, title }: IProps) =>
             </Button>
           </div>
         )}
-      </Card>
+      </div>
     </div>
   );
 };

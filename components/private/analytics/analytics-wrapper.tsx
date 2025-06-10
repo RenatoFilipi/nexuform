@@ -75,9 +75,9 @@ const AnalyticsWrapper = ({ profile, subscription, email, viewLogs, submissionLo
   if (query.isPending) return null;
 
   return (
-    <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col px-3 sm:px-20 lg:px-52 gap-6 py-4 sm:py-8">
+    <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col px-3 sm:px-20 lg:px-56 gap-6 py-4 sm:py-8">
       <div className="flex justify-between items-center gap-2">
-        <h1 className="text-xl font-medium">{t("label_analytics")}</h1>
+        <h1 className="text-xl font-semibold">{t("label_analytics")}</h1>
         <DateRangePicker
           initialRange={{
             from: global.from.toISOString(),
