@@ -139,7 +139,7 @@ const SubmissionsList = () => {
       )}
       {isDesktop && !noSubmission && (
         <div className="flex flex-col gap-4">
-          <Table className="border">
+          <Table className="border bg-card">
             <TableHeader className="">
               <TableRow className="">
                 <TableHead className="h-10">{t("col_identifier")}</TableHead>
@@ -154,7 +154,7 @@ const SubmissionsList = () => {
                 return (
                   <TableRow key={submission.id} className="text-xs text-foreground/80 hover:bg-transparent">
                     <TableCell className="p-0 pl-4 font-semibold">{submission.identifier}</TableCell>
-                    <TableCell className="py-1.5">
+                    <TableCell className="py-3">
                       <div className="flex justify-start items-center gap-2">
                         <span className="font-semibold">{new Date(submission.created_at).toLocaleString()}</span>
                         <span className="text-muted-foreground">
@@ -162,16 +162,16 @@ const SubmissionsList = () => {
                         </span>
                       </div>
                     </TableCell>
-                    <TableCell className="py-1.5">
+                    <TableCell className="py-3">
                       <div className="flex justify-start items-center gap-1">
                         <ClockIcon className="w-3 h-3 text-muted-foreground" />
                         <span className="font-semibold">{formatTime(submission.completion_time ?? 0, 2)}</span>
                       </div>
                     </TableCell>
-                    <TableCell className="py-1.5">
+                    <TableCell className="py-3">
                       <SubmissionStatusBadge status={submission.status as TSubmissionStatus} />
                     </TableCell>
-                    <TableCell className="text-right py-1.5">
+                    <TableCell className="text-right py-3">
                       <SubmissionDetails blocks={global.blocks} submission={submission}>
                         <Button variant={"outline"} size={"xs"} className="">
                           {t("label_view_details")}
@@ -208,10 +208,10 @@ const SubmissionsList = () => {
                       <span className="text-base font-semibold">{submission.identifier}</span>
                       <SubmissionStatusBadge status={submission.status as TSubmissionStatus} />
                     </div>
-                    <div className="text-foreground/70 flex justify-start flex-col">
-                      <span className="font-semibold text-xs">{new Date(submission.created_at).toLocaleString()}</span>
+                    <div className="flex justify-start items-center gap-2">
+                      <span className="font-medium text-xs">{new Date(submission.created_at).toLocaleString()}</span>
                       <span className="text-muted-foreground text-xs">
-                        {formatDateRelativeToNow(submission.created_at)}
+                        ({formatDateRelativeToNow(submission.created_at)})
                       </span>
                     </div>
                   </Card>

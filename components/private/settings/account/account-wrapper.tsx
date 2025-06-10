@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import useUserStore from "@/stores/user";
@@ -9,7 +10,7 @@ import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { AlertTriangleIcon, EyeIcon, EyeOffIcon, LoaderIcon, LockIcon, Trash2Icon, User2Icon } from "lucide-react";
+import { AlertTriangleIcon, EyeIcon, EyeOffIcon, LoaderIcon, LockIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -29,7 +30,7 @@ const AccountWrapper = (props: IProps) => {
   const t = useTranslations("app");
 
   const query = useQuery({
-    queryKey: ["settingsData"],
+    queryKey: ["settings-data"],
     queryFn: () => {
       user.setLocale(props.locale);
       user.setProfile(props.profile);
@@ -49,7 +50,7 @@ const AccountWrapper = (props: IProps) => {
         <p className="text-sm text-muted-foreground">{t("desc_account_settings")}</p>
       </div>
       {/* content */}
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-10">
         <Profile />
         <Password />
         <Delete />
@@ -78,7 +79,6 @@ const Profile = () => {
     firstName: z.string(),
     lastName: z.string(),
   });
-
   const profileHandler = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
@@ -86,7 +86,6 @@ const Profile = () => {
       lastName: profile.last_name,
     },
   });
-
   const onProfileSubmit = async (values: z.infer<typeof profileSchema>) => {
     setAppState("loading");
     const { firstName, lastName } = values;
@@ -109,16 +108,15 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <Header
-        icon={<User2Icon className="w-5 h-5 text-primary" />}
-        name={t("label_profile_info")}
-        desc={t("desc_profile_info")}
-      />
-      <div>
+    <Card className="flex flex-col gap-4 p-4 sm:p-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
+        <div className="flex flex-col gap-1 w-full">
+          <h1 className="font-semibold text-base">{t("label_profile_info")}</h1>
+          <p className="text-xs text-muted-foreground">{t("desc_profile_info")}</p>
+        </div>
         <Form {...profileHandler}>
-          <form onSubmit={profileHandler.handleSubmit(onProfileSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <form onSubmit={profileHandler.handleSubmit(onProfileSubmit)} className="flex flex-col gap-6 w-full">
+            <div className="flex flex-col gap-4 w-full">
               <FormField
                 control={profileHandler.control}
                 name="firstName"
@@ -147,12 +145,7 @@ const Profile = () => {
               />
             </div>
             <div className="flex justify-end">
-              <Button
-                variant="secondary"
-                size="sm"
-                disabled={appState === "loading"}
-                type="submit"
-                className="w-full md:w-auto">
+              <Button variant="secondary" size="sm" disabled={appState === "loading"} type="submit" className="w-fit">
                 {appState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
                 {t("label_save_profile")}
               </Button>
@@ -160,7 +153,7 @@ const Profile = () => {
           </form>
         </Form>
       </div>
-    </div>
+    </Card>
   );
 };
 const Password = () => {
@@ -221,6 +214,88 @@ const Password = () => {
       setAppState("idle");
     }
   };
+
+  return (
+    <Card className="flex flex-col gap-4 p-4 sm:p-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
+        <div className="flex flex-col gap-1 w-full">
+          <h1 className="font-semibold text-base">{t("label_password")}</h1>
+          <p className="text-xs text-muted-foreground">{t("desc_password")}</p>
+        </div>
+        <Form {...passwordHandler}>
+          <form onSubmit={passwordHandler.handleSubmit(onPasswordSubmit)} className="flex flex-col gap-6 w-full">
+            <div className="flex flex-col gap-4 w-full">
+              <FormField
+                control={passwordHandler.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("label_new_password")}</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          type={isVisible ? "text" : "password"}
+                          {...field}
+                          onChange={onPasswordChange}
+                          className="pr-10"
+                          autoComplete="new-password"
+                        />
+                        <button
+                          type="button"
+                          onClick={toggleVisibility}
+                          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                          {isVisible ? <EyeOffIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
+                        </button>
+                      </div>
+                    </FormControl>
+                    {passwordStrength > 0 && (
+                      <div className="mt-2">
+                        <div className="flex gap-1 h-1.5">
+                          {[1, 2, 3, 4, 5].map((level) => (
+                            <div
+                              key={level}
+                              className={`flex-1 rounded-full ${
+                                level <= passwordStrength
+                                  ? level <= 2
+                                    ? "bg-red-400"
+                                    : level <= 4
+                                    ? "bg-yellow-400"
+                                    : "bg-green-500"
+                                  : "bg-gray-200 dark:bg-gray-700"
+                              }`}
+                            />
+                          ))}
+                        </div>
+                        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                          {passwordStrength <= 2
+                            ? t("label_password_weak")
+                            : passwordStrength <= 4
+                            ? t("label_password_medium")
+                            : t("label_password_strong")}
+                        </p>
+                      </div>
+                    )}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex justify-end">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  disabled={appState === "loading" || passwordStrength < 3}
+                  type="submit"
+                  className="w-fit">
+                  {appState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
+                  {t("label_update_password")}
+                </Button>
+              </div>
+            </div>
+          </form>
+        </Form>
+      </div>
+    </Card>
+  );
 
   return (
     <div className="space-y-6">
@@ -307,26 +382,20 @@ const Delete = () => {
   const t = useTranslations("app");
 
   return (
-    <div className="relative bg-destructive/5 dark:bg-destructive/10 border border-destructive/20 dark:border-destructive/30 rounded-lg px-6 py-10 space-y-5 transition-all hover:border-destructive/30 dark:hover:border-destructive/40">
-      <div className="flex flex-col items-center text-center gap-4">
-        <div className="p-3 rounded bg-destructive/10 text-destructive dark:bg-destructive/20">
-          <AlertTriangleIcon className="w-6 h-6" />
-        </div>
-        <div className="space-y-1.5">
-          <h3 className="text-lg font-semibold text-foreground">{t("label_delete_account")}</h3>
-          <p className="text-sm text-muted-foreground">{t("desc_delete_account")}</p>
-        </div>
+    <Card className="flex flex-col sm:flex-row justify-between items-center gap-8 p-4 sm:p-8">
+      <div className="flex flex-col gap-1">
+        <h1 className="font-semibold text-base">{t("label_delete_account")}</h1>
+        <p className="text-xs text-muted-foreground">{t("desc_delete_account")}</p>
       </div>
-
-      <div className="flex justify-center">
+      <div className="flex justify-end items-center w-full">
         <AccountDelete>
-          <Button variant="destructive" size="sm" className="w-full md:w-auto">
-            <Trash2Icon className="w-4 h-4 mr-2" />
+          <Button variant="destructive_outline" size="sm" className="">
+            <AlertTriangleIcon className="w-4 h-4 mr-2" />
             {t("label_delete_account")}
           </Button>
         </AccountDelete>
       </div>
-    </div>
+    </Card>
   );
 };
 export default AccountWrapper;

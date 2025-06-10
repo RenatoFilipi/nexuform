@@ -44,13 +44,11 @@ const HelpWrapper = ({ email, profile, subscription }: Props) => {
           <h1 className="text-3xl font-bold tracking-tight">{t("label_help")}</h1>
           <p className="text-muted-foreground">{t("desc_help")}</p>
         </div>
-
         <div className="space-y-6 bg-card p-6 rounded-lg border shadow-sm">
           <div className="space-y-2">
             <h2 className="text-lg font-medium">{t("label_contact_support")}</h2>
             <p className="text-sm text-muted-foreground">{t("desc_contact_support")}</p>
           </div>
-
           <div className="flex items-center justify-between bg-accent/50 p-3 rounded-md">
             <span className="font-mono text-sm truncate">{contactEmail}</span>
             <Button variant="outline" size="sm" onClick={handleCopyEmail} className="shrink-0">
@@ -58,7 +56,6 @@ const HelpWrapper = ({ email, profile, subscription }: Props) => {
               {t("label_copy")}
             </Button>
           </div>
-
           <div className="pt-4 border-t">
             <p className="text-sm text-muted-foreground">{t("label_response_time_info")}</p>
           </div>

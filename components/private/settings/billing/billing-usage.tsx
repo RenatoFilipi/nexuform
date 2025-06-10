@@ -58,7 +58,7 @@ const BillingUsage = () => {
       </div>
       <div className="flex w-full gap-6 flex-col">
         {isCancelled && (
-          <div className="border rounded-lg bg-background/50 p-6 flex flex-col md:flex-row gap-8 w-full mx-auto shadow-sm">
+          <Card className="p-6 flex flex-col md:flex-row gap-8 w-full shadow-sm">
             <div className="md:w-2/3 flex flex-col justify-center">
               <div className="flex flex-col md:flex-row gap-4 items-center text-center md:text-left">
                 <AlertTriangleIcon className="h-6 w-6 flex-shrink-0 text-warning" />
@@ -76,10 +76,10 @@ const BillingUsage = () => {
                 </Button>
               </ManageSubscription>
             </div>
-          </div>
+          </Card>
         )}
         {!isCancelled && (
-          <div className="relative overflow-hidden rounded border bg-background p-6 shadow-sm w-full">
+          <Card className="relative overflow-hidden rounded p-6 shadow-sm w-full">
             <div className="absolute right-0 top-0 h-full w-1 bg-primary hidden" />
             <div className="flex flex-col gap-6">
               <div className="flex items-center justify-start gap-4">
@@ -142,7 +142,7 @@ const BillingUsage = () => {
                 </ManageSubscription>
               </div>
             </div>
-          </div>
+          </Card>
         )}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
           <UsageCard

@@ -91,7 +91,7 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
         </div>
         <Input type="text" id="form_name" value={value} onChange={(e) => setValue(e.target.value)} />
       </div>
-      <div className="flex justify-start items-center gap-1">
+      <div className="flex justify-start items-center gap-1 bg-destructive/15 p-2 rounded">
         <AlertCircleIcon className="w-4 h-4 text-destructive" />
         <span className="text-sm font-semibold text-destructive">{t("label_action_undone")}</span>
       </div>
