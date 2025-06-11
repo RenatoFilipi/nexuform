@@ -114,16 +114,33 @@ const cancelSubscriptionInSupabase = async (profileId: string) => {
 
 // Função para cancelar assinaturas antigas no Stripe
 const cancelOldSubscriptions = async (customerId: string, currentSubscriptionId: string) => {
-  const { data: activeSubscriptions } = await stripe.subscriptions.list({
+  const { data: allSubscriptions } = await stripe.subscriptions.list({
     customer: customerId,
-    status: "active",
+    status: "all",
   });
 
-  const oldSubscriptions = activeSubscriptions.filter((sub) => sub.id !== currentSubscriptionId);
+  // Inclui todas exceto a atual, e que podem gerar cobrança ou interferência
+  const cancellableSubscriptions = allSubscriptions.filter(
+    (sub) =>
+      sub.id !== currentSubscriptionId &&
+      ["incomplete", "trialing", "active", "past_due", "unpaid"].includes(sub.status)
+  );
 
-  if (oldSubscriptions.length === 0) return;
+  if (cancellableSubscriptions.length === 0) return;
 
-  await Promise.all(oldSubscriptions.map((sub) => stripe.subscriptions.cancel(sub.id)));
+  await Promise.all(
+    cancellableSubscriptions.map(async (sub) => {
+      try {
+        await stripe.subscriptions.cancel(sub.id, {
+          invoice_now: false,
+          prorate: false,
+        });
+        console.log(`✔️ Cancelada: ${sub.id} (${sub.status})`);
+      } catch (error) {
+        console.error(`❌ Erro ao cancelar ${sub.id}:`, error);
+      }
+    })
+  );
 };
 
 // Handlers de Eventos
@@ -150,20 +167,41 @@ const handleCheckoutSessionCompleted = async (session: Stripe.Checkout.Session) 
 const handleSubscriptionUpdated = async (subscription: Stripe.Subscription) => {
   const customerId = subscription.customer as string;
   const profile = await getProfileByCustomerId(customerId);
+  const subscriptionItem = subscription.items?.data?.[0];
 
-  // Verifica se é uma mudança de plano válida
-  if (subscription.status === "active" && subscription.items?.data?.length > 0) {
-    const planName = getPlanByPriceId(subscription.items.data[0].price.id);
-    await updateSubscriptionInSupabase(profile.id, subscription, planName);
-  } else {
-    // Atualiza apenas o status se não for mudança de plano
-    await supabase
-      .from("subscriptions")
-      .update({
-        status: subscription.status,
-        updated_at: new Date().toISOString(),
-      })
-      .eq("profile_id", profile.id);
+  if (!subscriptionItem) return;
+  const planName = getPlanByPriceId(subscriptionItem.price.id);
+
+  // Situações possíveis:
+  switch (subscription.status) {
+    case "active":
+    case "trialing":
+      // Assinatura está ativa ou em trial — atualiza normalmente
+      await updateSubscriptionInSupabase(profile.id, subscription, planName);
+      break;
+    case "past_due":
+      // Pagamento falhou, mas Stripe ainda tentará cobrar
+      await supabase
+        .from("subscriptions")
+        .update({
+          status: "past_due",
+          updated_at: new Date().toISOString(),
+          // Se quiser controlar período de carência
+          past_due_since: new Date().toISOString(),
+        })
+        .eq("profile_id", profile.id);
+      break;
+    case "unpaid":
+    case "incomplete":
+    case "incomplete_expired":
+    case "canceled":
+      // Situações graves: o usuário deve ser considerado sem assinatura
+      await cancelSubscriptionInSupabase(profile.id);
+      break;
+    default:
+      // Qualquer outro status que você queira logar, mas não atualizar
+      console.warn(`Status de assinatura não tratado: ${subscription.status}`);
+      break;
   }
 };
 

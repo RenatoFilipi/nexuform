@@ -6,6 +6,11 @@ import { createTranslator } from "use-intl/core";
 import { ESubscription } from "./entities";
 import { TBlock, TTemplateCategory } from "./types";
 
+const localeMap: Record<string, any> = {
+  en: enUS,
+  es: es,
+  pt: ptBR,
+};
 export const uuid = () => {
   const uuid = self.crypto.randomUUID();
   return uuid;
@@ -20,11 +25,6 @@ export const nanoid = (length: number = 12, onlyLetters: boolean = false, onlyLo
   alphabet = alphabet.replace(/[^a-zA-Z0-9]/g, "");
   const nnid = customAlphabet(alphabet, length);
   return nnid();
-};
-const localeMap: Record<string, any> = {
-  en: enUS,
-  es: es,
-  pt: ptBR,
 };
 export const formatDateRelativeToNow = (isoDate: string, locale: string = "en") => {
   const date = new Date(isoDate);
@@ -67,7 +67,8 @@ export const getDaysDifference = (startDate: Date, endDate: Date) => {
 export const isSubscriptionActive = (subscription: ESubscription) => {
   const now = new Date();
   const dueDate = new Date(subscription.due_date);
-  return subscription.status === "active" && dueDate >= now;
+  const activeStatuses = ["active", "trialing", "past_due"];
+  return activeStatuses.includes(subscription.status) && dueDate >= now;
 };
 export const isSubmissionsLimitReached = (subscription: ESubscription, submissions: number) => {
   return submissions >= subscription.submissions;
@@ -242,7 +243,6 @@ export const generateDistinctColors = (baseColor: string, count: number) => {
     return `hsl(${hue}, 75%, 55%)`;
   });
 };
-
 export const getPlanName = (value: string) => {
   switch (value) {
     case "free_trial":
@@ -255,7 +255,6 @@ export const getPlanName = (value: string) => {
       return "Custom";
   }
 };
-
 export const getDateDifferenceInDays = (date1: Date, date2: Date): number => {
   const d1 = new Date(date1);
   const d2 = new Date(date2);
