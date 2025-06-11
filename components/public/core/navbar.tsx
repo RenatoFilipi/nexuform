@@ -39,24 +39,24 @@ const Navbar = () => {
 
   return (
     <div
-      className={`fixed top-0 w-full sm:px-20 px-3 z-20 backdrop-blur-lg transition-all duration-300 ${
+      className={`fixed top-0 w-full px-3 z-20 backdrop-blur-lg transition-all duration-300 ${
         scrolled ? "bg-background/90 shadow-md py-2" : "bg-background/0 py-4"
       }`}>
       <div className="w-full flex justify-between md:justify-around items-center transition-all duration-300">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center">
-            <Brand type="primary_logo_text" className="h-5 fill-foreground" />
+            <Brand type="primary_logo_text" className="h-3.5 fill-foreground" />
           </Link>
-        </div>
-        <div className="hidden md:flex items-center gap-6">
-          {sections.map((section) => (
-            <Link
-              key={section.name}
-              href={section.id}
-              className="text-xs text-foreground hover:text-primary transition-colors">
-              {section.name}
-            </Link>
-          ))}
+          <div className="hidden md:flex items-center gap-6">
+            {sections.map((section) => (
+              <Link
+                key={section.name}
+                href={section.id}
+                className="text-sm text-foreground hover:text-primary transition-colors font-medium">
+                {section.name}
+              </Link>
+            ))}
+          </div>
         </div>
         <div className="hidden md:flex items-center gap-4">
           <Button variant="outline" size="sm" asChild>

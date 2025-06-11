@@ -8,19 +8,7 @@ import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
 import { EForm, EProfile, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
-import {
-  ArrowUpRightIcon,
-  CheckCircleIcon,
-  DownloadIcon,
-  ExternalLinkIcon,
-  LightbulbIcon,
-  LinkIcon,
-  LoaderIcon,
-  SettingsIcon,
-  Share2Icon,
-  UsersIcon,
-  ZapIcon,
-} from "lucide-react";
+import { ArrowUpRightIcon, DownloadIcon, ExternalLinkIcon, LinkIcon, LoaderIcon, Share2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { QRCodeSVG } from "qrcode.react";
@@ -55,77 +43,36 @@ const ShareWrapper = (props: IProps) => {
 
   if (query.isPending) return null;
 
-  if (!isPublished)
-    return (
-      <div className="flex flex-col w-full gap-4">
-        <div>
-          <span className="font-semibold text-lg sm:text-xl">{t("label_share")}</span>
-        </div>
-        <div className="flex flex-col md:flex-row gap-8">
-          {/* Conteúdo Principal */}
-          <Card className="flex flex-col justify-center items-center w-full gap-6 p-6">
-            <div className="p-3 rounded bg-primary/10">
-              <Share2Icon className="w-6 h-6 text-primary" />
-            </div>
-            <div className="flex flex-col justify-center items-center gap-1 text-center">
-              <h3 className="text-xl font-bold text-foreground">{t("label_not_public")}</h3>
-              <p className="text-muted-foreground max-w-md text-sm/relaxed">{t("desc_not_public")}</p>
-            </div>
-            <Button variant="secondary" size="sm" asChild className="">
-              <Link href={`/dashboard/editor/${global.form.id}`} className="flex items-center gap-2">
-                <ArrowUpRightIcon className="w-4 h-4" />
-                {t("nav_editor")}
-              </Link>
-            </Button>
-          </Card>
-          {/* Painel de Dicas */}
-          <div className="w-full md:w-80 space-y-6">
-            <Card className="flex flex-col gap-4 p-4 sm:p-6">
-              <h4 className="font-semibold flex items-center gap-2 mb-4">
-                <LightbulbIcon className="w-5 h-5 text-yellow-500" />
-                {t("label_quick_tips")}
-              </h4>
-              <ul className="space-y-4 text-sm text-left">
-                <li className="flex gap-3">
-                  <CheckCircleIcon className="w-4 h-4 mt-0.5 text-green-500 flex-shrink-0" />
-                  <span className="text-muted-foreground">{t("label_tip_publish_to_share")}</span>
-                </li>
-                <li className="flex gap-3">
-                  <SettingsIcon className="w-4 h-4 mt-0.5 text-blue-500 flex-shrink-0" />
-                  <span className="text-muted-foreground">{t("label_tip_configure_privacy")}</span>
-                </li>
-                <li className="flex gap-3">
-                  <UsersIcon className="w-4 h-4 mt-0.5 text-purple-500 flex-shrink-0" />
-                  <span className="text-muted-foreground">{t("label_tip_restrict_access")}</span>
-                </li>
-              </ul>
-            </Card>
-            <Card className="p-4 sm:p-6">
-              <h4 className="font-semibold flex items-center gap-2 mb-4">
-                <ZapIcon className="w-5 h-5 text-orange-500" />
-                {t("label_next_steps")}
-              </h4>
-              <Button variant="outline" size="sm" className="w-full" asChild>
-                <Link href={`/dashboard/editor/${global.form.id}`} className="flex items-center gap-2">
-                  <ArrowUpRightIcon className="w-4 h-4" />
-                  {t("label_configure_sharing")}
-                </Link>
-              </Button>
-            </Card>
-          </div>
-        </div>
-      </div>
-    );
-
   return (
     <div className="flex flex-col w-full gap-4">
       <div>
         <span className="font-semibold text-lg sm:text-xl">{t("label_share")}</span>
       </div>
-      <div className="flex flex-col gap-10">
-        <ShareLink />
-        <ShareQrCode />
-      </div>
+      {!isPublished && (
+        <Card className="flex w-full justify-center items-center flex-col gap-4 py-28">
+          <div className="flex justify-center items-center p-3 w-fit rounded bg-primary/10">
+            <Share2Icon className="w-6 h-6 text-primary" />
+          </div>
+          <div className="flex flex-col justify-center items-center gap-1 text-center">
+            <h3 className="text-xl font-bold text-foreground">{t("label_not_public")}</h3>
+            <p className="text-muted-foreground max-w-md text-sm/relaxed">{t("desc_not_public")}</p>
+          </div>
+          <div>
+            <Button variant="secondary" size="sm" asChild className="">
+              <Link href={`/dashboard/forms/${global.form.id}/settings`} className="flex items-center gap-2">
+                <ArrowUpRightIcon className="w-4 h-4" />
+                {t("label_configure_sharing")}
+              </Link>
+            </Button>
+          </div>
+        </Card>
+      )}
+      {isPublished && (
+        <div className="flex flex-col gap-10">
+          <ShareLink />
+          <ShareQrCode />
+        </div>
+      )}
     </div>
   );
 };

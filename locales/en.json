@@ -65,7 +65,7 @@
     "desc_link_share": "Copy the link below to easily share your form with others.",
     "label_link_copied": "Link copied",
     "label_not_public": "Form is not public",
-    "desc_not_public": "This form is currently private. To make it public, go to the editor page and update its status",
+    "desc_not_public": "This form is currently private. To make it public, go to the settings page and update its status.",
     "nav_editor": "Go to Editor",
     "col_identifier": "identifier",
     "col_sent_in": "Sent in",

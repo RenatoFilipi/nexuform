@@ -11,10 +11,10 @@ const Hero = () => {
   const t = useTranslations("landing");
 
   return (
-    <div className="relative flex flex-col justify-center items-center gap-6 md:gap-10 min-h-[calc(100dvh-64px)] w-full px-4 overflow-hidden pt-32 pb-6">
+    <div className="relative flex flex-col justify-center items-center gap-6 md:gap-10 min-h-[calc(100dvh-64px)] w-full px-4 overflow-hidden pt-40 pb-6">
       <BgDesign />
       <motion.div
-        className="flex justify-center items-center flex-col gap-5 md:gap-10 w-full z-10 relative max-w-6xl mx-auto"
+        className="flex justify-center items-center flex-col gap-5 md:gap-8 w-full z-10 relative max-w-6xl mx-auto"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}>
@@ -24,7 +24,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.5, ease: "easeOut" }}>
-          <h1 className="font-bold text-3xl sm:text-5xl leading-tight">
+          <h1 className="font-semibold text-3xl sm:text-5xl leading-tight">
             {t.rich("hero_headline", {
               main: (chunks) => (
                 <span className="relative">
@@ -33,7 +33,7 @@ const Hero = () => {
               ),
             })}
           </h1>
-          <p className="max-w-lg md:max-w-xl text-sm sm:text-base font-normal text-muted-foreground">
+          <p className="max-w-lg md:max-w-xl text-sm sm:text-lg font-normal text-muted-foreground">
             {t("hero_subheadline")}
           </p>
         </motion.div>
@@ -76,7 +76,7 @@ const CtaActions = () => {
         asChild
         className="group transition-all hover:shadow-lg hover:shadow-primary/20"
         size="default"
-        variant={"default"}>
+        variant={"secondary"}>
         <Link href="/signup">
           {t("hero_get_started")}
           <ArrowRightIcon className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />

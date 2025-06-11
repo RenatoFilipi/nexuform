@@ -65,7 +65,7 @@
     "desc_link_share": "Copia el enlace a continuación para compartir fácilmente tu formulario con otros.",
     "label_link_copied": "Enlace copiado",
     "label_not_public": "El formulario no es público",
-    "desc_not_public": "Este formulario está actualmente privado. Para hacerlo público, ve a la página del editor y actualiza su estado.",
+    "desc_not_public": "Este formulario es actualmente privado. Para hacerlo público, ve a la página de configuración y actualiza su estado.",
     "nav_editor": "Ir al Editor",
     "col_identifier": "Identificador",
     "col_sent_in": "Enviado en",
