@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { ArrowRightIcon, ClockIcon } from "lucide-react";
+import { ArrowRightIcon, PartyPopperIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +11,7 @@ const Hero = () => {
   const t = useTranslations("landing");
 
   return (
-    <div className="relative flex flex-col justify-center items-center gap-6 md:gap-10 min-h-[calc(100dvh-64px)] w-full px-4 overflow-hidden pt-40 pb-6">
+    <div className="relative flex flex-col justify-center items-center gap-6 md:gap-10 min-h-[calc(100dvh-64px)] w-full px-4 overflow-hidden pt-44 pb-6">
       <BgDesign />
       <motion.div
         className="flex justify-center items-center flex-col gap-5 md:gap-8 w-full z-10 relative max-w-6xl mx-auto"
@@ -24,7 +24,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.5, ease: "easeOut" }}>
-          <h1 className="font-semibold text-3xl sm:text-5xl leading-tight">
+          <h1 className="font-semibold text-3xl sm:text-4xl leading-tight">
             {t.rich("hero_headline", {
               main: (chunks) => (
                 <span className="relative">
@@ -58,7 +58,7 @@ const CtaBadge = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.3 }}>
       <span className="text-primary text-xs sm:text-sm font-medium flex justify-center items-center gap-1.5">
-        <ClockIcon className="w-3.5 h-3.5" />
+        <PartyPopperIcon className="w-3.5 h-3.5" />
         {t("hero_badge")}
       </span>
     </motion.div>
