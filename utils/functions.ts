@@ -123,7 +123,10 @@ export const getBlockName = async (type: TBlock, locale: string): Promise<string
       return "Unknown";
   }
 };
-export const formatDate = (unixTimestamp: number) => {
+export const formatDate = (unixTimestamp?: number): string | null => {
+  if (typeof unixTimestamp !== "number" || isNaN(unixTimestamp)) {
+    return null; // melhor que gerar data inválida
+  }
   return new Date(unixTimestamp * 1000).toISOString();
 };
 export const getFormCategoryName = async (category: TTemplateCategory, locale: string): Promise<string> => {

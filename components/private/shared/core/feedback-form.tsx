@@ -1,7 +1,7 @@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState, TSetState } from "@/utils/types";
-import { CheckIcon, FrownIcon, Loader2Icon, SmileIcon, XIcon } from "lucide-react";
+import { CheckIcon, FrownIcon, LoaderIcon, SmileIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { ReactNode, useState } from "react";
 import { Button } from "../../../ui/button";
@@ -103,7 +103,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
             })}
           </div>
           <Button size={"xs"} variant={"secondary"} onClick={onSendFeedback} disabled={appState === "loading"}>
-            {appState === "loading" && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
+            {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
             {t("fb_submit")}
           </Button>
         </div>

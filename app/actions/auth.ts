@@ -60,24 +60,48 @@ export const DeleteAccountAction = async (formData: FormData) => {
   );
 
   const userId = formData.get("userId") as string;
-  if (!userId) return encodedRedirect("error", "/dashboard/settings", "User ID is required.");
-
-  const profiles = await supabase.from("profiles").select("stripe_customer_id").eq("id", userId).single();
-  if (profiles.error) return encodedRedirect("error", "/dashboard/settings", "Failed to retrieve account information.");
-
-  const { stripe_customer_id } = profiles.data;
-  if (stripe_customer_id) {
-    const subs = await stripe.subscriptions.list({
-      customer: stripe_customer_id,
-    });
-
-    if (subs.data.length > 0) await Promise.all(subs.data.map((sub) => stripe.subscriptions.cancel(sub.id)));
-    await stripe.customers.del(stripe_customer_id);
+  if (!userId) {
+    return encodedRedirect("error", "/dashboard/settings", "User ID is required.");
   }
 
-  const { error: authError } = await supabase.auth.admin.deleteUser(userId);
-  if (authError) return encodedRedirect("error", "/dashboard/settings", "Failed to delete authentication record.");
+  // 1. Obtem o stripe_customer_id
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("stripe_customer_id")
+    .eq("id", userId)
+    .single();
 
+  if (profileError || !profile) {
+    console.error("Erro ao buscar o perfil:", profileError?.message);
+    return encodedRedirect("error", "/dashboard/settings", "Failed to retrieve account information.");
+  }
+
+  const customerId = profile.stripe_customer_id;
+
+  // 2. Cancela assinaturas e deleta o cliente da Stripe (se existir)
+  if (customerId) {
+    try {
+      const { data: subscriptions } = await stripe.subscriptions.list({ customer: customerId });
+
+      if (subscriptions.length > 0) {
+        await Promise.all(subscriptions.map((sub) => stripe.subscriptions.cancel(sub.id)));
+      }
+
+      await stripe.customers.del(customerId);
+    } catch (err) {
+      console.error("Erro ao cancelar assinatura ou deletar cliente da Stripe:", err);
+      return encodedRedirect("error", "/dashboard/settings", "Stripe account cleanup failed.");
+    }
+  }
+
+  // 3. Deleta o usuário da autenticação
+  const { error: authError } = await supabase.auth.admin.deleteUser(userId);
+  if (authError) {
+    console.error("Erro ao deletar usuário do Supabase Auth:", authError.message);
+    return encodedRedirect("error", "/dashboard/settings", "Failed to delete authentication record.");
+  }
+
+  // 4. Redireciona
   redirect("/login");
 };
 export const ResetPasswordAction = async (formData: FormData) => {

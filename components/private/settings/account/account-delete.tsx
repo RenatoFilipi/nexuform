@@ -17,7 +17,7 @@ import useUserStore from "@/stores/user";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { AlertCircleIcon, Loader2Icon } from "lucide-react";
+import { AlertCircleIcon, LoaderIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { ReactNode, useState, useTransition } from "react";
@@ -97,7 +97,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
           {t("label_cancel")}
         </Button>
         <Button disabled={email !== value || isPending} onClick={onDeleteAccount} variant={"destructive"} size={"sm"}>
-          {isPending && <Loader2Icon className="animate-spin w-4 h-4 mr-2" />}
+          {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
           {t("label_delete_personal_account")}
         </Button>
       </div>

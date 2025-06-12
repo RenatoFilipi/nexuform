@@ -1,4 +1,5 @@
 import { stripe } from "@/lib/stripe";
+import { day } from "@/utils/constants";
 import { Database } from "@/utils/database.types";
 import { createClient } from "@supabase/supabase-js";
 import { headers } from "next/headers";
@@ -54,8 +55,6 @@ const getProfile = async (customerId: string) => {
   return data;
 };
 
-// event functions
-
 // main
 export const POST = async (req: Request) => {
   const body = await req.text();
@@ -72,40 +71,65 @@ export const POST = async (req: Request) => {
   // handle events
   try {
     switch (event.type) {
+      case "customer.subscription.created":
+      case "customer.subscription.updated": {
+        const subscription = event.data.object as Stripe.Subscription;
+        console.log("Subscription object:", JSON.stringify(subscription, null, 2));
+        const customerId = subscription.customer as string;
+        const priceId = subscription.items.data[0].price.id;
+        const plan = getPlan(priceId);
+        const config = getConfig(plan);
+        const profile = await getProfile(customerId);
+
+        const startDate = subscription.current_period_start
+          ? new Date(subscription.current_period_start * 1000).toISOString()
+          : new Date().toISOString();
+
+        const dueDate = subscription.current_period_end
+          ? new Date(subscription.current_period_end * 1000).toISOString()
+          : new Date(Date.now() + 30 * day).toISOString();
+
+        await supabase
+          .from("subscriptions")
+          .update({
+            plan,
+            forms: config.forms,
+            submissions: config.submissions,
+            stripe_subscription_id: subscription.id,
+            status: subscription.status,
+            start_date: startDate,
+            due_date: dueDate,
+            billing_interval: subscription.items.data[0].price.recurring?.interval || "month",
+            updated_at: new Date().toISOString(),
+          })
+          .eq("profile_id", profile.id);
+        break;
+      }
+      case "customer.subscription.deleted": {
+        const subscription = event.data.object as Stripe.Subscription;
+        console.log("Subscription object:", JSON.stringify(subscription, null, 2));
+        const customerId = subscription.customer as string;
+
+        let profile;
+        try {
+          profile = await getProfile(customerId);
+        } catch (err) {
+          console.warn(`Webhook ignored: profile for customer ${customerId} not found`);
+          break;
+        }
+
+        await supabase
+          .from("subscriptions")
+          .update({ status: "canceled", updated_at: new Date().toISOString() })
+          .eq("profile_id", profile.id);
+        break;
+      }
+      default:
+        console.log(`Unhandled event: ${event.type}`);
     }
   } catch (error) {
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    console.error("Webhook error:", error);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
   return new NextResponse(null, { status: 200 });
 };
-
-// supabase database tables
-
-// profiles {
-//   avatar_url: string | null
-//   first_name: string
-//   free_trial_due_date: string | null
-//   full_name: string | null
-//   id: string
-//   last_name: string
-//   role: string
-//   stripe_customer_id: string | null
-//   updated_at: string | null
-//   username: string | null
-//   website: string | null
-// }
-
-// subscriptions: {
-//   billing_interval: string
-//   created_at: string
-//   due_date: string
-//   forms: number
-//   id: string
-//   plan: string
-//   profile_id: string
-//   start_date: string
-//   status: string
-//   stripe_subscription_id: string | null
-//   submissions: number
-//   updated_at: string
-// }
