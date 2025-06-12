@@ -15,23 +15,44 @@ import { Badge } from "@/components/ui/badge";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import useUserStore from "@/stores/user";
-import { minWidth640 } from "@/utils/constants";
 import { IPlan } from "@/utils/interfaces";
 import { getPlans } from "@/utils/plans";
 import { TAppState, TPlan, TSetState } from "@/utils/types";
 import { EmbeddedCheckout, EmbeddedCheckoutProvider } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowRight, Check, CheckIcon, LoaderIcon, Rocket, X } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+  ArrowRightIcon,
+  BriefcaseIcon,
+  CheckCircleIcon,
+  CheckIcon,
+  ChevronLeftIcon,
+  LoaderIcon,
+  RocketIcon,
+  SettingsIcon,
+  XCircleIcon,
+  XIcon,
+  ZapIcon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { useMedia } from "react-use";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
+const PlanIcon = ({ type }: { type: string }) => {
+  const icons = {
+    free_trial: <ZapIcon className="w-5 h-5 text-purple-500" />,
+    basic: <ZapIcon className="w-5 h-5 text-blue-500" />,
+    pro: <RocketIcon className="w-5 h-5 text-emerald-500" />,
+    business: <BriefcaseIcon className="w-5 h-5 text-amber-500" />,
+    custom: <SettingsIcon className="w-5 h-5 text-cyan-500" />,
+  };
+
+  return icons[type as keyof typeof icons] || <ZapIcon className="w-5 h-5 text-primary" />;
+};
 const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations("app");
-  const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
   return (
@@ -57,7 +78,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const filteredPlans = localPlans.filter((x) => x.type !== "free_trial");
 
   const query = useQuery({
-    queryKey: ["manageSubData"],
+    queryKey: ["manage-sub-data"],
     queryFn: async () => {
       setLocalPlans(await getPlans(userStore.locale));
       return null;
@@ -154,9 +175,9 @@ const PlanOption = ({ plan, isCurrent, onSelect }: { plan: IPlan; isCurrent: boo
             {plan.features.map((feature, i) => (
               <li key={i} className="flex items-center gap-1.5">
                 {feature.comingSoon ? (
-                  <Rocket className="w-3.5 h-3.5 text-amber-500" />
+                  <RocketIcon className="w-3.5 h-3.5 text-amber-500" />
                 ) : (
-                  <Check className="w-3.5 h-3.5 text-primary" />
+                  <CheckIcon className="w-3.5 h-3.5 text-primary" />
                 )}
                 <span className={feature.comingSoon ? "text-muted-foreground" : "text-xs"}>{feature.description}</span>
               </li>
@@ -169,7 +190,7 @@ const PlanOption = ({ plan, isCurrent, onSelect }: { plan: IPlan; isCurrent: boo
             className="shrink-0"
             variant={isCurrent ? "outline" : "secondary"}>
             {isCurrent ? t("label_current_plan") : t("label_select")}
-            {!isCurrent && <ArrowRight className="ml-1 w-4 h-4" />}
+            {!isCurrent && <ArrowRightIcon className="ml-1 w-4 h-4" />}
           </Button>
         </div>
       </div>
@@ -177,7 +198,6 @@ const PlanOption = ({ plan, isCurrent, onSelect }: { plan: IPlan; isCurrent: boo
   );
 };
 const CheckoutFlow = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) => {
-  const t = useTranslations("app");
   const user = useUserStore();
   const isUpdatingSubscription =
     user.subscription.stripe_subscription_id !== null &&
@@ -185,53 +205,53 @@ const CheckoutFlow = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) => 
     user.subscription.plan !== "free_trial";
 
   return (
-    <div className="flex flex-col h-full gap-4 overflow-y-auto">
-      <div className="flex items-center justify-between">
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
-          <X className="w-4 h-4" />
-          {t("label_back_to_plans")}
-        </button>
-        <div className="w-4"></div>
-      </div>
-      <div className="flex flex-col gap-6 h-full overflow-y-auto">
-        <div className="p-4 rounded-lg bg-foreground/5">
-          <div className="flex justify-between items-center">
-            <div>
-              <h4 className="font-semibold">{plan.name}</h4>
-              <p className="text-sm text-muted-foreground">{t("label_pricing_billed_monthly")}</p>
-            </div>
-            <p className="font-bold text-lg">${plan.price}/m</p>
-          </div>
-        </div>
-        {isUpdatingSubscription ? <CheckoutUpdate plan={plan.type} /> : <CheckoutCreate plan={plan.type} />}
-      </div>
+    <div className="flex flex-col h-full overflow-y-auto">
+      {isUpdatingSubscription && <CheckoutUpdate onBack={onBack} plan={plan} />}
+      {!isUpdatingSubscription && <CheckoutCreate onBack={onBack} plan={plan} />}
     </div>
   );
 };
-const CheckoutCreate = ({ plan }: { plan: TPlan }) => {
+const CheckoutCreate = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) => {
+  const t = useTranslations("app");
   const user = useUserStore();
   const formData = new FormData();
   formData.append("customerId", user.profile.stripe_customer_id as string);
-  formData.append("plan", plan as string);
+  formData.append("plan", plan.type as string);
 
   return (
-    <div id="checkout" className="">
-      <EmbeddedCheckoutProvider
-        stripe={stripePromise}
-        options={{ fetchClientSecret: () => createCheckoutSessionAction(formData) }}>
-        <EmbeddedCheckout />
-      </EmbeddedCheckoutProvider>
+    <div className="flex flex-col gap-4 overflow-y-auto">
+      <div className="flex flex-col gap-4">
+        <button
+          onClick={onBack}
+          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
+          <XIcon className="w-4 h-4" />
+          {t("label_back_to_plans")}
+        </button>
+        <div className="px-4 py-3 rounded bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20">
+          <div className="flex justify-between items-center">
+            <div>
+              <h4 className="font-semibold text-lg tracking-tight text-foreground/90">{plan.name}</h4>
+              <p className="text-sm text-muted-foreground/80 mt-1">{t("label_pricing_billed_monthly")}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="checkout" className="overflow-y-auto">
+        <EmbeddedCheckoutProvider
+          stripe={stripePromise}
+          options={{ fetchClientSecret: () => createCheckoutSessionAction(formData) }}>
+          <EmbeddedCheckout />
+        </EmbeddedCheckoutProvider>
+      </div>
     </div>
   );
 };
-const CheckoutUpdate = ({ plan }: { plan: TPlan }) => {
+export const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) => {
   const t = useTranslations("app");
   const user = useUserStore();
   const currentPlan = user.subscription.plan as TPlan;
-  const intentPlan = plan;
-  const [appState, setAppState] = useState<TAppState>("loading"); // "loading" | "idle" | "success" | "error"
+  const intentPlan = plan.type;
+  const [appState, setAppState] = useState<TAppState>("idle");
   const formData = new FormData();
   formData.append("subscriptionId", user.subscription.stripe_subscription_id as string);
   formData.append("plan", intentPlan as string);
@@ -251,27 +271,112 @@ const CheckoutUpdate = ({ plan }: { plan: TPlan }) => {
 
   if (appState === "loading")
     return (
-      <div className="flex flex-1 w-full h-full justify-center items-center flex-col gap-2">
-        <LoaderIcon className="w-8 h-8 animate-spin text-primary" />
-        <span className="text-sm text-muted-foreground">Updating subscription</span>
+      <div className="flex flex-1 w-full h-full justify-center items-center flex-col gap-4">
+        <motion.div animate={{ rotate: 360 }} transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}>
+          <LoaderIcon className="w-10 h-10 text-primary" />
+        </motion.div>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-sm text-muted-foreground">
+          {t("label_updating_subscription")}
+        </motion.p>
       </div>
     );
-  if (appState === "success") return <div></div>;
-  if (appState === "error") return <div></div>;
-  return (
-    <div className="flex flex-1 flex-col justify-between">
-      <div className="flex items-center justify-center rounded-lg border p-6 text-sm bg-muted">
-        <div className="text-center">
-          <p className="mb-2">
-            You are switching from <strong>{currentPlan}</strong> to <strong>{intentPlan}</strong>.
-          </p>
-          <p className="text-muted-foreground">
-            This change will take effect immediately and may include prorated charges.
-          </p>
+
+  if (appState === "success")
+    return (
+      <div className="flex flex-1 flex-col items-center justify-center gap-6 text-center p-6">
+        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="p-4 rounded-full bg-success/10">
+          <CheckCircleIcon className="w-12 h-12 text-success" />
+        </motion.div>
+        <div className="space-y-2">
+          <h3 className="text-xl font-semibold">{t("label_subscription_updated")}</h3>
+          <p className="text-muted-foreground">{t("desc_subscription_updated")}</p>
+        </div>
+        <Button onClick={onBack} className="mt-4">
+          {t("label_return_to_dashboard")}
+        </Button>
+      </div>
+    );
+
+  if (appState === "error")
+    return (
+      <div className="flex flex-1 flex-col items-center justify-center gap-6 text-center p-6">
+        <div className="p-4 rounded-full bg-destructive/10">
+          <XCircleIcon className="w-12 h-12 text-destructive" />
+        </div>
+        <div className="space-y-2">
+          <h3 className="text-xl font-semibold">{t("label_update_failed")}</h3>
+          <p className="text-muted-foreground">{t("desc_update_failed")}</p>
+        </div>
+        <div className="flex gap-3">
+          <Button variant="outline" onClick={onBack}>
+            {t("label_go_back")}
+          </Button>
+          <Button onClick={onConfirm}>{t("label_try_again")}</Button>
         </div>
       </div>
-      <div className="flex justify-end mt-4">
-        <Button onClick={onConfirm} variant={"secondary"} size={"sm"}>
+    );
+
+  return (
+    <div className="flex flex-1 flex-col justify-between gap-6">
+      <div className="relative p-8 rounded-xl bg-gradient-to-br from-muted/50 to-background border h-full flex flex-col justify-center items-center w-full">
+        <div className="relative z-10 flex items-center justify-between w-full">
+          {/* Current Plan */}
+          <motion.div
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="flex flex-col items-center gap-3 p-4">
+            <div className="p-3 rounded-full bg-background border shadow-sm">
+              <PlanIcon type={currentPlan} />
+            </div>
+            <div className="text-center">
+              <p className="text-sm text-muted-foreground">{t("label_current_plan")}</p>
+              <p className="font-medium capitalize">{currentPlan}</p>
+            </div>
+          </motion.div>
+          {/* Animated arrow */}
+          <motion.div
+            animate={{
+              x: [-5, 5, -5],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+            }}
+            className="p-2 rounded-full bg-primary/10 text-primary">
+            <ArrowRightIcon className="w-5 h-5" />
+          </motion.div>
+
+          {/* New Plan */}
+          <motion.div
+            initial={{ x: 20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="flex flex-col items-center gap-3 p-4">
+            <div className="p-3 rounded-full bg-background border shadow-sm border-primary/30">
+              <PlanIcon type={intentPlan} />
+            </div>
+            <div className="text-center">
+              <p className="text-sm text-muted-foreground">{t("label_new_plan")}</p>
+              <p className="font-medium capitalize">{intentPlan}</p>
+            </div>
+          </motion.div>
+        </div>
+
+        <div className="mt-6 text-center text-sm text-muted-foreground">
+          <p>{t("desc_plan_change_notice")}</p>
+        </div>
+      </div>
+
+      <div className="flex justify-between">
+        <Button variant="outline" onClick={onBack} size="sm">
+          <ChevronLeftIcon className="w-4 h-4 mr-2" />
+          {t("label_back_to_plans")}
+        </Button>
+        <Button onClick={onConfirm} size="sm" className="ml-auto" variant={"secondary"}>
           {t("label_complete_subscription")}
         </Button>
       </div>

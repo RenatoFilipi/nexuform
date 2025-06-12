@@ -423,7 +423,16 @@
     "desc_choose_plan": "Escolha o plano que atende às suas necessidades",
     "label_pricing_billed_monthly": "Cobrado mensalmente",
     "label_desc_no_submission": "Nenhuma submissão recebida ainda. Compartilhe o formulário para ver as respostas aparecerem aqui.",
-    "label_sub_cancel_warning_irreversible": "Esta ação é irreversível! Todos os seus recursos premium serão perdidos imediatamente."
+    "label_sub_cancel_warning_irreversible": "Esta ação é irreversível! Todos os seus recursos premium serão perdidos imediatamente.",
+    "label_updating_subscription": "Atualizando sua assinatura...",
+    "label_subscription_updated": "Assinatura Atualizada!",
+    "desc_subscription_updated": "Seu plano foi alterado com sucesso. Todos os recursos estão agora disponíveis.",
+    "label_update_failed": "Falha na Atualização",
+    "desc_update_failed": "Não conseguimos atualizar sua assinatura. Por favor, tente novamente ou entre em contato com o suporte.",
+    "label_try_again": "Tentar Novamente",
+    "label_return_to_dashboard": "Voltar ao Painel",
+    "label_new_plan": "Novo Plano",
+    "desc_plan_change_notice": "Esta alteração terá efeito imediato e pode incluir cobranças proporcionais."
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

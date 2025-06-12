@@ -57,6 +57,30 @@ const BillingUsage = () => {
         </div>
       </div>
       <div className="flex w-full gap-6 flex-col">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
+          <UsageCard
+            limit={formsLimit}
+            count={user.formsCount}
+            usage={formsUsage}
+            available={user.subscription.forms}
+            label={t("label_forms")}
+            labelUsage={t("label_all_time")}
+            labelAvailable={t("label_forms_included")}
+            showBillingWarning={false}
+            icon={<LayersIcon className="h-5 w-5 text-primary" />}
+          />
+          <UsageCard
+            limit={submissionsLimit}
+            count={user.submissionLogs.length}
+            usage={submissionsUsage}
+            available={user.subscription.submissions}
+            label={t("label_submissions")}
+            labelUsage={t("label_monthly_usage")}
+            labelAvailable={t("label_submissions_included")}
+            showBillingWarning
+            icon={<Send className="h-5 w-5 text-primary" />}
+          />
+        </div>
         {isCancelled && (
           <Card className="p-6 flex flex-col md:flex-row gap-8 w-full shadow-sm">
             <div className="md:w-2/3 flex flex-col justify-center">
@@ -144,30 +168,6 @@ const BillingUsage = () => {
             </div>
           </Card>
         )}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
-          <UsageCard
-            limit={formsLimit}
-            count={user.formsCount}
-            usage={formsUsage}
-            available={user.subscription.forms}
-            label={t("label_forms")}
-            labelUsage={t("label_all_time")}
-            labelAvailable={t("label_forms_included")}
-            showBillingWarning={false}
-            icon={<LayersIcon className="h-5 w-5 text-primary" />}
-          />
-          <UsageCard
-            limit={submissionsLimit}
-            count={user.submissionLogs.length}
-            usage={submissionsUsage}
-            available={user.subscription.submissions}
-            label={t("label_submissions")}
-            labelUsage={t("label_monthly_usage")}
-            labelAvailable={t("label_submissions_included")}
-            showBillingWarning
-            icon={<Send className="h-5 w-5 text-primary" />}
-          />
-        </div>
       </div>
     </div>
   );

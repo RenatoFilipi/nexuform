@@ -42,7 +42,9 @@ const Pricing = ({ plans }: { plans: IPlan[] }) => {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
           className="text-center max-w-3xl space-y-4">
-          <Badge className="text-primary border-primary/30 dark:border-primary/50 px-3 py-1 text-xs">
+          <Badge
+            variant={"primary"}
+            className="text-primary border-primary/30 dark:border-primary/50 px-3 py-1 text-xs">
             {t("nav_pricing")}
           </Badge>
           <h2 className="text-3xl font-bold tracking-tight text-foreground">{t("pricing_headline")}</h2>
@@ -79,7 +81,7 @@ const CardTemplate = ({ plan }: { plan: IPlan }) => {
       {plan.isMostPopular && (
         <div className="absolute -top-2.5 left-1/2 transform -translate-x-1/2">
           <Badge
-            variant="default"
+            variant="primary"
             className="bg-primary text-primary-foreground flex items-center gap-1 px-3 py-1 text-xs">
             <ZapIcon className="h-3 w-3 fill-current" />
             {t("pricing_most_popular")}
