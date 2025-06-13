@@ -172,7 +172,7 @@ export type Database = {
           description: string | null
           id: string
           name: string
-          org_id: string
+          org_id: string | null
           owner_id: string
           public_url: string
           status: string
@@ -186,7 +186,7 @@ export type Database = {
           description?: string | null
           id?: string
           name?: string
-          org_id?: string
+          org_id?: string | null
           owner_id?: string
           public_url?: string
           status?: string
@@ -200,7 +200,7 @@ export type Database = {
           description?: string | null
           id?: string
           name?: string
-          org_id?: string
+          org_id?: string | null
           owner_id?: string
           public_url?: string
           status?: string
@@ -386,6 +386,12 @@ export type Database = {
           due_date: string
           forms: number
           id: string
+          pending_effective_date: string | null
+          pending_forms: number | null
+          pending_plan: string | null
+          pending_submissions: number | null
+          pending_update_requested_at: string | null
+          pending_update_status: string | null
           plan: string
           profile_id: string
           start_date: string
@@ -400,6 +406,12 @@ export type Database = {
           due_date?: string
           forms?: number
           id?: string
+          pending_effective_date?: string | null
+          pending_forms?: number | null
+          pending_plan?: string | null
+          pending_submissions?: number | null
+          pending_update_requested_at?: string | null
+          pending_update_status?: string | null
           plan?: string
           profile_id: string
           start_date?: string
@@ -414,6 +426,12 @@ export type Database = {
           due_date?: string
           forms?: number
           id?: string
+          pending_effective_date?: string | null
+          pending_forms?: number | null
+          pending_plan?: string | null
+          pending_submissions?: number | null
+          pending_update_requested_at?: string | null
+          pending_update_status?: string | null
           plan?: string
           profile_id?: string
           start_date?: string

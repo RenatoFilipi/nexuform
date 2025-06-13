@@ -264,8 +264,6 @@ export const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => vo
       setAppState("success");
     } catch (error) {
       setAppState("error");
-    } finally {
-      setAppState("idle");
     }
   };
 
@@ -383,6 +381,9 @@ export const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => vo
           transition={{ delay: 0.6 }}
           className="mt-8 text-center max-w-md">
           <p className="text-sm text-muted-foreground leading-relaxed">{t("desc_plan_change_notice")}</p>
+          {currentPlan === "pro" && intentPlan === "basic" && (
+            <p className="mt-2 text-xs text-warning">{t("label_warning_downgrade_effect_next_cycle")}</p>
+          )}
         </motion.div>
       </div>
 

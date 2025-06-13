@@ -432,7 +432,8 @@
     "label_try_again": "Intentar Nuevamente",
     "label_return_to_dashboard": "Volver al Panel",
     "label_new_plan": "Nuevo Plan",
-    "desc_plan_change_notice": "Este cambio tendrá efecto inmediato y puede incluir cargos prorrateados."
+    "desc_plan_change_notice": "El cambio de plan tendrá efecto en tu próximo ciclo de facturación. Permanecerás en tu plan actual hasta el final del período pagado.",
+    "label_warning_downgrade_effect_next_cycle": "El cambio al plan Básico tendrá efecto solo en el próximo ciclo. Se te cobrará normalmente por el plan actual hasta entonces."
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

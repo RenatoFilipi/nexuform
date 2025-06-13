@@ -432,7 +432,8 @@
     "label_try_again": "Try Again",
     "label_return_to_dashboard": "Return to Dashboard",
     "label_new_plan": "New Plan",
-    "desc_plan_change_notice": "This change will take effect immediately and may include prorated charges."
+    "desc_plan_change_notice": "The plan change will take effect on your next billing cycle. You'll remain on your current plan until the end of your paid period.",
+    "label_warning_downgrade_effect_next_cycle": "The downgrade to the Basic plan will take effect only on the next cycle. You’ll be billed normally for the current plan until then."
   },
   "s": {
     "err_required_all": "Answer all required questions.",

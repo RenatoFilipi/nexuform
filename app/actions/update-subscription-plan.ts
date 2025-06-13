@@ -26,7 +26,8 @@ export const updateSubscriptionPlanAction = async (formData: FormData) => {
 
     await stripe.subscriptions.update(subscriptionId, {
       items: [{ id: itemId, price: newPriceId }],
-      proration_behavior: "create_prorations",
+      proration_behavior: "none",
+      billing_cycle_anchor: "unchanged",
     });
 
     return true;
