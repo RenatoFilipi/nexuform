@@ -19,11 +19,11 @@ import {
   RefreshCwIcon,
   Send,
   Settings2Icon,
-  ZapIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import CancelSubscription from "../../shared/subscription/cancel-subscription";
 import ManageSubscription from "../../shared/subscription/manage-subscription";
+import PlanIcon from "../../shared/subscription/plan-icon";
 
 const BillingUsage = () => {
   const t = useTranslations("app");
@@ -109,7 +109,7 @@ const BillingUsage = () => {
               <div className="flex items-center justify-start gap-4">
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                    <ZapIcon className="h-5 w-5 text-primary" />
+                    <PlanIcon type={user.subscription.plan} />
                   </div>
                   <div>
                     <h2 className="text-xl font-semibold tracking-tight">{planName(user.subscription.plan)}</h2>
@@ -157,7 +157,6 @@ const BillingUsage = () => {
                     </Button>
                   </CancelSubscription>
                 )}
-
                 <ManageSubscription>
                   <Button variant="secondary" size="sm" className="w-full sm:w-auto gap-2">
                     <Settings2Icon className="h-4 w-4" />

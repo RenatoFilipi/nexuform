@@ -30,6 +30,7 @@ export const getPlans = async (locale: string): Promise<IPlan[]> => {
         { description: t("app.feat_basic_analytics"), comingSoon: false },
       ],
       ctaButton: t("app.label_upgrade_now"),
+      label: "Free Trial",
     },
     {
       name: t("app.label_plan_basic"),
@@ -44,6 +45,7 @@ export const getPlans = async (locale: string): Promise<IPlan[]> => {
         { description: t("app.feat_basic_analytics"), comingSoon: false },
       ],
       ctaButton: t("app.label_upgrade_now"),
+      label: "Basic",
     },
     {
       name: t("app.label_plan_pro"),
@@ -61,6 +63,7 @@ export const getPlans = async (locale: string): Promise<IPlan[]> => {
         { description: t("app.feat_premium_analytics"), comingSoon: false },
       ],
       ctaButton: t("app.label_upgrade_now"),
+      label: "Pro",
     },
   ];
 };

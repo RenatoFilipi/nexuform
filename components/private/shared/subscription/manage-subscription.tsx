@@ -14,6 +14,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import useUserStore from "@/stores/user";
 import { IPlan } from "@/utils/interfaces";
 import { getPlans } from "@/utils/plans";
@@ -24,34 +25,22 @@ import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import {
   ArrowRightIcon,
-  BriefcaseIcon,
   CheckCircleIcon,
   CheckIcon,
   ChevronLeftIcon,
+  ChevronRightIcon,
   LoaderIcon,
   RocketIcon,
-  SettingsIcon,
   XCircleIcon,
   XIcon,
-  ZapIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
+import PlanIcon from "./plan-icon";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-const PlanIcon = ({ type }: { type: string }) => {
-  const icons = {
-    free_trial: <ZapIcon className="w-5 h-5 text-purple-500" />,
-    basic: <ZapIcon className="w-5 h-5 text-blue-500" />,
-    pro: <RocketIcon className="w-5 h-5 text-emerald-500" />,
-    business: <BriefcaseIcon className="w-5 h-5 text-amber-500" />,
-    custom: <SettingsIcon className="w-5 h-5 text-cyan-500" />,
-  };
-
-  return icons[type as keyof typeof icons] || <ZapIcon className="w-5 h-5 text-primary" />;
-};
 const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations("app");
   const [open, setOpen] = useState(false);
@@ -148,17 +137,22 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
 };
 const PlanOption = ({ plan, isCurrent, onSelect }: { plan: IPlan; isCurrent: boolean; onSelect: () => void }) => {
   const t = useTranslations("app");
+  const user = useUserStore();
+  const notAvailable = isCurrent && user.subscription.plan !== "active";
 
   return (
-    <div
+    <Card
       className={`${
-        isCurrent ? "opacity-60" : "hover:border-primary hover:bg-primary/5"
+        notAvailable ? "opacity-60" : "hover:border-primary hover:bg-primary/5"
       } relative p-4 rounded-lg border`}>
       <div className="flex flex-col gap-4">
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-lg">{plan.name}</h3>
+              <div className="flex justify-center items-center border p-2 rounded bg-primary/">
+                <PlanIcon type={plan.type} />
+              </div>
+              <h3 className="font-semibold text-lg">{plan.label}</h3>
               {plan.isMostPopular && (
                 <Badge variant="green" className="px-2">
                   {t("label_most_popular")}
@@ -184,18 +178,13 @@ const PlanOption = ({ plan, isCurrent, onSelect }: { plan: IPlan; isCurrent: boo
               </li>
             ))}
           </ul>
-          <Button
-            onClick={onSelect}
-            disabled={isCurrent}
-            size="sm"
-            className="shrink-0"
-            variant={isCurrent ? "outline" : "secondary"}>
-            {isCurrent ? t("label_current_plan") : t("label_select")}
-            {!isCurrent && <ArrowRightIcon className="ml-1 w-4 h-4" />}
-          </Button>
         </div>
+        <Button onClick={onSelect} disabled={isCurrent} size="sm" variant={"secondary"}>
+          {notAvailable ? t("label_current_plan") : t("label_select")}
+          {!notAvailable && <ChevronRightIcon className="ml-1 w-4 h-4" />}
+        </Button>
       </div>
-    </div>
+    </Card>
   );
 };
 const CheckoutFlow = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) => {
@@ -228,14 +217,13 @@ const CheckoutCreate = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) =
           <XIcon className="w-4 h-4" />
           {t("label_back_to_plans")}
         </button>
-        <div className="px-4 py-3 rounded bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20">
-          <div className="flex justify-between items-center">
-            <div>
-              <h4 className="font-semibold text-lg tracking-tight text-foreground/90">{plan.name}</h4>
-              <p className="text-sm text-muted-foreground/80 mt-1">{t("label_pricing_billed_monthly")}</p>
-            </div>
+        <Card className="flex items-center w-full py-2 px-3 gap-3">
+          <PlanIcon type={plan.type} />
+          <div className="flex justify-center items-start flex-col">
+            <h4 className="font-semibold text-sm">{plan.name}</h4>
+            <p className="text-xs text-muted-foreground">{t("label_pricing_billed_monthly")}</p>
           </div>
-        </div>
+        </Card>
       </div>
       <div id="checkout" className="overflow-y-auto">
         <EmbeddedCheckoutProvider
@@ -293,7 +281,7 @@ export const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => vo
           <h3 className="text-xl font-semibold">{t("label_subscription_updated")}</h3>
           <p className="text-muted-foreground">{t("desc_subscription_updated")}</p>
         </div>
-        <Button onClick={onBack} className="mt-4" asChild>
+        <Button className="mt-4" asChild>
           <Link href="/dashboard/forms">{t("label_return_to_dashboard")}</Link>
         </Button>
       </div>

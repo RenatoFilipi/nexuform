@@ -1,7 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import useGlobalStore from "@/stores/global";
 import { TrendingDown, TrendingUp } from "lucide-react";
@@ -43,17 +43,17 @@ const AnalyticsSubmissionsByFormChart = () => {
   const overallConversion = totalViews > 0 ? Math.round((totalSubmissions / totalViews) * 100) : 0;
 
   return (
-    <Card className="border-none shadow-sm w-full bg-transparent">
-      <CardHeader className="pb-3 px-0 pt-0">
+    <div className="border-none shadow-sm w-full bg-transparent">
+      <div className="pb-3 px-0 pt-0">
         <div className="flex justify-between items-center">
-          <CardTitle className="text-lg font-semibold">{t("label_forms")}</CardTitle>
+          <span className="text-lg font-semibold">{t("label_forms")}</span>
           <div className="flex items-center gap-2 text-sm">
             <span className="text-muted-foreground first-letter:uppercase">{t("label_conversion")}:</span>
             <span className="font-medium">{overallConversion}%</span>
           </div>
         </div>
-      </CardHeader>
-      <CardContent className="space-y-6 p-0">
+      </div>
+      <div className="space-y-6 p-0">
         {!hasForms && (
           <div className="border border-dashed rounded-lg flex flex-col items-center justify-center p-8 gap-2">
             <p className="text-muted-foreground text-sm">{t("label_no_forms")}</p>
@@ -73,8 +73,8 @@ const AnalyticsSubmissionsByFormChart = () => {
             ))}
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
@@ -105,29 +105,30 @@ const FormItem = ({ formName, views, submissions }: IFormItemProps) => {
   const badgeConfig = getBadgeConfig();
 
   return (
-    <div className="group p-4 border rounded-lg hover:shadow-sm transition-shadow">
-      <div className="flex justify-between items-start gap-4 mb-3">
-        <h3 className="font-medium text-sm line-clamp-2">{formName}</h3>
-
+    <Card className="group p-4 rounded">
+      <div className="flex justify-between items-start gap-4 mb-4">
+        <h3 className="font-medium text-base line-clamp-2 group-hover:text-primary transition-colors">{formName}</h3>
         <div className="flex items-center gap-2">
-          <Badge variant={badgeConfig.variant} className="px-2 py-1 flex gap-2">
-            {badgeConfig.icon}
-            {conversionRate}%
+          <Badge
+            variant={badgeConfig.variant}
+            className="px-2.5 py-1 flex gap-1.5 items-center rounded-md transition-transform group-hover:scale-105">
+            {badgeConfig.icon && <span className="text-xs">{badgeConfig.icon}</span>}
+            <span className="text-xs font-semibold">{conversionRate}%</span>
           </Badge>
         </div>
       </div>
-      <Progress value={conversionRate} className="h-1.5 mb-2" />
-      <div className="flex justify-between text-xs">
+      <Progress value={conversionRate} className="h-2 mb-3" />
+      <div className="flex justify-between text-sm">
         <div className="flex items-center gap-2">
           <span className="text-muted-foreground">{t("label_views")}:</span>
-          <span className="font-medium">{views.toLocaleString()}</span>
+          <span className="font-medium text-foreground">{views.toLocaleString()}</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="text-muted-foreground">{t("label_submissions")}:</span>
-          <span className="font-medium">{submissions.toLocaleString()}</span>
+          <span className="font-medium text-foreground">{submissions.toLocaleString()}</span>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 

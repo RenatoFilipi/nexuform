@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import useUserStore from "@/stores/user";
 import { EProfile, ESubscription } from "@/utils/entities";
 import { getPlanName } from "@/utils/functions";
@@ -38,43 +39,39 @@ const SubscriptionUI = ({
   if (query.isPending) return null;
 
   return (
-    <div className="flex items-center justify-center h-dvh px-4 py-6 sm:px-6 w-full">
-      <div className="w-full max-w-4xl mx-auto">
-        <div className="flex flex-col md:flex-row gap-8 p-8 rounded-xl border bg-card shadow-lg">
-          <div className="md:w-2/3 flex flex-col gap-6">
-            <div className="flex items-center gap-4">
-              <div className="flex justify-center items-center p-2 w-fit rounded bg-primary/10">
-                <WalletIcon className="w-6 h-6 text-primary" />
+    <div className="flex items-center justify-center min-h-dvh px-4 py-12 sm:px-6 w-full">
+      <Card>
+        <div className="flex justify-center items-center flex-col sm:flex-row">
+          {/* Left Content */}
+          <div className="flex-1 p-8">
+            <div className="flex items-start gap-5">
+              <div className="flex-shrink-0 flex justify-center items-center p-3.5 rounded-lg bg-primary/10 border border-primary/30 shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
+                <WalletIcon className="w-7 h-7 text-primary" />
               </div>
-              <div className="text-left">
-                <h2 className="text-lg font-medium">{t("label_upgrade_sub")}</h2>
-                <p className="text-sm text-muted-foreground">{t("desc_upgrade_sub")}</p>
-              </div>
-            </div>
-
-            {/* Additional content can go here */}
-            <div className="space-y-4">
-              <div className="p-4 rounded-lg bg-muted/50">
-                <h3 className="font-medium mb-2">{t("label_current_plan")}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {t("desc_current_plan", { subscription: query.data?.plan })}
-                </p>
+              <div className="flex flex-col gap-2">
+                <h2 className="text-xl font-semibold tracking-tight text-foreground">{t("label_upgrade_sub")}</h2>
+                <p className="text-muted-foreground max-w-lg text-sm leading-relaxed">{t("desc_upgrade_sub")}</p>
               </div>
             </div>
           </div>
-          <div className="md:w-1/3 flex flex-col justify-center">
-            <div className="flex flex-col items-center gap-6 p-6 rounded-lg bg-muted/50">
-              <Button className="w-full" size="lg" asChild>
+
+          {/* Right Content - Vertical Divider and Button */}
+          <div className="relative md:w-[280px] flex flex-col justify-center p-8 bg-gradient-to-b from-muted/15 to-muted/5">
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 h-3/4 w-px bg-gradient-to-b from-transparent via-border/50 to-transparent hidden md:block"></div>
+            <div className="flex flex-col items-center gap-6">
+              <Button size="default" asChild>
                 <Link href={"/dashboard/settings/billing"}>
-                  {t("label_manage_sub")} <ArrowUpRightIcon className="w-4 h-4 ml-2" />
+                  <span className="flex items-center justify-center font-medium">
+                    {t("label_manage_sub")}
+                    <ArrowUpRightIcon className="w-5 h-5 ml-2" />
+                  </span>
                 </Link>
               </Button>
-
-              <p className="text-xs text-center text-muted-foreground">{t("desc_manage_sub2")}</p>
+              <p className="text-sm text-center text-muted-foreground leading-snug px-2">{t("desc_manage_sub2")}</p>
             </div>
           </div>
         </div>
-      </div>
+      </Card>
     </div>
   );
 };

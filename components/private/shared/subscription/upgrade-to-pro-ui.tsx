@@ -1,32 +1,31 @@
 "use client";
 
-import CheckoutStripe from "@/components/private/checkout/checkout-stripe";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import useUserStore from "@/stores/user";
 import { EProfile, ESubscription } from "@/utils/entities";
 import { proPricing } from "@/utils/envs";
 import { getPlans } from "@/utils/plans";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowUpRightIcon, CheckIcon, GemIcon } from "lucide-react";
+import { CheckIcon, RocketIcon, StarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import ManageSubscription from "./manage-subscription";
 
-const UpgradeToProUI = ({
-  email,
-  profile,
-  subscription,
-  locale,
-}: {
+interface IProps {
   email: string;
   profile: EProfile;
   subscription: ESubscription;
   locale: string;
-}) => {
+}
+
+const UpgradeToProUI = ({ email, profile, subscription, locale }: IProps) => {
   const t = useTranslations("app");
   const user = useUserStore();
 
   const query = useQuery({
-    queryKey: ["upgradeToProUIData"],
+    queryKey: ["upgrade-to-pro-data"],
     queryFn: async () => {
+      user.setLocale(locale);
       user.setEmail(email);
       user.setProfile(profile);
       user.setSubscription(subscription);
@@ -38,58 +37,58 @@ const UpgradeToProUI = ({
   if (query.isPending) return null;
 
   return (
-    <div className="flex items-center justify-center min-h-dvh px-4 py-12 sm:px-6 w-full bg-gradient-to-b from-background to-muted/20">
-      <div className="w-full max-w-4xl mx-auto">
-        <div className="flex flex-col md:flex-row gap-8 p-8 rounded-xl border bg-card shadow-lg">
-          {/* Left side - Features */}
-          <div className="md:w-1/2">
-            <div className="space-y-6">
-              <div className="flex flex-col items-start gap-4">
-                <div className="relative">
-                  <div className="absolute -inset-2 rounded-full bg-primary/20 blur-sm"></div>
-                  <div className="flex justify-center items-center p-4 w-fit rounded-full bg-primary/10">
-                    <GemIcon className="w-8 h-8 text-primary" />
-                  </div>
-                </div>
-
-                <div className="space-y-2 text-left">
-                  <h2 className="text-2xl font-bold tracking-tight">{t("label_upgrade_pro")}</h2>
-                  <p className="text-muted-foreground">{t("desc_upgrade_pro")}</p>
-                </div>
+    <div className="flex items-center justify-center min-h-dvh px-4 py-12 sm:px-6 w-full">
+      <Card className="flex flex-col sm:flex-row p-0 overflow-hidden shadow-sm w-full max-w-4xl">
+        {/* Left side - Features */}
+        <div className="space-y-4 p-6 md:w-1/2 bg-card/80">
+          <div className="flex flex-col items-start gap-3">
+            <div className="relative group">
+              <div className="absolute -inset-1 rounded-full bg-primary/20 blur opacity-75 group-hover:opacity-100 transition-opacity duration-200"></div>
+              <div className="relative flex justify-center items-center p-3 w-fit rounded-full bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/30">
+                <RocketIcon className="w-5 h-5 text-primary" />
               </div>
-
-              <div className="w-full space-y-4">
-                {query.data?.plan.features.map((feature, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckIcon className="w-4 h-4 mt-0.5 text-primary flex-shrink-0" />
-                    <p className="text-sm">{feature.description}</p>
-                  </div>
-                ))}
-              </div>
+            </div>
+            <div className="space-y-2 text-left">
+              <h2 className="text-xl font-bold text-foreground">{t("label_upgrade_pro")}</h2>
+              <p className="text-muted-foreground text-sm">{t("desc_upgrade_pro")}</p>
             </div>
           </div>
-
-          {/* Right side - Pricing and CTA */}
-          <div className="md:w-1/2 flex flex-col justify-center">
-            <div className="flex flex-col items-center gap-8 p-6 rounded-lg bg-muted-foreground/5">
-              <div className="text-center">
-                <div className="flex items-end justify-center gap-1">
-                  <span className="text-4xl font-bold">${proPricing}</span>
-                  <span className="text-muted-foreground">/{t("label_per_month")}</span>
+          <div className="w-full space-y-3">
+            {query.data?.plan.features.map((feature, index) => (
+              <div key={index} className="flex items-start gap-2">
+                <div className="flex-shrink-0 mt-0.5 flex items-center justify-center p-1 rounded-full bg-primary/10 border border-primary/20">
+                  <CheckIcon className="w-3 h-3 text-primary" />
                 </div>
+                <p className="text-sm text-muted-foreground">{feature.description}</p>
               </div>
-              <CheckoutStripe plan="pro">
-                <Button className="w-full" size="lg">
-                  <GemIcon className="w-5 h-5 mr-2" />
-                  {t("label_upgrade_pro")}
-                  <ArrowUpRightIcon className="w-4 h-4 ml-2" />
-                </Button>
-              </CheckoutStripe>
-              <p className="text-xs text-center text-muted-foreground">{t("label_cancel_anytime")}</p>
-            </div>
+            ))}
           </div>
         </div>
-      </div>
+        {/* Right side - Pricing and CTA */}
+        <div className="md:w-1/2 flex flex-col gap-4 justify-center items-center p-6 bg-gradient-to-br from-primary/5 to-primary/10 border-l border-muted/20">
+          <div className="text-center space-y-1">
+            <div className="flex items-end justify-center gap-1">
+              <span className="text-3xl font-bold bg-gradient-to-br from-primary to-primary/80 bg-clip-text text-transparent">
+                ${proPricing}
+              </span>
+              <span className="text-sm text-muted-foreground pb-1">/{t("label_per_month")}</span>
+            </div>
+          </div>
+          <ManageSubscription>
+            <Button className="w-full group rounded-lg py-4 shadow-sm" size="sm">
+              <span className="text-primary-foreground text-sm font-semibold">{t("label_upgrade_pro")}</span>
+            </Button>
+          </ManageSubscription>
+          <div className="flex flex-col items-center gap-2">
+            <div className="flex items-center gap-1">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <StarIcon key={i} className="w-3 h-3 text-yellow-500 fill-yellow-500" />
+              ))}
+            </div>
+            <p className="text-xs text-center text-muted-foreground/80 max-w-xs">{t("label_cancel_anytime")}</p>
+          </div>
+        </div>
+      </Card>
     </div>
   );
 };

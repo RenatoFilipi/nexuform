@@ -1,3 +1,4 @@
+import { Card } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import useGlobalStore from "@/stores/global";
 import { fallbackColor } from "@/utils/constants";
@@ -101,7 +102,7 @@ const AnalyticsSubmissionsActivityChart = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 border rounded p-4 h-fit">
+    <Card className="flex flex-col gap-4 border rounded p-4 h-fit">
       <div className="flex justify-between items-center">
         <span className="text-sm font-semibold">{t("label_activity")}</span>
       </div>
@@ -130,7 +131,7 @@ const AnalyticsSubmissionsActivityChart = () => {
           ))}
         </LineChart>
       </ChartContainer>
-    </div>
+    </Card>
   );
 };
 

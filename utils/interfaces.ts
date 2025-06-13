@@ -44,6 +44,7 @@ export interface IPlan {
   freeTrialDuration: number | null;
   features: IPlanFeatures[];
   ctaButton: string;
+  label: string;
 }
 export interface IPlanFeatures {
   description: string;
