@@ -36,6 +36,7 @@ import {
   ZapIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { useState } from "react";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
@@ -292,8 +293,8 @@ export const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => vo
           <h3 className="text-xl font-semibold">{t("label_subscription_updated")}</h3>
           <p className="text-muted-foreground">{t("desc_subscription_updated")}</p>
         </div>
-        <Button onClick={onBack} className="mt-4">
-          {t("label_return_to_dashboard")}
+        <Button onClick={onBack} className="mt-4" asChild>
+          <Link href="/dashboard/forms">{t("label_return_to_dashboard")}</Link>
         </Button>
       </div>
     );
@@ -382,7 +383,7 @@ export const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => vo
           className="mt-8 text-center max-w-md">
           <p className="text-sm text-muted-foreground leading-relaxed">{t("desc_plan_change_notice")}</p>
           {currentPlan === "pro" && intentPlan === "basic" && (
-            <p className="mt-2 text-xs text-warning">{t("label_warning_downgrade_effect_next_cycle")}</p>
+            <p className="mt-2 text-xs text-warning">{t("desc_downgrade_plan_notice")}</p>
           )}
         </motion.div>
       </div>

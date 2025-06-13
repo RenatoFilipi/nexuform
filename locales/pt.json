@@ -432,8 +432,8 @@
     "label_try_again": "Tentar Novamente",
     "label_return_to_dashboard": "Voltar ao Painel",
     "label_new_plan": "Novo Plano",
-    "desc_plan_change_notice": "A mudança de plano terá efeito no próximo ciclo de faturamento. Você permanecerá no plano atual até o final do período pago.",
-    "label_warning_downgrade_effect_next_cycle": "O downgrade para o plano Básico terá efeito apenas no próximo ciclo. Você será cobrado normalmente pelo plano atual até lá."
+    "desc_plan_change_notice": "Mudanças de plano têm efeito imediato. Créditos/cobranças proporcionais aparecerão na próxima fatura. Novos recursos são liberados após confirmação.",
+    "desc_downgrade_plan_notice": "Aviso: Redução de plano revogará imediatamente o acesso a recursos premium."
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

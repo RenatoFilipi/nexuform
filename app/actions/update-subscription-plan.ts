@@ -6,28 +6,18 @@ export const updateSubscriptionPlanAction = async (formData: FormData) => {
   try {
     const subscriptionId = formData.get("subscriptionId") as string;
     const plan = formData.get("plan") as "basic" | "pro";
-
-    if (!subscriptionId || !plan) {
-      return false;
-    }
+    if (!subscriptionId || !plan) return false;
 
     const newPriceId = plan === "basic" ? process.env.STRIPE_BASIC_PLAN_PRICE_ID : process.env.STRIPE_PRO_PLAN_PRICE_ID;
-
-    if (!newPriceId) {
-      return false;
-    }
+    if (!newPriceId) return false;
 
     const subscription = await stripe.subscriptions.retrieve(subscriptionId);
     const itemId = subscription.items.data[0]?.id;
-
-    if (!itemId) {
-      return false;
-    }
+    if (!itemId) return false;
 
     await stripe.subscriptions.update(subscriptionId, {
       items: [{ id: itemId, price: newPriceId }],
-      proration_behavior: "none",
-      billing_cycle_anchor: "unchanged",
+      proration_behavior: "always_invoice",
     });
 
     return true;

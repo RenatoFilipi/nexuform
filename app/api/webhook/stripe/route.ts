@@ -46,19 +46,16 @@ const getPlan = (priceId: string): plan => {
   if (priceId === config.plans.pro.priceId) return "pro";
   return "custom";
 };
-
 const getConfig = (plan: plan): IPlan => {
   if (plan === "basic") return config.plans.basic;
   if (plan === "pro") return config.plans.pro;
   return { forms: 3, submissions: 300, name: "custom", priceId: "" };
 };
-
 const getProfile = async (customerId: string) => {
   const { data, error } = await supabase.from("profiles").select("*").eq("stripe_customer_id", customerId).single();
   if (error) throw new Error(`Profile not found: ${error.message}`);
   return data;
 };
-
 // main
 export const POST = async (req: Request) => {
   const body = await req.text();
@@ -73,119 +70,57 @@ export const POST = async (req: Request) => {
 
   try {
     switch (event.type) {
-      case "invoice.payment_succeeded": {
-        const invoice = event.data.object as Stripe.Invoice;
-
-        if (!invoice.subscription || !invoice.customer || !invoice.lines?.data?.length) break;
-
-        const customerId = invoice.customer as string;
-        const subscriptionId = invoice.subscription as string;
-
-        const latestLineItem = invoice.lines.data.find((line) => line.type === "subscription");
-        if (!latestLineItem || !latestLineItem.price?.id) break;
-
-        const priceId = latestLineItem.price.id;
-        const plan = getPlan(priceId);
-        const planConfig = getConfig(plan);
+      case "customer.subscription.created":
+      case "customer.subscription.updated": {
+        const subscription = event.data.object as Stripe.Subscription;
+        const customerId = subscription.customer as string;
         const profile = await getProfile(customerId);
+        const item = subscription.items.data[0];
+        const priceId = item.price.id;
+        const interval = item.price.recurring?.interval ?? "month";
+        const plan = getPlan(priceId);
+        const config = getConfig(plan);
+        const now = new Date();
+        const startDate = subscription.start_date
+          ? new Date(subscription.start_date * 1000).toISOString()
+          : now.toISOString();
+        const dueDate = subscription.current_period_end
+          ? new Date(subscription.current_period_end * 1000).toISOString()
+          : new Date(new Date(startDate).getTime() + 30 * day).toISOString();
 
-        const startDate = invoice.period_start
-          ? new Date(invoice.period_start * 1000).toISOString()
-          : new Date().toISOString();
-
-        const dueDate = invoice.period_end
-          ? new Date(invoice.period_end * 1000).toISOString()
-          : new Date(Date.now() + 30 * day).toISOString();
-
-        const now = new Date().toISOString();
-
-        const { data: currentSubscription, error: subError } = await supabase
+        await supabase
           .from("subscriptions")
-          .select("*")
-          .eq("profile_id", profile.id)
-          .single();
-
-        if (subError || !currentSubscription) {
-          throw new Error(`Subscription not found for profile ${profile.id}`);
-        }
-
-        const isPendingUpdateEffective =
-          currentSubscription.pending_plan != null &&
-          currentSubscription.pending_update_status === "pending" &&
-          currentSubscription.pending_effective_date != null &&
-          currentSubscription.pending_effective_date <= now &&
-          currentSubscription.pending_forms != null &&
-          currentSubscription.pending_submissions != null;
-
-        const isFirstActivation =
-          currentSubscription.status === "free_trial" || !currentSubscription.stripe_subscription_id;
-
-        if (isPendingUpdateEffective) {
-          await supabase
-            .from("subscriptions")
-            .update({
-              plan: currentSubscription.pending_plan ?? "basic",
-              forms: currentSubscription.pending_forms ?? 0,
-              submissions: currentSubscription.pending_submissions ?? 0,
-              start_date: startDate,
-              due_date: dueDate,
-              billing_interval: latestLineItem.price.recurring?.interval || "month",
-              status: "active",
-              stripe_subscription_id: subscriptionId,
-              pending_plan: null,
-              pending_forms: null,
-              pending_submissions: null,
-              pending_effective_date: null,
-              pending_update_requested_at: null,
-              pending_update_status: null,
-              updated_at: now,
-            })
-            .eq("profile_id", profile.id);
-        } else if (isFirstActivation) {
-          await supabase
-            .from("subscriptions")
-            .update({
-              plan,
-              forms: planConfig.forms,
-              submissions: planConfig.submissions,
-              start_date: startDate,
-              due_date: dueDate,
-              billing_interval: latestLineItem.price.recurring?.interval || "month",
-              status: "active",
-              stripe_subscription_id: subscriptionId,
-              updated_at: now,
-            })
-            .eq("profile_id", profile.id);
-        } else {
-          await supabase
-            .from("subscriptions")
-            .update({
-              plan,
-              forms: planConfig.forms,
-              submissions: planConfig.submissions,
-              start_date: startDate,
-              due_date: dueDate,
-              billing_interval: latestLineItem.price.recurring?.interval || "month",
-              status: "active",
-              stripe_subscription_id: subscriptionId,
-              updated_at: now,
-            })
-            .eq("profile_id", profile.id);
-        }
+          .update({
+            plan,
+            billing_interval: interval,
+            forms: config.forms,
+            submissions: config.submissions,
+            stripe_subscription_id: subscription.id,
+            start_date: startDate,
+            due_date: dueDate,
+            status: subscription.status,
+            updated_at: new Date().toISOString(),
+            pending_effective_date: null,
+            pending_forms: null,
+            pending_plan: null,
+            pending_submissions: null,
+            pending_update_requested_at: null,
+            pending_update_status: null,
+          })
+          .eq("profile_id", profile.id);
         break;
       }
       case "customer.subscription.deleted": {
         const subscription = event.data.object as Stripe.Subscription;
         const customerId = subscription.customer as string;
-
         let profile;
+
         try {
           profile = await getProfile(customerId);
         } catch (err) {
           console.warn(`Webhook ignored: profile for customer ${customerId} not found`);
           break;
         }
-
         await supabase
           .from("subscriptions")
           .update({
