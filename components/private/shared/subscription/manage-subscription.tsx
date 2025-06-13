@@ -320,23 +320,32 @@ export const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => vo
     );
 
   return (
-    <div className="flex flex-1 flex-col justify-between gap-6">
-      <div className="relative p-8 rounded-xl bg-gradient-to-br from-muted/50 to-background border h-full flex flex-col justify-center items-center w-full">
-        <div className="relative z-10 flex items-center justify-between w-full">
+    <div className="flex flex-1 flex-col justify-between gap-8">
+      <div className="relative p-8 rounded-2xl bg-gradient-to-br from-muted/20 to-background border border-muted/30 shadow-lg h-full flex flex-col justify-center items-center w-full overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute -top-20 -left-20 w-40 h-40 bg-primary/30 rounded-full blur-xl"></div>
+          <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-secondary/30 rounded-full blur-xl"></div>
+        </div>
+
+        <div className="relative z-10 flex items-center justify-between w-full max-w-md">
           {/* Current Plan */}
           <motion.div
             initial={{ x: -20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="flex flex-col items-center gap-3 p-4">
+            className="flex flex-col items-center gap-4 p-5 bg-background/80 rounded-xl border border-muted/20 shadow-sm backdrop-blur-sm">
             <div className="p-3 rounded-full bg-background border shadow-sm">
               <PlanIcon type={currentPlan} />
             </div>
             <div className="text-center">
-              <p className="text-sm text-muted-foreground">{t("label_current_plan")}</p>
-              <p className="font-medium capitalize">{currentPlan}</p>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                {t("label_current_plan")}
+              </p>
+              <p className="font-semibold text-lg capitalize mt-1 text-foreground">{currentPlan}</p>
             </div>
           </motion.div>
+
           {/* Animated arrow */}
           <motion.div
             animate={{
@@ -346,8 +355,8 @@ export const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => vo
               duration: 2,
               repeat: Infinity,
             }}
-            className="p-2 rounded-full bg-primary/10 text-primary">
-            <ArrowRightIcon className="w-5 h-5" />
+            className="p-3 rounded-full bg-primary/10 text-primary shadow-md mx-4">
+            <ArrowRightIcon className="w-6 h-6" />
           </motion.div>
 
           {/* New Plan */}
@@ -355,28 +364,34 @@ export const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => vo
             initial={{ x: 20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="flex flex-col items-center gap-3 p-4">
+            className="flex flex-col items-center gap-4 p-5 bg-background/80 rounded-xl border border-primary/30 shadow-sm backdrop-blur-sm">
             <div className="p-3 rounded-full bg-background border shadow-sm border-primary/30">
               <PlanIcon type={intentPlan} />
             </div>
             <div className="text-center">
-              <p className="text-sm text-muted-foreground">{t("label_new_plan")}</p>
-              <p className="font-medium capitalize">{intentPlan}</p>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                {t("label_new_plan")}
+              </p>
+              <p className="font-semibold text-lg capitalize mt-1 text-primary">{intentPlan}</p>
             </div>
           </motion.div>
         </div>
 
-        <div className="mt-6 text-center text-sm text-muted-foreground">
-          <p>{t("desc_plan_change_notice")}</p>
-        </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="mt-8 text-center max-w-md">
+          <p className="text-sm text-muted-foreground leading-relaxed">{t("desc_plan_change_notice")}</p>
+        </motion.div>
       </div>
 
-      <div className="flex justify-between">
-        <Button variant="outline" onClick={onBack} size="sm">
+      <div className="flex justify-between items-center">
+        <Button variant="outline" onClick={onBack} size="sm" className="">
           <ChevronLeftIcon className="w-4 h-4 mr-2" />
           {t("label_back_to_plans")}
         </Button>
-        <Button onClick={onConfirm} size="sm" className="ml-auto" variant={"secondary"}>
+        <Button variant={"secondary"} onClick={onConfirm} size="sm" className="">
           {t("label_complete_subscription")}
         </Button>
       </div>
