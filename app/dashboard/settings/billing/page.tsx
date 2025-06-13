@@ -1,9 +1,12 @@
 import BillingWrapper from "@/components/private/settings/billing/billing-wrapper";
 import ErrorUI from "@/components/shared/utils/error-ui";
+import { stripe } from "@/lib/stripe";
+import { IInvoiceSummary } from "@/utils/interfaces";
 import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
+import Stripe from "stripe";
 
 const Billing = async () => {
   const locale = await getLocale();
@@ -34,6 +37,23 @@ const Billing = async () => {
 
   if (submissionLogs.error) return <ErrorUI email={email} />;
 
+  let invoicesSummary: IInvoiceSummary[] = [];
+  if (profiles.data.stripe_customer_id) {
+    let invoices: Stripe.Invoice[] = [];
+    const response = await stripe.invoices.list({
+      customer: profiles.data.stripe_customer_id,
+      limit: 10,
+    });
+    invoices = response.data;
+    invoicesSummary = invoices.map((invoice) => ({
+      id: invoice.id,
+      status: invoice.status,
+      total: invoice.total / 100,
+      dueDate: invoice.due_date ? new Date(invoice.due_date * 1000).toLocaleDateString("en-US") : null,
+      hostedInvoiceUrl: invoice.hosted_invoice_url,
+    }));
+  }
+
   return (
     <BillingWrapper
       locale={locale}
@@ -42,6 +62,7 @@ const Billing = async () => {
       subscription={subscriptions.data}
       formsCount={forms.data.length}
       submissionLogs={submissionLogs.data}
+      invoices={invoicesSummary}
     />
   );
 };

@@ -43,7 +43,7 @@ const AccountWrapper = (props: IProps) => {
   if (query.isPending) return null;
 
   return (
-    <div className="flex flex-col gap-8 mb-14">
+    <div className="flex flex-col gap-8 sm:mb-14">
       {/* header */}
       <div className="flex flex-col gap-1">
         <h1 className="font-semibold text-lg tracking-tight">{t("label_account_settings")}</h1>

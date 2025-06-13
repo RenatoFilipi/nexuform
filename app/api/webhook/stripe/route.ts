@@ -100,12 +100,6 @@ export const POST = async (req: Request) => {
             due_date: dueDate,
             status: subscription.status,
             updated_at: new Date().toISOString(),
-            pending_effective_date: null,
-            pending_forms: null,
-            pending_plan: null,
-            pending_submissions: null,
-            pending_update_requested_at: null,
-            pending_update_status: null,
           })
           .eq("profile_id", profile.id);
         break;

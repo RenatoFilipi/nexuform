@@ -7,6 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import useUserStore from "@/stores/user";
 import { getDaysDifference } from "@/utils/functions";
+import { IInvoiceSummary } from "@/utils/interfaces";
 import {
   AlertCircleIcon,
   AlertTriangle,
@@ -14,7 +15,10 @@ import {
   ArrowUpRightIcon,
   CalendarIcon,
   CalendarX2Icon,
+  CheckIcon,
   CircleHelpIcon,
+  ClockIcon,
+  FileTextIcon,
   LayersIcon,
   RefreshCwIcon,
   Send,
@@ -38,6 +42,7 @@ const BillingUsage = () => {
   const isFreeTrial = user.subscription.plan === "free_trial";
   const isCancelled = user.subscription.status === "canceled";
   const showCancelButton = user.subscription.status !== "canceled" && user.subscription.plan !== "free_trial";
+  const hasInvoices = user.invoices.length >= 1;
 
   const planName = (plan: string) =>
     ({
@@ -47,7 +52,7 @@ const BillingUsage = () => {
     }[plan] || "Custom");
 
   return (
-    <div className="w-full flex flex-col gap-6">
+    <div className="w-full flex flex-col gap-6 sm:mb-12">
       <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
         <div className="flex items-center gap-4 w-full sm:w-auto">
           <div className="flex flex-col gap-1">
@@ -167,6 +172,25 @@ const BillingUsage = () => {
             </div>
           </Card>
         )}
+        <Card className="flex flex-col gap-4 w-full p-6">
+          <div className="flex flex-col gap-1">
+            <span className="font-semibold text-lg tracking-tight">{t("label_invoices")}</span>
+            <p className="text-sm text-muted-foreground">{t("desc_invoices")}</p>
+          </div>
+          {!hasInvoices && (
+            <div className="flex flex-col items-center justify-center w-full py-16 px-4 text-center gap-2">
+              <h4 className="text-lg font-semibold">{t("label_no_invoices")}</h4>
+              <p className="text-sm text-muted-foreground">{t("desc_no_invoices")}</p>
+            </div>
+          )}
+          {hasInvoices && (
+            <div className="grid w-full gap-4">
+              {user.invoices.map((invoice) => {
+                return <InvoiceCard key={invoice.id} invoice={invoice} />;
+              })}
+            </div>
+          )}
+        </Card>
       </div>
     </div>
   );
@@ -261,6 +285,68 @@ const WarningTooltip = ({ children }: { children: React.ReactNode }) => {
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
+  );
+};
+const InvoiceCard = ({ invoice }: { invoice: IInvoiceSummary }) => {
+  const t = useTranslations("app");
+
+  return (
+    <Card className="group overflow-hidden hover:bg-primary/5 hover:border-primary/30">
+      <div className="p-4">
+        <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:items-center md:justify-between">
+          {/* Left section */}
+          <div className="flex items-start space-x-4">
+            <div
+              className={`flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-lg 
+${
+  invoice.status === "paid"
+    ? "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400"
+    : invoice.status === "pending"
+    ? "bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400"
+    : "bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
+}`}>
+              {invoice.status === "paid" ? (
+                <CheckIcon className="h-5 w-5" />
+              ) : invoice.status === "pending" ? (
+                <ClockIcon className="h-5 w-5" />
+              ) : (
+                <FileTextIcon className="h-5 w-5" />
+              )}
+            </div>
+
+            <div className="space-y-1">
+              <h3 className="font-semibold">{t("label_invoice_id", { id: invoice.id.slice(0, 8) })}</h3>
+              <div className="flex items-center text-xs text-muted-foreground">
+                {invoice.dueDate
+                  ? `${t("label_due_date", { date: new Date(invoice.dueDate).toLocaleDateString() })}`
+                  : t("label_no_due_date")}
+              </div>
+            </div>
+          </div>
+
+          {/* Right section */}
+          <div className="flex flex-col items-end space-y-2">
+            <span className="text-base font-semibold">
+              {new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+              }).format(invoice.total)}
+            </span>
+
+            {invoice.hostedInvoiceUrl && (
+              <a
+                href={invoice.hostedInvoiceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors group-hover:underline">
+                {t("label_view_details")}
+                <ArrowUpRightIcon className="ml-1 h-4 w-4" />
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </Card>
   );
 };
 

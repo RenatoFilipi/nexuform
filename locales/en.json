@@ -433,7 +433,19 @@
     "label_return_to_dashboard": "Return to Dashboard",
     "label_new_plan": "New Plan",
     "desc_plan_change_notice": "Plan changes take effect immediately. Prorated charges/credits will appear on your next invoice. New features unlock after confirmation.",
-    "desc_downgrade_plan_notice": "Warning: Downgrading will immediately revoke access to premium features."
+    "desc_downgrade_plan_notice": "Warning: Downgrading will immediately revoke access to premium features.",
+    "label_invoices": "Invoices",
+    "desc_invoices": "Recent transactions and billing history.",
+    "label_due_date": "Due { date }",
+    "label_no_due_date": "No due date",
+    "label_paid": "Paid",
+    "label_pending": "Pending",
+    "label_other": "Other",
+    "label_invoice_id": "Invoice #{ id }",
+    "label_amount": "Amount",
+    "label_download": "Download",
+    "label_no_invoices": "No invoices found",
+    "desc_no_invoices": "When you have invoices, they'll appear here."
   },
   "s": {
     "err_required_all": "Answer all required questions.",

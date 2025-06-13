@@ -433,7 +433,19 @@
     "label_return_to_dashboard": "Volver al Panel",
     "label_new_plan": "Nuevo Plan",
     "desc_plan_change_notice": "Los cambios de plan tienen efecto inmediato. Los cargos/créditos prorrateados aparecerán en tu próxima factura. Las nuevas funciones se desbloquean después de la confirmación.",
-    "desc_downgrade_plan_notice": "Advertencia: Reducir el plan revocará inmediatamente el acceso a funciones premium."
+    "desc_downgrade_plan_notice": "Advertencia: Reducir el plan revocará inmediatamente el acceso a funciones premium.",
+    "label_invoices": "Facturas",
+    "desc_invoices": "Transacciones recientes e historial de facturación.",
+    "label_due_date": "Vencimiento { date }",
+    "label_no_due_date": "Sin fecha de vencimiento",
+    "label_paid": "Pagado",
+    "label_pending": "Pendiente",
+    "label_other": "Otro",
+    "label_invoice_id": "Factura #{ id }",
+    "label_amount": "Monto",
+    "label_download": "Descargar",
+    "label_no_invoices": "No se encontraron facturas",
+    "desc_no_invoices": "Cuando tengas facturas, aparecerán aquí."
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

@@ -68,3 +68,11 @@ export interface IBlockViewSettings {
   showRequired: boolean;
   showChar: boolean;
 }
+
+export interface IInvoiceSummary {
+  id: string;
+  status: string | null;
+  total: number;
+  dueDate: string | null;
+  hostedInvoiceUrl: string | null | undefined;
+}
