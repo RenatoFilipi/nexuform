@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
-import { EForm, EProfile, ESubscription } from "@/utils/entities";
+import { EForm, EOrganization, EProfile, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { LayersIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -17,9 +17,10 @@ interface IProps {
   subscription: ESubscription;
   email: string;
   locale: string;
+  organizations: EOrganization[];
 }
 
-const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProps) => {
+const DashboardWrapper = (props: IProps) => {
   const t = useTranslations("app");
   const user = useUserStore();
   const global = useGlobalStore();
@@ -27,12 +28,13 @@ const DashboardWrapper = ({ forms, profile, subscription, email, locale }: IProp
   const query = useQuery({
     queryKey: ["dashboard-page"],
     queryFn: () => {
-      user.setFormsCount(forms.length);
-      user.setProfile(profile);
-      user.setSubscription(subscription);
-      user.setEmail(email);
-      user.setLocale(locale);
-      global.setForms(forms);
+      user.setLocale(props.locale);
+      user.setFormsCount(props.forms.length);
+      user.setProfile(props.profile);
+      user.setSubscription(props.subscription);
+      user.setEmail(props.email);
+      user.setOrganizations(props.organizations);
+      global.setForms(props.forms);
       return null;
     },
   });

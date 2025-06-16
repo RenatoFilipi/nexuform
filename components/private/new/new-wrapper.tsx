@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
 import { minute } from "@/utils/constants";
-import { EForm, EProfile, ESubscription, ETemplate } from "@/utils/entities";
+import { EForm, EOrganization, EProfile, ESubscription, ETemplate } from "@/utils/entities";
 import { getFormCategoryName } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState, TTemplateCategory } from "@/utils/types";
@@ -26,6 +26,7 @@ interface IProps {
   subscription: ESubscription;
   email: string;
   locale: string;
+  organizations: EOrganization[];
 }
 type TView = "scratch" | "templates" | "none";
 
@@ -44,6 +45,7 @@ const NewWrapper = (props: IProps) => {
       user.setEmail(props.email);
       user.setProfile(props.profile);
       user.setSubscription(props.subscription);
+      user.setOrganizations(props.organizations);
       global.setForms(props.forms);
       return null;
     },
@@ -63,6 +65,7 @@ const NewWrapper = (props: IProps) => {
       formData.append("name", t("label_untitled_form"));
       formData.append("description", "");
       formData.append("userId", user.profile.id);
+      formData.append("orgId", user.organizations[0].id);
       await createFormAction(formData);
     });
   };

@@ -29,13 +29,13 @@ import FormDelete from "../shared/form/form-delete";
 const DashboardFormCard = ({ form }: { form: EForm }) => {
   const t = useTranslations("app");
   const router = useRouter();
-  const { id, name, status, updated_at, public_url } = form;
+  const { id, name, status, updated_at, public_id } = form;
   const user = useUserStore();
   const isPublished = status === "published";
 
   const isProduction = process.env.NODE_ENV === "production";
   const protocol = isProduction ? "https" : "http";
-  const fullUrl = `${protocol}://${window.location.host}/s/${public_url}`;
+  const fullUrl = `${protocol}://${window.location.host}/s/${public_id}`;
 
   const options = [
     { name: t("nav_overview"), icon: BarChartIcon, url: `/dashboard/forms/${id}/overview` },

@@ -7,7 +7,7 @@ const S = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
   const supabase = await createClient();
 
-  const forms = await supabase.from("forms").select("*").eq("public_url", slug).single();
+  const forms = await supabase.from("forms").select("*").eq("public_id", slug).single();
   if (forms.error) return <FormNotAvailableUI />;
   if (forms.data.status !== "published") return <FormNotAvailableUI />;
 

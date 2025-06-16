@@ -172,9 +172,9 @@ export type Database = {
           description: string | null
           id: string
           name: string
-          org_id: string | null
+          org_id: string
           owner_id: string
-          public_url: string
+          public_id: string
           status: string
           submit_label: string
           success_description: string
@@ -186,9 +186,9 @@ export type Database = {
           description?: string | null
           id?: string
           name?: string
-          org_id?: string | null
+          org_id: string
           owner_id?: string
-          public_url?: string
+          public_id?: string
           status?: string
           submit_label?: string
           success_description?: string
@@ -200,9 +200,9 @@ export type Database = {
           description?: string | null
           id?: string
           name?: string
-          org_id?: string | null
+          org_id?: string
           owner_id?: string
-          public_url?: string
+          public_id?: string
           status?: string
           submit_label?: string
           success_description?: string
@@ -234,6 +234,7 @@ export type Database = {
           owner_id: string
           personal: boolean
           public_id: string
+          status: string
           updated_at: string
         }
         Insert: {
@@ -243,6 +244,7 @@ export type Database = {
           owner_id?: string
           personal?: boolean
           public_id?: string
+          status?: string
           updated_at?: string
         }
         Update: {
@@ -252,6 +254,7 @@ export type Database = {
           owner_id?: string
           personal?: boolean
           public_id?: string
+          status?: string
           updated_at?: string
         }
         Relationships: [
@@ -389,6 +392,7 @@ export type Database = {
           due_date: string
           forms: number
           id: string
+          org_id: string
           plan: string
           profile_id: string
           start_date: string
@@ -403,6 +407,7 @@ export type Database = {
           due_date?: string
           forms?: number
           id?: string
+          org_id: string
           plan?: string
           profile_id: string
           start_date?: string
@@ -417,6 +422,7 @@ export type Database = {
           due_date?: string
           forms?: number
           id?: string
+          org_id?: string
           plan?: string
           profile_id?: string
           start_date?: string
@@ -426,6 +432,13 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "subscriptions_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "subscriptions_user_id_fkey"
             columns: ["profile_id"]

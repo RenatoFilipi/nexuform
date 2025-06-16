@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
-import { EForm, EProfile, ESubscription } from "@/utils/entities";
+import { EForm, EOrganization, EProfile, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRightIcon, DownloadIcon, ExternalLinkIcon, LinkIcon, LoaderIcon, Share2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -21,6 +21,7 @@ interface IProps {
   email: string;
   locale: string;
   form: EForm;
+  organizations: EOrganization[];
 }
 
 const ShareWrapper = (props: IProps) => {
@@ -36,6 +37,7 @@ const ShareWrapper = (props: IProps) => {
       user.setProfile(props.profile);
       user.setSubscription(props.subscription);
       user.setLocale(props.locale);
+      user.setOrganizations(props.organizations);
       global.setForm(props.form);
       return null;
     },
@@ -81,7 +83,7 @@ const ShareLink = () => {
   const global = useGlobalStore();
   const isProduction = process.env.NODE_ENV === "production";
   const protocol = isProduction ? "https" : "http";
-  const fullUrl = `${protocol}://${window.location.host}/s/${global.form.public_url}`;
+  const fullUrl = `${protocol}://${window.location.host}/s/${global.form.public_id}`;
 
   return (
     <Card className="flex flex-col sm:flex-row justify-between items-center gap-8 p-4 sm:p-8">
@@ -123,7 +125,7 @@ const ShareQrCode = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const isProduction = process.env.NODE_ENV === "production";
   const protocol = isProduction ? "https" : "http";
-  const fullUrl = `${protocol}://${window.location.host}/s/${global.form.public_url}`;
+  const fullUrl = `${protocol}://${window.location.host}/s/${global.form.public_id}`;
 
   const downloadQRCode = () => {
     setIsGenerating(true);

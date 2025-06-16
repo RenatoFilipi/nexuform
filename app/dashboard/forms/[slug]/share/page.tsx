@@ -19,7 +19,12 @@ const Share = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const profiles = await supabase.from("profiles").select("*").eq("id", userId).single();
   if (profiles.error) return <ErrorUI email={email} />;
 
-  const subscriptions = await supabase.from("subscriptions").select("*").eq("profile_id", userId).single();
+  const organizations = await supabase.from("organizations").select("*").eq("owner_id", userId);
+  if (organizations.error) return <ErrorUI email={email} />;
+
+  const orgId = organizations.data[0].id;
+
+  const subscriptions = await supabase.from("subscriptions").select("*").eq("org_id", orgId).single();
   if (subscriptions.error) return <ErrorUI email={email} />;
 
   const active = isSubscriptionActive(subscriptions.data);
@@ -37,6 +42,7 @@ const Share = async ({ params }: { params: Promise<{ slug: string }> }) => {
       profile={profiles.data}
       subscription={subscriptions.data}
       form={form.data}
+      organizations={organizations.data}
     />
   );
 };

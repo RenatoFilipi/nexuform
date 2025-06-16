@@ -2,7 +2,7 @@
 
 import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
-import { EBlock, EForm, EProfile, ESubmission, ESubscription } from "@/utils/entities";
+import { EBlock, EForm, EOrganization, EProfile, ESubmission, ESubscription } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import SubmissionsList from "./submissions-list";
 
@@ -14,6 +14,7 @@ interface IProps {
   form: EForm;
   submissions: ESubmission[];
   blocks: EBlock[];
+  organizations: EOrganization[];
 }
 
 const SubmissionsWrapper = (props: IProps) => {
@@ -27,6 +28,7 @@ const SubmissionsWrapper = (props: IProps) => {
       user.setProfile(props.profile);
       user.setSubscription(props.subscription);
       user.setLocale(props.locale);
+      user.setOrganizations(props.organizations);
       global.setForm(props.form);
       global.setBlocks(props.blocks);
       global.setSubmissions(props.submissions);

@@ -38,7 +38,7 @@ const useGlobalStore = create<global>((set) => ({
     owner_id: "",
     status: "",
     submit_label: "Submit",
-    public_url: "",
+    public_id: "",
     success_title: "",
     success_description: "",
     org_id: "",

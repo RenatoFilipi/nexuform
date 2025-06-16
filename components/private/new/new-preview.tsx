@@ -66,6 +66,7 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
   const router = useRouter();
   const user = useUserStore();
   const [appState, setAppState] = useState<TAppState>("idle");
+  const orgId = user.organizations[0].id;
 
   const query = useQuery({
     queryKey: ["templateBlocks", template.id],
@@ -137,17 +138,17 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
             name: template.name,
             description: "",
             owner_id: user.profile.id,
-            public_url: nanoid(20, true, true),
+            public_id: nanoid(20, true, true),
             success_title: t("label_success_form"),
             success_description: t("desc_success_form"),
             submit_label: t("label_submit_form"),
+            org_id: orgId,
           },
         ])
         .select("*")
         .single();
 
       if (forms.error) {
-        console.log("FORMS");
         console.log(forms.error);
         toast.error(t("err_generic"));
         return;

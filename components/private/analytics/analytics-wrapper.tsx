@@ -2,7 +2,7 @@
 
 import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
-import { EForm, EProfile, ESubmissionLog, ESubscription, EViewLog } from "@/utils/entities";
+import { EForm, EOrganization, EProfile, ESubmissionLog, ESubscription, EViewLog } from "@/utils/entities";
 import { getDateRangeFromToday } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
@@ -20,9 +20,10 @@ interface Props {
   submissionLogs: ESubmissionLog[];
   viewLogs: EViewLog[];
   forms: EForm[];
+  organizations: EOrganization[];
 }
 
-const AnalyticsWrapper = ({ profile, subscription, email, viewLogs, submissionLogs, forms, locale }: Props) => {
+const AnalyticsWrapper = (props: Props) => {
   const t = useTranslations("app");
   const user = useUserStore();
   const global = useGlobalStore();
@@ -32,13 +33,14 @@ const AnalyticsWrapper = ({ profile, subscription, email, viewLogs, submissionLo
     queryKey: ["analytics-data"],
     queryFn: () => {
       const dates = getDateRangeFromToday(7);
-      user.setProfile(profile);
-      user.setSubscription(subscription);
-      user.setEmail(email);
-      user.setLocale(locale);
-      global.setSubmissionLogs(submissionLogs);
-      global.setViewLogs(viewLogs);
-      global.setForms(forms);
+      user.setProfile(props.profile);
+      user.setSubscription(props.subscription);
+      user.setEmail(props.email);
+      user.setLocale(props.locale);
+      user.setOrganizations(props.organizations);
+      global.setSubmissionLogs(props.submissionLogs);
+      global.setViewLogs(props.viewLogs);
+      global.setForms(props.forms);
       global.setFrom(dates.startDate);
       global.setTo(dates.endDate);
       return null;
@@ -52,7 +54,6 @@ const AnalyticsWrapper = ({ profile, subscription, email, viewLogs, submissionLo
     global.setTo(toD);
 
     const ids = global.forms.map((x) => x.id);
-    console.log(ids);
 
     const submissionLogs = await supabase
       .from("submission_logs")

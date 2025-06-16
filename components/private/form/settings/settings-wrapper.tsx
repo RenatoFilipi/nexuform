@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
-import { EForm, EProfile, ESubscription } from "@/utils/entities";
+import { EForm, EOrganization, EProfile, ESubscription } from "@/utils/entities";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState, TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
@@ -21,6 +21,7 @@ interface IProps {
   email: string;
   locale: string;
   form: EForm;
+  organizations: EOrganization[];
 }
 
 const SettingsWrapper = (props: IProps) => {
@@ -35,6 +36,7 @@ const SettingsWrapper = (props: IProps) => {
       user.setProfile(props.profile);
       user.setSubscription(props.subscription);
       user.setLocale(props.locale);
+      user.setOrganizations(props.organizations);
       global.setForm(props.form);
       return null;
     },

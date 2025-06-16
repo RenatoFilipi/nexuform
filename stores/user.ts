@@ -11,7 +11,7 @@ interface user {
   forms: EForm[];
   submissionLogs: ESubmissionLog[];
   viewLogs: EViewLog[];
-  organization: EOrganization;
+  organizations: EOrganization[];
   invoices: IInvoiceSummary[];
   setProfile: (payload: EProfile) => void;
   setSubscription: (payload: ESubscription) => void;
@@ -21,7 +21,7 @@ interface user {
   setForms: (payload: EForm[]) => void;
   setSubmissionLogs: (paylaod: ESubmissionLog[]) => void;
   setViewLogs: (paylaod: EViewLog[]) => void;
-  setOrganization: (payload: EOrganization) => void;
+  setOrganizations: (payload: EOrganization[]) => void;
   setInvoices: (payload: IInvoiceSummary[]) => void;
 }
 
@@ -52,7 +52,7 @@ const useUserStore = create<user>((set) => ({
     stripe_subscription_id: null,
     forms: 0,
     submissions: 0,
-    pending_plan: null,
+    org_id: "",
   },
   formsCount: 0,
   email: "",
@@ -60,15 +60,7 @@ const useUserStore = create<user>((set) => ({
   forms: [],
   submissionLogs: [],
   viewLogs: [],
-  organization: {
-    created_at: "",
-    updated_at: "",
-    id: "",
-    owner_id: "",
-    personal: false,
-    name: "",
-    public_id: "",
-  },
+  organizations: [],
   invoices: [],
   setProfile: (payload) => set({ profile: payload }),
   setSubscription: (payload) => set({ subscription: payload }),
@@ -78,7 +70,7 @@ const useUserStore = create<user>((set) => ({
   setForms: (payload) => set({ forms: payload }),
   setSubmissionLogs: (payload) => set({ submissionLogs: payload }),
   setViewLogs: (payload) => set({ viewLogs: payload }),
-  setOrganization: (payload) => set({ organization: payload }),
+  setOrganizations: (payload) => set({ organizations: payload }),
   setInvoices: (payload) => set({ invoices: payload }),
   reset: () =>
     set({
@@ -108,16 +100,9 @@ const useUserStore = create<user>((set) => ({
         stripe_subscription_id: null,
         forms: 0,
         submissions: 0,
+        org_id: "",
       },
-      organization: {
-        created_at: "",
-        updated_at: "",
-        id: "",
-        owner_id: "",
-        personal: false,
-        name: "",
-        public_id: "",
-      },
+      organizations: [],
       formsCount: 0,
       email: "",
       submissionLogs: [],

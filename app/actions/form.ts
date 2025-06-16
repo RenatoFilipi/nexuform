@@ -11,11 +11,12 @@ export const createFormAction = async (formData: FormData) => {
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
   const userId = formData.get("userId") as string;
-  if (!name || !userId) return encodedRedirect("error", "/dashboard/forms", t("required_all_fields"));
+  const orgId = formData.get("orgId") as string;
+  if (!name || !userId || !orgId) return encodedRedirect("error", "/dashboard/forms", t("required_all_fields"));
 
   const forms = await supabase
     .from("forms")
-    .insert([{ name, description, owner_id: userId, public_url: nanoid(20, true, true) }])
+    .insert([{ name, description, owner_id: userId, public_id: nanoid(20, true, true), org_id: orgId }])
     .select("*")
     .single();
   if (forms.error) return encodedRedirect("error", "/dashboard/forms", t("err_generic"));

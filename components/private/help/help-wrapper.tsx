@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import useUserStore from "@/stores/user";
-import { EProfile, ESubscription } from "@/utils/entities";
+import { EOrganization, EProfile, ESubscription } from "@/utils/entities";
 import { contactEmail } from "@/utils/envs";
 import { useQuery } from "@tanstack/react-query";
 import { CopyIcon, MailIcon } from "lucide-react";
@@ -10,21 +10,24 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
 interface Props {
+  locale: string;
   subscription: ESubscription;
   profile: EProfile;
   email: string;
+  organizations: EOrganization[];
 }
 
-const HelpWrapper = ({ email, profile, subscription }: Props) => {
+const HelpWrapper = (props: Props) => {
   const t = useTranslations("app");
-  const userStore = useUserStore();
+  const user = useUserStore();
 
   const query = useQuery({
     queryKey: ["helpData"],
     queryFn: () => {
-      userStore.setEmail(email);
-      userStore.setProfile(profile);
-      userStore.setSubscription(subscription);
+      user.setLocale(props.locale);
+      user.setEmail(props.email);
+      user.setProfile(props.profile);
+      user.setSubscription(props.subscription);
       return null;
     },
   });

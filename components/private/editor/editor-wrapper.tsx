@@ -3,7 +3,7 @@
 import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
 import { fallbackColor, minWidth640 } from "@/utils/constants";
-import { EBlock, EForm, EProfile, ESubscription, ETheme } from "@/utils/entities";
+import { EBlock, EForm, EOrganization, EProfile, ESubscription, ETheme } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
 import { LoaderIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -20,6 +20,7 @@ interface IProps {
   form: EForm;
   theme: ETheme;
   blocks: EBlock[];
+  organizations: EOrganization[];
 }
 
 const EditorWrapper = (props: IProps) => {
@@ -35,6 +36,7 @@ const EditorWrapper = (props: IProps) => {
       user.setEmail(props.email);
       user.setProfile(props.profile);
       user.setSubscription(props.subscription);
+      user.setOrganizations(props.organizations);
       editor.setForm(props.form);
       editor.setTheme(props.theme);
       editor.setBlocks(props.blocks);

@@ -18,12 +18,18 @@ const Forms = async () => {
   const profiles = await supabase.from("profiles").select("*").eq("id", userId).single();
   if (profiles.error) return <ErrorUI email={email} />;
 
-  const subscriptions = await supabase.from("subscriptions").select("*").eq("profile_id", userId).single();
+  const organizations = await supabase.from("organizations").select("*").eq("owner_id", userId);
+  if (organizations.error) return <ErrorUI email={email} />;
+
+  const orgId = organizations.data[0].id;
+
+  const subscriptions = await supabase.from("subscriptions").select("*").eq("org_id", orgId).single();
   if (subscriptions.error) return <ErrorUI email={email} />;
 
   const active = isSubscriptionActive(subscriptions.data);
-  if (!active)
+  if (!active) {
     return <SubscriptionUI email={email} locale={locale} profile={profiles.data} subscription={subscriptions.data} />;
+  }
 
   const forms = await supabase
     .from("forms")
@@ -39,6 +45,7 @@ const Forms = async () => {
       forms={forms.data}
       profile={profiles.data}
       subscription={subscriptions.data}
+      organizations={organizations.data}
     />
   );
 };

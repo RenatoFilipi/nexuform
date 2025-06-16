@@ -4,7 +4,7 @@ import FormStatusBadge from "@/components/shared/badges/form-status-badge";
 import { Button } from "@/components/ui/button";
 import useGlobalStore from "@/stores/global";
 import useUserStore from "@/stores/user";
-import { EForm, EProfile, ESubmissionLog, ESubscription, EViewLog } from "@/utils/entities";
+import { EForm, EOrganization, EProfile, ESubmissionLog, ESubscription, EViewLog } from "@/utils/entities";
 import {
   formatDateRelativeToNow,
   formatDecimal,
@@ -31,6 +31,7 @@ interface IProps {
   form: EForm;
   submissionLogs: ESubmissionLog[];
   viewLogs: EViewLog[];
+  organizations: EOrganization[];
 }
 
 const OverviewWrapper = (props: IProps) => {
@@ -57,6 +58,7 @@ const OverviewWrapper = (props: IProps) => {
       user.setProfile(props.profile);
       user.setSubscription(props.subscription);
       user.setLocale(props.locale);
+      user.setOrganizations(props.organizations);
       global.setForm(props.form);
       global.setSubmissionLogs(props.submissionLogs);
       global.setViewLogs(props.viewLogs);
