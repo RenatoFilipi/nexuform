@@ -55,9 +55,9 @@ const AnalyticsSubmissionsByFormChart = () => {
       </div>
       <div className="space-y-6 p-0">
         {!hasForms && (
-          <div className="border border-dashed rounded-lg flex flex-col items-center justify-center p-8 gap-2">
+          <Card className="flex justify-center items-center px-2 py-8">
             <p className="text-muted-foreground text-sm">{t("label_no_forms")}</p>
-          </div>
+          </Card>
         )}
 
         {hasForms && (
