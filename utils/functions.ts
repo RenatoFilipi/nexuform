@@ -4,7 +4,7 @@ import { customAlphabet } from "nanoid";
 import { redirect } from "next/navigation";
 import { createTranslator } from "use-intl/core";
 import { ESubscription } from "./entities";
-import { TBlock, TTemplateCategory } from "./types";
+import { CurrencyCode, TBlock, TTemplateCategory } from "./types";
 
 const localeMap: Record<string, any> = {
   en: enUS,
@@ -279,4 +279,15 @@ export const getDateRangeFromToday = (intervalDays: number): { startDate: Date; 
   startDate.setHours(0, 0, 0, 0);
 
   return { startDate, endDate };
+};
+export const formatCurrency = (currency: CurrencyCode, amount: number) => {
+  try {
+    const formatter = new Intl.NumberFormat(undefined, {
+      style: "currency",
+      currency: currency,
+    });
+    return formatter.format(amount);
+  } catch (error) {
+    return `${currency} ${amount.toFixed(2)}`;
+  }
 };

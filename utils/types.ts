@@ -51,3 +51,24 @@ export type TBillingInterval = "monthly" | "yearly";
 export type TSetState<T> = React.Dispatch<React.SetStateAction<T>>;
 export type TAppState = "loading" | "idle" | "success" | "error";
 export type TBrand = "logo" | "logo_text" | "top_logo_bottom_text" | "primary_logo_text";
+export type CurrencyCode =
+  | "USD" // US Dollar
+  | "EUR" // Euro
+  | "GBP" // British Pound
+  | "JPY" // Japanese Yen
+  | "AUD" // Australian Dollar
+  | "CAD" // Canadian Dollar
+  | "CHF" // Swiss Franc
+  | "CNY" // Chinese Yuan
+  | "BRL" // Brazilian Real
+  | "MXN" // Mexican Peso
+  | "INR" // Indian Rupee
+  | "RUB" // Russian Ruble
+  | "ZAR" // South African Rand
+  | "SEK" // Swedish Krona
+  | "NZD" // New Zealand Dollar
+  | "SGD" // Singapore Dollar
+  | "HKD" // Hong Kong Dollar
+  | "KRW" // South Korean Won
+  | "TRY" // Turkish Lira
+  | "AED"; // UAE Dirham;

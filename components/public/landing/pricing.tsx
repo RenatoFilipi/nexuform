@@ -2,6 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { formatCurrency } from "@/utils/functions";
 import { IPlan } from "@/utils/interfaces";
 import { motion } from "framer-motion";
 import { CheckIcon, RocketIcon, ZapIcon } from "lucide-react";
@@ -91,10 +92,10 @@ const CardTemplate = ({ plan }: { plan: IPlan }) => {
 
       <div className="w-full space-y-5">
         <div className="space-y-3">
-          <h3 className="text-lg font-semibold text-foreground">{plan.name}</h3>
+          <h3 className="text-lg font-semibold text-foreground">{plan.label}</h3>
           <div className="space-y-1">
             <p className={`${plan.isMostPopular ? "text-primary" : "text-foreground"} text-2xl font-bold`}>
-              ${plan.price}
+              {formatCurrency("USD", plan.price)}
               {plan.type !== "free_trial" && <span className="text-sm font-normal text-muted-foreground">/m</span>}
             </p>
             <p className="text-xs text-muted-foreground">

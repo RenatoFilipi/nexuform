@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import useUserStore from "@/stores/user";
 import { EProfile, ESubscription } from "@/utils/entities";
 import { proPricing } from "@/utils/envs";
+import { formatCurrency } from "@/utils/functions";
 import { getPlans } from "@/utils/plans";
 import { useQuery } from "@tanstack/react-query";
 import { CheckIcon, RocketIcon, StarIcon } from "lucide-react";
@@ -69,7 +70,7 @@ const UpgradeToProUI = ({ email, profile, subscription, locale }: IProps) => {
           <div className="text-center space-y-1">
             <div className="flex items-end justify-center gap-1">
               <span className="text-3xl font-bold bg-gradient-to-br from-primary to-primary/80 bg-clip-text text-transparent">
-                ${proPricing}
+                {formatCurrency("USD", proPricing)}
               </span>
               <span className="text-sm text-muted-foreground pb-1">/{t("label_per_month")}</span>
             </div>

@@ -15,6 +15,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import useUserStore from "@/stores/user";
+import { formatCurrency } from "@/utils/functions";
 import { IPlan } from "@/utils/interfaces";
 import { getPlans } from "@/utils/plans";
 import { TAppState, TPlan, TSetState } from "@/utils/types";
@@ -160,7 +161,7 @@ const PlanOption = ({ plan, isCurrent, onSelect }: { plan: IPlan; isCurrent: boo
             </div>
           </div>
           <div className="text-right">
-            <p className="font-bold text-xl">${plan.price}</p>
+            <p className="font-bold text-xl">{formatCurrency("USD", plan.price)}</p>
             <p className="text-xs text-muted-foreground">{t("label_per_month")}</p>
           </div>
         </div>
@@ -241,6 +242,7 @@ const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) =
   const user = useUserStore();
   const currentPlan = user.subscription.plan as TPlan;
   const intentPlan = plan.type;
+  const intentPrice = plan.price;
   const [appState, setAppState] = useState<TAppState>("idle");
   const formData = new FormData();
   formData.append("subscriptionId", user.subscription.stripe_subscription_id as string);
@@ -364,19 +366,18 @@ const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) =
             </div>
           </motion.div>
         </div>
-
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="mt-8 text-center max-w-md">
+          className="mt-1 text-center max-w-md flex flex-col justify-center items-center gap-4">
+          <p className="text-lg">{formatCurrency("USD", intentPrice)}</p>
           <p className="text-sm text-muted-foreground leading-relaxed">{t("desc_plan_change_notice")}</p>
           {currentPlan === "pro" && intentPlan === "basic" && (
             <p className="mt-2 text-xs text-warning">{t("desc_downgrade_plan_notice")}</p>
           )}
         </motion.div>
       </div>
-
       <div className="flex justify-between items-center">
         <Button variant="outline" onClick={onBack} size="sm" className="">
           <ChevronLeftIcon className="w-4 h-4 mr-2" />

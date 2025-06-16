@@ -31,6 +31,7 @@ import NumberInputDesign from "../design/number-input-design";
 import ParagraphTextDesign from "../design/paragraph-text-design";
 import ShortTextDesign from "../design/short-text-design";
 import StarRatingDesign from "../design/star-rating-design";
+import ManageSubscription from "../shared/subscription/manage-subscription";
 
 const defaultTheme: ETheme = {
   id: "",
@@ -67,6 +68,7 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
   const user = useUserStore();
   const [appState, setAppState] = useState<TAppState>("idle");
   const orgId = user.organizations[0].id;
+  const isAllowed = user.subscription.plan === "pro";
 
   const query = useQuery({
     queryKey: ["templateBlocks", template.id],
@@ -194,7 +196,7 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-      <AlertDialogContent className="h-[90%] min-w-[80%] overflow-y-auto p-0 border-transparent">
+      <AlertDialogContent className="h-[100%] min-w-[100%] overflow-y-auto p-0 border-transparent">
         <AlertDialogHeader className="hidden">
           <AlertDialogTitle></AlertDialogTitle>
           <AlertDialogDescription></AlertDialogDescription>
@@ -212,15 +214,24 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
                 <ChevronLeftIcon className="w-4 h-4 mr-2" />
                 {t("label_go_back")}
               </Button>
-              <Button
-                variant="secondary"
-                size="sm"
-                disabled={appState === "loading"}
-                onClick={onCreate}
-                className="transition">
-                {appState === "loading" && <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />}
-                {t("label_use_template")}
-              </Button>
+              {isAllowed && (
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  disabled={appState === "loading"}
+                  onClick={onCreate}
+                  className="transition">
+                  {appState === "loading" && <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />}
+                  {t("label_use_template")}
+                </Button>
+              )}
+              {!isAllowed && (
+                <ManageSubscription>
+                  <Button variant={"secondary"} size={"sm"}>
+                    {t("label_upgrade_to_pro")}
+                  </Button>
+                </ManageSubscription>
+              )}
             </div>
           </div>
           {query.isPending && (

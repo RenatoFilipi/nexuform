@@ -81,6 +81,8 @@ export const POST = async (req: Request) => {
         const interval = item.price.recurring?.interval ?? "month";
         const plan = getPlan(priceId);
         const config = getConfig(plan);
+        const amount = item.price.unit_amount ? item.price.unit_amount / 100 : 0;
+
         const now = new Date();
         const startDate = subscription.start_date
           ? new Date(subscription.start_date * 1000).toISOString()
@@ -101,6 +103,7 @@ export const POST = async (req: Request) => {
             due_date: dueDate,
             status: subscription.status,
             updated_at: new Date().toISOString(),
+            amount,
           })
           .eq("profile_id", profile.id)
           .eq("org_id", orgId);
