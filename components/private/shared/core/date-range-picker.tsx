@@ -10,7 +10,7 @@ import { ArrowUpRightIcon, CalendarIcon, GemIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 import { DateRange } from "react-day-picker";
-import CheckoutStripe from "../../checkout/checkout-stripe";
+import ManageSubscription from "../subscription/manage-subscription";
 
 interface IProps {
   className?: string;
@@ -178,16 +178,15 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
                     <GemIcon className="w-8 h-8 text-primary" />
                   </div>
                   <p className="text-sm text-center">{t("label_upgrade_for_custom_dates")}</p>
-                  <CheckoutStripe plan="pro">
+                  <ManageSubscription>
                     <Button variant="default" size="sm">
                       <ArrowUpRightIcon className="w-4 h-4 mr-2" />
                       {t("label_upgrade_to_pro")}
                     </Button>
-                  </CheckoutStripe>
+                  </ManageSubscription>
                 </div>
               )}
               <Calendar
-                initialFocus
                 mode="range"
                 defaultMonth={range?.to || today}
                 selected={range}

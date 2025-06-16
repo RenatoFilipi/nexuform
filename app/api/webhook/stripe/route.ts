@@ -73,6 +73,7 @@ export const POST = async (req: Request) => {
       case "customer.subscription.created":
       case "customer.subscription.updated": {
         const subscription = event.data.object as Stripe.Subscription;
+        const orgId = subscription.metadata.organization_id;
         const customerId = subscription.customer as string;
         const profile = await getProfile(customerId);
         const item = subscription.items.data[0];
@@ -101,11 +102,13 @@ export const POST = async (req: Request) => {
             status: subscription.status,
             updated_at: new Date().toISOString(),
           })
-          .eq("profile_id", profile.id);
+          .eq("profile_id", profile.id)
+          .eq("org_id", orgId);
         break;
       }
       case "customer.subscription.deleted": {
         const subscription = event.data.object as Stripe.Subscription;
+        const orgId = subscription.metadata.organization_id;
         const customerId = subscription.customer as string;
         let profile;
 
@@ -121,7 +124,8 @@ export const POST = async (req: Request) => {
             status: "canceled",
             updated_at: new Date().toISOString(),
           })
-          .eq("profile_id", profile.id);
+          .eq("profile_id", profile.id)
+          .eq("org_id", orgId);
 
         break;
       }

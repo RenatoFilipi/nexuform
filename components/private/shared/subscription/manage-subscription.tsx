@@ -1,7 +1,6 @@
 "use client";
 
-import { createCheckoutSessionAction } from "@/app/actions/create-checkout-session";
-import { updateSubscriptionPlanAction } from "@/app/actions/update-subscription-plan";
+import { createCheckoutSessionAction, updateSubscriptionPlanAction } from "@/app/actions/stripe";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -205,8 +204,10 @@ const CheckoutCreate = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) =
   const t = useTranslations("app");
   const user = useUserStore();
   const formData = new FormData();
+  const orgId = user.organizations[0].id;
   formData.append("customerId", user.profile.stripe_customer_id as string);
   formData.append("plan", plan.type as string);
+  formData.append("orgId", orgId);
 
   return (
     <div className="flex flex-col gap-4 overflow-y-auto">
@@ -235,7 +236,7 @@ const CheckoutCreate = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) =
     </div>
   );
 };
-export const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) => {
+const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) => {
   const t = useTranslations("app");
   const user = useUserStore();
   const currentPlan = user.subscription.plan as TPlan;
