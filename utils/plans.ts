@@ -36,7 +36,7 @@ export const getPlans = async (locale: string): Promise<IPlan[]> => {
       name: t("app.label_plan_basic"),
       price: basicPricing,
       type: "basic",
-      isMostPopular: true,
+      isMostPopular: false,
       freeTrialDuration: null,
       features: [
         { description: t("app.feat_forms", { n: basicForms }), comingSoon: false },
@@ -51,7 +51,7 @@ export const getPlans = async (locale: string): Promise<IPlan[]> => {
       name: t("app.label_plan_pro"),
       price: proPricing,
       type: "pro",
-      isMostPopular: false,
+      isMostPopular: true,
       freeTrialDuration: null,
       features: [
         { description: t("app.feat_forms", { n: proForms }), comingSoon: false },

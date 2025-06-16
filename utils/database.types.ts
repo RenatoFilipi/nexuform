@@ -232,7 +232,8 @@ export type Database = {
           id: string
           name: string
           owner_id: string
-          personal: boolean | null
+          personal: boolean
+          public_id: string
           updated_at: string
         }
         Insert: {
@@ -240,7 +241,8 @@ export type Database = {
           id?: string
           name?: string
           owner_id?: string
-          personal?: boolean | null
+          personal?: boolean
+          public_id?: string
           updated_at?: string
         }
         Update: {
@@ -248,7 +250,8 @@ export type Database = {
           id?: string
           name?: string
           owner_id?: string
-          personal?: boolean | null
+          personal?: boolean
+          public_id?: string
           updated_at?: string
         }
         Relationships: [
