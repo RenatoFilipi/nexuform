@@ -248,6 +248,35 @@ const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) =
   formData.append("subscriptionId", user.subscription.stripe_subscription_id as string);
   formData.append("plan", intentPlan as string);
 
+  const planDecoration = (plan: TPlan) => {
+    switch (plan) {
+      case "basic": {
+        return [
+          "linear-gradient(90deg, rgba(59,130,246,0) 0%, rgba(59,130,246,1) 50%, rgba(59,130,246,0) 100%) 1",
+          "linear-gradient(180deg, rgba(59,130,246,0) 0%, rgba(59,130,246,1) 50%, rgba(59,130,246,0) 100%) 1",
+          "linear-gradient(270deg, rgba(59,130,246,0) 0%, rgba(59,130,246,1) 50%, rgba(59,130,246,0) 100%) 1",
+          "linear-gradient(360deg, rgba(59,130,246,0) 0%, rgba(59,130,246,1) 50%, rgba(59,130,246,0) 100%) 1",
+        ];
+      }
+      case "pro": {
+        return [
+          "linear-gradient(90deg, rgba(16,185,129,0) 0%, rgba(16,185,129,1) 50%, rgba(16,185,129,0) 100%) 1",
+          "linear-gradient(180deg, rgba(16,185,129,0) 0%, rgba(16,185,129,1) 50%, rgba(16,185,129,0) 100%) 1",
+          "linear-gradient(270deg, rgba(16,185,129,0) 0%, rgba(16,185,129,1) 50%, rgba(16,185,129,0) 100%) 1",
+          "linear-gradient(360deg, rgba(16,185,129,0) 0%, rgba(16,185,129,1) 50%, rgba(16,185,129,0) 100%) 1",
+        ];
+      }
+      default: {
+        return [
+          "linear-gradient(90deg, rgba(192,192,192,0) 0%, rgba(192,192,192,1) 50%, rgba(192,192,192,0) 100%) 1",
+          "linear-gradient(180deg, rgba(192,192,192,0) 0%, rgba(192,192,192,1) 50%, rgba(192,192,192,0) 100%) 1",
+          "linear-gradient(270deg, rgba(192,192,192,0) 0%, rgba(192,192,192,1) 50%, rgba(192,192,192,0) 100%) 1",
+          "linear-gradient(360deg, rgba(192,192,192,0) 0%, rgba(192,192,192,1) 50%, rgba(192,192,192,0) 100%) 1",
+        ];
+      }
+    }
+  };
+
   const onConfirm = async () => {
     try {
       setAppState("loading");
@@ -310,7 +339,7 @@ const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) =
     );
 
   return (
-    <div className="flex flex-1 flex-col justify-between gap-8">
+    <div className="flex flex-1 flex-col justify-between gap-6">
       <div className="relative p-8 rounded-2xl bg-gradient-to-br from-muted/20 to-background border border-muted/30 shadow-lg h-full flex flex-col justify-center items-center w-full overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute inset-0 opacity-10">
@@ -354,11 +383,48 @@ const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) =
             initial={{ x: 20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="flex flex-col items-center gap-4 p-5 bg-background/80 rounded-xl border border-primary/30 shadow-sm backdrop-blur-sm">
-            <div className="p-3 rounded-full bg-background border shadow-sm border-primary/30">
+            className="relative flex flex-col items-center gap-4 p-5 bg-background/80 rounded-xl border border-primary/30 shadow-sm backdrop-blur-sm overflow-hidden">
+            {/* Efeito de borda animada */}
+            <motion.div
+              className="absolute inset-0 rounded-xl pointer-events-none"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}>
+              <motion.div
+                className="absolute inset-0 rounded-xl border-2 border-transparent"
+                animate={{
+                  borderImage: planDecoration(intentPlan),
+                  borderImageSlice: "1",
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+              />
+
+              <motion.div
+                className="absolute inset-0 rounded-xl border border-primary/30"
+                animate={{
+                  boxShadow: [
+                    "0 0 5px rgba(59, 130, 246, 0.3)",
+                    "0 0 10px rgba(59, 130, 246, 0.5)",
+                    "0 0 5px rgba(59, 130, 246, 0.3)",
+                  ],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+            </motion.div>
+
+            <div className="p-3 rounded-full bg-background border shadow-sm border-primary/30 relative z-10">
               <PlanIcon type={intentPlan} />
             </div>
-            <div className="text-center">
+
+            <div className="text-center relative z-10">
               <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
                 {t("label_new_plan")}
               </p>
