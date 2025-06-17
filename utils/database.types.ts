@@ -232,7 +232,6 @@ export type Database = {
           id: string
           name: string
           owner_id: string
-          personal: boolean
           public_id: string
           status: string
           updated_at: string
@@ -242,7 +241,6 @@ export type Database = {
           id?: string
           name?: string
           owner_id?: string
-          personal?: boolean
           public_id?: string
           status?: string
           updated_at?: string
@@ -252,7 +250,6 @@ export type Database = {
           id?: string
           name?: string
           owner_id?: string
-          personal?: boolean
           public_id?: string
           status?: string
           updated_at?: string
@@ -444,6 +441,54 @@ export type Database = {
           },
           {
             foreignKeyName: "subscriptions_user_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      team_member_profiles: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          org_id: string
+          permissions: string[]
+          profile_id: string
+          role: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name?: string
+          org_id: string
+          permissions: string[]
+          profile_id: string
+          role?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          org_id?: string
+          permissions?: string[]
+          profile_id?: string
+          role?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_member_profiles_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "team_member_profiles_profile_id_fkey"
             columns: ["profile_id"]
             isOneToOne: false
             referencedRelation: "profiles"

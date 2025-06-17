@@ -85,3 +85,5 @@ export type TeamMemberPermission =
   | "team:remove"
   | "team:update_role"
   | "billing:manage";
+
+export type TOrganizationStatus = "inactive" | "active";

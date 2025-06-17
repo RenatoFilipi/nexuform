@@ -176,7 +176,8 @@ const NavApp = () => {
     pathname === "/dashboard/forms" ||
     pathname === "/dashboard/analytics" ||
     pathname === "/dashboard/help" ||
-    pathname === "/dashboard/forms/new";
+    pathname === "/dashboard/forms/new" ||
+    pathname === "/dashboard/organizations";
 
   const links = [
     {
@@ -219,7 +220,7 @@ const NavApp = () => {
       <div className="flex justify-center items-center gap-4 h-full">
         <div className="flex justify-center items-center gap-4">
           <Button variant={"ghost"} size={"icon"} className="h-8 w-8" asChild>
-            <Link href={"/dashboard/forms"}>
+            <Link href={"/dashboard/organizations"}>
               <Brand type="logo" className="h-5 fill-foreground" />
             </Link>
           </Button>

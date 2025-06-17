@@ -22,7 +22,7 @@ export const signInAction = async (formData: FormData) => {
   });
   if (error) return encodedRedirect("error", "/login", error.message);
 
-  return redirect("/dashboard/forms");
+  return redirect("/dashboard/organizations");
 };
 export const signUpAction = async (formData: FormData) => {
   const t = await getTranslations("auth");
