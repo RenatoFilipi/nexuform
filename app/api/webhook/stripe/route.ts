@@ -132,8 +132,62 @@ export const POST = async (req: Request) => {
 
         break;
       }
+      case "invoice.payment_succeeded": {
+        const invoice = event.data.object as Stripe.Invoice;
+
+        // Evita erro caso não exista assinatura associada
+        if (!invoice.subscription) {
+          console.warn(`invoice.paid ignorado: invoice ${invoice.id} sem subscription`);
+          break;
+        }
+
+        try {
+          const subscription = await stripe.subscriptions.retrieve(invoice.subscription as string);
+
+          // Essa lógica garante que, após o pagamento da primeira fatura, o status fique como 'active'
+          const customerId = invoice.customer as string;
+          const orgId = subscription.metadata.organization_id;
+          const profile = await getProfile(customerId);
+
+          const item = subscription.items.data[0];
+          const priceId = item.price.id;
+          const plan = getPlan(priceId);
+          const config = getConfig(plan);
+          const amount = item.price.unit_amount ? item.price.unit_amount / 100 : 0;
+          const interval = item.price.recurring?.interval ?? "month";
+
+          const now = new Date();
+          const startDate = subscription.start_date
+            ? new Date(subscription.start_date * 1000).toISOString()
+            : now.toISOString();
+          const dueDate = subscription.current_period_end
+            ? new Date(subscription.current_period_end * 1000).toISOString()
+            : new Date(new Date(startDate).getTime() + 30 * day).toISOString();
+
+          await supabase
+            .from("subscriptions")
+            .update({
+              plan,
+              billing_interval: interval,
+              forms: config.forms,
+              submissions: config.submissions,
+              stripe_subscription_id: subscription.id,
+              start_date: startDate,
+              due_date: dueDate,
+              status: "active",
+              updated_at: new Date().toISOString(),
+              amount,
+            })
+            .eq("profile_id", profile.id)
+            .eq("org_id", orgId);
+        } catch (err) {
+          console.error("Erro ao processar invoice.paid:", err);
+        }
+        break;
+      }
       default:
         console.log(`Unhandled event: ${event.type}`);
+        console.log(event.data.object);
     }
   } catch (error) {
     console.error("Webhook error:", error);
