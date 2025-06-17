@@ -488,7 +488,13 @@
     "label_suc_update_password": "Password Updated",
     "desc_suc_update_password": "Your password has been successfully updated. Use your new password to access your account.",
     "label_login_into": "Login into { platform }",
-    "label_signup_into": "Sign up into { platform }"
+    "label_signup_into": "Sign up into { platform }",
+    "label_name": "Name",
+    "required_name": "Name is required",
+    "label_first_name": "First name",
+    "label_last_name": "Last name",
+    "required_first_name": "First name is required",
+    "required_last_name": "Last name is required"
   },
   "landing": {
     "nav_features": "Features",

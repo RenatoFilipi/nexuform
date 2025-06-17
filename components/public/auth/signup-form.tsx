@@ -34,6 +34,8 @@ const SignupForm = () => {
   });
 
   const formSchema = z.object({
+    first_name: z.string().min(2, { message: t("required_first_name") }),
+    last_name: z.string().min(2, { message: t("required_last_name") }),
     email: z.string().email({ message: t("required_email") }),
     password: z.string().min(8, { message: t("required_n_password", { n: 8 }) }),
   });
@@ -41,15 +43,19 @@ const SignupForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      first_name: "",
+      last_name: "",
       email: "",
       password: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const { email, password } = values;
+    const { email, password, first_name, last_name } = values;
     startTransition(async () => {
       const formData = new FormData();
+      formData.append("first_name", first_name);
+      formData.append("last_name", last_name);
       formData.append("email", email);
       formData.append("password", password);
       await signUpAction(formData);
@@ -76,6 +82,39 @@ const SignupForm = () => {
           path="/login"
           link={t("label_login")}
         />
+
+        <div className="grid grid-cols-2 gap-2">
+          <FormField
+            control={form.control}
+            name="first_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("label_first_name")}</FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <Input id="first_name" type="text" {...field} />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="last_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("label_last_name")}</FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <Input id="last_name" type="text" {...field} />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         {/* Email Field */}
         <FormField

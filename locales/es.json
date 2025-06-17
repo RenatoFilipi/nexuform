@@ -488,7 +488,13 @@
     "label_suc_update_password": "Contraseña Actualizada",
     "desc_suc_update_password": "Tu contraseña ha sido actualizada con éxito. Usa tu nueva contraseña para acceder a tu cuenta.",
     "label_login_into": "Iniciar sesión en { platform }",
-    "label_signup_into": "Registrarse en { platform }"
+    "label_signup_into": "Registrarse en { platform }",
+    "label_name": "Nombre",
+    "required_name": "Nombre es obligatorio",
+    "label_first_name": "Nombre",
+    "label_last_name": "Apellido",
+    "required_first_name": "Nombre es obligatorio",
+    "required_last_name": "Apellido es obligatorio"
   },
   "landing": {
     "nav_features": "Características",
