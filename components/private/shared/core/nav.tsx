@@ -511,4 +511,5 @@ const AvatarAppMenu = ({ children }: { children: React.ReactNode }) => {
     </DropdownMenu>
   );
 };
+
 export default Nav;
