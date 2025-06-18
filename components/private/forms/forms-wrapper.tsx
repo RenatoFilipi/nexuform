@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { LayersIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface IProps {
   locale: string;
@@ -25,6 +26,9 @@ const FormsWrapper = (props: IProps) => {
   const t = useTranslations("app");
   const pf = usePlatformStore();
   const user = useUserStore();
+  const pathname = usePathname();
+  const orgId = pathname.split("/")[3];
+  const newFormPath = `/dashboard/organizations/${orgId}/forms/new`;
 
   const query = useQuery({
     queryKey: ["forms-page"],
@@ -47,7 +51,7 @@ const FormsWrapper = (props: IProps) => {
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-semibold">{t("label_forms")}</h1>
         <Button size="sm" variant="secondary" asChild>
-          <Link href="">
+          <Link href={newFormPath}>
             <PlusIcon className="w-4 h-4 mr-2" />
             {t("label_create_form")}
           </Link>

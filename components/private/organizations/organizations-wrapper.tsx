@@ -11,6 +11,7 @@ import { TOrganizationStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { BoxesIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 interface IProps {
   locale: string;
@@ -44,9 +45,11 @@ const OrganizationsWrapper = (props: IProps) => {
     <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-6 sm:gap-10 px-3 sm:px-20 lg:px-56 py-4 sm:py-8">
       <div className="flex w-full justify-between items-center">
         <h1 className="text-xl font-semibold">{t("label_organizations")} </h1>
-        <Button variant={"secondary"} size={"sm"} className="">
-          <PlusIcon className="w-4 h-4 mr-2" />
-          {t("label_new_organization")}
+        <Button variant={"secondary"} size={"sm"} className="" asChild>
+          <Link href="/dashboard/forms/new">
+            <PlusIcon className="w-4 h-4 mr-2" />
+            {t("label_new_organization")}
+          </Link>
         </Button>
       </div>
       <div className="overflow-y-auto grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">

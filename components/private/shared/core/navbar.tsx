@@ -11,16 +11,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Separator } from "@/components/ui/separator";
+import usePlatformStore from "@/stores/platform";
 import useUserStore from "@/stores/user";
-import {
-  BoxesIcon,
-  ChartNoAxesColumnIcon,
-  CircleHelpIcon,
-  CircleUserIcon,
-  InboxIcon,
-  MenuIcon,
-  XIcon,
-} from "lucide-react";
+import { BoxesIcon, CircleHelpIcon, CircleUserIcon, MenuIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -65,43 +59,24 @@ const NavbarInOrg = () => {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const orgId = pathname.split("/")[3];
-  const isActive = (path: string) => path === pathname;
-
-  const menus = [
-    { name: "Forms", path: `/dashboard/organizations/${orgId}/forms`, icon: InboxIcon, enabled: true },
-    {
-      name: "Analytics",
-      path: `/dashboard/organizations/${orgId}/analytics`,
-      icon: ChartNoAxesColumnIcon,
-      enabled: true,
-    },
-  ];
+  const pf = usePlatformStore();
 
   return (
     <nav className={`${open ? "" : "border-b"} z-10 flex flex-col bg-background fixed w-full`}>
       <div className="flex w-full justify-between items-center h-14 px-4 sm:px-6">
         {/* content */}
-        <div className="flex justify-center items-center gap-6">
+        <div className="flex justify-center items-center gap-4">
           <Button variant={"ghost"} size={"icon"} className="h-8 w-8" asChild>
             <a href={"/dashboard/organizations"}>
               <Brand type="logo" className="h-5 fill-foreground" />
             </a>
           </Button>
-          <div className="hidden sm:flex justify-center items-center gap-4">
-            {menus.map((m) => {
-              return (
-                <Link
-                  key={m.name}
-                  href={m.path}
-                  className={`${
-                    isActive(m.path) ? "" : "text-muted-foreground hover:text-foreground"
-                  } flex justify-center items-center gap-2`}>
-                  <m.icon className={`${isActive(m.path) ? "text-primary" : ""} w-4 h-4`} />
-                  <span className="text-sm">{m.name}</span>
-                </Link>
-              );
-            })}
-          </div>
+          {pf.organizations.length > 0 && (
+            <div className="flex justify-center items-center gap-4">
+              <Separator orientation="vertical" className="h-5 bg-muted-foreground rotate-12" />
+              <span className="text-sm font-semibold">{pf.organizations[0].name}</span>
+            </div>
+          )}
         </div>
         {/* avatar - desk */}
         <div className="hidden sm:flex">
