@@ -12,12 +12,11 @@ const ErrorUI = ({ email }: { email: string }) => {
   const user = useUserStore();
 
   const query = useQuery({
-    queryKey: ["errorUIData"],
+    queryKey: ["error-ui"],
     queryFn: () => {
       user.setEmail(email);
       return null;
     },
-    refetchOnWindowFocus: false,
   });
 
   if (query.isPending) return null;
@@ -32,7 +31,7 @@ const ErrorUI = ({ email }: { email: string }) => {
           <h2 className="text-lg font-medium">{t("label_error_generic")}</h2>
           <p className="text-sm text-foreground/70">{t("desc_error_generic")}</p>
           <Button variant={"secondary"} size={"xs"} className="w-full sm:w-fit mt-4" asChild>
-            <Link href={"/dashboard/forms"}>{t("label_go_home")}</Link>
+            <Link href={"/dashboard/organizations"}>{t("label_go_home")}</Link>
           </Button>
         </div>
       </div>

@@ -66,23 +66,26 @@ const OrganizationsCard = (props: ICardProps) => {
   const tmp = props.teamMemberProfile;
   const organization = pf.organizations.find((x) => x.id === tmp.org_id) as EOrganization;
   const subscription = pf.subscriptions.find((x) => x.org_id === tmp.org_id) as ESubscription;
+  const orgPath = `organizations/${organization.public_id}/forms`;
   const plan = getPlanName(subscription.plan);
 
   return (
-    <Card className="flex h-20 p-5 justify-between items-center border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm cursor-pointer">
-      <div className="flex justify-center items-center gap-4">
-        <div className="flex justify-center items-center p-2 bg-foreground/5 rounded">
-          <BoxesIcon className="w-5 h-5" />
+    <a href={orgPath}>
+      <Card className="flex h-20 p-5 justify-between items-center border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm cursor-pointer">
+        <div className="flex justify-center items-center gap-4">
+          <div className="flex justify-center items-center p-2 bg-foreground/5 rounded">
+            <BoxesIcon className="w-5 h-5" />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-sm font-semibold">{organization.name}</span>
+            <span className="text-xs text-muted-foreground">{plan}</span>
+          </div>
         </div>
-        <div className="flex flex-col">
-          <span className="text-sm font-semibold">{organization.name}</span>
-          <span className="text-xs text-muted-foreground">{plan}</span>
+        <div className="">
+          <OrganizationStatusBadge status={organization.status as TOrganizationStatus} />
         </div>
-      </div>
-      <div className="">
-        <OrganizationStatusBadge status={organization.status as TOrganizationStatus} />
-      </div>
-    </Card>
+      </Card>
+    </a>
   );
 };
 
@@ -90,7 +93,6 @@ interface IBadgeProps {
   uppercase?: boolean;
   status: TOrganizationStatus;
 }
-
 const OrganizationStatusBadge = (props: IBadgeProps) => {
   const t = useTranslations("app");
 
