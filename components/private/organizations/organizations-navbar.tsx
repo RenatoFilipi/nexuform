@@ -29,7 +29,7 @@ const OrganizationsNavbar = () => {
   ];
 
   return (
-    <div className="border-b h-10 flex justify-start items-center gap-2 px-2 sm:px-6 overflow-x-auto fixed bg-background w-full z-10 truncate">
+    <div className="border-b h-10 flex justify-start items-center gap-2 px-2 sm:px-6 overflow-x-auto fixed bg-background w-full truncate">
       {isNewFormResource && (
         <div>
           <Link

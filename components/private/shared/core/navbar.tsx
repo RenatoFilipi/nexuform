@@ -62,7 +62,7 @@ const NavbarInOrg = () => {
   const pf = usePlatformStore();
 
   return (
-    <nav className={`${open ? "" : "border-b"} z-10 flex flex-col bg-background fixed w-full`}>
+    <nav className="z-10 flex flex-col bg-background fixed w-full">
       <div className="flex w-full justify-between items-center h-14 px-4 sm:px-6">
         {/* content */}
         <div className="flex justify-center items-center gap-4">
@@ -89,7 +89,11 @@ const NavbarInOrg = () => {
           </Button>
         </div>
       </div>
-      {open && <AvatarMenuMob />}
+      {open && (
+        <div className="fixed w-full mt-14 z-20">
+          <AvatarMenuMob />
+        </div>
+      )}
     </nav>
   );
 };
@@ -150,7 +154,6 @@ const AvatarMenuDesk = () => {
 };
 const AvatarMenuMob = () => {
   const t = useTranslations("app");
-  const user = useUserStore();
 
   const resources = [
     { name: t("label_organizations"), path: "/dashboard/organizations", icon: BoxesIcon, enabled: true },
@@ -159,7 +162,7 @@ const AvatarMenuMob = () => {
   ];
 
   return (
-    <div className="border-b flex w-full px-4 sm:px-6 pb-4 flex-col">
+    <div className="border-b flex w-full px-4 sm:px-6 pb-4 flex-col bg-background">
       <div className="flex flex-col w-full gap-2">
         {resources.map((r) => (
           <Link
