@@ -289,7 +289,7 @@
     "label_go_back": "Volver",
     "label_upgrade_sub": "Actualiza tu suscripción.",
     "desc_upgrade_sub": "Para seguir usando nuestra plataforma, actualiza tu suscripción.",
-    "label_help": "¿Necesitas ayuda?",
+    "label_help": "Ayuda",
     "desc_help": "No dudes en contactarnos por correo electrónico si tienes alguna pregunta o inquietud:",
     "label_copy": "Copiar",
     "nav_help": "Ayuda",
@@ -445,7 +445,11 @@
     "label_amount": "Monto",
     "label_download": "Descargar",
     "label_no_invoices": "No se encontraron facturas",
-    "desc_no_invoices": "Cuando tengas facturas, aparecerán aquí."
+    "desc_no_invoices": "Cuando tengas facturas, aparecerán aquí.",
+    "label_organizations": "Organizaciones",
+    "label_new_organization": "Nueva organización",
+    "label_active": "Activo",
+    "label_account": "Cuenta"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

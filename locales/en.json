@@ -289,7 +289,7 @@
     "label_go_back": "Go back",
     "label_upgrade_sub": "Update your subscription.",
     "desc_upgrade_sub": "To keep using our plataform update your subscription.",
-    "label_help": "Need help?",
+    "label_help": "Help",
     "desc_help": "Feel free to reach out to us via email with any questions or concerns:",
     "label_copy": "Copy",
     "nav_help": "Help",
@@ -445,7 +445,11 @@
     "label_amount": "Amount",
     "label_download": "Download",
     "label_no_invoices": "No invoices found",
-    "desc_no_invoices": "When you have invoices, they'll appear here."
+    "desc_no_invoices": "When you have invoices, they'll appear here.",
+    "label_organizations": "Organizations",
+    "label_new_organization": "New organization",
+    "label_active": "Active",
+    "label_account": "Account"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

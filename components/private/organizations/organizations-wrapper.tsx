@@ -9,7 +9,7 @@ import { EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/ut
 import { getPlanName } from "@/utils/functions";
 import { TOrganizationStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { BoxesIcon } from "lucide-react";
+import { BoxesIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface IProps {
@@ -43,9 +43,10 @@ const OrganizationsWrapper = (props: IProps) => {
   return (
     <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-6 sm:gap-10 px-3 sm:px-20 lg:px-56 py-4 sm:py-8">
       <div className="flex w-full justify-between items-center">
-        <h1 className="text-xl font-semibold">Organizations</h1>
+        <h1 className="text-xl font-semibold">{t("label_organizations")} </h1>
         <Button variant={"secondary"} size={"sm"} className="">
-          New organization
+          <PlusIcon className="w-4 h-4 mr-2" />
+          {t("label_new_organization")}
         </Button>
       </div>
       <div className="overflow-y-auto grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -61,7 +62,6 @@ interface ICardProps {
   teamMemberProfile: ETeamMemberProfile;
 }
 const OrganizationsCard = (props: ICardProps) => {
-  const t = useTranslations("app");
   const pf = usePlatformStore();
   const tmp = props.teamMemberProfile;
   const organization = pf.organizations.find((x) => x.id === tmp.org_id) as EOrganization;
@@ -92,18 +92,20 @@ interface IBadgeProps {
 }
 
 const OrganizationStatusBadge = (props: IBadgeProps) => {
+  const t = useTranslations("app");
+
   switch (props.status) {
     case "active": {
       return (
         <Badge className="w-fit" variant={"success"} uppercase={props.uppercase}>
-          Active
+          {t("label_active")}
         </Badge>
       );
     }
     case "inactive": {
       return (
         <Badge className="w-fit" variant={"gray"} uppercase={props.uppercase}>
-          Inactive
+          {t("label_inactive")}
         </Badge>
       );
     }
