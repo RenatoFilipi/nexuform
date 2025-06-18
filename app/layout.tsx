@@ -5,11 +5,10 @@ import { appName } from "@/utils/envs";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
-import { Inter, Work_Sans } from "next/font/google";
+import { Work_Sans } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], fallback: ["system-ui", "arial"] });
 const worksans = Work_Sans({ subsets: ["latin"], fallback: ["system-ui", "arial"] });
 
 export default async function RootLayout({

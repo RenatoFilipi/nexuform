@@ -23,17 +23,15 @@ export async function middleware(request: NextRequest) {
   };
 
   let defaultLocale: keyof AvailableLocales = "en";
-  let matchedLocale = match(
-    languages,
-    Object.keys(availableLocales),
-    defaultLocale
-  );
+  let matchedLocale = match(languages, Object.keys(availableLocales), defaultLocale);
 
   let baseLang = matchedLocale.split("-")[0] as keyof AvailableLocales;
   matchedLocale = availableLocales[baseLang] || "en";
 
   const response = await updateSession(request);
   response.cookies.set("locale", matchedLocale.slice(0, 2));
+  response.headers.set("x-current-path", request.nextUrl.pathname);
+
   return response;
 }
 
