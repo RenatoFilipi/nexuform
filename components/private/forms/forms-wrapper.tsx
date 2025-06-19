@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import usePlatformStore from "@/stores/platform";
 import useUserStore from "@/stores/user";
 import { EForm, EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
+import { formatDateRelativeToNow } from "@/utils/functions";
 import { useQuery } from "@tanstack/react-query";
 import { LayersIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -57,7 +58,13 @@ const FormsWrapper = (props: IProps) => {
           </Link>
         </Button>
       </div>
-      {hasForms && <WipUI context="has form design" />}
+      {hasForms && (
+        <div className="overflow-y-auto grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          {pf.forms.map((f) => {
+            return <FormCard key={f.id} form={f} />;
+          })}
+        </div>
+      )}
       {!hasForms && (
         <Card className="flex justify-center items-center flex-col gap-6 py-20">
           <div className="flex justify-center items-center p-3 bg-primary/10 rounded">
@@ -73,7 +80,24 @@ const FormsWrapper = (props: IProps) => {
   );
 };
 
-const FormCard = () => {
-  return <div></div>;
+const FormCard = ({ form }: { form: EForm }) => {
+  const t = useTranslations("app");
+  const user = useUserStore();
+  const pathname = usePathname();
+  const orgId = pathname.split("/")[3];
+  const editorPath = `/dashboard/organizations/${orgId}/form/${form.public_id}/editor`;
+
+  return (
+    <Card className="flex flex-col h-44 p-5 justify-between border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm">
+      <div>
+        <Link href={editorPath}>{form.name}</Link>
+      </div>
+      <div>
+        <span className="text-xs text-muted-foreground">
+          {t("label_last_updated")} {formatDateRelativeToNow(form.updated_at, user.locale)}
+        </span>
+      </div>
+    </Card>
+  );
 };
 export default FormsWrapper;

@@ -10,6 +10,7 @@ import { ArrowUpRightIcon, ChevronRightIcon, HexagonIcon, LoaderIcon, PlusIcon }
 import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
 import ManageSubscription from "../shared/subscription/manage-subscription";
+import { createFormAction } from "@/app/actions/form";
 
 type TView = "method:list" | "method:scratch" | "method:templates";
 
@@ -37,12 +38,23 @@ const NewWrapper = (props: IProps) => {
       user.setProfile(props.profile);
       pf.setOrganizations([props.organization]);
       pf.setSubscriptions([props.subscription]);
+      pf.setTeamMemberProfiles([props.teamMemberProfile]);
       pf.setForms(props.forms);
       return null;
     },
   });
 
-  const onNewScratchForm = async () => {};
+  const onNewScratchForm = async () => {
+    startTransition(async () => {
+      const formData = new FormData();
+      formData.append("name", t("label_untitled_form"));
+      formData.append("description", "");
+      formData.append("userId", pf.teamMemberProfiles[0].id);
+      formData.append("orgId", pf.organizations[0].id);
+      formData.append("orgPublicId", pf.organizations[0].public_id);
+      await createFormAction(formData);
+    });
+  };
 
   if (query.isPending) return null;
 
