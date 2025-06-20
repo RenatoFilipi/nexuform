@@ -22,11 +22,15 @@ import { useState } from "react";
 
 const Navbar = () => {
   const pathname = usePathname();
-  const isInOrg = pathname?.includes("/organizations/") && pathname.split("/organizations/")[1]?.split("/")[0] !== "";
+  const isEditorMode = pathname.endsWith("editor");
 
-  return isInOrg ? <NavbarInOrg /> : <NavbarOutOrg />;
+  const isInOrg = pathname.includes("/organizations/") && pathname.split("/organizations/")[1]?.split("/")[0] !== "";
+
+  if (isEditorMode) return <EditorNavbar />;
+  if (isInOrg) return <AfterOrgNavbar />;
+  return <BeforeOrgNavbar />;
 };
-const NavbarOutOrg = () => {
+const BeforeOrgNavbar = () => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -55,7 +59,7 @@ const NavbarOutOrg = () => {
     </nav>
   );
 };
-const NavbarInOrg = () => {
+const AfterOrgNavbar = () => {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const orgId = pathname.split("/")[3];
@@ -182,6 +186,28 @@ const AvatarMenuMob = () => {
         <span className="text-sm">{t("label_logout")}</span>
       </button>
     </div>
+  );
+};
+const EditorNavbar = () => {
+  const t = useTranslations("app");
+
+  return (
+    <nav className="z-10 flex flex-col bg-background fixed w-full border-b">
+      <div className="flex w-full justify-between items-center h-14 px-4 sm:px-6">
+        <div>
+          <Button variant={"ghost"} size={"icon"} className="h-8 w-8" asChild>
+            <a href={"/dashboard/organizations"}>
+              <Brand type="logo" className="h-5 fill-foreground" />
+            </a>
+          </Button>
+        </div>
+        <div>
+          <Button variant={"secondary"} size={"sm"}>
+            {t("label_save_form")}
+          </Button>
+        </div>
+      </div>
+    </nav>
   );
 };
 

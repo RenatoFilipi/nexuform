@@ -1,6 +1,5 @@
 "use client";
 
-import WipUI from "@/components/shared/utils/wip-ui";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import usePlatformStore from "@/stores/platform";

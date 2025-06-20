@@ -2,7 +2,7 @@ import Navbar from "@/components/private/shared/core/navbar";
 import { headers } from "next/headers";
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
-  const path = (await headers()).get("x-current-path");
+  const path = (await headers()).get("x-current-path") as string;
 
   return (
     <div className="min-h-dvh relative flex flex-col">
