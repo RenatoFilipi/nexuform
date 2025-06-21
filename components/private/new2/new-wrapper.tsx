@@ -6,7 +6,7 @@ import usePlatformStore from "@/stores/platform";
 import useUserStore from "@/stores/user";
 import { EForm, EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowUpRightIcon, ChevronRightIcon, HexagonIcon, LoaderIcon, PlusIcon } from "lucide-react";
+import { ArrowUpRightIcon, HexagonIcon, LoaderIcon, PlusIcon, RocketIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
 import ManageSubscription from "../shared/subscription/manage-subscription";
@@ -93,12 +93,15 @@ const NewWrapper = (props: IProps) => {
           description={t("desc_templates")}
           action={
             <Button
+              disabled
               variant={"outline"}
               size={"sm"}
               onClick={() => setView("method:templates")}
               className="mt-2 group-hover:border-primary group-hover:text-primary">
-              {t("label_create_form_template")}
-              <ChevronRightIcon className="w-4 h-4 ml-2" />
+              {/* {t("label_create_form_template")} */}
+              {/* <ChevronRightIcon className="w-4 h-4 ml-2" /> */}
+              {t("label_soon")}
+              <RocketIcon className="w-4 h-4 ml-2" />
             </Button>
           }
         />

@@ -84,12 +84,12 @@ const FormCard = ({ form }: { form: EForm }) => {
   const user = useUserStore();
   const pathname = usePathname();
   const orgId = pathname.split("/")[3];
-  const editorPath = `/dashboard/organizations/${orgId}/form/${form.public_id}/editor`;
+  const overviewPath = `/dashboard/organizations/${orgId}/form/${form.public_id}/overview`;
 
   return (
     <Card className="flex flex-col h-44 p-5 justify-between border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm">
       <div>
-        <Link href={editorPath}>{form.name}</Link>
+        <Link href={overviewPath}>{form.name}</Link>
       </div>
       <div>
         <span className="text-xs text-muted-foreground">

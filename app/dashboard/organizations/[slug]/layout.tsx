@@ -9,8 +9,8 @@ const OrgFormsLayout = ({ children }: { children: React.ReactNode }) => {
 
   if (isEditorMode) {
     return (
-      <div className={`mt-14 flex flex-col relative`}>
-        <div className="py-14">{children}</div>
+      <div className={`h-dvh max-h-dvh flex flex-col relative`}>
+        <div className="mt-14">{children}</div>
       </div>
     );
   }

@@ -63,7 +63,11 @@ const AfterOrgNavbar = () => {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const orgId = pathname.split("/")[3];
+  const formId = pathname.split("/")[5];
+  const isFormResource = pathname.split("/")[4] === "form";
   const pf = usePlatformStore();
+  const orgPath = `/dashboard/organizations/${orgId}/forms`;
+  const formPath = `/dashboard/organizations/${orgId}/form/${formId}/overview`;
 
   return (
     <nav className="z-10 flex flex-col bg-background fixed w-full">
@@ -76,10 +80,22 @@ const AfterOrgNavbar = () => {
             </a>
           </Button>
           {pf.organizations.length > 0 && (
-            <div className="flex justify-center items-center gap-4">
-              <Separator orientation="vertical" className="h-5 bg-muted-foreground rotate-12" />
-              <span className="text-sm font-semibold">{pf.organizations[0].name}</span>
-            </div>
+            <>
+              <div className="flex justify-center items-center gap-4">
+                <Separator orientation="vertical" className="h-5 bg-muted-foreground rotate-12" />
+                <Link href={orgPath} className="text-sm font-semibold hover:bg-foreground/10 px-2 py-1 rounded">
+                  {pf.organizations[0].name}
+                </Link>
+              </div>
+              {formId && isFormResource && (
+                <div className="flex justify-center items-center gap-4">
+                  <Separator orientation="vertical" className="h-5 bg-muted-foreground rotate-12" />
+                  <Link href={formPath} className="text-sm font-semibold hover:bg-foreground/10 px-2 py-1 rounded">
+                    {pf.forms[0].name}
+                  </Link>
+                </div>
+              )}
+            </>
           )}
         </div>
         {/* avatar - desk */}
