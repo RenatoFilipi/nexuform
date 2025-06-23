@@ -26,6 +26,8 @@ import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRightIcon, EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import DateRangePicker from "../../shared/core/date-range-picker";
 import OverviewActivityChart from "./overview-activity-chart";
 
@@ -45,7 +47,11 @@ const OverviewWrapper = (props: IProps) => {
   const t = useTranslations("app");
   const pf = usePlatformStore();
   const user = useUserStore();
+  const pathname = usePathname();
   const supabase = createClient();
+  const orgId = pathname.split("/")[3];
+  const formId = pathname.split("/")[5];
+  const editorPath = `/dashboard/organizations/${orgId}/form/${formId}/editor`;
 
   const query = useQuery({
     queryKey: ["overview-page"],
@@ -110,9 +116,11 @@ const OverviewWrapper = (props: IProps) => {
               onSelectRange(range.from, range.to);
             }}
           />
-          <Button variant={"secondary"} size={"sm"} className="w-full">
-            <ArrowUpRightIcon className="w-4 h-4 mr-2" />
-            {t("nav_editor")}
+          <Button variant={"secondary"} size={"sm"} className="w-full" asChild>
+            <Link href={editorPath}>
+              <ArrowUpRightIcon className="w-4 h-4 mr-2" />
+              {t("nav_editor")}
+            </Link>
           </Button>
         </div>
       </div>

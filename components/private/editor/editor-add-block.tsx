@@ -13,6 +13,7 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import useEditorStore from "@/stores/editor";
+import useStudioStore from "@/stores/studio";
 import { minWidth640 } from "@/utils/constants";
 import { EBlock } from "@/utils/entities";
 import { uuid } from "@/utils/functions";
@@ -74,6 +75,7 @@ const EditorAddBlock = ({ children }: { children: React.ReactNode }) => {
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const editor = useEditorStore();
+  const studio = useStudioStore();
 
   const categoryColors = {
     text: {
@@ -216,7 +218,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
 
     const block: EBlock = {
       id: uuid(),
-      form_id: editor.form.id,
+      form_id: studio.form.id,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       name: targetBlock.name,
@@ -228,7 +230,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       max_char: 100,
       min_char: 1,
       show_char: null,
-      position: editor.blocks.length + 1,
+      position: studio.blocks.length + 1,
       rating: null,
       max_scale: null,
       min_scale: null,
@@ -236,9 +238,9 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       min_date: null,
       max_date: null,
     };
-    editor.addBlock(block);
-    editor.setBlockView(block);
-    editor.setToolView("block");
+    studio.addBlock(block);
+    studio.setBlockView(block);
+    studio.setToolView("block");
     setState(false);
   };
 

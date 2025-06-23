@@ -211,7 +211,7 @@ const EditorNavbar = () => {
     <nav className="z-10 flex flex-col bg-background fixed w-full border-b">
       <div className="flex w-full justify-between items-center h-14 px-4 sm:px-6">
         <div>
-          <Button variant={"ghost"} size={"icon"} className="h-8 w-8" asChild>
+          <Button variant={"ghost"} size={"icon"} className="p-2" asChild>
             <a href={"/dashboard/organizations"}>
               <Brand type="logo" className="h-5 fill-foreground" />
             </a>
