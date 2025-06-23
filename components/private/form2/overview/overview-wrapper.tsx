@@ -21,6 +21,7 @@ import {
   getAverageCompletionTime,
   getDateRangeFromToday,
 } from "@/utils/functions";
+import { createClient } from "@/utils/supabase/client";
 import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRightIcon, EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
@@ -44,6 +45,7 @@ const OverviewWrapper = (props: IProps) => {
   const t = useTranslations("app");
   const pf = usePlatformStore();
   const user = useUserStore();
+  const supabase = createClient();
 
   const query = useQuery({
     queryKey: ["overview-page"],
@@ -65,10 +67,35 @@ const OverviewWrapper = (props: IProps) => {
   });
 
   const form = pf.forms.length > 0 ? pf.forms[0] : null;
+
+  const onSelectRange = async (from: string, to: string) => {
+    const fromDate = new Date(from);
+    const toDate = new Date(to);
+    pf.setFrom(fromDate);
+    pf.setTo(toDate);
+
+    const submissionLogs = await supabase
+      .from("submission_logs")
+      .select("*")
+      .eq("form_id", form?.id as string)
+      .gte("created_at", fromDate.toISOString())
+      .lte("created_at", toDate.toISOString());
+
+    const viewLogs = await supabase
+      .from("view_logs")
+      .select("*")
+      .eq("form_id", form?.id as string)
+      .gte("created_at", fromDate.toISOString())
+      .lte("created_at", toDate.toISOString());
+
+    if (!submissionLogs.error) pf.setSubmissionLogs(submissionLogs.data);
+    if (!viewLogs.error) pf.setViewLogs(viewLogs.data);
+  };
+
   if (query.isPending) return null;
 
   return (
-    <div className="w-full h-full flex-1 flex flex-col gap-6">
+    <div className="w-full h-full flex-1 flex flex-col gap-4">
       {/* header */}
       <div className="flex flex-col gap-4 w-full sm:flex-row justify-between items-center">
         <div className="flex justify-between items-center w-full sm:w-fit gap-4">
@@ -78,7 +105,10 @@ const OverviewWrapper = (props: IProps) => {
         <div className="flex gap-4">
           <DateRangePicker
             initialRange={{ from: pf.from.toISOString(), to: pf.to.toISOString() }}
-            onChange={() => {}}
+            onChange={(range) => {
+              if (!range) return;
+              onSelectRange(range.from, range.to);
+            }}
           />
           <Button variant={"secondary"} size={"sm"} className="w-full">
             <ArrowUpRightIcon className="w-4 h-4 mr-2" />

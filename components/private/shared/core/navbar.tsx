@@ -38,7 +38,7 @@ const BeforeOrgNavbar = () => {
       <div className="flex w-full justify-between items-center h-14 px-4 sm:px-6">
         {/* content */}
         <div>
-          <Button variant={"ghost"} size={"icon"} className="h-8 w-8" asChild>
+          <Button variant={"ghost"} size={"icon"} className="p-2" asChild>
             <a href={"/dashboard/organizations"}>
               <Brand type="logo" className="h-5 fill-foreground" />
             </a>
@@ -73,22 +73,22 @@ const AfterOrgNavbar = () => {
     <nav className="z-10 flex flex-col bg-background fixed w-full">
       <div className="flex w-full justify-between items-center h-14 px-4 sm:px-6">
         {/* content */}
-        <div className="flex justify-center items-center gap-4">
-          <Button variant={"ghost"} size={"icon"} className="h-8 w-8" asChild>
+        <div className="flex justify-center items-center gap-2">
+          <Button variant={"ghost"} size={"icon"} className="p-2" asChild>
             <a href={"/dashboard/organizations"}>
               <Brand type="logo" className="h-5 fill-foreground" />
             </a>
           </Button>
           {pf.organizations.length > 0 && (
             <>
-              <div className="flex justify-center items-center gap-4">
+              <div className="flex justify-center items-center gap-2">
                 <Separator orientation="vertical" className="h-4 bg-muted-foreground rotate-12" />
                 <Link href={orgPath} className="text-sm hover:bg-foreground/10 px-2 py-1 rounded">
                   {pf.organizations[0].name}
                 </Link>
               </div>
               {formId && isFormResource && (
-                <div className="flex justify-center items-center gap-4">
+                <div className="flex justify-center items-center gap-2">
                   <Separator orientation="vertical" className="h-4 bg-muted-foreground rotate-12" />
                   <Link href={formPath} className="text-sm hover:bg-foreground/10 px-2 py-1 rounded">
                     {pf.forms[0].name}

@@ -1,11 +1,10 @@
-import SubmissionsWrapper from "@/components/private/form2/submissions/submissions-wrapper";
+import ShareWrapper from "@/components/private/form2/share/share-wrapper";
 import ErrorUI from "@/components/shared/utils/error-ui";
-import { paginationFrom, paginationTo } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
-const Submissions = async ({ params }: { params: Promise<{ slug: string; id: string }> }) => {
+const Share = async ({ params }: { params: Promise<{ slug: string; id: string }> }) => {
   const { slug, id } = await params;
   const locale = await getLocale();
   const supabase = await createClient();
@@ -31,23 +30,8 @@ const Submissions = async ({ params }: { params: Promise<{ slug: string; id: str
   const forms = await supabase.from("forms").select("*").eq("public_id", id).single();
   if (forms.error) return <ErrorUI email={email} />;
 
-  const blocks = await supabase
-    .from("blocks")
-    .select("*")
-    .eq("form_id", forms.data.id)
-    .order("position", { ascending: true });
-  if (blocks.error) return <ErrorUI email={email} />;
-
-  const submissions = await supabase
-    .from("submissions")
-    .select("*")
-    .range(paginationFrom, paginationTo)
-    .eq("form_id", forms.data.id)
-    .order("created_at", { ascending: false });
-  if (submissions.error) return <ErrorUI email={email} />;
-
   return (
-    <SubmissionsWrapper
+    <ShareWrapper
       locale={locale}
       email={email}
       profile={profiles.data}
@@ -55,9 +39,8 @@ const Submissions = async ({ params }: { params: Promise<{ slug: string; id: str
       organization={organizations.data}
       subscription={subscriptions.data}
       form={forms.data}
-      blocks={blocks.data}
-      submissions={submissions.data}
     />
   );
 };
-export default Submissions;
+
+export default Share;
