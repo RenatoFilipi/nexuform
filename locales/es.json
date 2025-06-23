@@ -449,7 +449,8 @@
     "label_organizations": "Organizaciones",
     "label_new_organization": "Nueva organización",
     "label_active": "Activo",
-    "label_account": "Cuenta"
+    "label_account": "Cuenta",
+    "label_overview": "Resumen"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

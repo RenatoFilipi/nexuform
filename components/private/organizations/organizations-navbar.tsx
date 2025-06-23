@@ -39,6 +39,7 @@ const NewFormNavbar = () => {
   );
 };
 const OrganizationNavbar = () => {
+  const t = useTranslations("app");
   const pathname = usePathname();
   const orgId = pathname.split("/")[3];
   const isActive = (path: string) => pathname.endsWith(path);
@@ -46,15 +47,15 @@ const OrganizationNavbar = () => {
   const isFormResource = pathname.split("/")[4] === "form";
 
   const orgResources = [
-    { name: "Forms", path: `/dashboard/organizations/${orgId}/forms`, icon: LayersIcon, enabled: true },
+    { name: t("label_forms"), path: `/dashboard/organizations/${orgId}/forms`, icon: LayersIcon, enabled: true },
     {
-      name: "Analytics",
+      name: t("label_analytics"),
       path: `/dashboard/organizations/${orgId}/analytics`,
       icon: ChartNoAxesColumnIcon,
       enabled: false,
     },
     {
-      name: "Settings",
+      name: t("label_settings"),
       path: `/dashboard/organizations/${orgId}/settings`,
       icon: Settings2Icon,
       enabled: false,
@@ -62,25 +63,25 @@ const OrganizationNavbar = () => {
   ];
   const formResources = [
     {
-      name: "Overview",
+      name: t("label_overview"),
       path: `/dashboard/organizations/${orgId}/form/${formId}/overview`,
       icon: BarChartIcon,
       enabled: true,
     },
     {
-      name: "Submissions",
+      name: t("label_submissions"),
       path: `/dashboard/organizations/${orgId}/form/${formId}/submissions`,
       icon: SendIcon,
       enabled: true,
     },
     {
-      name: "Share",
+      name: t("label_share"),
       path: `/dashboard/organizations/${orgId}/form/${formId}/share`,
       icon: Share2Icon,
       enabled: true,
     },
     {
-      name: "Settings",
+      name: t("label_settings"),
       path: `/dashboard/organizations/${orgId}/form/${formId}/settings`,
       icon: Settings2Icon,
       enabled: true,
