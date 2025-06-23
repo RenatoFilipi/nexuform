@@ -1,6 +1,7 @@
 "use client";
 
 import PoweredByBadge from "@/components/shared/badges/powered-by-badge";
+import WipUI from "@/components/shared/utils/wip-ui";
 import { Button } from "@/components/ui/button";
 import usePlatformStore from "@/stores/platform";
 import useStudioStore from "@/stores/studio";
@@ -10,7 +11,7 @@ import { EBlock, EForm, EOrganization, EProfile, ESubscription, ETeamMemberProfi
 import { TBlock } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { Reorder, useDragControls } from "framer-motion";
-import { Edit2Icon, GripVerticalIcon, PlusIcon, Trash2Icon } from "lucide-react";
+import { Edit2Icon, GripVerticalIcon, PlusIcon, Trash2Icon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import CheckBoxesDesign from "../design/checkboxes-design";
 import CustomScaleDesign from "../design/custom-scale-design";
@@ -35,7 +36,6 @@ interface IProps {
   theme: ETheme;
   blocks: EBlock[];
 }
-
 const EditorWrapper = (props: IProps) => {
   const t = useTranslations("app");
   const pf = usePlatformStore();
@@ -71,7 +71,6 @@ const EditorWrapper = (props: IProps) => {
     </div>
   );
 };
-
 interface IBlockComponent {
   block: EBlock;
   theme: ETheme;
@@ -185,7 +184,7 @@ const BlockWrapper = ({ children, block }: { children: React.ReactNode; block: E
       className={`${
         block.id === studio.blockView.id && studio.toolView === "block"
           ? "border-2 border-primary dark:border-primary"
-          : "border border-transparent"
+          : "border-2 border-transparent"
       } flex w-full p-3 relative group hover:bg-foreground/10 transition-colors rounded`}>
       {/* Content */}
       <div className="flex-1">{children}</div>
@@ -214,7 +213,43 @@ const BlockWrapper = ({ children, block }: { children: React.ReactNode; block: E
   );
 };
 const EditorToolbar = () => {
-  return <div className="border-l flex justify-center items-center h-full w-[500px]">toolbar</div>;
+  const t = useTranslations("app");
+  const studio = useStudioStore();
+  const isEditingBlock = studio.toolView === "block";
+  const views = [
+    { label: t("label_properties"), view: "properties", enabled: true },
+    { label: t("label_styles"), view: "styles", enabled: true },
+    { label: t("label_settings"), view: "settings", enabled: true },
+  ];
+
+  return (
+    <div className="border-l flex justify-center items-center h-full w-[500px]">
+      {isEditingBlock && <EditorBlockSettings />}
+      {!isEditingBlock && <div>ok</div>}
+    </div>
+  );
+};
+const EditorBlockSettings = () => {
+  const t = useTranslations("app");
+  const studio = useStudioStore();
+
+  const onClose = () => {
+    studio.setToolView("properties");
+  };
+
+  return (
+    <div className="flex flex-col w-full border h-full">
+      <div className="flex justify-between items-center w-full border-b h-12 px-3">
+        <span className="font-semibold text-sm">Placeholder</span>
+        <Button onClick={onClose} variant={"ghost"} size={"icon"} className="w-8 h-8">
+          <XIcon className="w-5 h-5" />
+        </Button>
+      </div>
+      <div className="flex justify-center items-center h-full">
+        <WipUI context="Tool block" />
+      </div>
+    </div>
+  );
 };
 
 export default EditorWrapper;
