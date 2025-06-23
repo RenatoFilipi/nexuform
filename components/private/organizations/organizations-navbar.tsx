@@ -1,6 +1,14 @@
 "use client";
 
-import { ChartNoAxesColumnIcon, ChevronLeftIcon, LayersIcon, Settings2Icon } from "lucide-react";
+import {
+  BarChartIcon,
+  ChartNoAxesColumnIcon,
+  ChevronLeftIcon,
+  LayersIcon,
+  SendIcon,
+  Settings2Icon,
+  Share2Icon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -12,7 +20,6 @@ const OrganizationsNavbar = () => {
   if (isNewFormResource) return <NewFormNavbar />;
   return <OrganizationNavbar />;
 };
-
 const NewFormNavbar = () => {
   const t = useTranslations("app");
   const pathname = usePathname();
@@ -35,8 +42,10 @@ const OrganizationNavbar = () => {
   const pathname = usePathname();
   const orgId = pathname.split("/")[3];
   const isActive = (path: string) => pathname.endsWith(path);
+  const formId = pathname.split("/")[5];
+  const isFormResource = pathname.split("/")[4] === "form";
 
-  const resources = [
+  const orgResources = [
     { name: "Forms", path: `/dashboard/organizations/${orgId}/forms`, icon: LayersIcon, enabled: true },
     {
       name: "Analytics",
@@ -51,10 +60,59 @@ const OrganizationNavbar = () => {
       enabled: false,
     },
   ];
+  const formResources = [
+    {
+      name: "Overview",
+      path: `/dashboard/organizations/${orgId}/form/${formId}/overview`,
+      icon: BarChartIcon,
+      enabled: true,
+    },
+    {
+      name: "Submissions",
+      path: `/dashboard/organizations/${orgId}/form/${formId}/submissions`,
+      icon: SendIcon,
+      enabled: true,
+    },
+    {
+      name: "Share",
+      path: `/dashboard/organizations/${orgId}/form/${formId}/share`,
+      icon: Share2Icon,
+      enabled: true,
+    },
+    {
+      name: "Settings",
+      path: `/dashboard/organizations/${orgId}/form/${formId}/settings`,
+      icon: Settings2Icon,
+      enabled: true,
+    },
+  ];
+
+  if (formId && isFormResource) {
+    return (
+      <div className="border-b h-10 flex justify-start items-center gap-2 px-2 sm:px-6 overflow-x-auto fixed bg-background w-full truncate">
+        {formResources
+          .filter((x) => x.enabled)
+          .map((r) => {
+            return (
+              <Link
+                key={r.name}
+                href={r.path}
+                className={`${
+                  isActive(r.path) ? "font-medium text-foreground" : "text-muted-foreground"
+                } text-sm flex justify-center items-center px-2 hover:bg-foreground/5 relative rounded gap-2 h-full`}>
+                <r.icon className={`${isActive(r.path) ? "text-primary" : "text-muted-foreground"} w-4 h-4`} />
+                {r.name}
+                {isActive(r.path) && <div className="bg-primary/80 bottom-0 w-full h-0.5 absolute"></div>}
+              </Link>
+            );
+          })}
+      </div>
+    );
+  }
 
   return (
     <div className="border-b h-10 flex justify-start items-center gap-2 px-2 sm:px-6 overflow-x-auto fixed bg-background w-full truncate">
-      {resources
+      {orgResources
         .filter((x) => x.enabled)
         .map((r) => {
           return (

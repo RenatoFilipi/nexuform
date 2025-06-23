@@ -82,15 +82,15 @@ const AfterOrgNavbar = () => {
           {pf.organizations.length > 0 && (
             <>
               <div className="flex justify-center items-center gap-4">
-                <Separator orientation="vertical" className="h-5 bg-muted-foreground rotate-12" />
-                <Link href={orgPath} className="text-sm font-semibold hover:bg-foreground/10 px-2 py-1 rounded">
+                <Separator orientation="vertical" className="h-4 bg-muted-foreground rotate-12" />
+                <Link href={orgPath} className="text-sm hover:bg-foreground/10 px-2 py-1 rounded">
                   {pf.organizations[0].name}
                 </Link>
               </div>
               {formId && isFormResource && (
                 <div className="flex justify-center items-center gap-4">
-                  <Separator orientation="vertical" className="h-5 bg-muted-foreground rotate-12" />
-                  <Link href={formPath} className="text-sm font-semibold hover:bg-foreground/10 px-2 py-1 rounded">
+                  <Separator orientation="vertical" className="h-4 bg-muted-foreground rotate-12" />
+                  <Link href={formPath} className="text-sm hover:bg-foreground/10 px-2 py-1 rounded">
                     {pf.forms[0].name}
                   </Link>
                 </div>
