@@ -221,7 +221,7 @@ export type Database = {
             foreignKeyName: "forms_owner_id_fkey"
             columns: ["owner_id"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "team_member_profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -682,26 +682,26 @@ export type Database = {
           created_at: string
           form_id: string
           id: string
-          profile_id: string
+          org_id: string
         }
         Insert: {
           created_at?: string
           form_id?: string
           id?: string
-          profile_id?: string
+          org_id: string
         }
         Update: {
           created_at?: string
           form_id?: string
           id?: string
-          profile_id?: string
+          org_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "view_logs_profile_id_fkey"
-            columns: ["profile_id"]
+            foreignKeyName: "view_logs_org_id_fkey"
+            columns: ["org_id"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
         ]

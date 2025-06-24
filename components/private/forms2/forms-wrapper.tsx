@@ -160,7 +160,7 @@ const FormCard = ({ form }: { form: EForm }) => {
               <MoreHorizontalIcon className="w-5 h-5 text-muted-foreground hover:text-primary" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-52" align="end">
+          <DropdownMenuContent className="w-52 p-2 flex flex-col gap-1" align="end">
             {options
               .filter((x) => x.enabled)
               .map((opt) => {
