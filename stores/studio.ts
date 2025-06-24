@@ -22,6 +22,7 @@ interface studio {
   setEditorView: (p: TEditorView) => void;
   setToolView: (p: TToolView) => void;
   setBlockView: (p: EBlock) => void;
+  reset: () => void;
 }
 
 const useStudioStore = create<studio>((set) => ({
@@ -95,6 +96,34 @@ const useStudioStore = create<studio>((set) => ({
   setEditorView: (p) => set({ editorView: p }),
   setToolView: (p) => set({ toolView: p }),
   setBlockView: (p) => set({ blockView: p }),
+  reset: () =>
+    set({
+      preview: false,
+      editorView: "blocks",
+      toolView: "properties",
+      blockView: {
+        id: "",
+        form_id: "",
+        created_at: "",
+        updated_at: "",
+        name: "",
+        description: "",
+        is_identifier: false,
+        max_char: null,
+        min_char: null,
+        max_date: null,
+        max_scale: null,
+        min_date: null,
+        min_scale: null,
+        options: null,
+        placeholder: null,
+        position: 0,
+        rating: null,
+        required: false,
+        show_char: null,
+        type: "",
+      },
+    }),
 }));
 
 export default useStudioStore;

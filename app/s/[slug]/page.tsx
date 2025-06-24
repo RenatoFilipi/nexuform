@@ -1,9 +1,12 @@
 import FormNotAvailableUI from "@/components/private/shared/form/form-not-available-ui";
+import SubmissionWrapper from "@/components/public/submission2/submission-wrapper";
 import { createClient } from "@/utils/supabase/server";
+import { getLocale } from "next-intl/server";
 
 const S = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
   const supabase = await createClient();
+  const locale = await getLocale();
 
   const forms = await supabase.from("forms").select("*").eq("public_id", slug).single();
   if (forms.error || forms.data.status !== "published") return <FormNotAvailableUI />;
@@ -18,7 +21,26 @@ const S = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   await supabase.from("view_logs").insert([{ form_id: forms.data.id, org_id: orgId }]);
 
-  return <div>all good</div>;
+  const themes = await supabase.from("themes").select("*").eq("form_id", forms.data.id).single();
+  if (themes.error) return <FormNotAvailableUI />;
+
+  const blocks = await supabase
+    .from("blocks")
+    .select("*")
+    .eq("form_id", forms.data.id)
+    .order("position", { ascending: true });
+  if (blocks.error) return <FormNotAvailableUI />;
+
+  return (
+    <SubmissionWrapper
+      locale={locale}
+      organization={organizations.data}
+      subscription={subscriptions.data}
+      form={forms.data}
+      theme={themes.data}
+      blocks={blocks.data}
+    />
+  );
 };
 
 export default S;

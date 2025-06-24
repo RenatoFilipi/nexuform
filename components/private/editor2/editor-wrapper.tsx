@@ -54,6 +54,7 @@ const EditorWrapper = (props: IProps) => {
   const query = useQuery({
     queryKey: ["editor-page"],
     queryFn: () => {
+      studio.reset();
       user.setLocale(props.locale);
       user.setEmail(props.email);
       user.setProfile(props.profile);
@@ -115,7 +116,7 @@ const EditorCanva = () => {
 
   return (
     <div className="flex justify-center items-center h-full w-full flex-col">
-      <div className="h-16 w-full flex justify-between items-center px-4 border-b gap-4">
+      <div className="h-16 w-full flex justify-between items-center px-3 border-b gap-4">
         <EditorAddBlock>
           <Button variant={"outline"} size={"sm"}>
             <PlusIcon className="w-4 h-4 mr-2" />

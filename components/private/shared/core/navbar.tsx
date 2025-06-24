@@ -314,12 +314,18 @@ const EditorNavbar = () => {
   return (
     <nav className="z-10 flex flex-col bg-background fixed w-full border-b">
       <div className="flex w-full justify-between items-center h-14 px-4 sm:px-6">
-        <div>
+        <div className="flex justify-center items-center gap-2">
           <Button variant={"ghost"} size={"icon"} className="p-2" asChild>
             <a href={overviewPath}>
               <Brand type="logo" className="h-5 fill-foreground" />
             </a>
           </Button>
+          <div className="flex justify-center items-center gap-2">
+            <Separator orientation="vertical" className="h-4 bg-muted-foreground rotate-12" />
+            <Link href={""} className="text-sm hover:bg-foreground/10 px-2 py-1 rounded">
+              {studio.form.name}
+            </Link>
+          </div>
         </div>
         <div>
           <Button size={"sm"} variant={"secondary"} onClick={handleSave} disabled={appState === "loading"}>

@@ -49,6 +49,8 @@ const Overview = async ({ params }: { params: Promise<{ slug: string; id: string
     .lte("created_at", dates.endDate.toISOString());
   if (viewLogs.error) return <ErrorUI email={email} />;
 
+  console.log(submissionLogs.data);
+
   return (
     <OverviewWrapper
       locale={locale}
