@@ -35,7 +35,7 @@ const SuccessDesign = ({ brand, preview, color, description, title }: IProps) =>
   const lighterColor = lightenColor(color, 20);
 
   return (
-    <div className="flex justify-center items-center min-h-[calc(100vh-4rem)] w-full p-4">
+    <div className="flex justify-center items-center w-full p-4">
       <div className="flex flex-col gap-8 p-8 w-full sm:max-w-md">
         <div className="flex flex-col justify-center items-center gap-6">
           <div className="relative">

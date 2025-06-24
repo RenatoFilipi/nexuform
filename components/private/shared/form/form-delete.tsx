@@ -74,7 +74,7 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
         return;
       }
       toast.success(t("suc_form_delete"));
-      router.push("/dashboard/forms");
+      router.push("/dashboard/organizations");
       global.setForms(global.forms.filter((x) => x.id !== formId));
       setState(false);
     });

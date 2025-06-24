@@ -5,11 +5,12 @@ import { appName } from "@/utils/envs";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
-import { Work_Sans } from "next/font/google";
+import { Inter, Work_Sans } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
 
 const worksans = Work_Sans({ subsets: ["latin"], fallback: ["system-ui", "arial"] });
+const inter = Inter({ subsets: ["latin"], fallback: ["system-ui", "arial"] });
 
 export default async function RootLayout({
   children,
@@ -21,7 +22,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={worksans.className}>
+      <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
           <QueryProvider>
             <NuqsAdapter>

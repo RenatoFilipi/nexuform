@@ -3,6 +3,13 @@
 import FormStatusBadge from "@/components/shared/badges/form-status-badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import usePlatformStore from "@/stores/platform";
 import useUserStore from "@/stores/user";
 import { EForm, EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
@@ -23,13 +30,6 @@ import {
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 interface IProps {
   locale: string;
@@ -127,13 +127,13 @@ const FormCard = ({ form }: { form: EForm }) => {
       name: t("label_share"),
       icon: Share2Icon,
       url: `/dashboard/organizations/${orgId}/form/${form.public_id}/share`,
-      enabled: false,
+      enabled: true,
     },
     {
       name: t("label_settings"),
       icon: Settings2Icon,
       url: `/dashboard/organizations/${orgId}/form/${form.public_id}/settings`,
-      enabled: false,
+      enabled: true,
     },
     {
       name: t("label_editor"),
@@ -186,7 +186,7 @@ const FormCard = ({ form }: { form: EForm }) => {
                     href={fullUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="cursor-pointer hover:bg-accent flex justify-between items-center text-xs">
+                    className="cursor-pointer hover:bg-accent flex justify-between items-center text-sm">
                     {t("label_go_to_form")}
                     <ExternalLinkIcon className="w-4 h-4" />
                   </a>
