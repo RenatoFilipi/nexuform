@@ -64,6 +64,7 @@ const BeforeOrgNavbar = () => {
   );
 };
 const AfterOrgNavbar = () => {
+  const t = useTranslations("app");
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const orgId = pathname.split("/")[3];
@@ -105,7 +106,10 @@ const AfterOrgNavbar = () => {
           )}
         </div>
         {/* avatar - desk */}
-        <div className="hidden sm:flex">
+        <div className="hidden sm:flex justify-center items-center gap-4">
+          <Button variant={"outline"} size={"sm"}>
+            {t("label_feedback")}
+          </Button>
           <AvatarMenuDesk />
         </div>
         {/* avatar - mob */}

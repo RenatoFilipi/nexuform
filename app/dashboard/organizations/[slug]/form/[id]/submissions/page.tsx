@@ -28,13 +28,13 @@ const Submissions = async ({ params }: { params: Promise<{ slug: string; id: str
   const subscriptions = await supabase.from("subscriptions").select("*").eq("org_id", orgId).single();
   if (subscriptions.error) return <ErrorUI email={email} />;
 
-  const forms = await supabase.from("forms").select("*").eq("public_id", id).single();
-  if (forms.error) return <ErrorUI email={email} />;
+  const form = await supabase.from("forms").select("*").eq("public_id", id).single();
+  if (form.error) return <ErrorUI email={email} />;
 
   const blocks = await supabase
     .from("blocks")
     .select("*")
-    .eq("form_id", forms.data.id)
+    .eq("form_id", form.data.id)
     .order("position", { ascending: true });
   if (blocks.error) return <ErrorUI email={email} />;
 
@@ -42,7 +42,7 @@ const Submissions = async ({ params }: { params: Promise<{ slug: string; id: str
     .from("submissions")
     .select("*")
     .range(paginationFrom, paginationTo)
-    .eq("form_id", forms.data.id)
+    .eq("form_id", form.data.id)
     .order("created_at", { ascending: false });
   if (submissions.error) return <ErrorUI email={email} />;
 
@@ -54,7 +54,7 @@ const Submissions = async ({ params }: { params: Promise<{ slug: string; id: str
       teamMemberProfile={teamMemberProfiles.data}
       organization={organizations.data}
       subscription={subscriptions.data}
-      form={forms.data}
+      form={form.data}
       blocks={blocks.data}
       submissions={submissions.data}
     />

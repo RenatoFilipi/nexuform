@@ -36,6 +36,7 @@ interface platform {
   setBlocks: (p: EBlock[]) => void;
   setSubmissions: (p: ESubmission[]) => void;
   setSubmissionPagination: (p: IPagination) => void;
+  resetForm: () => void;
 }
 
 const dates = getDateRangeFromToday(7);
@@ -63,6 +64,15 @@ const usePlatformStore = create<platform>((set) => ({
   setBlocks: (p) => set({ blocks: p }),
   setSubmissions: (p) => set({ submissions: p }),
   setSubmissionPagination: (p) => set({ submissionPagination: p }),
+  resetForm: () => ({
+    blocks: [],
+    submissions: [],
+    from: dates.startDate,
+    to: dates.endDate,
+    submissionPagination: { from: paginationFrom, to: paginationTo },
+    submissionLogs: [],
+    viewLogs: [],
+  }),
 }));
 
 export default usePlatformStore;

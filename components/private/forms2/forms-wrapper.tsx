@@ -165,7 +165,7 @@ const FormCard = ({ form }: { form: EForm }) => {
               .filter((x) => x.enabled)
               .map((opt) => {
                 return (
-                  <Link
+                  <a
                     href={opt.url}
                     key={opt.name}
                     className="cursor-pointer hover:bg-accent flex justify-between items-center text-sm p-1"
@@ -175,7 +175,7 @@ const FormCard = ({ form }: { form: EForm }) => {
                       <opt.icon className="w-4 h-4" />
                       {opt.name}
                     </div>
-                  </Link>
+                  </a>
                 );
               })}
             {isPublished && (

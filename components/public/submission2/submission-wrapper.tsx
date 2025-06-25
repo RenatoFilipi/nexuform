@@ -171,14 +171,12 @@ const SubmissionEnvironment = () => {
       return;
     }
 
-    const submissionLogs = await supabase.from("submission_logs").insert({
+    await supabase.from("submission_logs").insert({
       form_id: sub.form.id,
       submission_id: sub.submission.id,
       org_id: sub.organization.id,
       completion_time: time,
     });
-    console.log(submissionLogs.data);
-    console.log(submissionLogs.error);
 
     setAppState("success");
     setSubmissionState("idle");
