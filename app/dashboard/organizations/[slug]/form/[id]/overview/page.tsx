@@ -1,4 +1,4 @@
-import OverviewWrapper from "@/components/private/form2/overview/overview-wrapper";
+import OverviewWrapper from "@/components/private2/form/overview/overview-wrapper";
 import ErrorUI from "@/components/shared/utils/error-ui";
 import { getDateRangeFromToday } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
@@ -48,8 +48,6 @@ const Overview = async ({ params }: { params: Promise<{ slug: string; id: string
     .gte("created_at", dates.startDate.toISOString())
     .lte("created_at", dates.endDate.toISOString());
   if (viewLogs.error) return <ErrorUI email={email} />;
-
-  console.log(submissionLogs.data);
 
   return (
     <OverviewWrapper

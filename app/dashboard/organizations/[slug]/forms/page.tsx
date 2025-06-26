@@ -1,4 +1,4 @@
-import FormsWrapper from "@/components/private/forms2/forms-wrapper";
+import FormsWrapper from "@/components/private2/organization/forms/forms-wrapper";
 import ErrorUI from "@/components/shared/utils/error-ui";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";

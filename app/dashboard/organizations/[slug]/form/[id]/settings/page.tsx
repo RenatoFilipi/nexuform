@@ -1,4 +1,4 @@
-import SettingsWrapper from "@/components/private/form2/settings/settings-wrapper";
+import SettingsWrapper from "@/components/private2/form/settings/settings-wrapper";
 import ErrorUI from "@/components/shared/utils/error-ui";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";

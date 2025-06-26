@@ -1,4 +1,4 @@
-import ShareWrapper from "@/components/private/form2/share/share-wrapper";
+import ShareWrapper from "@/components/private2/form/share/share-wrapper";
 import ErrorUI from "@/components/shared/utils/error-ui";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";

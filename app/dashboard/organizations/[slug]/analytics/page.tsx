@@ -1,10 +1,6 @@
-import WipUI from "@/components/shared/utils/wip-ui";
+import AnalyticsWrapper from "@/components/private2/organization/analytics/analytics-wrapper";
 
 const Analytics = () => {
-  return (
-    <div>
-      <WipUI context="Analytics page" />
-    </div>
-  );
+  return <AnalyticsWrapper />;
 };
 export default Analytics;

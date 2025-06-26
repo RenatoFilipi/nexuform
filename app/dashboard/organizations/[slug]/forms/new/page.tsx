@@ -1,4 +1,4 @@
-import NewWrapper from "@/components/private/new2/new-wrapper";
+import NewWrapper from "@/components/private2/organization/new/new-wrapper";
 import ErrorUI from "@/components/shared/utils/error-ui";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";

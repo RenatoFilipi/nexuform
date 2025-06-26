@@ -1,4 +1,4 @@
-import SubmissionStatusBadge from "@/components/shared/badges/submission-status-badge";
+import SubmissionStatusBadge from "@/components/private2/form/submissions/submission-status-badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -14,7 +14,10 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useMedia } from "react-use";
 import { toast } from "sonner";
-import { default as FormSubmissionDetails, default as SubmissionDetails } from "./submission-details";
+import {
+  default as FormSubmissionDetails,
+  default as SubmissionDetails,
+} from "../../../private2/form/submissions/submission-details";
 
 const SubmissionsList = () => {
   const t = useTranslations("app");

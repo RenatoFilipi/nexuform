@@ -1,4 +1,4 @@
-import Navbar from "@/components/private/shared/core/navbar";
+import Navbar from "@/components/private2/shared/navbar";
 import { headers } from "next/headers";
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {

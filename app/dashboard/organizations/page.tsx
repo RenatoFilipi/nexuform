@@ -1,4 +1,4 @@
-import OrganizationsWrapper from "@/components/private/organizations/organizations-wrapper";
+import OrganizationsWrapper from "@/components/private2/organizations/organizations-wrapper";
 import ErrorUI from "@/components/shared/utils/error-ui";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";

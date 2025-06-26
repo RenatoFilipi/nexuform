@@ -1,4 +1,4 @@
-import SubmissionsWrapper from "@/components/private/form2/submissions/submissions-wrapper";
+import SubmissionsWrapper from "@/components/private2/form/submissions/submissions-wrapper";
 import ErrorUI from "@/components/shared/utils/error-ui";
 import { paginationFrom, paginationTo } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/server";
