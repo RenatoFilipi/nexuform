@@ -6,7 +6,7 @@ import useUserStore from "@/stores/user";
 import { useQuery } from "@tanstack/react-query";
 import { endOfMonth, endOfWeek, startOfMonth, startOfToday, startOfWeek, subDays } from "date-fns";
 import { enUS, es, pt } from "date-fns/locale";
-import { ArrowUpRightIcon, CalendarIcon, GemIcon } from "lucide-react";
+import { ArrowUpRightIcon, CalendarIcon, RocketIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 import { DateRange } from "react-day-picker";
@@ -174,12 +174,14 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
             <div className="flex flex-col relative">
               {!isAllowedCustom && (
                 <div className="absolute inset-0 bg-background/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center gap-4 p-4">
-                  <div className="flex justify-center items-center p-4 w-fit rounded-full bg-primary/10">
-                    <GemIcon className="w-8 h-8 text-primary" />
+                  <div className="relative group">
+                    <div className="relative flex justify-center items-center p-3 w-fit rounded-full border bg-foreground/5">
+                      <RocketIcon className="w-6 h-6 text-emerald-500" />
+                    </div>
                   </div>
                   <p className="text-sm text-center">{t("label_upgrade_for_custom_dates")}</p>
                   <ManageSubscription>
-                    <Button variant="default" size="sm">
+                    <Button variant="secondary" size="xs">
                       <ArrowUpRightIcon className="w-4 h-4 mr-2" />
                       {t("label_upgrade_to_pro")}
                     </Button>

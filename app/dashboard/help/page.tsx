@@ -1,4 +1,4 @@
-import HelpWrapper from "@/components/private/help/help-wrapper";
+import HelpWrapper from "@/components/private2/help/help-wrapper";
 import ErrorUI from "@/components/shared/utils/error-ui";
 import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";

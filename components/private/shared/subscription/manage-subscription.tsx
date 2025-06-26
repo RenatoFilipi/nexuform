@@ -314,7 +314,7 @@ const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) =
           <p className="text-muted-foreground">{t("desc_subscription_updated")}</p>
         </div>
         <Button className="mt-4" asChild>
-          <Link href="/dashboard/forms">{t("label_return_to_dashboard")}</Link>
+          <Link href="/dashboard/organizations">{t("label_return_to_dashboard")}</Link>
         </Button>
       </div>
     );

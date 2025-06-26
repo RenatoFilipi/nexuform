@@ -87,3 +87,5 @@ export type TeamMemberPermission =
   | "billing:manage";
 
 export type TOrganizationStatus = "inactive" | "active";
+
+export type TMetric = "total_views" | "total_submissions" | "completion_rate" | "completion_time";

@@ -1,4 +1,4 @@
-import CheckoutSuccess from "@/components/private/checkout/checkout-success";
+import CheckoutSuccess from "@/components/private2/checkout/checkout-success";
 import ErrorUI from "@/components/shared/utils/error-ui";
 import { stripe } from "@/lib/stripe";
 import { createClient } from "@/utils/supabase/server";
@@ -18,7 +18,7 @@ const CheckoutResult = async ({ searchParams }: { searchParams: Promise<{ [key: 
     expand: ["line_items", "payment_intent"],
   });
 
-  if (status === "open" || status === "expired") return redirect("/dashboard/forms");
+  if (status === "open" || status === "expired") return redirect("/dashboard/organizations");
 
   return <CheckoutSuccess />;
 };

@@ -7,12 +7,7 @@ const nextConfig = {
     return [
       {
         source: "/dashboard",
-        destination: "/dashboard/forms",
-        permanent: true,
-      },
-      {
-        source: "/dashboard/editor",
-        destination: "/dashboard/forms",
+        destination: "/dashboard/organizations",
         permanent: true,
       },
       {
