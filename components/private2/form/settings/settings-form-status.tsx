@@ -7,7 +7,7 @@ interface IProps {
   onStatusChange: (status: string) => void;
 }
 
-const FormStatus = ({ status, onStatusChange }: IProps) => {
+const SettingsFormStatus = ({ status, onStatusChange }: IProps) => {
   const t = useTranslations("app");
   const statusList = [
     {
@@ -60,4 +60,4 @@ const FormStatus = ({ status, onStatusChange }: IProps) => {
   );
 };
 
-export default FormStatus;
+export default SettingsFormStatus;

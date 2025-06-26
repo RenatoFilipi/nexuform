@@ -21,18 +21,18 @@ import { Reorder, useDragControls } from "framer-motion";
 import { CheckCircleIcon, ComponentIcon, Edit2Icon, GripVerticalIcon, PlusIcon, Trash2Icon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import CheckBoxesDesign from "../design/checkboxes-design";
-import CustomScaleDesign from "../design/custom-scale-design";
-import DatePickerDesign from "../design/date-picker-design";
-import DropdownMenuDesign from "../design/dropdown-menu-design";
-import EmailAddressDesign from "../design/email-address-design";
-import MultipleChoiceDesign from "../design/multiple-choice-design";
-import NumberInputDesign from "../design/number-input-design";
-import ParagraphTextDesign from "../design/paragraph-text-design";
-import ShortTextDesign from "../design/short-text-design";
-import StarRatingDesign from "../design/star-rating-design";
-import SuccessDesign from "../design/success-design";
-import EditorAddBlock from "../editor/editor-add-block";
+import CheckBoxesDesign from "../../shared/blocks-design/checkboxes-design";
+import CustomScaleDesign from "../../shared/blocks-design/custom-scale-design";
+import DatePickerDesign from "../../shared/blocks-design/date-picker-design";
+import DropdownMenuDesign from "../../shared/blocks-design/dropdown-menu-design";
+import EmailAddressDesign from "../../shared/blocks-design/email-address-design";
+import MultipleChoiceDesign from "../../shared/blocks-design/multiple-choice-design";
+import NumberInputDesign from "../../shared/blocks-design/number-input-design";
+import ParagraphTextDesign from "../../shared/blocks-design/paragraph-text-design";
+import ShortTextDesign from "../../shared/blocks-design/short-text-design";
+import StarRatingDesign from "../../shared/blocks-design/star-rating-design";
+import SuccessDesign from "../../shared/blocks-design/success-design";
+import EditorAddBlock from "./editor-add-block";
 
 interface IProps {
   locale: string;
@@ -147,7 +147,7 @@ const EditorCanva = () => {
         </div>
       </div>
       {!hasBlocks && (
-        <div className="flex justify-center items-center h-full w-full overflow-y-auto">
+        <div className="flex justify-center items-center h-full w-full overflow-y-auto flex-col gap-4">
           <div className="flex flex-col items-center max-w-md text-center space-y-6">
             <div className="rounded bg-primary/10 p-3">
               <PlusIcon className="h-6 w-6 text-primary" />

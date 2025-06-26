@@ -17,8 +17,8 @@ import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
+import NewPreview from "../../private2/organization/new/new-preview";
 import ManageSubscription from "../shared/subscription/manage-subscription";
-import NewPreview from "./new-preview";
 
 interface IProps {
   forms: EForm[];

@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import useUserStore from "@/stores/user";
+import useAppStore from "@/stores/v2/app";
 import { fallbackColor, minute } from "@/utils/constants";
 import { EBlock, ETemplate, ETheme } from "@/utils/entities";
 import { nanoid, uuid } from "@/utils/functions";
@@ -21,17 +22,16 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import CheckBoxesDesign from "../design/checkboxes-design";
-import CustomScaleDesign from "../design/custom-scale-design";
-import DatePickerDesign from "../design/date-picker-design";
-import DropdownMenuDesign from "../design/dropdown-menu-design";
-import EmailAddressDesign from "../design/email-address-design";
-import MultipleChoiceDesign from "../design/multiple-choice-design";
-import NumberInputDesign from "../design/number-input-design";
-import ParagraphTextDesign from "../design/paragraph-text-design";
-import ShortTextDesign from "../design/short-text-design";
-import StarRatingDesign from "../design/star-rating-design";
-import ManageSubscription from "../shared/subscription/manage-subscription";
+import CheckBoxesDesign from "../../shared/blocks-design/checkboxes-design";
+import CustomScaleDesign from "../../shared/blocks-design/custom-scale-design";
+import DatePickerDesign from "../../shared/blocks-design/date-picker-design";
+import DropdownMenuDesign from "../../shared/blocks-design/dropdown-menu-design";
+import EmailAddressDesign from "../../shared/blocks-design/email-address-design";
+import MultipleChoiceDesign from "../../shared/blocks-design/multiple-choice-design";
+import NumberInputDesign from "../../shared/blocks-design/number-input-design";
+import ParagraphTextDesign from "../../shared/blocks-design/paragraph-text-design";
+import ShortTextDesign from "../../shared/blocks-design/short-text-design";
+import StarRatingDesign from "../../shared/blocks-design/star-rating-design";
 
 const defaultTheme: ETheme = {
   id: "",
@@ -66,9 +66,8 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
   const supabase = createClient();
   const router = useRouter();
   const user = useUserStore();
+  const app = useAppStore();
   const [appState, setAppState] = useState<TAppState>("idle");
-  const orgId = user.organizations[0].id;
-  const isAllowed = user.subscription.plan === "pro";
 
   const query = useQuery({
     queryKey: ["templateBlocks", template.id],
@@ -139,12 +138,12 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
             id: uuid(),
             name: template.name,
             description: "",
-            owner_id: user.profile.id,
+            owner_id: app.teamMemberProfile.id,
             public_id: nanoid(20, true, true),
             success_title: t("label_success_form"),
             success_description: t("desc_success_form"),
             submit_label: t("label_submit_form"),
-            org_id: orgId,
+            org_id: app.organization.id,
           },
         ])
         .select("*")
@@ -185,7 +184,7 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
       }
 
       toast.success(t("suc_form_create"));
-      router.push(`/dashboard/editor/${forms.data.id}`);
+      router.push(`/dashboard/organizations/${app.organization.public_id}/form/${forms.data.public_id}/editor`);
     } catch (error) {
       toast.error((error as Error).message || t("err_generic"));
     } finally {
@@ -214,24 +213,15 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
                 <ChevronLeftIcon className="w-4 h-4 mr-2" />
                 {t("label_go_back")}
               </Button>
-              {isAllowed && (
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  disabled={appState === "loading"}
-                  onClick={onCreate}
-                  className="transition">
-                  {appState === "loading" && <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />}
-                  {t("label_use_template")}
-                </Button>
-              )}
-              {!isAllowed && (
-                <ManageSubscription>
-                  <Button variant={"secondary"} size={"sm"}>
-                    {t("label_upgrade_to_pro")}
-                  </Button>
-                </ManageSubscription>
-              )}
+              <Button
+                variant="secondary"
+                size="sm"
+                disabled={appState === "loading"}
+                onClick={onCreate}
+                className="transition">
+                {appState === "loading" && <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />}
+                {t("label_use_template")}
+              </Button>
             </div>
           </div>
           {query.isPending && (

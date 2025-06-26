@@ -1,4 +1,4 @@
-import EditorWrapper from "@/components/private/editor2/editor-wrapper";
+import EditorWrapper from "@/components/private2/form/editor/editor-wrapper";
 import ErrorUI from "@/components/shared/utils/error-ui";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";

@@ -12,7 +12,6 @@ import {
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import useEditorStore from "@/stores/editor";
 import useStudioStore from "@/stores/studio";
 import { minWidth640 } from "@/utils/constants";
 import { EBlock } from "@/utils/entities";
@@ -37,7 +36,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMedia } from "react-use";
 import { z } from "zod";
-import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../ui/drawer";
+import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../../ui/drawer";
 
 const EditorAddBlock = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations("app");
@@ -74,7 +73,6 @@ const EditorAddBlock = ({ children }: { children: React.ReactNode }) => {
 };
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
-  const editor = useEditorStore();
   const studio = useStudioStore();
 
   const categoryColors = {

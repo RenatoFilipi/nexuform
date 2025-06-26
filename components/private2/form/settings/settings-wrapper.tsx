@@ -12,8 +12,8 @@ import { AlertTriangleIcon, LoaderIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
-import FormStatus from "../../../private/form/form-status";
 import FormDelete from "../../../private/shared/form/form-delete";
+import SettingsFormStatus from "./settings-form-status";
 
 interface IProps {
   locale: string;
@@ -92,7 +92,7 @@ const SettingsStatus = () => {
           <h1 className="font-semibold text-base">{t("label_status")}</h1>
           <p className="text-xs text-muted-foreground">{t("desc_status")}</p>
         </div>
-        <FormStatus status={app.form.status as TFormStatus} onStatusChange={onSetStatus} />
+        <SettingsFormStatus status={app.form.status as TFormStatus} onStatusChange={onSetStatus} />
       </div>
       <div className="flex justify-end items-center">
         <Button onClick={onSaveFormStatus} variant={"secondary"} size={"sm"} disabled={appState === "loading"}>
