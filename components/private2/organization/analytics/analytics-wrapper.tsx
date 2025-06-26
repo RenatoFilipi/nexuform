@@ -15,7 +15,6 @@ import {
 } from "@/utils/entities";
 import { formatDecimal, formatTime, getAverageCompletionRate, getAverageCompletionTime } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
-import { TMetric } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -119,49 +118,35 @@ const AnalyticsMetrics = () => {
       <AnalyticsCard
         name={t("label_total_views")}
         value={totalViews}
-        icon={<EyeIcon className="w-4 h-4 text-primary" />}
-        view="total_views"
+        icon={<EyeIcon className="w-5 h-5 text-primary" />}
       />
       <AnalyticsCard
         name={t("label_total_submissions")}
         value={totalSubmissions}
-        icon={<SendIcon className="w-4 h-4 text-primary" />}
-        view="total_submissions"
+        icon={<SendIcon className="w-5 h-5 text-primary" />}
       />
       <AnalyticsCard
         name={t("label_completion_rate")}
         value={avgCompletionRate}
-        icon={<VoteIcon className="w-4 h-4 text-primary" />}
-        view="completion_rate"
+        icon={<VoteIcon className="w-5 h-5 text-primary" />}
       />
       <AnalyticsCard
         name={t("label_avg_completion_time")}
         value={avgCompletionTime}
-        icon={<TimerIcon className="w-4 h-4 text-primary" />}
-        view="completion_time"
+        icon={<TimerIcon className="w-5 h-5 text-primary" />}
       />
     </div>
   );
 };
-const AnalyticsCard = ({
-  name,
-  value,
-  icon,
-  view,
-}: {
-  name: string;
-  value: string;
-  icon: React.ReactNode;
-  view: TMetric;
-}) => {
+const AnalyticsCard = ({ name, value, icon }: { name: string; value: string; icon: React.ReactNode }) => {
   return (
-    <Card className="group p-4 justify-between flex flex-col gap-3 w-full sm:h-44">
+    <Card className="group p-5 justify-between flex flex-col gap-3 w-full sm:h-44 border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm">
       <div className="flex justify-between items-center w-full">
         <span className="text-sm">{name}</span>
-        <div className="flex justify-center items-center p-2 bg-foreground/5 rounded">{icon}</div>
+        <div className="flex justify-center items-center p-3 bg-foreground/5 rounded">{icon}</div>
       </div>
       <div className="flex justify-between items-center">
-        <span className="text-lg font-bold">{value}</span>
+        <span className="text-xl font-bold">{value}</span>
       </div>
     </Card>
   );

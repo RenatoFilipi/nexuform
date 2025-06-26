@@ -12,7 +12,7 @@ import { AlertTriangleIcon, LoaderIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
-import FormDelete from "../../../private/shared/form/form-delete";
+import FormDelete from "./settings-form-delete";
 import SettingsFormStatus from "./settings-form-status";
 
 interface IProps {
