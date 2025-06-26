@@ -28,7 +28,7 @@ const ModeToggle2 = () => {
         <Label
           htmlFor="system"
           className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
-          <MonitorIcon className="w-3 h-3" />
+          <MonitorIcon className="w-3.5 h-3.5" />
         </Label>
       </div>
       <div>
@@ -36,7 +36,7 @@ const ModeToggle2 = () => {
         <Label
           htmlFor="light"
           className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
-          <SunIcon className="w-3 h-3" />
+          <SunIcon className="w-3.5 h-3.5" />
         </Label>
       </div>
       <div>
@@ -44,7 +44,7 @@ const ModeToggle2 = () => {
         <Label
           htmlFor="dark"
           className="text-xs cursor-pointer flex items-center justify-start gap-2 rounded-md border-1 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:bg-foreground/10">
-          <MoonIcon className="w-3 h-3" />
+          <MoonIcon className="w-3.5 h-3.5" />
         </Label>
       </div>
     </RadioGroup>

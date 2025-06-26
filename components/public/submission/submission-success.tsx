@@ -1,8 +1,8 @@
-import usePublicStore from "@/stores/public";
+import useSubmissionStore from "@/stores/submission";
 import SuccessDesign from "../../private/design/success-design";
 
 const SubmissionSuccess = () => {
-  const { form, theme } = usePublicStore();
+  const { form, theme } = useSubmissionStore();
 
   return (
     <SuccessDesign

@@ -9,8 +9,8 @@ import { Inter, Work_Sans } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], fallback: ["system-ui", "arial"] });
 const worksans = Work_Sans({ subsets: ["latin"], fallback: ["system-ui", "arial"] });
+const inter = Inter({ subsets: ["latin"], fallback: ["system-ui", "arial"] });
 
 export default async function RootLayout({
   children,
@@ -22,7 +22,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={worksans.className}>
+      <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
           <QueryProvider>
             <NuqsAdapter>

@@ -22,21 +22,29 @@ export const signInAction = async (formData: FormData) => {
   });
   if (error) return encodedRedirect("error", "/login", error.message);
 
-  return redirect("/dashboard/forms");
+  return redirect("/dashboard/organizations");
 };
 export const signUpAction = async (formData: FormData) => {
   const t = await getTranslations("auth");
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
+  const first_name = formData.get("first_name") as string;
+  const last_name = formData.get("last_name") as string;
   const supabase = await createClient();
   const origin = (await headers()).get("origin");
 
-  if (!email || !password) return encodedRedirect("error", "/signup", t("required_all_fields"));
+  if (!email || !password || !first_name || !last_name)
+    return encodedRedirect("error", "/signup", t("required_all_fields"));
+
   const { data: auth, error: authError } = await supabase.auth.signUp({
     email,
     password,
     options: {
       emailRedirectTo: `${origin}/signup/confirm-email`,
+      data: {
+        first_name,
+        last_name,
+      },
     },
   });
   if (authError) return encodedRedirect("error", "/signup", authError.message);

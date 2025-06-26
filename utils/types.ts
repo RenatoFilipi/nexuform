@@ -72,3 +72,18 @@ export type CurrencyCode =
   | "KRW" // South Korean Won
   | "TRY" // Turkish Lira
   | "AED"; // UAE Dirham;
+
+export type TeamMemberRole = "owner" | "admin" | "editor" | "viewer";
+export type TeamMemberPermission =
+  | "form:create"
+  | "form:edit"
+  | "form:delete"
+  | "form:view"
+  | "submission:view"
+  | "submission:export"
+  | "team:invite"
+  | "team:remove"
+  | "team:update_role"
+  | "billing:manage";
+
+export type TOrganizationStatus = "inactive" | "active";

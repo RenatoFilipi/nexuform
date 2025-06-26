@@ -221,7 +221,7 @@ export type Database = {
             foreignKeyName: "forms_owner_id_fkey"
             columns: ["owner_id"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "team_member_profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -232,7 +232,6 @@ export type Database = {
           id: string
           name: string
           owner_id: string
-          personal: boolean
           public_id: string
           status: string
           updated_at: string
@@ -242,7 +241,6 @@ export type Database = {
           id?: string
           name?: string
           owner_id?: string
-          personal?: boolean
           public_id?: string
           status?: string
           updated_at?: string
@@ -252,7 +250,6 @@ export type Database = {
           id?: string
           name?: string
           owner_id?: string
-          personal?: boolean
           public_id?: string
           status?: string
           updated_at?: string
@@ -315,7 +312,7 @@ export type Database = {
           created_at: string
           form_id: string
           id: string
-          profile_id: string
+          org_id: string
           submission_id: string
           updated_at: string
         }
@@ -324,7 +321,7 @@ export type Database = {
           created_at?: string
           form_id: string
           id?: string
-          profile_id: string
+          org_id: string
           submission_id: string
           updated_at?: string
         }
@@ -333,16 +330,16 @@ export type Database = {
           created_at?: string
           form_id?: string
           id?: string
-          profile_id?: string
+          org_id?: string
           submission_id?: string
           updated_at?: string
         }
         Relationships: [
           {
-            foreignKeyName: "submission_logs_profile_id_fkey"
-            columns: ["profile_id"]
+            foreignKeyName: "submission_logs_org_id_fkey"
+            columns: ["org_id"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
         ]
@@ -444,6 +441,54 @@ export type Database = {
           },
           {
             foreignKeyName: "subscriptions_user_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      team_member_profiles: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          org_id: string
+          permissions: string[]
+          profile_id: string
+          role: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name?: string
+          org_id: string
+          permissions: string[]
+          profile_id: string
+          role?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          org_id?: string
+          permissions?: string[]
+          profile_id?: string
+          role?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_member_profiles_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "team_member_profiles_profile_id_fkey"
             columns: ["profile_id"]
             isOneToOne: false
             referencedRelation: "profiles"
@@ -637,26 +682,26 @@ export type Database = {
           created_at: string
           form_id: string
           id: string
-          profile_id: string
+          org_id: string
         }
         Insert: {
           created_at?: string
           form_id?: string
           id?: string
-          profile_id?: string
+          org_id: string
         }
         Update: {
           created_at?: string
           form_id?: string
           id?: string
-          profile_id?: string
+          org_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "view_logs_profile_id_fkey"
-            columns: ["profile_id"]
+            foreignKeyName: "view_logs_org_id_fkey"
+            columns: ["org_id"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
         ]

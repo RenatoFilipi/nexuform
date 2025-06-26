@@ -289,7 +289,7 @@
     "label_go_back": "Volver",
     "label_upgrade_sub": "Actualiza tu suscripción.",
     "desc_upgrade_sub": "Para seguir usando nuestra plataforma, actualiza tu suscripción.",
-    "label_help": "¿Necesitas ayuda?",
+    "label_help": "Ayuda",
     "desc_help": "No dudes en contactarnos por correo electrónico si tienes alguna pregunta o inquietud:",
     "label_copy": "Copiar",
     "nav_help": "Ayuda",
@@ -445,7 +445,12 @@
     "label_amount": "Monto",
     "label_download": "Descargar",
     "label_no_invoices": "No se encontraron facturas",
-    "desc_no_invoices": "Cuando tengas facturas, aparecerán aquí."
+    "desc_no_invoices": "Cuando tengas facturas, aparecerán aquí.",
+    "label_organizations": "Organizaciones",
+    "label_new_organization": "Nueva organización",
+    "label_active": "Activo",
+    "label_account": "Cuenta",
+    "label_overview": "Resumen"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",
@@ -488,7 +493,13 @@
     "label_suc_update_password": "Contraseña Actualizada",
     "desc_suc_update_password": "Tu contraseña ha sido actualizada con éxito. Usa tu nueva contraseña para acceder a tu cuenta.",
     "label_login_into": "Iniciar sesión en { platform }",
-    "label_signup_into": "Registrarse en { platform }"
+    "label_signup_into": "Registrarse en { platform }",
+    "label_name": "Nombre",
+    "required_name": "Nombre es obligatorio",
+    "label_first_name": "Nombre",
+    "label_last_name": "Apellido",
+    "required_first_name": "Nombre es obligatorio",
+    "required_last_name": "Apellido es obligatorio"
   },
   "landing": {
     "nav_features": "Características",

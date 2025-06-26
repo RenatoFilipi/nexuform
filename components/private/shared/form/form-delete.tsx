@@ -5,6 +5,7 @@ import {
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogHeader,
+  AlertDialogOverlay,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
@@ -12,26 +13,22 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useGlobalStore from "@/stores/global";
-import { minWidth640 } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState } from "@/utils/types";
 import { AlertCircleIcon, LoaderIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { ReactNode, useState, useTransition } from "react";
-import { useMedia } from "react-use";
 import { toast } from "sonner";
-import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../../ui/drawer";
 
 const FormDelete = ({ children, formId, formName }: { children: ReactNode; formId: string; formName: string }) => {
   const t = useTranslations("app");
-  const isDesktop = useMedia(minWidth640);
   const [open, setOpen] = useState(false);
 
-  if (isDesktop) {
-    return (
-      <AlertDialog open={open} onOpenChange={setOpen}>
-        <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
+  return (
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
+      <AlertDialogOverlay className="backdrop-blur-sm">
         <AlertDialogContent className="flex flex-col w-full min-w-[650px]">
           <AlertDialogHeader>
             <AlertDialogTitle>{t("label_absolute_delete_form")}</AlertDialogTitle>
@@ -39,21 +36,8 @@ const FormDelete = ({ children, formId, formName }: { children: ReactNode; formI
           </AlertDialogHeader>
           <Body formId={formId} formName={formName} setState={setOpen} />
         </AlertDialogContent>
-      </AlertDialog>
-    );
-  }
-
-  return (
-    <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="p-3">
-        <DrawerHeader>
-          <DrawerTitle>{t("label_absolute_delete_form")}</DrawerTitle>
-          <DrawerDescription>{t("desc_absolute_delete_form")}</DrawerDescription>
-        </DrawerHeader>
-        <Body formId={formId} formName={formName} setState={setOpen} />
-      </DrawerContent>
-    </Drawer>
+      </AlertDialogOverlay>
+    </AlertDialog>
   );
 };
 
@@ -74,7 +58,7 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
         return;
       }
       toast.success(t("suc_form_delete"));
-      router.push("/dashboard/forms");
+      router.push("/dashboard/organizations");
       global.setForms(global.forms.filter((x) => x.id !== formId));
       setState(false);
     });

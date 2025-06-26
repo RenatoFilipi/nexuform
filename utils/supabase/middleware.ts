@@ -42,23 +42,23 @@ export const updateSession = async (request: NextRequest) => {
 
     // landing
     if (request.nextUrl.pathname === "/" && !user.error) {
-      return NextResponse.redirect(new URL("/dashboard/forms", request.url));
+      return NextResponse.redirect(new URL("/dashboard/organizations", request.url));
     }
     // login
     if (request.nextUrl.pathname === "/login" && !user.error) {
-      return NextResponse.redirect(new URL("/dashboard/forms", request.url));
+      return NextResponse.redirect(new URL("/dashboard/organizations", request.url));
     }
     // signup
     if (request.nextUrl.pathname === "/signup" && !user.error) {
-      return NextResponse.redirect(new URL("/dashboard/forms", request.url));
+      return NextResponse.redirect(new URL("/dashboard/organizations", request.url));
     }
     // password new
     if (request.nextUrl.pathname === "/password/new" && !user.error) {
-      return NextResponse.redirect(new URL("/dashboard/forms", request.url));
+      return NextResponse.redirect(new URL("/dashboard/organizations", request.url));
     }
     // password reset
     if (request.nextUrl.pathname === "/password/reset" && !user.error) {
-      return NextResponse.redirect(new URL("/dashboard/forms", request.url));
+      return NextResponse.redirect(new URL("/dashboard/organizations", request.url));
     }
 
     return response;

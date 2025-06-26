@@ -289,7 +289,7 @@
     "label_go_back": "Voltar",
     "label_upgrade_sub": "Atualize sua assinatura.",
     "desc_upgrade_sub": "Para continuar usando nossa plataforma, atualize sua assinatura.",
-    "label_help": "Precisa de ajuda?",
+    "label_help": "Ajuda",
     "desc_help": "Sinta-se à vontade para nos contatar por e-mail com quaisquer dúvidas ou preocupações:",
     "label_copy": "Copiar",
     "nav_help": "Ajuda",
@@ -445,7 +445,12 @@
     "label_amount": "Valor",
     "label_download": "Baixar",
     "label_no_invoices": "Nenhuma fatura encontrada",
-    "desc_no_invoices": "Quando você tiver faturas, elas aparecerão aqui."
+    "desc_no_invoices": "Quando você tiver faturas, elas aparecerão aqui.",
+    "label_organizations": "Organizações",
+    "label_new_organization": "Nova organização",
+    "label_active": "Ativo",
+    "label_account": "Conta",
+    "label_overview": "Visão Geral"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",
@@ -488,7 +493,13 @@
     "label_suc_update_password": "Senha Atualizada",
     "desc_suc_update_password": "Sua senha foi atualizada com sucesso. Use a nova senha para acessar sua conta.",
     "label_login_into": "Entrar no { platform }",
-    "label_signup_into": "Cadastrar-se no { platform }"
+    "label_signup_into": "Cadastrar-se no { platform }",
+    "label_name": "Nome",
+    "required_name": "Nome é obrigatório",
+    "label_first_name": "Nome",
+    "label_last_name": "Sobrenome",
+    "required_first_name": "Nome é obrigatório",
+    "required_last_name": "Sobrenome é obrigatório"
   },
   "landing": {
     "nav_features": "Recursos",
