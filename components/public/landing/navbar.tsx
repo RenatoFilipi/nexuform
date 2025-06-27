@@ -45,7 +45,7 @@ const Navbar = () => {
       <div className="w-full flex justify-between md:justify-around items-center transition-all duration-300">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center">
-            <Brand type="primary_logo_text" className="h-3.5 fill-foreground" />
+            <Brand type="primary_logo_text" className="h-5 fill-foreground" />
           </Link>
           <div className="hidden md:flex items-center gap-6">
             {sections.map((section) => (
