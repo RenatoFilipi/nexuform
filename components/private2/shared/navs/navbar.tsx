@@ -1,8 +1,8 @@
 "use client";
 
 import { signOutAction } from "@/app/actions/auth";
-import Brand from "@/components/shared/core/brand";
-import ModeToggle2 from "@/components/shared/core/mode-toggle2";
+import Brand from "@/components/shared/brand";
+import ModeToggle2 from "@/components/shared/mode-toggle2";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {

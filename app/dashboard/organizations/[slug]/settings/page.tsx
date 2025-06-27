@@ -1,4 +1,4 @@
-import WipUI from "@/components/shared/utils/wip-ui";
+import WipUI from "@/components/private2/shared/custom/wip-ui";
 
 const Settings = () => {
   return (

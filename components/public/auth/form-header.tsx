@@ -1,4 +1,4 @@
-import Brand from "@/components/shared/core/brand";
+import Brand from "@/components/shared/brand";
 import Link from "next/link";
 
 interface FormHeaderProps {

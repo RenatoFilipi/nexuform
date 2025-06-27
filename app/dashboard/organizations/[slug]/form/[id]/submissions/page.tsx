@@ -1,5 +1,5 @@
 import SubmissionsWrapper from "@/components/private2/form/submissions/submissions-wrapper";
-import ErrorUI from "@/components/shared/utils/error-ui";
+import ErrorUI from "@/components/private2/shared/pages/error-ui";
 import { paginationFrom, paginationTo } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";

@@ -1,6 +1,6 @@
 "use client";
 
-import FormStatusBadge from "@/components/shared/badges/form-status-badge";
+import FormStatusBadge from "@/components/private2/shared/custom/form-status-badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {

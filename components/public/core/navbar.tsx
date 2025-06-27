@@ -1,7 +1,7 @@
 "use client";
 
-import Brand from "@/components/shared/core/brand";
-import ModeToggle2 from "@/components/shared/core/mode-toggle2";
+import Brand from "@/components/shared/brand";
+import ModeToggle2 from "@/components/shared/mode-toggle2";
 import { Button } from "@/components/ui/button";
 import { MenuIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";

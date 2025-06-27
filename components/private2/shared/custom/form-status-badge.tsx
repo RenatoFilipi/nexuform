@@ -1,6 +1,6 @@
 import { TFormStatus } from "@/utils/types";
 import { useTranslations } from "next-intl";
-import { Badge } from "../../ui/badge";
+import { Badge } from "../../../ui/badge";
 
 const FormStatusBadge = ({ status, uppercase = false }: { status: TFormStatus; uppercase?: boolean }) => {
   const t = useTranslations("app");

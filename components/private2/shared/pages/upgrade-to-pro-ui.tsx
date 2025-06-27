@@ -10,7 +10,7 @@ import { getPlans } from "@/utils/plans";
 import { useQuery } from "@tanstack/react-query";
 import { CheckIcon, RocketIcon, StarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import ManageSubscription from "./manage-subscription";
+import ManageSubscription from "../subscription/manage-subscription";
 
 interface IProps {
   email: string;

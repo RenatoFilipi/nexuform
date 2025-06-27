@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
-const FormNotAvailableUI = () => {
+const SubmissionFormNotAvailableUI = () => {
   const t = useTranslations("app");
 
   return (
@@ -23,4 +23,4 @@ const FormNotAvailableUI = () => {
   );
 };
 
-export default FormNotAvailableUI;
+export default SubmissionFormNotAvailableUI;

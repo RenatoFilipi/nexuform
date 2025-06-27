@@ -1,5 +1,5 @@
 import BillingWrapper from "@/components/private/settings/billing/billing-wrapper";
-import ErrorUI from "@/components/shared/utils/error-ui";
+import ErrorUI from "@/components/private2/shared/pages/error-ui";
 import { stripe } from "@/lib/stripe";
 import { IInvoiceSummary } from "@/utils/interfaces";
 import { createClient } from "@/utils/supabase/server";

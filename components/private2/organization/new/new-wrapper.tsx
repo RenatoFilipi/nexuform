@@ -17,7 +17,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useTransition } from "react";
-import ManageSubscription from "../../../private/shared/subscription/manage-subscription";
+import ManageSubscription from "../../shared/subscription/manage-subscription";
 import NewPreview from "./new-preview";
 
 type TView = "method:list" | "method:scratch" | "method:templates";

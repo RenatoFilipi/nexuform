@@ -1,6 +1,6 @@
 "use client";
 
-import FormStatusBadge from "@/components/shared/badges/form-status-badge";
+import FormStatusBadge from "@/components/private2/shared/custom/form-status-badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import useUserStore from "@/stores/user";
@@ -28,7 +28,7 @@ import { ArrowUpRightIcon, EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import DateRangePicker from "../../../private/shared/core/date-range-picker";
+import DateRangePicker from "../../shared/custom/date-range-picker";
 import OverviewActivityChart from "./overview-activity-chart";
 
 interface IProps {

@@ -1,4 +1,4 @@
-import Brand from "@/components/shared/core/brand";
+import Brand from "@/components/shared/brand";
 import { appName, contactEmail } from "@/utils/envs";
 import { cookieTypes, cookiesLastUpdatedAt, managementOptions } from "@/utils/legal";
 import Link from "next/link";

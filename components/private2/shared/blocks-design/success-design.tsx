@@ -1,6 +1,6 @@
 "use client";
 
-import Brand from "@/components/shared/core/brand";
+import Brand from "@/components/shared/brand";
 import { Button } from "@/components/ui/button";
 import { CheckIcon } from "lucide-react";
 import { useTranslations } from "next-intl";

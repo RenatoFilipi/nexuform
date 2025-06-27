@@ -1,5 +1,5 @@
 import AccountWrapper from "@/components/private/settings/account/account-wrapper";
-import ErrorUI from "@/components/shared/utils/error-ui";
+import ErrorUI from "@/components/private2/shared/pages/error-ui";
 import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
 import { getLocale } from "next-intl/server";

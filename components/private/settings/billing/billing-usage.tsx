@@ -25,9 +25,9 @@ import {
   Settings2Icon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import CancelSubscription from "../../shared/subscription/cancel-subscription";
-import ManageSubscription from "../../shared/subscription/manage-subscription";
-import PlanIcon from "../../shared/subscription/plan-icon";
+import PlanIcon from "../../../private2/shared/custom/plan-icon";
+import CancelSubscription from "../../../private2/shared/subscription/cancel-subscription";
+import ManageSubscription from "../../../private2/shared/subscription/manage-subscription";
 
 const BillingUsage = () => {
   const t = useTranslations("app");

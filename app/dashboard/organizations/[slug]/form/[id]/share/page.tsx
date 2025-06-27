@@ -1,5 +1,5 @@
 import ShareWrapper from "@/components/private2/form/share/share-wrapper";
-import ErrorUI from "@/components/shared/utils/error-ui";
+import ErrorUI from "@/components/private2/shared/pages/error-ui";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";

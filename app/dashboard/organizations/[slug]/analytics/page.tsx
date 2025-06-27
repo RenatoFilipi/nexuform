@@ -1,5 +1,5 @@
 import AnalyticsWrapper from "@/components/private2/organization/analytics/analytics-wrapper";
-import ErrorUI from "@/components/shared/utils/error-ui";
+import ErrorUI from "@/components/private2/shared/pages/error-ui";
 import { getDateRangeFromToday } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";

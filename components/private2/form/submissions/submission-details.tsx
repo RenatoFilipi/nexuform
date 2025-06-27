@@ -16,8 +16,8 @@ import { useTranslations } from "next-intl";
 import Papa from "papaparse";
 import { useState } from "react";
 import { useMedia } from "react-use";
-import ManageSubscription from "../../../private/shared/subscription/manage-subscription";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../../../ui/drawer";
+import ManageSubscription from "../../shared/subscription/manage-subscription";
 
 interface IBlockItem {
   question: string;

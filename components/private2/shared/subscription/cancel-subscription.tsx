@@ -23,7 +23,7 @@ import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import PlanIcon from "./plan-icon";
+import PlanIcon from "../custom/plan-icon";
 
 const CancelSubscription = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations("app");

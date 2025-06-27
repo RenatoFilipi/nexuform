@@ -1,7 +1,7 @@
 "use client";
 
-import Brand from "@/components/shared/core/brand";
-import ModeToggle2 from "@/components/shared/core/mode-toggle2";
+import Brand from "@/components/shared/brand";
+import ModeToggle2 from "@/components/shared/mode-toggle2";
 import { appName } from "@/utils/envs";
 import { useTranslations } from "next-intl";
 import Link from "next/link";

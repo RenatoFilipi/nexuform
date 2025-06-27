@@ -37,7 +37,7 @@ import {
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
-import PlanIcon from "./plan-icon";
+import PlanIcon from "../custom/plan-icon";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
