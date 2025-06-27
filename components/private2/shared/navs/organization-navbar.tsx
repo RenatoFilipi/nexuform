@@ -1,4 +1,4 @@
-import { ChartNoAxesColumnIcon, LayersIcon, Settings2Icon } from "lucide-react";
+import { ChartNoAxesColumnIcon, CreditCard, LayersIcon, Settings2Icon, UsersIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -18,10 +18,22 @@ const OrganizationNavbar = () => {
       enabled: true,
     },
     {
+      name: t("label_members"),
+      path: `/dashboard/organizations/${orgId}/members`,
+      icon: UsersIcon,
+      enabled: true,
+    },
+    {
+      name: t("label_billing"),
+      path: `/dashboard/organizations/${orgId}/billing`,
+      icon: CreditCard,
+      enabled: true,
+    },
+    {
       name: t("label_settings"),
       path: `/dashboard/organizations/${orgId}/settings`,
       icon: Settings2Icon,
-      enabled: false,
+      enabled: true,
     },
   ];
   return (

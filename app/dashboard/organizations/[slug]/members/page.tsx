@@ -1,11 +1,11 @@
 import WipUI from "@/components/private2/shared/custom/wip-ui";
 
-const Billing = () => {
+const Members = () => {
   return (
     <div>
-      <WipUI context="Billing page" />
+      <WipUI context="Members page" />
     </div>
   );
 };
 
-export default Billing;
+export default Members;

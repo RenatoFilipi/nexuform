@@ -450,7 +450,8 @@
     "label_new_organization": "Nova organização",
     "label_active": "Ativo",
     "label_account": "Conta",
-    "label_overview": "Visão Geral"
+    "label_overview": "Visão Geral",
+    "label_members": "Membros"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",
