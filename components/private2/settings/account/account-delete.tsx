@@ -10,6 +10,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,7 +19,7 @@ import { createClient } from "@/utils/supabase/client";
 import { TSetState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { AlertTriangleIcon, LoaderIcon, SkullIcon } from "lucide-react";
+import { LoaderIcon, SkullIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { ReactNode, useState, useTransition } from "react";
@@ -87,36 +88,47 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
           <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-secondary/30 rounded-full blur-xl"></div>
         </div>
         <div className="flex justify-center items-center py-8 flex-col gap-8">
-          <motion.div
-            animate={{
-              x: 0,
-              opacity: 1,
-              boxShadow: [
-                "0 0 0 0 rgba(220, 38, 38, 0.7)",
-                "0 0 0 10px rgba(220, 38, 38, 0)",
-                "0 0 0 0 rgba(220, 38, 38, 0)",
-              ],
-              borderColor: ["rgb(220 38 38 / 0.7)", "rgb(220 38 38 / 0.3)", "rgb(220 38 38 / 0.7)"],
-            }}
-            transition={{
-              delay: 0.2,
-              duration: 1.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="flex flex-col items-center gap-4 p-4 bg-destructive/10 rounded-xl border border-muted/20 shadow-sm backdrop-blur-sm">
-            <SkullIcon className="text-destructive w-8 h-8" />
-          </motion.div>
+          <div className="flex justify-center items-center gap-12 relative">
+            <motion.div
+              animate={{
+                x: 0,
+                opacity: 1,
+                boxShadow: [
+                  "0 0 0 0 rgba(220, 38, 38, 0.7)",
+                  "0 0 0 10px rgba(220, 38, 38, 0)",
+                  "0 0 0 0 rgba(220, 38, 38, 0)",
+                ],
+                borderColor: ["rgb(220 38 38 / 0.7)", "rgb(220 38 38 / 0.3)", "rgb(220 38 38 / 0.7)"],
+              }}
+              transition={{
+                delay: 0.2,
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="flex flex-col items-center gap-4 p-4 bg-destructive/10 rounded-xl border border-muted/20 shadow-sm backdrop-blur-sm z-10">
+              <SkullIcon className="text-destructive w-8 h-8" />
+            </motion.div>
+          </div>
           <div className="flex flex-col gap-6 justify-center items-center">
             <span className="text-sm">{t("desc_delete_personal_account")}</span>
-            <Button
-              variant={"destructive_outline"}
-              size={"sm"}
-              className="w-fit relative z-10"
-              onClick={() => console.log("Botão clicado")}>
-              <AlertTriangleIcon className="w-4 h-4 mr-2" />
-              {t("label_continue")}
-            </Button>
+            <div className="flex flex-col gap-4">
+              <Badge variant={"destructive"} className="text-center">
+                {t("label_type_delete_personal_account")}
+              </Badge>
+              <div className="flex flex-col sm:flex-row justify-between items-center w-full gap-4">
+                <Input id="account_email" type="email" value={value} onChange={(e) => setValue(e.target.value)} />
+                <Button
+                  disabled={email !== value || isPending}
+                  onClick={onDeleteAccount}
+                  variant={"destructive_outline"}
+                  size={"sm"}
+                  className="w-full sm:w-fit">
+                  {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
+                  {t("label_delete_personal_account")}
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

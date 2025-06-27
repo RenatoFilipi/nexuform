@@ -100,9 +100,7 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
           </motion.div>
           <div className="flex flex-col gap-6 items-center text-center">
             <span className="text-sm">{t("desc_absolute_delete_form")}</span>
-            <Badge variant={"destructive"}>
-              <SkullIcon className="w-4 h-4" /> {t("label_action_undone")}
-            </Badge>
+            <Badge variant={"destructive"}>{t("label_action_undone")}</Badge>
           </div>
         </div>
       </div>
