@@ -67,7 +67,7 @@ const FormsWrapper = (props: IProps) => {
   if (query.isPending) return null;
 
   return (
-    <div className="flex flex-col gap-6 sm:gap-10">
+    <div className="flex flex-col gap-6">
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-semibold">{t("label_forms")}</h1>
         <Button size="sm" variant="secondary" asChild>
@@ -85,13 +85,13 @@ const FormsWrapper = (props: IProps) => {
         </div>
       )}
       {!hasForms && (
-        <Card className="flex justify-center items-center flex-col gap-6 py-20">
-          <div className="flex justify-center items-center p-3 bg-primary/10 rounded">
+        <Card className="flex w-full justify-center items-center flex-col gap-4 py-28 px-4">
+          <div className="flex justify-center items-center p-3 w-fit rounded bg-primary/10">
             <LayersIcon className="w-6 h-6 text-primary" />
           </div>
-          <div className="flex justify-center items-center flex-col">
-            <span className="text-lg font-semibold">{t("label_no_forms")}</span>
-            <span className="text-sm text-center text-muted-foreground">{t("desc_no_forms")}</span>
+          <div className="flex flex-col justify-center items-center gap-1 text-center">
+            <h3 className="text-xl font-bold text-foreground">{t("label_no_forms")}</h3>
+            <p className="text-muted-foreground max-w-md text-sm/relaxed">{t("desc_no_forms")}</p>
           </div>
         </Card>
       )}

@@ -82,7 +82,7 @@ const AnalyticsWrapper = (props: IProps) => {
   if (query.isPending) return null;
 
   return (
-    <div className="flex flex-col gap-6 sm:gap-10">
+    <div className="flex flex-col gap-6">
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-semibold">{t("label_analytics")}</h1>
         <DateRangePicker

@@ -9,9 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import usePlatformStore from "@/stores/platform";
 import useStudioStore from "@/stores/studio";
 import useUserStore from "@/stores/user";
+import useAppStore from "@/stores/v2/app";
 import { blockViewSettings, fallbackColor } from "@/utils/constants";
 import { EBlock, EForm, EOrganization, EProfile, ESubscription, ETeamMemberProfile, ETheme } from "@/utils/entities";
 import { getBlockName } from "@/utils/functions";
@@ -46,9 +46,8 @@ interface IProps {
   blocks: EBlock[];
 }
 const EditorWrapper = (props: IProps) => {
-  const t = useTranslations("app");
-  const pf = usePlatformStore();
   const studio = useStudioStore();
+  const app = useAppStore();
   const user = useUserStore();
 
   const query = useQuery({
@@ -58,9 +57,9 @@ const EditorWrapper = (props: IProps) => {
       user.setLocale(props.locale);
       user.setEmail(props.email);
       user.setProfile(props.profile);
-      pf.setOrganizations([props.organization]);
-      pf.setSubscriptions([props.subscription]);
-      pf.setTeamMemberProfiles([props.teamMemberProfile]);
+      app.setOrganization(props.organization);
+      app.setSubscription(props.subscription);
+      app.setTeamMemberProfile(props.teamMemberProfile);
       studio.setForm(props.form);
       const primaryColor = props.theme.custom_primary_color.trim() || fallbackColor;
       studio.setTheme({ ...props.theme, custom_primary_color: primaryColor });

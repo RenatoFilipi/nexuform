@@ -11,11 +11,10 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import useGlobalStore from "@/stores/global";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState } from "@/utils/types";
 import { motion } from "framer-motion";
-import { LayersIcon, LoaderIcon, SkullIcon } from "lucide-react";
+import { LayersIcon, LoaderIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { ReactNode, useState, useTransition } from "react";
@@ -54,7 +53,6 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
   const supabase = createClient();
   const router = useRouter();
   const [value, setValue] = useState("");
-  const global = useGlobalStore();
   const matches = formName.trim().toLowerCase() === value.trim().toLowerCase();
 
   const onDeleteForm = () => {
@@ -66,7 +64,6 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
       }
       toast.success(t("suc_form_delete"));
       router.push("/dashboard/organizations");
-      global.setForms(global.forms.filter((x) => x.id !== formId));
     });
   };
 

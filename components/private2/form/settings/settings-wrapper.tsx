@@ -50,7 +50,7 @@ const SettingsWrapper = (props: IProps) => {
     <div className="w-full h-full flex-1 flex flex-col gap-4">
       {/* header */}
       <div>
-        <span className="font-semibold text-lg sm:text-xl">{t("label_settings")}</span>
+        <span className="font-semibold text-xl">{t("label_settings")}</span>
       </div>
       {/* content */}
       <div className="flex flex-col gap-10">

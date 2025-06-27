@@ -1,3 +1,4 @@
+import { paginationFrom, paginationTo } from "@/utils/constants";
 import {
   EBlock,
   EForm,
@@ -9,6 +10,7 @@ import {
   EViewLog,
 } from "@/utils/entities";
 import { getDateRangeFromToday } from "@/utils/functions";
+import { IPagination } from "@/utils/interfaces";
 import { create } from "zustand";
 
 interface IProps {
@@ -44,8 +46,10 @@ interface IProps {
   // utils
   from: Date;
   to: Date;
+  submissionPagination: IPagination;
   setFrom: (p: Date) => void;
   setTo: (p: Date) => void;
+  setSubmissionPagination: (p: IPagination) => void;
 }
 
 const dates = getDateRangeFromToday(7);
@@ -92,6 +96,7 @@ const useAppStore = create<IProps>((set) => ({
     public_id: "",
     status: "",
     updated_at: "",
+    created_at_signup: false,
   },
   subscription: {
     created_at: "",
@@ -127,8 +132,10 @@ const useAppStore = create<IProps>((set) => ({
   // utils
   from: dates.startDate,
   to: dates.endDate,
+  submissionPagination: { from: paginationFrom, to: paginationTo },
   setFrom: (p) => set({ from: p }),
   setTo: (p) => set({ to: p }),
+  setSubmissionPagination: (p) => set({ submissionPagination: p }),
 }));
 
 export default useAppStore;

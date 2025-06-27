@@ -61,7 +61,7 @@ const OrganizationsCard = (props: ICardProps) => {
   const tmp = props.teamMemberProfile;
   const organization = app.organizations.find((x) => x.id === tmp.org_id) as EOrganization;
   const subscription = app.subscriptions.find((x) => x.org_id === tmp.org_id) as ESubscription;
-  const orgPath = `organizations/${organization.public_id}/forms`;
+  const orgPath = `/dashboard/organizations/${organization.public_id}/forms`;
   const plan = getPlanName(subscription.plan);
 
   return (

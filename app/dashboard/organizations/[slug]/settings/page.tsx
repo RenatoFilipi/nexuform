@@ -1,10 +1,6 @@
-import WipUI from "@/components/private2/shared/custom/wip-ui";
+import SettingsWrapper from "@/components/private2/organization/settings/settings-wrapper";
 
-const Settings = () => {
-  return (
-    <div>
-      <WipUI context="Settings page" />
-    </div>
-  );
+const Settings = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  return <SettingsWrapper />;
 };
 export default Settings;
