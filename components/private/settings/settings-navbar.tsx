@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const SettingsNav = () => {
+const SettingsNavbar = () => {
   const t = useTranslations("app");
   const pathname = usePathname();
   const isActive = (path: string) => pathname.endsWith(path);
@@ -24,6 +24,8 @@ const SettingsNav = () => {
       path: `/dashboard/settings/billing`,
     },
   ];
+
+  return null;
 
   return (
     <div className="border-b h-10 flex justify-start items-center gap-2 px-2 sm:px-8 overflow-x-auto fixed bg-background w-full z-10 truncate">
@@ -47,4 +49,4 @@ const SettingsNav = () => {
   );
 };
 
-export default SettingsNav;
+export default SettingsNavbar;

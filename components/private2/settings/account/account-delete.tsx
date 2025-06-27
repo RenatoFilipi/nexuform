@@ -17,7 +17,8 @@ import useUserStore from "@/stores/user";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { AlertCircleIcon, LoaderIcon } from "lucide-react";
+import { motion } from "framer-motion";
+import { AlertTriangleIcon, LoaderIcon, SkullIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { ReactNode, useState, useTransition } from "react";
@@ -47,10 +48,9 @@ const AccountDelete = ({ children }: { children: ReactNode }) => {
         <AlertDialogContent className="flex flex-col w-full sm:min-w-[650px]">
           <AlertDialogHeader>
             <AlertDialogTitle className="flex justify-start items-center gap-2">
-              <AlertCircleIcon className="w-5 h-5 text-destructive" />
               {t("label_delete_personal_account")}
             </AlertDialogTitle>
-            <AlertDialogDescription className="hidden">{t("desc_delete_personal_account")}</AlertDialogDescription>
+            <AlertDialogDescription className="hidden">{t("label_action_undone")}</AlertDialogDescription>
           </AlertDialogHeader>
           <Body setState={setOpen} />
         </AlertDialogContent>
@@ -77,6 +77,56 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       await DeleteAccountAction(formData);
     });
   };
+
+  return (
+    <div className="flex flex-1 flex-col justify-between gap-6">
+      <div className="relative p-8 rounded-2xl bg-gradient-to-br from-muted/20 to-background border border-muted/30 shadow-lg h-full flex flex-col justify-center items-center w-full overflow-hidden">
+        {/* Adicione pointer-events-none aqui */}
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+          <div className="absolute -top-20 -left-20 w-40 h-40 bg-primary/30 rounded-full blur-xl"></div>
+          <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-secondary/30 rounded-full blur-xl"></div>
+        </div>
+        <div className="flex justify-center items-center py-8 flex-col gap-8">
+          <motion.div
+            animate={{
+              x: 0,
+              opacity: 1,
+              boxShadow: [
+                "0 0 0 0 rgba(220, 38, 38, 0.7)",
+                "0 0 0 10px rgba(220, 38, 38, 0)",
+                "0 0 0 0 rgba(220, 38, 38, 0)",
+              ],
+              borderColor: ["rgb(220 38 38 / 0.7)", "rgb(220 38 38 / 0.3)", "rgb(220 38 38 / 0.7)"],
+            }}
+            transition={{
+              delay: 0.2,
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="flex flex-col items-center gap-4 p-4 bg-destructive/10 rounded-xl border border-muted/20 shadow-sm backdrop-blur-sm">
+            <SkullIcon className="text-destructive w-8 h-8" />
+          </motion.div>
+          <div className="flex flex-col gap-6 justify-center items-center">
+            <span className="text-sm">{t("desc_delete_personal_account")}</span>
+            <Button
+              variant={"destructive_outline"}
+              size={"sm"}
+              className="w-fit relative z-10"
+              onClick={() => console.log("Botão clicado")}>
+              <AlertTriangleIcon className="w-4 h-4 mr-2" />
+              {t("label_continue")}
+            </Button>
+          </div>
+        </div>
+      </div>
+      <div className="flex justify-between items-center gap-4">
+        <Button disabled={isPending} variant={"outline"} size={"sm"} onClick={() => setState(false)}>
+          {t("label_cancel")}
+        </Button>
+      </div>
+    </div>
+  );
 
   return (
     <div className="flex flex-col gap-4">

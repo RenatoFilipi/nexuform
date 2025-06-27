@@ -9,12 +9,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import useGlobalStore from "@/stores/global";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState } from "@/utils/types";
 import { motion } from "framer-motion";
-import { LoaderIcon, SkullIcon } from "lucide-react";
+import { LayersIcon, LoaderIcon, SkullIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { ReactNode, useState, useTransition } from "react";
@@ -39,7 +40,7 @@ const SettingsFormDelete = ({
         <AlertDialogContent className="flex flex-col w-full max-w-2xl">
           <AlertDialogHeader>
             <AlertDialogTitle>{t("label_absolute_delete_form")}</AlertDialogTitle>
-            <AlertDialogDescription>{t("desc_absolute_delete_form")}</AlertDialogDescription>
+            <AlertDialogDescription className="hidden">{t("desc_absolute_delete_form")}</AlertDialogDescription>
           </AlertDialogHeader>
           <Body formId={formId} formName={formName} setState={setOpen} />
         </AlertDialogContent>
@@ -95,10 +96,13 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
               ease: "easeInOut",
             }}
             className="flex flex-col items-center gap-4 p-4 bg-destructive/10 rounded-xl border border-muted/20 shadow-sm backdrop-blur-sm">
-            <SkullIcon className="text-destructive w-8 h-8" />
+            <LayersIcon className="text-destructive w-8 h-8" />
           </motion.div>
-          <div className="flex flex-col gap-2">
-            <span className="text-sm">{t("label_action_undone")}</span>
+          <div className="flex flex-col gap-6 items-center text-center">
+            <span className="text-sm">{t("desc_absolute_delete_form")}</span>
+            <Badge variant={"destructive"}>
+              <SkullIcon className="w-4 h-4" /> {t("label_action_undone")}
+            </Badge>
           </div>
         </div>
       </div>

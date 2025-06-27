@@ -23,6 +23,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import FeedbackForm from "../custom/feedback-form";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -34,6 +35,7 @@ const Navbar = () => {
   return <BeforeOrgNavbar />;
 };
 const BeforeOrgNavbar = () => {
+  const t = useTranslations("app");
   const [open, setOpen] = useState(false);
 
   return (
@@ -48,7 +50,12 @@ const BeforeOrgNavbar = () => {
           </Button>
         </div>
         {/* avatar - desk */}
-        <div className="hidden sm:flex">
+        <div className="hidden sm:flex justify-center items-center gap-4">
+          <FeedbackForm>
+            <Button variant={"outline"} size={"sm"}>
+              {t("label_feedback")}
+            </Button>
+          </FeedbackForm>
           <AvatarMenuDesk />
         </div>
         {/* avatar = mob */}
@@ -104,9 +111,11 @@ const AfterOrgNavbar = () => {
         </div>
         {/* avatar - desk */}
         <div className="hidden sm:flex justify-center items-center gap-4">
-          <Button variant={"outline"} size={"sm"}>
-            {t("label_feedback")}
-          </Button>
+          <FeedbackForm>
+            <Button variant={"outline"} size={"sm"}>
+              {t("label_feedback")}
+            </Button>
+          </FeedbackForm>
           <AvatarMenuDesk />
         </div>
         {/* avatar - mob */}

@@ -1,6 +1,7 @@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
 import { createClient } from "@/utils/supabase/client";
-import { TAppState, TSetState } from "@/utils/types";
+import { TAppState } from "@/utils/types";
 import { CheckIcon, FrownIcon, LoaderIcon, SmileIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { ReactNode, useState } from "react";
@@ -13,24 +14,23 @@ const FeedbackForm = ({ children }: { children: ReactNode }) => {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent className="w-80 p-3 mr-16">
-        <Body setState={setOpen} />
+      <PopoverContent className="flex w-full min-w-80 p-0" align="end">
+        <Body />
       </PopoverContent>
     </Popover>
   );
 };
-
-const moods = [
-  { icon: <SmileIcon className="w-4 h-4" />, value: "good" },
-  { icon: <FrownIcon className="w-4 h-4" />, value: "bad" },
-];
-
-const Body = ({ setState }: { setState: TSetState<boolean> }) => {
+const Body = () => {
   const t = useTranslations("app");
   const supabase = createClient();
   const [appState, setAppState] = useState<TAppState>("idle");
   const [localMood, setMood] = useState("");
   const [value, setValue] = useState("");
+
+  const moods = [
+    { icon: <SmileIcon className="w-4 h-4" />, value: "good" },
+    { icon: <FrownIcon className="w-4 h-4" />, value: "bad" },
+  ];
 
   const onSendFeedback = async () => {
     if (value.trim() === "") return;
@@ -58,35 +58,36 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
 
   if (appState === "error")
     return (
-      <div className="min-h-32 flex flex-col justify-center items-center w-full h-full gap-4">
-        <div className="flex justify-center items-center rounded-full p-2 bg-destructive/10">
-          <XIcon className="text-destructive w-5 h-5" />
+      <div className="min-h-40 flex flex-col justify-center items-center w-full h-full gap-4">
+        <div className="flex justify-center items-center rounded p-2 bg-destructive/10">
+          <XIcon className="text-destructive w-4 h-4" />
         </div>
-        <div className="flex flex-col justify-center items-center text-sm text-foreground/80">
-          <span>{t('"fb_error_1"')}</span>
-          <span>{t("fb_error_2")}</span>
+        <div className="flex flex-col justify-center items-center text-sm text-foreground/80 gap-1">
+          <span className="font-medium">{t("label_feedback_error")}</span>
+          <span className="text-xs text-muted-foreground">{t("desc_feedback_error")}</span>
         </div>
       </div>
     );
   if (appState === "success")
     return (
-      <div className="min-h-32 flex flex-col justify-center items-center w-full h-full gap-4">
-        <div className="flex justify-center items-center rounded-full p-2 bg-success/10">
-          <CheckIcon className="text-success w-5 h-5" />
+      <div className="min-h-40 flex flex-col justify-center items-center w-full h-full gap-4">
+        <div className="flex justify-center items-center rounded p-2 bg-success/10">
+          <CheckIcon className="text-success w-4 h-4" />
         </div>
-        <div className="flex flex-col justify-center items-center text-sm text-foreground/80">
-          <span>{t("fb_success_1")}</span>
-          <span>{t("fb_success_2")}</span>
+        <div className="flex flex-col justify-center items-center text-sm text-foreground/80 gap-1">
+          <span className="font-medium">{t("label_feedback_success")}</span>
+          <span className="text-xs text-muted-foreground">{t("desc_feedback_success")}</span>
         </div>
       </div>
     );
 
   return (
-    <div className="flex flex-col justify-between gap-3">
-      <div className="flex flex-col">
+    <div className="flex flex-col justify-between w-full">
+      <div className="flex flex-col p-4">
         <Textarea value={value} onChange={(e) => setValue(e.target.value)} placeholder={t("fb_placeholder")} />
       </div>
-      <div className="flex flex-col gap-4">
+      <Separator />
+      <div className="flex flex-col gap-4 p-4">
         <div className="flex justify-between items-center w-full">
           <div className="flex justify-center items-center gap-2">
             {moods.map((mood, i) => {

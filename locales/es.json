@@ -3,10 +3,6 @@
     "nav_dashboard": "Tablero",
     "nav_analytics": "Analítica",
     "nav_settings": "Configuraciones",
-    "fb_error_1": "¡Algo salió mal!",
-    "fb_error_2": "Por favor, inténtalo de nuevo.",
-    "fb_success_1": "¡Tu feedback ha sido recibido!",
-    "fb_success_2": "Gracias por tu ayuda.",
     "fb_placeholder": "¿Problemas con algo técnico? Háznoslo saber.",
     "fb_submit": "Enviar Feedback",
     "fb_label": "Feedback",
@@ -250,7 +246,7 @@
     "label_sub_cancel_warning_feats": "Perderá el acceso a todas estas funciones",
     "desc_manage_sub": "Elija el plan que mejor se adapte a sus necesidades.",
     "label_delete_personal_account": "Eliminar Cuenta Personal",
-    "desc_delete_personal_account": "Esta acción eliminará permanentemente todos sus formularios, junto con todos los datos relacionados. Esto incluye todas las respuestas, configuraciones y cualquier archivo asociado. Una vez eliminado, estos datos no se pueden recuperar. Por favor, proceda con precaución.",
+    "desc_delete_personal_account": "Esta acción eliminará permanentemente todos sus formularios, junto con todos los datos relacionados. Esto incluye todas las respuestas, configuraciones y cualquier archivo asociado. Una vez eliminado, estos datos no se pueden recuperar.",
     "label_type_delete_personal_account": "Escriba el correo electrónico de su cuenta relacionada para continuar.",
     "label_delete_personal_account_alert": "Esta acción no es reversible. Una vez confirmada, todos sus formularios y datos asociados serán eliminados permanentemente. Por favor, esté absolutamente seguro antes de continuar.",
     "err_delete_personal_account": "Ocurrió un error inesperado al eliminar esta cuenta.",
@@ -451,7 +447,11 @@
     "label_active": "Activo",
     "label_account": "Cuenta",
     "label_overview": "Resumen",
-    "label_members": "Miembros"
+    "label_members": "Miembros",
+    "label_feedback_error": "¡Algo salió mal!",
+    "desc_feedback_error": "Por favor, inténtalo de nuevo.",
+    "label_feedback_success": "¡Hemos recibido tus comentarios!",
+    "desc_feedback_success": "Gracias por tu ayuda."
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

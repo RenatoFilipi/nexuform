@@ -3,10 +3,6 @@
     "nav_dashboard": "Dashboard",
     "nav_analytics": "Analytics",
     "nav_settings": "Settings",
-    "fb_error_1": "Something went wrong!",
-    "fb_error_2": "Please try again.",
-    "fb_success_1": "Your feedback has been received!",
-    "fb_success_2": "Thank you for your help.",
     "fb_placeholder": "Trouble with something technical? Let us know.",
     "fb_submit": "Send Feedback",
     "fb_label": "Feedback",
@@ -250,7 +246,7 @@
     "label_sub_cancel_warning_feats": "You will lose access to all these features",
     "desc_manage_sub": "Choose the plan that best fits your needs.",
     "label_delete_personal_account": "Delete Personal Account",
-    "desc_delete_personal_account": "This action will permanently delete all of your forms, along with all the related data. This includes all responses, settings, and any associated files. Once deleted, this data cannot be recovered. Please proceed with caution.",
+    "desc_delete_personal_account": "This action will permanently delete all of your forms, along with all the related data. This includes all responses, settings, and any associated files. Once deleted, this data cannot be recovered.",
     "label_type_delete_personal_account": "Type your related account email to continue.",
     "label_delete_personal_account_alert": "This action is not reversible. Once confirmed, all your forms and associated data will be permanently deleted. Please be absolutely certain before proceeding.",
     "err_delete_personal_account": "An unexpected error occurred while deleting this account.",
@@ -451,7 +447,11 @@
     "label_active": "Active",
     "label_account": "Account",
     "label_overview": "Overview",
-    "label_members": "Members"
+    "label_members": "Members",
+    "label_feedback_error": "Something went wrong!",
+    "desc_feedback_error": "Please try again.",
+    "label_feedback_success": "Your feedback has been received!",
+    "desc_feedback_success": "Thank you for your help."
   },
   "s": {
     "err_required_all": "Answer all required questions.",
