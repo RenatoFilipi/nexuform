@@ -9,9 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import useStudioStore from "@/stores/studio";
+import useAppStore from "@/stores/app";
+import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
-import useAppStore from "@/stores/v2/app";
 import { blockViewSettings, fallbackColor } from "@/utils/constants";
 import { EBlock, EForm, EOrganization, EProfile, ESubscription, ETeamMemberProfile, ETheme } from "@/utils/entities";
 import { getBlockName } from "@/utils/functions";
@@ -46,7 +46,7 @@ interface IProps {
   blocks: EBlock[];
 }
 const EditorWrapper = (props: IProps) => {
-  const studio = useStudioStore();
+  const studio = useEditorStore();
   const app = useAppStore();
   const user = useUserStore();
 
@@ -97,7 +97,7 @@ const COMPONENT_MAP: Record<TBlock, React.ComponentType<IBlockComponent>> = {
 };
 const EditorCanva = () => {
   const t = useTranslations("app");
-  const studio = useStudioStore();
+  const studio = useEditorStore();
   const hasBlocks = studio.blocks.length > 0;
 
   const pages = [
@@ -208,7 +208,7 @@ const EditorCanva = () => {
   );
 };
 const BlockWrapper = ({ children, block }: { children: React.ReactNode; block: EBlock }) => {
-  const studio = useStudioStore();
+  const studio = useEditorStore();
   const dragControls = useDragControls();
 
   const onSelectBlock = () => {
@@ -259,7 +259,7 @@ const BlockWrapper = ({ children, block }: { children: React.ReactNode; block: E
 };
 const EditorToolbar = () => {
   const t = useTranslations("app");
-  const studio = useStudioStore();
+  const studio = useEditorStore();
   const isEditingBlock = studio.toolView === "block";
   const views = [
     { label: t("label_properties"), view: "properties", enabled: true },
@@ -300,7 +300,7 @@ const EditorToolbar = () => {
 };
 const ToolProperties = () => {
   const t = useTranslations("app");
-  const { form, setForm, editorView } = useStudioStore();
+  const { form, setForm, editorView } = useEditorStore();
 
   const onSetName = (value: string) => {
     setForm({ ...form, name: value });
@@ -379,7 +379,7 @@ const ToolProperties = () => {
 };
 const ToolStyles = () => {
   const t = useTranslations("app");
-  const { theme, setTheme, form, setForm } = useStudioStore();
+  const { theme, setTheme, form, setForm } = useEditorStore();
   const user = useUserStore();
 
   const onSetNumericBlocks = (value: boolean) => {
@@ -446,7 +446,7 @@ const ToolStyles = () => {
 };
 const ToolBlock = () => {
   const t = useTranslations("app");
-  const studio = useStudioStore();
+  const studio = useEditorStore();
   const user = useUserStore();
   const block = studio.blocks.find((x) => x.id === studio.blockView.id)!;
   const [input, setInput] = useState("");

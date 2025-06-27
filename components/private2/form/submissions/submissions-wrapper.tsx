@@ -4,8 +4,8 @@ import SubmissionStatusBadge from "@/components/private2/form/submissions/submis
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
-import useAppStore from "@/stores/v2/app";
 import {
   EBlock,
   EForm,

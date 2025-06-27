@@ -61,6 +61,7 @@ const useSubmissionStore = create<submission>((set) => ({
     public_id: "",
     status: "",
     updated_at: "",
+    created_at_signup: false,
   },
   setForm: (p) => set({ form: p }),
   setTheme: (p) => set({ theme: p }),

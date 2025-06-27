@@ -2,7 +2,7 @@ import { EBlock, EForm, ETheme } from "@/utils/entities";
 import { TEditorView, TToolView } from "@/utils/types";
 import { create } from "zustand";
 
-interface studio {
+interface editor {
   form: EForm;
   theme: ETheme;
   blocks: EBlock[];
@@ -25,7 +25,7 @@ interface studio {
   reset: () => void;
 }
 
-const useStudioStore = create<studio>((set) => ({
+const useEditorStore = create<editor>((set) => ({
   form: {
     id: "",
     created_at: "",
@@ -126,4 +126,4 @@ const useStudioStore = create<studio>((set) => ({
     }),
 }));
 
-export default useStudioStore;
+export default useEditorStore;

@@ -12,9 +12,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
-import useStudioStore from "@/stores/studio";
+import useAppStore from "@/stores/app";
+import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
-import useAppStore from "@/stores/v2/app";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { BoxesIcon, CircleHelpIcon, CircleUserIcon, LoaderIcon, MenuIcon, XIcon } from "lucide-react";
@@ -225,7 +225,7 @@ const EditorNavbar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const supabase = createClient();
-  const studio = useStudioStore();
+  const studio = useEditorStore();
   const [appState, setAppState] = useState<TAppState>("idle");
   const orgId = pathname.split("/")[3];
   const formId = pathname.split("/")[5];

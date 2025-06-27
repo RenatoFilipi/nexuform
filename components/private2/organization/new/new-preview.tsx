@@ -9,8 +9,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
-import useAppStore from "@/stores/v2/app";
 import { fallbackColor, minute } from "@/utils/constants";
 import { EBlock, ETemplate, ETheme } from "@/utils/entities";
 import { nanoid, uuid } from "@/utils/functions";

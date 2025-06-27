@@ -6,7 +6,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import useAppStore from "@/stores/v2/app";
+import useAppStore from "@/stores/app";
 import { ESubmission } from "@/utils/entities";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState, TSetState, TSubmissionStatus } from "@/utils/types";

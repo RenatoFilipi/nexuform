@@ -2,8 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
-import useAppStore from "@/stores/v2/app";
 import { EForm, EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState, TFormStatus } from "@/utils/types";

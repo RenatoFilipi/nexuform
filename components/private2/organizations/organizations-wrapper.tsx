@@ -2,8 +2,8 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
-import useAppStore from "@/stores/v2/app";
 import { EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
 import { getPlanName } from "@/utils/functions";
 import { TOrganizationStatus } from "@/utils/types";

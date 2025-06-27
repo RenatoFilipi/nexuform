@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import useAppStore from "@/stores/v2/app";
+import useAppStore from "@/stores/app";
 import { getDateDifferenceInDays } from "@/utils/functions";
 import { addDays, format, isWithinInterval, parseISO } from "date-fns";
 import { useTranslations } from "next-intl";

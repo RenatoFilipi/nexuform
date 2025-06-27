@@ -12,7 +12,7 @@ import {
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import useStudioStore from "@/stores/studio";
+import useEditorStore from "@/stores/editor";
 import { minWidth640 } from "@/utils/constants";
 import { EBlock } from "@/utils/entities";
 import { uuid } from "@/utils/functions";
@@ -73,7 +73,7 @@ const EditorAddBlock = ({ children }: { children: React.ReactNode }) => {
 };
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
-  const studio = useStudioStore();
+  const studio = useEditorStore();
 
   const categoryColors = {
     text: {
