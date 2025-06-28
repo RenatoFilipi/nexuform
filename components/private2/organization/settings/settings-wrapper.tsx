@@ -2,6 +2,20 @@
 
 import { useTranslations } from "next-intl";
 import WipUI from "../../shared/custom/wip-ui";
+import { Card } from "@/components/ui/card";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import useAppStore from "@/stores/app";
+import { TAppState } from "@/utils/types";
+import { useState } from "react";
+import { createClient } from "@/utils/supabase/client";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { AlertTriangleIcon, BadgeCheckIcon, CheckIcon, LoaderIcon, PauseIcon, XIcon } from "lucide-react";
+import { appName } from "@/utils/envs";
+import OptionSelector from "../../shared/custom/option-selector";
 
 const SettingsWrapper = () => {
   const t = useTranslations("app");
@@ -12,25 +26,127 @@ const SettingsWrapper = () => {
         <h1 className="text-xl font-semibold">{t("label_settings")}</h1>
       </div>
       <div className="flex flex-col gap-10">
-        <SettingsOrgName />
-        <SettingsOrgStatus />
+        <OrgSettings />
+        <OrgDelete />
       </div>
     </div>
   );
 };
 
-const SettingsOrgName = () => {
+const OrgSettings = () => {
+  const t = useTranslations("app");
+  const app = useAppStore();
+  const supabase = createClient();
+  const [appState, setAppState] = useState<TAppState>("idle");
+
+  const schema = z.object({
+    name: z.string(),
+    status: z.string(),
+  });
+
+  const handler = useForm<z.infer<typeof schema>>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      name: app.organization.name,
+      status: app.organization.status,
+    },
+  });
+
+  const statusList = [
+    {
+      status: "active",
+      label: t("label_active"),
+      description: t("desc_org_active"),
+      icon: BadgeCheckIcon,
+      color:
+        "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800",
+    },
+    {
+      status: "inactive",
+      label: t("label_inactive"),
+      description: t("desc_org_inactive"),
+      icon: PauseIcon,
+      color:
+        "bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400 border border-amber-200 dark:border-amber-800",
+    },
+  ];
+
+  const onSetStatus = (value: string) => {
+    app.setOrganization({ ...app.organization, status: value });
+    handler.setValue("status", value);
+  };
+
+  const onSubmit = async (values: z.infer<typeof schema>) => {
+    console.log(values);
+  };
+
   return (
-    <div>
-      <WipUI context="Settings org name" />
-    </div>
+    <Card className="flex flex-col gap-4 p-4 sm:p-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
+        <div className="flex flex-col gap-1 w-full">
+          <h1 className="font-semibold">{t("label_organization")}</h1>
+          <p className="text-sm text-muted-foreground">{t("desc_organization_settings", { name: appName })}</p>
+        </div>
+        <Form {...handler}>
+          <form onSubmit={handler.handleSubmit(onSubmit)} className="flex flex-col gap-6 w-full">
+            <div className="flex flex-col gap-4 w-full">
+              <FormField
+                control={handler.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("label_name")}</FormLabel>
+                    <FormControl>
+                      <Input type="text" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={handler.control}
+                name="status"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("label_status")}</FormLabel>
+                    <OptionSelector
+                      options={statusList}
+                      status={app.organization.status}
+                      onStatusChange={onSetStatus}
+                    />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="flex justify-end">
+              <Button variant={"secondary"} size={"sm"}>
+                {appState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
+                {t("label_save")}
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </div>
+    </Card>
   );
 };
-const SettingsOrgStatus = () => {
+const OrgDelete = () => {
+  const t = useTranslations("app");
+  const app = useAppStore();
+
   return (
-    <div>
-      <WipUI context="Settings org status" />
-    </div>
+    <Card className="flex flex-col sm:flex-row justify-between items-center gap-8 p-4 sm:p-8">
+      <div className="flex flex-col gap-1">
+        <h1 className="font-semibold">{t("label_danger_zone")}</h1>
+        <p className="text-sm text-muted-foreground">{t("desc_delete_org")}</p>
+      </div>
+      <div className="flex justify-end items-center w-full">
+        <Button variant="destructive_outline" size="sm" className="">
+          <AlertTriangleIcon className="w-4 h-4 mr-2" />
+          {t("label_continue")}
+        </Button>
+      </div>
+    </Card>
   );
 };
 export default SettingsWrapper;

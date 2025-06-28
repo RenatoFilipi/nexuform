@@ -8,12 +8,12 @@ import { EForm, EOrganization, EProfile, ESubscription, ETeamMemberProfile } fro
 import { createClient } from "@/utils/supabase/client";
 import { TAppState, TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { AlertTriangleIcon, LoaderIcon } from "lucide-react";
+import { AlertTriangleIcon, DraftingCompassIcon, LoaderIcon, PauseCircleIcon, RocketIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import FormDelete from "./settings-form-delete";
-import SettingsFormStatus from "./settings-form-status";
+import OptionSelector from "../../shared/custom/option-selector";
 
 interface IProps {
   locale: string;
@@ -66,6 +66,30 @@ const SettingsStatus = () => {
   const supabase = createClient();
   const [appState, setAppState] = useState<TAppState>("idle");
 
+  const statusList = [
+    {
+      status: "draft",
+      label: t("label_draft"),
+      description: t("desc_draft"),
+      icon: DraftingCompassIcon,
+      color: "bg-amber-100 text-amber-600 dark:bg-amber-900/40 dark:text-amber-300",
+    },
+    {
+      status: "published",
+      label: t("label_published"),
+      description: t("desc_published"),
+      icon: RocketIcon,
+      color: "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-300",
+    },
+    {
+      status: "inactive",
+      label: t("label_inactive"),
+      description: t("desc_inactive"),
+      icon: PauseCircleIcon,
+      color: "bg-slate-100 text-slate-600 dark:bg-slate-800/80 dark:text-slate-300",
+    },
+  ];
+
   const onSetStatus = (value: string) => {
     app.setForm({ ...app.form, status: value });
   };
@@ -92,7 +116,7 @@ const SettingsStatus = () => {
           <h1 className="font-semibold text-base">{t("label_status")}</h1>
           <p className="text-xs text-muted-foreground">{t("desc_status")}</p>
         </div>
-        <SettingsFormStatus status={app.form.status as TFormStatus} onStatusChange={onSetStatus} />
+        <OptionSelector options={statusList} status={app.form.status} onStatusChange={onSetStatus} />
       </div>
       <div className="flex justify-end items-center">
         <Button onClick={onSaveFormStatus} variant={"secondary"} size={"sm"} disabled={appState === "loading"}>
@@ -111,7 +135,7 @@ const SettingsDelete = () => {
     <Card className="flex flex-col sm:flex-row justify-between items-center gap-8 p-4 sm:p-8">
       <div className="flex flex-col gap-1">
         <h1 className="font-semibold text-base">{t("label_danger_zone")}</h1>
-        <p className="text-xs text-muted-foreground">{t("desc_danger_zone")}</p>
+        <p className="text-xs text-muted-foreground">{t("desc_delete_form")}</p>
       </div>
       <div className="flex justify-end items-center w-full">
         <FormDelete formId={app.form.id as string} formName={app.form.name as string}>

@@ -107,8 +107,7 @@
     "desc_inactive": "O formulário não está mais disponível para os usuários preencherem ou enviarem.",
     "label_danger_zone": "Zona de Perigo",
     "label_delete_form": "Excluir Formulário",
-    "desc_delete_form": "Remova permanentemente este formulário e todos os seus dados. Esta ação não pode ser desfeita.",
-    "desc_danger_zone": "Exclua permanentemente este formulário e todos os dados associados aos nossos servidores. Esta ação não pode ser desfeita.",
+    "desc_delete_form": "Exclua permanentemente este formulário e todos os dados associados aos nossos servidores. Esta ação não pode ser desfeita.",
     "label_continue": "Continuar",
     "label_absolute_delete_form": "Você tem certeza absoluta?",
     "desc_absolute_delete_form": "Esta ação excluirá permanentemente o formulário selecionado, juntamente com todas as submissões e configurações associadas.",
@@ -451,7 +450,13 @@
     "label_feedback_error": "Algo deu errado!",
     "desc_feedback_error": "Por favor, tente novamente.",
     "label_feedback_success": "Seu feedback foi recebido!",
-    "desc_feedback_success": "Obrigado pela sua ajuda."
+    "desc_feedback_success": "Obrigado pela sua ajuda.",
+    "desc_delete_org": "Excluir permanentemente esta organização e todos os dados associados dos nossos servidores. Esta ação não pode ser desfeita.",
+    "desc_org_active": "Organização está totalmente operacional. Pode receber submissões e membros da equipe têm acesso a todos os recursos.",
+    "desc_org_inactive": "Organização está pausada. Novas submissões não são aceitas, mas os dados existentes permanecem acessíveis.",
+    "label_organization": "Organização",
+    "desc_organization_settings": "Gerencie as configurações gerais da sua organização em { name }.",
+    "label_name": "Nome"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

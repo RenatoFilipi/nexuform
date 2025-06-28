@@ -37,7 +37,7 @@ const FormNavbar = () => {
     },
   ];
   return (
-    <div className="border-b h-10 flex justify-start items-center gap-2 px-2 sm:px-6 overflow-x-auto fixed bg-background w-full truncate">
+    <div className="border-b h-10 flex justify-start items-center gap-2 px-2 sm:px-6 overflow-x-auto fixed bg-background w-full truncate z-10">
       {formResources
         .filter((x) => x.enabled)
         .map((r) => {

@@ -107,8 +107,7 @@
     "desc_inactive": "The form is no longer available for users to fill out or submit.",
     "label_danger_zone": "Danger Zone",
     "label_delete_form": "Delete Form",
-    "desc_delete_form": "Permanently remove this form and all its data. This action cannot be undone.",
-    "desc_danger_zone": "Permanently delete this form and all its associated data from our servers. This action cannot be undone.",
+    "desc_delete_form": "Permanently delete this form and all its associated data from our servers. This action cannot be undone",
     "label_continue": "Continue",
     "label_absolute_delete_form": "Are you absolutely sure?",
     "desc_absolute_delete_form": "This action will permanently delete the selected form, along with all associated submissions and settings.",
@@ -451,7 +450,13 @@
     "label_feedback_error": "Something went wrong!",
     "desc_feedback_error": "Please try again.",
     "label_feedback_success": "Your feedback has been received!",
-    "desc_feedback_success": "Thank you for your help."
+    "desc_feedback_success": "Thank you for your help.",
+    "desc_delete_org": "Permanently delete this organization and all its associated data from our servers. This action cannot be undone.",
+    "desc_org_active": "Organization is fully operational. Can receive submissions and team members can access all features.",
+    "desc_org_inactive": "Organization is paused. No new submissions accepted, but existing data remains accessible.",
+    "label_organization": "Organization",
+    "desc_organization_settings": "Manage your organization’s general settings in { name }.",
+    "label_name": "Name"
   },
   "s": {
     "err_required_all": "Answer all required questions.",
