@@ -1,7 +1,6 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import WipUI from "../../shared/custom/wip-ui";
 import { Card } from "@/components/ui/card";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -13,12 +12,43 @@ import { createClient } from "@/utils/supabase/client";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { AlertTriangleIcon, BadgeCheckIcon, CheckIcon, LoaderIcon, PauseIcon, XIcon } from "lucide-react";
+import { AlertTriangleIcon, BadgeCheckIcon, LoaderIcon, PauseIcon } from "lucide-react";
 import { appName } from "@/utils/envs";
 import OptionSelector from "../../shared/custom/option-selector";
+import { EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
+import { useQuery } from "@tanstack/react-query";
+import useUserStore from "@/stores/user";
+import { toast } from "sonner";
 
-const SettingsWrapper = () => {
+interface IProps {
+  locale: string;
+  email: string;
+  profile: EProfile;
+  organization: EOrganization;
+  subscription: ESubscription;
+  teamMemberProfile: ETeamMemberProfile;
+}
+
+const SettingsWrapper = (props: IProps) => {
   const t = useTranslations("app");
+  const app = useAppStore();
+  const user = useUserStore();
+  const isRootOrganization = app.organization.created_at_signup;
+
+  const query = useQuery({
+    queryKey: ["org-settings-page"],
+    queryFn: () => {
+      user.setLocale(props.locale);
+      user.setEmail(props.email);
+      user.setProfile(props.profile);
+      app.setOrganization(props.organization);
+      app.setSubscription(props.subscription);
+      app.setTeamMemberProfile(props.teamMemberProfile);
+      return null;
+    },
+  });
+
+  if (query.isPending) return null;
 
   return (
     <div className="flex flex-col gap-6">
@@ -27,12 +57,11 @@ const SettingsWrapper = () => {
       </div>
       <div className="flex flex-col gap-10">
         <OrgSettings />
-        <OrgDelete />
+        {!isRootOrganization && <OrgDelete />}
       </div>
     </div>
   );
 };
-
 const OrgSettings = () => {
   const t = useTranslations("app");
   const app = useAppStore();
@@ -77,7 +106,24 @@ const OrgSettings = () => {
   };
 
   const onSubmit = async (values: z.infer<typeof schema>) => {
-    console.log(values);
+    setAppState("loading");
+    try {
+      const { name, status } = values;
+      const { data, error } = await supabase
+        .from("organizations")
+        .update({ name, status })
+        .eq("id", app.organization.id)
+        .select()
+        .single();
+      if (error) throw new Error(t("err_generic"));
+
+      app.setOrganization(data);
+      toast.success(t("success_generic"));
+    } catch (error) {
+      toast.error(t("err_generic"));
+    } finally {
+      setAppState("idle");
+    }
   };
 
   return (
@@ -132,7 +178,6 @@ const OrgSettings = () => {
 };
 const OrgDelete = () => {
   const t = useTranslations("app");
-  const app = useAppStore();
 
   return (
     <Card className="flex flex-col sm:flex-row justify-between items-center gap-8 p-4 sm:p-8">

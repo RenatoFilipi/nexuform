@@ -456,7 +456,8 @@
     "desc_org_inactive": "Organization is paused. No new submissions accepted, but existing data remains accessible.",
     "label_organization": "Organization",
     "desc_organization_settings": "Manage your organization’s general settings in { name }.",
-    "label_name": "Name"
+    "label_name": "Name",
+    "success_generic": "Operation completed successfully."
   },
   "s": {
     "err_required_all": "Answer all required questions.",

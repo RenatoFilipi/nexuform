@@ -19,6 +19,7 @@ const OptionSelector = ({ status, onStatusChange, options }: IProps) => {
     <div className="grid gap-3 overflow-y-auto sm:grid-cols-1 w-full">
       {options.map((option, index) => (
         <button
+          type="button"
           key={index}
           onClick={() => onStatusChange(option.status)}
           className={`${
