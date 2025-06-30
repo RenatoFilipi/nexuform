@@ -114,7 +114,7 @@ const AnalyticsMetrics = () => {
   )}%`;
 
   return (
-    <div className="grid sm:grid-cols-2 gap-4">
+    <div className="grid sm:grid-cols-2 gap-6">
       <AnalyticsCard
         name={t("label_total_views")}
         value={totalViews}

@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
 import { formatCurrency } from "@/utils/functions";
 import { IPlan } from "@/utils/interfaces";
@@ -137,8 +138,8 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
 };
 const PlanOption = ({ plan, isCurrent, onSelect }: { plan: IPlan; isCurrent: boolean; onSelect: () => void }) => {
   const t = useTranslations("app");
-  const user = useUserStore();
-  const notAvailable = isCurrent && user.subscription.plan !== "active";
+  const app = useAppStore();
+  const notAvailable = isCurrent && app.subscription.plan !== "active";
 
   return (
     <Card
@@ -188,11 +189,11 @@ const PlanOption = ({ plan, isCurrent, onSelect }: { plan: IPlan; isCurrent: boo
   );
 };
 const CheckoutFlow = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) => {
-  const user = useUserStore();
+  const app = useAppStore();
   const isUpdatingSubscription =
-    user.subscription.stripe_subscription_id !== null &&
-    user.subscription.status !== "canceled" &&
-    user.subscription.plan !== "free_trial";
+    app.subscription.stripe_subscription_id !== null &&
+    app.subscription.status !== "canceled" &&
+    app.subscription.plan !== "free_trial";
 
   return (
     <div className="flex flex-col h-full overflow-y-auto">
@@ -203,9 +204,10 @@ const CheckoutFlow = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) => 
 };
 const CheckoutCreate = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) => {
   const t = useTranslations("app");
+  const app = useAppStore();
   const user = useUserStore();
   const formData = new FormData();
-  const orgId = user.organizations[0].id;
+  const orgId = app.organization.id;
   formData.append("customerId", user.profile.stripe_customer_id as string);
   formData.append("plan", plan.type as string);
   formData.append("orgId", orgId);
@@ -239,13 +241,13 @@ const CheckoutCreate = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) =
 };
 const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) => {
   const t = useTranslations("app");
-  const user = useUserStore();
-  const currentPlan = user.subscription.plan as TPlan;
+  const app = useAppStore();
+  const currentPlan = app.subscription.plan as TPlan;
   const intentPlan = plan.type;
   const intentPrice = plan.price;
   const [appState, setAppState] = useState<TAppState>("idle");
   const formData = new FormData();
-  formData.append("subscriptionId", user.subscription.stripe_subscription_id as string);
+  formData.append("subscriptionId", app.subscription.stripe_subscription_id as string);
   formData.append("plan", intentPlan as string);
 
   const planDecoration = (plan: TPlan) => {
