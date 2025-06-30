@@ -6,14 +6,14 @@ import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
 import { EForm, EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
 import { createClient } from "@/utils/supabase/client";
-import { TAppState, TFormStatus } from "@/utils/types";
+import { TAppState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { AlertTriangleIcon, DraftingCompassIcon, LoaderIcon, PauseCircleIcon, RocketIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
-import FormDelete from "./settings-form-delete";
 import OptionSelector from "../../shared/custom/option-selector";
+import FormDelete from "./settings-form-delete";
 
 interface IProps {
   locale: string;
@@ -114,7 +114,7 @@ const SettingsStatus = () => {
       <div className="flex flex-col sm:flex-row justify-center items-start gap-8">
         <div className="flex flex-col gap-1">
           <h1 className="font-semibold text-base">{t("label_status")}</h1>
-          <p className="text-xs text-muted-foreground">{t("desc_status")}</p>
+          <p className="text-sm text-muted-foreground">{t("desc_status")}</p>
         </div>
         <OptionSelector options={statusList} status={app.form.status} onStatusChange={onSetStatus} />
       </div>
@@ -135,7 +135,7 @@ const SettingsDelete = () => {
     <Card className="flex flex-col sm:flex-row justify-between items-center gap-8 p-4 sm:p-8">
       <div className="flex flex-col gap-1">
         <h1 className="font-semibold text-base">{t("label_danger_zone")}</h1>
-        <p className="text-xs text-muted-foreground">{t("desc_delete_form")}</p>
+        <p className="text-sm text-muted-foreground">{t("desc_delete_form")}</p>
       </div>
       <div className="flex justify-end items-center w-full">
         <FormDelete formId={app.form.id as string} formName={app.form.name as string}>
