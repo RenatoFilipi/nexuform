@@ -2,16 +2,15 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { formatCurrency } from "@/utils/functions";
-import { IPlan } from "@/utils/interfaces";
+import { Card } from "@/components/ui/card";
+import { IPlan } from "@/utils/pricing";
 import { motion } from "framer-motion";
-import { CheckIcon, RocketIcon, ZapIcon } from "lucide-react";
+import { CheckIcon, ClockIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 const Pricing = ({ plans }: { plans: IPlan[] }) => {
-  const t = useTranslations("landing");
-
+  const t = useTranslations("pricing");
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -21,7 +20,6 @@ const Pricing = ({ plans }: { plans: IPlan[] }) => {
       },
     },
   };
-
   const itemVariants = {
     hidden: { y: 10, opacity: 0 },
     visible: {
@@ -33,10 +31,9 @@ const Pricing = ({ plans }: { plans: IPlan[] }) => {
       },
     },
   };
-
   return (
     <section id="pricing" className="relative py-16 px-4 sm:px-6 bg-background">
-      <div className="max-w-6xl mx-auto flex flex-col items-center gap-8">
+      <div className="max-w-7xl mx-auto flex flex-col items-center gap-8">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -46,10 +43,10 @@ const Pricing = ({ plans }: { plans: IPlan[] }) => {
           <Badge
             variant={"primary"}
             className="text-primary border-primary/30 dark:border-primary/50 px-3 py-1 text-xs">
-            {t("nav_pricing")}
+            {t("pricing")}
           </Badge>
-          <h2 className="text-3xl font-bold tracking-tight text-foreground">{t("pricing_headline")}</h2>
-          <p className="text-muted-foreground/80 leading-relaxed">{t("pricing_subheadline")}</p>
+          <h2 className="text-3xl font-bold tracking-tight text-foreground">{t("headline")}</h2>
+          <p className="text-muted-foreground/80 leading-relaxed">{t("subheadline")}</p>
         </motion.div>
 
         <motion.div
@@ -70,83 +67,77 @@ const Pricing = ({ plans }: { plans: IPlan[] }) => {
 };
 
 const CardTemplate = ({ plan }: { plan: IPlan }) => {
-  const t = useTranslations("landing");
+  const t = useTranslations("pricing");
 
   return (
-    <div
-      className={`relative flex flex-col h-full p-6 rounded-xl border bg-background/80 dark:bg-muted/5 transition-all ${
+    <Card
+      key={plan.id}
+      className={`relative flex flex-col h-full p-5 rounded-xl ${
         plan.isMostPopular
-          ? "border-primary/40 dark:border-primary/40 shadow-sm ring-1 ring-primary/10"
+          ? "border-primary ring-1 ring-primary/10"
           : "border-muted-foreground/15 hover:border-muted-foreground/25"
       }`}>
       {plan.isMostPopular && (
-        <div className="absolute -top-2.5 left-1/2 transform -translate-x-1/2">
-          <Badge
-            variant="primary"
-            className="bg-primary text-primary-foreground flex items-center gap-1 px-3 py-1 text-xs">
-            <ZapIcon className="h-3 w-3 fill-current" />
-            {t("pricing_most_popular")}
-          </Badge>
+        <div className="absolute top-0 right-0 bg-primary text-white text-xs font-semibold px-3 py-1 transform translate-x-2 -translate-y-2 rounded-bl-lg">
+          {t("most_popular")}
         </div>
       )}
-
-      <div className="w-full space-y-5">
-        <div className="space-y-3">
-          <h3 className="text-lg font-semibold text-foreground">{plan.label}</h3>
-          <div className="space-y-1">
-            <p className={`${plan.isMostPopular ? "text-primary" : "text-foreground"} text-2xl font-bold`}>
-              {formatCurrency("USD", plan.price)}
-              {plan.type !== "free_trial" && <span className="text-sm font-normal text-muted-foreground">/m</span>}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              {plan.type === "free_trial"
-                ? `${plan.freeTrialDuration} ${t("pricing_days_trial")}`
-                : t("pricing_billed_monthly")}
-            </p>
+      <div className="flex flex-col justify-between h-full items-center w-full gap-6">
+        <div className="p-3 flex flex-col w-full">
+          <h3 className="text-lg font-bold text-foreground">{plan.name}</h3>
+          <p className="mt-2 text-muted-foreground text-sm">{plan.description}</p>
+          <div className="mt-6">
+            <div className="flex items-center">
+              <span className="text-4xl">${plan.price.amount}</span>
+              {!plan.freeTrialDuration && (
+                <span className="ml-2 text-sm font-medium text-muted-foreground">/{t("month")}</span>
+              )}
+            </div>
+            {plan.freeTrialDuration && (
+              <p className="mt-1 text-sm text-green-600">
+                {plan.freeTrialDuration}-{t("day_freetrial")}
+              </p>
+            )}
+          </div>
+          <div className="mt-8">
+            <h4 className="text-sm font-semibold">{t("recommended_for")}</h4>
+            <p className="mt-1 text-xs text-muted-foreground">{plan.recommendedFor}</p>
+          </div>
+          <div className="mt-8">
+            <h4 className="text-sm font-semibold">{t("whats_included")}</h4>
+            <ul className="mt-4 space-y-3">
+              {plan.features.map((feature, index) => (
+                <li key={index} className="flex items-start">
+                  {feature.comingSoon ? (
+                    <div className="flex">
+                      <ClockIcon className="w-4 h-4 text-muted-foreground/70" />
+                    </div>
+                  ) : (
+                    <div className={`flex`}>
+                      <CheckIcon className="w-4 h-4 text-green-500" />
+                    </div>
+                  )}
+                  <span
+                    className={`ml-3 text-xs ${
+                      feature.comingSoon ? "text-muted-foreground/70" : "text-muted-foreground"
+                    }`}>
+                    {feature.description}
+                    {feature.comingSoon && (
+                      <span className="ml-1 text-xs text-muted-foreground/70">({t("coming_soon")})</span>
+                    )}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-
-        <Button asChild size="sm" className="w-full" variant={plan.isMostPopular ? "default" : "outline"}>
-          <Link href="/signup">
-            <span className="flex items-center gap-2">
-              {plan.type === "free_trial" ? (
-                <RocketIcon className="h-3.5 w-3.5" />
-              ) : (
-                <CheckIcon className="h-3.5 w-3.5" />
-              )}
-              {plan.type === "free_trial" ? t("pricing_start_trial") : t("pricing_get_started")}
-            </span>
-          </Link>
-        </Button>
-
-        <ul className="space-y-3 pt-4 border-t border-muted-foreground/10">
-          {plan.features.map((feature, i) => (
-            <li key={i} className="flex items-start gap-3">
-              {feature.comingSoon ? (
-                <div className="flex-shrink-0 p-1 rounded-full bg-amber-100/50 dark:bg-amber-900/20 text-amber-500 dark:text-amber-400">
-                  <RocketIcon className="w-3 h-3" />
-                </div>
-              ) : (
-                <div
-                  className={`flex-shrink-0 p-0.5 rounded ${
-                    plan.isMostPopular ? "bg-primary/10 text-primary" : "bg-muted text-foreground"
-                  }`}>
-                  <CheckIcon className="w-2.5 h-2.5" />
-                </div>
-              )}
-              <span className={`text-xs ${feature.comingSoon ? "text-muted-foreground" : "text-foreground"}`}>
-                {feature.description}
-                {feature.comingSoon && (
-                  <span className="ml-1.5 text-[0.65rem] bg-muted text-muted-foreground px-1.5 py-0.5 rounded-full">
-                    {t("pricing_coming_soon")}
-                  </span>
-                )}
-              </span>
-            </li>
-          ))}
-        </ul>
+        <div className="w-full">
+          <Button className="w-full" variant={plan.isMostPopular ? "secondary" : "outline"} asChild>
+            <Link href="/signup">{plan.ctaLabel}</Link>
+          </Button>
+        </div>
       </div>
-    </div>
+    </Card>
   );
 };
 

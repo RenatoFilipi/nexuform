@@ -35,7 +35,6 @@ export interface FormSubmission {
   count: number;
   percentage: number;
 }
-
 export interface IPlan {
   name: string;
   price: number;
@@ -68,7 +67,6 @@ export interface IBlockViewSettings {
   showRequired: boolean;
   showChar: boolean;
 }
-
 export interface IInvoiceSummary {
   id: string;
   status: string | null;
