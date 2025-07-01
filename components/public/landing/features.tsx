@@ -115,7 +115,7 @@ const Features = () => {
           {features.map((feature, index) => (
             <motion.div key={index} variants={cardVariants} whileHover="hover" className="h-full">
               <div
-                className={`relative h-full rounded-2xl border border-muted/50 ${feature.borderColor} ${feature.bgColor} p-8 transition-all duration-300 group hover:shadow-lg overflow-hidden`}>
+                className={`relative h-full rounded-xl border border-muted/50 ${feature.borderColor} ${feature.bgColor} p-8 transition-all duration-300 group hover:shadow-lg overflow-hidden`}>
                 {/* Floating gradient background */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}

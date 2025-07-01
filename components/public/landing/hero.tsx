@@ -33,7 +33,7 @@ const Hero = () => {
               ),
             })}
           </h1>
-          <p className="max-w-lg md:max-w-xl text-sm sm:text-lg font-normal text-muted-foreground">
+          <p className="max-w-lg md:max-w-xl text-sm sm:text-lg font-normal text-foreground/80">
             {t("hero_subheadline")}
           </p>
         </motion.div>
@@ -45,7 +45,7 @@ const Hero = () => {
 };
 const BgDesign = () => (
   <div className="absolute top-0 left-0 w-full h-full z-0 overflow-hidden">
-    <div className="absolute -bottom-[200px] w-full h-[600px] rounded-full dark:bg-primary/20 bg-primary/10 blur-2xl animate-float-delay" />
+    <div className="absolute -bottom-[150px] w-full h-[650px] rounded-full dark:bg-primary/20 bg-primary/50 blur-3xl animate-float-delay hidden sm:flex" />
     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-transparent via-background/10 to-background" />
   </div>
 );

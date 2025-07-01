@@ -74,7 +74,7 @@ const CardTemplate = ({ plan }: { plan: IPlan }) => {
       key={plan.id}
       className={`relative flex flex-col h-full p-5 rounded-xl ${
         plan.isMostPopular
-          ? "border-primary ring-1 ring-primary/10"
+          ? "border-primary ring-1 ring-primary/10 bg-primary/10"
           : "border-muted-foreground/15 hover:border-muted-foreground/25"
       }`}>
       {plan.isMostPopular && (

@@ -40,12 +40,12 @@ const Navbar = () => {
   return (
     <div
       className={`fixed top-0 w-full px-3 z-20 backdrop-blur-lg transition-all duration-300 ${
-        scrolled ? "bg-background/90 shadow-md py-2" : "bg-background/0 py-4"
+        scrolled ? "bg-background/90 shadow py-4" : "bg-background/0 py-4"
       }`}>
-      <div className="w-full flex justify-between md:justify-around items-center transition-all duration-300">
+      <div className="w-full flex justify-between md:justify-between items-center transition-all duration-300 sm:px-28">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center">
-            <Brand type="primary_logo_text" className="h-5 fill-foreground" />
+            <Brand type="primary_logo_text" className="h-5 sm:h-4 fill-foreground" />
           </Link>
           <div className="hidden md:flex items-center gap-6">
             {sections.map((section) => (
@@ -59,7 +59,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="hidden md:flex items-center gap-4">
-          <Button variant="outline" size="sm" asChild>
+          <Button variant="ghost" size="sm" asChild>
             <Link href="/login">{t("label_login")}</Link>
           </Button>
           <Button variant="secondary" size="sm" asChild>

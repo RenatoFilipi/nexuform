@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { AnimatePresence, motion } from "framer-motion";
-import { BarChartIcon, CheckIcon, ChevronDownIcon, DatabaseIcon, LayersIcon } from "lucide-react";
+import { CheckIcon, ChevronDownIcon, LayersIcon, SendIcon, Share2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -19,24 +19,27 @@ const HowItWorks = () => {
       color: "text-purple-500",
       bgColor: "bg-purple-500/10",
       borderColor: "border-purple-500/20",
+      activeBgColor: "bg-purple-500/20",
     },
     {
       title: t("step2_label"),
       description: t("step2_desc"),
-      icon: DatabaseIcon,
+      icon: Share2Icon,
       details: [t("step2_topic1"), t("step2_topic2"), t("step2_topic3")],
       color: "text-blue-500",
       bgColor: "bg-blue-500/10",
       borderColor: "border-blue-500/20",
+      activeBgColor: "bg-blue-500/20",
     },
     {
       title: t("step3_label"),
       description: t("step3_desc"),
-      icon: BarChartIcon,
+      icon: SendIcon,
       details: [t("step3_topic1"), t("step3_topic2"), t("step3_topic3")],
       color: "text-emerald-500",
       bgColor: "bg-emerald-500/10",
       borderColor: "border-emerald-500/20",
+      activeBgColor: "bg-emerald-500/20",
     },
   ];
 
@@ -112,49 +115,54 @@ const HowItWorks = () => {
           <div className="space-y-8">
             {steps.map((step, index) => (
               <motion.div key={index} variants={stepVariants} className="relative pl-16">
-                {/* Timeline dot */}
+                {/* Timeline dot - mais destacado */}
                 <div
                   className={`absolute left-0 top-0 h-12 w-12 rounded-full flex items-center justify-center border-2 ${
                     activeStep === index
-                      ? `${step.color} border-current`
+                      ? `${step.color} border-current ${step.activeBgColor}`
                       : "border-muted-foreground/30 text-muted-foreground/50"
-                  } transition-all duration-300 cursor-pointer`}
+                  } transition-all duration-300 cursor-pointer shadow-md`}
                   onClick={() => setActiveStep(index)}>
-                  <div
-                    className={`absolute inset-0 rounded-full ${step.bgColor} opacity-0 ${
-                      activeStep === index ? "opacity-100" : ""
-                    } transition-opacity duration-300`}
-                  />
                   <step.icon className="h-5 w-5" />
-                  {/* <span className="absolute -right-8 text-sm font-medium text-muted-foreground">0{index + 1}</span> */}
                 </div>
 
-                {/* Step header */}
+                {/* Step header - mais destacado */}
                 <div
-                  className={`p-6 rounded-xl border ${step.borderColor} ${
-                    activeStep === index ? "bg-background shadow-sm" : "bg-muted/10"
-                  } transition-all duration-300 cursor-pointer`}
+                  className={`p-6 rounded-xl border ${
+                    activeStep === index
+                      ? `${step.borderColor} bg-background shadow-lg ${step.activeBgColor}`
+                      : "bg-muted/10 border-muted-foreground/20"
+                  } transition-all duration-300 cursor-pointer hover:bg-muted/20`}
                   onClick={() => setActiveStep(index)}>
                   <div className="flex justify-between items-center">
                     <div>
                       <h3
                         className={`text-lg font-semibold ${
-                          activeStep === index ? step.color : "text-foreground/80"
+                          activeStep === index ? `${step.color} font-bold` : "text-foreground/80"
                         } transition-colors duration-300`}>
                         {step.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground mt-1">{step.description}</p>
+                      <p
+                        className={`text-sm mt-1 ${
+                          activeStep === index ? "text-foreground" : "text-muted-foreground"
+                        }`}>
+                        {step.description}
+                      </p>
                     </div>
                     <motion.div
                       animate={{ rotate: activeStep === index ? 180 : 0 }}
                       transition={{ duration: 0.3 }}
-                      className={`p-1 rounded-full ${activeStep === index ? step.bgColor : "bg-transparent"}`}>
-                      <ChevronDownIcon className="h-4 w-4" />
+                      className={`p-1.5 rounded-full ${
+                        activeStep === index ? `${step.bgColor} shadow-inner` : "bg-transparent"
+                      }`}>
+                      <ChevronDownIcon
+                        className={`h-4 w-4 ${activeStep === index ? step.color : "text-muted-foreground"}`}
+                      />
                     </motion.div>
                   </div>
                 </div>
 
-                {/* Step content */}
+                {/* Step content - mais destacado */}
                 <AnimatePresence>
                   {activeStep === index && (
                     <motion.div
@@ -162,7 +170,7 @@ const HowItWorks = () => {
                       initial="hidden"
                       animate="visible"
                       exit="exit"
-                      className={`overflow-hidden ${step.borderColor}`}>
+                      className={`overflow-hidden ${step.borderColor} border-t-0 rounded-b-xl shadow-sm`}>
                       <div className="p-6 pt-4 space-y-4">
                         <ul className="space-y-3">
                           {step.details.map((detail, i) => (
@@ -172,7 +180,7 @@ const HowItWorks = () => {
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ delay: i * 0.1 }}
                               className="flex items-start gap-3">
-                              <div className={`flex-shrink-0 mt-0.5 p-1 rounded-full ${step.bgColor}`}>
+                              <div className={`flex-shrink-0 mt-0.5 p-1 rounded-full ${step.bgColor} shadow-sm`}>
                                 <CheckIcon className={`h-3.5 w-3.5 ${step.color}`} />
                               </div>
                               <p className="text-sm text-foreground/90 leading-relaxed">{detail}</p>
