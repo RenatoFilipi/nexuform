@@ -1,5 +1,5 @@
-import SubmissionStatus from "@/components/private2/form/submissions/submission-status";
-import SubmissionStatusBadge from "@/components/private2/form/submissions/submission-status-badge";
+import SubmissionStatus from "@/components/private/form/submissions/submission-status";
+import SubmissionStatusBadge from "@/components/private/form/submissions/submission-status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";

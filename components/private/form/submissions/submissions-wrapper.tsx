@@ -1,6 +1,6 @@
 "use client";
 
-import SubmissionStatusBadge from "@/components/private2/form/submissions/submission-status-badge";
+import SubmissionStatusBadge from "@/components/private/form/submissions/submission-status-badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";

@@ -1,4 +1,4 @@
-import WipUI from "@/components/private2/shared/custom/wip-ui";
+import WipUI from "@/components/private/shared/custom/wip-ui";
 
 const Members = () => {
   return (

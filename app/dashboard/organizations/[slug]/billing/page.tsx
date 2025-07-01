@@ -1,5 +1,5 @@
-import BillingWrapper from "@/components/private2/organization/billing/billing-wrapper";
-import ErrorUI from "@/components/private2/shared/pages/error-ui";
+import BillingWrapper from "@/components/private/organization/billing/billing-wrapper";
+import ErrorUI from "@/components/private/shared/pages/error-ui";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";

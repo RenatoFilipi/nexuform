@@ -1,5 +1,5 @@
 import useSubmissionStore from "@/stores/submission";
-import SuccessDesign from "../../private2/shared/blocks-design/success-design";
+import SuccessDesign from "../../private/shared/blocks-design/success-design";
 
 const SubmissionSuccess = () => {
   const { form, theme } = useSubmissionStore();

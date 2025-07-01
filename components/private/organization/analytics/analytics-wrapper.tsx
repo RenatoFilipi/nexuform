@@ -1,6 +1,6 @@
 "use client";
 
-import DateRangePicker from "@/components/private2/shared/custom/date-range-picker";
+import DateRangePicker from "@/components/private/shared/custom/date-range-picker";
 import { Card } from "@/components/ui/card";
 import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";

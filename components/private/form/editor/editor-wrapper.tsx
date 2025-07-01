@@ -1,6 +1,6 @@
 "use client";
 
-import ColorPicker from "@/components/private2/shared/custom/color-picker";
+import ColorPicker from "@/components/private/shared/custom/color-picker";
 import PoweredByBadge from "@/components/shared/powered-by-badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";

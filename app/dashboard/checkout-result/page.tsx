@@ -1,5 +1,5 @@
-import CheckoutSuccess from "@/components/private2/checkout/checkout-success";
-import ErrorUI from "@/components/private2/shared/pages/error-ui";
+import CheckoutSuccess from "@/components/private/checkout/checkout-success";
+import ErrorUI from "@/components/private/shared/pages/error-ui";
 import { stripe } from "@/lib/stripe";
 import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";

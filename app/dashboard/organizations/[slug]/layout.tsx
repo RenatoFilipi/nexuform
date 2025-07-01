@@ -1,7 +1,7 @@
 "use client";
 
-import FormNavbar from "@/components/private2/shared/navs/form-navbar";
-import OrganizationNavbar from "@/components/private2/shared/navs/organization-navbar";
+import FormNavbar from "@/components/private/shared/navs/form-navbar";
+import OrganizationNavbar from "@/components/private/shared/navs/organization-navbar";
 import { usePathname } from "next/navigation";
 
 const OrgFormsLayout = ({ children }: { children: React.ReactNode }) => {

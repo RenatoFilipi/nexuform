@@ -1,5 +1,5 @@
-import SettingsWrapper from "@/components/private2/organization/settings/settings-wrapper";
-import ErrorUI from "@/components/private2/shared/pages/error-ui";
+import SettingsWrapper from "@/components/private/organization/settings/settings-wrapper";
+import ErrorUI from "@/components/private/shared/pages/error-ui";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";

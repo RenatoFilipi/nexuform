@@ -1,5 +1,5 @@
-import EditorWrapper from "@/components/private2/form/editor/editor-wrapper";
-import ErrorUI from "@/components/private2/shared/pages/error-ui";
+import EditorWrapper from "@/components/private/form/editor/editor-wrapper";
+import ErrorUI from "@/components/private/shared/pages/error-ui";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";

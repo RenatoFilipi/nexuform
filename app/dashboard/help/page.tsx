@@ -1,5 +1,5 @@
-import HelpWrapper from "@/components/private2/help/help-wrapper";
-import ErrorUI from "@/components/private2/shared/pages/error-ui";
+import HelpWrapper from "@/components/private/help/help-wrapper";
+import ErrorUI from "@/components/private/shared/pages/error-ui";
 import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
