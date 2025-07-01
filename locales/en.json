@@ -312,7 +312,7 @@
     "label_use_template": "Use template",
     "suc_form_create": "Form created.",
     "label_contact": "contact",
-    "label_feedback": "feedback",
+    "label_feedback": "Feedback",
     "label_marketing": "marketing",
     "label_customer-success": "customer-success",
     "label_events": "events",
@@ -522,7 +522,6 @@
     "hero_get_started": "Start for free",
     "hero_no_card": "No credit card required",
     "hero_badge": "14-Day Free Trial",
-
     "feat_headline": "Made for Those Who Need Speed, Not Complexity",
     "feat_subheadline": "Build, publish and track forms with simple, fast and objective tools.",
     "feat1_headline": "Super Simple Editor",
@@ -533,7 +532,6 @@
     "feat3_subheadline": "Download your data in CSV anytime with one click.",
     "feat4_headline": "Basic Templates",
     "feat4_subheadline": "Start with ready-made templates or create from scratch with a few clicks.",
-
     "htw_headline": "Three Steps, Ready Form",
     "htw_subheadline": "Create, share and see responses in minutes. No complications.",
     "step1_label": "Create Quickly",
@@ -551,10 +549,8 @@
     "step3_topic1": "View everything in real time.",
     "step3_topic2": "Download in CSV with one click.",
     "step3_topic3": "Optimize your forms based on responses.",
-
     "pricing_headline": "Pricing for Small Teams (and Agile Minds)",
     "pricing_subheadline": "Free trial for 14 days. Then, choose a simple plan that grows with your team.",
-
     "pricing_plan_freetrial": "14-Day Trial",
     "pricing_plan_basic": "Basic",
     "pricing_plan_pro": "Team",
@@ -565,7 +561,6 @@
     "pricing_start_trial": "Start free trial",
     "pricing_get_started": "Subscribe now",
     "pricing_coming_soon": "Coming soon",
-
     "faq_headline": "Frequently Asked Questions",
     "faq1_q": "What is the Free Trial?",
     "faq1_a": "You can test the platform for free for 14 days with full access to all features.",
@@ -575,11 +570,9 @@
     "faq3_a": "Yes! You can cancel anytime in your account settings.",
     "faq4_q": "Do you offer support?",
     "faq4_a": "Yes, we offer email support during the trial and priority support for paid plans.",
-
     "cta_headline": "Ready to Create Forms in Less Than 2 Minutes?",
     "cta_subheadline": "14-day free trial. Simple, fast and no credit card required.",
     "cta_get_started": "Start for free",
-
     "nav_cookies": "Cookie Policy",
     "footer_cta": "Speed that generates data.",
     "label_product": "Product",
@@ -604,7 +597,6 @@
     "free_trial_feat_05": "Branding required",
     "free_trial_cta": "Start free 14-day trial",
     "free_trial_recommended_for": "Experiment and test core features",
-
     "starter_name": "Starter",
     "starter_description": "Ideal for solo creators and freelancers who need essential form capabilities",
     "starter_feat_01": "Up to 5 forms",
@@ -616,7 +608,6 @@
     "starter_feat_07": "Branding required",
     "starter_cta": "Upgrade to Starter",
     "starter_recommended_for": "Solo creators and freelancers",
-
     "pro_name": "Pro",
     "pro_description": "Designed for small teams and growing businesses with collaboration needs",
     "pro_feat_01": "Up to 15 forms",
