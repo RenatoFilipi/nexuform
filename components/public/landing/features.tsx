@@ -12,40 +12,39 @@ const Features = () => {
       title: t("feat1_headline"),
       description: t("feat1_subheadline"),
       icon: BlocksIcon,
-      color: "text-blue-500",
-      borderColor: "hover:border-blue-300",
-      accent: "bg-blue-500",
-      bgColor: "bg-blue-500/5",
+      color: "text-primary",
+      borderColor: "hover:border-primary border-primary/20",
+      accent: "bg-primary",
+      bgColor: "bg-transparent hover:bg-primary/5",
     },
     {
       title: t("feat2_headline"),
       description: t("feat2_subheadline"),
       icon: BarChartIcon,
-      color: "text-purple-500",
-      borderColor: "hover:border-purple-300",
-      accent: "bg-purple-500",
-      bgColor: "bg-purple-500/5",
+      color: "text-primary",
+      borderColor: "hover:border-primary border-primary/20",
+      accent: "bg-primary",
+      bgColor: "bg-transparent hover:bg-primary/5",
     },
     {
       title: t("feat3_headline"),
       description: t("feat3_subheadline"),
       icon: DatabaseIcon,
-      color: "text-green-500",
-      borderColor: "hover:border-green-300",
-      accent: "bg-green-500",
-      bgColor: "bg-green-500/5",
+      color: "text-primary",
+      borderColor: "hover:border-primary border-primary/20",
+      accent: "bg-primary",
+      bgColor: "bg-transparent hover:bg-primary/5",
     },
     {
       title: t("feat4_headline"),
       description: t("feat4_subheadline"),
       icon: HexagonIcon,
-      color: "text-orange-500",
-      borderColor: "hover:border-orange-300",
-      accent: "bg-orange-500",
-      bgColor: "bg-orange-500/5",
+      color: "text-primary",
+      borderColor: "hover:border-primary border-primary/20",
+      accent: "bg-primary",
+      bgColor: "bg-transparent hover:bg-primary/5",
     },
   ];
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -55,7 +54,6 @@ const Features = () => {
       },
     },
   };
-
   const cardVariants = {
     hidden: { y: 20, opacity: 0 },
     visible: {
@@ -71,7 +69,6 @@ const Features = () => {
       boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
     },
   };
-
   const iconVariants = {
     hidden: { scale: 0.8, opacity: 0 },
     visible: {
@@ -83,7 +80,6 @@ const Features = () => {
       },
     },
     hover: {
-      rotate: 5,
       scale: 1.1,
     },
   };
@@ -115,7 +111,7 @@ const Features = () => {
           {features.map((feature, index) => (
             <motion.div key={index} variants={cardVariants} whileHover="hover" className="h-full">
               <div
-                className={`relative h-full rounded-xl border border-muted/50 ${feature.borderColor} ${feature.bgColor} p-8 transition-all duration-300 group hover:shadow-lg overflow-hidden`}>
+                className={`relative h-full rounded-xl border border-muted-foreground ${feature.borderColor} ${feature.bgColor} p-8 transition-all duration-300 group hover:shadow-lg overflow-hidden`}>
                 {/* Floating gradient background */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -130,7 +126,7 @@ const Features = () => {
                   <div className="flex flex-col gap-4">
                     <motion.div
                       variants={iconVariants}
-                      className={`p-3 rounded-xl ${feature.bgColor} w-fit shadow-sm border border-muted/20`}>
+                      className={`p-3 rounded-xl ${feature.bgColor} w-fit shadow-sm border border-muted-foreground/15 group-hover:border-primary/60`}>
                       <feature.icon className={`h-6 w-6 ${feature.color}`} />
                     </motion.div>
                     <h3 className="text-xl font-semibold text-foreground">{feature.title}</h3>
@@ -138,7 +134,7 @@ const Features = () => {
                   <motion.p
                     initial={{ opacity: 0.8 }}
                     whileHover={{ opacity: 1 }}
-                    className="text-muted-foreground/80 leading-relaxed">
+                    className="text-muted-foreground leading-relaxed group-hover:text-foreground">
                     {feature.description}
                   </motion.p>
                 </div>
