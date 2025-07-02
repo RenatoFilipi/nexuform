@@ -25,6 +25,7 @@ import { useTranslations } from "next-intl";
 import PlanIcon from "../../shared/custom/plan-icon";
 import CancelSubscription from "../../shared/subscription/cancel-subscription";
 import ManageSubscription from "../../shared/subscription/manage-subscription";
+import ManageSubscription2 from "../../shared/subscription/manage-subscription2";
 
 interface IProps {
   locale: string;
@@ -215,12 +216,12 @@ const BillingPlan = () => {
           </div>
         </div>
         <div className="md:w-1/3 flex flex-col justify-center items-center md:items-end">
-          <ManageSubscription>
+          <ManageSubscription2>
             <Button className="gap-2 w-full md:w-auto" variant="secondary" size="sm">
               <ArrowUpRightIcon className="h-4 w-4" />
               {t("label_manage_sub")}
             </Button>
-          </ManageSubscription>
+          </ManageSubscription2>
         </div>
       </Card>
     );
@@ -281,12 +282,12 @@ const BillingPlan = () => {
               </Button>
             </CancelSubscription>
           )}
-          <ManageSubscription>
+          <ManageSubscription2>
             <Button variant="secondary" size="sm" className="w-full sm:w-auto gap-2">
               <ArrowUpRightIcon className="h-4 w-4" />
               {t("label_manage_sub")}
             </Button>
-          </ManageSubscription>
+          </ManageSubscription2>
         </div>
       </div>
     </Card>
