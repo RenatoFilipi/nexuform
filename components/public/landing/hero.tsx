@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { ArrowRightIcon, PartyPopperIcon } from "lucide-react";
+import { ArrowRightIcon, ZapIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +11,7 @@ const Hero = () => {
   const t = useTranslations("landing");
 
   return (
-    <div className="relative flex flex-col justify-center items-center gap-6 md:gap-10 min-h-[calc(100dvh-64px)] w-full px-4 overflow-hidden pt-44 pb-6">
+    <div className="relative flex flex-col justify-center items-center gap-6 md:gap-10 min-h-dvh w-full px-4 overflow-hidden pt-44 pb-6">
       <BgDesign />
       <motion.div
         className="flex justify-center items-center flex-col gap-5 md:gap-8 w-full z-10 relative max-w-6xl mx-auto"
@@ -24,7 +24,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.5, ease: "easeOut" }}>
-          <h1 className="font-semibold text-3xl sm:text-4xl leading-tight">
+          <h1 className="font-semibold text-4xl sm:text-6xl leading-tight">
             {t.rich("hero_headline", {
               main: (chunks) => (
                 <span className="relative">
@@ -33,7 +33,7 @@ const Hero = () => {
               ),
             })}
           </h1>
-          <p className="max-w-lg md:max-w-xl text-sm sm:text-lg font-normal text-foreground/80">
+          <p className="max-w-lg md:max-w-xl text-sm sm:text-lg font-medium text-foreground/80">
             {t("hero_subheadline")}
           </p>
         </motion.div>
@@ -45,7 +45,7 @@ const Hero = () => {
 };
 const BgDesign = () => (
   <div className="absolute top-0 left-0 w-full h-full z-0 overflow-hidden">
-    <div className="absolute -bottom-[150px] w-full h-[650px] rounded-full dark:bg-primary/20 bg-primary/50 blur-3xl animate-float-delay hidden sm:flex" />
+    <div className="absolute -bottom-[150px] w-full h-[700px] rounded-full dark:bg-primary/40 bg-primary/30 blur-3xl animate-float-delay hidden sm:flex" />
     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-transparent via-background/10 to-background" />
   </div>
 );
@@ -53,12 +53,13 @@ const CtaBadge = () => {
   const t = useTranslations("landing");
   return (
     <motion.div
-      className="flex border border-primary/20 py-1 px-2 rounded-lg bg-primary/5 backdrop-blur-sm"
+      style={{ boxShadow: "0 0 14px -2px rgba(99, 102, 241, 0.6)" }}
+      className="flex border border-primary/20 py-1 px-2.5 rounded-lg backdrop-blur-sm justify-center items-center gap-2 group"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.3 }}>
-      <span className="text-primary text-xs sm:text-sm font-medium flex justify-center items-center gap-1.5">
-        <PartyPopperIcon className="w-3.5 h-3.5" />
+      <ZapIcon className="w-3.5 h-3.5 text-foreground/60 group-hover:text-foreground transition-colors" />
+      <span className="text-foreground/60 text-sm font-medium group-hover:text-foreground transition-colors">
         {t("hero_badge")}
       </span>
     </motion.div>

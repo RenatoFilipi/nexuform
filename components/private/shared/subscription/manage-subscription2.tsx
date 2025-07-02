@@ -9,16 +9,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useTranslations } from "next-intl";
-import { useState } from "react";
-import WipUI from "../custom/wip-ui";
-import { TSetState } from "@/utils/types";
-import { useQuery } from "@tanstack/react-query";
-import { IPlan, getPlans } from "@/utils/pricing";
-import useUserStore from "@/stores/user";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import useUserStore from "@/stores/user";
+import { IPlan, getPlans } from "@/utils/pricing";
+import { TSetState } from "@/utils/types";
+import { useQuery } from "@tanstack/react-query";
 import { CheckIcon, ClockIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
 
 const ManageSubscription2 = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations("app");
@@ -43,6 +42,8 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const user = useUserStore();
   const [localPlans, setLocalPlans] = useState<IPlan[]>([]);
+  const [intentPlan, setIntentPlan] = useState<IPlan | null>(null);
+  const hasIntentPlan = intentPlan !== null;
 
   const query = useQuery({
     queryKey: ["manage-subscription-modal"],
@@ -56,10 +57,10 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   if (query.isPending) return null;
 
   return (
-    <div className="flex flex-col h-full gap-6">
-      <div className="grid sm:grid-cols-2 w-full h-full gap-6">
+    <div className="flex flex-col h-full gap-6 overflow-y-auto">
+      <div className="grid sm:grid-cols-2 w-full h-full gap-6 overflow-y-auto">
         {localPlans.map((p) => {
-          return <PlanCard plan={p} key={p.id} />;
+          return <PlanCard plan={p} key={p.id} setPlan={setIntentPlan} />;
         })}
       </div>
       <div className="flex gap-4">
@@ -70,7 +71,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     </div>
   );
 };
-const PlanCard = ({ plan }: { plan: IPlan }) => {
+const PlanCard = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IPlan | null> }) => {
   const t = useTranslations("pricing");
   return (
     <Card
@@ -118,13 +119,19 @@ const PlanCard = ({ plan }: { plan: IPlan }) => {
           </ul>
         </div>
         <div className="w-full">
-          <Button className="w-full" variant={plan.isMostPopular ? "secondary" : "outline"}>
+          <Button
+            onClick={() => setPlan(plan)}
+            className="w-full"
+            variant={plan.isMostPopular ? "secondary" : "outline"}>
             {plan.ctaLabel}
           </Button>
         </div>
       </div>
     </Card>
   );
+};
+const CheckoutDisplay = () => {
+  return <div></div>;
 };
 
 export default ManageSubscription2;
