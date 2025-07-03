@@ -13,7 +13,7 @@ const Features = () => {
       description: t("feat1_subheadline"),
       icon: BlocksIcon,
       color: "text-primary",
-      borderColor: "hover:border-primary border-primary/20",
+      borderColor: "hover:border-primary border-primary/30",
       accent: "bg-primary",
       bgColor: "bg-transparent hover:bg-primary/5",
     },
@@ -22,7 +22,7 @@ const Features = () => {
       description: t("feat2_subheadline"),
       icon: BarChartIcon,
       color: "text-primary",
-      borderColor: "hover:border-primary border-primary/20",
+      borderColor: "hover:border-primary border-primary/30",
       accent: "bg-primary",
       bgColor: "bg-transparent hover:bg-primary/5",
     },
@@ -31,7 +31,7 @@ const Features = () => {
       description: t("feat3_subheadline"),
       icon: DatabaseIcon,
       color: "text-primary",
-      borderColor: "hover:border-primary border-primary/20",
+      borderColor: "hover:border-primary border-primary/30",
       accent: "bg-primary",
       bgColor: "bg-transparent hover:bg-primary/5",
     },
@@ -40,7 +40,7 @@ const Features = () => {
       description: t("feat4_subheadline"),
       icon: HexagonIcon,
       color: "text-primary",
-      borderColor: "hover:border-primary border-primary/20",
+      borderColor: "hover:border-primary border-primary/30",
       accent: "bg-primary",
       bgColor: "bg-transparent hover:bg-primary/5",
     },
@@ -85,7 +85,7 @@ const Features = () => {
   };
 
   return (
-    <section id="features" className="relative py-20 px-4 sm:px-6 lg:px-8 bg-background">
+    <section id="features" className="relative py-40 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -111,7 +111,7 @@ const Features = () => {
           {features.map((feature, index) => (
             <motion.div key={index} variants={cardVariants} whileHover="hover" className="h-full">
               <div
-                className={`relative h-full rounded-xl border border-muted-foreground ${feature.borderColor} ${feature.bgColor} p-8 transition-all duration-300 group hover:shadow-lg overflow-hidden`}>
+                className={`relative h-full rounded-xl border ${feature.borderColor} ${feature.bgColor} p-8 transition-all duration-300 group hover:shadow-lg overflow-hidden`}>
                 {/* Floating gradient background */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}

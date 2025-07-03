@@ -19,8 +19,8 @@ const HowItWorks = () => {
       borderColor: "border-blue-500/20",
       activeBgColor: "bg-blue-500/20",
       cardBg: "bg-blue-500/5 hover:bg-blue-500/10 hover:border-blue-500",
+      shadow: "hover:shadow-blue-500/20",
     },
-
     {
       title: t("step2_label"),
       description: t("step2_desc"),
@@ -31,6 +31,7 @@ const HowItWorks = () => {
       borderColor: "border-emerald-500/20",
       activeBgColor: "bg-emerald-500/20",
       cardBg: "bg-emerald-500/5 hover:bg-emerald-500/10 hover:border-emerald-500",
+      shadow: "hover:shadow-emerald-500/20",
     },
     {
       title: t("step3_label"),
@@ -42,9 +43,9 @@ const HowItWorks = () => {
       borderColor: "border-orange-500/20",
       activeBgColor: "bg-orange-500/20",
       cardBg: "bg-orange-500/5 hover:bg-orange-500/10 hover:border-orange-500",
+      shadow: "hover:shadow-orange-500/20",
     },
   ];
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -54,7 +55,6 @@ const HowItWorks = () => {
       },
     },
   };
-
   const cardVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -63,6 +63,36 @@ const HowItWorks = () => {
       transition: {
         duration: 0.5,
         ease: [0.16, 1, 0.3, 1],
+      },
+    },
+    hover: {
+      y: -5,
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 10,
+      },
+    },
+  };
+  const iconContainerVariants = {
+    initial: { scale: 1 },
+    hover: {
+      scale: 1.05,
+      transition: {
+        type: "spring",
+        stiffness: 500,
+        damping: 15,
+      },
+    },
+  };
+  const iconVariants = {
+    initial: { rotate: 0, scale: 1 },
+    hover: {
+      rotate: [0, 5, -5, 0],
+      scale: [1, 1.1, 1.1, 1],
+      transition: {
+        duration: 0.8,
+        ease: "easeInOut",
       },
     },
   };
@@ -90,36 +120,52 @@ const HowItWorks = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          className="grid md:grid-cols-3 gap-6">
           {steps.map((step, index) => (
             <motion.div
               key={index}
               variants={cardVariants}
-              className={`relative rounded-xl p-6 ${step.cardBg} group border ${step.borderColor} shadow-sm hover:shadow-md transition-all duration-300 h-full flex flex-col`}>
-              <div className={`flex items-center justify-center h-12 w-12 rounded-lg ${step.bgColor} mb-4`}>
-                <step.icon className={`h-6 w-6 ${step.color}`} />
+              whileHover="hover"
+              initial="visible"
+              className={`relative rounded-xl p-8 ${step.cardBg} group border ${step.borderColor} shadow-sm ${step.shadow} transition-all duration-300 h-full flex flex-col`}>
+              <div className="flex-1 mb-6">
+                <h3 className={`text-xl font-semibold mb-3 ${step.color}`}>{step.title}</h3>
+                <p className="text-background mb-5 text-sm leading-relaxed">{step.description}</p>
+
+                <ul className="space-y-3">
+                  {step.details.map((detail, i) => (
+                    <motion.li
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      whileHover={{ x: 3 }}
+                      className="flex items-start gap-2">
+                      <div
+                        className={`flex-shrink-0 mt-1 p-1 rounded-full ${step.bgColor} group-hover:${step.activeBgColor} transition-colors`}>
+                        <CheckIcon className={`h-3.5 w-3.5 ${step.color}`} />
+                      </div>
+                      <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-background transition-colors">
+                        {detail}
+                      </p>
+                    </motion.li>
+                  ))}
+                </ul>
               </div>
 
-              <h3 className={`text-xl font-semibold mb-2 ${step.color}`}>{step.title}</h3>
-              <p className="text-background mb-4">{step.description}</p>
+              <motion.div
+                variants={iconContainerVariants}
+                className={`flex justify-center items-center p-6 ${step.bgColor} rounded-xl mt-auto group-hover:${step.activeBgColor} transition-colors`}>
+                <motion.div variants={iconVariants} className="p-3">
+                  <step.icon className={`h-8 w-8 ${step.color}`} />
+                </motion.div>
+              </motion.div>
 
-              <ul className="space-y-2 mt-auto">
-                {step.details.map((detail, i) => (
-                  <motion.li
-                    key={i}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    className="flex items-start gap-2">
-                    <div className={`flex-shrink-0 mt-1 p-1 rounded-full ${step.bgColor}`}>
-                      <CheckIcon className={`h-3.5 w-3.5 ${step.color}`} />
-                    </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-background">
-                      {detail}
-                    </p>
-                  </motion.li>
-                ))}
-              </ul>
+              {/* Decorative elements */}
+              <div className="absolute inset-0 overflow-hidden rounded-xl blur-lg">
+                <div
+                  className={`absolute -right-10 -top-10 w-20 h-20 rounded-full ${step.bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+              </div>
             </motion.div>
           ))}
         </motion.div>

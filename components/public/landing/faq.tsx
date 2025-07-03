@@ -34,7 +34,7 @@ const Faq = () => {
   };
 
   return (
-    <section id="faq" className="relative py-16 px-4 sm:px-6 bg-background w-full">
+    <section id="faq" className="relative py-40 px-4 sm:px-6 bg-background w-full">
       <div className="max-w-3xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
