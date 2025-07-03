@@ -3,6 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { formatCurrency } from "@/utils/functions";
 import { IPlan } from "@/utils/pricing";
 import { motion } from "framer-motion";
 import { CheckIcon, ClockIcon } from "lucide-react";
@@ -88,7 +89,7 @@ const CardTemplate = ({ plan }: { plan: IPlan }) => {
           <p className="mt-2 text-muted-foreground text-sm">{plan.description}</p>
           <div className="mt-6">
             <div className="flex items-center">
-              <span className="text-4xl">${plan.price.amount}</span>
+              <span className="text-4xl">{formatCurrency("USD", plan.price.amount, "compact")}</span>
               {!plan.freeTrialDuration && (
                 <span className="ml-2 text-sm font-medium text-muted-foreground">/{t("month")}</span>
               )}

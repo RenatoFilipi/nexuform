@@ -280,11 +280,14 @@ export const getDateRangeFromToday = (intervalDays: number): { startDate: Date; 
 
   return { startDate, endDate };
 };
-export const formatCurrency = (currency: CurrencyCode, amount: number) => {
+export const formatCurrency = (currency: CurrencyCode, amount: number, display: "compact" | "full" = "full") => {
   try {
     const formatter = new Intl.NumberFormat(undefined, {
       style: "currency",
-      currency: currency,
+      currency,
+      notation: display === "compact" ? "compact" : "standard",
+      compactDisplay: display === "compact" ? "short" : undefined,
+      currencyDisplay: display === "compact" ? "narrowSymbol" : "symbol",
     });
     return formatter.format(amount);
   } catch (error) {

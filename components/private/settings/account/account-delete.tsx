@@ -1,5 +1,4 @@
 import { DeleteAccountAction } from "@/app/actions/auth";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -13,7 +12,6 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import useUserStore from "@/stores/user";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState } from "@/utils/types";
@@ -135,32 +133,6 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       <div className="flex justify-between items-center gap-4">
         <Button disabled={isPending} variant={"outline"} size={"sm"} onClick={() => setState(false)}>
           {t("label_cancel")}
-        </Button>
-      </div>
-    </div>
-  );
-
-  return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-4">
-        <div className="bg-foreground p-3 rounded text-background border-transparent">
-          <span className="text-sm font-semibold">{t("desc_delete_personal_account")}</span>
-        </div>
-        <div className="grid gap-3">
-          <Label htmlFor="account_email">{t("label_type_delete_personal_account")}</Label>
-          <Input id="account_email" type="email" value={value} onChange={(e) => setValue(e.target.value)} />
-        </div>
-        <Alert variant={"destructive"} className="p-4 bg-red-100">
-          <AlertDescription className="font-medium">{t("label_delete_personal_account_alert")}</AlertDescription>
-        </Alert>
-      </div>
-      <div className="flex justify-between items-center">
-        <Button disabled={isPending} variant={"outline"} size={"sm"} onClick={() => setState(false)}>
-          {t("label_cancel")}
-        </Button>
-        <Button disabled={email !== value || isPending} onClick={onDeleteAccount} variant={"destructive"} size={"sm"}>
-          {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
-          {t("label_delete_personal_account")}
         </Button>
       </div>
     </div>

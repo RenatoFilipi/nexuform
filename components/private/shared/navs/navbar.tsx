@@ -17,7 +17,7 @@ import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
-import { BoxesIcon, CircleHelpIcon, CircleUserIcon, LoaderIcon, MenuIcon, XIcon } from "lucide-react";
+import { BoxesIcon, CircleHelpIcon, CircleUserIcon, LoaderIcon, LogOutIcon, MenuIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -136,7 +136,7 @@ const AfterOrgNavbar = () => {
 const AvatarMenuDesk = () => {
   const t = useTranslations("app");
   const user = useUserStore();
-  const avatarName = user.email.slice(0, 1);
+  const avatarName = user.email.slice(0, 2);
 
   const resources = [
     { name: t("label_organizations"), path: "/dashboard/organizations", icon: BoxesIcon, enabled: true },
@@ -176,13 +176,16 @@ const AvatarMenuDesk = () => {
             );
           })}
         </div>
-        <div className="p-1 flex justify-between items-center">
+        <div className="p-1 px-2 flex justify-between items-center">
           <span className="text-sm">{t("label_theme")}</span>
           <ModeToggle2 />
         </div>
         <DropdownMenuSeparator />
-        <button onClick={signOutAction} className="p-1 text-sm flex w-full hover:bg-foreground/5">
+        <button
+          onClick={signOutAction}
+          className="p-2 text-sm flex items-center justify-between w-full hover:bg-destructive/5 hover:text-destructive">
           {t("label_logout")}
+          <LogOutIcon className="w-4 h-4" />
         </button>
       </DropdownMenuContent>
     </DropdownMenu>

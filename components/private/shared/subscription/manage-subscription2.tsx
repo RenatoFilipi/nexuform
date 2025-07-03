@@ -11,11 +11,13 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
+import { formatCurrency } from "@/utils/functions";
 import { IPlan, getPlans } from "@/utils/pricing";
 import { TSetState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { CheckIcon, ClockIcon } from "lucide-react";
+import { CheckIcon, ChevronLeftIcon, ClockIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -41,9 +43,14 @@ const ManageSubscription2 = ({ children }: { children: React.ReactNode }) => {
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const user = useUserStore();
+  const app = useAppStore();
   const [localPlans, setLocalPlans] = useState<IPlan[]>([]);
   const [intentPlan, setIntentPlan] = useState<IPlan | null>(null);
   const hasIntentPlan = intentPlan !== null;
+  const isUpdatingPlan =
+    app.subscription.stripe_subscription_id !== null &&
+    app.subscription.status !== "canceled" &&
+    app.subscription.plan !== "free_trial";
 
   const query = useQuery({
     queryKey: ["manage-subscription-modal"],
@@ -55,6 +62,9 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   });
 
   if (query.isPending) return null;
+
+  if (hasIntentPlan && !isUpdatingPlan) return <CheckoutNewPlan setPlan={setIntentPlan} plan={intentPlan} />;
+  if (hasIntentPlan && isUpdatingPlan) return <CheckoutUpdatePlan setPlan={setIntentPlan} plan={intentPlan} />;
 
   return (
     <div className="flex flex-col h-full gap-6 overflow-y-auto">
@@ -88,7 +98,7 @@ const PlanCard = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IPlan | n
             <p className="mt-2 text-muted-foreground text-sm">{plan.description}</p>
           </div>
           <div className="flex items-center">
-            <span className="text-4xl">${plan.price.amount}</span>
+            <span className="text-4xl">{formatCurrency("USD", plan.price.amount, "compact")}</span>
             {!plan.freeTrialDuration && (
               <span className="ml-2 text-sm font-medium text-muted-foreground">/{t("month")}</span>
             )}
@@ -130,8 +140,57 @@ const PlanCard = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IPlan | n
     </Card>
   );
 };
-const CheckoutDisplay = () => {
-  return <div></div>;
+const CheckoutNewPlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IPlan | null> }) => {
+  const t = useTranslations("app");
+  const app = useAppStore();
+
+  return (
+    <div className="flex flex-col h-full w-full gap-6">
+      <div className="grid sm:grid-cols-2 flex-1 h-full gap-6">
+        <Card className="relative p-8 rounded-2xl bg-gradient-to-br from-muted/20 to-background border border-muted/30 shadow-lg h-full flex flex-col justify-between w-full overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-30" />
+          <div className="relative z-10">
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="text-2xl font-bold tracking-tight capitalize">{plan.type.replace("_", " ")}</h3>
+                <p className="text-muted-foreground mt-1">{plan.description}</p>
+              </div>
+            </div>
+          </div>
+          <div className="relative z-10 mt-8 pt-6 border-t border-muted/30">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-muted-foreground">Selected plan</span>
+              <span className="font-medium capitalize">{plan.type.replace("_", " ")}</span>
+            </div>
+          </div>
+        </Card>
+
+        <div className="border flex justify-center items-center">Checkout page</div>
+      </div>
+      <div className="flex gap-4">
+        <Button onClick={() => setPlan(null)} variant={"ghost"} size={"sm"} className="">
+          <ChevronLeftIcon className="w-4 h-4 mr-1" />
+          {t("label_go_back")}
+        </Button>
+      </div>
+    </div>
+  );
+};
+const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IPlan | null> }) => {
+  const t = useTranslations("app");
+  const app = useAppStore();
+
+  return (
+    <div className="flex flex-col h-full w-full gap-6">
+      <Card className="flex justify-center items-center">Checkout update plan</Card>
+      <div className="flex gap-4">
+        <Button onClick={() => setPlan(null)} variant={"ghost"} size={"sm"} className="">
+          <ChevronLeftIcon className="w-4 h-4 mr-1" />
+          {t("label_go_back")}
+        </Button>
+      </div>
+    </div>
+  );
 };
 
 export default ManageSubscription2;
