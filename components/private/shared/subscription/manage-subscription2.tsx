@@ -1,5 +1,6 @@
 "use client";
 
+import { createCheckoutSessionAction } from "@/app/actions/stripe";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -16,10 +17,15 @@ import useUserStore from "@/stores/user";
 import { formatCurrency } from "@/utils/functions";
 import { IPlan, getPlans } from "@/utils/pricing";
 import { TSetState } from "@/utils/types";
+import { EmbeddedCheckout, EmbeddedCheckoutProvider } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import { useQuery } from "@tanstack/react-query";
 import { CheckIcon, ChevronLeftIcon, ClockIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTheme } from "next-themes";
 import { useState } from "react";
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const ManageSubscription2 = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations("app");
@@ -141,12 +147,19 @@ const PlanCard = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IPlan | n
   );
 };
 const CheckoutNewPlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IPlan | null> }) => {
+  const theme = useTheme();
   const t = useTranslations("app");
   const app = useAppStore();
+  const user = useUserStore();
+  const formData = new FormData();
+  formData.append("orgId", app.organization.id);
+  formData.append("plan", plan.type as string);
+  formData.append("customerId", user.profile.stripe_customer_id as string);
+  const currentTheme = theme.resolvedTheme as string;
 
   return (
-    <div className="flex flex-col h-full w-full gap-6">
-      <div className="grid sm:grid-cols-2 flex-1 h-full gap-6">
+    <div className="flex flex-col h-full w-full gap-6 overflow-y-auto">
+      <div className="grid sm:grid-cols-2 flex-1 h-full gap-6 overflow-y-auto">
         <Card className="relative p-8 rounded-2xl bg-gradient-to-br from-muted/20 to-background border border-muted/30 shadow-lg h-full flex flex-col justify-between w-full overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-30" />
           <div className="relative z-10">
@@ -164,8 +177,13 @@ const CheckoutNewPlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IP
             </div>
           </div>
         </Card>
-
-        <div className="border flex justify-center items-center">Checkout page</div>
+        <div id="checkout" className="overflow-y-auto rounded flex w-full flex-col justify-start">
+          <EmbeddedCheckoutProvider
+            stripe={stripePromise}
+            options={{ fetchClientSecret: () => createCheckoutSessionAction(formData) }}>
+            <EmbeddedCheckout />
+          </EmbeddedCheckoutProvider>
+        </div>
       </div>
       <div className="flex gap-4">
         <Button onClick={() => setPlan(null)} variant={"ghost"} size={"sm"} className="">

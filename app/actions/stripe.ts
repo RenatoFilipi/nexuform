@@ -7,8 +7,8 @@ export const createCheckoutSessionAction = async (formData: FormData) => {
   const origin = (await headers()).get("origin");
   const customerId = formData.get("customerId") as string;
   const orgId = formData.get("orgId") as string;
-  const plan = formData.get("plan") as "basic" | "pro";
-  const priceId = plan === "basic" ? process.env.STRIPE_STARTER_PRICE_ID! : process.env.STRIPE_PRO_PRICE_ID!;
+  const plan = formData.get("plan") as "starter" | "pro";
+  const priceId = plan === "starter" ? process.env.STRIPE_STARTER_PRICE_ID! : process.env.STRIPE_PRO_PRICE_ID!;
 
   const session = await stripe.checkout.sessions.create({
     customer: customerId,
