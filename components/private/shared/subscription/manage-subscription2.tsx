@@ -159,8 +159,8 @@ const CheckoutNewPlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IP
           </div>
           <div className="relative z-10 mt-8 pt-6 border-t border-muted/30">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Selected plan</span>
               <span className="font-medium capitalize">{plan.type.replace("_", " ")}</span>
+              <span className="text-sm text-muted-foreground">{formatCurrency("USD", plan.price.amount, "full")}</span>
             </div>
           </div>
         </Card>
