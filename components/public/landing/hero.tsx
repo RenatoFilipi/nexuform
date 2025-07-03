@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRightIcon, CheckIcon, ZapIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import Link from "next/link";
 
 const Hero = () => {
@@ -67,9 +68,12 @@ const Hero = () => {
           <div className="relative mt-8 overflow-hidden">
             <div className="relative mx-auto max-w-5xl">
               <div className="relative rounded-t-2xl border border-b-0 border-foreground/20 bg-foreground/5 p-2 shadow-2xl h-80 overflow-hidden">
-                <img
-                  src="/hero.png"
-                  alt="FormCraft Dashboard - Drag and drop form builder interface"
+                <Image
+                  width={1912}
+                  height={932}
+                  loading="lazy"
+                  src="/hero-d.png"
+                  alt="NexuForm"
                   className="w-full rounded-t-xl object-cover object-top"
                 />
               </div>

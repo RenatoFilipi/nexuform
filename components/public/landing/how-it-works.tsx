@@ -20,7 +20,7 @@ const HowItWorks = () => {
       borderColor: "border-indigo-200 hover:border-indigo-400 dark:border-indigo-500/30 dark:hover:border-indigo-400",
       accent: "from-indigo-100 to-purple-100 dark:from-indigo-600 dark:to-purple-600",
       bgColor:
-        "bg-gradient-to-br from-indigo-50 to-purple-50 hover:from-indigo-100 hover:to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/20 dark:hover:from-indigo-900/40 dark:hover:to-purple-900/30",
+        "bg-gradient-to-br from-indigo-50 to-purple-50 hover:from-indigo-100 hover:to-purple-100 dark:from-indigo-900/10 dark:to-purple-900/20 dark:hover:from-indigo-900/40 dark:hover:to-purple-900/30",
       highlight: "bg-indigo-100 dark:bg-indigo-500/10",
     },
     {
@@ -28,24 +28,24 @@ const HowItWorks = () => {
       description: t("step2_desc"),
       icon: Share2Icon,
       details: [t("step2_topic1"), t("step2_topic2"), t("step2_topic3")],
-      color: "text-teal-600 dark:text-teal-300",
-      borderColor: "border-teal-200 hover:border-teal-400 dark:border-teal-500/30 dark:hover:border-teal-400",
-      accent: "from-teal-100 to-emerald-100 dark:from-teal-600 dark:to-emerald-600",
+      color: "text-green-600 dark:text-green-300",
+      borderColor: "border-green-200 hover:border-green-400 dark:border-green-500/30 dark:hover:border-green-400",
+      accent: "from-green-100 to-emerald-100 dark:from-green-600 dark:to-emerald-600",
       bgColor:
-        "bg-gradient-to-br from-teal-50 to-emerald-50 hover:from-teal-100 hover:to-emerald-100 dark:from-teal-900/30 dark:to-emerald-900/20 dark:hover:from-teal-900/40 dark:hover:to-emerald-900/30",
-      highlight: "bg-teal-100 dark:bg-teal-500/10",
+        "bg-gradient-to-br from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 dark:from-green-900/10 dark:to-emerald-900/20 dark:hover:from-green-900/40 dark:hover:to-emerald-900/30",
+      highlight: "bg-green-100 dark:bg-green-500/10",
     },
     {
       title: t("step3_label"),
       description: t("step3_desc"),
       icon: SendIcon,
       details: [t("step3_topic1"), t("step3_topic2"), t("step3_topic3")],
-      color: "text-amber-600 dark:text-amber-300",
-      borderColor: "border-amber-200 hover:border-amber-400 dark:border-amber-500/30 dark:hover:border-amber-400",
-      accent: "from-amber-100 to-orange-100 dark:from-amber-600 dark:to-orange-600",
+      color: "text-yellow-600 dark:text-yellow-300",
+      borderColor: "border-yellow-200 hover:border-yellow-400 dark:border-yellow-500/30 dark:hover:border-yellow-400",
+      accent: "from-yellow-100 to-amber-100 dark:from-yellow-600 dark:to-amber-600",
       bgColor:
-        "bg-gradient-to-br from-amber-50 to-orange-50 hover:from-amber-100 hover:to-orange-100 dark:from-amber-900/30 dark:to-orange-900/20 dark:hover:from-amber-900/40 dark:hover:to-orange-900/30",
-      highlight: "bg-amber-100 dark:bg-amber-500/10",
+        "bg-gradient-to-br from-yellow-50 to-amber-50 hover:from-yellow-100 hover:to-amber-100 dark:from-yellow-900/10 dark:to-amber-900/20 dark:hover:from-yellow-900/40 dark:hover:to-amber-900/30",
+      highlight: "bg-yellow-100 dark:bg-yellow-500/10",
     },
   ];
   const containerVariants = {
@@ -208,7 +208,7 @@ const HowItWorks = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
           viewport={{ once: true }}
-          className="mt-20 text-center">
+          className="mt-32 mb-10 text-center">
           <p className="text-lg text-muted-foreground mb-6">
             {t("htw_cta_text")} <span className="text-foreground font-semibold">{t("htw_cta_highlight")}</span>
           </p>

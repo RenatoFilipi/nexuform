@@ -21,7 +21,6 @@ const Cta = () => {
         {/* Texto superior em uppercase */}
         <motion.span
           className="uppercase tracking-wider text-xs font-mono text-white/70"
-          initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.1, duration: 0.4 }}>
           {t("cta_label")}
@@ -31,7 +30,6 @@ const Cta = () => {
           {/* Headline destacada */}
           <motion.h2
             className="text-3xl font-bold tracking-tight text-white"
-            initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}>
             {t("cta_headline")}
@@ -40,7 +38,6 @@ const Cta = () => {
           {/* Subheadline */}
           <motion.p
             className="text-base text-white/70 max-w-2xl mx-auto leading-relaxed font-medium"
-            initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}>
             {t("cta_subheadline")}
@@ -48,12 +45,7 @@ const Cta = () => {
         </div>
 
         {/* Botão CTA */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4, duration: 0.4 }}
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.98 }}>
+        <motion.div transition={{ delay: 0.4, duration: 0.4 }} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
           <Button asChild size="lg" className="text-base px-6 py-3 mt-6" variant={"secondary"}>
             <Link href="/signup">
               {t("cta_get_started")}
