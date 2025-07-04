@@ -508,7 +508,9 @@
     "required_first_name": "Nombre es obligatorio",
     "required_last_name": "Apellido es obligatorio",
     "label_login_headline": "Bienvenido de nuevo",
-    "desc_login_headline": "Ingrese sus credenciales para acceder a su cuenta"
+    "desc_login_headline": "Ingrese sus credenciales para acceder a su cuenta",
+    "label_signup_headline": "Crea tu cuenta",
+    "desc_signup_headline": "Completa tus datos para explorar todo lo que ofrecemos"
   },
   "landing": {
     "nav_features": "Características",

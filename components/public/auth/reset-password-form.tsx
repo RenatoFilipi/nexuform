@@ -6,7 +6,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { CheckIcon, LoaderIcon, MailIcon } from "lucide-react";
+import { CheckIcon, LoaderIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useQueryState } from "nuqs";
@@ -65,43 +65,43 @@ const ResetPasswordForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-6 justify-center items-center">
-        <div className="flex justify-start w-full flex-col gap-2">
-          <h1 className="text-xl font-medium">{t("label_reset_password")}</h1>
-          <span className="text-sm text-foreground/80">{t("desc_reset_password")}</span>
-        </div>
-        <div className="flex flex-col gap-3 w-full">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel htmlFor="email">{t("label_email")}</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <Input id="email" type="email" {...field} />
-                    <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-muted-foreground/80 peer-disabled:opacity-50">
-                      <MailIcon size={16} strokeWidth={2} aria-hidden="true" />
-                    </div>
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="flex flex-col w-full gap-6">
-          <Button disabled={isPending} variant="default" type="submit" size="sm" className="w-full">
-            {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
-            {t("label_reset_password")}
-          </Button>
-          <div className="flex justify-center items-center w-full">
-            <Link href={"/login"} className="hover:underline text-blue-600 text-sm">
-              {t("label_go_back_login")}
-            </Link>
+      <div className="flex sm:max-w-xl w-full justify-center items-center p-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-6 justify-center items-center">
+          <div className="flex justify-start w-full flex-col gap-2">
+            <h1 className="text-xl font-medium">{t("label_reset_password")}</h1>
+            <span className="text-sm text-foreground/80">{t("desc_reset_password")}</span>
           </div>
-        </div>
-      </form>
+          <div className="flex flex-col gap-3 w-full">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="email">{t("label_email")}</FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <Input id="email" type="email" {...field} />
+                      <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-muted-foreground/80 peer-disabled:opacity-50"></div>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex flex-col w-full gap-6">
+            <Button disabled={isPending} variant="default" type="submit" size="sm" className="w-full">
+              {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
+              {t("label_reset_password")}
+            </Button>
+            <div className="flex justify-center items-center w-full">
+              <Link href={"/login"} className="hover:underline text-muted-foreground text-sm">
+                {t("label_go_back_login")}
+              </Link>
+            </div>
+          </div>
+        </form>
+      </div>
     </Form>
   );
 };

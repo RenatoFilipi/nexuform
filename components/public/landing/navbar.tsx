@@ -39,7 +39,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`fixed top-0 w-full px-3 z-20 backdrop-blur-sm transition-all duration-300 ${
+      className={`fixed top-0 w-full px-3 z-20 backdrop-blur-xl transition-all duration-300 ${
         scrolled ? "bg-background/90 shadow py-4" : "bg-background/0 py-4"
       }`}>
       <div className="w-full flex justify-between md:justify-between items-center transition-all duration-300 sm:px-28">
