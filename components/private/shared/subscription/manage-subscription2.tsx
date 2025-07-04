@@ -35,7 +35,7 @@ const ManageSubscription2 = ({ children }: { children: React.ReactNode }) => {
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogOverlay className="backdrop-blur-sm">
-        <AlertDialogContent className="flex flex-col w-full max-w-5xl max-h-[90%] h-full overflow-y-auto">
+        <AlertDialogContent className="flex flex-col w-full max-w-5xl max-h-[95%] h-full overflow-y-auto">
           <AlertDialogHeader className="">
             <AlertDialogTitle className="">{t("label_manage_sub")}</AlertDialogTitle>
             <AlertDialogDescription>{t("desc_manage_sub")}</AlertDialogDescription>
@@ -160,7 +160,7 @@ const CheckoutNewPlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IP
   return (
     <div className="flex flex-col h-full w-full gap-6 overflow-y-auto">
       <div className="grid sm:grid-cols-2 flex-1 h-full gap-6 overflow-y-auto">
-        <Card className="relative p-8 rounded-2xl bg-gradient-to-br from-muted/20 to-background border border-muted/30 shadow-lg h-full flex flex-col justify-between w-full overflow-hidden">
+        <Card className="relative p-8 rounded-2xl bg-gradient-to-br from-muted/20 to-background border border-muted/30 shadow-lg h-full flex flex-col justify-between w-full overflow-hidden gap-4 overflow-y-auto">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-30" />
           <div className="relative z-10">
             <div className="flex justify-between items-start">
@@ -170,20 +170,30 @@ const CheckoutNewPlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IP
               </div>
             </div>
           </div>
-          <div className="relative z-10 mt-8 pt-6 border-t border-muted/30">
+          <div className="flex flex-1 flex-col gap-2 mt-2">
+            {plan.features.map((feat) => {
+              return (
+                <div key={feat.description} className="flex justify-start items-center gap-3">
+                  <CheckIcon className="w-4 h-4" />
+                  <span className="text-xs text-muted-foreground">{feat.description}</span>
+                </div>
+              );
+            })}
+          </div>
+          <div className="relative z-10 pt-6 border-t border-muted/30">
             <div className="flex items-center justify-between">
               <span className="font-medium capitalize">{plan.type.replace("_", " ")}</span>
               <span className="text-sm text-muted-foreground">{formatCurrency("USD", plan.price.amount, "full")}</span>
             </div>
           </div>
         </Card>
-        <div id="checkout" className="overflow-y-auto rounded flex w-full flex-col justify-start">
+        <Card id="checkout" className="overflow-y-auto">
           <EmbeddedCheckoutProvider
             stripe={stripePromise}
             options={{ fetchClientSecret: () => createCheckoutSessionAction(formData) }}>
             <EmbeddedCheckout />
           </EmbeddedCheckoutProvider>
-        </div>
+        </Card>
       </div>
       <div className="flex gap-4">
         <Button onClick={() => setPlan(null)} variant={"ghost"} size={"sm"} className="">
