@@ -1,5 +1,6 @@
 "use client";
 
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import useAppStore from "@/stores/app";
@@ -8,6 +9,7 @@ import { EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/ut
 import { useQuery } from "@tanstack/react-query";
 import { PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import WipUI from "../../shared/custom/wip-ui";
 
 interface IProps {
   locale: string;
@@ -59,13 +61,37 @@ const MembersWrapper = (props: IProps) => {
   );
 };
 const MemberProfile = () => {
-  return <Card className="">Profile</Card>;
+  const t = useTranslations("app");
+  const app = useAppStore();
+  const user = useUserStore();
+  const avatarName = `${user.profile.first_name.slice(0, 1)}${user.profile.last_name.slice(0, 1)}`.toUpperCase();
+  const fullName = `${app.teamMemberProfile.name} ${app.teamMemberProfile.last_name}`;
+  const isOrgOwner = app.organization.owner_id === app.teamMemberProfile.profile_id;
+
+  return (
+    <Card className="p-5 flex justify-between items-center w-full">
+      <div className="flex justify-center items-center gap-4">
+        <Avatar>
+          <AvatarFallback>{avatarName}</AvatarFallback>
+        </Avatar>
+        <div className="flex flex-col justify-center items-start gap-1">
+          <span>{fullName}</span>
+          <span className="text-sm">{app.teamMemberProfile.email}</span>
+          <div>{isOrgOwner && <span className="text-xs text-muted-foreground">Owner</span>}</div>
+        </div>
+      </div>
+      <div>
+        <Button variant={"outline"} size={"sm"}>
+          Update Profile
+        </Button>
+      </div>
+    </Card>
+  );
 };
 const MemberList = () => {
   return (
     <div>
-      <div>header</div>
-      <Card>Members list</Card>
+      <WipUI context="List of members" />
     </div>
   );
 };

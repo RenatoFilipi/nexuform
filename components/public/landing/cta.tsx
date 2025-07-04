@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { ArrowUpRightIcon } from "lucide-react";
+import { ArrowRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
@@ -49,7 +49,7 @@ const Cta = () => {
           <Button asChild size="lg" className="text-base px-6 py-3 mt-6" variant={"secondary"}>
             <Link href="/signup">
               {t("cta_get_started")}
-              <ArrowUpRightIcon className="w-4 h-4 ml-2" />
+              <ArrowRightIcon className="w-4 h-4 ml-2" />
             </Link>
           </Button>
         </motion.div>

@@ -40,7 +40,7 @@ const Navbar = () => {
   return (
     <div
       className={`fixed top-0 w-full px-3 z-20 backdrop-blur-xl transition-all duration-300 ${
-        scrolled ? "bg-background/90 shadow py-4" : "bg-background/0 py-4"
+        scrolled ? "bg-background/90 shadow py-3" : "bg-background/0 py-3"
       }`}>
       <div className="w-full flex justify-between md:justify-between items-center transition-all duration-300 sm:px-28">
         <div className="flex items-center gap-8">
@@ -52,14 +52,14 @@ const Navbar = () => {
               <Link
                 key={section.name}
                 href={section.id}
-                className="text-sm text-foreground hover:text-primary transition-colors font-medium">
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">
                 {section.name}
               </Link>
             ))}
           </div>
         </div>
         <div className="hidden md:flex items-center gap-4">
-          <Button variant="ghost" size="sm" asChild>
+          <Button variant="outline" size="sm" asChild>
             <Link href="/login">{t("label_login")}</Link>
           </Button>
           <Button variant="secondary" size="sm" asChild>
