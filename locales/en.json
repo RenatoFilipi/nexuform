@@ -506,7 +506,9 @@
     "label_first_name": "First name",
     "label_last_name": "Last name",
     "required_first_name": "First name is required",
-    "required_last_name": "Last name is required"
+    "required_last_name": "Last name is required",
+    "label_login_headline": "Welcome back",
+    "desc_login_headline": "Enter your credentials to access your account"
   },
   "landing": {
     "nav_features": "Features",

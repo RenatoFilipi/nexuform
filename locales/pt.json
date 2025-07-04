@@ -506,7 +506,9 @@
     "label_first_name": "Nome",
     "label_last_name": "Sobrenome",
     "required_first_name": "Nome é obrigatório",
-    "required_last_name": "Sobrenome é obrigatório"
+    "required_last_name": "Sobrenome é obrigatório",
+    "label_login_headline": "Bem-vindo de volta",
+    "desc_login_headline": "Insira suas credenciais para acessar sua conta"
   },
   "landing": {
     "nav_features": "Recursos",

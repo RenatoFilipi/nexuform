@@ -14,7 +14,7 @@ const Hero = () => {
   return (
     <section className="relative overflow-hidden py-20 md:pt-48 pb-0 w-full">
       <div className="absolute top-0 left-0 w-full h-full z-0 overflow-hidden">
-        <div className="absolute -bottom-[150px] w-full h-[450px] rounded-full dark:bg-primary/40 bg-primary/30 blur-3xl animate-float-delay hidden sm:flex" />
+        <div className="absolute -bottom-[150px] w-full h-[470px] rounded-full dark:bg-primary/40 bg-primary/80 blur-3xl animate-float-delay hidden sm:flex" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-transparent via-background/10 to-background" />
       </div>
       <motion.div
