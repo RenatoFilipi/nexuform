@@ -80,11 +80,6 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   return (
     <div className="flex flex-1 flex-col justify-between gap-6">
       <div className="relative p-8 rounded-2xl bg-gradient-to-br from-muted/20 to-background border border-muted/30 shadow-lg h-full flex flex-col justify-center items-center w-full overflow-hidden">
-        {/* Adicione pointer-events-none aqui */}
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="absolute -top-20 -left-20 w-40 h-40 bg-primary/30 rounded-full blur-xl"></div>
-          <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-secondary/30 rounded-full blur-xl"></div>
-        </div>
         <div className="flex justify-center items-center py-8 flex-col gap-8">
           <div className="flex justify-center items-center gap-12 relative">
             <motion.div
