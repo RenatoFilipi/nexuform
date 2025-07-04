@@ -270,6 +270,7 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
+          email: string
           first_name: string
           free_trial_due_date: string | null
           full_name: string | null
@@ -283,6 +284,7 @@ export type Database = {
         }
         Insert: {
           avatar_url?: string | null
+          email?: string
           first_name?: string
           free_trial_due_date?: string | null
           full_name?: string | null
@@ -296,6 +298,7 @@ export type Database = {
         }
         Update: {
           avatar_url?: string | null
+          email?: string
           first_name?: string
           free_trial_due_date?: string | null
           full_name?: string | null
@@ -454,7 +457,9 @@ export type Database = {
       team_member_profiles: {
         Row: {
           created_at: string
+          email: string
           id: string
+          last_name: string
           name: string
           org_id: string
           permissions: string[]
@@ -464,7 +469,9 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          email?: string
           id?: string
+          last_name?: string
           name?: string
           org_id: string
           permissions: string[]
@@ -474,7 +481,9 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          email?: string
           id?: string
+          last_name?: string
           name?: string
           org_id?: string
           permissions?: string[]

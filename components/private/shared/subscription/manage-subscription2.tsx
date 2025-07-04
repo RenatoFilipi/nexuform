@@ -22,7 +22,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useQuery } from "@tanstack/react-query";
 import { CheckIcon, ChevronLeftIcon, ClockIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useTheme } from "next-themes";
 import { useState } from "react";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
@@ -147,7 +146,6 @@ const PlanCard = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IPlan | n
   );
 };
 const CheckoutNewPlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IPlan | null> }) => {
-  const theme = useTheme();
   const t = useTranslations("app");
   const app = useAppStore();
   const user = useUserStore();
@@ -155,7 +153,6 @@ const CheckoutNewPlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IP
   formData.append("orgId", app.organization.id);
   formData.append("plan", plan.type as string);
   formData.append("customerId", user.profile.stripe_customer_id as string);
-  const currentTheme = theme.resolvedTheme as string;
 
   return (
     <div className="flex flex-col h-full w-full gap-6 overflow-y-auto">

@@ -136,7 +136,8 @@ const AfterOrgNavbar = () => {
 const AvatarMenuDesk = () => {
   const t = useTranslations("app");
   const user = useUserStore();
-  const avatarName = user.email.slice(0, 2);
+  const app = useAppStore();
+  const avatarName = `${user.profile.first_name.slice(0, 1)}${user.profile.last_name.slice(0, 1)}`.toUpperCase();
 
   const resources = [
     { name: t("label_organizations"), path: "/dashboard/organizations", icon: BoxesIcon, enabled: true },

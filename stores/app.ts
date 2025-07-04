@@ -123,6 +123,8 @@ const useAppStore = create<IProps>((set) => ({
     profile_id: "",
     permissions: [],
     role: "",
+    last_name: "",
+    email: "",
   },
   setForm: (p) => set({ form: p }),
   setOrganization: (p) => set({ organization: p }),

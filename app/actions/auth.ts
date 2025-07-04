@@ -44,6 +44,7 @@ export const signUpAction = async (formData: FormData) => {
       data: {
         first_name,
         last_name,
+        email,
       },
     },
   });
