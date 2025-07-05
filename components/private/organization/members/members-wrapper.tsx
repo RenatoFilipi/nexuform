@@ -7,7 +7,7 @@ import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
 import { EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowUpRightIcon, CheckCircle2Icon, UserPlus2Icon, UsersIcon } from "lucide-react";
+import { ArrowUpRightIcon, CheckCircle2Icon, UserPlus2Icon, UsersIcon, ZapIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import WipUI from "../../shared/custom/wip-ui";
 import { Badge } from "@/components/ui/badge";
@@ -110,7 +110,7 @@ const UpgradeToPro = () => {
         <div className="flex flex-col space-y-4">
           <div className="flex items-center gap-3">
             <div className="rounded-lg bg-white/20 p-2 backdrop-blur-sm">
-              <UsersIcon className="h-6 w-6 text-white" />
+              <ZapIcon className="h-6 w-6 text-white" />
             </div>
             <h3 className="text-xl font-bold">{t("label_upgrade_pro")}</h3>
           </div>

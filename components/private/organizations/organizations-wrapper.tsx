@@ -66,18 +66,18 @@ const OrganizationsCard = (props: ICardProps) => {
 
   return (
     <a href={orgPath}>
-      <Card className="flex h-20 p-5 justify-between items-center border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm cursor-pointer">
-        <div className="flex justify-center items-center gap-4">
-          <div className="flex justify-center items-center p-2 bg-foreground/5 rounded">
-            <BoxesIcon className="w-5 h-5" />
-          </div>
-          <div className="flex flex-col">
+      <Card className="flex flex-col justify-between h-44 p-4 border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm cursor-pointer">
+        <div className="flex justify-between items-start w-full">
+          <div className="flex justify-start items-center gap-3">
+            <div className="flex justify-center items-center p-2 bg-foreground/5 rounded w-fit">
+              <BoxesIcon className="w-5 h-5" />
+            </div>
             <span className="text-sm font-semibold">{organization.name}</span>
-            <span className="text-xs text-muted-foreground">{plan}</span>
           </div>
-        </div>
-        <div className="">
           <OrganizationStatusBadge status={organization.status as TOrganizationStatus} />
+        </div>
+        <div>
+          <span className="text-sm text-muted-foreground">{plan}</span>
         </div>
       </Card>
     </a>
