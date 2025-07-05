@@ -457,7 +457,11 @@
     "label_organization": "Organización",
     "desc_organization_settings": "Administra la configuración general de tu organización en { name }.",
     "label_name": "Nombre",
-    "success_generic": "Operación completada con éxito."
+    "success_generic": "Operación completada con éxito.",
+    "label_up_members": "Desbloquee funciones avanzadas de gestión de miembros para controlar mejor el acceso y los permisos de su organización.",
+    "label_members_feat_01": "Capacidades completas de gestión de miembros",
+    "label_members_feat_02": "Controles avanzados de permisos",
+    "label_members_feat_03": "Gestión de acceso basada en roles"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

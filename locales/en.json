@@ -457,7 +457,11 @@
     "label_organization": "Organization",
     "desc_organization_settings": "Manage your organization’s general settings in { name }.",
     "label_name": "Name",
-    "success_generic": "Operation completed successfully."
+    "success_generic": "Operation completed successfully.",
+    "label_up_members": "Unlock advanced member management features to better control your organization's access and permissions.",
+    "label_members_feat_01": "Full member management capabilities",
+    "label_members_feat_02": "Advanced permission controls",
+    "label_members_feat_03": "Role-based access management"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

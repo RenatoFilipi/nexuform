@@ -26,7 +26,9 @@ import { useState } from "react";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-const ManageSubscription2 = ({ children }: { children: React.ReactNode }) => {
+type TSelected = "starter" | "pro";
+
+const ManageSubscription2 = ({ children, selected }: { children: React.ReactNode; selected?: TSelected }) => {
   const t = useTranslations("app");
   const [open, setOpen] = useState(false);
 
@@ -39,13 +41,13 @@ const ManageSubscription2 = ({ children }: { children: React.ReactNode }) => {
             <AlertDialogTitle className="">{t("label_manage_sub")}</AlertDialogTitle>
             <AlertDialogDescription>{t("desc_manage_sub")}</AlertDialogDescription>
           </AlertDialogHeader>
-          <Body setState={setOpen} />
+          <Body setState={setOpen} selected={selected} />
         </AlertDialogContent>
       </AlertDialogOverlay>
     </AlertDialog>
   );
 };
-const Body = ({ setState }: { setState: TSetState<boolean> }) => {
+const Body = ({ setState, selected }: { setState: TSetState<boolean>; selected?: TSelected }) => {
   const t = useTranslations("app");
   const user = useUserStore();
   const app = useAppStore();
@@ -62,6 +64,8 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     queryFn: async () => {
       const plans = (await getPlans(user.locale)).filter((x) => x.type !== "free_trial");
       setLocalPlans(plans);
+      if (selected === "starter") setIntentPlan(plans.find((x) => x.type === "starter") as IPlan);
+      if (selected === "pro") setIntentPlan(plans.find((x) => x.type === "pro") as IPlan);
       return null;
     },
   });
