@@ -27,18 +27,21 @@ const SubmissionStatus = ({ submission, setState }: { submission: ESubmission; s
       label: t("label_reviewed"),
       value: "reviewed",
       description: t("desc_reviewed"),
+      enabled: true,
     },
     {
       button: t("label_mark_not_reviewed"),
       label: t("label_not_reviewed"),
       value: "not_reviewed",
       description: t("desc_not_reviewed"),
+      enabled: true,
     },
     {
       button: t("label_mark_ignored"),
       label: t("label_ignored"),
       value: "ignored",
       description: t("desc_ignored"),
+      enabled: false,
     },
   ];
   const getDefaultIndex = (status: TSubmissionStatus) => {
@@ -104,14 +107,16 @@ const SubmissionStatus = ({ submission, setState }: { submission: ESubmission; s
         </DropdownMenuTrigger>
         <DropdownMenuContent className="max-w-64 md:max-w-xs" side="bottom" sideOffset={4} align="end">
           <DropdownMenuRadioGroup value={selectedIndex} onValueChange={setSelectedIndex}>
-            {options.map((option, index) => (
-              <DropdownMenuRadioItem key={option.label} value={String(index)} className="items-start [&>span]:pt-1.5">
-                <div className="flex flex-col gap-1">
-                  <span className="text-sm font-medium">{option.label}</span>
-                  <span className="text-xs text-muted-foreground">{option.description}</span>
-                </div>
-              </DropdownMenuRadioItem>
-            ))}
+            {options
+              .filter((s) => s.enabled)
+              .map((option, index) => (
+                <DropdownMenuRadioItem key={option.label} value={String(index)} className="items-start [&>span]:pt-1.5">
+                  <div className="flex flex-col gap-1">
+                    <span className="text-sm font-medium">{option.label}</span>
+                    <span className="text-xs text-muted-foreground">{option.description}</span>
+                  </div>
+                </DropdownMenuRadioItem>
+              ))}
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenu>

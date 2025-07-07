@@ -94,14 +94,30 @@ const SubmissionsList = () => {
   const [status, setStatus] = useQueryState("status", { defaultValue: "all" });
   const [pagination, setPagination] = useState<IPagination>({ from: paginationFrom, to: paginationTo });
   const statusButtons = [
-    { label: t("label_all"), status: "all", icon: <div className="h-2 w-2 rounded-full bg-foreground"></div> },
-    { label: t("label_reviewed"), status: "reviewed", icon: <div className="h-2 w-2 rounded-full bg-success"></div> },
+    {
+      label: t("label_all"),
+      status: "all",
+      icon: <div className="h-2 w-2 rounded-full bg-foreground"></div>,
+      enabled: true,
+    },
+    {
+      label: t("label_reviewed"),
+      status: "reviewed",
+      icon: <div className="h-2 w-2 rounded-full bg-success"></div>,
+      enabled: true,
+    },
     {
       label: t("label_not_reviewed"),
       status: "not_reviewed",
       icon: <div className="h-2 w-2 rounded-full bg-warning"></div>,
+      enabled: true,
     },
-    { label: t("label_ignored"), status: "ignored", icon: <div className="h-2 w-2 rounded-full bg-gray-400"></div> },
+    {
+      label: t("label_ignored"),
+      status: "ignored",
+      icon: <div className="h-2 w-2 rounded-full bg-gray-400"></div>,
+      enabled: false,
+    },
   ];
   const filteredSubmissions = app.submissions.filter((submission) => {
     if (status === "all") return true;
@@ -145,21 +161,23 @@ const SubmissionsList = () => {
         <span className="font-semibold text-lg sm:text-xl">{t("label_submissions")}</span>
         <div className="flex w-full sm:w-fit justify-start overflow-x-auto">
           <div className="flex justify-center items-center gap-2">
-            {statusButtons.map((x) => {
-              return (
-                <Button
-                  key={x.status}
-                  variant={"outline"}
-                  size={"sm"}
-                  className={`${
-                    status === x.status ? "bg-foreground/10 text-foreground" : "text-muted-foreground"
-                  } flex justify-center items-center gap-2 w-full sm:w-fit text-sm`}
-                  onClick={() => setStatus(x.status)}>
-                  {x.icon}
-                  {x.label}
-                </Button>
-              );
-            })}
+            {statusButtons
+              .filter((s) => s.enabled)
+              .map((x) => {
+                return (
+                  <Button
+                    key={x.status}
+                    variant={"outline"}
+                    size={"sm"}
+                    className={`${
+                      status === x.status ? "bg-foreground/10 text-foreground" : "text-muted-foreground"
+                    } flex justify-center items-center gap-2 w-full sm:w-fit text-sm`}
+                    onClick={() => setStatus(x.status)}>
+                    {x.icon}
+                    {x.label}
+                  </Button>
+                );
+              })}
           </div>
         </div>
       </div>
