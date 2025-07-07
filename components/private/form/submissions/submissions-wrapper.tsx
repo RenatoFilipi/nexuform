@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
+import { paginationFrom, paginationRange, paginationTo } from "@/utils/constants";
 import {
   EBlock,
   EForm,
@@ -16,11 +17,15 @@ import {
   ETeamMemberProfile,
 } from "@/utils/entities";
 import { formatDateRelativeToNow, formatTime } from "@/utils/functions";
+import { IPagination } from "@/utils/interfaces";
+import { createClient } from "@/utils/supabase/client";
 import { TSubmissionStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { ClockIcon, SendIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
+import { useState } from "react";
+import { toast } from "sonner";
 import SubmissionDetails from "./submission-details";
 
 interface IProps {
@@ -83,9 +88,11 @@ const SubmissionsNoData = () => {
 };
 const SubmissionsList = () => {
   const t = useTranslations("app");
+  const supabase = createClient();
   const user = useUserStore();
   const app = useAppStore();
   const [status, setStatus] = useQueryState("status", { defaultValue: "all" });
+  const [pagination, setPagination] = useState<IPagination>({ from: paginationFrom, to: paginationTo });
   const statusButtons = [
     { label: t("label_all"), status: "all", icon: <div className="h-2 w-2 rounded-full bg-foreground"></div> },
     { label: t("label_reviewed"), status: "reviewed", icon: <div className="h-2 w-2 rounded-full bg-success"></div> },
@@ -100,6 +107,37 @@ const SubmissionsList = () => {
     if (status === "all") return true;
     return submission.status === status;
   });
+  const fetchSubmissions = async (newPagination = pagination) => {
+    let submissions = await supabase
+      .from("submissions")
+      .select("*")
+      .eq("form_id", app.form.id)
+      .order("created_at", { ascending: false })
+      .range(newPagination.from, newPagination.to);
+
+    if (submissions.error) {
+      toast.error(t("err_generic"));
+      return;
+    }
+
+    app.setSubmissions(submissions.data);
+  };
+  const handleNext = async () => {
+    const nextFrom = pagination.from + paginationRange + 1;
+    const nextTo = pagination.to + paginationRange + 1;
+    const newPagination = { from: nextFrom, to: nextTo };
+    setPagination(newPagination);
+    await fetchSubmissions(newPagination);
+  };
+  const handleBack = async () => {
+    const prevFrom = pagination.from - paginationRange - 1;
+    const prevTo = pagination.to - paginationRange - 1;
+    const newPagination = { from: prevFrom, to: prevTo };
+    setPagination(newPagination);
+    await fetchSubmissions(newPagination);
+  };
+  const disabledNext = app.submissions.length <= paginationRange;
+  const disableBack = pagination.from <= 0;
 
   return (
     <div className="w-full h-full flex-1 flex flex-col gap-4">
@@ -170,6 +208,14 @@ const SubmissionsList = () => {
             })}
           </TableBody>
         </Table>
+      </div>
+      <div className="flex justify-end items-center gap-4">
+        <Button disabled={disableBack} onClick={handleBack} variant={"outline"} size={"sm"}>
+          {t("label_back")}
+        </Button>
+        <Button disabled={disabledNext} onClick={handleNext} variant={"outline"} size={"sm"}>
+          {t("label_next")}
+        </Button>
       </div>
     </div>
   );
