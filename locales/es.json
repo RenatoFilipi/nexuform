@@ -461,7 +461,14 @@
     "label_up_members": "Desbloquee funciones avanzadas de gestión de miembros para controlar mejor el acceso y los permisos de su organización.",
     "label_members_feat_01": "Capacidades completas de gestión de miembros",
     "label_members_feat_02": "Controles avanzados de permisos",
-    "label_members_feat_03": "Gestión de acceso basada en roles"
+    "label_members_feat_03": "Gestión de acceso basada en roles",
+    "label_invite_member": "Invitar Miembro",
+    "label_update_profile": "Actualizar Perfil",
+    "label_no_members": "No se encontraron miembros",
+    "desc_no_members": "Invite miembros a su organización y gestione sus permisos de acceso.",
+    "label_role": "Rol",
+    "label_update_member": "Actualizar Miembro",
+    "label_joined": "Se unió"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

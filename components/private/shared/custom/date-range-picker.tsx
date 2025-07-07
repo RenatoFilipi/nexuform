@@ -10,7 +10,7 @@ import { ArrowUpRightIcon, CalendarIcon, RocketIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 import { DateRange } from "react-day-picker";
-import ManageSubscription from "../subscription/manage-subscription";
+import ManageSubscription2 from "../subscription/manage-subscription2";
 
 interface IProps {
   className?: string;
@@ -180,12 +180,12 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
                     </div>
                   </div>
                   <p className="text-sm text-center">{t("label_upgrade_for_custom_dates")}</p>
-                  <ManageSubscription>
+                  <ManageSubscription2 selected="pro">
                     <Button variant="secondary" size="xs">
                       <ArrowUpRightIcon className="w-4 h-4 mr-2" />
                       {t("label_upgrade_to_pro")}
                     </Button>
-                  </ManageSubscription>
+                  </ManageSubscription2>
                 </div>
               )}
               <Calendar

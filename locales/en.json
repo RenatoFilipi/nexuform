@@ -461,7 +461,14 @@
     "label_up_members": "Unlock advanced member management features to better control your organization's access and permissions.",
     "label_members_feat_01": "Full member management capabilities",
     "label_members_feat_02": "Advanced permission controls",
-    "label_members_feat_03": "Role-based access management"
+    "label_members_feat_03": "Role-based access management",
+    "label_invite_member": "Invite Member",
+    "label_update_profile": "Update Profile",
+    "label_no_members": "No members found",
+    "desc_no_members": "Invite members to your organization and manage their access permissions.",
+    "label_role": "Role",
+    "label_update_member": "Update Member",
+    "label_joined": "Joined"
   },
   "s": {
     "err_required_all": "Answer all required questions.",
