@@ -6,15 +6,22 @@ import { createTranslator } from "use-intl/core";
 import { ESubscription } from "./entities";
 import { CurrencyCode, TBlock, TTemplateCategory } from "./types";
 
+// =========================
+// Locale mapping
+// =========================
 const localeMap: Record<string, any> = {
   en: enUS,
   es: es,
   pt: ptBR,
 };
+
+// =========================
+// ID / UUID / Token Utilities
+// =========================
 export const uuid = () => {
-  const uuid = self.crypto.randomUUID();
-  return uuid;
+  return self.crypto.randomUUID();
 };
+
 export const nanoid = (length: number = 12, onlyLetters: boolean = false, onlyLowercase: boolean = false): string => {
   let alphabet = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   if (onlyLetters) {
@@ -26,6 +33,10 @@ export const nanoid = (length: number = 12, onlyLetters: boolean = false, onlyLo
   const nnid = customAlphabet(alphabet, length);
   return nnid();
 };
+
+// =========================
+// Date Functions
+// =========================
 export const formatDateRelativeToNow = (isoDate: string, locale: string = "en") => {
   const date = new Date(isoDate);
   const localeToUse = localeMap[locale] || enUS;
@@ -34,45 +45,96 @@ export const formatDateRelativeToNow = (isoDate: string, locale: string = "en") 
     locale: localeToUse,
   });
 };
-export const encodedRedirect = (type: "error" | "success", path: string, message: string): never => {
-  return redirect(`${path}?${type}=${encodeURIComponent(message)}`);
+
+export const getDaysDifference = (startDate: Date, endDate: Date) => {
+  return differenceInDays(endDate, startDate);
 };
-export const isValidEmail = (email: string): boolean => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+
+export const getDateDifferenceInDays = (date1: Date, date2: Date): number => {
+  const d1 = new Date(date1);
+  const d2 = new Date(date2);
+  d1.setHours(0, 0, 0, 0);
+  d2.setHours(0, 0, 0, 0);
+  const msPerDay = 1000 * 60 * 60 * 24;
+  return Math.abs(d2.getTime() - d1.getTime()) / msPerDay + 1;
 };
+
+export const getDateRangeFromToday = (intervalDays: number): { startDate: Date; endDate: Date } => {
+  const endDate = new Date();
+  endDate.setHours(23, 59, 59, 999);
+  const startDate = new Date(endDate);
+  startDate.setDate(startDate.getDate() - (intervalDays - 1));
+  startDate.setHours(0, 0, 0, 0);
+  return { startDate, endDate };
+};
+
+// =========================
+// Formatters (Text, Time, Currency, Number)
+// =========================
 export const formatTime = (time: number, decimalPlaces: number = 3) => {
   const totalSeconds = Math.floor(time / 1000);
   const milliseconds = time % 1000;
   const formattedMilliseconds = (milliseconds / 1000).toFixed(decimalPlaces).slice(2);
-
   if (totalSeconds >= 60) {
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
     return `${minutes}m ${seconds}.${formattedMilliseconds}s`;
   }
-
   return `${totalSeconds}.${formattedMilliseconds}s`;
 };
+
 export const formatDecimal = (num: number, decimals: number = 1): string => {
   if (isNaN(num)) return "0";
-  if (num % 1 === 0 || decimals === 0) {
-    return num.toString();
+  return num % 1 === 0 || decimals === 0 ? num.toString() : num.toFixed(decimals);
+};
+
+export const formatCurrency = (currency: CurrencyCode, amount: number, display: "compact" | "full" = "full") => {
+  try {
+    const formatter = new Intl.NumberFormat(undefined, {
+      style: "currency",
+      currency,
+      notation: display === "compact" ? "compact" : "standard",
+      compactDisplay: display === "compact" ? "short" : undefined,
+      currencyDisplay: display === "compact" ? "narrowSymbol" : "symbol",
+    });
+    return formatter.format(amount);
+  } catch (error) {
+    return `${currency} ${amount.toFixed(2)}`;
   }
-  return num.toFixed(decimals);
 };
-export const getDaysDifference = (startDate: Date, endDate: Date) => {
-  return differenceInDays(endDate, startDate);
+
+// =========================
+// Validation
+// =========================
+export const isValidEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
 };
+
+// =========================
+// Redirection
+// =========================
+export const encodedRedirect = (type: "error" | "success", path: string, message: string): never => {
+  return redirect(`${path}?${type}=${encodeURIComponent(message)}`);
+};
+
+// =========================
+// Subscription Logic
+// =========================
 export const isSubscriptionActive = (subscription: ESubscription) => {
   const now = new Date();
   const dueDate = new Date(subscription.due_date);
   const activeStatuses = ["active", "trialing", "past_due"];
   return activeStatuses.includes(subscription.status) && dueDate >= now;
 };
+
 export const isSubmissionsLimitReached = (subscription: ESubscription, submissions: number) => {
   return submissions >= subscription.submissions;
 };
+
+// =========================
+// Block and Category Translators
+// =========================
 export const blockName = (type: TBlock) => {
   switch (type) {
     case "short_text":
@@ -95,6 +157,7 @@ export const blockName = (type: TBlock) => {
       return "Custom Scale";
   }
 };
+
 export const getBlockName = async (type: TBlock, locale: string): Promise<string> => {
   const messages = (await import(`@/locales/${locale}.json`)).default;
   const t = createTranslator({ locale, messages });
@@ -123,12 +186,7 @@ export const getBlockName = async (type: TBlock, locale: string): Promise<string
       return "Unknown";
   }
 };
-export const formatDate = (unixTimestamp?: number): string | null => {
-  if (typeof unixTimestamp !== "number" || isNaN(unixTimestamp)) {
-    return null; // melhor que gerar data inválida
-  }
-  return new Date(unixTimestamp * 1000).toISOString();
-};
+
 export const getFormCategoryName = async (category: TTemplateCategory, locale: string): Promise<string> => {
   const messages = (await import(`@/locales/${locale}.json`)).default;
   const t = createTranslator({ locale, messages });
@@ -175,24 +233,30 @@ export const getFormCategoryName = async (category: TTemplateCategory, locale: s
       return "Unknown";
   }
 };
+
+// =========================
+// Statistics / Analytics
+// =========================
 export const getAverageCompletionTime = (numbers: number[]) => {
   if (numbers.length === 0) return 0;
   const sum = numbers.reduce((t, n) => t + n, 0);
   return sum / numbers.length;
 };
+
 export const getAverageCompletionRate = (views: number, submissions: number) => {
   if (views <= 0) return 0;
   const rate = (submissions / views) * 100;
   return Math.round(rate * 100) / 100;
 };
+
+// =========================
+// UI Utilities
+// =========================
 export const generateDistinctColors = (baseColor: string, count: number) => {
-  // Converte a cor hexadecimal para HSL
   const hexToHsl = (hex: string) => {
     let r = 0,
       g = 0,
       b = 0;
-
-    // Converte a cor hexadecimal para RGB
     if (hex.length === 4) {
       r = parseInt(hex[1] + hex[1], 16);
       g = parseInt(hex[2] + hex[2], 16);
@@ -203,23 +267,18 @@ export const generateDistinctColors = (baseColor: string, count: number) => {
       b = parseInt(hex[5] + hex[6], 16);
     }
 
-    // Converte RGB para HSL
     r /= 255;
     g /= 255;
     b /= 255;
-
     const max = Math.max(r, g, b);
     const min = Math.min(r, g, b);
     let h = 0,
-      s,
+      s = 0,
       l = (max + min) / 2;
 
-    if (max === min) {
-      h = s = 0; // achromatic
-    } else {
+    if (max !== min) {
       const d = max - min;
       s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-
       switch (max) {
         case r:
           h = (g - b) / d + (g < b ? 6 : 0);
@@ -231,10 +290,8 @@ export const generateDistinctColors = (baseColor: string, count: number) => {
           h = (r - g) / d + 4;
           break;
       }
-
       h /= 6;
     }
-
     return [h * 360, s * 100, l * 100];
   };
 
@@ -246,6 +303,7 @@ export const generateDistinctColors = (baseColor: string, count: number) => {
     return `hsl(${hue}, 75%, 55%)`;
   });
 };
+
 export const getPlanName = (value: string) => {
   switch (value) {
     case "free_trial":
@@ -256,41 +314,5 @@ export const getPlanName = (value: string) => {
       return "Pro";
     default:
       return "Custom";
-  }
-};
-export const getDateDifferenceInDays = (date1: Date, date2: Date): number => {
-  const d1 = new Date(date1);
-  const d2 = new Date(date2);
-
-  d1.setHours(0, 0, 0, 0);
-  d2.setHours(0, 0, 0, 0);
-
-  const msPerDay = 1000 * 60 * 60 * 24;
-  const diffInMs = d2.getTime() - d1.getTime();
-
-  return Math.abs(diffInMs) / msPerDay + 1;
-};
-export const getDateRangeFromToday = (intervalDays: number): { startDate: Date; endDate: Date } => {
-  const endDate = new Date();
-  endDate.setHours(23, 59, 59, 999);
-
-  const startDate = new Date(endDate);
-  startDate.setDate(startDate.getDate() - (intervalDays - 1));
-  startDate.setHours(0, 0, 0, 0);
-
-  return { startDate, endDate };
-};
-export const formatCurrency = (currency: CurrencyCode, amount: number, display: "compact" | "full" = "full") => {
-  try {
-    const formatter = new Intl.NumberFormat(undefined, {
-      style: "currency",
-      currency,
-      notation: display === "compact" ? "compact" : "standard",
-      compactDisplay: display === "compact" ? "short" : undefined,
-      currencyDisplay: display === "compact" ? "narrowSymbol" : "symbol",
-    });
-    return formatter.format(amount);
-  } catch (error) {
-    return `${currency} ${amount.toFixed(2)}`;
   }
 };

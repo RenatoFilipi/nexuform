@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRightIcon, CheckCircle2Icon, UserIcon, UserPlus2Icon, ZapIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import ManageSubscription2 from "../../shared/subscription/manage-subscription2";
+import MembersInvite from "./members-invite";
 
 interface IProps {
   locale: string;
@@ -50,20 +51,12 @@ const MembersWrapper = (props: IProps) => {
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-semibold">{t("label_members")}</h1>
         <div className="flex gap-4">
-          {isPro && (
+          <MembersInvite>
             <Button variant={"secondary"} size={"sm"}>
               <UserPlus2Icon className="w-4 h-4 mr-2" />
               {t("label_invite_member")}
             </Button>
-          )}
-          {!isPro && (
-            <ManageSubscription2 selected="pro">
-              <Button variant={"secondary"} size={"sm"}>
-                <UserPlus2Icon className="w-4 h-4 mr-2" />
-                {t("label_invite_member")}
-              </Button>
-            </ManageSubscription2>
-          )}
+          </MembersInvite>
         </div>
       </div>
       <div className="flex flex-col gap-6">

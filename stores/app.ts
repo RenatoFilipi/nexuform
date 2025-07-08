@@ -50,11 +50,13 @@ interface IProps {
   setFrom: (p: Date) => void;
   setTo: (p: Date) => void;
   setSubmissionPagination: (p: IPagination) => void;
+  isOrgOwner: boolean;
+  isPro: boolean;
 }
 
 const dates = getDateRangeFromToday(7);
 
-const useAppStore = create<IProps>((set) => ({
+const useAppStore = create<IProps>((set, get) => ({
   // arrays
   forms: [],
   organizations: [],
@@ -138,6 +140,12 @@ const useAppStore = create<IProps>((set) => ({
   setFrom: (p) => set({ from: p }),
   setTo: (p) => set({ to: p }),
   setSubmissionPagination: (p) => set({ submissionPagination: p }),
+  get isOrgOwner() {
+    return get().organization.owner_id === get().teamMemberProfile.profile_id;
+  },
+  get isPro() {
+    return get().subscription.plan === "pro";
+  },
 }));
 
 export default useAppStore;
