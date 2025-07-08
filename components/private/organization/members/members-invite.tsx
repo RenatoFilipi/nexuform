@@ -3,15 +3,21 @@ import {
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogHeader,
+  AlertDialogOverlay,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import useAppStore from "@/stores/app";
 import { TSetState } from "@/utils/types";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { ReactNode, useState } from "react";
-import WipUI from "../../shared/custom/wip-ui";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const MembersInvite = ({ children }: { children: ReactNode }) => {
   const t = useTranslations("app");
@@ -20,13 +26,15 @@ const MembersInvite = ({ children }: { children: ReactNode }) => {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-      <AlertDialogContent className="flex flex-col w-full max-w-2xl">
-        <AlertDialogHeader>
-          <AlertDialogTitle></AlertDialogTitle>
-          <AlertDialogDescription></AlertDialogDescription>
-        </AlertDialogHeader>
-        <Body setState={setOpen} />
-      </AlertDialogContent>
+      <AlertDialogOverlay className="backdrop-blur-sm">
+        <AlertDialogContent className="flex flex-col w-full max-w-2xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t("label_invite_member")}</AlertDialogTitle>
+            <AlertDialogDescription className="">{t("desc_invite_member")}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <Body setState={setOpen} />
+        </AlertDialogContent>
+      </AlertDialogOverlay>
     </AlertDialog>
   );
 };
@@ -35,14 +43,74 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const app = useAppStore();
 
+  const formSchema = z.object({
+    email: z.string().email(t("label_required_email")),
+    role: z.enum(["admin", "staff"]),
+  });
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { email: "", role: "staff" },
+  });
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log(values);
+  };
+
   return (
     <div className="flex flex-col gap-4">
-      <WipUI context="invite" />
-      <div>
-        <Button variant={"outline"} size={"sm"} onClick={() => setState(false)}>
-          {t("label_close")}
-        </Button>
-      </div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-10">
+          <div className="grid sm:grid-cols-2 gap-6">
+            <div className="">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("label_email")}</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input id="email" type="email" {...field} autoComplete="email" />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="">
+              <FormField
+                control={form.control}
+                name="role"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Role</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="admin">{t("label_admin")}</SelectItem>
+                        <SelectItem value="staff">{t("label_staff")}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+          <div className="flex justify-between items-center w-full">
+            <Button type="button" variant={"outline"} size={"sm"} onClick={() => setState(false)}>
+              {t("label_close")}
+            </Button>
+            <Button type="submit" variant={"secondary"} size={"sm"}>
+              {t("label_invite")}
+            </Button>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 };

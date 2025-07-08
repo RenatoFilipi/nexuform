@@ -468,7 +468,13 @@
     "desc_no_members": "Invite miembros a su organización y gestione sus permisos de acceso.",
     "label_role": "Rol",
     "label_update_member": "Actualizar Miembro",
-    "label_joined": "Se unió"
+    "label_joined": "Se unió",
+    "label_email": "Correo electrónico",
+    "label_required_email": "El correo electrónico es obligatorio",
+    "label_admin": "Administrador",
+    "label_staff": "Personal",
+    "label_invite": "Invitar",
+    "desc_invite_member": "Envíe invitaciones para unirse a su organización."
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",
@@ -645,7 +651,7 @@
     "pro_description": "Diseñado para pequeños equipos y negocios en crecimiento con necesidades de colaboración",
     "pro_feat_01": "Hasta 15 formularios",
     "pro_feat_02": "Hasta 5.000 envíos por mes",
-    "pro_feat_03": "Hasta 5 miembros incluidos (1 admin + 4 miembros)",
+    "pro_feat_03": "Hasta 5 miembros incluidos",
     "pro_feat_04": "Soporte prioritario (6h de tiempo de respuesta)",
     "pro_feat_05": "Eliminar marca",
     "pro_feat_06": "Plantillas de formularios",

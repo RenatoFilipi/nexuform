@@ -468,7 +468,13 @@
     "desc_no_members": "Convide membros para sua organização e gerencie suas permissões de acesso.",
     "label_role": "Função",
     "label_update_member": "Atualizar Membro",
-    "label_joined": "Entrou em"
+    "label_joined": "Entrou em",
+    "label_email": "E-mail",
+    "label_required_email": "E-mail é obrigatório",
+    "label_admin": "Administrador",
+    "label_staff": "Equipe",
+    "label_invite": "Convidar",
+    "desc_invite_member": "Envie convites para participar da sua organização."
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",
@@ -645,7 +651,7 @@
     "pro_description": "Projetado para pequenas equipes e negócios em crescimento com necessidades de colaboração",
     "pro_feat_01": "Até 15 formulários",
     "pro_feat_02": "Até 5.000 envios por mês",
-    "pro_feat_03": "Até 5 membros incluídos (1 admin + 4 membros)",
+    "pro_feat_03": "Até 5 membros incluídos",
     "pro_feat_04": "Suporte prioritário (6h de tempo de resposta)",
     "pro_feat_05": "Remover marca",
     "pro_feat_06": "Modelos de formulário",

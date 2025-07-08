@@ -82,7 +82,7 @@ const MemberProfile = () => {
           </div>
           <p className="text-muted-foreground text-sm truncate">{app.teamMemberProfile.email}</p>
         </div>
-        <Button variant={"outline"} size={"sm"}>
+        <Button variant={"outline"} size={"sm"} className="hidden">
           {t("label_update_profile")}
         </Button>
       </div>

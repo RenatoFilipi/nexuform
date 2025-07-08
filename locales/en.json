@@ -468,7 +468,13 @@
     "desc_no_members": "Invite members to your organization and manage their access permissions.",
     "label_role": "Role",
     "label_update_member": "Update Member",
-    "label_joined": "Joined"
+    "label_joined": "Joined",
+    "label_email": "Email",
+    "label_required_email": "Email is required",
+    "label_admin": "Administrator",
+    "label_staff": "Staff",
+    "label_invite": "Invite",
+    "desc_invite_member": "Send invites to join your organization."
   },
   "s": {
     "err_required_all": "Answer all required questions.",
@@ -638,7 +644,7 @@
     "pro_description": "Designed for small teams and growing businesses with collaboration needs",
     "pro_feat_01": "Up to 15 forms",
     "pro_feat_02": "Up to 5,000 submissions per month",
-    "pro_feat_03": "Includes up to 5 members (1 admin + 4 members)",
+    "pro_feat_03": "Includes up to 5 members",
     "pro_feat_04": "Priority support (6h response time)",
     "pro_feat_05": "Remove branding",
     "pro_feat_06": "Form templates",
