@@ -4,12 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
-import { EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
+import { EInvitations, EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
 import { getPlanName } from "@/utils/functions";
 import { TOrganizationStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { BoxesIcon } from "lucide-react";
+import { BoxesIcon, Clock2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import WipUI from "../shared/custom/wip-ui";
 
 interface IProps {
   locale: string;
@@ -18,6 +19,7 @@ interface IProps {
   organizations: EOrganization[];
   subscriptions: ESubscription[];
   teamMemberProfiles: ETeamMemberProfile[];
+  invitations: EInvitations[];
 }
 const OrganizationsWrapper = (props: IProps) => {
   const t = useTranslations("app");
@@ -33,6 +35,7 @@ const OrganizationsWrapper = (props: IProps) => {
       app.setOrganizations(props.organizations);
       app.setSubscriptions(props.subscriptions);
       app.setTeamMemberProfiles(props.teamMemberProfiles);
+      app.setReceivedInvitations(props.invitations);
       return null;
     },
   });
@@ -40,14 +43,17 @@ const OrganizationsWrapper = (props: IProps) => {
   if (query.isPending) return null;
 
   return (
-    <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-6 sm:gap-10 px-3 sm:px-20 lg:px-56 py-4 sm:py-8">
+    <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-6 px-3 sm:px-20 lg:px-56 py-4 sm:py-8">
       <div className="flex w-full justify-between items-center">
         <h1 className="text-xl font-semibold">{t("label_organizations")} </h1>
       </div>
-      <div className="overflow-y-auto grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        {app.teamMemberProfiles.map((tmp) => {
-          return <OrganizationsCard key={tmp.id} teamMemberProfile={tmp} />;
-        })}
+      <div className="flex flex-col gap-6">
+        <div className="overflow-y-auto grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          {app.teamMemberProfiles.map((tmp) => {
+            return <OrganizationsCard key={tmp.id} teamMemberProfile={tmp} />;
+          })}
+        </div>
+        <PendingInvitationsList />
       </div>
     </div>
   );
@@ -107,6 +113,36 @@ const OrganizationStatusBadge = (props: IBadgeProps) => {
       );
     }
   }
+};
+
+const PendingInvitationsList = () => {
+  const t = useTranslations("app");
+  const app = useAppStore();
+  const hasPendingInvitations = app.receivedInvitations.length > 0;
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="flex w-full justify-between items-center">
+        <h1 className="text-xl font-semibold">{t("label_pending_invitations")}</h1>
+      </div>
+      {!hasPendingInvitations && (
+        <Card className="flex w-full justify-center items-center flex-col gap-4 py-14 px-4">
+          <div className="flex justify-center items-center p-3 w-fit rounded bg-primary/10">
+            <Clock2Icon className="w-6 h-6 text-primary" />
+          </div>
+          <div className="flex flex-col justify-center items-center gap-1 text-center">
+            <h3 className="text-xl font-bold text-foreground">{t("label_no_pending_invitations")}</h3>
+            <p className="text-muted-foreground max-w-md text-sm/relaxed">{t("desc_pending_invitations")}</p>
+          </div>
+        </Card>
+      )}
+      {hasPendingInvitations && (
+        <div>
+          <WipUI context="Pending invites" />
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default OrganizationsWrapper;

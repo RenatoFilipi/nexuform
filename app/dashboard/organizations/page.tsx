@@ -28,6 +28,9 @@ const Organizations = async () => {
   const subscriptions = await supabase.from("subscriptions").select("*").in("org_id", orgIds);
   if (subscriptions.error) return <ErrorUI email={email} />;
 
+  const invitations = await supabase.from("invitations").select("*").eq("email", email).eq("status", "pending");
+  if (invitations.error) return <ErrorUI email={email} />;
+
   return (
     <OrganizationsWrapper
       locale={locale}
@@ -36,6 +39,7 @@ const Organizations = async () => {
       organizations={organizations.data}
       subscriptions={subscriptions.data}
       teamMemberProfiles={teamMemberProfiles.data}
+      invitations={invitations.data}
     />
   );
 };

@@ -474,7 +474,10 @@
     "label_admin": "Administrador",
     "label_staff": "Equipe",
     "label_invite": "Convidar",
-    "desc_invite_member": "Envie convites para participar da sua organização."
+    "desc_invite_member": "Envie convites para participar da sua organização.",
+    "label_pending_invitations": "Convites Pendentes",
+    "desc_pending_invitations": "Você não tem nenhum convite de organização pendente no momento.",
+    "label_no_pending_invitations": "Nenhum convite pendente"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

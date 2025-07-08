@@ -12,11 +12,14 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import useAppStore from "@/stores/app";
+import { createClient } from "@/utils/supabase/client";
 import { TSetState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoaderIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const MembersInvite = ({ children }: { children: ReactNode }) => {
@@ -42,6 +45,8 @@ const MembersInvite = ({ children }: { children: ReactNode }) => {
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const app = useAppStore();
+  const [isPending, startTransition] = useTransition();
+  const supabase = createClient();
 
   const formSchema = z.object({
     email: z.string().email(t("label_required_email")),
@@ -52,7 +57,21 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     defaultValues: { email: "", role: "staff" },
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    startTransition(async () => {
+      const { error } = await supabase.from("invitations").insert({
+        email: values.email,
+        invited_by: app.teamMemberProfile.id,
+        org_id: app.organization.id,
+        role: values.role,
+        status: "pending",
+      });
+      if (error) {
+        toast.error(t("err_generic"));
+        return;
+      }
+      toast.success(t("success_generic"));
+      setState(false);
+    });
   };
 
   return (
@@ -83,7 +102,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
                 name="role"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Role</FormLabel>
+                    <FormLabel>{t("label_role")}</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
@@ -106,6 +125,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
               {t("label_close")}
             </Button>
             <Button type="submit" variant={"secondary"} size={"sm"}>
+              {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
               {t("label_invite")}
             </Button>
           </div>

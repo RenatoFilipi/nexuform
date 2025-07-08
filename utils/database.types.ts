@@ -231,7 +231,7 @@ export type Database = {
           },
         ]
       }
-      organization_invites: {
+      invitations: {
         Row: {
           accepted_at: string | null
           created_at: string

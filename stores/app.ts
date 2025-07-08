@@ -2,6 +2,7 @@ import { paginationFrom, paginationTo } from "@/utils/constants";
 import {
   EBlock,
   EForm,
+  EInvitations,
   EOrganization,
   ESubmission,
   ESubmissionLog,
@@ -23,6 +24,7 @@ interface IProps {
   viewLogs: EViewLog[];
   blocks: EBlock[];
   submissions: ESubmission[];
+  receivedInvitations: EInvitations[];
 
   setOrganizations: (p: EOrganization[]) => void;
   setSubscriptions: (p: ESubscription[]) => void;
@@ -32,6 +34,7 @@ interface IProps {
   setViewLogs: (p: EViewLog[]) => void;
   setBlocks: (p: EBlock[]) => void;
   setSubmissions: (p: ESubmission[]) => void;
+  setReceivedInvitations: (p: EInvitations[]) => void;
 
   // unit
   form: EForm;
@@ -66,6 +69,7 @@ const useAppStore = create<IProps>((set, get) => ({
   viewLogs: [],
   blocks: [],
   submissions: [],
+  receivedInvitations: [],
   setForms: (p) => set({ forms: p }),
   setOrganizations: (p) => set({ organizations: p }),
   setSubscriptions: (p) => set({ subscriptions: p }),
@@ -74,6 +78,7 @@ const useAppStore = create<IProps>((set, get) => ({
   setViewLogs: (p) => set({ viewLogs: p }),
   setBlocks: (p) => set({ blocks: p }),
   setSubmissions: (p) => set({ submissions: p }),
+  setReceivedInvitations: (p) => set({ receivedInvitations: p }),
 
   // unit
   form: {

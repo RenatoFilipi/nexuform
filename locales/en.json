@@ -474,7 +474,10 @@
     "label_admin": "Administrator",
     "label_staff": "Staff",
     "label_invite": "Invite",
-    "desc_invite_member": "Send invites to join your organization."
+    "desc_invite_member": "Send invites to join your organization.",
+    "label_pending_invitations": "Pending Invitations",
+    "desc_pending_invitations": "You don't have any pending organization invitations at the moment.",
+    "label_no_pending_invitations": "No pending invitations"
   },
   "s": {
     "err_required_all": "Answer all required questions.",
