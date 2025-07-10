@@ -24,7 +24,6 @@ import {
 import { useTranslations } from "next-intl";
 import PlanIcon from "../../shared/custom/plan-icon";
 import CancelSubscription from "../../shared/subscription/cancel-subscription";
-import ManageSubscription from "../../shared/subscription/manage-subscription";
 import ManageSubscription2 from "../../shared/subscription/manage-subscription2";
 
 interface IProps {
@@ -133,9 +132,9 @@ const BillingUsageCard = ({
   const usagePercentage = rawValue % 1 === 0 ? rawValue.toString() : rawValue.toFixed(1);
 
   return (
-    <Card className="relative w-full p-6 transition-all hover:shadow-md rounded border bg-gradient-to-br from-background to-muted/50 overflow-hidden">
+    <Card className="relative w-full p-6 transition-all hover:shadow-md rounded border overflow-hidden">
       {limit && (
-        <div className="absolute inset-0 bg-gradient-to-r from-destructive/5 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-destructive/10 to-transparent pointer-events-none" />
       )}
       <div className="flex flex-col gap-5">
         <div className="flex justify-between items-start">
@@ -283,7 +282,7 @@ const BillingPlan = () => {
             </CancelSubscription>
           )}
           <ManageSubscription2>
-            <Button variant="secondary" size="sm" className="w-full sm:w-auto gap-2">
+            <Button variant="outline" size="sm" className="w-full sm:w-auto gap-2">
               <ArrowUpRightIcon className="h-4 w-4" />
               {t("label_manage_sub")}
             </Button>
