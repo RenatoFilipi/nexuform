@@ -4,13 +4,15 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
-import { EInvitations, EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
-import { getPlanName } from "@/utils/functions";
+import { EInvitation, EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
+import { formatDateRelativeToNow, getPlanName } from "@/utils/functions";
 import { TOrganizationStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { BoxesIcon, Clock2Icon } from "lucide-react";
+import { BoxesIcon, CheckIcon, Clock2Icon, HousePlusIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import WipUI from "../shared/custom/wip-ui";
+import { Button } from "@/components/ui/button";
+import { createClient } from "@/utils/supabase/client";
 
 interface IProps {
   locale: string;
@@ -19,7 +21,7 @@ interface IProps {
   organizations: EOrganization[];
   subscriptions: ESubscription[];
   teamMemberProfiles: ETeamMemberProfile[];
-  invitations: EInvitations[];
+  invitations: EInvitation[];
 }
 const OrganizationsWrapper = (props: IProps) => {
   const t = useTranslations("app");
@@ -75,8 +77,8 @@ const OrganizationsCard = (props: ICardProps) => {
       <Card className="flex flex-col justify-between h-44 p-4 border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm cursor-pointer">
         <div className="flex justify-between items-start w-full">
           <div className="flex justify-start items-center gap-3">
-            <div className="flex justify-center items-center p-2 bg-foreground/5 rounded w-fit">
-              <BoxesIcon className="w-5 h-5" />
+            <div className="flex justify-center items-center p-3 bg-foreground/5 rounded-full w-fit">
+              <BoxesIcon className="w-6 h-6" />
             </div>
             <span className="text-sm font-semibold">{organization.name}</span>
           </div>
@@ -137,11 +139,64 @@ const PendingInvitationsList = () => {
         </Card>
       )}
       {hasPendingInvitations && (
-        <div>
-          <WipUI context="Pending invites" />
+        <div className="grid gap-6">
+          {app.receivedInvitations.map((invitation) => {
+            return <InvitationCard key={invitation.id} invitation={invitation} />;
+          })}
         </div>
       )}
     </div>
+  );
+};
+
+const InvitationCard = ({ invitation }: { invitation: EInvitation }) => {
+  const user = useUserStore();
+  const supabase = createClient();
+  const invitedAt = formatDateRelativeToNow(new Date().toISOString(), user.locale);
+
+  const query = useQuery({
+    queryKey: ["invitation-data", invitation.id],
+    queryFn: async () => {
+      // const org = await supabase.from("organizations").select("*").single();
+      // const tmp = await supabase.from("team_member_profiles").select("*").single();
+      // console.log(org);
+      // console.log(tmp);
+      // const orgName = org.data?.name as string;
+      // const ownerName = `${tmp.data?.name} ${tmp.data?.last_name}` as string;
+      // return { orgName, ownerName };
+      return null;
+    },
+  });
+
+  if (query.isPending) return null;
+
+  return (
+    <Card className="p-4 flex justify-between items-center flex-col sm:flex-row gap-6">
+      <div className="flex justify-center items-center gap-4">
+        <div className="flex justify-center items-center rounded-full bg-foreground/5 p-3">
+          <HousePlusIcon className="w-6 h-6" />
+        </div>
+        <div className="flex flex-col gap-1">
+          <div className="flex justify-start items-center gap-2">
+            <span>OrgName</span>
+            <Badge variant={"default"}>{invitation.role}</Badge>
+          </div>
+          <span className="text-muted-foreground text-sm">Invited by OrgOwner</span>
+          <span className="text-muted-foreground text-sm">{invitedAt}</span>
+        </div>
+      </div>
+
+      <div className="flex justify-center items-center gap-4 w-full sm:w-fit">
+        <Button variant={"secondary"} size={"sm"} className="w-full">
+          <CheckIcon className="w-4 h-4 mr-2" />
+          Accept
+        </Button>
+        <Button variant={"outline"} size={"sm"} className="w-full">
+          <XIcon className="w-4 h-4 mr-2" />
+          Decline
+        </Button>
+      </div>
+    </Card>
   );
 };
 

@@ -14,4 +14,4 @@ export type ETemplateBlock = Tables<"templates_blocks">;
 export type ETheme = Tables<"themes">;
 export type EViewLog = Tables<"view_logs">;
 export type ETeamMemberProfile = Tables<"team_member_profiles">;
-export type EInvitations = Tables<"invitations">;
+export type EInvitation = Tables<"invitations">;

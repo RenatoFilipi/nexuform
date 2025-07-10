@@ -2,7 +2,7 @@ import { paginationFrom, paginationTo } from "@/utils/constants";
 import {
   EBlock,
   EForm,
-  EInvitations,
+  EInvitation,
   EOrganization,
   ESubmission,
   ESubmissionLog,
@@ -24,7 +24,7 @@ interface IProps {
   viewLogs: EViewLog[];
   blocks: EBlock[];
   submissions: ESubmission[];
-  receivedInvitations: EInvitations[];
+  receivedInvitations: EInvitation[];
 
   setOrganizations: (p: EOrganization[]) => void;
   setSubscriptions: (p: ESubscription[]) => void;
@@ -34,7 +34,7 @@ interface IProps {
   setViewLogs: (p: EViewLog[]) => void;
   setBlocks: (p: EBlock[]) => void;
   setSubmissions: (p: ESubmission[]) => void;
-  setReceivedInvitations: (p: EInvitations[]) => void;
+  setReceivedInvitations: (p: EInvitation[]) => void;
 
   // unit
   form: EForm;
