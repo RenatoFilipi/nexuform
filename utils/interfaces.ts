@@ -74,3 +74,8 @@ export interface IInvoiceSummary {
   dueDate: string | null;
   hostedInvoiceUrl: string | null | undefined;
 }
+
+export interface IContext {
+  isOrgOwner: boolean;
+  isFormOwner: boolean;
+}
