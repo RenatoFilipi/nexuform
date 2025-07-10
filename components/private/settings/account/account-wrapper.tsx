@@ -225,7 +225,7 @@ const Password = () => {
         </div>
         <Form {...passwordHandler}>
           <form onSubmit={passwordHandler.handleSubmit(onPasswordSubmit)} className="flex flex-col gap-6 w-full">
-            <div className="flex flex-col gap-4 w-full">
+            <div className="flex flex-col gap-6 w-full">
               <FormField
                 control={passwordHandler.control}
                 name="password"

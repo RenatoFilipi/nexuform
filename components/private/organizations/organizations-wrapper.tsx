@@ -8,9 +8,8 @@ import { EInvitation, EOrganization, EProfile, ESubscription, ETeamMemberProfile
 import { formatDateRelativeToNow, getPlanName } from "@/utils/functions";
 import { TOrganizationStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { BoxesIcon, CheckIcon, Clock2Icon, HousePlusIcon, XIcon } from "lucide-react";
+import { BoxesIcon, CheckIcon, ChevronRightIcon, HousePlusIcon, MailOpenIcon, MailPlusIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import WipUI from "../shared/custom/wip-ui";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/client";
 
@@ -27,6 +26,7 @@ const OrganizationsWrapper = (props: IProps) => {
   const t = useTranslations("app");
   const user = useUserStore();
   const app = useAppStore();
+  const hasPendingInvitations = app.receivedInvitations.length > 0;
 
   const query = useQuery({
     queryKey: ["organizations-page"],
@@ -45,27 +45,33 @@ const OrganizationsWrapper = (props: IProps) => {
   if (query.isPending) return null;
 
   return (
-    <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-6 px-3 sm:px-20 lg:px-56 py-4 sm:py-8">
+    <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-6 px-3 sm:px-20 lg:px-60 py-4 sm:py-8">
       <div className="flex w-full justify-between items-center">
         <h1 className="text-xl font-semibold">{t("label_organizations")} </h1>
       </div>
       <div className="flex flex-col gap-6">
+        {hasPendingInvitations && (
+          <div className="grid gap-6">
+            {app.receivedInvitations.map((invitation) => {
+              return <InvitationCard key={invitation.id} invitation={invitation} />;
+            })}
+          </div>
+        )}
         <div className="overflow-y-auto grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {app.teamMemberProfiles.map((tmp) => {
             return <OrganizationsCard key={tmp.id} teamMemberProfile={tmp} />;
           })}
         </div>
-        <PendingInvitationsList />
       </div>
     </div>
   );
 };
-
 interface ICardProps {
   teamMemberProfile: ETeamMemberProfile;
 }
 const OrganizationsCard = (props: ICardProps) => {
   const app = useAppStore();
+  const user = useUserStore();
   const tmp = props.teamMemberProfile;
   const organization = app.organizations.find((x) => x.id === tmp.org_id) as EOrganization;
   const subscription = app.subscriptions.find((x) => x.org_id === tmp.org_id) as ESubscription;
@@ -74,24 +80,28 @@ const OrganizationsCard = (props: ICardProps) => {
 
   return (
     <a href={orgPath}>
-      <Card className="flex flex-col justify-between h-44 p-4 border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm cursor-pointer">
+      <Card className="flex flex-col justify-between h-44 p-4 border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm cursor-pointer relative">
         <div className="flex justify-between items-start w-full">
           <div className="flex justify-start items-center gap-3">
             <div className="flex justify-center items-center p-3 bg-foreground/5 rounded-full w-fit">
               <BoxesIcon className="w-6 h-6" />
             </div>
-            <span className="text-sm font-semibold">{organization.name}</span>
+            <div className="flex flex-col gap-2">
+              <span className="text-base font-semibold">{organization.name}</span>
+              <div className="flex gap-2">
+                <OrganizationStatusBadge status={organization.status as TOrganizationStatus} />
+                <Badge variant={"default"}>{plan}</Badge>
+              </div>
+            </div>
           </div>
-          <OrganizationStatusBadge status={organization.status as TOrganizationStatus} />
-        </div>
-        <div>
-          <span className="text-sm text-muted-foreground">{plan}</span>
+          <button className="absolute right-4 top-4 text-foreground-lighter transition-all duration-200 group-hover:right-3 group-hover:text-foreground ">
+            <ChevronRightIcon className="w-5 h-5" />
+          </button>
         </div>
       </Card>
     </a>
   );
 };
-
 interface IBadgeProps {
   uppercase?: boolean;
   status: TOrganizationStatus;
@@ -116,76 +126,26 @@ const OrganizationStatusBadge = (props: IBadgeProps) => {
     }
   }
 };
-
-const PendingInvitationsList = () => {
-  const t = useTranslations("app");
-  const app = useAppStore();
-  const hasPendingInvitations = app.receivedInvitations.length > 0;
-
-  return (
-    <div className="flex flex-col gap-6">
-      <div className="flex w-full justify-between items-center">
-        <h1 className="text-xl font-semibold">{t("label_pending_invitations")}</h1>
-      </div>
-      {!hasPendingInvitations && (
-        <Card className="flex w-full justify-center items-center flex-col gap-4 py-14 px-4">
-          <div className="flex justify-center items-center p-3 w-fit rounded bg-primary/10">
-            <Clock2Icon className="w-6 h-6 text-primary" />
-          </div>
-          <div className="flex flex-col justify-center items-center gap-1 text-center">
-            <h3 className="text-xl font-bold text-foreground">{t("label_no_pending_invitations")}</h3>
-            <p className="text-muted-foreground max-w-md text-sm/relaxed">{t("desc_pending_invitations")}</p>
-          </div>
-        </Card>
-      )}
-      {hasPendingInvitations && (
-        <div className="grid gap-6">
-          {app.receivedInvitations.map((invitation) => {
-            return <InvitationCard key={invitation.id} invitation={invitation} />;
-          })}
-        </div>
-      )}
-    </div>
-  );
-};
-
 const InvitationCard = ({ invitation }: { invitation: EInvitation }) => {
   const user = useUserStore();
   const supabase = createClient();
-  const invitedAt = formatDateRelativeToNow(new Date().toISOString(), user.locale);
-
-  const query = useQuery({
-    queryKey: ["invitation-data", invitation.id],
-    queryFn: async () => {
-      // const org = await supabase.from("organizations").select("*").single();
-      // const tmp = await supabase.from("team_member_profiles").select("*").single();
-      // console.log(org);
-      // console.log(tmp);
-      // const orgName = org.data?.name as string;
-      // const ownerName = `${tmp.data?.name} ${tmp.data?.last_name}` as string;
-      // return { orgName, ownerName };
-      return null;
-    },
-  });
-
-  if (query.isPending) return null;
+  const invitedAt = formatDateRelativeToNow(new Date(invitation.created_at).toISOString(), user.locale);
 
   return (
-    <Card className="p-4 flex justify-between items-center flex-col sm:flex-row gap-6">
-      <div className="flex justify-center items-center gap-4">
-        <div className="flex justify-center items-center rounded-full bg-foreground/5 p-3">
-          <HousePlusIcon className="w-6 h-6" />
+    <Card className="p-4 flex justify-between items-center flex-col sm:flex-row gap-6 w-full">
+      <div className="flex justify-start items-center gap-4 w-full">
+        <div className="flex justify-center items-center rounded-full bg-foreground/5 h-14 w-14">
+          <MailPlusIcon className="w-6 h-6" />
         </div>
         <div className="flex flex-col gap-1">
           <div className="flex justify-start items-center gap-2">
-            <span>OrgName</span>
+            <span className="font-semibold">{invitation.org_name}</span>
             <Badge variant={"default"}>{invitation.role}</Badge>
           </div>
-          <span className="text-muted-foreground text-sm">Invited by OrgOwner</span>
+          <span className="text-muted-foreground text-sm">Invited by {invitation.inviter_name}</span>
           <span className="text-muted-foreground text-sm">{invitedAt}</span>
         </div>
       </div>
-
       <div className="flex justify-center items-center gap-4 w-full sm:w-fit">
         <Button variant={"secondary"} size={"sm"} className="w-full">
           <CheckIcon className="w-4 h-4 mr-2" />

@@ -18,6 +18,7 @@ import { createClient } from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import WipUI from "../../shared/custom/wip-ui";
 
 interface IProps {
   locale: string;
@@ -114,27 +115,32 @@ const AnalyticsMetrics = () => {
   )}%`;
 
   return (
-    <div className="grid sm:grid-cols-2 gap-6">
-      <AnalyticsCard
-        name={t("label_total_views")}
-        value={totalViews}
-        icon={<EyeIcon className="w-5 h-5 text-primary" />}
-      />
-      <AnalyticsCard
-        name={t("label_total_submissions")}
-        value={totalSubmissions}
-        icon={<SendIcon className="w-5 h-5 text-primary" />}
-      />
-      <AnalyticsCard
-        name={t("label_completion_rate")}
-        value={avgCompletionRate}
-        icon={<VoteIcon className="w-5 h-5 text-primary" />}
-      />
-      <AnalyticsCard
-        name={t("label_avg_completion_time")}
-        value={avgCompletionTime}
-        icon={<TimerIcon className="w-5 h-5 text-primary" />}
-      />
+    <div className="flex flex-col gap-6">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <AnalyticsCard
+          name={t("label_total_views")}
+          value={totalViews}
+          icon={<EyeIcon className="w-5 h-5 text-primary" />}
+        />
+        <AnalyticsCard
+          name={t("label_total_submissions")}
+          value={totalSubmissions}
+          icon={<SendIcon className="w-5 h-5 text-primary" />}
+        />
+        <AnalyticsCard
+          name={t("label_completion_rate")}
+          value={avgCompletionRate}
+          icon={<VoteIcon className="w-5 h-5 text-primary" />}
+        />
+        <AnalyticsCard
+          name={t("label_avg_completion_time")}
+          value={avgCompletionTime}
+          icon={<TimerIcon className="w-5 h-5 text-primary" />}
+        />
+      </div>
+      <div>
+        <WipUI context="charts" />
+      </div>
     </div>
   );
 };

@@ -134,7 +134,7 @@ const OrgSettings = () => {
         </div>
         <Form {...handler}>
           <form onSubmit={handler.handleSubmit(onSubmit)} className="flex flex-col gap-6 w-full">
-            <div className="flex flex-col gap-4 w-full">
+            <div className="flex flex-col gap-6 w-full">
               <FormField
                 control={handler.control}
                 name="name"
