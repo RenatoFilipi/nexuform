@@ -8,7 +8,7 @@ import { EForm, EOrganization, EProfile, ESubscription, ETeamMemberProfile } fro
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { AlertTriangleIcon, DraftingCompassIcon, LoaderIcon, PauseCircleIcon, RocketIcon } from "lucide-react";
+import { AlertTriangleIcon, DraftingCompassIcon, GlobeIcon, LoaderIcon, PauseCircleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -72,21 +72,21 @@ const SettingsStatus = () => {
       label: t("label_draft"),
       description: t("desc_draft"),
       icon: DraftingCompassIcon,
-      color: "bg-amber-100 text-amber-600 dark:bg-amber-900/40 dark:text-amber-300",
+      color: "bg-info/20 text-white border border-info/60 p-2",
     },
     {
       status: "published",
       label: t("label_published"),
       description: t("desc_published"),
-      icon: RocketIcon,
-      color: "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-300",
+      icon: GlobeIcon,
+      color: "bg-success/20 text-white border border-success/60 p-2",
     },
     {
       status: "inactive",
       label: t("label_inactive"),
       description: t("desc_inactive"),
       icon: PauseCircleIcon,
-      color: "bg-slate-100 text-slate-600 dark:bg-slate-800/80 dark:text-slate-300",
+      color: "bg-foreground/20 text-white border border-foreground/60 p-2",
     },
   ];
 

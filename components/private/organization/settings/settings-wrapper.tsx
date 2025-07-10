@@ -86,16 +86,14 @@ const OrgSettings = () => {
       label: t("label_active"),
       description: t("desc_org_active"),
       icon: BadgeCheckIcon,
-      color:
-        "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800",
+      color: "bg-success/20 text-white border border-success/60 p-2",
     },
     {
       status: "inactive",
       label: t("label_inactive"),
       description: t("desc_org_inactive"),
       icon: PauseIcon,
-      color:
-        "bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400 border border-amber-200 dark:border-amber-800",
+      color: "bg-warning/20 text-white border border-warning/60 p-2",
     },
   ];
 

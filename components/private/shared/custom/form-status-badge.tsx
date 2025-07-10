@@ -14,7 +14,7 @@ const FormStatusBadge = ({ status, uppercase = false }: { status: TFormStatus; u
       );
     case "draft":
       return (
-        <Badge variant={"warning"} uppercase={uppercase} className="w-fit">
+        <Badge variant={"info"} uppercase={uppercase} className="w-fit">
           {t("label_draft")}
         </Badge>
       );

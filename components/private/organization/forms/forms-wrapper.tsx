@@ -105,7 +105,6 @@ const FormCard = ({ form }: { form: EForm }) => {
   const pathname = usePathname();
   const orgId = pathname.split("/")[3];
   const isPublished = form.status === "published";
-  const overviewPath = `/dashboard/organizations/${orgId}/form/${form.public_id}/overview`;
   const isProduction = process.env.NODE_ENV === "production";
   const protocol = isProduction ? "https" : "http";
   const fullUrl = `${protocol}://${window.location.host}/s/${form.public_id}`;

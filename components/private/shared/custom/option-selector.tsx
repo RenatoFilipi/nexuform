@@ -1,5 +1,3 @@
-import { useTranslations } from "next-intl";
-
 interface IStatus {
   status: string;
   label: string;
@@ -26,7 +24,7 @@ const OptionSelector = ({ status, onStatusChange, options }: IProps) => {
             option.status === status ? "border-primary bg-primary/5" : "hover:bg-foreground/5"
           } border p-4 flex gap-4 h-full w-full rounded bg-background`}>
           <div className="flex items-center justify-center">
-            <div className={`p-3 rounded ${option.color} ${status === option.status ? "opacity-100" : "opacity-60"}`}>
+            <div className={`${option.color} ${status === option.status ? "opacity-100" : "opacity-60"}`}>
               <option.icon className="w-6 h-6" />
             </div>
           </div>

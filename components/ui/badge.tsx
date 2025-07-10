@@ -8,7 +8,7 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default:
-          "inline-flex items-center rounded-md bg-foreground/5 px-2 py-1 text-xs font-medium text-foreground/80 dark:bg-foreground/20 dark:text-foreground",
+          "inline-flex items-center rounded-md bg-foreground/5 px-2 py-1 text-xs font-medium text-foreground/80 dark:bg-foreground/5 dark:text-foreground",
         primary:
           "inline-flex items-center rounded-md bg-primary/5 px-2 py-1 text-xs font-medium text-primary/80 dark:bg-primary/10 dark:text-primary",
         success:

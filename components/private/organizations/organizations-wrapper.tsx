@@ -1,17 +1,17 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
 import { EInvitation, EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
 import { formatDateRelativeToNow, getPlanName } from "@/utils/functions";
+import { createClient } from "@/utils/supabase/client";
 import { TOrganizationStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { BoxesIcon, CheckIcon, ChevronRightIcon, HousePlusIcon, MailOpenIcon, MailPlusIcon, XIcon } from "lucide-react";
+import { BoxesIcon, CheckIcon, ChevronRightIcon, ClockIcon, MailPlusIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
-import { createClient } from "@/utils/supabase/client";
 
 interface IProps {
   locale: string;
@@ -83,13 +83,12 @@ const OrganizationsCard = (props: ICardProps) => {
       <Card className="flex flex-col justify-between h-44 p-4 border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm cursor-pointer relative">
         <div className="flex justify-between items-start w-full">
           <div className="flex justify-start items-center gap-3">
-            <div className="flex justify-center items-center p-3 bg-foreground/5 rounded-full w-fit">
+            <div className="flex justify-center items-center p-3 bg-foreground/5 rounded-xl w-fit">
               <BoxesIcon className="w-6 h-6" />
             </div>
             <div className="flex flex-col gap-2">
-              <span className="text-base font-semibold">{organization.name}</span>
+              <span className="text-sm font-semibold">{organization.name}</span>
               <div className="flex gap-2">
-                <OrganizationStatusBadge status={organization.status as TOrganizationStatus} />
                 <Badge variant={"default"}>{plan}</Badge>
               </div>
             </div>
@@ -97,6 +96,9 @@ const OrganizationsCard = (props: ICardProps) => {
           <button className="absolute right-4 top-4 text-foreground-lighter transition-all duration-200 group-hover:right-3 group-hover:text-foreground ">
             <ChevronRightIcon className="w-5 h-5" />
           </button>
+        </div>
+        <div>
+          <OrganizationStatusBadge status={organization.status as TOrganizationStatus} />
         </div>
       </Card>
     </a>
@@ -119,7 +121,7 @@ const OrganizationStatusBadge = (props: IBadgeProps) => {
     }
     case "inactive": {
       return (
-        <Badge className="w-fit" variant={"gray"} uppercase={props.uppercase}>
+        <Badge className="w-fit" variant={"warning"} uppercase={props.uppercase}>
           {t("label_inactive")}
         </Badge>
       );
@@ -132,27 +134,32 @@ const InvitationCard = ({ invitation }: { invitation: EInvitation }) => {
   const invitedAt = formatDateRelativeToNow(new Date(invitation.created_at).toISOString(), user.locale);
 
   return (
-    <Card className="p-4 flex justify-between items-center flex-col sm:flex-row gap-6 w-full">
-      <div className="flex justify-start items-center gap-4 w-full">
-        <div className="flex justify-center items-center rounded-full bg-foreground/5 h-14 w-14">
-          <MailPlusIcon className="w-6 h-6" />
+    <Card className="p-4 flex flex-col sm:flex-row justify-between items-center gap-4 w-full hover:bg-muted/50 transition-colors">
+      <div className="flex flex-1 justify-start items-start gap-4 w-full">
+        <div className="flex justify-center items-center rounded-xl bg-foreground text-background p-3">
+          <MailPlusIcon className="w-5 h-5" />
         </div>
         <div className="flex flex-col gap-1">
-          <div className="flex justify-start items-center gap-2">
-            <span className="font-semibold">{invitation.org_name}</span>
-            <Badge variant={"default"}>{invitation.role}</Badge>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-semibold text-base">{invitation.org_name}</span>
+            <Badge>{invitation.role}</Badge>
           </div>
-          <span className="text-muted-foreground text-sm">Invited by {invitation.inviter_name}</span>
-          <span className="text-muted-foreground text-sm">{invitedAt}</span>
+          <p className="text-muted-foreground text-sm">
+            Invited by <span className="font-medium text-foreground">{invitation.inviter_name}</span>
+          </p>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <ClockIcon className="w-4 h-4" />
+            <span>{invitedAt}</span>
+          </div>
         </div>
       </div>
-      <div className="flex justify-center items-center gap-4 w-full sm:w-fit">
-        <Button variant={"secondary"} size={"sm"} className="w-full">
-          <CheckIcon className="w-4 h-4 mr-2" />
+      <div className="flex sm:flex-col justify-end items-stretch gap-3 w-full sm:w-auto">
+        <Button variant={"secondary"} size={"sm"} className="w-full sm:w-32 gap-2">
+          <CheckIcon className="w-4 h-4" />
           Accept
         </Button>
-        <Button variant={"outline"} size={"sm"} className="w-full">
-          <XIcon className="w-4 h-4 mr-2" />
+        <Button variant={"outline"} size={"sm"} className="w-full sm:w-32 gap-2">
+          <XIcon className="w-4 h-4" />
           Decline
         </Button>
       </div>

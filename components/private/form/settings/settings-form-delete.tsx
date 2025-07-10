@@ -70,10 +70,6 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
   return (
     <div className="flex flex-1 flex-col justify-between gap-6">
       <div className="relative p-8 rounded-2xl bg-gradient-to-br from-muted/20 to-background border border-muted/30 shadow-lg h-full flex flex-col justify-center items-center w-full overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute -top-20 -left-20 w-40 h-40 bg-primary/30 rounded-full blur-xl"></div>
-          <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-secondary/30 rounded-full blur-xl"></div>
-        </div>
         <div className="flex justify-center items-center py-14 flex-col gap-8">
           <motion.div
             animate={{
