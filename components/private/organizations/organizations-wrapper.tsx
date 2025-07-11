@@ -10,9 +10,10 @@ import { formatDateRelativeToNow, getPlanName } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { TOrganizationRole, TOrganizationStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { BoxesIcon, CheckIcon, ChevronRightIcon, ClockIcon, MailPlusIcon, XIcon } from "lucide-react";
+import { BoxesIcon, CheckIcon, ChevronRightIcon, ClockIcon, LoaderIcon, MailPlusIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
+import { toast } from "sonner";
 import OrgRoleBadge from "../shared/custom/org-role-badge";
 
 interface IProps {
@@ -132,15 +133,91 @@ const OrganizationStatusBadge = (props: IBadgeProps) => {
 const InvitationCard = ({ invitation }: { invitation: EInvitation }) => {
   const t = useTranslations("app");
   const user = useUserStore();
+  const app = useAppStore();
   const supabase = createClient();
   const [isPending, startTransition] = useTransition();
   const invitedAt = formatDateRelativeToNow(new Date(invitation.created_at).toISOString(), user.locale);
 
   const onAccept = () => {
-    try {
-    } catch (error) {}
+    startTransition(async () => {
+      const tmp = await supabase.from("team_member_profiles").insert({
+        org_id: invitation.org_id,
+        permissions: [],
+        profile_id: user.profile.id,
+        email: user.email,
+        role: invitation.role,
+        name: user.profile.first_name,
+        last_name: user.profile.last_name,
+      });
+
+      if (tmp.error) {
+        toast.error(t("err_generic"));
+        return;
+      }
+      await supabase
+        .from("invitations")
+        .update({ status: "accepted", accepted_at: new Date().toISOString() })
+        .eq("id", invitation.id);
+
+      const teamMemberProfiles = await supabase
+        .from("team_member_profiles")
+        .select("*")
+        .eq("profile_id", user.profile.id);
+
+      if (teamMemberProfiles.error) {
+        toast.error(t("err_generic"));
+        return;
+      }
+      const orgIds = teamMemberProfiles.data.map((x) => x.org_id);
+      const organizations = await supabase.from("organizations").select("*").in("id", orgIds);
+
+      if (organizations.error) {
+        toast.error(t("err_generic"));
+        return;
+      }
+      const subscriptions = await supabase.from("subscriptions").select("*").in("org_id", orgIds);
+
+      if (subscriptions.error) {
+        toast.error(t("err_generic"));
+        return;
+      }
+      const invitations = await supabase
+        .from("invitations")
+        .select("*")
+        .eq("email", user.email)
+        .eq("status", "pending");
+
+      if (invitations.error) {
+        toast.error(t("err_generic"));
+        return;
+      }
+
+      app.setTeamMemberProfiles(teamMemberProfiles.data);
+      app.setOrganizations(organizations.data);
+      app.setSubscriptions(subscriptions.data);
+      app.setReceivedInvitations(invitations.data);
+    });
   };
-  const onDecline = () => {};
+  const onDecline = () => {
+    startTransition(async () => {
+      const invi = await supabase.from("invitations").update({ status: "declined" }).eq("id", invitation.id);
+      if (invi.error) {
+        toast.error(t("err_generic"));
+        return;
+      }
+
+      const invitations = await supabase
+        .from("invitations")
+        .select("*")
+        .eq("email", user.email)
+        .eq("status", "pending");
+      if (invitations.error) {
+        toast.error(t("err_generic"));
+        return;
+      }
+      app.setReceivedInvitations(invitations.data);
+    });
+  };
 
   return (
     <Card className="p-4 flex flex-col sm:flex-row justify-between items-center gap-4 w-full hover:bg-muted/50 transition-colors">
@@ -163,11 +240,22 @@ const InvitationCard = ({ invitation }: { invitation: EInvitation }) => {
         </div>
       </div>
       <div className="flex sm:flex-col justify-end items-stretch gap-3 w-full sm:w-auto">
-        <Button variant={"secondary"} size={"sm"} className="w-full sm:w-32 gap-2">
-          <CheckIcon className="w-4 h-4" />
+        <Button
+          onClick={() => onAccept()}
+          disabled={isPending}
+          variant={"secondary"}
+          size={"sm"}
+          className="w-full sm:w-32 gap-2">
+          {!isPending && <CheckIcon className="w-4 h-4" />}
+          {isPending && <LoaderIcon className="w-4 h-4 animate-spin" />}
           {t("label_accept")}
         </Button>
-        <Button variant={"outline"} size={"sm"} className="w-full sm:w-32 gap-2">
+        <Button
+          onClick={() => onDecline()}
+          disabled={isPending}
+          variant={"outline"}
+          size={"sm"}
+          className="w-full sm:w-32 gap-2">
           <XIcon className="w-4 h-4" />
           {t("label_decline")}
         </Button>

@@ -31,7 +31,6 @@ const MembersWrapper = (props: IProps) => {
   const query = useQuery({
     queryKey: ["members-page"],
     queryFn: () => {
-      const members = props.teamMemberProfiles.filter((x) => x.id !== props.teamMemberProfile.id);
       user.setLocale(props.locale);
       user.setEmail(props.email);
       user.setProfile(props.profile);
@@ -83,14 +82,14 @@ const MemberList = () => {
   }
 
   return (
-    <div className="overflow-y-auto grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="overflow-y-auto grid gap-4 grid-cols-1">
       {app.teamMemberProfiles.map((m) => {
-        return <MemberCard member={m} key={m.id} />;
+        return <MemberRow member={m} key={m.id} />;
       })}
     </div>
   );
 };
-const MemberCard = ({ member }: { member: ETeamMemberProfile }) => {
+const MemberRow = ({ member }: { member: ETeamMemberProfile }) => {
   const t = useTranslations("app");
   const user = useUserStore();
   const app = useAppStore();
@@ -98,33 +97,44 @@ const MemberCard = ({ member }: { member: ETeamMemberProfile }) => {
   const isYou = app.teamMemberProfile.profile_id === member.profile_id;
 
   return (
-    <Card className="flex flex-col justify-center items-center w-full p-4 gap-4 border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm">
-      <div className="flex justify-start items-center w-full gap-3">
-        <Avatar className="w-10 h-10">
-          <AvatarFallback className="text-sm">{avatarName}</AvatarFallback>
+    <div className="relative flex flex-col md:flex-row items-start md:items-center w-full p-3 md:p-4 gap-3 md:gap-4 border-b hover:bg-muted/50 transition-colors duration-200 group">
+      {/* Badge de cargo no canto superior direito (mobile only) */}
+      <div className="md:hidden absolute top-3 right-3">
+        <OrgRoleBadge role={member.role as TOrganizationRole} />
+      </div>
+
+      {/* Primeira coluna - Avatar e Nome */}
+      <div className="flex items-center w-full md:w-[30%] gap-3 pr-10 md:pr-0">
+        <Avatar className="w-8 h-8">
+          <AvatarFallback className="text-xs">{avatarName}</AvatarFallback>
         </Avatar>
-        <div className="flex flex-col">
-          <span>
+        <div className="flex flex-col overflow-hidden">
+          <span className="text-sm font-medium">
             {member.name} {member.last_name}{" "}
             {isYou && <span className="text-xs text-muted-foreground">({t("label_you")})</span>}
           </span>
-          <span className="text-sm text-muted-foreground">{member.email}</span>
+          <span className="text-xs text-muted-foreground truncate">{member.email}</span>
         </div>
       </div>
-      <div className="flex justify-center items-center w-full flex-col gap-2">
-        <div className="flex justify-between items-center w-full">
-          <span className="text-sm">{t("label_role")}</span>
-          <OrgRoleBadge role={member.role as TOrganizationRole} />
-        </div>
-        <div className="flex justify-between items-center w-full">
-          <span className="text-sm">{t("label_joined")}</span>
-          <span className="text-xs">{new Date(member.created_at).toLocaleDateString(user.locale)}</span>
-        </div>
+
+      {/* Segunda coluna - Cargo (apenas desktop) */}
+      <div className="hidden md:block md:w-[20%]">
+        <OrgRoleBadge role={member.role as TOrganizationRole} />
       </div>
-      <Button className="w-full" variant={"outline"} size={"sm"}>
-        {t("label_update_member")}
-      </Button>
-    </Card>
+
+      {/* Terceira coluna - Data */}
+      <div className="w-full md:w-[20%] text-sm text-muted-foreground pl-11 md:pl-0 flex items-center gap-2 md:block">
+        <span className="md:hidden text-xs">Entrou em:</span>
+        <span>{new Date(member.created_at).toLocaleDateString(user.locale)}</span>
+      </div>
+
+      {/* Quarta coluna - Botão */}
+      <div className="w-full md:w-[30%] flex justify-end pl-11 md:pl-0">
+        <Button variant={"outline"} size={"sm"} className="w-full md:w-auto">
+          {t("label_update_member")}
+        </Button>
+      </div>
+    </div>
   );
 };
 export default MembersWrapper;

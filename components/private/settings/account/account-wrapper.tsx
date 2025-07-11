@@ -52,6 +52,7 @@ const AccountWrapper = (props: IProps) => {
       </div>
       {/* content */}
       <div className="flex flex-col gap-6">
+        <Profile />
         <Password />
         <Delete />
       </div>

@@ -13,31 +13,40 @@ const Members = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const email = data.user.email!;
   const userId = data.user.id;
 
-  const profiles = await supabase.from("profiles").select("*").eq("id", userId).single();
-  if (profiles.error) return <ErrorUI email={email} />;
+  const profile = await supabase.from("profiles").select("*").eq("id", userId).single();
+  if (profile.error) return <ErrorUI email={email} />;
 
-  const organizations = await supabase.from("organizations").select("*").eq("public_id", slug).single();
-  if (organizations.error) return <ErrorUI email={email} />;
+  const organization = await supabase.from("organizations").select("*").eq("public_id", slug).single();
+  if (organization.error) return <ErrorUI email={email} />;
 
-  const orgId = organizations.data.id;
+  const orgId = organization.data.id;
 
-  const teamMemberProfiles = await supabase.from("team_member_profiles").select("*").eq("org_id", orgId);
+  const teamMemberProfile = await supabase
+    .from("team_member_profiles")
+    .select("*")
+    .eq("profile_id", userId)
+    .eq("org_id", orgId)
+    .single();
+  if (teamMemberProfile.error) return <ErrorUI email={email} />;
+
+  const teamMemberProfiles = await supabase
+    .from("team_member_profiles")
+    .select("*")
+    .eq("org_id", orgId)
+    .order("created_at", { ascending: true });
   if (teamMemberProfiles.error) return <ErrorUI email={email} />;
 
-  const subscriptions = await supabase.from("subscriptions").select("*").eq("org_id", orgId).single();
-  if (subscriptions.error) return <ErrorUI email={email} />;
-
-  const teamMemberProfile = teamMemberProfiles.data.find((x) => x.profile_id, userId);
-  if (!teamMemberProfile) return <ErrorUI email={email} />;
+  const subscription = await supabase.from("subscriptions").select("*").eq("org_id", orgId).single();
+  if (subscription.error) return <ErrorUI email={email} />;
 
   return (
     <MembersWrapper
       locale={locale}
       email={email}
-      profile={profiles.data}
-      organization={organizations.data}
-      subscription={subscriptions.data}
-      teamMemberProfile={teamMemberProfile}
+      profile={profile.data}
+      organization={organization.data}
+      subscription={subscription.data}
+      teamMemberProfile={teamMemberProfile.data}
       teamMemberProfiles={teamMemberProfiles.data}
     />
   );

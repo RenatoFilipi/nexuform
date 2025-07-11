@@ -12,8 +12,8 @@ const Organizations = async () => {
   const email = data.user.email!;
   const userId = data.user.id;
 
-  const profiles = await supabase.from("profiles").select("*").eq("id", userId).single();
-  if (profiles.error) return <ErrorUI email={email} />;
+  const profile = await supabase.from("profiles").select("*").eq("id", userId).single();
+  if (profile.error) return <ErrorUI email={email} />;
 
   const teamMemberProfiles = await supabase.from("team_member_profiles").select("*").eq("profile_id", userId);
   if (teamMemberProfiles.error) return <ErrorUI email={email} />;
@@ -35,7 +35,7 @@ const Organizations = async () => {
     <OrganizationsWrapper
       locale={locale}
       email={email}
-      profile={profiles.data}
+      profile={profile.data}
       organizations={organizations.data}
       subscriptions={subscriptions.data}
       teamMemberProfiles={teamMemberProfiles.data}
