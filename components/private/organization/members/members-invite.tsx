@@ -156,7 +156,7 @@ const UpgradeToPro = () => {
             <h3 className="text-xl font-bold">{t("label_upgrade_pro")}</h3>
           </div>
           <p className="max-w-[85%] text-sm leading-relaxed text-white/90">{t("label_up_members")}</p>
-          <div className="mt-2 space-y-3">
+          <div className="mt-2 space-y-3 hidden">
             <div className="flex items-center gap-2">
               <CheckCircle2Icon className="h-4 w-4 text-emerald-300" />
               <span className="text-sm">{t("label_members_feat_01")}</span>
