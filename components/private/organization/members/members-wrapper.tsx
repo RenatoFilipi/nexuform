@@ -98,12 +98,10 @@ const MemberRow = ({ member }: { member: ETeamMemberProfile }) => {
 
   return (
     <div className="relative flex flex-col md:flex-row items-start md:items-center w-full p-3 md:p-4 gap-3 md:gap-4 border-b hover:bg-muted/50 transition-colors duration-200 group">
-      {/* Badge de cargo no canto superior direito (mobile only) */}
       <div className="md:hidden absolute top-3 right-3">
         <OrgRoleBadge role={member.role as TOrganizationRole} />
       </div>
 
-      {/* Primeira coluna - Avatar e Nome */}
       <div className="flex items-center w-full md:w-[30%] gap-3 pr-10 md:pr-0">
         <Avatar className="w-8 h-8">
           <AvatarFallback className="text-xs">{avatarName}</AvatarFallback>
@@ -117,18 +115,15 @@ const MemberRow = ({ member }: { member: ETeamMemberProfile }) => {
         </div>
       </div>
 
-      {/* Segunda coluna - Cargo (apenas desktop) */}
       <div className="hidden md:block md:w-[20%]">
         <OrgRoleBadge role={member.role as TOrganizationRole} />
       </div>
 
-      {/* Terceira coluna - Data */}
       <div className="w-full md:w-[20%] text-sm text-muted-foreground pl-11 md:pl-0 flex items-center gap-2 md:block">
         <span className="md:hidden text-xs">Entrou em:</span>
         <span>{new Date(member.created_at).toLocaleDateString(user.locale)}</span>
       </div>
 
-      {/* Quarta coluna - Botão */}
       <div className="w-full md:w-[30%] flex justify-end pl-11 md:pl-0">
         <Button variant={"outline"} size={"sm"} className="w-full md:w-auto">
           {t("label_update_member")}
