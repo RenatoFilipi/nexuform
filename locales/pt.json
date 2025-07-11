@@ -477,7 +477,11 @@
     "desc_invite_member": "Envie convites para participar da sua organização.",
     "label_pending_invitations": "Convites Pendentes",
     "desc_pending_invitations": "Você não tem nenhum convite de organização pendente no momento.",
-    "label_no_pending_invitations": "Nenhum convite pendente"
+    "label_no_pending_invitations": "Nenhum convite pendente",
+    "label_invited_by": "Convidado por",
+    "label_accept": "Aceitar",
+    "label_decline": "Recusar",
+    "label_you": "Você"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

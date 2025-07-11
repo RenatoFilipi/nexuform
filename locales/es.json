@@ -477,7 +477,11 @@
     "desc_invite_member": "Envíe invitaciones para unirse a su organización.",
     "label_pending_invitations": "Invitaciones Pendientes",
     "desc_pending_invitations": "No tienes ninguna invitación de organización pendiente en este momento.",
-    "label_no_pending_invitations": "No hay invitaciones pendientes"
+    "label_no_pending_invitations": "No hay invitaciones pendientes",
+    "label_invited_by": "Invitado por",
+    "label_accept": "Aceptar",
+    "label_decline": "Rechazar",
+    "label_you": "Tú"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

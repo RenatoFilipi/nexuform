@@ -8,10 +8,12 @@ import useUserStore from "@/stores/user";
 import { EInvitation, EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
 import { formatDateRelativeToNow, getPlanName } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
-import { TOrganizationStatus } from "@/utils/types";
+import { TOrganizationRole, TOrganizationStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { BoxesIcon, CheckIcon, ChevronRightIcon, ClockIcon, MailPlusIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTransition } from "react";
+import OrgRoleBadge from "../shared/custom/org-role-badge";
 
 interface IProps {
   locale: string;
@@ -128,9 +130,17 @@ const OrganizationStatusBadge = (props: IBadgeProps) => {
   }
 };
 const InvitationCard = ({ invitation }: { invitation: EInvitation }) => {
+  const t = useTranslations("app");
   const user = useUserStore();
   const supabase = createClient();
+  const [isPending, startTransition] = useTransition();
   const invitedAt = formatDateRelativeToNow(new Date(invitation.created_at).toISOString(), user.locale);
+
+  const onAccept = () => {
+    try {
+    } catch (error) {}
+  };
+  const onDecline = () => {};
 
   return (
     <Card className="p-4 flex flex-col sm:flex-row justify-between items-center gap-4 w-full hover:bg-muted/50 transition-colors">
@@ -141,10 +151,10 @@ const InvitationCard = ({ invitation }: { invitation: EInvitation }) => {
         <div className="flex flex-col gap-1">
           <div className="flex flex-wrap items-center gap-2">
             <span className="font-semibold text-base">{invitation.org_name}</span>
-            <Badge>{invitation.role}</Badge>
+            <OrgRoleBadge role={invitation.role as TOrganizationRole} />
           </div>
           <p className="text-muted-foreground text-sm">
-            Invited by <span className="font-medium text-foreground">{invitation.inviter_name}</span>
+            {t("label_invited_by")} <span className="font-medium text-foreground">{invitation.inviter_name}</span>
           </p>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <ClockIcon className="w-4 h-4" />
@@ -155,11 +165,11 @@ const InvitationCard = ({ invitation }: { invitation: EInvitation }) => {
       <div className="flex sm:flex-col justify-end items-stretch gap-3 w-full sm:w-auto">
         <Button variant={"secondary"} size={"sm"} className="w-full sm:w-32 gap-2">
           <CheckIcon className="w-4 h-4" />
-          Accept
+          {t("label_accept")}
         </Button>
         <Button variant={"outline"} size={"sm"} className="w-full sm:w-32 gap-2">
           <XIcon className="w-4 h-4" />
-          Decline
+          {t("label_decline")}
         </Button>
       </div>
     </Card>

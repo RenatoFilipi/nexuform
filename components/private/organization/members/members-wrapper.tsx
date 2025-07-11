@@ -1,15 +1,16 @@
 "use client";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
 import { EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
+import { TOrganizationRole } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { UserIcon, UserPlus2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import OrgRoleBadge from "../../shared/custom/org-role-badge";
 import MembersInvite from "./members-invite";
 
 interface IProps {
@@ -92,29 +93,32 @@ const MemberList = () => {
 const MemberCard = ({ member }: { member: ETeamMemberProfile }) => {
   const t = useTranslations("app");
   const user = useUserStore();
+  const app = useAppStore();
   const avatarName = `${member.name.slice(0, 1)}${member.last_name.slice(0, 1)}`.toUpperCase();
+  const isYou = app.teamMemberProfile.profile_id === member.profile_id;
 
   return (
     <Card className="flex flex-col justify-center items-center w-full p-4 gap-4 border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm">
       <div className="flex justify-start items-center w-full gap-3">
-        <Avatar className="w-12 h-12">
-          <AvatarFallback className="">{avatarName}</AvatarFallback>
+        <Avatar className="w-10 h-10">
+          <AvatarFallback className="text-sm">{avatarName}</AvatarFallback>
         </Avatar>
         <div className="flex flex-col">
           <span>
-            {member.name} {member.last_name}
+            {member.name} {member.last_name}{" "}
+            {isYou && <span className="text-xs text-muted-foreground">({t("label_you")})</span>}
           </span>
           <span className="text-sm text-muted-foreground">{member.email}</span>
         </div>
       </div>
       <div className="flex justify-center items-center w-full flex-col gap-2">
         <div className="flex justify-between items-center w-full">
-          <span className="text-sm text-muted-foreground">{t("label_role")}</span>
-          <Badge variant={"default"}>{member.role}</Badge>
+          <span className="text-sm">{t("label_role")}</span>
+          <OrgRoleBadge role={member.role as TOrganizationRole} />
         </div>
         <div className="flex justify-between items-center w-full">
-          <span className="text-sm text-muted-foreground">{t("label_joined")}</span>
-          <span className="text-sm">{new Date(member.created_at).toLocaleDateString(user.locale)}</span>
+          <span className="text-sm">{t("label_joined")}</span>
+          <span className="text-xs">{new Date(member.created_at).toLocaleDateString(user.locale)}</span>
         </div>
       </div>
       <Button className="w-full" variant={"outline"} size={"sm"}>

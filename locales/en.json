@@ -477,7 +477,11 @@
     "desc_invite_member": "Send invites to join your organization.",
     "label_pending_invitations": "Pending Invitations",
     "desc_pending_invitations": "You don't have any pending organization invitations at the moment.",
-    "label_no_pending_invitations": "No pending invitations"
+    "label_no_pending_invitations": "No pending invitations",
+    "label_invited_by": "Invited by",
+    "label_accept": "Accept",
+    "label_decline": "Decline",
+    "label_you": "You"
   },
   "s": {
     "err_required_all": "Answer all required questions.",
