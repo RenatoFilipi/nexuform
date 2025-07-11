@@ -1,5 +1,6 @@
 import FormsWrapper from "@/components/private/organization/forms/forms-wrapper";
 import ErrorUI from "@/components/private/shared/pages/error-ui";
+import { applyContext } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
@@ -27,8 +28,10 @@ const OrgForms = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const subscriptions = await supabase.from("subscriptions").select("*").eq("org_id", orgId).single();
   if (subscriptions.error) return <ErrorUI email={email} />;
 
-  const forms = await supabase.from("forms").select("*").eq("org_id", orgId);
+  const forms = await supabase.from("forms").select("*").eq("org_id", orgId).order("created_at", { ascending: true });
   if (forms.error) return <ErrorUI email={email} />;
+
+  const context = applyContext(teamMemberProfiles.data, organizations.data);
 
   return (
     <FormsWrapper
@@ -39,6 +42,7 @@ const OrgForms = async ({ params }: { params: Promise<{ slug: string }> }) => {
       organization={organizations.data}
       subscription={subscriptions.data}
       forms={forms.data}
+      context={context}
     />
   );
 };

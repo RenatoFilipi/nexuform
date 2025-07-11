@@ -14,6 +14,7 @@ import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
 import { EForm, EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
 import { formatDateRelativeToNow } from "@/utils/functions";
+import { IContext } from "@/utils/interfaces";
 import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -39,6 +40,7 @@ interface IProps {
   subscription: ESubscription;
   teamMemberProfile: ETeamMemberProfile;
   forms: EForm[];
+  context: IContext;
 }
 
 const FormsWrapper = (props: IProps) => {
@@ -59,6 +61,8 @@ const FormsWrapper = (props: IProps) => {
       app.setSubscription(props.subscription);
       app.setTeamMemberProfile(props.teamMemberProfile);
       app.setForms(props.forms);
+      app.setContext(props.context);
+      console.log(props.context);
       return null;
     },
   });
@@ -143,7 +147,7 @@ const FormCard = ({ form }: { form: EForm }) => {
   ];
 
   return (
-    <Card className="flex flex-col h-44 p-5 justify-between border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm">
+    <Card className="flex flex-col h-40 p-5 justify-between border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm overflow-x-auto">
       <div className="flex w-full justify-between items-start">
         <div className="flex flex-col gap-2">
           <h1 className="font-semibold truncate max-w-[270px] transition-colors">{form.name}</h1>

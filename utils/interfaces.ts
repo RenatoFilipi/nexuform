@@ -1,6 +1,6 @@
 import type { JSX } from "react";
 import { EBlock, EForm, ETheme } from "./entities";
-import { TBlock, TBrand, TPlan, TTemplateCategory } from "./types";
+import { TBlock, TBrand, TOrganizationRole, TPlan, TTemplateCategory } from "./types";
 
 export interface IBrand {
   className?: string;
@@ -77,5 +77,5 @@ export interface IInvoiceSummary {
 
 export interface IContext {
   isOrgOwner: boolean;
-  isFormOwner: boolean;
+  orgRole: TOrganizationRole;
 }

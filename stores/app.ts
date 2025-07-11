@@ -11,7 +11,7 @@ import {
   EViewLog,
 } from "@/utils/entities";
 import { getDateRangeFromToday } from "@/utils/functions";
-import { IPagination } from "@/utils/interfaces";
+import { IContext, IPagination } from "@/utils/interfaces";
 import { create } from "zustand";
 
 interface IProps {
@@ -53,13 +53,15 @@ interface IProps {
   setFrom: (p: Date) => void;
   setTo: (p: Date) => void;
   setSubmissionPagination: (p: IPagination) => void;
-  isOrgOwner: boolean;
-  isPro: boolean;
+
+  // context
+  context: IContext;
+  setContext: (p: IContext) => void;
 }
 
 const dates = getDateRangeFromToday(7);
 
-const useAppStore = create<IProps>((set, get) => ({
+const useAppStore = create<IProps>((set) => ({
   // arrays
   forms: [],
   organizations: [],
@@ -145,12 +147,13 @@ const useAppStore = create<IProps>((set, get) => ({
   setFrom: (p) => set({ from: p }),
   setTo: (p) => set({ to: p }),
   setSubmissionPagination: (p) => set({ submissionPagination: p }),
-  get isOrgOwner() {
-    return get().organization.owner_id === get().teamMemberProfile.profile_id;
+
+  // context
+  context: {
+    isOrgOwner: false,
+    orgRole: "staff",
   },
-  get isPro() {
-    return get().subscription.plan === "pro";
-  },
+  setContext: (p) => set({ context: p }),
 }));
 
 export default useAppStore;

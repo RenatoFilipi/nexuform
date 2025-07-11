@@ -71,7 +71,6 @@ interface ICardProps {
 }
 const OrganizationsCard = (props: ICardProps) => {
   const app = useAppStore();
-  const user = useUserStore();
   const tmp = props.teamMemberProfile;
   const organization = app.organizations.find((x) => x.id === tmp.org_id) as EOrganization;
   const subscription = app.subscriptions.find((x) => x.org_id === tmp.org_id) as ESubscription;
@@ -80,7 +79,7 @@ const OrganizationsCard = (props: ICardProps) => {
 
   return (
     <a href={orgPath}>
-      <Card className="flex flex-col justify-between h-44 p-4 border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm cursor-pointer relative">
+      <Card className="flex flex-col justify-between h-40 p-4 border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm cursor-pointer relative">
         <div className="flex justify-between items-start w-full">
           <div className="flex justify-start items-center gap-3">
             <div className="flex justify-center items-center p-3 bg-foreground/5 rounded-xl w-fit">

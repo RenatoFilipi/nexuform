@@ -3,8 +3,9 @@ import { enUS, es, ptBR } from "date-fns/locale";
 import { customAlphabet } from "nanoid";
 import { redirect } from "next/navigation";
 import { createTranslator } from "use-intl/core";
-import { ESubscription } from "./entities";
-import { CurrencyCode, TBlock, TTemplateCategory } from "./types";
+import { EOrganization, ESubscription, ETeamMemberProfile } from "./entities";
+import { IContext } from "./interfaces";
+import { CurrencyCode, TBlock, TOrganizationRole, TTemplateCategory } from "./types";
 
 // =========================
 // Locale mapping
@@ -315,4 +316,11 @@ export const getPlanName = (value: string) => {
     default:
       return "Custom";
   }
+};
+
+export const applyContext = (tmp: ETeamMemberProfile, org: EOrganization): IContext => {
+  const isOrgOwner = org.owner_id === tmp.profile_id;
+  const orgRole = tmp.role as TOrganizationRole;
+  const app: IContext = { isOrgOwner, orgRole };
+  return app;
 };
