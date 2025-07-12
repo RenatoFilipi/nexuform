@@ -146,13 +146,13 @@ const AnalyticsMetrics = () => {
 };
 const AnalyticsCard = ({ name, value, icon }: { name: string; value: string; icon: React.ReactNode }) => {
   return (
-    <Card className="group p-5 justify-between flex flex-col gap-3 w-full sm:h-44 border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm">
+    <Card className="group p-4 justify-between flex flex-col gap-3 w-full sm:h-32 border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm">
       <div className="flex justify-between items-center w-full">
         <span className="text-sm">{name}</span>
-        <div className="flex justify-center items-center p-3 bg-foreground/5 rounded">{icon}</div>
+        <div className="flex justify-center items-center p-3 bg-foreground/10 rounded">{icon}</div>
       </div>
       <div className="flex justify-between items-center">
-        <span className="text-xl font-bold">{value}</span>
+        <span className="text-lg font-bold">{value}</span>
       </div>
     </Card>
   );
