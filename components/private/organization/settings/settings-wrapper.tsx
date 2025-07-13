@@ -19,6 +19,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import OptionSelector from "../../shared/custom/option-selector";
+import { IContext } from "@/utils/interfaces";
 
 interface IProps {
   locale: string;
@@ -27,6 +28,7 @@ interface IProps {
   organization: EOrganization;
   subscription: ESubscription;
   teamMemberProfile: ETeamMemberProfile;
+  context: IContext;
 }
 
 const SettingsWrapper = (props: IProps) => {
@@ -44,6 +46,7 @@ const SettingsWrapper = (props: IProps) => {
       app.setOrganization(props.organization);
       app.setSubscription(props.subscription);
       app.setTeamMemberProfile(props.teamMemberProfile);
+      app.setContext(props.context);
       return null;
     },
   });

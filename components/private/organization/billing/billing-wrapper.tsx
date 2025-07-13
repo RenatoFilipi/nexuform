@@ -25,6 +25,7 @@ import { useTranslations } from "next-intl";
 import PlanIcon from "../../shared/custom/plan-icon";
 import CancelSubscription from "../../shared/subscription/cancel-subscription";
 import ManageSubscription2 from "../../shared/subscription/manage-subscription2";
+import { IContext } from "@/utils/interfaces";
 
 interface IProps {
   locale: string;
@@ -35,6 +36,7 @@ interface IProps {
   teamMemberProfile: ETeamMemberProfile;
   submissionLogs: ESubmissionLog[];
   forms: EForm[];
+  context: IContext;
 }
 
 const BillingWrapper = (props: IProps) => {
@@ -53,6 +55,7 @@ const BillingWrapper = (props: IProps) => {
       app.setTeamMemberProfile(props.teamMemberProfile);
       app.setSubmissionLogs(props.submissionLogs);
       app.setForms(props.forms);
+      app.setContext(props.context);
       return null;
     },
   });

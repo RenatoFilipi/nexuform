@@ -1,5 +1,6 @@
 import NewWrapper from "@/components/private/organization/new/new-wrapper";
 import ErrorUI from "@/components/private/shared/pages/error-ui";
+import { applyContext } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
@@ -35,6 +36,8 @@ const New = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const forms = await supabase.from("forms").select("*").eq("org_id", orgId);
   if (forms.error) return <ErrorUI email={email} />;
 
+  const context = applyContext(teamMemberProfile.data, organization.data);
+
   return (
     <NewWrapper
       locale={locale}
@@ -44,6 +47,7 @@ const New = async ({ params }: { params: Promise<{ slug: string }> }) => {
       organization={organization.data}
       subscription={subscription.data}
       forms={forms.data}
+      context={context}
     />
   );
 };

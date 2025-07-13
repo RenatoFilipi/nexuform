@@ -1,5 +1,6 @@
 import BillingWrapper from "@/components/private/organization/billing/billing-wrapper";
 import ErrorUI from "@/components/private/shared/pages/error-ui";
+import { applyContext } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
@@ -47,6 +48,8 @@ const Billing = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   if (submissionLogs.error) return <ErrorUI email={email} />;
 
+  const context = applyContext(teamMemberProfile.data, organization.data);
+
   return (
     <BillingWrapper
       locale={locale}
@@ -57,6 +60,7 @@ const Billing = async ({ params }: { params: Promise<{ slug: string }> }) => {
       subscription={subscription.data}
       forms={forms.data}
       submissionLogs={submissionLogs.data}
+      context={context}
     />
   );
 };

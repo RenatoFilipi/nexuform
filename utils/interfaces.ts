@@ -77,5 +77,5 @@ export interface IInvoiceSummary {
 
 export interface IContext {
   isOrgOwner: boolean;
-  orgRole: TOrganizationRole;
+  orgRole: TOrganizationRole; // staff | "admin"
 }

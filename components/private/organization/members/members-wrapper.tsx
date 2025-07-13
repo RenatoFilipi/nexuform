@@ -8,10 +8,12 @@ import useUserStore from "@/stores/user";
 import { EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
 import { TOrganizationRole } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { UserIcon, UserPlus2Icon } from "lucide-react";
+import { PenBoxIcon, Trash2Icon, TrashIcon, UserIcon, UserPlus2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import OrgRoleBadge from "../../shared/custom/org-role-badge";
 import MembersInvite from "./members-invite";
+import { IContext } from "@/utils/interfaces";
+import Avvvatars from "avvvatars-react";
 
 interface IProps {
   locale: string;
@@ -21,6 +23,7 @@ interface IProps {
   subscription: ESubscription;
   teamMemberProfile: ETeamMemberProfile;
   teamMemberProfiles: ETeamMemberProfile[];
+  context: IContext;
 }
 
 const MembersWrapper = (props: IProps) => {
@@ -38,6 +41,7 @@ const MembersWrapper = (props: IProps) => {
       app.setSubscription(props.subscription);
       app.setTeamMemberProfile(props.teamMemberProfile);
       app.setTeamMemberProfiles(props.teamMemberProfiles);
+      app.setContext(props.context);
       return null;
     },
   });
@@ -93,19 +97,28 @@ const MemberRow = ({ member }: { member: ETeamMemberProfile }) => {
   const t = useTranslations("app");
   const user = useUserStore();
   const app = useAppStore();
-  const avatarName = `${member.name.slice(0, 1)}${member.last_name.slice(0, 1)}`.toUpperCase();
+
   const isYou = app.teamMemberProfile.profile_id === member.profile_id;
+  const isOwner = app.organization.owner_id === member.profile_id;
+  const role = member.role; // admin | staff
+
+  /**  1. Owner nunca vê o proprio botão (owner tem sempre o role como admin)
+   *   2. Admin vê para todo mundo, exceto o verdadeiro dono
+   *   3. Staff só vê no próprio card
+   */
+
+  const showDeleteButton =
+    !(isOwner && isYou) &&
+    ((app.teamMemberProfile.role === "admin" && !isOwner) || (app.teamMemberProfile.role === "staff" && isYou));
 
   return (
-    <div className="relative flex flex-col md:flex-row items-start md:items-center w-full p-3 md:p-4 gap-3 md:gap-4 border-b hover:bg-muted/50 transition-colors duration-200 group">
+    <div className="relative flex flex-col md:flex-row items-start md:items-center w-full p-3 gap-3 md:gap-4 border-b hover:bg-muted/50 transition-colors duration-200 group">
       <div className="md:hidden absolute top-3 right-3">
         <OrgRoleBadge role={member.role as TOrganizationRole} />
       </div>
 
       <div className="flex items-center w-full md:w-[30%] gap-3 pr-10 md:pr-0">
-        <Avatar className="w-8 h-8">
-          <AvatarFallback className="text-xs">{avatarName}</AvatarFallback>
-        </Avatar>
+        <Avvvatars value={member.email} />
         <div className="flex flex-col overflow-hidden">
           <span className="text-sm font-medium">
             {member.name} {member.last_name}{" "}
@@ -120,14 +133,19 @@ const MemberRow = ({ member }: { member: ETeamMemberProfile }) => {
       </div>
 
       <div className="w-full md:w-[20%] text-sm text-muted-foreground pl-11 md:pl-0 flex items-center gap-2 md:block">
-        <span className="md:hidden text-xs">Entrou em:</span>
+        <span className="md:hidden text-xs">{t("label_joined")}:</span>
         <span>{new Date(member.created_at).toLocaleDateString(user.locale)}</span>
       </div>
 
-      <div className="w-full md:w-[30%] flex justify-end pl-11 md:pl-0">
-        <Button variant={"outline"} size={"sm"} className="w-full md:w-auto">
-          {t("label_update_member")}
+      <div className="w-full md:w-[30%] flex justify-end pl-11 md:pl-0 gap-3">
+        <Button variant={"outline"} size={"sm"} className="w-fit">
+          <PenBoxIcon className="w-4 h-4" />
         </Button>
+        {showDeleteButton && (
+          <Button variant={"destructive_outline"} size={"sm"} className="w-fit">
+            <Trash2Icon className="w-4 h-4" />
+          </Button>
+        )}
       </div>
     </div>
   );

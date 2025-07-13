@@ -19,6 +19,7 @@ import { usePathname } from "next/navigation";
 import { useState, useTransition } from "react";
 import ManageSubscription from "../../shared/subscription/manage-subscription";
 import NewPreview from "./new-preview";
+import { IContext } from "@/utils/interfaces";
 
 type TView = "method:list" | "method:scratch" | "method:templates";
 
@@ -30,6 +31,7 @@ interface IProps {
   subscription: ESubscription;
   teamMemberProfile: ETeamMemberProfile;
   forms: EForm[];
+  context: IContext;
 }
 const NewWrapper = (props: IProps) => {
   const t = useTranslations("app");
@@ -51,6 +53,7 @@ const NewWrapper = (props: IProps) => {
       app.setSubscription(props.subscription);
       app.setTeamMemberProfile(props.teamMemberProfile);
       app.setForms(props.forms);
+      app.setContext(props.context);
       return null;
     },
   });

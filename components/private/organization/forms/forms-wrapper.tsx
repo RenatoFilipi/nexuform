@@ -62,7 +62,6 @@ const FormsWrapper = (props: IProps) => {
       app.setTeamMemberProfile(props.teamMemberProfile);
       app.setForms(props.forms);
       app.setContext(props.context);
-      console.log(props.context);
       return null;
     },
   });

@@ -1,5 +1,6 @@
 import MembersWrapper from "@/components/private/organization/members/members-wrapper";
 import ErrorUI from "@/components/private/shared/pages/error-ui";
+import { applyContext } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
@@ -39,6 +40,8 @@ const Members = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const subscription = await supabase.from("subscriptions").select("*").eq("org_id", orgId).single();
   if (subscription.error) return <ErrorUI email={email} />;
 
+  const context = applyContext(teamMemberProfile.data, organization.data);
+
   return (
     <MembersWrapper
       locale={locale}
@@ -48,6 +51,7 @@ const Members = async ({ params }: { params: Promise<{ slug: string }> }) => {
       subscription={subscription.data}
       teamMemberProfile={teamMemberProfile.data}
       teamMemberProfiles={teamMemberProfiles.data}
+      context={context}
     />
   );
 };

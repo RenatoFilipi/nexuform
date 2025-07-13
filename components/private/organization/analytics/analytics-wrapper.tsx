@@ -19,6 +19,7 @@ import { useQuery } from "@tanstack/react-query";
 import { EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import WipUI from "../../shared/custom/wip-ui";
+import { IContext } from "@/utils/interfaces";
 
 interface IProps {
   locale: string;
@@ -30,6 +31,7 @@ interface IProps {
   forms: EForm[];
   submissionLogs: ESubmissionLog[];
   viewLogs: EViewLog[];
+  context: IContext;
 }
 
 const AnalyticsWrapper = (props: IProps) => {
@@ -50,6 +52,7 @@ const AnalyticsWrapper = (props: IProps) => {
       app.setForms(props.forms);
       app.setViewLogs(props.viewLogs);
       app.setSubmissionLogs(props.submissionLogs);
+      app.setContext(props.context);
       return null;
     },
   });

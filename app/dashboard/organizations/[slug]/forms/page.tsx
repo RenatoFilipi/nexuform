@@ -15,10 +15,14 @@ const OrgForms = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const userId = data.user.id;
 
   const profile = await supabase.from("profiles").select("*").eq("id", userId).single();
-  if (profile.error) return <ErrorUI email={email} />;
+  if (profile.error) {
+    return <ErrorUI email={email} />;
+  }
 
   const organization = await supabase.from("organizations").select("*").eq("public_id", slug).single();
-  if (organization.error) return <ErrorUI email={email} />;
+  if (organization.error) {
+    return <ErrorUI email={email} />;
+  }
 
   const orgId = organization.data.id;
 
@@ -28,7 +32,9 @@ const OrgForms = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .eq("profile_id", userId)
     .eq("org_id", orgId)
     .single();
-  if (teamMemberProfile.error) return <ErrorUI email={email} />;
+  if (teamMemberProfile.error) {
+    return <ErrorUI email={email} />;
+  }
 
   const subscription = await supabase.from("subscriptions").select("*").eq("org_id", orgId).single();
   if (subscription.error) return <ErrorUI email={email} />;

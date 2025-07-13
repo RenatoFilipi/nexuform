@@ -24,6 +24,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import FeedbackForm from "../custom/feedback-form";
+import Avvvatars from "avvvatars-react";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -136,8 +137,6 @@ const AfterOrgNavbar = () => {
 const AvatarMenuDesk = () => {
   const t = useTranslations("app");
   const user = useUserStore();
-  const app = useAppStore();
-  const avatarName = `${user.profile.first_name.slice(0, 1)}${user.profile.last_name.slice(0, 1)}`.toUpperCase();
 
   const resources = [
     { name: t("label_organizations"), path: "/dashboard/organizations", icon: BoxesIcon, enabled: true },
@@ -147,12 +146,8 @@ const AvatarMenuDesk = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Avatar className="cursor-pointer w-9 h-9">
-          <AvatarFallback className="bg-foreground/15 hover:bg-foreground/30 transition">
-            <span className="first-letter:uppercase text-xs font-bold">{avatarName}</span>
-          </AvatarFallback>
-        </Avatar>
+      <DropdownMenuTrigger>
+        <Avvvatars value={user.email} />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-64" align="end" sideOffset={6}>
         {user.email !== "" && (
