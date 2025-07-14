@@ -14,6 +14,7 @@ import { useTranslations } from "next-intl";
 import OrgRoleBadge from "../../shared/custom/org-role-badge";
 import MembersInvite from "./members-invite";
 import MembersRemove from "./members-remove";
+import MembersUpdate from "./members-update";
 
 interface IProps {
   locale: string;
@@ -144,9 +145,11 @@ const MemberRow = ({ member }: { member: ETeamMemberProfile }) => {
 
       <div className="w-full md:w-[30%] flex justify-end pl-11 md:pl-0 gap-3">
         {isUpdateAllowed && (
-          <Button variant={"outline"} size={"sm"} className="w-fit">
-            <PenBoxIcon className="w-4 h-4" />
-          </Button>
+          <MembersUpdate self={isYou} member={member}>
+            <Button variant={"outline"} size={"sm"} className="w-fit">
+              <PenBoxIcon className="w-4 h-4" />
+            </Button>
+          </MembersUpdate>
         )}
         {isRemoveAllowed && (
           <MembersRemove self={isYou} member={member}>

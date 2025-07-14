@@ -165,7 +165,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
               />
             </div>
           </div>
-          <div className="flex justify-between items-center w-full">
+          <div className="flex flex-col-reverse sm:flex-row gap-2 w-full justify-between">
             <Button type="button" variant={"outline"} size={"sm"} onClick={() => setState(false)}>
               {t("label_close")}
             </Button>
