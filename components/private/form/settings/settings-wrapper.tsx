@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
 import { EForm, EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
+import { IContext } from "@/utils/interfaces";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
@@ -23,6 +24,7 @@ interface IProps {
   subscription: ESubscription;
   teamMemberProfile: ETeamMemberProfile;
   form: EForm;
+  context: IContext;
 }
 
 const SettingsWrapper = (props: IProps) => {
@@ -40,10 +42,12 @@ const SettingsWrapper = (props: IProps) => {
       app.setSubscription(props.subscription);
       app.setTeamMemberProfile(props.teamMemberProfile);
       app.setForm(props.form);
+      app.setContext(props.context);
       return null;
     },
   });
 
+  const isAdmin = app.context.orgRole === "admin";
   if (query.isPending) return null;
 
   return (
@@ -55,7 +59,7 @@ const SettingsWrapper = (props: IProps) => {
       {/* content */}
       <div className="flex flex-col gap-10">
         <SettingsStatus />
-        <SettingsDelete />
+        {isAdmin && <SettingsDelete />}
       </div>
     </div>
   );

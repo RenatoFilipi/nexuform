@@ -9,6 +9,8 @@ import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
 import { EForm, EOrganization, EProfile, ESubmissionLog, ESubscription, ETeamMemberProfile } from "@/utils/entities";
 import { getDaysDifference } from "@/utils/functions";
+import { IContext } from "@/utils/interfaces";
+import { TPlan } from "@/utils/pricing";
 import { useQuery } from "@tanstack/react-query";
 import {
   AlertCircleIcon,
@@ -22,10 +24,9 @@ import {
   SendIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import PlanIcon from "../../shared/custom/plan-icon";
+import PlanBadge from "../../shared/custom/plan-badge";
 import CancelSubscription from "../../shared/subscription/cancel-subscription";
 import ManageSubscription2 from "../../shared/subscription/manage-subscription2";
-import { IContext } from "@/utils/interfaces";
 
 interface IProps {
   locale: string;
@@ -197,6 +198,7 @@ const BillingPlan = () => {
   const isFreeTrial = app.subscription.plan === "free_trial";
   const remainingDays = getDaysDifference(new Date(), new Date(app.subscription.due_date));
   const showCancelButton = app.subscription.status !== "canceled" && app.subscription.plan !== "free_trial";
+  const isOwner = app.context.isOrgOwner;
 
   const planName = (plan: string) =>
     ({
@@ -235,12 +237,12 @@ const BillingPlan = () => {
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-start gap-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-              <PlanIcon type={user.subscription.plan} />
+            <div className="flex items-center justify-center rounded-lg">
+              <PlanBadge type={app.subscription.plan as TPlan} size={"xl"} />
             </div>
             <div>
-              <h2 className="text-xl font-semibold tracking-tight">{planName(app.subscription.plan)}</h2>
-              <p className="text-sm text-foreground/70">{t("label_plan")}</p>
+              <h2 className="text-base font-semibold">{planName(app.subscription.plan)}</h2>
+              <p className="text-xs text-muted-foreground">{t("label_plan")}</p>
             </div>
           </div>
         </div>
@@ -276,21 +278,23 @@ const BillingPlan = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col-reverse sm:flex-row justify-end gap-4 items-center">
-          {showCancelButton && (
-            <CancelSubscription>
-              <Button variant="ghost" size="xs" className="w-full sm:w-auto gap-2 text-muted-foreground">
-                {t("label_cancel_sub")}
+        {isOwner && (
+          <div className="flex flex-col-reverse sm:flex-row justify-end gap-4 items-center">
+            {showCancelButton && (
+              <CancelSubscription>
+                <Button variant="ghost" size="xs" className="w-full sm:w-auto gap-2 text-muted-foreground">
+                  {t("label_cancel_sub")}
+                </Button>
+              </CancelSubscription>
+            )}
+            <ManageSubscription2>
+              <Button variant="outline" size="sm" className="w-full sm:w-auto gap-2">
+                <ArrowUpRightIcon className="h-4 w-4" />
+                {t("label_manage_sub")}
               </Button>
-            </CancelSubscription>
-          )}
-          <ManageSubscription2>
-            <Button variant="outline" size="sm" className="w-full sm:w-auto gap-2">
-              <ArrowUpRightIcon className="h-4 w-4" />
-              {t("label_manage_sub")}
-            </Button>
-          </ManageSubscription2>
-        </div>
+            </ManageSubscription2>
+          </div>
+        )}
       </div>
     </Card>
   );

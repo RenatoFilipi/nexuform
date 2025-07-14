@@ -17,7 +17,7 @@ import {
   ETeamMemberProfile,
 } from "@/utils/entities";
 import { formatDateRelativeToNow, formatTime } from "@/utils/functions";
-import { IPagination } from "@/utils/interfaces";
+import { IContext, IPagination } from "@/utils/interfaces";
 import { createClient } from "@/utils/supabase/client";
 import { TSubmissionStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
@@ -38,6 +38,7 @@ interface IProps {
   form: EForm;
   submissions: ESubmission[];
   blocks: EBlock[];
+  context: IContext;
 }
 
 const SubmissionsWrapper = (props: IProps) => {
@@ -56,6 +57,7 @@ const SubmissionsWrapper = (props: IProps) => {
       app.setForm(props.form);
       app.setBlocks(props.blocks);
       app.setSubmissions(props.submissions);
+      app.setContext(props.context);
       return null;
     },
   });

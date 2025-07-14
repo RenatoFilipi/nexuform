@@ -15,6 +15,7 @@ import useUserStore from "@/stores/user";
 import { blockViewSettings, fallbackColor } from "@/utils/constants";
 import { EBlock, EForm, EOrganization, EProfile, ESubscription, ETeamMemberProfile, ETheme } from "@/utils/entities";
 import { getBlockName } from "@/utils/functions";
+import { IContext } from "@/utils/interfaces";
 import { TBlock, TEditorView, TToolView } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { Reorder, useDragControls } from "framer-motion";
@@ -44,6 +45,7 @@ interface IProps {
   form: EForm;
   theme: ETheme;
   blocks: EBlock[];
+  context: IContext;
 }
 const EditorWrapper = (props: IProps) => {
   const studio = useEditorStore();
@@ -65,6 +67,7 @@ const EditorWrapper = (props: IProps) => {
       studio.setTheme({ ...props.theme, custom_primary_color: primaryColor });
       studio.setBlocks(props.blocks);
       studio.setOriginalBlocks(props.blocks);
+      app.setContext(props.context);
       return null;
     },
   });

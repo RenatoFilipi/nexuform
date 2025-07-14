@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
 import { EForm, EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
+import { IContext } from "@/utils/interfaces";
 import { useQuery } from "@tanstack/react-query";
 import { DownloadIcon, ExternalLinkIcon, LinkIcon, LoaderIcon, Share2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -22,6 +23,7 @@ interface IProps {
   subscription: ESubscription;
   teamMemberProfile: ETeamMemberProfile;
   form: EForm;
+  context: IContext;
 }
 
 const ShareWrapper = (props: IProps) => {
@@ -39,6 +41,7 @@ const ShareWrapper = (props: IProps) => {
       app.setSubscription(props.subscription);
       app.setTeamMemberProfile(props.teamMemberProfile);
       app.setForm(props.form);
+      app.setContext(props.context);
       return null;
     },
   });

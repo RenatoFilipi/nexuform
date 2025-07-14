@@ -1,6 +1,6 @@
 import OverviewWrapper from "@/components/private/form/overview/overview-wrapper";
 import ErrorUI from "@/components/private/shared/pages/error-ui";
-import { getDateRangeFromToday } from "@/utils/functions";
+import { applyContext, getDateRangeFromToday } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
@@ -54,6 +54,8 @@ const Overview = async ({ params }: { params: Promise<{ slug: string; id: string
     .lte("created_at", dates.endDate.toISOString());
   if (viewLogs.error) return <ErrorUI email={email} />;
 
+  const context = applyContext(teamMemberProfile.data, organization.data);
+
   return (
     <OverviewWrapper
       locale={locale}
@@ -65,6 +67,7 @@ const Overview = async ({ params }: { params: Promise<{ slug: string; id: string
       form={form.data}
       submissionLogs={submissionLogs.data}
       viewLogs={viewLogs.data}
+      context={context}
     />
   );
 };

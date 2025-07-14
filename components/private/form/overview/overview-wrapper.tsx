@@ -21,6 +21,7 @@ import {
   getAverageCompletionTime,
   getDateRangeFromToday,
 } from "@/utils/functions";
+import { IContext } from "@/utils/interfaces";
 import { createClient } from "@/utils/supabase/client";
 import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
@@ -41,6 +42,7 @@ interface IProps {
   form: EForm;
   submissionLogs: ESubmissionLog[];
   viewLogs: EViewLog[];
+  context: IContext;
 }
 
 const OverviewWrapper = (props: IProps) => {
@@ -68,6 +70,7 @@ const OverviewWrapper = (props: IProps) => {
       app.setViewLogs(props.viewLogs);
       app.setFrom(dates.startDate);
       app.setTo(dates.endDate);
+      app.setContext(props.context);
       return null;
     },
   });

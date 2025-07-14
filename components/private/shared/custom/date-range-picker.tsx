@@ -2,15 +2,17 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
 import { useQuery } from "@tanstack/react-query";
 import { endOfMonth, endOfWeek, startOfMonth, startOfToday, startOfWeek, subDays } from "date-fns";
 import { enUS, es, pt } from "date-fns/locale";
-import { ArrowUpRightIcon, CalendarIcon, RocketIcon } from "lucide-react";
+import { ArrowUpRightIcon, CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 import { DateRange } from "react-day-picker";
 import ManageSubscription2 from "../subscription/manage-subscription2";
+import PlanBadge from "./plan-badge";
 
 interface IProps {
   className?: string;
@@ -21,8 +23,10 @@ interface IProps {
 const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
   const t = useTranslations("app");
   const user = useUserStore();
+  const app = useAppStore();
   const isAllowedCustom = user.subscription.plan === "pro";
   const today = startOfToday();
+  const isOwner = app.context.isOrgOwner;
 
   const query = useQuery({
     queryKey: ["date-range-picker"],
@@ -173,19 +177,21 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
             {/* Calendar column */}
             <div className="flex flex-col relative">
               {!isAllowedCustom && (
-                <div className="absolute inset-0 bg-background/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center gap-4 p-4">
+                <div className="absolute inset-0 bg-background/40 backdrop-blur-sm z-10 flex flex-col items-center justify-center gap-4 p-4">
                   <div className="relative group">
-                    <div className="relative flex justify-center items-center p-3 w-fit rounded-full border bg-foreground/5">
-                      <RocketIcon className="w-6 h-6 text-emerald-500" />
+                    <div className="">
+                      <PlanBadge type="pro" size={36} />
                     </div>
                   </div>
                   <p className="text-sm text-center">{t("label_upgrade_for_custom_dates")}</p>
-                  <ManageSubscription2 selected="pro">
-                    <Button variant="secondary" size="xs">
-                      <ArrowUpRightIcon className="w-4 h-4 mr-2" />
-                      {t("label_upgrade_to_pro")}
-                    </Button>
-                  </ManageSubscription2>
+                  {isOwner && (
+                    <ManageSubscription2 selected="pro">
+                      <Button variant="secondary" size="xs">
+                        <ArrowUpRightIcon className="w-4 h-4 mr-2" />
+                        {t("label_upgrade_to_pro")}
+                      </Button>
+                    </ManageSubscription2>
+                  )}
                 </div>
               )}
               <Calendar

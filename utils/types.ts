@@ -43,7 +43,7 @@ export type TSubmissionStatus = "reviewed" | "not_reviewed" | "ignored";
 export type TRole = "admin" | "moderator" | "editor" | "contributor" | "member" | "guest" | "none";
 
 // subscriptions
-export type TPlan = "free_trial" | "basic" | "pro" | "business" | "custom";
+export type TPlan = "free_trial" | "basic" | "pro" | "business" | "custom" | "starter";
 export type TSubscriptionStatus = "active" | "inactive" | "trial";
 export type TBillingInterval = "monthly" | "yearly";
 

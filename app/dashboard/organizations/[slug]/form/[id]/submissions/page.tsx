@@ -1,6 +1,7 @@
 import SubmissionsWrapper from "@/components/private/form/submissions/submissions-wrapper";
 import ErrorUI from "@/components/private/shared/pages/error-ui";
 import { paginationFrom, paginationTo } from "@/utils/constants";
+import { applyContext } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
@@ -51,6 +52,8 @@ const Submissions = async ({ params }: { params: Promise<{ slug: string; id: str
     .order("created_at", { ascending: false });
   if (submissions.error) return <ErrorUI email={email} />;
 
+  const context = applyContext(teamMemberProfile.data, organization.data);
+
   return (
     <SubmissionsWrapper
       locale={locale}
@@ -62,6 +65,7 @@ const Submissions = async ({ params }: { params: Promise<{ slug: string; id: str
       form={form.data}
       blocks={blocks.data}
       submissions={submissions.data}
+      context={context}
     />
   );
 };

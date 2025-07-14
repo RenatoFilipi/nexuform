@@ -1,5 +1,6 @@
 import EditorWrapper from "@/components/private/form/editor/editor-wrapper";
 import ErrorUI from "@/components/private/shared/pages/error-ui";
+import { applyContext } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
@@ -45,6 +46,8 @@ const Editor = async ({ params }: { params: Promise<{ slug: string; id: string }
     .order("position", { ascending: true });
   if (blocks.error) return <ErrorUI email={email} />;
 
+  const context = applyContext(teamMemberProfile.data, organization.data);
+
   return (
     <EditorWrapper
       locale={locale}
@@ -56,6 +59,7 @@ const Editor = async ({ params }: { params: Promise<{ slug: string; id: string }
       form={form.data}
       theme={theme.data}
       blocks={blocks.data}
+      context={context}
     />
   );
 };

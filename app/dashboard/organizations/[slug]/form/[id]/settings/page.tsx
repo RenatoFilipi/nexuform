@@ -1,5 +1,6 @@
 import SettingsWrapper from "@/components/private/form/settings/settings-wrapper";
 import ErrorUI from "@/components/private/shared/pages/error-ui";
+import { applyContext } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
@@ -35,6 +36,8 @@ const Settings = async ({ params }: { params: Promise<{ slug: string; id: string
   const form = await supabase.from("forms").select("*").eq("public_id", id).single();
   if (form.error) return <ErrorUI email={email} />;
 
+  const context = applyContext(teamMemberProfile.data, organization.data);
+
   return (
     <SettingsWrapper
       locale={locale}
@@ -44,6 +47,7 @@ const Settings = async ({ params }: { params: Promise<{ slug: string; id: string
       organization={organization.data}
       subscription={subscription.data}
       form={form.data}
+      context={context}
     />
   );
 };
