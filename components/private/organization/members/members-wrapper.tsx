@@ -14,6 +14,7 @@ import OrgRoleBadge from "../../shared/custom/org-role-badge";
 import MembersInvite from "./members-invite";
 import { IContext } from "@/utils/interfaces";
 import Avvvatars from "avvvatars-react";
+import MembersRemove from "./members-remove";
 
 interface IProps {
   locale: string;
@@ -86,7 +87,7 @@ const MemberList = () => {
   }
 
   return (
-    <div className="overflow-y-auto grid gap-4 grid-cols-1">
+    <div className="overflow-y-auto grid">
       {app.teamMemberProfiles.map((m) => {
         return <MemberRow member={m} key={m.id} />;
       })}
@@ -100,12 +101,6 @@ const MemberRow = ({ member }: { member: ETeamMemberProfile }) => {
 
   const isYou = app.teamMemberProfile.profile_id === member.profile_id;
   const isOwner = app.organization.owner_id === member.profile_id;
-  const role = member.role; // admin | staff
-
-  /**  1. Owner nunca vê o proprio botão (owner tem sempre o role como admin)
-   *   2. Admin vê para todo mundo, exceto o verdadeiro dono
-   *   3. Staff só vê no próprio card
-   */
 
   const showDeleteButton =
     !(isOwner && isYou) &&
@@ -142,9 +137,11 @@ const MemberRow = ({ member }: { member: ETeamMemberProfile }) => {
           <PenBoxIcon className="w-4 h-4" />
         </Button>
         {showDeleteButton && (
-          <Button variant={"destructive_outline"} size={"sm"} className="w-fit">
-            <Trash2Icon className="w-4 h-4" />
-          </Button>
+          <MembersRemove self={isYou} member={member}>
+            <Button variant={"destructive_outline"} size={"sm"} className="w-fit">
+              <Trash2Icon className="w-4 h-4" />
+            </Button>
+          </MembersRemove>
         )}
       </div>
     </div>
