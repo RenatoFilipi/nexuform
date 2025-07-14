@@ -481,7 +481,9 @@
     "label_invited_by": "Convidado por",
     "label_accept": "Aceitar",
     "label_decline": "Recusar",
-    "label_you": "Você"
+    "label_you": "Você",
+    "label_remove_member": "Remover Membro",
+    "desc_remove_member": "Isso removerá o membro da organização. Esta ação é permanente."
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

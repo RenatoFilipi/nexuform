@@ -49,7 +49,8 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const app = useAppStore();
   const [isPending, startTransition] = useTransition();
   const supabase = createClient();
-  const isPro = app.subscription.plan === "pro";
+  const isNotPro = app.subscription.plan !== "pro";
+  const isNotAdmin = app.context.orgRole !== "admin";
 
   const formSchema = z.object({
     email: z.string().email(t("label_required_email")),
@@ -62,7 +63,43 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     startTransition(async () => {
       const inviterName = `${app.teamMemberProfile.name} ${app.teamMemberProfile.last_name}`;
-      const { error } = await supabase.from("invitations").insert({
+
+      const existingMember = await supabase
+        .from("team_member_profiles")
+        .select("id")
+        .eq("email", values.email)
+        .eq("org_id", app.organization.id)
+        .maybeSingle();
+
+      if (existingMember.error) {
+        toast.error(t("err_generic"));
+        return;
+      }
+
+      if (existingMember.data) {
+        toast.error("Este membro já faz parte da organização.");
+        return;
+      }
+
+      const pendingInvite = await supabase
+        .from("invitations")
+        .select("id")
+        .eq("email", values.email)
+        .eq("org_id", app.organization.id)
+        .eq("status", "pending")
+        .maybeSingle();
+
+      if (pendingInvite.error) {
+        toast.error(t("err_generic"));
+        return;
+      }
+
+      if (pendingInvite.data) {
+        toast.error("Já existe um convite pendente para este email.");
+        return;
+      }
+
+      const newInvitation = await supabase.from("invitations").insert({
         email: values.email,
         invited_by: app.teamMemberProfile.id,
         org_id: app.organization.id,
@@ -71,7 +108,8 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
         org_name: app.organization.name,
         inviter_name: inviterName,
       });
-      if (error) {
+
+      if (newInvitation.error) {
         toast.error(t("err_generic"));
         return;
       }
@@ -82,7 +120,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
 
   return (
     <div className="flex flex-col gap-4">
-      {!isPro && <UpgradeToPro />}
+      {isNotPro && <UpgradeToPro />}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-10">
           <div className="grid sm:grid-cols-2 gap-6">
@@ -131,7 +169,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
             <Button type="button" variant={"outline"} size={"sm"} onClick={() => setState(false)}>
               {t("label_close")}
             </Button>
-            <Button type="submit" variant={"secondary"} size={"sm"} disabled={!isPro || isPending}>
+            <Button type="submit" variant={"secondary"} size={"sm"} disabled={isPending || isNotAdmin}>
               {!isPending && <MailPlusIcon className="w-4 h-4 mr-2" />}
               {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
               {t("label_invite")}

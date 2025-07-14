@@ -1,19 +1,18 @@
 "use client";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
 import { EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
+import { IContext } from "@/utils/interfaces";
 import { TOrganizationRole } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { PenBoxIcon, Trash2Icon, TrashIcon, UserIcon, UserPlus2Icon } from "lucide-react";
+import Avvvatars from "avvvatars-react";
+import { CrownIcon, PenBoxIcon, Trash2Icon, UserIcon, UserPlus2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import OrgRoleBadge from "../../shared/custom/org-role-badge";
 import MembersInvite from "./members-invite";
-import { IContext } from "@/utils/interfaces";
-import Avvvatars from "avvvatars-react";
 import MembersRemove from "./members-remove";
 
 interface IProps {
@@ -102,9 +101,14 @@ const MemberRow = ({ member }: { member: ETeamMemberProfile }) => {
   const isYou = app.teamMemberProfile.profile_id === member.profile_id;
   const isOwner = app.organization.owner_id === member.profile_id;
 
-  const showDeleteButton =
+  const isRemoveAllowed =
     !(isOwner && isYou) &&
     ((app.teamMemberProfile.role === "admin" && !isOwner) || (app.teamMemberProfile.role === "staff" && isYou));
+
+  const isUpdateAllowed =
+    (isOwner && isYou) ||
+    (app.teamMemberProfile.role === "admin" && !isOwner) ||
+    (app.teamMemberProfile.role === "staff" && isYou);
 
   return (
     <div className="relative flex flex-col md:flex-row items-start md:items-center w-full p-3 gap-3 md:gap-4 border-b hover:bg-muted/50 transition-colors duration-200 group">
@@ -114,10 +118,16 @@ const MemberRow = ({ member }: { member: ETeamMemberProfile }) => {
 
       <div className="flex items-center w-full md:w-[30%] gap-3 pr-10 md:pr-0">
         <Avvvatars value={member.email} />
+
         <div className="flex flex-col overflow-hidden">
-          <span className="text-sm font-medium">
+          <span className="text-sm font-medium flex justify-start items-center gap-1">
             {member.name} {member.last_name}{" "}
             {isYou && <span className="text-xs text-muted-foreground">({t("label_you")})</span>}
+            {isOwner && (
+              <span>
+                <CrownIcon className="w-4 h-4 text-yellow-500" />
+              </span>
+            )}
           </span>
           <span className="text-xs text-muted-foreground truncate">{member.email}</span>
         </div>
@@ -133,10 +143,12 @@ const MemberRow = ({ member }: { member: ETeamMemberProfile }) => {
       </div>
 
       <div className="w-full md:w-[30%] flex justify-end pl-11 md:pl-0 gap-3">
-        <Button variant={"outline"} size={"sm"} className="w-fit">
-          <PenBoxIcon className="w-4 h-4" />
-        </Button>
-        {showDeleteButton && (
+        {isUpdateAllowed && (
+          <Button variant={"outline"} size={"sm"} className="w-fit">
+            <PenBoxIcon className="w-4 h-4" />
+          </Button>
+        )}
+        {isRemoveAllowed && (
           <MembersRemove self={isYou} member={member}>
             <Button variant={"destructive_outline"} size={"sm"} className="w-fit">
               <Trash2Icon className="w-4 h-4" />

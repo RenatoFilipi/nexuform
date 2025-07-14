@@ -481,7 +481,9 @@
     "label_invited_by": "Invited by",
     "label_accept": "Accept",
     "label_decline": "Decline",
-    "label_you": "You"
+    "label_you": "You",
+    "label_remove_member": "Remove Member",
+    "desc_remove_member": "This will remove the member from the organization. This action is permanent."
   },
   "s": {
     "err_required_all": "Answer all required questions.",
