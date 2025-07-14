@@ -89,7 +89,7 @@ const MemberList = () => {
   return (
     <div className="overflow-y-auto grid">
       {app.teamMemberProfiles.map((m) => {
-        return <MemberRow member={m} key={m.id} />;
+        return <MemberRow member={m} key={`${m.id}`} />;
       })}
     </div>
   );

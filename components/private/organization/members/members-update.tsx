@@ -66,7 +66,6 @@ const Body = ({
   const supabase = createClient();
   const isOwner = app.context.isOrgOwner;
   const isYou = app.teamMemberProfile.profile_id === member.profile_id;
-  const isNotAdmin = member.role !== "admin";
 
   const formSchema = z.object({
     name: z.string().min(2, { message: "Name is required" }),
@@ -80,22 +79,22 @@ const Body = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     startTransition(async () => {
-      const response = await supabase
+      const tmp = await supabase
         .from("team_member_profiles")
         .update({ name: values.name, last_name: values.lastName, role: values.role })
         .eq("id", member.id)
         .select("*")
         .single();
 
-      if (response.error) {
+      if (tmp.error) {
         toast.error(t("err_generic"));
         return;
       }
       const updatedTMPs = app.teamMemberProfiles.map((x) => {
-        return x.id === response.data.id ? response.data : x;
+        return x.id === tmp.data.id ? tmp.data : x;
       });
-      console.log(updatedTMPs);
       app.setTeamMemberProfiles(updatedTMPs);
+      toast.success(t("success_generic"));
       setState(false);
     });
   };
@@ -144,10 +143,7 @@ const Body = ({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{t("label_role")}</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                      disabled={(isOwner && isYou) || isNotAdmin}>
+                    <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isOwner && isYou}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue />
