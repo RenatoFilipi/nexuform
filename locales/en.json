@@ -483,7 +483,11 @@
     "label_decline": "Decline",
     "label_you": "You",
     "label_remove_member": "Remove Member",
-    "desc_remove_member": "This will remove the member from the organization. This action is permanent."
+    "desc_remove_member": "This will remove the member from the organization. This action is permanent.",
+    "label_owner": "Owner",
+    "desc_update_member": "Modify member details and adjust role permissions.",
+    "required_last_name": "Last name is required",
+    "required_name": "Name is required"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

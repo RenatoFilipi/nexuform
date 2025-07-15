@@ -1,15 +1,23 @@
 import { Badge } from "@/components/ui/badge";
 import { TOrganizationRole } from "@/utils/types";
-import { HardHatIcon, ShieldCheckIcon } from "lucide-react";
+import { CrownIcon, HardHatIcon, ShieldCheckIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 const OrgRoleBadge = ({ role, uppercase = false }: { role: TOrganizationRole; uppercase?: boolean }) => {
   const t = useTranslations("app");
 
   switch (role) {
-    case "admin": {
+    case "owner": {
       return (
         <Badge variant={"gold"} uppercase={uppercase} className="w-fit">
+          <CrownIcon className="w-4 h-4" />
+          {t("label_owner")}
+        </Badge>
+      );
+    }
+    case "admin": {
+      return (
+        <Badge variant={"green"} uppercase={uppercase} className="w-fit">
           <ShieldCheckIcon className="w-4 h-4" />
           {t("label_admin")}
         </Badge>

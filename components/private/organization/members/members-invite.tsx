@@ -32,7 +32,7 @@ const MembersInvite = ({ children }: { children: ReactNode }) => {
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogOverlay className="backdrop-blur-sm">
-        <AlertDialogContent className="flex flex-col w-full max-w-2xl">
+        <AlertDialogContent className="flex flex-col w-full">
           <AlertDialogHeader>
             <AlertDialogTitle>{t("label_invite_member")}</AlertDialogTitle>
             <AlertDialogDescription className="">{t("desc_invite_member")}</AlertDialogDescription>

@@ -483,7 +483,11 @@
     "label_decline": "Recusar",
     "label_you": "Você",
     "label_remove_member": "Remover Membro",
-    "desc_remove_member": "Isso removerá o membro da organização. Esta ação é permanente."
+    "desc_remove_member": "Isso removerá o membro da organização. Esta ação é permanente.",
+    "label_owner": "Proprietário",
+    "desc_update_member": "Modificar os dados do membro e ajustar as permissões de função.",
+    "required_last_name": "Sobrenome é obrigatório",
+    "required_name": "Nome é obrigatório"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

@@ -60,7 +60,7 @@ const OrganizationsWrapper = (props: IProps) => {
             })}
           </div>
         )}
-        <div className="overflow-y-auto grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="overflow-y-auto grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {app.teamMemberProfiles.map((tmp) => {
             return <OrganizationsCard key={tmp.id} teamMemberProfile={tmp} />;
           })}
@@ -85,10 +85,10 @@ const OrganizationsCard = (props: ICardProps) => {
       <Card className="flex flex-col justify-between h-40 p-4 border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm cursor-pointer relative">
         <div className="flex justify-between items-start w-full">
           <div className="flex justify-start items-center gap-3">
-            <div className="flex justify-center items-center p-3 bg-foreground/5 rounded-xl w-fit">
-              <BoxesIcon className="w-6 h-6" />
+            <div className="flex justify-center items-center p-3 bg-foreground/10 rounded w-fit">
+              <BoxesIcon className="w-5 h-5" />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1">
               <span className="text-sm font-semibold">{organization.name}</span>
               <div className="flex gap-2">
                 <Badge variant={"default"}>{plan}</Badge>

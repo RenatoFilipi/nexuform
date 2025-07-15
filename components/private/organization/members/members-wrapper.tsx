@@ -9,7 +9,7 @@ import { IContext } from "@/utils/interfaces";
 import { TOrganizationRole } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import Avvvatars from "avvvatars-react";
-import { CrownIcon, PenBoxIcon, Trash2Icon, UserIcon, UserPlus2Icon } from "lucide-react";
+import { PenBoxIcon, Trash2Icon, UserIcon, UserPlus2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import OrgRoleBadge from "../../shared/custom/org-role-badge";
 import MembersInvite from "./members-invite";
@@ -156,11 +156,6 @@ const MemberRow = ({
           <span className="text-sm font-medium flex justify-start items-center gap-1">
             {member.name} {member.last_name}{" "}
             {isYou && <span className="text-xs text-muted-foreground">({t("label_you")})</span>}
-            {isOwner && (
-              <span>
-                <CrownIcon className="w-4 h-4 text-yellow-500" />
-              </span>
-            )}
           </span>
           <span className="text-xs text-muted-foreground truncate">{member.email}</span>
         </div>

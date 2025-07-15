@@ -20,7 +20,7 @@ const PlanBadge = ({ type, size = "md", className = "", ...props }: PlanBadgePro
       case "free_trial":
         return "text-blue-500 fill-blue-500";
       case "pro":
-        return "text-purple-500 fill-purple-500";
+        return "text-yellow-500 fill-yellow-500";
       case "starter":
         return "text-pink-500 fill-pink-500";
       default:

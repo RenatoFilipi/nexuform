@@ -40,7 +40,7 @@ const MembersRemove = ({
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogOverlay className="backdrop-blur-sm">
-        <AlertDialogContent className="flex flex-col w-full sm:min-w-[650px]">
+        <AlertDialogContent className="flex flex-col w-full">
           <AlertDialogHeader>
             <AlertDialogTitle>{t("label_remove_member")}</AlertDialogTitle>
             <AlertDialogDescription>{t("desc_remove_member")}</AlertDialogDescription>

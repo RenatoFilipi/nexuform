@@ -69,8 +69,8 @@ const BillingWrapper = (props: IProps) => {
         <h1 className="text-xl font-semibold">{t("label_billing")}</h1>
       </div>
       <div className="flex flex-col gap-6">
-        <BillingUsage />
         <BillingPlan />
+        <BillingUsage />
       </div>
     </div>
   );

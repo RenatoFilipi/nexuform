@@ -16,7 +16,6 @@ import { ETeamMemberProfile } from "@/utils/entities";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeftIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { ReactNode, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -39,10 +38,10 @@ const MembersUpdate = ({
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogOverlay className="backdrop-blur-sm">
-        <AlertDialogContent className="flex flex-col w-full sm:min-w-[650px]">
+        <AlertDialogContent className="flex flex-col w-full">
           <AlertDialogHeader>
-            <AlertDialogTitle>Update Member</AlertDialogTitle>
-            <AlertDialogDescription>Modify member details and adjust role permissions.</AlertDialogDescription>
+            <AlertDialogTitle>{t("label_update_member")}</AlertDialogTitle>
+            <AlertDialogDescription>{t("desc_update_member")}</AlertDialogDescription>
           </AlertDialogHeader>
           <Body setState={setOpen} self={self} member={member} />
         </AlertDialogContent>
@@ -66,10 +65,11 @@ const Body = ({
   const supabase = createClient();
   const isOwner = app.context.isOrgOwner;
   const isYou = app.teamMemberProfile.profile_id === member.profile_id;
+  const isStaff = app.teamMemberProfile.role === "staff";
 
   const formSchema = z.object({
-    name: z.string().min(2, { message: "Name is required" }),
-    lastName: z.string().min(2, { message: "Last name is required" }),
+    name: z.string().min(2, { message: t("required_name") }),
+    lastName: z.string().min(2, { message: t("required_last_name") }),
     role: z.string(),
   });
   const form = useForm<z.infer<typeof formSchema>>({
@@ -132,7 +132,7 @@ const Body = ({
                 name="lastName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Last name</FormLabel>
+                    <FormLabel>{t("label_last_name")}</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Input id="lastName" type="text" {...field} />
@@ -143,14 +143,17 @@ const Body = ({
                 )}
               />
             </div>
-            <div className="">
+            <div className={`${(isOwner && isYou) || isStaff ? "hidden" : ""}`}>
               <FormField
                 control={form.control}
                 name="role"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{t("label_role")}</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isOwner && isYou}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      disabled={(isOwner && isYou) || isStaff}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue />
@@ -175,11 +178,10 @@ const Body = ({
               variant="outline"
               size="sm"
               className="w-full sm:w-fit gap-2">
-              <ArrowLeftIcon className="w-4 h-4" />
-              {t("label_back")}
+              {t("label_close")}
             </Button>
             <Button disabled={isPending} type="submit" variant={"secondary"} size={"sm"}>
-              Update Member
+              {t("label_update_member")}
             </Button>
           </div>
         </form>

@@ -90,4 +90,4 @@ export type TOrganizationStatus = "inactive" | "active";
 
 export type TMetric = "total_views" | "total_submissions" | "completion_rate" | "completion_time";
 
-export type TOrganizationRole = "admin" | "staff";
+export type TOrganizationRole = "owner" | "admin" | "staff";

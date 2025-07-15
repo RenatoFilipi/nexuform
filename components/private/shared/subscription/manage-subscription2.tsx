@@ -23,6 +23,7 @@ import { useQuery } from "@tanstack/react-query";
 import { CheckIcon, ChevronLeftIcon, ClockIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import PlanBadge from "../custom/plan-badge";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -103,7 +104,10 @@ const PlanCard = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IPlan | n
       <div className="flex flex-col justify-between h-full items-center w-full gap-6">
         <div className="flex flex-col w-full gap-6">
           <div className="flex flex-col w-full">
-            <h3 className="text-lg font-bold text-foreground">{plan.name}</h3>
+            <div className="flex justify-start items-center gap-2">
+              <PlanBadge type={plan.type} />
+              <h3 className="text-lg font-bold text-foreground">{plan.name}</h3>
+            </div>
             <p className="mt-2 text-muted-foreground text-sm">{plan.description}</p>
           </div>
           <div className="flex items-center">
@@ -166,7 +170,10 @@ const CheckoutNewPlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IP
           <div className="relative z-10">
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="text-2xl font-bold tracking-tight capitalize">{plan.type.replace("_", " ")}</h3>
+                <div className="flex justify-start items-center gap-2">
+                  <PlanBadge type={plan.type} />
+                  <h3 className="text-2xl font-bold tracking-tight capitalize">{plan.name}</h3>
+                </div>
                 <p className="text-muted-foreground mt-1">{plan.description}</p>
               </div>
             </div>
