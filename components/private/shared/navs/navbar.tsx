@@ -15,10 +15,22 @@ import { Separator } from "@/components/ui/separator";
 import useAppStore from "@/stores/app";
 import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
+import { minute } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
+import { useQuery } from "@tanstack/react-query";
 import Avvvatars from "avvvatars-react";
-import { BoxesIcon, CircleHelpIcon, CircleUserIcon, LoaderIcon, LogOutIcon, MenuIcon, XIcon } from "lucide-react";
+import {
+  BoxesIcon,
+  CheckIcon,
+  ChevronsUpDownIcon,
+  CircleHelpIcon,
+  CircleUserIcon,
+  LoaderIcon,
+  LogOutIcon,
+  MenuIcon,
+  XIcon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -98,19 +110,23 @@ const AfterOrgNavbar = () => {
                 <Link href={orgPath} className="text-sm hover:bg-foreground/10 p-1 rounded">
                   {app.organization.name}
                 </Link>
-                {/* <SearchOrgs orgId={orgId}>
+                <SearchOrgs orgId={orgId}>
                   <Button variant={"ghost"} size={"icon"} className="w-5 h-5">
                     <ChevronsUpDownIcon className="w-4 h-4" />
                   </Button>
-                </SearchOrgs> */}
+                </SearchOrgs>
               </div>
-
               {formId && isFormResource && (
-                <div className="flex justify-center items-center gap-2">
-                  <Separator orientation="vertical" className="h-4 bg-muted-foreground rotate-12" />
+                <div className="flex justify-center items-center gap-0">
+                  <Separator orientation="vertical" className="h-4 bg-muted-foreground rotate-12 mr-2" />
                   <Link href={formPath} className="text-sm hover:bg-foreground/10 px-2 py-1 rounded">
                     {app.form.name}
                   </Link>
+                  <SearchForms orgId={orgId}>
+                    <Button variant={"ghost"} size={"icon"} className="w-5 h-5">
+                      <ChevronsUpDownIcon className="w-4 h-4" />
+                    </Button>
+                  </SearchForms>
                 </div>
               )}
             </div>
@@ -352,19 +368,116 @@ const EditorNavbar = () => {
   );
 };
 const SearchOrgs = ({ children, orgId }: { children: React.ReactNode; orgId: string }) => {
-  // const supabase = createClient();
+  const t = useTranslations("app");
+  const supabase = createClient();
+  const app = useAppStore();
 
-  // const query = useQuery({
-  //   queryKey: ["orgs", orgId],
-  //   queryFn: async () => {
-  //     return null;
-  //   },
-  // });
+  const query = useQuery({
+    queryKey: ["orgs", orgId],
+    queryFn: async () => {
+      const teamMemberProfiles = await supabase
+        .from("team_member_profiles")
+        .select("org_id")
+        .eq("profile_id", app.teamMemberProfile.profile_id);
+      if (teamMemberProfiles.error) return null;
+
+      const orgIds = teamMemberProfiles.data.map((x) => x.org_id);
+      const organizations = await supabase.from("organizations").select("name, public_id").in("id", orgIds);
+      if (organizations.error) return null;
+
+      return { orgs: organizations.data };
+    },
+    staleTime: 10 * minute,
+    gcTime: 10 * minute,
+  });
 
   return (
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent align="start">Place content for the popover here. {orgId}</PopoverContent>
+      <PopoverContent align="start" className="p-0">
+        <div className="flex flex-col">
+          <div className="px-3 py-2 border-b">
+            <h3 className="font-semibold text-sm">{t("label_organizations")}</h3>
+          </div>
+          <div className="max-h-60 overflow-y-auto p-2">
+            {query.isPending ? (
+              <div className="flex justify-center items-center p-4">
+                <LoaderIcon className="w-5 h-5 animate-spin" />
+              </div>
+            ) : query.data ? (
+              <div className="flex flex-col gap-1">
+                {query.data.orgs.map((x) => (
+                  <a
+                    href={`/dashboard/organizations/${x.public_id}/forms`}
+                    key={x.name}
+                    className={`${
+                      x.public_id === app.organization.public_id ? "bg-foreground/5" : ""
+                    } px-3 py-2 text-sm rounded transition-colors flex items-center gap-2 hover:bg-foreground/5 group`}>
+                    <span className="flex-1 truncate">{x.name}</span>
+                    {x.public_id === app.organization.public_id && <CheckIcon className="w-4 h-4" />}
+                  </a>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+};
+const SearchForms = ({ children, orgId }: { children: React.ReactNode; orgId: string }) => {
+  const t = useTranslations("app");
+  const supabase = createClient();
+  const app = useAppStore();
+
+  const query = useQuery({
+    queryKey: ["forms", orgId],
+    queryFn: async () => {
+      const forms = await supabase
+        .from("forms")
+        .select("name, public_id")
+        .eq("org_id", app.organization.id)
+        .order("created_at", { ascending: true });
+
+      if (forms.error) return null;
+
+      return { forms: forms.data };
+    },
+    staleTime: 10 * minute,
+    gcTime: 10 * minute,
+  });
+
+  return (
+    <Popover>
+      <PopoverTrigger asChild>{children}</PopoverTrigger>
+      <PopoverContent align="start" className="p-0">
+        <div className="flex flex-col">
+          <div className="px-3 py-2 border-b">
+            <h3 className="font-semibold text-sm">{t("label_forms")}</h3>
+          </div>
+          <div className="max-h-60 overflow-y-auto p-2">
+            {query.isPending ? (
+              <div className="flex justify-center items-center p-4">
+                <LoaderIcon className="w-5 h-5 animate-spin" />
+              </div>
+            ) : query.data ? (
+              <div className="flex flex-col gap-1">
+                {query.data.forms.map((x) => (
+                  <a
+                    href={`/dashboard/organizations/${orgId}/form/${x.public_id}/overview`}
+                    key={x.name}
+                    className={`${
+                      x.public_id === app.form.public_id ? "bg-foreground/5" : ""
+                    } px-3 py-2 text-sm rounded transition-colors flex items-center gap-2 hover:bg-foreground/5 group`}>
+                    <span className="flex-1 truncate">{x.name}</span>
+                    {x.public_id === app.form.public_id && <CheckIcon className="w-4 h-4" />}
+                  </a>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </PopoverContent>
     </Popover>
   );
 };
