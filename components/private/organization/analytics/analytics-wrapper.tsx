@@ -14,12 +14,12 @@ import {
   EViewLog,
 } from "@/utils/entities";
 import { formatDecimal, formatTime, getAverageCompletionRate, getAverageCompletionTime } from "@/utils/functions";
+import { IContext } from "@/utils/interfaces";
 import { createClient } from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import WipUI from "../../shared/custom/wip-ui";
-import { IContext } from "@/utils/interfaces";
+import AnalyticsSubmissionsByFormChart from "./analytics-submissions-by-form-chart";
 
 interface IProps {
   locale: string;
@@ -141,9 +141,7 @@ const AnalyticsMetrics = () => {
           icon={<TimerIcon className="w-5 h-5 text-primary" />}
         />
       </div>
-      <div>
-        <WipUI context="charts" />
-      </div>
+      <AnalyticsSubmissionsByFormChart />
     </div>
   );
 };

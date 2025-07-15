@@ -3,7 +3,6 @@
 import { signOutAction } from "@/app/actions/auth";
 import Brand from "@/components/shared/brand";
 import ModeToggle2 from "@/components/shared/mode-toggle2";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,12 +10,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import useAppStore from "@/stores/app";
 import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
+import Avvvatars from "avvvatars-react";
 import { BoxesIcon, CircleHelpIcon, CircleUserIcon, LoaderIcon, LogOutIcon, MenuIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -24,7 +25,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import FeedbackForm from "../custom/feedback-form";
-import Avvvatars from "avvvatars-react";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -92,13 +92,19 @@ const AfterOrgNavbar = () => {
             </a>
           </Button>
           {orgId && app.organization.name !== "" && (
-            <>
-              <div className="flex justify-center items-center gap-2">
-                <Separator orientation="vertical" className="h-4 bg-muted-foreground rotate-12" />
-                <Link href={orgPath} className="text-sm hover:bg-foreground/10 px-2 py-1 rounded">
+            <div className="hidden sm:flex justify-start items-center gap-2">
+              <Separator orientation="vertical" className="h-4 bg-muted-foreground rotate-12" />
+              <div className="flex justify-center items-center gap-0">
+                <Link href={orgPath} className="text-sm hover:bg-foreground/10 p-1 rounded">
                   {app.organization.name}
                 </Link>
+                {/* <SearchOrgs orgId={orgId}>
+                  <Button variant={"ghost"} size={"icon"} className="w-5 h-5">
+                    <ChevronsUpDownIcon className="w-4 h-4" />
+                  </Button>
+                </SearchOrgs> */}
               </div>
+
               {formId && isFormResource && (
                 <div className="flex justify-center items-center gap-2">
                   <Separator orientation="vertical" className="h-4 bg-muted-foreground rotate-12" />
@@ -107,7 +113,7 @@ const AfterOrgNavbar = () => {
                   </Link>
                 </div>
               )}
-            </>
+            </div>
           )}
         </div>
         {/* avatar - desk */}
@@ -343,6 +349,23 @@ const EditorNavbar = () => {
         </div>
       </div>
     </nav>
+  );
+};
+const SearchOrgs = ({ children, orgId }: { children: React.ReactNode; orgId: string }) => {
+  // const supabase = createClient();
+
+  // const query = useQuery({
+  //   queryKey: ["orgs", orgId],
+  //   queryFn: async () => {
+  //     return null;
+  //   },
+  // });
+
+  return (
+    <Popover>
+      <PopoverTrigger asChild>{children}</PopoverTrigger>
+      <PopoverContent align="start">Place content for the popover here. {orgId}</PopoverContent>
+    </Popover>
   );
 };
 
