@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
+import { templateMainColors } from "@/utils/constants";
 import { EForm, EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
 import { IContext } from "@/utils/interfaces";
 import { createClient } from "@/utils/supabase/client";
@@ -47,7 +48,7 @@ const SettingsWrapper = (props: IProps) => {
     },
   });
 
-  const isAdmin = app.context.orgRole === "admin";
+  const isNotStaff = app.context.orgRole !== "staff";
   if (query.isPending) return null;
 
   return (
@@ -59,7 +60,8 @@ const SettingsWrapper = (props: IProps) => {
       {/* content */}
       <div className="flex flex-col gap-10">
         <SettingsStatus />
-        {isAdmin && <SettingsDelete />}
+        <SettingsLabelColor />
+        {isNotStaff && <SettingsDelete />}
       </div>
     </div>
   );
@@ -148,6 +150,78 @@ const SettingsDelete = () => {
             {t("label_continue")}
           </Button>
         </FormDelete>
+      </div>
+    </Card>
+  );
+};
+const SettingsLabelColor = () => {
+  const t = useTranslations("app");
+  const app = useAppStore();
+  const labelColor = app.form.label_color;
+  const supabase = createClient();
+  const [appState, setAppState] = useState<TAppState>("idle");
+
+  const onColorChange = (color: string) => {
+    app.setForm({ ...app.form, label_color: color });
+  };
+  const onSaveLabelColor = async () => {
+    setAppState("loading");
+    try {
+      const { error } = await supabase
+        .from("forms")
+        .update({ label_color: app.form.label_color })
+        .eq("id", app.form.id as string);
+      if (error) throw new Error(t("err_generic"));
+      toast.success(t("suc_update_form"));
+    } catch (error) {
+      toast.error(t("err_generic"));
+    } finally {
+      setAppState("idle");
+    }
+  };
+
+  return (
+    <Card className="flex flex-col gap-4 p-4 sm:p-8">
+      <div className="flex flex-col justify-center items-start gap-8">
+        <div className="flex flex-col gap-1">
+          <h1 className="font-semibold text-base">{t("label_label_color")}</h1>
+          <p className="text-sm text-muted-foreground">{t("desc_label_color")}</p>
+        </div>
+        {/* melhore o design do body somente */}
+        <div id="body" className="flex flex-col gap-6">
+          <div className="flex flex-col gap-4">
+            <h3 className="text-sm font-medium text-muted-foreground">{t("label_current_label_color")}</h3>
+            <div className="flex items-center gap-4">
+              <div
+                style={{ backgroundColor: labelColor }}
+                className="w-10 h-10 rounded-lg shadow-md border text-muted-foreground transition-all hover:scale-105 cursor-pointer"
+              />
+              <span className="text-sm font-mono text-muted-foreground">{labelColor.toUpperCase()}</span>
+            </div>
+          </div>
+          <div className="flex flex-col gap-4">
+            <h3 className="text-sm font-medium text-muted-foreground">{t("label_color_pallete")}</h3>
+            <div className="flex gap-4 flex-wrap">
+              {templateMainColors.map((color, index) => (
+                <button
+                  key={index}
+                  onClick={() => onColorChange(color)}
+                  className={`w-8 h-8 rounded-md cursor-pointer transition-all hover:scale-110 shadow-sm ${
+                    labelColor === color ? "ring-2 ring-offset-2 ring-primary" : ""
+                  }`}
+                  style={{ backgroundColor: color }}
+                  aria-label={`Selecionar cor ${color}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex justify-end items-center">
+        <Button onClick={onSaveLabelColor} variant={"secondary"} size={"sm"} disabled={appState === "loading"}>
+          {appState === "loading" && <LoaderIcon className="w-4 h-4 animate-spin mr-2" />}
+          {t("label_save")}
+        </Button>
       </div>
     </Card>
   );

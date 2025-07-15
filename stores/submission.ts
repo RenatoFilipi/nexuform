@@ -1,3 +1,4 @@
+import { fallbackColor } from "@/utils/constants";
 import { EAnswer, EBlock, EForm, EOrganization, ESubmission, ETheme } from "@/utils/entities";
 import { create } from "zustand";
 
@@ -31,6 +32,7 @@ const useSubmissionStore = create<submission>((set) => ({
     success_title: "",
     success_description: "",
     org_id: "",
+    label_color: fallbackColor,
   },
   theme: {
     id: "",
@@ -40,7 +42,7 @@ const useSubmissionStore = create<submission>((set) => ({
     numeric_blocks: false,
     app_branding: true,
     uppercase_block_name: false,
-    custom_primary_color: "#713AED",
+    custom_primary_color: fallbackColor,
   },
   submission: {
     id: "",
@@ -84,6 +86,7 @@ const useSubmissionStore = create<submission>((set) => ({
         success_title: "",
         success_description: "",
         org_id: "",
+        label_color: fallbackColor,
       },
       theme: {
         id: "",
@@ -93,7 +96,7 @@ const useSubmissionStore = create<submission>((set) => ({
         numeric_blocks: false,
         app_branding: true,
         uppercase_block_name: false,
-        custom_primary_color: "#713AED",
+        custom_primary_color: fallbackColor,
       },
       submission: {
         id: "",

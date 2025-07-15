@@ -1,4 +1,4 @@
-import { paginationFrom, paginationTo } from "@/utils/constants";
+import { fallbackColor, paginationFrom, paginationTo } from "@/utils/constants";
 import {
   EBlock,
   EForm,
@@ -96,6 +96,7 @@ const useAppStore = create<IProps>((set) => ({
     success_title: "",
     success_description: "",
     org_id: "",
+    label_color: fallbackColor,
   },
   organization: {
     created_at: "",

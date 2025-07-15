@@ -487,7 +487,11 @@
     "label_owner": "Propietario",
     "desc_update_member": "Modificar los detalles del miembro y ajustar los permisos de rol.",
     "required_last_name": "Se requiere apellido",
-    "required_name": "Se requiere nombre"
+    "required_name": "Se requiere nombre",
+    "label_label_color": "Apariencia para Gráficos",
+    "desc_label_color": "Establece un color personalizado para representar este formulario en gráficos e informes analíticos. Esto facilita la identificación visual entre múltiples formularios.",
+    "label_current_label_color": "Color actual",
+    "label_color_pallete": "Paleta de colores"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

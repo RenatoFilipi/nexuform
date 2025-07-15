@@ -176,6 +176,7 @@ export type Database = {
           created_at: string
           description: string | null
           id: string
+          label_color: string
           name: string
           org_id: string
           owner_id: string
@@ -190,6 +191,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: string
+          label_color?: string
           name?: string
           org_id: string
           owner_id?: string
@@ -204,6 +206,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: string
+          label_color?: string
           name?: string
           org_id?: string
           owner_id?: string

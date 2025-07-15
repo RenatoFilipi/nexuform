@@ -487,7 +487,11 @@
     "label_owner": "Owner",
     "desc_update_member": "Modify member details and adjust role permissions.",
     "required_last_name": "Last name is required",
-    "required_name": "Name is required"
+    "required_name": "Name is required",
+    "label_label_color": "Appearance for Charts",
+    "desc_label_color": "Set a custom color to represent this form in charts and analytical reports. This helps visually distinguish between multiple forms.",
+    "label_current_label_color": "Current color",
+    "label_color_pallete": "Color palette"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

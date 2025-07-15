@@ -1,3 +1,4 @@
+import { fallbackColor } from "@/utils/constants";
 import { EBlock, EForm, ETheme } from "@/utils/entities";
 import { TEditorView, TToolView } from "@/utils/types";
 import { create } from "zustand";
@@ -39,6 +40,7 @@ const useEditorStore = create<editor>((set) => ({
     success_title: "",
     success_description: "",
     org_id: "",
+    label_color: fallbackColor,
   },
   theme: {
     id: "",
@@ -48,7 +50,7 @@ const useEditorStore = create<editor>((set) => ({
     numeric_blocks: false,
     app_branding: true,
     uppercase_block_name: false,
-    custom_primary_color: "#713AED",
+    custom_primary_color: fallbackColor,
   },
   blocks: [],
   originalBlocks: [],

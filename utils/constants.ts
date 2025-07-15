@@ -463,3 +463,42 @@ export const templateColors = [
 export const paginationRange = 10;
 export const paginationFrom = 0;
 export const paginationTo = paginationRange;
+export const templateMainColors = [
+  // Vermelhos e Rosas
+  "#FF0000", // Vermelho puro
+  "#FF2A00", // Vermelho-alaranjado
+  "#FF5500", // Laranja-avermelhado
+  "#FF8000", // Laranja intenso
+  "#FFAA00", // Laranja dourado
+  // Amarelos e Verdes-amarelados
+  "#FFFF00", // Amarelo sólido
+  "#AAFF00", // Limão neon
+  "#80FF00", // Chartreuse
+  "#55FF00", // Verde-limão ácido
+  // Verdes
+  "#00FF00", // Verde puro
+  "#00FF2A", // Verde radioativo
+  "#00FF55", // Verde tóxico
+  "#00FF80", // Verde-água brilhante
+  "#00FFAA", // Turquesa brilhante
+  // Cianos e Azuis-esverdeados
+  "#00FFFF", // Ciano puro
+  "#00BFFF", // Azul céu (DeepSkyBlue)
+  "#0080FF", // Azul céu profundo
+  "#0066FF", // Azul royal
+  "#0055FF", // Azul elétrico
+  // Azuis
+  "#0000FF", // Azul puro
+  "#2A00FF", // Ultramarinho
+  "#5500FF", // Azul anil
+  "#8000FF", // Violeta elétrico
+  // Roxos e Magentas
+  "#AA00FF", // Roxo vivo
+  "#D400FF", // Púrpura vibrante
+  "#FF00FF", // Magenta
+  "#FF00AA", // Magenta neon
+  "#FF0099", // Pink shock
+  "#FF0066", // Rosa elétrico
+  "#FF0080", // Rosa fluorescente
+  "#FF1493", // Rosa profundo (DeepPink)
+];

@@ -487,7 +487,11 @@
     "label_owner": "Proprietário",
     "desc_update_member": "Modificar os dados do membro e ajustar as permissões de função.",
     "required_last_name": "Sobrenome é obrigatório",
-    "required_name": "Nome é obrigatório"
+    "required_name": "Nome é obrigatório",
+    "label_label_color": "Aparência para Gráficos",
+    "desc_label_color": "Defina uma cor personalizada para representar este formulário em gráficos e relatórios analíticos. Isso facilita a identificação visual entre múltiplos formulários.",
+    "label_current_label_color": "Cor atual",
+    "label_color_pallete": "Paleta de cores"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

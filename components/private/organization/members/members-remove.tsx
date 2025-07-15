@@ -17,7 +17,6 @@ import { createClient } from "@/utils/supabase/client";
 import { TOrganizationRole, TSetState } from "@/utils/types";
 import Avvvatars from "avvvatars-react";
 import { motion } from "framer-motion";
-import { ArrowLeftIcon, Trash2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { ReactNode, useState, useTransition } from "react";
@@ -142,8 +141,7 @@ const Body = ({
           variant="outline"
           size="sm"
           className="w-full sm:w-fit gap-2">
-          <ArrowLeftIcon className="w-4 h-4" />
-          {t("label_back")}
+          {t("label_close")}
         </Button>
         <Button
           disabled={isPending}
@@ -151,7 +149,6 @@ const Body = ({
           variant="destructive_outline"
           size="sm"
           className="w-full sm:w-fit gap-2">
-          <Trash2Icon className="w-4 h-4" />
           {t("label_remove_member")}
         </Button>
       </div>
