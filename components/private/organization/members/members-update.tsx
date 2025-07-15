@@ -81,7 +81,11 @@ const Body = ({
     startTransition(async () => {
       const tmp = await supabase
         .from("team_member_profiles")
-        .update({ name: values.name, last_name: values.lastName, role: values.role })
+        .update({
+          name: values.name,
+          last_name: values.lastName,
+          role: values.role,
+        })
         .eq("id", member.id)
         .select("*")
         .single();
@@ -90,9 +94,12 @@ const Body = ({
         toast.error(t("err_generic"));
         return;
       }
-      const updatedTMPs = app.teamMemberProfiles.map((x) => {
-        return x.id === tmp.data.id ? tmp.data : x;
-      });
+      const updatedTMPs = app.teamMemberProfiles.map((x) => (x.id === tmp.data.id ? tmp.data : x));
+
+      if (member.profile_id === app.teamMemberProfile.profile_id) {
+        app.setTeamMemberProfile(tmp.data);
+      }
+
       app.setTeamMemberProfiles(updatedTMPs);
       toast.success(t("success_generic"));
       setState(false);

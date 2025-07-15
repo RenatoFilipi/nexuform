@@ -72,7 +72,39 @@ const MemberList = () => {
   const t = useTranslations("app");
   const app = useAppStore();
 
-  if (app.teamMemberProfiles.length <= 0) {
+  const currentUser = app.teamMemberProfile;
+  const isCurrentUserOwner = app.organization.owner_id === currentUser.profile_id;
+  const isCurrentUserAdmin = currentUser.role === "admin";
+  const teamMemberProfiles = app.teamMemberProfiles;
+
+  const members = teamMemberProfiles.map((tmp) => {
+    const isYou = currentUser.profile_id === tmp.profile_id;
+    const isOwner = app.organization.owner_id === tmp.profile_id;
+
+    let isRemoveAllowed = false;
+    let isUpdateAllowed = false;
+
+    if (isCurrentUserOwner) {
+      isUpdateAllowed = true;
+      isRemoveAllowed = !isOwner;
+    } else if (isCurrentUserAdmin) {
+      isUpdateAllowed = !isOwner;
+      isRemoveAllowed = !isOwner;
+    } else {
+      isUpdateAllowed = isYou;
+      isRemoveAllowed = isYou;
+    }
+
+    return {
+      isYou,
+      isOwner,
+      isRemoveAllowed,
+      isUpdateAllowed,
+      member: tmp,
+    };
+  });
+
+  if (members.length <= 0) {
     return (
       <Card className="flex w-full justify-center items-center flex-col gap-4 py-36 px-4">
         <div className="flex justify-center items-center p-3 w-fit rounded bg-primary/10">
@@ -88,28 +120,28 @@ const MemberList = () => {
 
   return (
     <div className="overflow-y-auto grid">
-      {app.teamMemberProfiles.map((m) => {
-        return <MemberRow member={m} key={`${m.id}`} />;
+      {members.map((m) => {
+        return <MemberRow key={m.member.id} {...m} />;
       })}
     </div>
   );
 };
-const MemberRow = ({ member }: { member: ETeamMemberProfile }) => {
+const MemberRow = ({
+  member,
+  isOwner,
+  isRemoveAllowed,
+  isUpdateAllowed,
+  isYou,
+}: {
+  member: ETeamMemberProfile;
+  isYou: boolean;
+  isOwner: boolean;
+  isRemoveAllowed: boolean;
+  isUpdateAllowed: boolean;
+}) => {
   const t = useTranslations("app");
   const user = useUserStore();
   const app = useAppStore();
-
-  const isYou = app.teamMemberProfile.profile_id === member.profile_id;
-  const isOwner = app.organization.owner_id === member.profile_id;
-
-  const isRemoveAllowed =
-    !(isOwner && isYou) &&
-    ((app.teamMemberProfile.role === "admin" && !isOwner) || (app.teamMemberProfile.role === "staff" && isYou));
-
-  const isUpdateAllowed =
-    (isOwner && isYou) ||
-    (app.teamMemberProfile.role === "admin" && !isOwner) ||
-    (app.teamMemberProfile.role === "staff" && isYou);
 
   return (
     <div className="relative flex flex-col md:flex-row items-start md:items-center w-full p-3 gap-3 md:gap-4 border-b hover:bg-muted/50 transition-colors duration-200 group">
