@@ -9,6 +9,7 @@ import useUserStore from "@/stores/user";
 import { minute } from "@/utils/constants";
 import { EForm, EOrganization, EProfile, ESubscription, ETeamMemberProfile, ETemplate } from "@/utils/entities";
 import { getFormCategoryName } from "@/utils/functions";
+import { IContext } from "@/utils/interfaces";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState, TTemplateCategory } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
@@ -17,9 +18,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useTransition } from "react";
-import ManageSubscription from "../../shared/subscription/manage-subscription";
 import NewPreview from "./new-preview";
-import { IContext } from "@/utils/interfaces";
 
 type TView = "method:list" | "method:scratch" | "method:templates";
 
@@ -146,12 +145,12 @@ const MethodCard = (props: IMethodProps) => {
       {props.icon}
       <p className="text-sm text-center group-hover:text-foreground text-muted-foreground">{props.description}</p>
       {limitReached && (
-        <ManageSubscription>
+        <Link href={`/dashboard/organizations/${app.organization.public_id}/billing`}>
           <Button variant={"outline"} size={"sm"} className="mt-2 group-hover:border-primary group-hover:text-primary">
             {t("label_manage_sub")}
             <ArrowUpRightIcon className="w-4 h-4 ml-2" />
           </Button>
-        </ManageSubscription>
+        </Link>
       )}
       {!limitReached && props.action}
     </Card>
