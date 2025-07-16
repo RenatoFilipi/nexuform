@@ -46,11 +46,11 @@ const MembersInvite = ({ children }: { children: ReactNode }) => {
 
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
-  const app = useAppStore();
   const [isPending, startTransition] = useTransition();
   const supabase = createClient();
+  const app = useAppStore();
   const isNotPro = app.subscription.plan !== "pro";
-  const isNotAdmin = app.context.orgRole !== "admin";
+  const isStaff = app.context.orgRole === "staff";
 
   const formSchema = z.object({
     email: z.string().email(t("label_required_email")),
@@ -166,10 +166,14 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
             </div>
           </div>
           <div className="flex flex-col-reverse sm:flex-row gap-2 w-full justify-between">
-            <Button type="button" variant={"outline"} size={"sm"} onClick={() => setState(false)}>
+            <Button disabled={isPending} type="button" variant={"outline"} size={"sm"} onClick={() => setState(false)}>
               {t("label_close")}
             </Button>
-            <Button type="submit" variant={"secondary"} size={"sm"} disabled={isPending || isNotAdmin}>
+            <Button
+              type="submit"
+              variant={"secondary"}
+              size={"sm"}
+              disabled={isPending || !app.context.isAllowedToInvite}>
               {!isPending && <MailPlusIcon className="w-4 h-4 mr-2" />}
               {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
               {t("label_invite")}
@@ -183,6 +187,8 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
 
 const UpgradeToPro = () => {
   const t = useTranslations("app");
+  const app = useAppStore();
+
   return (
     <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-primary to-purple-600 text-white">
       <div className="relative z-10 p-6">
@@ -208,14 +214,16 @@ const UpgradeToPro = () => {
               <span className="text-sm">{t("label_members_feat_03")}</span>
             </div>
           </div>
-          <div className="mt-4 flex items-center justify-center sm:justify-end">
-            <ManageSubscription2 selected="pro">
-              <Button size="sm" variant={"secondary"} className="w-full sm:w-fit">
-                <ArrowUpRightIcon className="w-4 h-4 mr-2" />
-                {t("label_upgrade_pro")}
-              </Button>
-            </ManageSubscription2>
-          </div>
+          {app.context.isOrgOwner && (
+            <div className="mt-4 flex items-center justify-center sm:justify-end">
+              <ManageSubscription2 selected="pro">
+                <Button size="sm" variant={"secondary"} className="w-full sm:w-fit">
+                  <ArrowUpRightIcon className="w-4 h-4 mr-2" />
+                  {t("label_upgrade_pro")}
+                </Button>
+              </ManageSubscription2>
+            </div>
+          )}
         </div>
       </div>
     </Card>

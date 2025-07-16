@@ -321,6 +321,7 @@ export const getPlanName = (value: string) => {
 export const applyContext = (tmp: ETeamMemberProfile, org: EOrganization): IContext => {
   const isOrgOwner = org.owner_id === tmp.profile_id;
   const orgRole = tmp.role as TOrganizationRole;
-  const app: IContext = { isOrgOwner, orgRole };
+  const isAllowedToInvite = isOrgOwner || orgRole === "admin" || orgRole === "owner";
+  const app: IContext = { isOrgOwner, orgRole, isAllowedToInvite };
   return app;
 };

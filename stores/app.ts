@@ -153,6 +153,7 @@ const useAppStore = create<IProps>((set) => ({
   context: {
     isOrgOwner: false,
     orgRole: "staff",
+    isAllowedToInvite: false,
   },
   setContext: (p) => set({ context: p }),
 }));

@@ -78,4 +78,5 @@ export interface IInvoiceSummary {
 export interface IContext {
   isOrgOwner: boolean;
   orgRole: TOrganizationRole;
+  isAllowedToInvite: boolean;
 }
