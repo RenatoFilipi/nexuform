@@ -3,7 +3,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
@@ -78,9 +77,10 @@ const BillingWrapper = (props: IProps) => {
 const BillingUsage = () => {
   const t = useTranslations("app");
   const app = useAppStore();
+  console.log(app.subscription);
   const isFormLimit = app.subscription.forms <= app.forms.length;
   const isSubmissionsLimit = app.subscription.submissions <= app.submissionLogs.length;
-  const formsUsage = Math.min(100, (100 * app.forms.length) / app.subscription.submissions);
+  const formsUsage = Math.min(100, (100 * app.forms.length) / app.subscription.forms);
   const submissionsUsage = Math.min(100, (100 * app.submissionLogs.length) / app.subscription.submissions);
 
   return (
@@ -94,7 +94,8 @@ const BillingUsage = () => {
         labelUsage={t("label_all_time")}
         labelAvailable={t("label_forms_included")}
         showBillingWarning={false}
-        icon={<LayersIcon className="h-5 w-5 text-primary group-hover:text-foreground" />}
+        BillingWarningText=""
+        icon={<LayersIcon className="h-5 w-5 text-primary" />}
       />
       <BillingUsageCard
         limit={isSubmissionsLimit}
@@ -105,99 +106,10 @@ const BillingUsage = () => {
         labelUsage={t("label_monthly_usage")}
         labelAvailable={t("label_submissions_included")}
         showBillingWarning={true}
-        icon={<SendIcon className="h-5 w-5 text-primary group-hover:text-foreground" />}
+        BillingWarningText={t("label_billing_warning")}
+        icon={<SendIcon className="h-5 w-5 text-primary" />}
       />
     </div>
-  );
-};
-const BillingUsageCard = ({
-  label,
-  limit,
-  available,
-  count,
-  usage,
-  labelAvailable,
-  labelUsage,
-  icon,
-  showBillingWarning,
-}: {
-  limit: boolean;
-  label: string;
-  count: number;
-  usage: number;
-  available: number;
-  labelAvailable: string;
-  labelUsage: string;
-  icon?: React.ReactNode;
-  showBillingWarning: boolean;
-}) => {
-  const t = useTranslations("app");
-  const rawValue = 100 - Math.min(usage);
-  const usagePercentage = rawValue % 1 === 0 ? rawValue.toString() : rawValue.toFixed(1);
-  const usageValue = Math.min(usage, 100);
-
-  return (
-    <Card className="relative w-full p-5 transition-all hover:shadow-sm rounded-lg border overflow-hidden group">
-      {/* Warning overlay for limit reached */}
-      {limit && (
-        <div className="absolute inset-0 bg-gradient-to-r from-destructive/10 via-destructive/5 to-transparent pointer-events-none" />
-      )}
-
-      <div className="flex flex-col gap-6">
-        {/* Header section */}
-        <div className="flex justify-between items-start gap-4">
-          <div className="flex items-center gap-4">
-            <div className="p-3 rounded-lg bg-primary/20 text-primary group-hover:bg-primary/30 transition-colors">
-              {icon}
-            </div>
-            <div className="flex flex-col w-fit">
-              <h2 className="font-semibold text-lg tracking-tight w-fit">{label}</h2>
-              <p className="text-sm text-muted-foreground mt-1">
-                {available.toLocaleString()} {labelAvailable}
-              </p>
-            </div>
-          </div>
-
-          {limit && (
-            <Badge variant="destructive" className="w-fit">
-              <AlertTriangleIcon className="w-4 h-4" />
-              <span className="truncate">{t("label_limit_reached")}</span>
-            </Badge>
-          )}
-        </div>
-
-        {/* Usage section */}
-        <div className="space-y-4">
-          {/* Usage label and count */}
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">{labelUsage}</span>
-              {showBillingWarning && (
-                <WarningTooltip>
-                  <CircleHelpIcon className="w-4 h-4 text-muted-foreground hover:text-foreground transition-colors" />
-                </WarningTooltip>
-              )}
-            </div>
-            <span className="text-sm font-medium">
-              <span className={limit ? "text-destructive font-semibold" : "text-foreground"}>
-                {count.toLocaleString()}
-              </span>
-              <span className="text-muted-foreground"> / {available.toLocaleString()}</span>
-            </span>
-          </div>
-
-          {/* Progress bar */}
-          <div className="space-y-2.5">
-            <Progress value={usageValue} className="h-2.5" />
-            <div className="flex justify-between items-center text-xs">
-              <span className="text-muted-foreground">
-                {usagePercentage}% {t("label_available")}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Card>
   );
 };
 const BillingPlan = () => {
@@ -321,15 +233,113 @@ const BillingPlan = () => {
     </Card>
   );
 };
-const WarningTooltip = ({ children }: { children: React.ReactNode }) => {
+const BillingUsageCard = ({
+  label,
+  limit,
+  available,
+  count,
+  usage,
+  labelAvailable,
+  labelUsage,
+  icon,
+  showBillingWarning,
+  BillingWarningText,
+}: {
+  limit: boolean;
+  label: string;
+  count: number;
+  usage: number;
+  available: number;
+  labelAvailable: string;
+  labelUsage: string;
+  icon?: React.ReactNode;
+  showBillingWarning: boolean;
+  BillingWarningText: string;
+}) => {
+  const t = useTranslations("app");
+  const rawValue = 100 - Math.min(usage);
+  const usagePercentage = rawValue % 1 === 0 ? rawValue.toString() : rawValue.toFixed(1);
+  const usageValue = Math.min(usage, 100);
+
+  return (
+    <Card className="relative w-full p-6 transition-all hover:shadow-sm rounded border overflow-hidden group bg-gradient-to-br from-background to-muted/10 hover:border-primary/50">
+      {/* Warning overlay for limit reached */}
+      {limit && (
+        <div className="absolute inset-0 bg-gradient-to-br from-destructive/5 via-destructive/10 to-transparent pointer-events-none" />
+      )}
+
+      <div className="flex flex-col gap-6">
+        {/* Header section */}
+        <div className="flex justify-between items-start gap-4">
+          <div className="flex items-center gap-4">
+            <div className="p-3 rounded-lg bg-foreground/5 group-hover:bg-foreground/10 transition-colors shadow-sm">
+              {icon}
+            </div>
+            <div className="flex flex-col w-fit">
+              <h2 className="font-semibold text-lg tracking-tight w-fit">{label}</h2>
+              <p className="text-sm text-muted-foreground mt-1">
+                {available.toLocaleString()} {labelAvailable}
+              </p>
+            </div>
+          </div>
+
+          {limit && (
+            <Badge variant="destructive" className="w-fit px-3 py-1.5 rounded-lg">
+              <AlertTriangleIcon className="w-4 h-4 mr-1.5" />
+              <span className="truncate">{t("label_limit_reached")}</span>
+            </Badge>
+          )}
+        </div>
+
+        {/* Usage section */}
+        <div className="space-y-4">
+          {/* Usage label and count */}
+          <div className="flex justify-between items-center">
+            <div className="flex justify-start items-center gap-2">
+              <span className="text-sm text-muted-foreground">{labelUsage}</span>
+              {/* Billing warning message */}
+              {showBillingWarning && (
+                <WarningTooltip message={BillingWarningText}>
+                  <CircleHelpIcon className="w-4 h-4 text-muted-foreground hover:text-foreground transition-colors" />
+                </WarningTooltip>
+              )}
+            </div>
+            <span className="text-sm font-medium">
+              <span className={limit ? "text-destructive font-semibold" : "text-foreground"}>
+                {count.toLocaleString()}
+              </span>
+              <span className="text-muted-foreground"> / {available.toLocaleString()}</span>
+            </span>
+          </div>
+
+          {/* Progress bar */}
+          <div className="space-y-2.5">
+            <div className="relative h-2.5 w-full rounded-full bg-muted overflow-hidden">
+              <div
+                className={`absolute h-full rounded-full ${limit ? "bg-destructive" : "bg-foreground"}`}
+                style={{ width: `${usageValue}%` }}
+              />
+            </div>
+            <div className="flex justify-between items-center text-xs">
+              <span className="text-muted-foreground">
+                {usagePercentage}% {t("label_available")}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+  );
+};
+const WarningTooltip = ({ children, message }: { children: React.ReactNode; message: string }) => {
   const t = useTranslations("app");
   return (
     <TooltipProvider delayDuration={0}>
       <Tooltip>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
-        <TooltipContent className="flex justify-center items-center gap-2">
-          <AlertCircleIcon className="w-4 h-4 text-warning" />
-          <p className="text-xs">{t("label_billing_warning")}</p>
+        <TooltipContent className="flex justify-center items-center gap-2 p-3">
+          <AlertCircleIcon className="w-4 h-4" />
+          <p className="text-xs">{message}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

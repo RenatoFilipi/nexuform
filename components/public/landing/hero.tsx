@@ -12,9 +12,9 @@ const Hero = () => {
   const t = useTranslations("landing");
 
   return (
-    <section className="relative overflow-hidden py-20 md:pt-48 pb-0 w-full">
+    <section className="relative overflow-hidden py-20 md:pt-36 pb-0 w-full">
       <div className="absolute top-0 left-0 w-full h-full z-0 overflow-hidden">
-        <div className="absolute -bottom-[150px] w-full h-[470px] rounded-full dark:bg-primary/40 bg-primary/80 blur-3xl animate-float-delay hidden sm:flex" />
+        <div className="absolute -bottom-[150px] w-full h-[500px] rounded-full dark:bg-primary/40 bg-primary/80 blur-3xl animate-float-delay hidden sm:flex" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-transparent via-background/10 to-background" />
       </div>
       <motion.div
@@ -23,7 +23,7 @@ const Hero = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}>
         <div className="mx-auto max-w-4xl text-center">
-          <Badge variant={"primary"} className="mb-6">
+          <Badge variant={"default"} className="mb-6">
             <ZapIcon className="mr-1 h-3 w-3" />
             {t("hero_badge")}
           </Badge>
@@ -36,9 +36,7 @@ const Hero = () => {
               ),
             })}
           </h1>
-          <p className="mx-auto mb-12 mt-8 max-w-2xl text-lg text-muted-foreground md:text-xl">
-            {t("hero_subheadline")}
-          </p>
+          <p className="mx-auto my-8 max-w-2xl text-lg text-muted-foreground md:text-lg">{t("hero_subheadline")}</p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button
               asChild

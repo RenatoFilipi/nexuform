@@ -6,12 +6,20 @@ import { Card } from "@/components/ui/card";
 import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
 import { EInvitation, EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
-import { formatDateRelativeToNow } from "@/utils/functions";
+import { formatDateRelativeToNow, getDaysDifference } from "@/utils/functions";
 import { TPlan } from "@/utils/pricing";
 import { createClient } from "@/utils/supabase/client";
 import { TOrganizationRole, TOrganizationStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { BoxesIcon, CheckIcon, ChevronRightIcon, LoaderIcon, MailPlusIcon, XIcon } from "lucide-react";
+import {
+  AlertTriangleIcon,
+  BoxesIcon,
+  CheckIcon,
+  ChevronRightIcon,
+  LoaderIcon,
+  MailPlusIcon,
+  XIcon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { toast } from "sonner";
@@ -71,65 +79,75 @@ const OrganizationsWrapper = (props: IProps) => {
     </div>
   );
 };
-interface ICardProps {
-  teamMemberProfile: ETeamMemberProfile;
-}
-const OrganizationsCard = (props: ICardProps) => {
+const OrganizationsCard = (props: { teamMemberProfile: ETeamMemberProfile }) => {
   const t = useTranslations("app");
   const app = useAppStore();
   const tmp = props.teamMemberProfile;
+
   const organization = app.organizations.find((x) => x.id === tmp.org_id) as EOrganization;
   const subscription = app.subscriptions.find((x) => x.org_id === tmp.org_id) as ESubscription;
+
   const orgPath = `/dashboard/organizations/${organization.public_id}/forms`;
 
-  const planName = (plan: TPlan) =>
-    ({
-      free_trial: t("label_plan_free_trial"),
-      starter: t("label_plan_starter"),
-      pro: t("label_plan_pro"),
-    }[plan] || "Custom");
+  // ⏳ Datas
+  const now = new Date();
+  const startDate = new Date(subscription.start_date);
+  const dueDate = new Date(subscription.due_date);
+
+  // 🧠 Lógicas básicas
+  const orgRole = tmp.role as TOrganizationRole;
+  const isSubscriptionExpired = now > dueDate;
+  const hasBillingIssues = subscription.status === "past_due";
+  const remainingDays = getDaysDifference(new Date(), new Date(dueDate));
 
   return (
     <a href={orgPath}>
-      <Card className="flex flex-col justify-between h-36 p-4 border hover:border-primary/40 transition-all duration-200 group hover:shadow-md cursor-pointer relative overflow-hidden">
-        {/* Background hover effect */}
+      <Card className="flex flex-col justify-between h-44 p-4 border hover:border-primary/40 transition-all duration-200 group hover:shadow-md cursor-pointer relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-primary/0 to-primary/0 group-hover:via-primary/5 group-hover:to-primary/10 transition-all duration-300" />
 
-        {/* Main content */}
-        <div className="flex justify-between items-start w-full relative z-10">
-          <div className="flex items-start gap-3">
-            <div className="flex justify-center items-center p-2 bg-foreground/5 rounded-lg group-hover:bg-primary/20 transition-colors">
-              <BoxesIcon className="w-5 h-5" />
+        {/* Topo: ícone + nome + papel */}
+        <div className="flex flex-col gap-2">
+          <div className="flex justify-between items-start w-full relative z-10">
+            <div className="flex items-start gap-3">
+              <div className="flex justify-center items-center p-2 bg-foreground/5 rounded-lg group-hover:bg-primary/20 transition-colors">
+                <BoxesIcon className="w-5 h-5" />
+              </div>
+              <div className="flex flex-col gap-1">
+                <h3 className="text-sm font-semibold line-clamp-1">{organization.name}</h3>
+                <span className="text-xs text-muted-foreground capitalize">
+                  {orgRole === "owner" && t("label_owner")}
+                  {orgRole === "admin" && t("label_admin")}
+                  {orgRole === "staff" && t("label_staff")}
+                </span>
+              </div>
             </div>
-            <div className="flex flex-col gap-2">
-              <h3 className="text-sm font-semibold line-clamp-1">{organization.name}</h3>
-            </div>
+            <ChevronRightIcon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
           </div>
-
-          {/* Chevron indicator */}
-          <ChevronRightIcon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+          <OrganizationStatusBadge status={organization.status as TOrganizationStatus} />
         </div>
 
-        {/* Status badge at bottom */}
-        <div className="relative z-10 mt-auto flex justify-start items-center gap-3">
-          <OrganizationStatusBadge status={organization.status as TOrganizationStatus} />
-          <PlanNameBadge type={subscription.plan as TPlan} className="" />
+        {/* Rodapé: badges e status */}
+        <div className="flex flex-col gap-2">
+          <p className="text-xs text-muted-foreground">{t("label_n_days_remaining", { n: remainingDays })}</p>
+          <div className="flex items-center gap-2">
+            <PlanNameBadge type={subscription.plan as TPlan} />
+            {hasBillingIssues && <AlertTriangleIcon className="w-3 h-3 text-destructive" />}
+            {isSubscriptionExpired && !hasBillingIssues && (
+              <Badge variant={"destructive"}>{t("label_expired_sub")}</Badge>
+            )}
+          </div>
         </div>
       </Card>
     </a>
   );
 };
-interface IBadgeProps {
-  uppercase?: boolean;
-  status: TOrganizationStatus;
-}
-const OrganizationStatusBadge = (props: IBadgeProps) => {
+const OrganizationStatusBadge = (props: { uppercase?: boolean; status: TOrganizationStatus }) => {
   const t = useTranslations("app");
 
   switch (props.status) {
     case "active": {
       return (
-        <Badge className="w-fit" variant={"success"} uppercase={props.uppercase}>
+        <Badge className="w-fit" variant={"green"} uppercase={props.uppercase}>
           {t("label_active")}
         </Badge>
       );

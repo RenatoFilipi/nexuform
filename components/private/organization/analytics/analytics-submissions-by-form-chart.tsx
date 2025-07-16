@@ -101,7 +101,7 @@ const AnalyticsSubmissionsByFormChart = () => {
 
   if (!hasData || !app.forms?.length) {
     return (
-      <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit">
+      <Card className="flex flex-col justify-between gap-4 relative border w-full p-6 h-fit">
         <div className="flex justify-center items-center h-[280px]">
           <p className="text-muted-foreground">{t("label_no_data")}</p>
         </div>
@@ -110,7 +110,7 @@ const AnalyticsSubmissionsByFormChart = () => {
   }
 
   return (
-    <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit">
+    <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit hover:border-primary/50 transition-all duration-300 hover:shadow-sm">
       <div className="flex justify-between items-center">
         <span className="font-semibold text-base">{t("label_submissions_by_form")}</span>
         <div className="justify-center items-center gap-4 hidden sm:flex">

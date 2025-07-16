@@ -491,7 +491,8 @@
     "label_label_color": "Appearance for Charts",
     "desc_label_color": "Set a custom color to represent this form in charts and analytical reports. This helps visually distinguish between multiple forms.",
     "label_current_label_color": "Current color",
-    "label_color_pallete": "Color palette"
+    "label_color_pallete": "Color palette",
+    "label_expired_sub": "Assinatura expirada"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

@@ -8,18 +8,18 @@ import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
 import { EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
 import { appName } from "@/utils/envs";
+import { IContext } from "@/utils/interfaces";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { AlertTriangleIcon, BadgeCheckIcon, LoaderIcon, PauseIcon } from "lucide-react";
+import { AlertTriangleIcon, LoaderIcon, PauseIcon, PlayIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import OptionSelector from "../../shared/custom/option-selector";
-import { IContext } from "@/utils/interfaces";
 
 interface IProps {
   locale: string;
@@ -88,7 +88,7 @@ const OrgSettings = () => {
       status: "active",
       label: t("label_active"),
       description: t("desc_org_active"),
-      icon: BadgeCheckIcon,
+      icon: PlayIcon,
       color: "bg-success/30 text-foreground border border-success/60 p-2 rounded",
     },
     {
@@ -138,19 +138,6 @@ const OrgSettings = () => {
             <div className="flex flex-col gap-6 w-full">
               <FormField
                 control={handler.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("label_name")}</FormLabel>
-                    <FormControl>
-                      <Input type="text" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={handler.control}
                 name="status"
                 render={({ field }) => (
                   <FormItem>
@@ -160,6 +147,19 @@ const OrgSettings = () => {
                       status={app.organization.status}
                       onStatusChange={onSetStatus}
                     />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={handler.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("label_name")}</FormLabel>
+                    <FormControl>
+                      <Input type="text" {...field} />
+                    </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />

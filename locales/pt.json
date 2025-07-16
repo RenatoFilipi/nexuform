@@ -491,7 +491,8 @@
     "label_label_color": "Aparência para Gráficos",
     "desc_label_color": "Defina uma cor personalizada para representar este formulário em gráficos e relatórios analíticos. Isso facilita a identificação visual entre múltiplos formulários.",
     "label_current_label_color": "Cor atual",
-    "label_color_pallete": "Paleta de cores"
+    "label_color_pallete": "Paleta de cores",
+    "label_expired_sub": "Assinatura expirada"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",
