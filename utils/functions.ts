@@ -318,10 +318,33 @@ export const getPlanName = (value: string) => {
   }
 };
 
-export const applyContext = (tmp: ETeamMemberProfile, org: EOrganization): IContext => {
+export const applyContext = (tmp: ETeamMemberProfile, org: EOrganization, sub: ESubscription): IContext => {
+  const now = new Date();
+  const startDate = new Date(sub.start_date);
+  const dueDate = new Date(sub.due_date);
   const isOrgOwner = org.owner_id === tmp.profile_id;
   const orgRole = tmp.role as TOrganizationRole;
   const isAllowedToInvite = isOrgOwner || orgRole === "admin" || orgRole === "owner";
-  const app: IContext = { isOrgOwner, orgRole, isAllowedToInvite };
-  return app;
+  const isAdminOrHigher = orgRole === "admin" || orgRole === "owner";
+  const isOrgActive = org.status === "active";
+  const isSubscriptionDateValid = startDate <= now && now <= dueDate;
+  const isSubscriptionExpired = now > dueDate;
+  const isSubscriptionActive = sub.status === "active" && isSubscriptionDateValid;
+  const isTrialing = (sub.status === "active" || sub.plan === "free_trial") && isSubscriptionDateValid;
+  const hasBillingIssues = sub.status !== "past_due";
+  const isAccountHolder = sub.profile_id === tmp.profile_id;
+
+  return {
+    isOrgOwner,
+    orgRole,
+    isAllowedToInvite,
+    isSubscriptionActive,
+    isTrialing,
+    isSubscriptionDateValid,
+    isSubscriptionExpired,
+    hasBillingIssues,
+    isAdminOrHigher,
+    isOrgActive,
+    isAccountHolder,
+  };
 };

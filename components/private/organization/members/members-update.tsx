@@ -100,7 +100,7 @@ const Body = ({
       if (member.profile_id === app.teamMemberProfile.profile_id) {
         app.setTeamMemberProfile(tmp.data);
       }
-      const updatedContext = applyContext(tmp.data, app.organization);
+      const updatedContext = applyContext(tmp.data, app.organization, app.subscription);
 
       app.setTeamMemberProfiles(updatedTMPs);
       app.setContext(updatedContext);

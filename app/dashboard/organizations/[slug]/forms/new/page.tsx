@@ -36,7 +36,7 @@ const New = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const forms = await supabase.from("forms").select("*").eq("org_id", orgId);
   if (forms.error) return <ErrorUI email={email} />;
 
-  const context = applyContext(teamMemberProfile.data, organization.data);
+  const context = applyContext(teamMemberProfile.data, organization.data, subscription.data);
 
   return (
     <NewWrapper

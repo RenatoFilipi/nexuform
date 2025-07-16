@@ -33,7 +33,7 @@ const Settings = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const subscription = await supabase.from("subscriptions").select("*").eq("org_id", orgId).single();
   if (subscription.error) return <ErrorUI email={email} />;
 
-  const context = applyContext(teamMemberProfile.data, organization.data);
+  const context = applyContext(teamMemberProfile.data, organization.data, subscription.data);
 
   return (
     <SettingsWrapper

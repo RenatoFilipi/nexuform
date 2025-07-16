@@ -79,4 +79,12 @@ export interface IContext {
   isOrgOwner: boolean;
   orgRole: TOrganizationRole;
   isAllowedToInvite: boolean;
+  isSubscriptionActive: boolean;
+  isTrialing: boolean;
+  isSubscriptionDateValid: boolean;
+  isSubscriptionExpired: boolean;
+  hasBillingIssues: boolean;
+  isAdminOrHigher: boolean;
+  isOrgActive: boolean;
+  isAccountHolder: boolean;
 }

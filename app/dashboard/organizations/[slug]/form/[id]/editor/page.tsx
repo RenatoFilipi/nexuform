@@ -46,7 +46,7 @@ const Editor = async ({ params }: { params: Promise<{ slug: string; id: string }
     .order("position", { ascending: true });
   if (blocks.error) return <ErrorUI email={email} />;
 
-  const context = applyContext(teamMemberProfile.data, organization.data);
+  const context = applyContext(teamMemberProfile.data, organization.data, subscription.data);
 
   return (
     <EditorWrapper

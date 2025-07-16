@@ -52,7 +52,7 @@ const Submissions = async ({ params }: { params: Promise<{ slug: string; id: str
     .order("created_at", { ascending: false });
   if (submissions.error) return <ErrorUI email={email} />;
 
-  const context = applyContext(teamMemberProfile.data, organization.data);
+  const context = applyContext(teamMemberProfile.data, organization.data, subscription.data);
 
   return (
     <SubmissionsWrapper

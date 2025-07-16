@@ -48,7 +48,7 @@ const Billing = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   if (submissionLogs.error) return <ErrorUI email={email} />;
 
-  const context = applyContext(teamMemberProfile.data, organization.data);
+  const context = applyContext(teamMemberProfile.data, organization.data, subscription.data);
 
   return (
     <BillingWrapper

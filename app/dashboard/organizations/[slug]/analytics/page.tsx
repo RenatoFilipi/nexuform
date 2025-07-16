@@ -55,7 +55,7 @@ const Analytics = async ({ params }: { params: Promise<{ slug: string }> }) => {
     .lte("created_at", dates.endDate.toISOString());
   if (viewLogs.error) return <ErrorUI email={email} />;
 
-  const context = applyContext(teamMemberProfile.data, organization.data);
+  const context = applyContext(teamMemberProfile.data, organization.data, subscription.data);
 
   return (
     <AnalyticsWrapper
