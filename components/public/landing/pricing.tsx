@@ -85,7 +85,9 @@ const CardTemplate = ({ plan }: { plan: IPlan }) => {
       )}
       <div className="flex flex-col justify-between h-full items-center w-full gap-6">
         <div className="p-3 flex flex-col w-full">
-          <h3 className="text-lg font-bold text-foreground">{plan.name}</h3>
+          <div className="flex justify-start items-center gap-2">
+            <h3 className="text-lg font-bold text-foreground">{plan.name}</h3>
+          </div>
           <p className="mt-2 text-muted-foreground text-sm">{plan.description}</p>
           <div className="mt-6">
             <div className="flex items-center">

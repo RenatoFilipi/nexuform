@@ -94,7 +94,7 @@ const BillingUsage = () => {
         labelUsage={t("label_all_time")}
         labelAvailable={t("label_forms_included")}
         showBillingWarning={false}
-        icon={<LayersIcon className="h-5 w-5 text-primary" />}
+        icon={<LayersIcon className="h-5 w-5 text-primary group-hover:text-foreground" />}
       />
       <BillingUsageCard
         limit={isSubmissionsLimit}
@@ -105,7 +105,7 @@ const BillingUsage = () => {
         labelUsage={t("label_monthly_usage")}
         labelAvailable={t("label_submissions_included")}
         showBillingWarning={true}
-        icon={<SendIcon className="h-5 w-5 text-primary" />}
+        icon={<SendIcon className="h-5 w-5 text-primary group-hover:text-foreground" />}
       />
     </div>
   );
@@ -134,51 +134,63 @@ const BillingUsageCard = ({
   const t = useTranslations("app");
   const rawValue = 100 - Math.min(usage);
   const usagePercentage = rawValue % 1 === 0 ? rawValue.toString() : rawValue.toFixed(1);
+  const usageValue = Math.min(usage, 100);
 
   return (
-    <Card className="relative w-full p-6 transition-all hover:shadow-md rounded border overflow-hidden">
+    <Card className="relative w-full p-5 transition-all hover:shadow-sm rounded-lg border overflow-hidden group">
+      {/* Warning overlay for limit reached */}
       {limit && (
-        <div className="absolute inset-0 bg-gradient-to-r from-destructive/10 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-destructive/10 via-destructive/5 to-transparent pointer-events-none" />
       )}
-      <div className="flex flex-col gap-5">
-        <div className="flex justify-between items-start">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-lg bg-primary/10">{icon}</div>
-            <div>
-              <h2 className="font-semibold text-lg tracking-tight">{label}</h2>
-              <p className="text-sm text-foreground/70">
+
+      <div className="flex flex-col gap-6">
+        {/* Header section */}
+        <div className="flex justify-between items-start gap-4">
+          <div className="flex items-center gap-4">
+            <div className="p-3 rounded-lg bg-primary/20 text-primary group-hover:bg-primary/30 transition-colors">
+              {icon}
+            </div>
+            <div className="flex flex-col w-fit">
+              <h2 className="font-semibold text-lg tracking-tight w-fit">{label}</h2>
+              <p className="text-sm text-muted-foreground mt-1">
                 {available.toLocaleString()} {labelAvailable}
               </p>
             </div>
           </div>
+
           {limit && (
-            <Badge variant={"destructive"} className="">
-              <AlertTriangleIcon className="h-3.5 w-3.5" />
-              <span>{t("label_limit_reached")}</span>
+            <Badge variant="destructive" className="w-fit">
+              <AlertTriangleIcon className="w-4 h-4" />
+              <span className="truncate">{t("label_limit_reached")}</span>
             </Badge>
           )}
         </div>
+
+        {/* Usage section */}
         <div className="space-y-4">
-          <div className="flex justify-between items-center w-full">
-            <div className="flex justify-center items-center gap-2">
-              <span className="text-sm text-foreground/70">{labelUsage}</span>
+          {/* Usage label and count */}
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">{labelUsage}</span>
               {showBillingWarning && (
                 <WarningTooltip>
-                  <CircleHelpIcon className="w-4 h-4 text-foreground/70" />
+                  <CircleHelpIcon className="w-4 h-4 text-muted-foreground hover:text-foreground transition-colors" />
                 </WarningTooltip>
               )}
             </div>
             <span className="text-sm font-medium">
-              <span className={limit ? "text-destructive" : ""}>{count.toLocaleString()}</span>
-              {" / "}
-              {available.toLocaleString()}
+              <span className={limit ? "text-destructive font-semibold" : "text-foreground"}>
+                {count.toLocaleString()}
+              </span>
+              <span className="text-muted-foreground"> / {available.toLocaleString()}</span>
             </span>
           </div>
 
-          <div className="space-y-2">
-            <Progress value={usage} className="h-2.5" />
-            <div className="flex justify-between items-center">
-              <span className="text-xs text-foreground/70">
+          {/* Progress bar */}
+          <div className="space-y-2.5">
+            <Progress value={usageValue} className="h-2.5" />
+            <div className="flex justify-between items-center text-xs">
+              <span className="text-muted-foreground">
                 {usagePercentage}% {t("label_available")}
               </span>
             </div>
@@ -191,7 +203,6 @@ const BillingUsageCard = ({
 const BillingPlan = () => {
   const t = useTranslations("app");
   const app = useAppStore();
-  const user = useUserStore();
   const isCanceled = app.subscription.status === "canceled";
   const startDate = new Date(app.subscription.start_date).toLocaleDateString();
   const dueDate = new Date(app.subscription.due_date).toLocaleDateString();
@@ -200,99 +211,110 @@ const BillingPlan = () => {
   const showCancelButton = app.subscription.status !== "canceled" && app.subscription.plan !== "free_trial";
   const isOwner = app.context.isOrgOwner;
 
-  const planName = (plan: string) =>
+  const planName = (plan: TPlan) =>
     ({
-      free_trial: "Free Trial",
-      basic: "Basic",
-      pro: "Pro",
+      free_trial: t("label_plan_free_trial"),
+      starter: t("label_plan_starter"),
+      pro: t("label_plan_pro"),
     }[plan] || "Custom");
 
   if (isCanceled) {
     return (
-      <Card className="p-6 flex flex-col md:flex-row gap-8 w-full shadow-sm">
-        <div className="md:w-2/3 flex flex-col justify-center">
-          <div className="flex flex-col md:flex-row gap-4 items-center text-center md:text-left">
-            <AlertTriangleIcon className="h-6 w-6 flex-shrink-0 text-warning" />
-            <div className="space-y-2">
-              <h3 className="text-lg font-medium">{t("label_sub_cancelled")}</h3>
-              <p className="text-muted-foreground text-sm">{t("desc_sub_cancelled")}</p>
+      <Card className="p-5 w-full border-warning/20 bg-warning/5">
+        <div className="flex flex-col md:flex-row gap-6 items-center">
+          <div className="flex items-center gap-4 w-full md:w-auto">
+            <div className="p-2 rounded-full bg-warning/10">
+              <AlertTriangleIcon className="h-5 w-5 text-warning" />
+            </div>
+            <div className="space-y-1">
+              <h3 className="text-lg font-semibold">{t("label_sub_cancelled")}</h3>
+              <p className="text-sm text-muted-foreground">{t("desc_sub_cancelled")}</p>
             </div>
           </div>
-        </div>
-        <div className="md:w-1/3 flex flex-col justify-center items-center md:items-end">
-          <ManageSubscription2>
-            <Button className="gap-2 w-full md:w-auto" variant="secondary" size="sm">
-              <ArrowUpRightIcon className="h-4 w-4" />
-              {t("label_manage_sub")}
-            </Button>
-          </ManageSubscription2>
+          <div className="ml-auto w-full md:w-auto">
+            <ManageSubscription2>
+              <Button className="gap-2 w-full" variant="outline" size="sm">
+                <ArrowUpRightIcon className="h-4 w-4" />
+                {t("label_manage_sub")}
+              </Button>
+            </ManageSubscription2>
+          </div>
         </div>
       </Card>
     );
   }
 
   return (
-    <Card className="relative overflow-hidden rounded p-6 shadow-sm w-full">
-      <div className="absolute right-0 top-0 h-full w-1 bg-primary hidden" />
+    <Card className="p-5 w-full border-border shadow-sm hover:shadow-md transition-shadow">
       <div className="flex flex-col gap-6">
-        <div className="flex items-center justify-start gap-4">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center rounded-lg">
+        {/* Plan Header */}
+        <div className="flex items-start justify-between gap-4 flex-col sm:flex-row">
+          <div className="flex items-center gap-4">
+            <div className="">
               <PlanBadge type={app.subscription.plan as TPlan} size={"xl"} />
             </div>
             <div>
-              <h2 className="text-base font-semibold">{planName(app.subscription.plan)}</h2>
-              <p className="text-xs text-muted-foreground">{t("label_plan")}</p>
+              <h2 className="text-lg font-semibold">{planName(app.subscription.plan as TPlan)}</h2>
+              <p className="text-sm text-muted-foreground">{t("label_plan")}</p>
             </div>
           </div>
-        </div>
-        <div className="h-px w-full bg-border" />
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {!isFreeTrial && (
-            <div className="space-y-2">
-              <h3 className="flex items-center gap-2 text-sm font-medium text-foreground/70">
-                <CalendarIcon className="h-4 w-4" />
-                {t("label_billing_cycle")}
-              </h3>
-              <p className="text-sm">
-                {startDate} - {dueDate}
-              </p>
-            </div>
-          )}
-          <div className="space-y-2">
-            {isFreeTrial && (
-              <h3 className="flex items-center gap-2 text-sm font-medium text-foreground/70">
-                <CalendarX2Icon className="h-4 w-4" />
-                {t("label_free_trial_ends")}
-              </h3>
-            )}
-            {!isFreeTrial && (
-              <h3 className="flex items-center gap-2 text-sm font-medium text-foreground/70">
-                <RefreshCwIcon className="h-4 w-4" />
-                {t("label_renews")}
-              </h3>
-            )}
-            <div className="flex justify-center items-center w-fit gap-2">
-              <p className="text-sm">{dueDate}</p>-
-              <p className="text-sm">{t("label_n_days_remaining", { n: remainingDays })}</p>
-            </div>
-          </div>
-        </div>
-        {isOwner && (
-          <div className="flex flex-col-reverse sm:flex-row justify-end gap-4 items-center">
-            {showCancelButton && (
-              <CancelSubscription>
-                <Button variant="ghost" size="xs" className="w-full sm:w-auto gap-2 text-muted-foreground">
-                  {t("label_cancel_sub")}
-                </Button>
-              </CancelSubscription>
-            )}
+          {isOwner && (
             <ManageSubscription2>
-              <Button variant="outline" size="sm" className="w-full sm:w-auto gap-2">
+              <Button variant="outline" size="sm" className="gap-2 w-full sm:w-fit">
                 <ArrowUpRightIcon className="h-4 w-4" />
                 {t("label_manage_sub")}
               </Button>
             </ManageSubscription2>
+          )}
+        </div>
+
+        {/* Divider */}
+        <div className="h-[1px] bg-gradient-to-r from-transparent via-border to-transparent" />
+
+        {/* Plan Details */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          {!isFreeTrial && (
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                <CalendarIcon className="h-4 w-4" />
+                {t("label_billing_cycle")}
+              </div>
+              <p className="text-sm font-medium">
+                {startDate} - {dueDate}
+              </p>
+            </div>
+          )}
+
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+              {isFreeTrial ? (
+                <>
+                  <CalendarX2Icon className="h-4 w-4" />
+                  {t("label_free_trial_ends")}
+                </>
+              ) : (
+                <>
+                  <RefreshCwIcon className="h-4 w-4" />
+                  {t("label_renews")}
+                </>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              <p className="text-sm font-medium">{dueDate}</p>
+              <span className="text-muted-foreground">•</span>
+              <p className="text-sm text-muted-foreground">{t("label_n_days_remaining", { n: remainingDays })}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Cancel Button */}
+        {isOwner && showCancelButton && (
+          <div className="flex justify-end">
+            <CancelSubscription>
+              <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-destructive">
+                {t("label_cancel_sub")}
+              </Button>
+            </CancelSubscription>
           </div>
         )}
       </div>

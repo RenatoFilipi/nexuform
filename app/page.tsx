@@ -19,9 +19,9 @@ const Home = async () => {
       <Navbar />
       <div className="relative flex flex-col justify-center items-center px-0 flex-1">
         <Hero />
+        <UseCases />
         <Features />
         <HowItWorks />
-        <UseCases />
         <Pricing plans={plans} />
         <Faq />
         <Cta />

@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { ArrowRightIcon, CheckIcon, LayersIcon, SendIcon, Share2Icon, SparklesIcon, ZapIcon } from "lucide-react";
+import { ArrowRightIcon, BarChartIcon, CheckIcon, LayersIcon, Share2Icon, SparklesIcon, ZapIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
@@ -16,207 +16,106 @@ const HowItWorks = () => {
       description: t("step1_desc"),
       icon: LayersIcon,
       details: [t("step1_topic1"), t("step1_topic2"), t("step1_topic3")],
-      color: "text-indigo-600 dark:text-indigo-300",
-      borderColor: "border-indigo-200 hover:border-indigo-400 dark:border-indigo-500/30 dark:hover:border-indigo-400",
-      accent: "from-indigo-100 to-purple-100 dark:from-indigo-600 dark:to-purple-600",
-      bgColor:
-        "bg-gradient-to-br from-indigo-50 to-purple-50 hover:from-indigo-100 hover:to-purple-100 dark:from-indigo-900/10 dark:to-purple-900/20 dark:hover:from-indigo-900/40 dark:hover:to-purple-900/30",
-      highlight: "bg-indigo-100 dark:bg-indigo-500/10",
+      color: "text-indigo-600 dark:text-indigo-200",
+      accent: "from-indigo-100 to-purple-100 dark:from-indigo-800 dark:to-purple-600",
+      card: "hover:border-indigo-600",
     },
     {
       title: t("step2_label"),
       description: t("step2_desc"),
       icon: Share2Icon,
       details: [t("step2_topic1"), t("step2_topic2"), t("step2_topic3")],
-      color: "text-green-600 dark:text-green-300",
-      borderColor: "border-green-200 hover:border-green-400 dark:border-green-500/30 dark:hover:border-green-400",
-      accent: "from-green-100 to-emerald-100 dark:from-green-600 dark:to-emerald-600",
-      bgColor:
-        "bg-gradient-to-br from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 dark:from-green-900/10 dark:to-emerald-900/20 dark:hover:from-green-900/40 dark:hover:to-emerald-900/30",
-      highlight: "bg-green-100 dark:bg-green-500/10",
+      color: "text-green-600 dark:text-green-200",
+      accent: "from-green-100 to-emerald-100 dark:from-green-800 dark:to-emerald-600",
+      card: "hover:border-green-600",
     },
     {
       title: t("step3_label"),
       description: t("step3_desc"),
-      icon: SendIcon,
+      icon: BarChartIcon,
       details: [t("step3_topic1"), t("step3_topic2"), t("step3_topic3")],
-      color: "text-yellow-600 dark:text-yellow-300",
-      borderColor: "border-yellow-200 hover:border-yellow-400 dark:border-yellow-500/30 dark:hover:border-yellow-400",
-      accent: "from-yellow-100 to-amber-100 dark:from-yellow-600 dark:to-amber-600",
-      bgColor:
-        "bg-gradient-to-br from-yellow-50 to-amber-50 hover:from-yellow-100 hover:to-amber-100 dark:from-yellow-900/10 dark:to-amber-900/20 dark:hover:from-yellow-900/40 dark:hover:to-amber-900/30",
-      highlight: "bg-yellow-100 dark:bg-yellow-500/10",
+      color: "text-yellow-600 dark:text-yellow-200",
+      accent: "from-yellow-100 to-amber-100 dark:from-yellow-800 dark:to-amber-600",
+      card: "hover:border-yellow-600",
     },
   ];
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-  const cardVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1],
-      },
-    },
-    hover: {
-      y: -15,
-      boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
-    },
-  };
-  const iconVariants = {
-    hidden: { scale: 0.8, opacity: 0 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: [0.175, 0.885, 0.32, 1.275],
-      },
-    },
-    hover: {
-      scale: 1.15,
-    },
-  };
-  const checkIconVariants = {
-    hidden: { scale: 0.8, opacity: 0 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      transition: {
-        delay: 0.4,
-        duration: 0.5,
-      },
-    },
-    hover: {
-      scale: 1.2,
-    },
-  };
 
   return (
-    <section id="how-it-works" className="relative py-28 px-4 w-full bg-foreground/10 dark:bg-black/70">
-      {/* Decorative elements - only visible in dark mode */}
-      <div className="absolute inset-0 overflow-hidden hidden dark:block">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-900/20 rounded-full filter blur-3xl opacity-20" />
-        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-teal-900/20 rounded-full filter blur-3xl opacity-20" />
-        <div className="absolute bottom-0 left-1/2 w-80 h-80 bg-amber-900/20 rounded-full filter blur-3xl opacity-20" />
-      </div>
+    <section id="how-it-works" className="relative py-28 px-4 w-full ">
       <div className="max-w-7xl mx-auto relative z-10">
+        {/* Headline */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
+          transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center max-w-4xl mx-auto mb-16 space-y-6">
-          <motion.div
-            initial={{ scale: 0.9 }}
-            whileInView={{ scale: 1 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center justify-center gap-3 mb-4">
-            <ZapIcon className="w-8 h-8 text-amber-500 dark:text-amber-400" />
-            <span className="text-sm font-semibold tracking-wider text-amber-500 dark:text-amber-400 uppercase">
-              {t("htw_preheadline")}
-            </span>
-          </motion.div>
-          <h2 className="text-5xl font-bold tracking-tight">
+          className="text-center max-w-3xl mx-auto mb-20 space-y-6">
+          <div className="flex justify-center items-center gap-3 text-amber-500 dark:text-amber-400">
+            <ZapIcon className="w-6 h-6" />
+            <span className="text-sm font-semibold uppercase tracking-wide">{t("htw_preheadline")}</span>
+          </div>
+          <h2 className="text-4xl font-bold leading-tight">
             {t("htw_headline")}{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-pink-500">
               {t("htw_headline_highlight")}
             </span>
           </h2>
-          <p className="text-xl leading-relaxed text-muted-foreground">
+          <p className="text-lg text-muted-foreground">
             {t("htw_subheadline")}{" "}
             <span className="text-foreground font-semibold">{t("htw_subheadline_highlight")}</span>
           </p>
         </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid md:grid-cols-3 gap-8">
-          {steps.map((s, index) => (
-            <motion.div key={index} variants={cardVariants} whileHover="hover" className="h-full">
+        {/* Steps */}
+        <div className="grid md:grid-cols-3 gap-8">
+          {steps.map((step, index) => (
+            <motion.div
+              key={index}
+              initial={{ y: 40, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.1 + index * 0.2, duration: 0.6 }}
+              viewport={{ once: true }}
+              className="h-full">
               <Card
-                className={`relative h-full rounded-xl border ${s.borderColor} ${s.bgColor} p-8 transition-all duration-500 group overflow-hidden shadow-sm dark:shadow-none`}>
-                {/* Animated gradient background */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileHover={{ opacity: 0.1, scale: 1.2 }}
-                  className={`absolute inset-0 bg-gradient-to-br ${s.accent} opacity-0 blur-xl transition-all duration-700`}
-                />
-                <div className="relative z-10 flex flex-col gap-8 h-full">
-                  <div className="flex flex-col gap-5">
-                    <motion.div
-                      variants={iconVariants}
-                      className={`p-5 rounded-xl ${s.highlight} w-fit shadow-sm border ${s.borderColor} backdrop-blur-sm`}>
-                      <s.icon className={`h-8 w-8 ${s.color}`} />
-                    </motion.div>
-                    <h3 className="text-2xl font-bold text-gray-800 dark:text-white">{s.title}</h3>
+                className={`h-full p-6 rounded-2xl border border-border bg-card shadow-sm dark:shadow-none group transition-all ${step.card}`}>
+                <div className={`w-fit p-4 rounded-xl bg-gradient-to-br ${step.accent} backdrop-blur-sm`}>
+                  <step.icon className={`w-6 h-6 ${step.color}`} />
+                </div>
+                <h3 className="mt-6 text-xl font-semibold">{step.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+
+                <div className="mt-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <SparklesIcon className={`w-4 h-4 ${step.color}`} />
+                    <span className={`text-sm font-medium ${step.color}`}>{t("htw_benefits_title")}</span>
                   </div>
-
-                  <motion.p
-                    initial={{ opacity: 0.8 }}
-                    whileHover={{ opacity: 1 }}
-                    className="leading-relaxed text-gray-600 dark:text-gray-300 text-[16px]">
-                    {s.description}
-                  </motion.p>
-
-                  <div className="mt-auto flex flex-col gap-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <SparklesIcon className={`w-4 h-4 ${s.color}`} />
-                      <span className={`text-sm font-medium ${s.color}`}>{t("htw_benefits_title")}</span>
-                    </div>
-                    {s.details.map((d, i) => (
-                      <motion.div
-                        key={d}
-                        className="flex items-start gap-3"
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.2 + i * 0.1 }}
-                        viewport={{ once: true }}>
-                        <motion.div
-                          variants={checkIconVariants}
-                          className={`flex justify-center items-center p-1.5 rounded-full ${s.highlight} border ${s.borderColor}`}>
-                          <CheckIcon className={`w-4 h-4 ${s.color}`} />
-                        </motion.div>
-                        <p className="text-sm text-gray-600 group-hover:text-gray-800 dark:text-gray-300 dark:group-hover:text-white">
-                          {d}
-                        </p>
-                      </motion.div>
+                  <ul className="space-y-3">
+                    {step.details.map((detail, i) => (
+                      <li key={i} className="flex gap-2 items-start">
+                        <div className={`p-1.5 rounded-full bg-muted/60 dark:bg-muted/30`}>
+                          <CheckIcon className={`w-4 h-4 ${step.color}`} />
+                        </div>
+                        <p className="text-sm text-muted-foreground">{detail}</p>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
               </Card>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
-        {/* CTA Section */}
+        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
+          transition={{ delay: 0.5 }}
           viewport={{ once: true }}
-          className="mt-32 mb-10 text-center">
+          className="mt-24 text-center">
           <p className="text-lg text-muted-foreground mb-6">
             {t("htw_cta_text")} <span className="text-foreground font-semibold">{t("htw_cta_highlight")}</span>
           </p>
-          <Button
-            asChild
-            className="group transition-all hover:shadow-lg hover:shadow-primary/20 text-base"
-            size="lg"
-            variant={"default"}>
+          <Button asChild size="lg" className="group transition-all text-base hover:shadow-lg hover:shadow-primary/20">
             <Link href="/signup">
               {t("htw_cta_button")}
               <ArrowRightIcon className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />

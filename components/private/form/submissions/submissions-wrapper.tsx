@@ -21,7 +21,7 @@ import { IContext, IPagination } from "@/utils/interfaces";
 import { createClient } from "@/utils/supabase/client";
 import { TSubmissionStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { ClockIcon, SendIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon, ClockIcon, SendIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { useState } from "react";
@@ -231,10 +231,12 @@ const SubmissionsList = () => {
       </div>
       <div className="flex justify-end items-center gap-4">
         <Button disabled={disableBack} onClick={handleBack} variant={"outline"} size={"sm"}>
+          <ChevronLeftIcon className="w-4 h-4 mr-2" />
           {t("label_back")}
         </Button>
         <Button disabled={disabledNext} onClick={handleNext} variant={"outline"} size={"sm"}>
           {t("label_next")}
+          <ChevronRightIcon className="w-4 h-4 ml-2" />
         </Button>
       </div>
     </div>

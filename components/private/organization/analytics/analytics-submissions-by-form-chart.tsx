@@ -1,7 +1,14 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
-import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
 import useAppStore from "@/stores/app";
 import { getDateDifferenceInDays } from "@/utils/functions";
 import { addDays, format, isWithinInterval, parseISO } from "date-fns";
@@ -106,7 +113,7 @@ const AnalyticsSubmissionsByFormChart = () => {
     <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit">
       <div className="flex justify-between items-center">
         <span className="font-semibold text-base">{t("label_submissions_by_form")}</span>
-        <div className="flex justify-center items-center gap-4">
+        <div className="justify-center items-center gap-4 hidden sm:flex">
           {app.forms?.map((form) => (
             <div key={form.id} className="flex justify-center items-center gap-2">
               <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: form.label_color }}></div>
@@ -141,10 +148,11 @@ const AnalyticsSubmissionsByFormChart = () => {
               fillOpacity={0.4}
               stroke={form.label_color}
               strokeWidth={2}
-              stackId="a"
+              stackId={form.id}
               name={form.name}
             />
           ))}
+          <ChartLegend className="flex sm:hidden" content={<ChartLegendContent />} />
         </AreaChart>
       </ChartContainer>
     </Card>

@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import useAppStore from "@/stores/app";
 import { ETeamMemberProfile } from "@/utils/entities";
+import { applyContext } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/client";
 import { TSetState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -99,8 +100,10 @@ const Body = ({
       if (member.profile_id === app.teamMemberProfile.profile_id) {
         app.setTeamMemberProfile(tmp.data);
       }
+      const updatedContext = applyContext(tmp.data, app.organization);
 
       app.setTeamMemberProfiles(updatedTMPs);
+      app.setContext(updatedContext);
       toast.success(t("success_generic"));
       setState(false);
     });

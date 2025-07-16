@@ -6,15 +6,17 @@ import { Card } from "@/components/ui/card";
 import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
 import { EInvitation, EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
-import { formatDateRelativeToNow, getPlanName } from "@/utils/functions";
+import { formatDateRelativeToNow } from "@/utils/functions";
+import { TPlan } from "@/utils/pricing";
 import { createClient } from "@/utils/supabase/client";
 import { TOrganizationRole, TOrganizationStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { BoxesIcon, CheckIcon, ChevronRightIcon, ClockIcon, LoaderIcon, MailPlusIcon, XIcon } from "lucide-react";
+import { BoxesIcon, CheckIcon, ChevronRightIcon, LoaderIcon, MailPlusIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import OrgRoleBadge from "../shared/custom/org-role-badge";
+import PlanNameBadge from "../shared/custom/plan-name-badge";
 
 interface IProps {
   locale: string;
@@ -73,34 +75,45 @@ interface ICardProps {
   teamMemberProfile: ETeamMemberProfile;
 }
 const OrganizationsCard = (props: ICardProps) => {
+  const t = useTranslations("app");
   const app = useAppStore();
   const tmp = props.teamMemberProfile;
   const organization = app.organizations.find((x) => x.id === tmp.org_id) as EOrganization;
   const subscription = app.subscriptions.find((x) => x.org_id === tmp.org_id) as ESubscription;
   const orgPath = `/dashboard/organizations/${organization.public_id}/forms`;
-  const plan = getPlanName(subscription.plan);
+
+  const planName = (plan: TPlan) =>
+    ({
+      free_trial: t("label_plan_free_trial"),
+      starter: t("label_plan_starter"),
+      pro: t("label_plan_pro"),
+    }[plan] || "Custom");
 
   return (
     <a href={orgPath}>
-      <Card className="flex flex-col justify-between h-40 p-4 border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm cursor-pointer relative">
-        <div className="flex justify-between items-start w-full">
-          <div className="flex justify-start items-center gap-3">
-            <div className="flex justify-center items-center p-3 bg-foreground/10 rounded w-fit">
+      <Card className="flex flex-col justify-between h-36 p-4 border hover:border-primary/40 transition-all duration-200 group hover:shadow-md cursor-pointer relative overflow-hidden">
+        {/* Background hover effect */}
+        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-primary/0 to-primary/0 group-hover:via-primary/5 group-hover:to-primary/10 transition-all duration-300" />
+
+        {/* Main content */}
+        <div className="flex justify-between items-start w-full relative z-10">
+          <div className="flex items-start gap-3">
+            <div className="flex justify-center items-center p-2 bg-foreground/5 rounded-lg group-hover:bg-primary/20 transition-colors">
               <BoxesIcon className="w-5 h-5" />
             </div>
-            <div className="flex flex-col gap-1">
-              <span className="text-sm font-semibold">{organization.name}</span>
-              <div className="flex gap-2">
-                <Badge variant={"default"}>{plan}</Badge>
-              </div>
+            <div className="flex flex-col gap-2">
+              <h3 className="text-sm font-semibold line-clamp-1">{organization.name}</h3>
             </div>
           </div>
-          <button className="absolute right-4 top-4 text-foreground-lighter transition-all duration-200 group-hover:right-3 group-hover:text-foreground ">
-            <ChevronRightIcon className="w-5 h-5" />
-          </button>
+
+          {/* Chevron indicator */}
+          <ChevronRightIcon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
         </div>
-        <div>
+
+        {/* Status badge at bottom */}
+        <div className="relative z-10 mt-auto flex justify-start items-center gap-3">
           <OrganizationStatusBadge status={organization.status as TOrganizationStatus} />
+          <PlanNameBadge type={subscription.plan as TPlan} className="" />
         </div>
       </Card>
     </a>
@@ -220,23 +233,20 @@ const InvitationCard = ({ invitation }: { invitation: EInvitation }) => {
   };
 
   return (
-    <Card className="p-4 flex flex-col sm:flex-row justify-between items-center gap-4 w-full hover:bg-muted/50 transition-colors">
-      <div className="flex flex-1 justify-start items-start gap-4 w-full">
-        <div className="flex justify-center items-center rounded-xl bg-foreground text-background p-3">
+    <Card className="p-4 flex flex-col sm:flex-row justify-between items-center gap-4 w-full transition-colors hover:bg-foreground/5">
+      <div className="flex flex-1 justify-start items-start gap-4 w-full h-full">
+        <div className="flex justify-center items-center rounded bg-foreground text-background p-3">
           <MailPlusIcon className="w-5 h-5" />
         </div>
         <div className="flex flex-col gap-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="font-semibold text-base">{invitation.org_name}</span>
+            <span className="font-semibold text-sm">{invitation.org_name}</span>
             <OrgRoleBadge role={invitation.role as TOrganizationRole} />
           </div>
           <p className="text-muted-foreground text-sm">
             {t("label_invited_by")} <span className="font-medium text-foreground">{invitation.inviter_name}</span>
           </p>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <ClockIcon className="w-4 h-4" />
-            <span>{invitedAt}</span>
-          </div>
+          <span className="text-sm text-muted-foreground">{invitedAt}</span>
         </div>
       </div>
       <div className="flex sm:flex-col justify-end items-stretch gap-3 w-full sm:w-auto">
