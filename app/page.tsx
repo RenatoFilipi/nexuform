@@ -6,6 +6,7 @@ import Hero from "@/components/public/landing/hero";
 import HowItWorks from "@/components/public/landing/how-it-works";
 import Navbar from "@/components/public/landing/navbar";
 import Pricing from "@/components/public/landing/pricing";
+import UseCases from "@/components/public/landing/use-cases";
 import { getPlans } from "@/utils/pricing";
 import { getLocale } from "next-intl/server";
 
@@ -20,6 +21,7 @@ const Home = async () => {
         <Hero />
         <Features />
         <HowItWorks />
+        <UseCases />
         <Pricing plans={plans} />
         <Faq />
         <Cta />

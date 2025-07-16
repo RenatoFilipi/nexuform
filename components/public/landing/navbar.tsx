@@ -29,6 +29,7 @@ const Navbar = () => {
   const sections = [
     { name: t("nav_features"), id: "#features" },
     { name: t("nav_htw"), id: "#how-it-works" },
+    { name: t("nav_usecases"), id: "#usecases" },
     { name: t("nav_pricing"), id: "#pricing" },
     { name: t("nav_faq"), id: "#faq" },
   ];
