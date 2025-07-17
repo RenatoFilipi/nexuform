@@ -10,7 +10,7 @@ import { useEffect, useMemo, useReducer, useState } from "react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import { CurveType } from "recharts/types/shape/Curve";
 
-const submissionColor = "#0000cc";
+const submissionColor = "#3232d6";
 const viewColor = "#ffa500";
 
 interface IChartData {

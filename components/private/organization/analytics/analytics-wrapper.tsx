@@ -109,7 +109,9 @@ const AnalyticsWrapper = (props: IProps) => {
       </div>
       <div className="flex flex-col gap-6">
         <AnalyticsMetrics ids={ids} />
-        <AnalyticsSubmissionsByFormChart ids={ids} />
+        <div className="grid grid-cols-1 gap-6">
+          <AnalyticsSubmissionsByFormChart ids={ids} />
+        </div>
       </div>
     </div>
   );
