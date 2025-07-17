@@ -492,7 +492,9 @@
     "desc_label_color": "Set a custom color to represent this form in charts and analytical reports. This helps visually distinguish between multiple forms.",
     "label_current_label_color": "Current color",
     "label_color_pallete": "Color palette",
-    "label_expired_sub": "Assinatura expirada"
+    "label_expired_sub": "Assinatura expirada",
+    "label_no_access": "Access restricted",
+    "desc_no_access": "You don’t have permission to view this content. Please contact your organization’s administrator to request access."
   },
   "s": {
     "err_required_all": "Answer all required questions.",

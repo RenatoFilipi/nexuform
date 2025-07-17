@@ -10,8 +10,8 @@ import { useEffect, useMemo, useReducer, useState } from "react";
 import { CartesianGrid, ComposedChart, Line, XAxis } from "recharts";
 import { CurveType } from "recharts/types/shape/Curve";
 
-const submissionColor = "#2784ad";
-const viewColor = "#fb923c";
+const submissionColor = "#0000cc";
+const viewColor = "#ffa500";
 
 interface IChartData {
   day: string;

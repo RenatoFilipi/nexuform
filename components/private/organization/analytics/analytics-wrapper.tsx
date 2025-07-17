@@ -98,10 +98,12 @@ const AnalyticsWrapper = (props: IProps) => {
             if (!range) return;
             onSelectRange(range.from, range.to);
           }}
+          align="end"
         />
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-6">
         <AnalyticsMetrics />
+        <AnalyticsSubmissionsByFormChart />
       </div>
     </div>
   );
@@ -118,37 +120,33 @@ const AnalyticsMetrics = () => {
   )}%`;
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <AnalyticsCard
-          name={t("label_total_views")}
-          value={totalViews}
-          icon={<EyeIcon className="w-5 h-5 text-primary" />}
-        />
-        <AnalyticsCard
-          name={t("label_total_submissions")}
-          value={totalSubmissions}
-          icon={<SendIcon className="w-5 h-5 text-primary" />}
-        />
-        <AnalyticsCard
-          name={t("label_completion_rate")}
-          value={avgCompletionRate}
-          icon={<VoteIcon className="w-5 h-5 text-primary" />}
-        />
-        <AnalyticsCard
-          name={t("label_avg_completion_time")}
-          value={avgCompletionTime}
-          icon={<TimerIcon className="w-5 h-5 text-primary" />}
-        />
-      </div>
-      <AnalyticsSubmissionsByFormChart />
+    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <AnalyticsCard
+        name={t("label_total_views")}
+        value={totalViews}
+        icon={<EyeIcon className="w-5 h-5 text-primary" />}
+      />
+      <AnalyticsCard
+        name={t("label_total_submissions")}
+        value={totalSubmissions}
+        icon={<SendIcon className="w-5 h-5 text-primary" />}
+      />
+      <AnalyticsCard
+        name={t("label_completion_rate")}
+        value={avgCompletionRate}
+        icon={<VoteIcon className="w-5 h-5 text-primary" />}
+      />
+      <AnalyticsCard
+        name={t("label_avg_completion_time")}
+        value={avgCompletionTime}
+        icon={<TimerIcon className="w-5 h-5 text-primary" />}
+      />
     </div>
   );
 };
 const AnalyticsCard = ({ name, value, icon }: { name: string; value: string; icon: React.ReactNode }) => {
   return (
     <Card className="group relative p-4 flex flex-col gap-4 w-full h-full border rounded-lg hover:border-primary/50 transition-all duration-300 hover:shadow-sm overflow-hidden">
-      {/* Subtle background effect on hover */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
       <div className="flex justify-between items-start w-full z-10">

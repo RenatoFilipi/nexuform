@@ -492,7 +492,9 @@
     "desc_label_color": "Defina uma cor personalizada para representar este formulário em gráficos e relatórios analíticos. Isso facilita a identificação visual entre múltiplos formulários.",
     "label_current_label_color": "Cor atual",
     "label_color_pallete": "Paleta de cores",
-    "label_expired_sub": "Assinatura expirada"
+    "label_expired_sub": "Assinatura expirada",
+    "label_no_access": "Acesso restrito",
+    "desc_no_access": "Você não tem permissão para visualizar este conteúdo. Entre em contato com o administrador da sua organização para solicitar acesso."
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

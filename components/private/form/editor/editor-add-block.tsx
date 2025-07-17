@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
+  DialogOverlay,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -47,13 +48,15 @@ const EditorAddBlock = ({ children }: { children: React.ReactNode }) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
-        <DialogContent className="flex flex-col min-w-[650px] h-[85%]">
-          <DialogHeader>
-            <DialogTitle>{t("label_blocks")}</DialogTitle>
-            <DialogDescription>{t("desc_blocks")}</DialogDescription>
-          </DialogHeader>
-          <Body setState={setOpen} />
-        </DialogContent>
+        <DialogOverlay className="backdrop-blur-sm">
+          <DialogContent className="flex flex-col min-w-[650px] h-[90%]">
+            <DialogHeader>
+              <DialogTitle>{t("label_blocks")}</DialogTitle>
+              <DialogDescription>{t("desc_blocks")}</DialogDescription>
+            </DialogHeader>
+            <Body setState={setOpen} />
+          </DialogContent>
+        </DialogOverlay>
       </Dialog>
     );
   }
@@ -77,27 +80,36 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
 
   const categoryColors = {
     text: {
-      bg: "bg-blue-100 dark:bg-blue-900/30",
-      text: "text-blue-600 dark:text-blue-400",
+      bg: "bg-sky-50 dark:bg-sky-900/20",
+      text: "text-sky-600 dark:text-sky-400",
+      border: "border-sky-200 dark:border-sky-800",
+      ring: "ring-sky-500/20 dark:ring-sky-400/30",
     },
     selection: {
-      bg: "bg-purple-100 dark:bg-purple-900/30",
-      text: "text-purple-600 dark:text-purple-400",
+      bg: "bg-violet-50 dark:bg-violet-900/20",
+      text: "text-violet-600 dark:text-violet-400",
+      border: "border-violet-200 dark:border-violet-800",
+      ring: "ring-violet-500/20 dark:ring-violet-400/30",
     },
     numeric: {
-      bg: "bg-green-100 dark:bg-green-900/30",
-      text: "text-green-600 dark:text-green-400",
+      bg: "bg-emerald-50 dark:bg-emerald-900/20",
+      text: "text-emerald-600 dark:text-emerald-400",
+      border: "border-emerald-200 dark:border-emerald-800",
+      ring: "ring-emerald-500/20 dark:ring-emerald-400/30",
     },
     data: {
-      bg: "bg-yellow-100 dark:bg-yellow-900/30",
-      text: "text-yellow-600 dark:text-yellow-400",
+      bg: "bg-amber-50 dark:bg-amber-900/20",
+      text: "text-amber-600 dark:text-amber-400",
+      border: "border-amber-200 dark:border-amber-800",
+      ring: "ring-amber-500/20 dark:ring-amber-400/30",
     },
     rating: {
-      bg: "bg-red-100 dark:bg-red-900/30",
-      text: "text-red-600 dark:text-red-400",
+      bg: "bg-rose-50 dark:bg-rose-900/20",
+      text: "text-rose-600 dark:text-rose-400",
+      border: "border-rose-200 dark:border-rose-800",
+      ring: "ring-rose-500/20 dark:ring-rose-400/30",
     },
   };
-
   const blockList: IBlockData[] = [
     {
       type: "short_text",
@@ -180,7 +192,6 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       category: "data",
     },
   ];
-
   const groupedBlocks = blockList.reduce((acc, block) => {
     if (!block.enabled) return acc;
 
@@ -198,7 +209,6 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     data: t("label_category_data"),
     rating: t("label_category_rating"),
   };
-
   const formSchema = z.object({
     block: z.string(),
   });
@@ -254,21 +264,21 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
                 <FormItem className="w-full">
                   <FormControl>
                     <RadioGroup
-                      className="flex flex-col overflow-y-auto gap-2"
+                      className="flex flex-col overflow-y-auto gap-2 sm:mr-2"
                       value={field.value}
                       onValueChange={field.onChange}>
                       {Object.entries(groupedBlocks).map(([category, blocks]) => (
                         <div key={category} className="flex flex-col gap-2">
-                          <h3 className="text-foreground/70">
+                          <h3 className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
                             {categoryLabels[category as keyof typeof categoryLabels]}
                           </h3>
-                          <div className="flex flex-col gap-2">
+                          <div className="flex flex-col gap-1">
                             {blocks.map((block, index) => (
                               <div key={index} className="">
                                 <RadioGroupItem value={block.type} id={block.type} className="peer sr-only" />
                                 <Label
                                   htmlFor={block.type}
-                                  className="text-sm cursor-pointer flex items-center justify-start gap-2.5 rounded border border-transparent bg-popover p-2 hover:bg-primary/5 hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 [&:has([data-state=checked])]:border-primary">
+                                  className="text-sm cursor-pointer flex items-center justify-start gap-2.5 rounded border border-transparent p-2 hover:bg-foreground/5 hover:text-accent-foreground peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 [&:has([data-state=checked])]:border-primary">
                                   <div
                                     className={`p-2 flex justify-center items-center rounded ${
                                       categoryColors[block.category as keyof typeof categoryColors].bg

@@ -150,6 +150,7 @@ const AnalyticsSubmissionsByFormChart = () => {
               strokeWidth={2}
               stackId={form.id}
               name={form.name}
+              animationDuration={300}
             />
           ))}
           <ChartLegend className="flex sm:hidden" content={<ChartLegendContent />} />

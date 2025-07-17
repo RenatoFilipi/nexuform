@@ -15,6 +15,7 @@ import {
   EViewLog,
 } from "@/utils/entities";
 import {
+  formatDateRelativeToNow,
   formatDecimal,
   formatTime,
   getAverageCompletionRate,
@@ -102,20 +103,21 @@ const OverviewWrapper = (props: IProps) => {
   if (query.isPending) return null;
 
   return (
-    <div className="w-full h-full flex-1 flex flex-col gap-4">
+    <div className="w-full h-full flex-1 flex flex-col gap-6 sm:gap-2">
       {/* header */}
       <div className="flex flex-col gap-4 w-full sm:flex-row justify-between items-center">
         <div className="flex justify-between items-center w-full sm:w-fit gap-4">
           <h1 className="font-semibold text-lg sm:text-xl truncate sm:max-w-[290px]">{app.form.name}</h1>
           <FormStatusBadge status={app.form.status as TFormStatus} />
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-4 w-full sm:w-fit">
           <DateRangePicker
             initialRange={{ from: app.from.toISOString(), to: app.to.toISOString() }}
             onChange={(range) => {
               if (!range) return;
               onSelectRange(range.from, range.to);
             }}
+            align="end"
           />
           <Button variant={"secondary"} size={"sm"} className="w-full" asChild>
             <Link href={editorPath}>
@@ -125,10 +127,13 @@ const OverviewWrapper = (props: IProps) => {
           </Button>
         </div>
       </div>
+      <span className="text-sm text-muted-foreground mb-5 hidden sm:flex">
+        {t("label_last_updated")} {formatDateRelativeToNow(app.form.updated_at, user.locale)}
+      </span>
       {/* content */}
-      <div className="gap-6 grid sm:grid-cols-3">
+      <div className="flex flex-col gap-6">
         <OverviewMetrics />
-        <OverviewCharts />
+        <OverviewActivityChart />
       </div>
     </div>
   );
@@ -145,7 +150,7 @@ const OverviewMetrics = () => {
   )}%`;
 
   return (
-    <div className="grid sm:grid-cols-1 col-span-2 sm:col-span-1 sm:gap-6 gap-3">
+    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
       <OverviewCard
         name={t("label_total_views")}
         content={
@@ -185,21 +190,21 @@ const OverviewMetrics = () => {
     </div>
   );
 };
-const OverviewCharts = () => {
-  return (
-    <div className="grid col-span-2">
-      <OverviewActivityChart />
-    </div>
-  );
-};
 const OverviewCard = ({ name, icon, content }: { name: string; icon: React.ReactNode; content: React.ReactNode }) => {
   return (
-    <Card className="p-4 justify-between items-center flex gap-3 w-full">
-      <div className="flex items-center w-full gap-3">
-        <div className="flex justify-center items-center p-2 bg-primary/10 rounded">{icon}</div>
-        <span className="text-sm">{name}</span>
+    <Card className="group relative p-4 flex flex-col gap-4 w-full h-full border rounded-lg hover:border-primary/50 transition-all duration-300 hover:shadow-sm overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+      <div className="flex justify-between items-start w-full z-10">
+        <span className="text-sm font-medium text-muted-foreground">{name}</span>
+        <div className="flex justify-center items-center p-2 bg-primary/10 rounded-lg text-primary group-hover:bg-primary/20 transition-colors duration-300">
+          {icon}
+        </div>
       </div>
-      {content}
+
+      <div className="flex flex-col gap-1 z-10">
+        <span className="text-xl font-bold tracking-tight">{content}</span>
+      </div>
     </Card>
   );
 };

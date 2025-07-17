@@ -18,9 +18,10 @@ interface IProps {
   className?: string;
   initialRange?: { from: string; to: string };
   onChange?: (range: { from: string; to: string } | undefined) => void;
+  align?: "center" | "start" | "end" | undefined;
 }
 
-const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
+const DateRangePicker = ({ className, initialRange, onChange, align }: IProps) => {
   const t = useTranslations("app");
   const user = useUserStore();
   const app = useAppStore();
@@ -162,7 +163,7 @@ const DateRangePicker = ({ className, initialRange, onChange }: IProps) => {
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto mt-2" align="center">
+        <PopoverContent className="w-auto mt-2" align={align}>
           <div className="flex justify-center items-center gap-4">
             {/* Presets column */}
             <div className="flex flex-col gap-2">
