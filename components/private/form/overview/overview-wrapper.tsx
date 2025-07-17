@@ -20,9 +20,8 @@ import {
   formatTime,
   getAverageCompletionRate,
   getAverageCompletionTime,
-  getDateRangeFromToday,
 } from "@/utils/functions";
-import { IContext } from "@/utils/interfaces";
+import { IContext, IInterval } from "@/utils/interfaces";
 import { createClient } from "@/utils/supabase/client";
 import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
@@ -44,6 +43,7 @@ interface IProps {
   submissionLogs: ESubmissionLog[];
   viewLogs: EViewLog[];
   context: IContext;
+  dates: IInterval;
 }
 
 const OverviewWrapper = (props: IProps) => {
@@ -59,7 +59,6 @@ const OverviewWrapper = (props: IProps) => {
   const query = useQuery({
     queryKey: ["overview-page"],
     queryFn: () => {
-      const dates = getDateRangeFromToday(7);
       user.setLocale(props.locale);
       user.setEmail(props.email);
       user.setProfile(props.profile);
@@ -69,8 +68,8 @@ const OverviewWrapper = (props: IProps) => {
       app.setForm(props.form);
       app.setSubmissionLogs(props.submissionLogs);
       app.setViewLogs(props.viewLogs);
-      app.setFrom(dates.startDate);
-      app.setTo(dates.endDate);
+      app.setFrom(props.dates.startDate);
+      app.setTo(props.dates.endDate);
       app.setContext(props.context);
       return null;
     },
@@ -112,7 +111,7 @@ const OverviewWrapper = (props: IProps) => {
         </div>
         <div className="flex gap-4 w-full sm:w-fit">
           <DateRangePicker
-            initialRange={{ from: app.from.toISOString(), to: app.to.toISOString() }}
+            initialRange={{ from: props.dates.startDate.toISOString(), to: props.dates.endDate.toISOString() }}
             onChange={(range) => {
               if (!range) return;
               onSelectRange(range.from, range.to);

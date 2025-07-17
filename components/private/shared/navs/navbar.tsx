@@ -94,7 +94,7 @@ const AfterOrgNavbar = () => {
   const formPath = `/dashboard/organizations/${orgId}/form/${formId}/overview`;
 
   return (
-    <nav className="z-10 flex flex-col bg-background fixed w-full">
+    <nav className="z-40 flex flex-col bg-background fixed w-full">
       <div className="flex w-full justify-between items-center h-14 px-4 sm:px-6">
         {/* content */}
         <div className="flex justify-center items-center gap-2">
@@ -394,7 +394,7 @@ const SearchOrgs = ({ children, orgId }: { children: React.ReactNode; orgId: str
   return (
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent align="start" className="p-0">
+      <PopoverContent align="start" className="p-0 z-50">
         <div className="flex flex-col">
           <div className="px-3 py-2 border-b">
             <h3 className="font-semibold text-sm">{t("label_organizations")}</h3>
@@ -450,7 +450,7 @@ const SearchForms = ({ children, orgId }: { children: React.ReactNode; orgId: st
   return (
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent align="start" className="p-0">
+      <PopoverContent align="start" className="p-0 z-50">
         <div className="flex flex-col">
           <div className="px-3 py-2 border-b">
             <h3 className="font-semibold text-sm">{t("label_forms")}</h3>

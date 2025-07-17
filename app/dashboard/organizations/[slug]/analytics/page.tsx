@@ -69,6 +69,7 @@ const Analytics = async ({ params }: { params: Promise<{ slug: string }> }) => {
       submissionLogs={submissionLogs.data}
       viewLogs={viewLogs.data}
       context={context}
+      dates={dates}
     />
   );
 };

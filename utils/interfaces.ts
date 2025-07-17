@@ -88,3 +88,8 @@ export interface IContext {
   isOrgActive: boolean;
   isAccountHolder: boolean;
 }
+
+export interface IInterval {
+  startDate: Date;
+  endDate: Date;
+}

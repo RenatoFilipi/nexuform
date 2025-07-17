@@ -68,6 +68,7 @@ const Overview = async ({ params }: { params: Promise<{ slug: string; id: string
       submissionLogs={submissionLogs.data}
       viewLogs={viewLogs.data}
       context={context}
+      dates={dates}
     />
   );
 };

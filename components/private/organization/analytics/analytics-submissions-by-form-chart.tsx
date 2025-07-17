@@ -33,12 +33,17 @@ const hasDataReducer = (state: boolean, action: HasDataAction): boolean => {
   }
 };
 
-const AnalyticsSubmissionsByFormChart = () => {
+const AnalyticsSubmissionsByFormChart = ({ ids }: { ids: string[] }) => {
   const t = useTranslations("app");
   const app = useAppStore();
   const [chartData, setChartData] = useState<IChartData[]>([]);
   const [hasData, dispatch] = useReducer(hasDataReducer, false);
   const curveType: CurveType = "linear";
+
+  // Filtrar os forms pelos IDs fornecidos
+  const filteredForms = useMemo(() => {
+    return app.forms?.filter((form) => ids.includes(form.id)) || [];
+  }, [app.forms, ids]);
 
   const dateRange = useMemo(() => {
     const daysCount = getDateDifferenceInDays(app.from, app.to);
@@ -46,27 +51,27 @@ const AnalyticsSubmissionsByFormChart = () => {
       const date = addDays(app.from, i);
       const dayEntry: IChartData = { day: format(date, "dd/MM") };
 
-      // Initialize all forms with 0 submissions
-      app.forms?.forEach((form) => {
+      // Inicializar apenas os forms filtrados com 0 submissões
+      filteredForms.forEach((form) => {
         dayEntry[form.id] = 0;
       });
 
       return dayEntry;
     });
-  }, [app.from, app.to, app.forms]);
+  }, [app.from, app.to, filteredForms]);
 
   useEffect(() => {
-    if (!app.submissionLogs || !app.forms) return;
+    if (!app.submissionLogs || !filteredForms.length) return;
 
-    // Create a count object for each form
+    // Criar um objeto de contagem para cada form filtrado
     const formCounts: Record<string, Record<string, number>> = {};
-    app.forms.forEach((form) => {
+    filteredForms.forEach((form) => {
       formCounts[form.id] = {};
     });
 
-    // Count submissions per form per day
+    // Contar submissões por form por dia (apenas para forms filtrados)
     app.submissionLogs.forEach((log) => {
-      if (!log?.created_at) return;
+      if (!log?.created_at || !ids.includes(log.form_id)) return;
       const logDate = parseISO(log.created_at);
       if (isWithinInterval(logDate, { start: app.from, end: app.to })) {
         const day = format(logDate, "dd/MM");
@@ -74,10 +79,10 @@ const AnalyticsSubmissionsByFormChart = () => {
       }
     });
 
-    // Update chart data with the counts
+    // Atualizar dados do gráfico com as contagens
     const updatedChartData = dateRange.map((dayData) => {
       const newDayData = { ...dayData };
-      app.forms?.forEach((form) => {
+      filteredForms.forEach((form) => {
         newDayData[form.id] = formCounts[form.id][dayData.day] || 0;
       });
       return newDayData;
@@ -85,21 +90,21 @@ const AnalyticsSubmissionsByFormChart = () => {
 
     setChartData(updatedChartData);
     dispatch({ type: "CHECK_DATA", payload: updatedChartData });
-  }, [app.submissionLogs, app.forms, dateRange, app.from, app.to]);
+  }, [app.submissionLogs, filteredForms, dateRange, app.from, app.to, ids]);
 
-  // Create chart config based on forms
+  // Criar configuração do gráfico baseada nos forms filtrados
   const chartConfig = useMemo(() => {
     const config: ChartConfig = {};
-    app.forms?.forEach((form) => {
+    filteredForms.forEach((form) => {
       config[form.id] = {
         label: form.name,
         color: form.label_color,
       };
     });
     return config;
-  }, [app.forms]);
+  }, [filteredForms]);
 
-  if (!hasData || !app.forms?.length) {
+  if (!hasData || !filteredForms.length) {
     return (
       <Card className="flex flex-col justify-between gap-4 relative border w-full p-6 h-fit">
         <div className="flex justify-center items-center h-[280px]">
@@ -114,7 +119,7 @@ const AnalyticsSubmissionsByFormChart = () => {
       <div className="flex justify-between items-center">
         <span className="font-semibold text-base">{t("label_submissions_by_form")}</span>
         <div className="justify-center items-center gap-4 hidden">
-          {app.forms?.map((form) => (
+          {filteredForms.map((form) => (
             <div key={form.id} className="flex justify-center items-center gap-2">
               <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: form.label_color }}></div>
               <span className="text-sm text-muted-foreground">{form.name}</span>
@@ -140,14 +145,14 @@ const AnalyticsSubmissionsByFormChart = () => {
           />
           <ChartTooltip cursor={true} content={<ChartTooltipContent indicator="line" />} />
           <defs>
-            {app.forms?.map((form) => (
+            {filteredForms.map((form) => (
               <linearGradient key={form.id} id={`fill-${form.id}`} x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor={form.label_color} stopOpacity={0.8} />
                 <stop offset="95%" stopColor={form.label_color} stopOpacity={0.1} />
               </linearGradient>
             ))}
           </defs>
-          {app.forms?.map((form) => (
+          {filteredForms.map((form) => (
             <Area
               key={form.id}
               dataKey={form.id}

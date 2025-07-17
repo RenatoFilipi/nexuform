@@ -14,11 +14,13 @@ import {
   EViewLog,
 } from "@/utils/entities";
 import { formatDecimal, formatTime, getAverageCompletionRate, getAverageCompletionTime } from "@/utils/functions";
-import { IContext } from "@/utils/interfaces";
+import { IContext, IInterval } from "@/utils/interfaces";
 import { createClient } from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
+import FormSelector from "../../shared/custom/form-selector";
 import AnalyticsSubmissionsByFormChart from "./analytics-submissions-by-form-chart";
 
 interface IProps {
@@ -32,13 +34,14 @@ interface IProps {
   submissionLogs: ESubmissionLog[];
   viewLogs: EViewLog[];
   context: IContext;
+  dates: IInterval;
 }
-
 const AnalyticsWrapper = (props: IProps) => {
   const t = useTranslations("app");
   const app = useAppStore();
   const user = useUserStore();
   const supabase = createClient();
+  const [ids, setIds] = useState<string[]>([]);
 
   const query = useQuery({
     queryKey: ["analytics-page"],
@@ -53,6 +56,9 @@ const AnalyticsWrapper = (props: IProps) => {
       app.setViewLogs(props.viewLogs);
       app.setSubmissionLogs(props.submissionLogs);
       app.setContext(props.context);
+      app.setFrom(props.dates.startDate);
+      app.setTo(props.dates.endDate);
+      setIds(props.forms.map((x) => x.id));
       return null;
     },
   });
@@ -89,34 +95,40 @@ const AnalyticsWrapper = (props: IProps) => {
     <div className="flex flex-col gap-6">
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-semibold">{t("label_analytics")}</h1>
-        <DateRangePicker
-          initialRange={{
-            from: app.from.toISOString(),
-            to: app.to.toISOString(),
-          }}
-          onChange={(range) => {
-            if (!range) return;
-            onSelectRange(range.from, range.to);
-          }}
-          align="end"
-        />
+        <div className="flex justify-center items-center gap-4">
+          {app.forms.length > 0 && <FormSelector forms={app.forms} onChange={(e) => setIds(e)} />}
+          <DateRangePicker
+            initialRange={{ from: props.dates.startDate.toISOString(), to: props.dates.endDate.toISOString() }}
+            onChange={(range) => {
+              if (!range) return;
+              onSelectRange(range.from, range.to);
+            }}
+            align="end"
+          />
+        </div>
       </div>
       <div className="flex flex-col gap-6">
-        <AnalyticsMetrics />
-        <AnalyticsSubmissionsByFormChart />
+        <AnalyticsMetrics ids={ids} />
+        <AnalyticsSubmissionsByFormChart ids={ids} />
       </div>
     </div>
   );
 };
-const AnalyticsMetrics = () => {
+const AnalyticsMetrics = ({ ids }: { ids: string[] }) => {
   const t = useTranslations("app");
   const app = useAppStore();
 
-  const totalViews = app.viewLogs.length.toString();
-  const totalSubmissions = app.submissionLogs.length.toString();
-  const avgCompletionTime = formatTime(getAverageCompletionTime(app.submissionLogs.map((x) => x.completion_time)), 1);
+  const filteredViewLogs = app.viewLogs.filter((log) => ids.includes(log.form_id));
+  const filteredSubmissionLogs = app.submissionLogs.filter((log) => ids.includes(log.form_id));
+
+  const totalViews = filteredViewLogs.length.toString();
+  const totalSubmissions = filteredSubmissionLogs.length.toString();
+  const avgCompletionTime = formatTime(
+    getAverageCompletionTime(filteredSubmissionLogs.map((x) => x.completion_time)),
+    1
+  );
   const avgCompletionRate = `${formatDecimal(
-    getAverageCompletionRate(app.viewLogs.length, app.submissionLogs.length)
+    getAverageCompletionRate(filteredViewLogs.length, filteredSubmissionLogs.length)
   )}%`;
 
   return (
