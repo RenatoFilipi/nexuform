@@ -194,15 +194,13 @@ const OverviewCard = ({ name, icon, content }: { name: string; icon: React.React
   return (
     <Card className="group relative p-4 flex flex-col gap-4 w-full h-full border rounded-lg hover:border-primary/50 transition-all duration-300 hover:shadow-sm overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-      <div className="flex justify-between items-start w-full z-10">
+      <div className="flex justify-between items-start w-full">
         <span className="text-sm font-medium text-muted-foreground">{name}</span>
         <div className="flex justify-center items-center p-2 bg-primary/10 rounded-lg text-primary group-hover:bg-primary/20 transition-colors duration-300">
           {icon}
         </div>
       </div>
-
-      <div className="flex flex-col gap-1 z-10">
+      <div className="flex flex-col gap-1">
         <span className="text-xl font-bold tracking-tight">{content}</span>
       </div>
     </Card>

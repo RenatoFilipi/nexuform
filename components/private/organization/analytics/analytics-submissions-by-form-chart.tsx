@@ -38,7 +38,7 @@ const AnalyticsSubmissionsByFormChart = () => {
   const app = useAppStore();
   const [chartData, setChartData] = useState<IChartData[]>([]);
   const [hasData, dispatch] = useReducer(hasDataReducer, false);
-  const curveType: CurveType = "basis";
+  const curveType: CurveType = "linear";
 
   const dateRange = useMemo(() => {
     const daysCount = getDateDifferenceInDays(app.from, app.to);
@@ -113,7 +113,7 @@ const AnalyticsSubmissionsByFormChart = () => {
     <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit hover:border-primary/50 transition-all duration-300 hover:shadow-sm">
       <div className="flex justify-between items-center">
         <span className="font-semibold text-base">{t("label_submissions_by_form")}</span>
-        <div className="justify-center items-center gap-4 hidden sm:flex">
+        <div className="justify-center items-center gap-4 hidden">
           {app.forms?.map((form) => (
             <div key={form.id} className="flex justify-center items-center gap-2">
               <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: form.label_color }}></div>
@@ -122,7 +122,7 @@ const AnalyticsSubmissionsByFormChart = () => {
           ))}
         </div>
       </div>
-      <ChartContainer config={chartConfig} className="sm:max-h-[280px]">
+      <ChartContainer config={chartConfig} className="sm:max-h-[400px]">
         <AreaChart
           accessibilityLayer
           data={chartData}
@@ -139,12 +139,20 @@ const AnalyticsSubmissionsByFormChart = () => {
             tickFormatter={(value) => value.slice(0, 5)}
           />
           <ChartTooltip cursor={true} content={<ChartTooltipContent indicator="line" />} />
+          <defs>
+            {app.forms?.map((form) => (
+              <linearGradient key={form.id} id={`fill-${form.id}`} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor={form.label_color} stopOpacity={0.8} />
+                <stop offset="95%" stopColor={form.label_color} stopOpacity={0.1} />
+              </linearGradient>
+            ))}
+          </defs>
           {app.forms?.map((form) => (
             <Area
               key={form.id}
               dataKey={form.id}
               type={curveType}
-              fill={form.label_color}
+              fill={`url(#fill-${form.id})`}
               fillOpacity={0.4}
               stroke={form.label_color}
               strokeWidth={2}
@@ -153,7 +161,7 @@ const AnalyticsSubmissionsByFormChart = () => {
               animationDuration={300}
             />
           ))}
-          <ChartLegend className="flex sm:hidden" content={<ChartLegendContent />} />
+          <ChartLegend className="mt-2" content={<ChartLegendContent />} />
         </AreaChart>
       </ChartContainer>
     </Card>

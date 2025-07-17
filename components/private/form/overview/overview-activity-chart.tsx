@@ -7,7 +7,7 @@ import { getDateDifferenceInDays } from "@/utils/functions";
 import { addDays, format, isWithinInterval, parseISO } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useReducer, useState } from "react";
-import { CartesianGrid, ComposedChart, Line, XAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import { CurveType } from "recharts/types/shape/Curve";
 
 const submissionColor = "#0000cc";
@@ -119,38 +119,54 @@ const OverviewActivityChart = () => {
           })}
         </div>
       </div>
-      <ChartContainer config={CHART_CONFIG} className="sm:max-h-[280px]">
-        <ComposedChart accessibilityLayer data={chartData}>
+      <ChartContainer config={CHART_CONFIG} className="sm:max-h-[400px]">
+        <AreaChart
+          accessibilityLayer
+          data={chartData}
+          margin={{
+            left: 12,
+            right: 12,
+          }}>
           <CartesianGrid vertical={false} />
           <XAxis
             dataKey="day"
-            tickLine={true}
-            tickMargin={10}
+            tickLine={false}
             axisLine={false}
+            tickMargin={8}
             tickFormatter={(value) => value.slice(0, 5)}
           />
           <ChartTooltip cursor={true} content={<ChartTooltipContent indicator="line" />} />
-          <Line
+          <defs>
+            <linearGradient id="fillSubmissions" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor={submissionColor} stopOpacity={0.8} />
+              <stop offset="95%" stopColor={submissionColor} stopOpacity={0.1} />
+            </linearGradient>
+            <linearGradient id="fillViews" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor={viewColor} stopOpacity={0.8} />
+              <stop offset="95%" stopColor={viewColor} stopOpacity={0.1} />
+            </linearGradient>
+          </defs>
+          <Area
             name={viewKey}
             type={curveType}
             dataKey="views"
+            fill="url(#fillViews)"
+            fillOpacity={0.4}
             stroke={viewColor}
             strokeWidth={2}
-            dot={true}
-            activeDot={{ r: 6 }}
             animationDuration={300}
           />
-          <Line
+          <Area
             name={subKey}
             type={curveType}
             dataKey="submissions"
+            fill="url(#fillSubmissions)"
+            fillOpacity={0.4}
             stroke={submissionColor}
             strokeWidth={2}
-            dot={true}
-            activeDot={{ r: 6 }}
             animationDuration={300}
           />
-        </ComposedChart>
+        </AreaChart>
       </ChartContainer>
     </Card>
   );
