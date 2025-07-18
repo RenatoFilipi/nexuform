@@ -27,6 +27,7 @@ import { useQueryState } from "nuqs";
 import { useState } from "react";
 import { toast } from "sonner";
 import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
+import UpdateSubscriptionUI from "../../shared/pages/update-subscription-ui";
 import SubmissionDetails from "./submission-details";
 
 interface IProps {
@@ -67,6 +68,10 @@ const SubmissionsWrapper = (props: IProps) => {
 
   if (!app.context.isOrgOwner && app.subscription.plan !== "pro") {
     return <RestrictedAccessUI />;
+  }
+
+  if (app.context.isSubscriptionExpired) {
+    return <UpdateSubscriptionUI />;
   }
 
   if (noSubmission) return <SubmissionsNoData />;

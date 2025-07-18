@@ -11,15 +11,7 @@ import { TPlan } from "@/utils/pricing";
 import { createClient } from "@/utils/supabase/client";
 import { TOrganizationRole, TOrganizationStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import {
-  AlertTriangleIcon,
-  BoxesIcon,
-  CheckIcon,
-  ChevronRightIcon,
-  LoaderIcon,
-  MailPlusIcon,
-  XIcon,
-} from "lucide-react";
+import { BoxesIcon, CheckIcon, ChevronRightIcon, LoaderIcon, MailPlusIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { toast } from "sonner";
@@ -123,18 +115,15 @@ const OrganizationsCard = (props: { teamMemberProfile: ETeamMemberProfile }) => 
             </div>
             <ChevronRightIcon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
           </div>
-          <OrganizationStatusBadge status={organization.status as TOrganizationStatus} />
+          {/* <OrganizationStatusBadge status={organization.status as TOrganizationStatus} /> */}
         </div>
 
         {/* Rodapé: badges e status */}
         <div className="flex flex-col gap-2">
           <p className="text-xs text-muted-foreground">{t("label_n_days_remaining", { n: remainingDays })}</p>
           <div className="flex items-center gap-2">
-            <PlanNameBadge type={subscription.plan as TPlan} />
-            {hasBillingIssues && <AlertTriangleIcon className="w-3 h-3 text-destructive" />}
-            {isSubscriptionExpired && !hasBillingIssues && (
-              <Badge variant={"destructive"}>{t("label_expired_sub")}</Badge>
-            )}
+            {!isSubscriptionExpired && <PlanNameBadge type={subscription.plan as TPlan} />}
+            {isSubscriptionExpired && <Badge variant={"destructive"}>{t("label_expired_sub")}</Badge>}
           </div>
         </div>
       </Card>

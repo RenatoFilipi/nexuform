@@ -358,7 +358,8 @@ const EditorNavbar = () => {
             </Link>
           </div>
         </div>
-        {app.context.isOrgOwner ||
+        {!app.context.isSubscriptionExpired ||
+          app.context.isOrgOwner ||
           (app.subscription.plan === "pro" && (
             <div>
               <Button size={"sm"} variant={"secondary"} onClick={handleSave} disabled={appState === "loading"}>

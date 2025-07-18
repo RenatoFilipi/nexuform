@@ -16,6 +16,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import OptionSelector from "../../shared/custom/option-selector";
 import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
+import UpdateSubscriptionUI from "../../shared/pages/update-subscription-ui";
 import FormDelete from "./settings-form-delete";
 
 interface IProps {
@@ -54,6 +55,10 @@ const SettingsWrapper = (props: IProps) => {
 
   if (!app.context.isOrgOwner && app.subscription.plan !== "pro") {
     return <RestrictedAccessUI />;
+  }
+
+  if (app.context.isSubscriptionExpired) {
+    return <UpdateSubscriptionUI />;
   }
 
   return (

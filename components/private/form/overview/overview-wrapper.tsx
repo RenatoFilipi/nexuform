@@ -31,6 +31,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import DateRangePicker from "../../shared/custom/date-range-picker";
 import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
+import UpdateSubscriptionUI from "../../shared/pages/update-subscription-ui";
 import OverviewActivityChart from "./overview-activity-chart";
 
 interface IProps {
@@ -104,6 +105,10 @@ const OverviewWrapper = (props: IProps) => {
 
   if (!app.context.isOrgOwner && app.subscription.plan !== "pro") {
     return <RestrictedAccessUI />;
+  }
+
+  if (app.context.isSubscriptionExpired) {
+    return <UpdateSubscriptionUI />;
   }
 
   return (

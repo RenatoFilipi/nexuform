@@ -16,6 +16,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
+import UpdateSubscriptionUI from "../../shared/pages/update-subscription-ui";
 
 interface IProps {
   locale: string;
@@ -53,6 +54,10 @@ const ShareWrapper = (props: IProps) => {
 
   if (!app.context.isOrgOwner && app.subscription.plan !== "pro") {
     return <RestrictedAccessUI />;
+  }
+
+  if (app.context.isSubscriptionExpired) {
+    return <UpdateSubscriptionUI />;
   }
 
   return (

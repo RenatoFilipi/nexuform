@@ -19,6 +19,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useTransition } from "react";
 import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
+import UpdateSubscriptionUI from "../../shared/pages/update-subscription-ui";
 import NewPreview from "./new-preview";
 
 type TView = "method:list" | "method:scratch" | "method:templates";
@@ -74,6 +75,10 @@ const NewWrapper = (props: IProps) => {
 
   if (!app.context.isOrgOwner && app.subscription.plan !== "pro") {
     return <RestrictedAccessUI />;
+  }
+
+  if (app.context.isSubscriptionExpired) {
+    return <UpdateSubscriptionUI />;
   }
 
   if (view === "method:list")
