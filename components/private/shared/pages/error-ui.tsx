@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import useUserStore from "@/stores/user";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeftIcon, BanIcon, VenetianMaskIcon } from "lucide-react";
+import { ArrowLeftIcon, BanIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 

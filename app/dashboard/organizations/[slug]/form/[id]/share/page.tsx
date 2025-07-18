@@ -33,7 +33,7 @@ const Share = async ({ params }: { params: Promise<{ slug: string; id: string }>
   const subscription = await supabase.from("subscriptions").select("*").eq("org_id", orgId).single();
   if (subscription.error) return <ErrorUI email={email} />;
 
-  const form = await supabase.from("forms").select("*").eq("public_id", id).single();
+  const form = await supabase.from("forms").select("*").eq("public_id", id).eq("org_id", orgId).single();
   if (form.error) return <ErrorUI email={email} />;
 
   const context = applyContext(teamMemberProfile.data, organization.data, subscription.data);

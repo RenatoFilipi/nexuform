@@ -54,12 +54,14 @@ const MembersWrapper = (props: IProps) => {
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-semibold">{t("label_members")}</h1>
         <div className="flex gap-4">
-          <MembersInvite>
-            <Button variant={"secondary"} size={"sm"}>
-              <UserPlus2Icon className="w-4 h-4 mr-2" />
-              {t("label_invite_member")}
-            </Button>
-          </MembersInvite>
+          {app.context.isAdminOrHigher && (
+            <MembersInvite>
+              <Button variant={"secondary"} size={"sm"}>
+                <UserPlus2Icon className="w-4 h-4 mr-2" />
+                {t("label_invite_member")}
+              </Button>
+            </MembersInvite>
+          )}
         </div>
       </div>
       <div className="flex flex-col gap-6">

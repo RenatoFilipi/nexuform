@@ -223,6 +223,7 @@ const InvitationCard = ({ invitation }: { invitation: EInvitation }) => {
         return;
       }
 
+      toast.success(t("success_generic"));
       app.setTeamMemberProfiles(teamMemberProfiles.data);
       app.setOrganizations(organizations.data);
       app.setSubscriptions(subscriptions.data);

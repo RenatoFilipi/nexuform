@@ -26,6 +26,7 @@ import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { useState } from "react";
 import { toast } from "sonner";
+import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 import SubmissionDetails from "./submission-details";
 
 interface IProps {
@@ -63,6 +64,10 @@ const SubmissionsWrapper = (props: IProps) => {
   });
   const noSubmission = app.submissions.length <= 0;
   if (query.isPending) return null;
+
+  if (!app.context.isOrgOwner && app.subscription.plan !== "pro") {
+    return <RestrictedAccessUI />;
+  }
 
   if (noSubmission) return <SubmissionsNoData />;
   return <SubmissionsList />;

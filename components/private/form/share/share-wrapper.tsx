@@ -15,6 +15,7 @@ import Link from "next/link";
 import { QRCodeSVG } from "qrcode.react";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
+import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 
 interface IProps {
   locale: string;
@@ -49,6 +50,10 @@ const ShareWrapper = (props: IProps) => {
 
   const isPublished = app.form.status === "published";
   if (query.isPending) return null;
+
+  if (!app.context.isOrgOwner && app.subscription.plan !== "pro") {
+    return <RestrictedAccessUI />;
+  }
 
   return (
     <div className="w-full h-full flex-1 flex flex-col gap-4">

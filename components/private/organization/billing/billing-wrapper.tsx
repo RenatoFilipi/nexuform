@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import PlanBadge from "../../shared/custom/plan-badge";
+import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 import CancelSubscription from "../../shared/subscription/cancel-subscription";
 import ManageSubscription2 from "../../shared/subscription/manage-subscription2";
 
@@ -61,6 +62,10 @@ const BillingWrapper = (props: IProps) => {
   });
 
   if (query.isPending) return null;
+
+  if (!app.context.isOrgOwner && app.subscription.plan !== "pro") {
+    return <RestrictedAccessUI />;
+  }
 
   return (
     <div className="flex flex-col gap-6">

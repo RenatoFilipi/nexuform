@@ -15,6 +15,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 import OptionSelector from "../../shared/custom/option-selector";
+import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 import FormDelete from "./settings-form-delete";
 
 interface IProps {
@@ -50,6 +51,10 @@ const SettingsWrapper = (props: IProps) => {
 
   const isNotStaff = app.context.orgRole !== "staff";
   if (query.isPending) return null;
+
+  if (!app.context.isOrgOwner && app.subscription.plan !== "pro") {
+    return <RestrictedAccessUI />;
+  }
 
   return (
     <div className="w-full h-full flex-1 flex flex-col gap-4">

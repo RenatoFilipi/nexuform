@@ -243,6 +243,7 @@ const AvatarMenuMob = () => {
 };
 const EditorNavbar = () => {
   const t = useTranslations("app");
+  const app = useAppStore();
   const router = useRouter();
   const pathname = usePathname();
   const supabase = createClient();
@@ -357,12 +358,15 @@ const EditorNavbar = () => {
             </Link>
           </div>
         </div>
-        <div>
-          <Button size={"sm"} variant={"secondary"} onClick={handleSave} disabled={appState === "loading"}>
-            {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
-            {t("label_save_form")}
-          </Button>
-        </div>
+        {app.context.isOrgOwner ||
+          (app.subscription.plan === "pro" && (
+            <div>
+              <Button size={"sm"} variant={"secondary"} onClick={handleSave} disabled={appState === "loading"}>
+                {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
+                {t("label_save_form")}
+              </Button>
+            </div>
+          ))}
       </div>
     </nav>
   );

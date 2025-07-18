@@ -13,13 +13,14 @@ import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { AlertTriangleIcon, LoaderIcon, PauseIcon, PlayIcon, ShieldIcon } from "lucide-react";
+import { AlertTriangleIcon, LoaderIcon, PauseIcon, PlayIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import OptionSelector from "../../shared/custom/option-selector";
+import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 
 interface IProps {
   locale: string;
@@ -53,17 +54,18 @@ const SettingsWrapper = (props: IProps) => {
 
   if (query.isPending) return null;
 
+  if ((!app.context.isOrgOwner && app.subscription.plan !== "pro") || !app.context.isAdminOrHigher) {
+    return <RestrictedAccessUI />;
+  }
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-semibold">{t("label_settings")}</h1>
       </div>
-      {app.context.isAdminOrHigher && (
-        <div className="flex flex-col gap-10">
-          <OrgSettings />
-        </div>
-      )}
-      {!app.context.isAdminOrHigher && <NoAccess />}
+      <div className="flex flex-col gap-10">
+        <OrgSettings />
+      </div>
     </div>
   );
 };
@@ -197,20 +199,4 @@ const OrgDelete = () => {
     </Card>
   );
 };
-const NoAccess = () => {
-  const t = useTranslations("app");
-
-  return (
-    <Card className="flex w-full justify-center items-center flex-col gap-4 py-36 px-4">
-      <div className="flex justify-center items-center p-3 w-fit rounded bg-primary/10">
-        <ShieldIcon className="w-6 h-6 text-primary" />
-      </div>
-      <div className="flex flex-col justify-center items-center gap-1 text-center">
-        <h3 className="text-xl font-bold text-foreground">{t("label_no_access")}</h3>
-        <p className="text-muted-foreground max-w-md text-sm/relaxed">{t("desc_no_access")}</p>
-      </div>
-    </Card>
-  );
-};
-
 export default SettingsWrapper;

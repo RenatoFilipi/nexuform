@@ -21,6 +21,7 @@ import { EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import FormSelector from "../../shared/custom/form-selector";
+import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 import AnalyticsSubmissionsByFormChart from "./analytics-submissions-by-form-chart";
 
 interface IProps {
@@ -90,6 +91,10 @@ const AnalyticsWrapper = (props: IProps) => {
   };
 
   if (query.isPending) return null;
+
+  if (!app.context.isOrgOwner && app.subscription.plan !== "pro") {
+    return <RestrictedAccessUI />;
+  }
 
   return (
     <div className="flex flex-col gap-6">

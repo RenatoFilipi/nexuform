@@ -31,6 +31,7 @@ import {
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 
 interface IProps {
   locale: string;
@@ -68,6 +69,10 @@ const FormsWrapper = (props: IProps) => {
 
   const hasForms = app.forms.length > 0;
   if (query.isPending) return null;
+
+  if (!app.context.isOrgOwner && app.subscription.plan !== "pro") {
+    return <RestrictedAccessUI />;
+  }
 
   return (
     <div className="flex flex-col gap-6">

@@ -18,6 +18,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useTransition } from "react";
+import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 import NewPreview from "./new-preview";
 
 type TView = "method:list" | "method:scratch" | "method:templates";
@@ -70,6 +71,10 @@ const NewWrapper = (props: IProps) => {
   };
 
   if (query.isPending) return null;
+
+  if (!app.context.isOrgOwner && app.subscription.plan !== "pro") {
+    return <RestrictedAccessUI />;
+  }
 
   if (view === "method:list")
     return (

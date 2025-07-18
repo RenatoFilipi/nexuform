@@ -88,6 +88,7 @@ const Body = ({
       }
 
       app.setTeamMemberProfiles(tmp.data);
+      toast.success(t("success_generic"));
       setState(false);
     });
   };

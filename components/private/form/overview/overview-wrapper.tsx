@@ -30,6 +30,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import DateRangePicker from "../../shared/custom/date-range-picker";
+import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 import OverviewActivityChart from "./overview-activity-chart";
 
 interface IProps {
@@ -100,6 +101,10 @@ const OverviewWrapper = (props: IProps) => {
   };
 
   if (query.isPending) return null;
+
+  if (!app.context.isOrgOwner && app.subscription.plan !== "pro") {
+    return <RestrictedAccessUI />;
+  }
 
   return (
     <div className="w-full h-full flex-1 flex flex-col gap-6 sm:gap-2">

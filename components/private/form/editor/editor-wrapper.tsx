@@ -33,6 +33,7 @@ import ParagraphTextDesign from "../../shared/blocks-design/paragraph-text-desig
 import ShortTextDesign from "../../shared/blocks-design/short-text-design";
 import StarRatingDesign from "../../shared/blocks-design/star-rating-design";
 import SuccessDesign from "../../shared/blocks-design/success-design";
+import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 import EditorAddBlock from "./editor-add-block";
 
 interface IProps {
@@ -73,6 +74,10 @@ const EditorWrapper = (props: IProps) => {
   });
 
   if (query.isPending) return null;
+
+  if (!app.context.isOrgOwner && app.subscription.plan !== "pro") {
+    return <RestrictedAccessUI />;
+  }
 
   return (
     <div className="flex justify-center items-center flex-1 h-full">
