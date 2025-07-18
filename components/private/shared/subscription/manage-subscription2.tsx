@@ -158,9 +158,12 @@ const CheckoutNewPlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IP
   const app = useAppStore();
   const user = useUserStore();
   const formData = new FormData();
-  formData.append("orgId", app.organization.id);
-  formData.append("plan", plan.type as string);
-  formData.append("customerId", user.profile.stripe_customer_id as string);
+  formData.append("customer_id", user.profile.stripe_customer_id!);
+  formData.append("organization_id", app.organization.id);
+  formData.append("profile_id", user.profile.id);
+  formData.append("tmp_id", app.teamMemberProfile.id);
+  formData.append("email", app.teamMemberProfile.email);
+  formData.append("plan", plan.type);
 
   return (
     <div className="flex flex-col h-full w-full gap-6 overflow-y-auto">
