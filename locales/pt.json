@@ -494,7 +494,13 @@
     "label_color_pallete": "Paleta de cores",
     "label_expired_sub": "Assinatura expirada",
     "label_no_access": "Acesso restrito",
-    "desc_no_access": "Você não tem permissão para visualizar este conteúdo. Entre em contato com o administrador da sua organização para solicitar acesso."
+    "desc_no_access": "Você não tem permissão para visualizar este conteúdo. Entre em contato com o administrador da sua organização para solicitar acesso.",
+    "label_incomplete": "Incompleto",
+    "label_incomplete_expired": "Incompleto Expirado",
+    "label_trialing": "Em teste",
+    "label_past_due": "Em atraso",
+    "label_canceled": "Cancelado",
+    "label_unpaid": "Não pago"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",
@@ -547,7 +553,8 @@
     "label_login_headline": "Bem-vindo de volta",
     "desc_login_headline": "Insira suas credenciais para acessar sua conta",
     "label_signup_headline": "Crie sua conta",
-    "desc_signup_headline": "Preencha seus dados para explorar tudo o que oferecemos"
+    "desc_signup_headline": "Preencha seus dados para explorar tudo o que oferecemos",
+    "label_plan_canceled": "Plano cancelado"
   },
   "landing": {
     "nav_features": "Recursos",

@@ -494,7 +494,13 @@
     "label_color_pallete": "Paleta de colores",
     "label_expired_sub": "Suscripción expirada",
     "label_no_access": "Acceso restringido",
-    "desc_no_access": "No tienes permiso para ver este contenido. Por favor, contacta al administrador de tu organización para solicitar acceso."
+    "desc_no_access": "No tienes permiso para ver este contenido. Por favor, contacta al administrador de tu organización para solicitar acceso.",
+    "label_incomplete": "Incompleto",
+    "label_incomplete_expired": "Incompleto Expirado",
+    "label_trialing": "En prueba",
+    "label_past_due": "Vencido",
+    "label_canceled": "Cancelado",
+    "label_unpaid": "No pagado"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",
@@ -547,7 +553,8 @@
     "label_login_headline": "Bienvenido de nuevo",
     "desc_login_headline": "Ingrese sus credenciales para acceder a su cuenta",
     "label_signup_headline": "Crea tu cuenta",
-    "desc_signup_headline": "Completa tus datos para explorar todo lo que ofrecemos"
+    "desc_signup_headline": "Completa tus datos para explorar todo lo que ofrecemos",
+    "label_plan_canceled": "Plan cancelado"
   },
   "landing": {
     "nav_features": "Funciones",

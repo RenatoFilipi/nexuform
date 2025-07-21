@@ -129,11 +129,12 @@ export const ResetPasswordAction = async (formData: FormData) => {
 };
 export const CancelSubscriptionAction = async (formData: FormData) => {
   const t = await getTranslations("auth");
-  const stripeSubscriptionId = formData.get("stripeSubscriptionId") as string;
-  const orgPublicId = formData.get("orgPublicId") as string;
 
-  if (!stripeSubscriptionId || orgPublicId) {
-    return encodedRedirect("error", `/dashboard/organizations/${orgPublicId}/billing`, t("err_generic"));
+  const stripeSubscriptionId = formData.get("stripeSubscriptionId") as string | null;
+  const orgPublicId = formData.get("orgPublicId") as string | null;
+
+  if (!stripeSubscriptionId || !orgPublicId) {
+    return encodedRedirect("error", `/dashboard/organizations/${orgPublicId ?? "unknown"}/billing`, t("err_generic"));
   }
 
   const supabase = superCreateClient<Database>(
@@ -141,7 +142,13 @@ export const CancelSubscriptionAction = async (formData: FormData) => {
     process.env.SUPABASE_SERVICE_ROLE!
   );
 
-  const result = await stripe.subscriptions.cancel(stripeSubscriptionId, { invoice_now: true });
+  let result;
+  try {
+    result = await stripe.subscriptions.cancel(stripeSubscriptionId);
+  } catch (err) {
+    return encodedRedirect("error", `/dashboard/organizations/${orgPublicId}/billing`, t("err_generic"));
+  }
+
   if (result.status !== "canceled") {
     return encodedRedirect("error", `/dashboard/organizations/${orgPublicId}/billing`, t("err_generic"));
   }
@@ -154,11 +161,9 @@ export const CancelSubscriptionAction = async (formData: FormData) => {
     })
     .eq("stripe_subscription_id", stripeSubscriptionId);
 
-  if (error) return encodedRedirect("error", `/dashboard/organizations/${orgPublicId}/billing`, t("err_generic"));
+  if (error) {
+    return encodedRedirect("error", `/dashboard/organizations/${orgPublicId}/billing`, t("err_generic"));
+  }
 
-  return encodedRedirect(
-    "success",
-    `/dashboard/organizations/${orgPublicId}/billing`,
-    "Subscription successfully cancelled."
-  );
+  return encodedRedirect("success", `/dashboard/organizations/${orgPublicId}/billing`, t("label_plan_canceled"));
 };

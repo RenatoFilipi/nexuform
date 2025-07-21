@@ -9,7 +9,7 @@ import { EInvitation, EOrganization, EProfile, ESubscription, ETeamMemberProfile
 import { formatDateRelativeToNow, getDaysDifference } from "@/utils/functions";
 import { TPlan } from "@/utils/pricing";
 import { createClient } from "@/utils/supabase/client";
-import { TOrganizationRole, TOrganizationStatus } from "@/utils/types";
+import { TOrganizationRole } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import { BoxesIcon, CheckIcon, ChevronRightIcon, LoaderIcon, MailPlusIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -81,25 +81,40 @@ const OrganizationsCard = (props: { teamMemberProfile: ETeamMemberProfile }) => 
 
   const orgPath = `/dashboard/organizations/${organization.public_id}/forms`;
 
-  // ⏳ Datas
   const now = new Date();
-  const startDate = new Date(subscription.start_date);
   const dueDate = new Date(subscription.due_date);
 
-  // 🧠 Lógicas básicas
   const orgRole = tmp.role as TOrganizationRole;
-  const isSubscriptionExpired = now > dueDate;
-  const hasBillingIssues = subscription.status === "past_due";
-  const remainingDays = getDaysDifference(new Date(), new Date(dueDate));
+  const remainingDays = getDaysDifference(now, dueDate);
+
+  const isCanceled = subscription.status === "canceled";
+  const isPastDue = subscription.status === "past_due";
+  const isActive = subscription.status === "active";
+  const isExpired = now > dueDate;
+
+  const renderStatusBadge = () => {
+    if (isCanceled) {
+      return <Badge variant="destructive">{t("label_canceled")}</Badge>;
+    }
+    if (isExpired) {
+      return <Badge variant="destructive">{t("label_expired_sub")}</Badge>;
+    }
+    if (isPastDue) {
+      return <Badge variant="warning">{t("label_past_due")}</Badge>;
+    }
+    if (isActive) {
+      return <PlanNameBadge type={subscription.plan as TPlan} />;
+    }
+    return null;
+  };
 
   return (
-    <a href={orgPath}>
+    <a href={orgPath} className="block">
       <Card className="flex flex-col justify-between h-44 p-4 border hover:border-primary/40 transition-all duration-200 group hover:shadow-md cursor-pointer relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-primary/0 to-primary/0 group-hover:via-primary/5 group-hover:to-primary/10 transition-all duration-300" />
 
-        {/* Topo: ícone + nome + papel */}
-        <div className="flex flex-col gap-2">
-          <div className="flex justify-between items-start w-full relative z-10">
+        <div className="flex flex-col gap-2 relative z-10 justify-between h-full">
+          <div className="flex justify-between items-start w-full">
             <div className="flex items-start gap-3">
               <div className="flex justify-center items-center p-2 bg-foreground/5 rounded-lg group-hover:bg-primary/20 transition-colors">
                 <BoxesIcon className="w-5 h-5" />
@@ -115,41 +130,20 @@ const OrganizationsCard = (props: { teamMemberProfile: ETeamMemberProfile }) => 
             </div>
             <ChevronRightIcon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
           </div>
-          {/* <OrganizationStatusBadge status={organization.status as TOrganizationStatus} /> */}
-        </div>
-
-        {/* Rodapé: badges e status */}
-        <div className="flex flex-col gap-2">
-          <p className="text-xs text-muted-foreground">{t("label_n_days_remaining", { n: remainingDays })}</p>
-          <div className="flex items-center gap-2">
-            {!isSubscriptionExpired && <PlanNameBadge type={subscription.plan as TPlan} />}
-            {isSubscriptionExpired && <Badge variant={"destructive"}>{t("label_expired_sub")}</Badge>}
+          <div className="mt-auto flex flex-col gap-2">
+            {!isCanceled && !isExpired && (
+              <p className={`text-xs ${isPastDue ? "text-warning" : "text-muted-foreground"}`}>
+                {t("label_n_days_remaining", { n: remainingDays })}
+              </p>
+            )}
+            {renderStatusBadge()}
           </div>
         </div>
       </Card>
     </a>
   );
 };
-const OrganizationStatusBadge = (props: { uppercase?: boolean; status: TOrganizationStatus }) => {
-  const t = useTranslations("app");
 
-  switch (props.status) {
-    case "active": {
-      return (
-        <Badge className="w-fit" variant={"green"} uppercase={props.uppercase}>
-          {t("label_active")}
-        </Badge>
-      );
-    }
-    case "inactive": {
-      return (
-        <Badge className="w-fit" variant={"warning"} uppercase={props.uppercase}>
-          {t("label_inactive")}
-        </Badge>
-      );
-    }
-  }
-};
 const InvitationCard = ({ invitation }: { invitation: EInvitation }) => {
   const t = useTranslations("app");
   const user = useUserStore();
