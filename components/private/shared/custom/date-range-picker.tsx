@@ -25,7 +25,7 @@ const DateRangePicker = ({ className, initialRange, onChange, align }: IProps) =
   const t = useTranslations("app");
   const user = useUserStore();
   const app = useAppStore();
-  const isAllowedCustom = user.subscription.plan === "pro";
+  const isAllowedCustom = app.subscription.plan === "pro";
   const today = startOfToday();
   const isOwner = app.context.isOrgOwner;
 

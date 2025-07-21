@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import useUserStore from "@/stores/user";
-import { EOrganization, EProfile, ESubscription } from "@/utils/entities";
+import { EProfile } from "@/utils/entities";
 import { contactEmail } from "@/utils/envs";
 import { useQuery } from "@tanstack/react-query";
 import { CopyIcon, MailIcon } from "lucide-react";
@@ -11,10 +11,8 @@ import { toast } from "sonner";
 
 interface Props {
   locale: string;
-  subscription: ESubscription;
-  profile: EProfile;
   email: string;
-  organizations: EOrganization[];
+  profile: EProfile;
 }
 
 const HelpWrapper = (props: Props) => {
@@ -27,7 +25,6 @@ const HelpWrapper = (props: Props) => {
       user.setLocale(props.locale);
       user.setEmail(props.email);
       user.setProfile(props.profile);
-      user.setSubscription(props.subscription);
       return null;
     },
   });

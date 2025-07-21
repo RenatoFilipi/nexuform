@@ -247,7 +247,7 @@ const EditorNavbar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const supabase = createClient();
-  const studio = useEditorStore();
+  const editor = useEditorStore();
   const [appState, setAppState] = useState<TAppState>("idle");
   const orgId = pathname.split("/")[3];
   const formId = pathname.split("/")[5];
@@ -269,18 +269,18 @@ const EditorNavbar = () => {
   };
   const saveForm = async () => {
     try {
-      const newStatus = studio.blocks.length <= 0 ? "draft" : studio.form.status;
+      const newStatus = editor.blocks.length <= 0 ? "draft" : editor.form.status;
       const { error } = await supabase
         .from("forms")
         .update({
-          name: studio.form.name,
-          description: studio.form.description,
+          name: editor.form.name,
+          description: editor.form.description,
           status: newStatus,
-          submit_label: studio.form.submit_label,
-          success_title: studio.form.success_title,
-          success_description: studio.form.success_description,
+          submit_label: editor.form.submit_label,
+          success_title: editor.form.success_title,
+          success_description: editor.form.success_description,
         })
-        .eq("id", studio.form.id);
+        .eq("id", editor.form.id);
 
       if (error) {
         throw new Error(t("err_generic"));
@@ -293,20 +293,20 @@ const EditorNavbar = () => {
     const { error } = await supabase
       .from("themes")
       .update({
-        numeric_blocks: studio.theme.numeric_blocks,
-        app_branding: studio.theme.app_branding,
-        uppercase_block_name: studio.theme.uppercase_block_name,
-        custom_primary_color: studio.theme.custom_primary_color,
+        numeric_blocks: editor.theme.numeric_blocks,
+        app_branding: editor.theme.app_branding,
+        uppercase_block_name: editor.theme.uppercase_block_name,
+        custom_primary_color: editor.theme.custom_primary_color,
       })
-      .eq("id", studio.theme.id);
+      .eq("id", editor.theme.id);
 
     if (error) {
       throw new Error(t("err_generic"));
     }
   };
   const saveBlocks = async () => {
-    const elementsBefore = studio.originalBlocks;
-    const elementsAfter = studio.blocks;
+    const elementsBefore = editor.originalBlocks;
+    const elementsAfter = editor.blocks;
 
     // Identify changes between versions
     const beforeIds = new Set(elementsBefore.map((x) => x.id));
@@ -354,7 +354,7 @@ const EditorNavbar = () => {
           <div className="flex justify-center items-center gap-2">
             <Separator orientation="vertical" className="h-4 bg-muted-foreground rotate-12" />
             <Link href={""} className="text-sm hover:bg-foreground/10 px-2 py-1 rounded">
-              {studio.form.name}
+              {editor.form.name}
             </Link>
           </div>
         </div>

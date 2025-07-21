@@ -30,7 +30,6 @@ const SubscriptionUI = ({
       user.setLocale(locale);
       user.setEmail(email);
       user.setProfile(profile);
-      user.setSubscription(subscription);
       const plan = getPlanName(subscription.plan);
       return { plan };
     },

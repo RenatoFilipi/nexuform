@@ -76,7 +76,7 @@ const EditorAddBlock = ({ children }: { children: React.ReactNode }) => {
 };
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
-  const studio = useEditorStore();
+  const editor = useEditorStore();
 
   const categoryColors = {
     text: {
@@ -226,7 +226,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
 
     const block: EBlock = {
       id: uuid(),
-      form_id: studio.form.id,
+      form_id: editor.form.id,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       name: targetBlock.name,
@@ -238,7 +238,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       max_char: 100,
       min_char: 1,
       show_char: null,
-      position: studio.blocks.length + 1,
+      position: editor.blocks.length + 1,
       rating: null,
       max_scale: null,
       min_scale: null,
@@ -246,9 +246,9 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       min_date: null,
       max_date: null,
     };
-    studio.addBlock(block);
-    studio.setBlockView(block);
-    studio.setToolView("block");
+    editor.addBlock(block);
+    editor.setBlockView(block);
+    editor.setToolView("block");
     setState(false);
   };
 

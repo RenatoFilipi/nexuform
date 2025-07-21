@@ -464,6 +464,7 @@ export type Database = {
           due_date: string
           forms: number
           id: string
+          max_members: number
           org_id: string
           plan: string
           profile_id: string
@@ -480,6 +481,7 @@ export type Database = {
           due_date?: string
           forms?: number
           id?: string
+          max_members?: number
           org_id: string
           plan?: string
           profile_id: string
@@ -496,6 +498,7 @@ export type Database = {
           due_date?: string
           forms?: number
           id?: string
+          max_members?: number
           org_id?: string
           plan?: string
           profile_id?: string

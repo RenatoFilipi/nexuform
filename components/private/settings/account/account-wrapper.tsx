@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import useUserStore from "@/stores/user";
-import { EOrganization, EProfile, ESubscription } from "@/utils/entities";
+import { EProfile } from "@/utils/entities";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,11 +19,9 @@ import { z } from "zod";
 import AccountDelete from "./account-delete";
 
 interface IProps {
-  profile: EProfile;
-  subscription: ESubscription;
-  email: string;
   locale: string;
-  organizations: EOrganization[];
+  email: string;
+  profile: EProfile;
 }
 
 const AccountWrapper = (props: IProps) => {
@@ -34,10 +32,8 @@ const AccountWrapper = (props: IProps) => {
     queryKey: ["settings-data"],
     queryFn: () => {
       user.setLocale(props.locale);
-      user.setProfile(props.profile);
-      user.setSubscription(props.subscription);
       user.setEmail(props.email);
-      user.setOrganizations(props.organizations);
+      user.setProfile(props.profile);
       return null;
     },
   });

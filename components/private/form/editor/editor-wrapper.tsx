@@ -50,25 +50,25 @@ interface IProps {
   context: IContext;
 }
 const EditorWrapper = (props: IProps) => {
-  const studio = useEditorStore();
+  const editor = useEditorStore();
   const app = useAppStore();
   const user = useUserStore();
 
   const query = useQuery({
     queryKey: ["editor-page"],
     queryFn: () => {
-      studio.reset();
+      editor.reset();
       user.setLocale(props.locale);
       user.setEmail(props.email);
       user.setProfile(props.profile);
       app.setOrganization(props.organization);
       app.setSubscription(props.subscription);
       app.setTeamMemberProfile(props.teamMemberProfile);
-      studio.setForm(props.form);
+      editor.setForm(props.form);
       const primaryColor = props.theme.custom_primary_color.trim() || fallbackColor;
-      studio.setTheme({ ...props.theme, custom_primary_color: primaryColor });
-      studio.setBlocks(props.blocks);
-      studio.setOriginalBlocks(props.blocks);
+      editor.setTheme({ ...props.theme, custom_primary_color: primaryColor });
+      editor.setBlocks(props.blocks);
+      editor.setOriginalBlocks(props.blocks);
       app.setContext(props.context);
       return null;
     },
@@ -116,8 +116,8 @@ const COMPONENT_MAP: Record<TBlock, React.ComponentType<IBlockComponent>> = {
 };
 const EditorCanva = () => {
   const t = useTranslations("app");
-  const studio = useEditorStore();
-  const hasBlocks = studio.blocks.length > 0;
+  const editor = useEditorStore();
+  const hasBlocks = editor.blocks.length > 0;
 
   const pages = [
     { view: "blocks", icon: ComponentIcon, label: "Blocks" },
@@ -129,7 +129,7 @@ const EditorCanva = () => {
       ...block,
       position: index + 1,
     }));
-    studio.setBlocks(updatedBlocks);
+    editor.setBlocks(updatedBlocks);
   };
 
   return (
@@ -143,7 +143,7 @@ const EditorCanva = () => {
         </EditorAddBlock>
         <div className="flex justify-center items-center gap-3">
           {pages.map((x) => {
-            const isActive = x.view === studio.editorView;
+            const isActive = x.view === editor.editorView;
             return (
               <Button
                 size={"sm"}
@@ -155,8 +155,8 @@ const EditorCanva = () => {
                 }`}
                 key={x.label}
                 onClick={() => {
-                  studio.setEditorView(x.view as TEditorView);
-                  studio.setToolView("properties");
+                  editor.setEditorView(x.view as TEditorView);
+                  editor.setToolView("properties");
                 }}>
                 {x.label}
               </Button>
@@ -177,49 +177,49 @@ const EditorCanva = () => {
           </div>
         </div>
       )}
-      {hasBlocks && studio.editorView === "blocks" && (
+      {hasBlocks && editor.editorView === "blocks" && (
         <div className="flex justify-center items-start h-full w-full overflow-y-auto py-8">
           <div className="flex flex-col gap-6 w-full sm:w-[650px]">
             <div className="flex flex-col gap-2 px-3 justify-center items-start">
-              <h1 className="text-2xl font-bold">{studio.form.name}</h1>
-              <p className="text-sm text-foreground/80">{studio.form.description}</p>
+              <h1 className="text-2xl font-bold">{editor.form.name}</h1>
+              <p className="text-sm text-foreground/80">{editor.form.description}</p>
             </div>
             <Reorder.Group
               axis="y"
-              values={studio.blocks}
+              values={editor.blocks}
               onReorder={handleReorder}
               className="flex flex-col gap-2 w-full">
-              {studio.blocks.map((block) => {
+              {editor.blocks.map((block) => {
                 const Component = COMPONENT_MAP[block.type as TBlock];
                 if (!Component) return null;
                 return (
                   <BlockWrapper key={block.id} block={block}>
-                    <Component block={block} theme={studio.theme} onValueChange={() => {}} />
+                    <Component block={block} theme={editor.theme} onValueChange={() => {}} />
                   </BlockWrapper>
                 );
               })}
             </Reorder.Group>
             <div className="flex justify-center items-center w-full flex-col gap-6 p-3">
               <button
-                style={{ backgroundColor: studio.theme.custom_primary_color }}
+                style={{ backgroundColor: editor.theme.custom_primary_color }}
                 className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 text-white w-full">
-                {studio.form.submit_label}
+                {editor.form.submit_label}
               </button>
               <div className="flex justify-center sm:justify-end items-center w-full gap-2 h-14">
-                {studio.theme.app_branding && <PoweredByBadge version="default" />}
+                {editor.theme.app_branding && <PoweredByBadge version="default" />}
               </div>
             </div>
           </div>
         </div>
       )}
-      {hasBlocks && studio.editorView === "success" && (
+      {hasBlocks && editor.editorView === "success" && (
         <div className="flex justify-center items-center h-full w-full overflow-y-auto">
           <SuccessDesign
-            brand={studio.theme.app_branding}
-            color={studio.theme.custom_primary_color}
+            brand={editor.theme.app_branding}
+            color={editor.theme.custom_primary_color}
             preview
-            title={studio.form.success_title}
-            description={studio.form.success_description}
+            title={editor.form.success_title}
+            description={editor.form.success_description}
           />
         </div>
       )}
@@ -227,17 +227,17 @@ const EditorCanva = () => {
   );
 };
 const BlockWrapper = ({ children, block }: { children: React.ReactNode; block: EBlock }) => {
-  const studio = useEditorStore();
+  const editor = useEditorStore();
   const dragControls = useDragControls();
 
   const onSelectBlock = () => {
-    studio.setBlockView(block);
-    studio.setToolView("block");
+    editor.setBlockView(block);
+    editor.setToolView("block");
   };
 
   const onRemoveBlock = () => {
-    studio.setToolView("properties");
-    studio.removeBlock(block.id);
+    editor.setToolView("properties");
+    editor.removeBlock(block.id);
   };
 
   return (
@@ -246,7 +246,7 @@ const BlockWrapper = ({ children, block }: { children: React.ReactNode; block: E
       dragListener={false}
       dragControls={dragControls}
       className={`${
-        block.id === studio.blockView.id && studio.toolView === "block"
+        block.id === editor.blockView.id && editor.toolView === "block"
           ? "border-2 border-primary dark:border-primary"
           : "border-2 border-transparent"
       } flex w-full p-3 relative group hover:bg-foreground/10 transition-colors rounded`}>
@@ -278,8 +278,8 @@ const BlockWrapper = ({ children, block }: { children: React.ReactNode; block: E
 };
 const EditorToolbar = () => {
   const t = useTranslations("app");
-  const studio = useEditorStore();
-  const isEditingBlock = studio.toolView === "block";
+  const editor = useEditorStore();
+  const isEditingBlock = editor.toolView === "block";
   const views = [
     { label: t("label_properties"), view: "properties", enabled: true },
     { label: t("label_styles"), view: "styles", enabled: true },
@@ -297,20 +297,20 @@ const EditorToolbar = () => {
               .map((v) => {
                 return (
                   <button
-                    onClick={() => studio.setToolView(v.view as TToolView)}
+                    onClick={() => editor.setToolView(v.view as TToolView)}
                     key={v.view}
                     className={`${
-                      v.view === studio.toolView ? "font-medium text-foreground" : "text-muted-foreground"
+                      v.view === editor.toolView ? "font-medium text-foreground" : "text-muted-foreground"
                     } text-sm flex justify-center items-center px-4 hover:bg-foreground/5 relative rounded gap-2 h-full`}>
                     <div className="truncate">{v.label}</div>
-                    {v.view === studio.toolView && <div className="bg-primary bottom-0 w-full h-0.5 absolute"></div>}
+                    {v.view === editor.toolView && <div className="bg-primary bottom-0 w-full h-0.5 absolute"></div>}
                   </button>
                 );
               })}
           </div>
           <div className="flex flex-1 overflow-y-auto">
-            {studio.toolView === "properties" && <ToolProperties />}
-            {studio.toolView === "styles" && <ToolStyles />}
+            {editor.toolView === "properties" && <ToolProperties />}
+            {editor.toolView === "styles" && <ToolStyles />}
           </div>
         </div>
       )}
@@ -398,21 +398,21 @@ const ToolProperties = () => {
 };
 const ToolStyles = () => {
   const t = useTranslations("app");
-  const { theme, setTheme, form, setForm } = useEditorStore();
-  const user = useUserStore();
+  const editor = useEditorStore();
+  const app = useAppStore();
 
   const onSetNumericBlocks = (value: boolean) => {
-    setTheme({ ...theme, numeric_blocks: value });
+    editor.setTheme({ ...editor.theme, numeric_blocks: value });
   };
   const onSetUppercaseBlockName = (value: boolean) => {
-    setTheme({ ...theme, uppercase_block_name: value });
+    editor.setTheme({ ...editor.theme, uppercase_block_name: value });
   };
   const onSetCustomPrimaryColor = (value: string) => {
-    setTheme({ ...theme, custom_primary_color: value });
+    editor.setTheme({ ...editor.theme, custom_primary_color: value });
   };
   const onSetAppBranding = (value: boolean) => {
-    if (user.subscription.plan !== "pro") return;
-    setTheme({ ...theme, app_branding: value });
+    if (app.subscription.plan !== "pro") return;
+    editor.setTheme({ ...editor.theme, app_branding: value });
   };
 
   return (
@@ -422,38 +422,38 @@ const ToolStyles = () => {
           <Label>{t("label_numeric_blocks")}</Label>
           <p className="text-xs text-foreground/60 hidden">{t("desc_numeric_blocks")}</p>
         </div>
-        <Switch checked={theme.numeric_blocks} onCheckedChange={onSetNumericBlocks} />
+        <Switch checked={editor.theme.numeric_blocks} onCheckedChange={onSetNumericBlocks} />
       </div>
       <div className="flex justify-between items-center w-full">
         <div className="grid gap-1">
           <Label>{t("label_uppercase_block")}</Label>
           <p className="text-xs text-foreground/60 hidden">{t("desc_uppercase_block")}.</p>
         </div>
-        <Switch checked={theme.uppercase_block_name} onCheckedChange={onSetUppercaseBlockName} />
+        <Switch checked={editor.theme.uppercase_block_name} onCheckedChange={onSetUppercaseBlockName} />
       </div>
       <div className="flex justify-between items-center w-full">
         <div className="flex justify-center items-center gap-2">
           <div className="grid gap-1">
             <div className="flex justify-start items-center gap-2">
               <Label>{t("label_app_branding")}</Label>
-              {user.subscription.plan !== "pro" && <Badge variant={"pink"}>Pro</Badge>}
+              {app.subscription.plan !== "pro" && <Badge variant={"primary"}>Pro</Badge>}
             </div>
             <span className="text-xs text-foreground/60 hidden">{t("desc_app_branding")}</span>
           </div>
         </div>
-        <Switch checked={theme.app_branding} onCheckedChange={onSetAppBranding} />
+        <Switch checked={editor.theme.app_branding} onCheckedChange={onSetAppBranding} />
       </div>
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">
           <AccordionTrigger className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 pt-0">
             <div className="flex justify-center items-center gap-3">
               {t("label_primary_color")}
-              <div className="w-8 h-4 rounded-md" style={{ backgroundColor: theme.custom_primary_color }}></div>
+              <div className="w-8 h-4 rounded-md" style={{ backgroundColor: editor.theme.custom_primary_color }}></div>
             </div>
           </AccordionTrigger>
           <AccordionContent>
             <ColorPicker
-              color={theme.custom_primary_color}
+              color={editor.theme.custom_primary_color}
               onColorChange={onSetCustomPrimaryColor}
               allowCustom={false}
             />
@@ -465,26 +465,26 @@ const ToolStyles = () => {
 };
 const ToolBlock = () => {
   const t = useTranslations("app");
-  const studio = useEditorStore();
+  const editor = useEditorStore();
   const user = useUserStore();
-  const block = studio.blocks.find((x) => x.id === studio.blockView.id)!;
+  const block = editor.blocks.find((x) => x.id === editor.blockView.id)!;
   const [input, setInput] = useState("");
   const [options, setOptions] = useState<string[]>([]);
-  const isIdentifierAvailable = studio.blocks.some((e) => e.is_identifier === true && e.id !== block.id);
+  const isIdentifierAvailable = editor.blocks.some((e) => e.is_identifier === true && e.id !== block.id);
 
   const query = useQuery({
     queryKey: ["blockSettingsData", block.id],
     queryFn: async () => {
       setOptions([]);
-      const blockType = studio.blockView.type as TBlock;
+      const blockType = editor.blockView.type as TBlock;
       const blockName = await getBlockName(blockType, user.locale);
       const blockSettings = blockViewSettings.find((x) => x.block === blockType)!;
-      setOptions(studio.blockView.options ?? []);
+      setOptions(editor.blockView.options ?? []);
       return { blockName, blockSettings };
     },
   });
   const onClose = () => {
-    studio.setToolView("properties");
+    editor.setToolView("properties");
   };
   const onAddOption = () => {
     const trimmedInput = input.trim();
@@ -500,13 +500,13 @@ const ToolBlock = () => {
 
     const newOptions = [...options, trimmedInput];
     setOptions(newOptions);
-    studio.updateBlock(block.id, { ...block, options: newOptions });
+    editor.updateBlock(block.id, { ...block, options: newOptions });
     setInput("");
   };
   const onDeleteOption = (value: string) => {
     const newOptions = options.filter((opt) => opt !== value);
     setOptions(newOptions);
-    studio.updateBlock(block.id, { ...block, options: newOptions });
+    editor.updateBlock(block.id, { ...block, options: newOptions });
   };
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
@@ -515,7 +515,7 @@ const ToolBlock = () => {
   };
   const onReorder = (newOptions: string[]) => {
     setOptions(newOptions);
-    studio.updateBlock(block.id, { ...block, options: newOptions });
+    editor.updateBlock(block.id, { ...block, options: newOptions });
   };
 
   if (query.isPending || !query.data) return null;
@@ -539,7 +539,7 @@ const ToolBlock = () => {
               id="required"
               checked={block.required}
               onCheckedChange={(checked: boolean) => {
-                studio.updateBlock(block.id, { ...block, required: checked });
+                editor.updateBlock(block.id, { ...block, required: checked });
               }}
             />
           </div>
@@ -555,7 +555,7 @@ const ToolBlock = () => {
               id="name"
               value={block.name}
               onChange={(e) => {
-                studio.updateBlock(block.id, { ...block, name: e.target.value });
+                editor.updateBlock(block.id, { ...block, name: e.target.value });
               }}
             />
           </div>
@@ -570,7 +570,7 @@ const ToolBlock = () => {
               id="description"
               value={block.description ?? ""}
               onChange={(e) => {
-                studio.updateBlock(block.id, { ...block, description: e.target.value });
+                editor.updateBlock(block.id, { ...block, description: e.target.value });
               }}
             />
           </div>
@@ -586,7 +586,7 @@ const ToolBlock = () => {
               id="placeholder"
               value={block.placeholder ?? ""}
               onChange={(e) => {
-                studio.updateBlock(block.id, { ...block, placeholder: e.target.value });
+                editor.updateBlock(block.id, { ...block, placeholder: e.target.value });
               }}
             />
           </div>
@@ -600,7 +600,7 @@ const ToolBlock = () => {
               id="min-character-limit"
               value={block.min_char ?? 1}
               onChange={(e) => {
-                studio.updateBlock(block.id, {
+                editor.updateBlock(block.id, {
                   ...block,
                   min_char: Number(e.target.value),
                 });
@@ -619,7 +619,7 @@ const ToolBlock = () => {
               id="max-character-limit"
               value={block.max_char ?? 100}
               onChange={(e) => {
-                studio.updateBlock(block.id, {
+                editor.updateBlock(block.id, {
                   ...block,
                   max_char: Number(e.target.value),
                 });
@@ -637,7 +637,7 @@ const ToolBlock = () => {
               id="show-character-limit"
               checked={block.show_char ?? false}
               onCheckedChange={(checked: boolean) => {
-                studio.updateBlock(block.id, { ...block, show_char: checked });
+                editor.updateBlock(block.id, { ...block, show_char: checked });
               }}
             />
           </div>
@@ -708,7 +708,7 @@ const ToolBlock = () => {
               disabled={isIdentifierAvailable}
               checked={block.is_identifier}
               onCheckedChange={(checked: boolean) => {
-                studio.updateBlock(block.id, { ...block, is_identifier: checked });
+                editor.updateBlock(block.id, { ...block, is_identifier: checked });
               }}
             />
           </div>
@@ -722,7 +722,7 @@ const ToolBlock = () => {
               id="min-date"
               value={block.min_date ?? ""}
               onChange={(e) => {
-                studio.updateBlock(block.id, {
+                editor.updateBlock(block.id, {
                   ...block,
                   min_date: e.target.value,
                 });
@@ -739,7 +739,7 @@ const ToolBlock = () => {
               id="max-date"
               value={block.max_date ?? ""}
               onChange={(e) => {
-                studio.updateBlock(block.id, {
+                editor.updateBlock(block.id, {
                   ...block,
                   max_date: e.target.value,
                 });
@@ -758,7 +758,7 @@ const ToolBlock = () => {
               id="max-rating"
               value={block.rating ?? 5}
               onChange={(e) => {
-                studio.updateBlock(block.id, {
+                editor.updateBlock(block.id, {
                   ...block,
                   rating: Number(e.target.value),
                 });
@@ -781,7 +781,7 @@ const ToolBlock = () => {
               onChange={(e) => {
                 const target = Number(e.target.value);
                 if (target > 10) return;
-                studio.updateBlock(block.id, {
+                editor.updateBlock(block.id, {
                   ...block,
                   max_scale: target,
                 });

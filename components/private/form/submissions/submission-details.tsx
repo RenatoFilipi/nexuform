@@ -3,6 +3,7 @@ import SubmissionStatusBadge from "@/components/private/form/submissions/submiss
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
 import { minWidth640, minute } from "@/utils/constants";
 import { EBlock, ESubmission } from "@/utils/entities";
@@ -79,7 +80,8 @@ const Body = ({
   const t = useTranslations("app");
   const supabase = createClient();
   const user = useUserStore();
-  const isAllowedToExport = user.subscription.plan === "pro";
+  const app = useAppStore();
+  const isAllowedToExport = app.subscription.plan === "pro";
 
   const query = useQuery({
     queryKey: [`submissionData`, submission.id],

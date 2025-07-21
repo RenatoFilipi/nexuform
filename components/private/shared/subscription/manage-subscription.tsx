@@ -63,7 +63,8 @@ const ManageSubscription = ({ children }: { children: React.ReactNode }) => {
 };
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
-  const userStore = useUserStore();
+  const user = useUserStore();
+  const app = useAppStore();
   const [localPlans, setLocalPlans] = useState<IPlan[]>([]);
   const [selectedPlan, setSelectedPlan] = useState<IPlan | null>(null);
   const filteredPlans = localPlans.filter((x) => x.type !== "free_trial");
@@ -71,7 +72,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const query = useQuery({
     queryKey: ["manage-sub-data"],
     queryFn: async () => {
-      setLocalPlans(await getPlans(userStore.locale));
+      setLocalPlans(await getPlans(user.locale));
       return null;
     },
   });
@@ -121,7 +122,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
               <PlanOption
                 key={plan.type}
                 plan={plan}
-                isCurrent={plan.type === userStore.subscription.plan && userStore.subscription.status !== "canceled"}
+                isCurrent={plan.type === app.subscription.plan && app.subscription.status !== "canceled"}
                 onSelect={() => setSelectedPlan(plan)}
               />
             ))}
@@ -282,8 +283,7 @@ const CheckoutUpdate = ({ plan, onBack }: { plan: IPlan; onBack: () => void }) =
   const onConfirm = async () => {
     try {
       setAppState("loading");
-      const res = await updateSubscriptionPlanAction(formData);
-      if (!res) throw Error;
+      await updateSubscriptionPlanAction(formData);
       setAppState("success");
     } catch (error) {
       setAppState("error");

@@ -29,7 +29,6 @@ const UpgradeToProUI = ({ email, profile, subscription, locale }: IProps) => {
       user.setLocale(locale);
       user.setEmail(email);
       user.setProfile(profile);
-      user.setSubscription(subscription);
       const plan = (await getPlans(locale)).filter((x) => x.type === "pro")[0];
       return { plan };
     },

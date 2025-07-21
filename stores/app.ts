@@ -123,6 +123,7 @@ const useAppStore = create<IProps>((set) => ({
     status: "",
     stripe_subscription_id: null,
     submissions: 0,
+    max_members: 1,
   },
   teamMemberProfile: {
     created_at: "",
