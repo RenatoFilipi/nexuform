@@ -59,6 +59,11 @@ const getProfile = async (customerId: string) => {
   if (error) throw new Error(`Profile not found: ${error.message}`);
   return data;
 };
+const getOrganization = async (orgId: string) => {
+  const { data, error } = await supabase.from("organizations").select("*").eq("id", orgId).single();
+  if (error) throw new Error(`Organization not found: ${error.message}`);
+  return data;
+};
 const getConfig = (plan: TPlan) => {
   switch (plan) {
     case "starter":
@@ -84,18 +89,24 @@ export const POST = async (req: Request) => {
   try {
     switch (event.type) {
       case "checkout.session.completed": {
+        const session = event.data.object as Stripe.Checkout.Session;
+        break;
       }
-      case "customer.subscription.created": {
-      }
-      case "customer.subscription.updated": {
+      case "customer.subscription.created":
+      case "customer.subscription.updated":
+      case "customer.subscription.deleted": {
+        const subscription = event.data.object as Stripe.Subscription;
+        break;
       }
       case "customer.subscription.deleted": {
+        const subscription = event.data.object as Stripe.Subscription;
+        break;
       }
-      case "invoice.payment_failed": {
-      }
+      case "invoice.payment_failed":
       case "invoice.paid": {
+        const invoice = event.data.object as Stripe.Invoice;
+        break;
       }
-
       default:
         console.log(`Unhandled event: ${event.type}`);
         console.log(event.data.object);

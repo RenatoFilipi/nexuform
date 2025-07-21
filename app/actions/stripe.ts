@@ -27,6 +27,14 @@ export const createCheckoutSessionAction = async (formData: FormData) => {
       mode: "subscription",
       payment_method_types: ["card"],
       return_url: `${origin}/dashboard/checkout-result?session_id={CHECKOUT_SESSION_ID}`,
+      metadata: {
+        plan,
+        customer_id,
+        organization_id,
+        profile_id,
+        tmp_id,
+        email,
+      },
       subscription_data: {
         metadata: {
           plan,
