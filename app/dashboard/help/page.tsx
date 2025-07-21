@@ -24,15 +24,7 @@ const Help = async () => {
   const subscriptions = await supabase.from("subscriptions").select("*").eq("org_id", orgId).single();
   if (subscriptions.error) return <ErrorUI email={email} />;
 
-  return (
-    <HelpWrapper
-      locale={locale}
-      email={email}
-      profile={profiles.data}
-      subscription={subscriptions.data}
-      organizations={organizations.data}
-    />
-  );
+  return <HelpWrapper locale={locale} email={email} profile={profiles.data} />;
 };
 
 export default Help;
