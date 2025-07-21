@@ -42,9 +42,12 @@ const Navbar = () => {
   const pathname = usePathname();
   const isEditorResource = pathname.split("/")[6] === "editor";
   const isInOrg = pathname.includes("/organizations/") && pathname.split("/organizations/")[1]?.split("/")[0] !== "";
+  const isCheckoutResource = pathname.includes("/checkout-result");
+  console.log(pathname);
 
   if (isEditorResource) return <EditorNavbar />;
   if (isInOrg) return <AfterOrgNavbar />;
+  if (isCheckoutResource) return null;
   return <BeforeOrgNavbar />;
 };
 const BeforeOrgNavbar = () => {

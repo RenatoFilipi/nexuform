@@ -111,7 +111,7 @@ const PlanCard = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IPlan | n
           </div>
           <p className="mt-2 text-muted-foreground text-sm">{plan.description}</p>
         </div>
-        <div className="flex justify-center items-center h-full">
+        <div className="flex justify-center items-center h-full py-6">
           <span>{t("label_current_plan")}</span>
         </div>
       </Card>

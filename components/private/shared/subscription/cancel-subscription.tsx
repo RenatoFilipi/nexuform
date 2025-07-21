@@ -190,8 +190,8 @@ const CancelConfirm = ({ setState }: { setState: TSetState<boolean> }) => {
             disabled={isDisabled || isPending}
             onClick={onCancelSubscription}
             size="sm"
-            className="">
-            {isPending ? <LoaderIcon className="w-4 h-4 mr-2 animate-spin" /> : isDisabled ? `${countdown}s` : null}
+            className="flex justify-center items-center gap-2">
+            {isPending ? <LoaderIcon className="w-4 h-4 animate-spin" /> : isDisabled ? `${countdown}s` : null}
             {!isPending && !isDisabled && t("label_sub_cancel_confirm")}
           </Button>
         </motion.div>

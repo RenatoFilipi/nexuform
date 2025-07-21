@@ -12,7 +12,7 @@ import Avvvatars from "avvvatars-react";
 import { PenBoxIcon, Trash2Icon, UserIcon, UserPlus2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import OrgRoleBadge from "../../shared/custom/org-role-badge";
-import UpdateSubscriptionUI from "../../shared/pages/update-subscription-ui";
+import SubscriptionUI from "../../shared/pages/subscription-ui";
 import MembersInvite from "./members-invite";
 import MembersRemove from "./members-remove";
 import MembersUpdate from "./members-update";
@@ -50,8 +50,8 @@ const MembersWrapper = (props: IProps) => {
 
   if (query.isPending) return null;
 
-  if (app.context.isSubscriptionExpired) {
-    return <UpdateSubscriptionUI />;
+  if (!app.context.isSubscriptionActive) {
+    return <SubscriptionUI />;
   }
 
   return (

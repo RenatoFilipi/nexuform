@@ -22,7 +22,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import FormSelector from "../../shared/custom/form-selector";
 import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
-import UpdateSubscriptionUI from "../../shared/pages/update-subscription-ui";
+import SubscriptionUI from "../../shared/pages/subscription-ui";
 import AnalyticsSubmissionsByFormChart from "./analytics-submissions-by-form-chart";
 
 interface IProps {
@@ -93,12 +93,12 @@ const AnalyticsWrapper = (props: IProps) => {
 
   if (query.isPending) return null;
 
-  if (!app.context.isOrgOwner && app.subscription.plan !== "pro") {
-    return <RestrictedAccessUI />;
+  if (!app.context.isSubscriptionActive) {
+    return <SubscriptionUI />;
   }
 
-  if (app.context.isSubscriptionExpired) {
-    return <UpdateSubscriptionUI />;
+  if (!app.context.isOrgOwner && app.subscription.plan !== "pro") {
+    return <RestrictedAccessUI />;
   }
 
   return (

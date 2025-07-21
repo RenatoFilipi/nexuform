@@ -21,6 +21,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import OptionSelector from "../../shared/custom/option-selector";
 import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
+import SubscriptionUI from "../../shared/pages/subscription-ui";
 
 interface IProps {
   locale: string;
@@ -53,6 +54,10 @@ const SettingsWrapper = (props: IProps) => {
   });
 
   if (query.isPending) return null;
+
+  if (!app.context.isSubscriptionActive) {
+    return <SubscriptionUI />;
+  }
 
   if ((!app.context.isOrgOwner && app.subscription.plan !== "pro") || !app.context.isAdminOrHigher) {
     return <RestrictedAccessUI />;

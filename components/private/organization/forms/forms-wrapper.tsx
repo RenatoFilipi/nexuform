@@ -32,7 +32,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
-import UpdateSubscriptionUI from "../../shared/pages/update-subscription-ui";
+import SubscriptionUI from "../../shared/pages/subscription-ui";
 
 interface IProps {
   locale: string;
@@ -71,11 +71,12 @@ const FormsWrapper = (props: IProps) => {
   const hasForms = app.forms.length > 0;
   if (query.isPending) return null;
 
+  if (!app.context.isSubscriptionActive) {
+    return <SubscriptionUI />;
+  }
+
   if (!app.context.isOrgOwner && app.subscription.plan !== "pro") {
     return <RestrictedAccessUI />;
-  }
-  if (app.context.isSubscriptionExpired) {
-    return <UpdateSubscriptionUI />;
   }
 
   return (
