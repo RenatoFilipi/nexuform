@@ -13,19 +13,19 @@ const PlanNameBadge = ({ type, className = "" }: PlanBadgeProps) => {
   switch (type) {
     case "free_trial":
       return (
-        <Badge variant={"green"} className={`${className}`}>
+        <Badge variant={"blue"} className={`${className}`}>
           {t("label_plan_free_trial")}
         </Badge>
       );
     case "starter":
       return (
-        <Badge variant={"green"} className={`${className}`}>
+        <Badge variant={"pink"} className={`${className}`}>
           {t("label_plan_starter")}
         </Badge>
       );
     case "pro":
       return (
-        <Badge variant={"green"} className={`${className}`}>
+        <Badge variant={"yellow"} className={`${className}`}>
           {t("label_plan_pro")}
         </Badge>
       );

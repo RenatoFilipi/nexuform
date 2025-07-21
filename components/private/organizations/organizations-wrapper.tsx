@@ -143,7 +143,6 @@ const OrganizationsCard = (props: { teamMemberProfile: ETeamMemberProfile }) => 
     </a>
   );
 };
-
 const InvitationCard = ({ invitation }: { invitation: EInvitation }) => {
   const t = useTranslations("app");
   const user = useUserStore();
