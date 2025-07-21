@@ -93,6 +93,31 @@ const Body = ({ setState, selected }: { setState: TSetState<boolean>; selected?:
 };
 const PlanCard = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IPlan | null> }) => {
   const t = useTranslations("pricing");
+  const app = useAppStore();
+  const isCurrentPlanAndActive = app.subscription.plan === plan.type && app.subscription.status === "active";
+
+  if (isCurrentPlanAndActive) {
+    return (
+      <Card className="relative flex flex-col h-full p-5 rounded-xl border-muted-foreground/15 transition-colors opacity-50">
+        {plan.isMostPopular && (
+          <div className="absolute bg-primary text-white text-xs font-semibold px-3 py-1 w-fit h-fit top-4 right-4">
+            {t("most_popular")}
+          </div>
+        )}
+        <div className="flex flex-col w-full">
+          <div className="flex justify-start items-center gap-2">
+            <PlanBadge type={plan.type} />
+            <h3 className="text-lg font-bold text-foreground">{plan.name}</h3>
+          </div>
+          <p className="mt-2 text-muted-foreground text-sm">{plan.description}</p>
+        </div>
+        <div className="flex justify-center items-center h-full">
+          <span>{t("label_current_plan")}</span>
+        </div>
+      </Card>
+    );
+  }
+
   return (
     <Card
       className={`relative flex flex-col h-full p-5 rounded-xl border-muted-foreground/15 hover:border-primary transition-colors`}>

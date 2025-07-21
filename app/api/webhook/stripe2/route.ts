@@ -106,6 +106,7 @@ const updateSubscription = async (
     due_date: currentPeriodEnd,
     status: status,
     updated_at: new Date().toISOString(),
+    max_members: config.maxMembers,
   };
 
   if (isNewSubscription) {
@@ -172,6 +173,7 @@ export const POST = async (req: Request) => {
           .from("subscriptions")
           .update({
             status: "canceled",
+            max_members: 1,
             updated_at: new Date().toISOString(),
           })
           .eq("stripe_subscription_id", subscription.id);

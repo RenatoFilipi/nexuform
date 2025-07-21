@@ -650,14 +650,13 @@
     "headline": "Simple, transparent pricing",
     "subheadline": "Find the plan that fits your workflow and growth stage",
     "coming_soon": "Coming soon",
-
+    "label_current_plan": "Current plan",
     "free_trial_name": "Free Trial",
     "most_popular": "Most popular",
     "month": "month",
     "day_freetrial": "day free trial",
     "recommended_for": "Recommended for",
     "whats_included": "What’s included",
-
     "free_trial_description": "Try all essential features free for 14 days. Upgrade to keep forms live and collecting data.",
     "free_trial_feat_01": "Create up to 2 forms",
     "free_trial_feat_02": "Collect up to 100 responses",
@@ -666,7 +665,6 @@
     "free_trial_feat_05": "NexuForm branding included",
     "free_trial_cta": "Start your 14-day free trial",
     "free_trial_recommended_for": "Testing and exploring the platform",
-
     "starter_name": "Starter",
     "starter_description": "Perfect for solo founders and freelancers who need reliable form tools",
     "starter_feat_01": "Create up to 5 forms",
@@ -678,7 +676,6 @@
     "starter_feat_07": "NexuForm branding included",
     "starter_cta": "Get Starter Plan",
     "starter_recommended_for": "Freelancers and solo entrepreneurs",
-
     "pro_name": "Pro",
     "pro_description": "Built for small teams that collaborate and need more control and flexibility",
     "pro_feat_01": "Create up to 15 forms",
