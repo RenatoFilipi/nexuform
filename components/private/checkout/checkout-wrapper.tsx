@@ -8,7 +8,7 @@ import { HomeIcon, ShoppingBagIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
-const CheckoutSuccess = () => {
+const CheckoutWrapper = () => {
   const t = useTranslations("app");
 
   return (
@@ -18,7 +18,7 @@ const CheckoutSuccess = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="w-full max-w-lg">
-        <Card className="p-8 sm:p-10 shadow-2xl overflow-hidden relative backdrop-blur-sm bg-background/80">
+        <Card className="p-8 sm:p-10 shadow-2xl overflow-hidden relative backdrop-blur-sm">
           <div className="relative z-10 flex flex-col items-center gap-8 text-center">
             {/* Logo/Brand with subtle animation */}
             <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
@@ -81,4 +81,4 @@ const CheckoutSuccess = () => {
   );
 };
 
-export default CheckoutSuccess;
+export default CheckoutWrapper;

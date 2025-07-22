@@ -71,19 +71,19 @@ const getConfig = (plan: TPlan) => {
       return freeTrialConfig;
   }
 };
-const updateSubscription = async (
-  subscription: Stripe.Subscription,
-  status: string,
-  isNewSubscription: boolean = false
-) => {
+const updateSubscription = async (subscription: Stripe.Subscription, status: string) => {
   const customerId = subscription.customer as string;
   const profile = await getProfile(customerId);
 
-  let plan = subscription.metadata?.plan as TPlan;
-  if (!plan) {
-    const priceId = subscription.items.data[0]?.price.id;
-    plan = priceId === starterConfig.priceId ? "starter" : "pro";
-  }
+  const priceToPlanMap: Record<string, TPlan> = {
+    [starterConfig.priceId]: "starter",
+    [proConfig.priceId]: "pro",
+  };
+
+  let plan: TPlan =
+    (subscription.metadata?.plan as TPlan) ||
+    priceToPlanMap[subscription.items.data[0]?.price.id || ""] ||
+    "free_trial";
 
   const config = getConfig(plan);
 
@@ -104,32 +104,23 @@ const updateSubscription = async (
     billing_interval: subscription.items.data[0]?.price.recurring?.interval || "month",
     start_date: currentPeriodStart,
     due_date: currentPeriodEnd,
-    status: status,
+    status,
     updated_at: new Date().toISOString(),
     max_members: config.maxMembers,
   };
 
-  if (isNewSubscription) {
-    const orgId = subscription.metadata?.organization_id;
-    if (!orgId) throw new Error("Organization ID not found in subscription metadata");
+  const orgId = subscription.metadata?.organization_id;
+  if (!orgId) throw new Error("Organization ID not found in subscription metadata");
 
-    const { error } = await supabase
-      .from("subscriptions")
-      .update({ ...subscriptionData, stripe_subscription_id: subscription.id })
-      .eq("profile_id", profile.id)
-      .eq("org_id", orgId);
+  const { error } = await supabase
+    .from("subscriptions")
+    .update(subscriptionData)
+    .eq("stripe_subscription_id", subscription.id)
+    .eq("profile_id", profile.id)
+    .eq("org_id", orgId);
 
-    if (error) throw error;
-  } else {
-    const { error } = await supabase
-      .from("subscriptions")
-      .update(subscriptionData)
-      .eq("stripe_subscription_id", subscription.id);
-
-    if (error) throw error;
-  }
+  if (error) throw error;
 };
-
 export const POST = async (req: Request) => {
   const body = await req.text();
   const signature = (await headers()).get("stripe-signature") as string;
@@ -148,20 +139,19 @@ export const POST = async (req: Request) => {
 
         if (session.mode === "subscription") {
           const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
-          await updateSubscription(subscription, "active", true);
+          await updateSubscription(subscription, "active");
         }
         break;
       }
 
       case "customer.subscription.created": {
         const subscription = event.data.object as Stripe.Subscription;
-        await updateSubscription(subscription, subscription.status, true);
+        await updateSubscription(subscription, subscription.status);
         break;
       }
 
       case "customer.subscription.updated": {
         const subscription = event.data.object as Stripe.Subscription;
-        const status = subscription.status === "active" ? "active" : "inactive";
         await updateSubscription(subscription, subscription.status);
         break;
       }
@@ -187,7 +177,7 @@ export const POST = async (req: Request) => {
 
         if (invoice.subscription) {
           const subscription = await stripe.subscriptions.retrieve(invoice.subscription as string);
-          await updateSubscription(subscription, "active");
+          await updateSubscription(subscription, subscription.status);
         }
         break;
       }
