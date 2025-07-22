@@ -8,15 +8,25 @@ const S = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const supabase = await createClient();
   const locale = await getLocale();
 
-  const form = await supabase.from("forms").select("*").eq("public_id", slug).single();
-  if (form.error || form.data.status !== "published") return <SubmissionFormNotAvailableUI />;
+  const form = await supabase.from("forms").select("*").eq("public_id", slug).eq("status", "published").single();
+  if (form.error) return <SubmissionFormNotAvailableUI />;
 
-  const organization = await supabase.from("organizations").select("*").eq("id", form.data.org_id).single();
+  const organization = await supabase
+    .from("organizations")
+    .select("*")
+    .eq("id", form.data.org_id)
+    .eq("status", "active")
+    .single();
   if (organization.error) return <SubmissionFormNotAvailableUI />;
 
   const orgId = organization.data.id;
 
-  const subscription = await supabase.from("subscriptions").select("*").eq("org_id", orgId).single();
+  const subscription = await supabase
+    .from("subscriptions")
+    .select("*")
+    .eq("org_id", orgId)
+    .eq("status", "active")
+    .single();
   if (subscription.error) return <SubmissionFormNotAvailableUI />;
 
   const now = new Date();

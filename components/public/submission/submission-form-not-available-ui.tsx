@@ -13,7 +13,7 @@ const SubmissionFormNotAvailableUI = () => {
         <div className="flex flex-col gap-4 justify-center items-center">
           <span className="text-sm text-muted-foreground">{t("label_form_not_available")}</span>
           <div className="flex justify-center items-center w-full">
-            <Button variant={"outline"} size={"xs"}>
+            <Button variant={"outline"} size={"xs"} asChild>
               <Link href={"/"}>{t("label_go_back")}</Link>
             </Button>
           </div>

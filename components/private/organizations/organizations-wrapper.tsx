@@ -11,12 +11,12 @@ import { TPlan } from "@/utils/pricing";
 import { createClient } from "@/utils/supabase/client";
 import { TOrganizationRole } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { BoxesIcon, CheckIcon, ChevronRightIcon, LoaderIcon, MailPlusIcon, XIcon } from "lucide-react";
+import { CheckIcon, ChevronRightIcon, LoaderIcon, MailPlusIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import OrgRoleBadge from "../shared/custom/org-role-badge";
-import PlanNameBadge from "../shared/custom/plan-name-badge";
+import PlanBadge from "../shared/custom/plan-badge";
 
 interface IProps {
   locale: string;
@@ -103,7 +103,7 @@ const OrganizationsCard = (props: { teamMemberProfile: ETeamMemberProfile }) => 
       return <Badge variant="warning">{t("label_past_due")}</Badge>;
     }
     if (isActive) {
-      return <PlanNameBadge type={subscription.plan as TPlan} />;
+      return <Badge variant="success">{t("label_active")}</Badge>;
     }
     return null;
   };
@@ -115,10 +115,8 @@ const OrganizationsCard = (props: { teamMemberProfile: ETeamMemberProfile }) => 
 
         <div className="flex flex-col gap-2 relative z-10 justify-between h-full">
           <div className="flex justify-between items-start w-full">
-            <div className="flex items-start gap-3">
-              <div className="flex justify-center items-center p-2 bg-foreground/5 rounded-lg group-hover:bg-primary/20 transition-colors">
-                <BoxesIcon className="w-5 h-5" />
-              </div>
+            <div className="flex items-center gap-3 justify-center">
+              <PlanBadge type={subscription.plan as TPlan} size={"lg"} />
               <div className="flex flex-col gap-1">
                 <h3 className="text-sm font-semibold line-clamp-1">{organization.name}</h3>
                 <span className="text-xs text-muted-foreground capitalize">
@@ -131,12 +129,12 @@ const OrganizationsCard = (props: { teamMemberProfile: ETeamMemberProfile }) => 
             <ChevronRightIcon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
           </div>
           <div className="mt-auto flex flex-col gap-2">
+            {renderStatusBadge()}
             {!isCanceled && !isExpired && (
               <p className={`text-xs ${isPastDue ? "text-warning" : "text-muted-foreground"}`}>
                 {t("label_n_days_remaining", { n: remainingDays })}
               </p>
             )}
-            {renderStatusBadge()}
           </div>
         </div>
       </Card>
