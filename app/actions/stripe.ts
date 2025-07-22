@@ -101,3 +101,18 @@ export const updateSubscriptionPlanAction = async (formData: FormData) => {
     throw new Error(error?.message || "Failed to update subscription plan.");
   }
 };
+export const getSubscriptionDetailsAction = async (id: string) => {
+  try {
+    const subscription = await stripe.subscriptions.retrieve(id);
+    if (!subscription) throw new Error("No subscription found.");
+    const amount = subscription.items.data[0]?.price.unit_amount || 0;
+    const interval = subscription.items.data[0]?.price.recurring?.interval || "month";
+    const start = subscription.current_period_start;
+    const end = subscription.current_period_end;
+    const status = subscription.status;
+    const currentPeriodEnd = subscription.current_period_end;
+    return { amount, interval, start, end, status, currentPeriodEnd };
+  } catch (error: any) {
+    throw new Error(error?.message || "Failed to fetch subscription.");
+  }
+};

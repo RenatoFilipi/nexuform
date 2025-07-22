@@ -1,6 +1,11 @@
 "use client";
 
-import { createCheckoutSessionAction, updateSubscriptionPlanAction } from "@/app/actions/stripe";
+import {
+  createCheckoutSessionAction,
+  getSubscriptionDetailsAction,
+  updateSubscriptionPlanAction,
+} from "@/app/actions/stripe";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -20,8 +25,10 @@ import { TAppState, TSetState } from "@/utils/types";
 import { EmbeddedCheckout, EmbeddedCheckoutProvider } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useQuery } from "@tanstack/react-query";
+import clsx from "clsx";
 import { motion } from "framer-motion";
 import {
+  AlertCircleIcon,
   ArrowRightIcon,
   CheckCircleIcon,
   CheckIcon,
@@ -251,14 +258,12 @@ const CheckoutNewPlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IP
   );
 };
 const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IPlan | null> }) => {
-  // a prop plan é o plano que se intende para atualizar
   const t = useTranslations("app");
   const [appState, setAppState] = useState<TAppState>("idle");
   const app = useAppStore();
   const formData = new FormData();
   formData.append("subscription_id", app.subscription.stripe_subscription_id as string);
-  formData.append("plan", plan.type); // "free_trial" | "starter" | "pro";
-  const stripeSubscriptionId = app.subscription.stripe_subscription_id as string;
+  formData.append("plan", plan.type);
 
   const onConfirm = async () => {
     try {
@@ -269,6 +274,23 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
       setAppState("error");
     }
   };
+
+  const query = useQuery({
+    queryKey: ["plan_id", app.subscription.stripe_subscription_id],
+    queryFn: async () => {
+      return await getSubscriptionDetailsAction(app.subscription.stripe_subscription_id as string);
+    },
+  });
+
+  if (query.isPending) return null;
+
+  const currentPlanAmount = (query.data?.amount || 0) / 100;
+  const newPlanAmount = plan.price.amount;
+  const difference = newPlanAmount - currentPlanAmount;
+  const isUpgrade = difference > 0;
+  const isDowngrade = difference < 0;
+  const isSamePrice = difference === 0;
+  const formatPrice = (amount: number) => formatCurrency("USD", amount);
 
   if (appState === "loading") {
     return (
@@ -380,70 +402,108 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
   }
 
   return (
-    <div className="flex flex-col h-full w-full gap-6">
-      <Card className="relative p-8 rounded-2xl bg-gradient-to-br from-muted/20 to-background border border-muted/30 shadow-lg h-full flex flex-col justify-center items-center w-full overflow-hidden">
-        <div className="relative z-10 flex items-center justify-between w-full max-w-md">
+    <div className="flex flex-col h-full w-full gap-6 overflow-y-auto">
+      <Card className="relative rounded-xl bg-background border border-muted/20 shadow-sm h-full flex flex-col justify-center items-center w-full overflow-y-auto">
+        {/* Header */}
+        <div className="w-full text-center mb-6">
+          <h2 className="text-xl font-semibold text-foreground">{t("label_plan_change_confirmation")}</h2>
+          <p className="text-sm text-muted-foreground mt-1">{t("desc_review_changes_before_confirmation")}</p>
+        </div>
+
+        {/* Plan Comparison */}
+        <div className="relative z-10 flex items-center justify-between w-full max-w-md mb-8">
           <motion.div
             initial={{ x: -20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="flex flex-col items-center gap-4 p-5 bg-background/80 rounded-xl border border-muted/20 shadow-sm backdrop-blur-sm">
-            <div className="p-3 rounded-full bg-background border shadow-sm">
-              <PlanBadge type={app.subscription.plan as TPlan} />
+            className="flex flex-col items-center gap-3 p-4 bg-card rounded-lg border border-card w-[45%]">
+            <div className="p-2 rounded-full bg-background border">
+              <PlanBadge type={app.subscription.plan as TPlan} size="sm" />
             </div>
-            <div className="text-center">
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                {t("label_current_plan")}
+            <div className="text-center w-full">
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{t("label_current")}</p>
+              <p className="font-medium text-base capitalize mt-1 text-foreground">{app.subscription.plan}</p>
+              <p className="text-primary font-semibold text-sm mt-2">
+                {formatPrice(currentPlanAmount)}
+                <span className="text-muted-foreground font-normal text-xs">/{t("label_month")}</span>
               </p>
-              <p className="font-semibold text-lg capitalize mt-1 text-foreground">{app.subscription.plan}</p>
             </div>
           </motion.div>
+
           <motion.div
             animate={{
-              x: [-5, 5, -5],
+              x: [-3, 3, -3],
             }}
             transition={{
               duration: 2,
               repeat: Infinity,
             }}
-            className="p-3 rounded-full bg-foreground/5 shadow-md mx-4">
-            <ArrowRightIcon className="w-6 h-6 text-foreground" />
+            className="p-2 rounded-full bg-primary/10 mx-2">
+            <ArrowRightIcon className="w-5 h-5 text-primary" />
           </motion.div>
+
           <motion.div
-            initial={{ x: -20, opacity: 0 }}
+            initial={{ x: 20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="flex flex-col items-center gap-4 p-5 bg-background/80 rounded-xl border border-muted/20 shadow-sm backdrop-blur-sm">
-            <div className="p-3 rounded-full bg-background border shadow-sm">
-              <PlanBadge type={plan.type} />
+            className="flex flex-col items-center gap-3 p-4 bg-card rounded-lg border border-card w-[45%]">
+            <div className="p-2 rounded-full bg-background border">
+              <PlanBadge type={plan.type} size="sm" />
             </div>
-            <div className="text-center">
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                {t("label_new_plan")}
+            <div className="text-center w-full">
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{t("label_new")}</p>
+              <p className="font-medium text-base capitalize mt-1 text-foreground">{plan.name}</p>
+              <p className="text-primary font-semibold text-sm mt-2">
+                {formatPrice(newPlanAmount)}
+                <span className="text-muted-foreground font-normal text-xs">/{t("label_month")}</span>
               </p>
-              <p className="font-semibold text-lg capitalize mt-1 text-foreground">{plan.name}</p>
             </div>
           </motion.div>
         </div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="mt-1 text-center max-w-md flex flex-col justify-center items-center gap-4">
-          <p className="text-lg">{formatCurrency("USD", plan.price.amount)}</p>
-          <p className="text-sm text-muted-foreground leading-relaxed">{t("desc_plan_change_notice")}</p>
-          {app.subscription.plan === "pro" && plan.type === "starter" && (
-            <p className="mt-2 text-xs text-warning">{t("desc_downgrade_plan_notice")}</p>
+
+        {/* Price Difference */}
+        <div className="w-full max-w-md bg-card rounded-lg p-4 mb-4">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm text-muted-foreground">{t("label_monthly_difference")}:</span>
+            <span
+              className={clsx(
+                "font-semibold",
+                isUpgrade ? "text-success" : isDowngrade ? "text-warning" : "text-muted-foreground"
+              )}>
+              {isSamePrice ? t("label_no_change") : `${isUpgrade ? "+" : "-"}${formatPrice(Math.abs(difference))}`}
+            </span>
+          </div>
+
+          {!isSamePrice && (
+            <div className="flex justify-between items-center text-sm">
+              <span className="text-muted-foreground">{t("label_new_monthly_total")}:</span>
+              <span className="font-medium text-foreground">{formatPrice(newPlanAmount)}</span>
+            </div>
           )}
-        </motion.div>
+        </div>
+
+        {/* Notices */}
+        <div className="w-full max-w-md space-y-2 text-center">
+          {app.subscription.plan === "pro" && plan.type === "starter" && (
+            <Alert variant="warning" className="text-xs py-2">
+              <AlertCircleIcon className="w-4 h-4" />
+              <AlertTitle>{t("warning_downgrade_title")}</AlertTitle>
+              <AlertDescription>{t("warning_downgrade_description")}</AlertDescription>
+            </Alert>
+          )}
+
+          <p className="text-xs text-muted-foreground">{t("desc_plan_change_notice")}</p>
+        </div>
       </Card>
-      <div className="flex gap-4 justify-between items-center">
-        <Button onClick={() => setPlan(null)} variant={"ghost"} size={"sm"} className="">
-          <ChevronLeftIcon className="w-4 h-4 mr-1" />
-          {t("label_go_back")}
+      {/* Actions */}
+      <div className="flex gap-3 justify-between items-center">
+        <Button onClick={() => setPlan(null)} variant="outline" size="sm" className="gap-1">
+          <ChevronLeftIcon className="w-4 h-4" />
+          {t("label_back")}
         </Button>
-        <Button variant={"secondary"} onClick={onConfirm} size="sm" className="">
-          {t("label_complete_subscription")}
+        <Button onClick={onConfirm} size="sm" className="gap-1" variant={"secondary"}>
+          {isUpgrade ? t("label_upgrade_plan") : isDowngrade ? t("label_downgrade_plan") : t("label_confirm_change")}
+          <ArrowRightIcon className="w-4 h-4" />
         </Button>
       </div>
     </div>

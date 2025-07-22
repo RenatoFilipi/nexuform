@@ -82,7 +82,6 @@ const BillingWrapper = (props: IProps) => {
 const BillingUsage = () => {
   const t = useTranslations("app");
   const app = useAppStore();
-  console.log(app.subscription);
   const isFormLimit = app.subscription.forms <= app.forms.length;
   const isSubmissionsLimit = app.subscription.submissions <= app.submissionLogs.length;
   const formsUsage = Math.min(100, (100 * app.forms.length) / app.subscription.forms);
