@@ -259,6 +259,7 @@ const EditorNavbar = () => {
   const orgId = pathname.split("/")[3];
   const formId = pathname.split("/")[5];
   const overviewPath = `/dashboard/organizations/${orgId}/form/${formId}/overview`;
+  const showSaveButton = true;
 
   const handleSave = async () => {
     if (appState === "loading") return;
@@ -349,6 +350,8 @@ const EditorNavbar = () => {
     }
   };
 
+  if (!app.context.isSubscriptionActive) return null;
+
   return (
     <nav className="z-10 flex flex-col bg-background fixed w-full border-b">
       <div className="flex w-full justify-between items-center h-14 px-4 sm:px-6">
@@ -365,16 +368,12 @@ const EditorNavbar = () => {
             </Link>
           </div>
         </div>
-        {!app.context.isSubscriptionExpired ||
-          app.context.isOrgOwner ||
-          (app.subscription.plan === "pro" && (
-            <div>
-              <Button size={"sm"} variant={"secondary"} onClick={handleSave} disabled={appState === "loading"}>
-                {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
-                {t("label_save_form")}
-              </Button>
-            </div>
-          ))}
+        <div>
+          <Button size={"sm"} variant={"secondary"} onClick={handleSave} disabled={appState === "loading"}>
+            {appState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
+            {t("label_save_form")}
+          </Button>
+        </div>
       </div>
     </nav>
   );

@@ -63,7 +63,7 @@ const BillingWrapper = (props: IProps) => {
 
   if (query.isPending) return null;
 
-  if (!app.context.isOrgOwner && app.subscription.plan !== "pro") {
+  if ((!app.context.isOrgOwner && app.subscription.plan !== "pro") || !app.context.isAdminOrHigher) {
     return <RestrictedAccessUI />;
   }
 
