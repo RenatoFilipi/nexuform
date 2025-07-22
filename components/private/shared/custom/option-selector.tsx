@@ -24,13 +24,15 @@ const OptionSelector = ({ status, onStatusChange, options }: IProps) => {
             option.status === status ? "border-primary bg-primary/5" : "hover:bg-foreground/5"
           } border p-4 flex gap-4 h-full w-full rounded bg-background`}>
           <div className="flex items-center justify-center">
-            <div className={`${option.color} ${status === option.status ? "opacity-100" : "opacity-60"}`}>
-              <option.icon className="w-6 h-6" />
+            <div className={`${option.color} ${status === option.status ? "opacity-100" : "opacity-30"}`}>
+              <option.icon className="w-6 h-6 text-black" />
             </div>
           </div>
           <div className="flex flex-col justify-center items-start gap-1">
             <span className="font-semibold">{option.label}</span>
-            <span className="text-sm text-muted-foreground text-start">{option.description}</span>
+            <span className={`${option.status === status ? "" : "text-muted-foreground"} text-sm  text-start`}>
+              {option.description}
+            </span>
           </div>
         </button>
       ))}

@@ -32,7 +32,7 @@ const MembersInvite = ({ children }: { children: ReactNode }) => {
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogOverlay className="backdrop-blur-sm">
-        <AlertDialogContent className="flex flex-col w-full">
+        <AlertDialogContent className="flex flex-col w-full sm:max-w-xl">
           <AlertDialogHeader>
             <AlertDialogTitle>{t("label_invite_member")}</AlertDialogTitle>
             <AlertDialogDescription className="">{t("desc_invite_member")}</AlertDialogDescription>
@@ -43,14 +43,11 @@ const MembersInvite = ({ children }: { children: ReactNode }) => {
     </AlertDialog>
   );
 };
-
 const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const t = useTranslations("app");
   const [isPending, startTransition] = useTransition();
   const supabase = createClient();
   const app = useAppStore();
-  const isNotPro = app.subscription.plan !== "pro";
-  const isStaff = app.context.orgRole === "staff";
 
   const formSchema = z.object({
     email: z.string().email(t("label_required_email")),
@@ -120,10 +117,10 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
 
   return (
     <div className="flex flex-col gap-4">
-      {isNotPro && <UpgradeToPro />}
+      <UpgradeToPro />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-10">
-          <div className="grid sm:grid-cols-2 gap-6">
+          <div className="grid gap-6">
             <div className="">
               <FormField
                 control={form.control}
@@ -184,7 +181,6 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     </div>
   );
 };
-
 const UpgradeToPro = () => {
   const t = useTranslations("app");
   const app = useAppStore();

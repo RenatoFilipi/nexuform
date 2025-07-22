@@ -88,21 +88,21 @@ const SettingsStatus = () => {
       label: t("label_draft"),
       description: t("desc_draft"),
       icon: DraftingCompassIcon,
-      color: "bg-info/30 text-foreground border border-info/60 p-2 rounded",
+      color: "bg-info/40 text-foreground border border-info p-2 rounded",
     },
     {
       status: "published",
       label: t("label_published"),
       description: t("desc_published"),
       icon: GlobeIcon,
-      color: "bg-success/30 text-foreground border border-success/60 p-2 rounded",
+      color: "bg-success/40 text-foreground border border-success p-2 rounded",
     },
     {
       status: "inactive",
       label: t("label_inactive"),
       description: t("desc_inactive"),
       icon: PauseCircleIcon,
-      color: "bg-foreground/30 text-foreground border border-foreground/60 p-2 rounded",
+      color: "bg-foreground/40 text-foreground border border-foreground p-2 rounded",
     },
   ];
 

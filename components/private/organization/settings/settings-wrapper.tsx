@@ -99,14 +99,14 @@ const OrgSettings = () => {
       label: t("label_active"),
       description: t("desc_org_active"),
       icon: PlayIcon,
-      color: "bg-success/30 text-foreground border border-success/60 p-2 rounded",
+      color: "bg-success/40 text-foreground border border-success p-2 rounded",
     },
     {
       status: "inactive",
       label: t("label_inactive"),
       description: t("desc_org_inactive"),
       icon: PauseIcon,
-      color: "bg-warning/30 text-foreground border border-warning/60 p-2 rounded",
+      color: "bg-warning/40 text-foreground border border-warning p-2 rounded",
     },
   ];
 
@@ -148,6 +148,19 @@ const OrgSettings = () => {
             <div className="flex flex-col gap-6 w-full">
               <FormField
                 control={handler.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("label_name")}</FormLabel>
+                    <FormControl>
+                      <Input type="text" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={handler.control}
                 name="status"
                 render={({ field }) => (
                   <FormItem>
@@ -157,19 +170,6 @@ const OrgSettings = () => {
                       status={app.organization.status}
                       onStatusChange={onSetStatus}
                     />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={handler.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("label_name")}</FormLabel>
-                    <FormControl>
-                      <Input type="text" {...field} />
-                    </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />

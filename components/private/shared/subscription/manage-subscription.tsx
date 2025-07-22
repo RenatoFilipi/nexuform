@@ -17,8 +17,7 @@ import { Card } from "@/components/ui/card";
 import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
 import { formatCurrency } from "@/utils/functions";
-import { IPlan } from "@/utils/interfaces";
-import { getPlans } from "@/utils/plans";
+import { IPlan, getPlans } from "@/utils/pricing";
 import { TAppState, TPlan, TSetState } from "@/utils/types";
 import { EmbeddedCheckout, EmbeddedCheckoutProvider } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -154,7 +153,7 @@ const PlanOption = ({ plan, isCurrent, onSelect }: { plan: IPlan; isCurrent: boo
               <div className="flex justify-center items-center border p-2 rounded bg-primary/">
                 <PlanIcon type={plan.type} />
               </div>
-              <h3 className="font-semibold text-lg">{plan.label}</h3>
+              <h3 className="font-semibold text-lg">{plan.name}</h3>
               {plan.isMostPopular && (
                 <Badge variant="green" className="px-2">
                   {t("label_most_popular")}
@@ -163,7 +162,7 @@ const PlanOption = ({ plan, isCurrent, onSelect }: { plan: IPlan; isCurrent: boo
             </div>
           </div>
           <div className="text-right">
-            <p className="font-bold text-xl">{formatCurrency("USD", plan.price)}</p>
+            <p className="font-bold text-xl">{formatCurrency("USD", plan.price.amount)}</p>
             <p className="text-xs text-muted-foreground">{t("label_per_month")}</p>
           </div>
         </div>

@@ -5,6 +5,7 @@ import { ComponentProps } from "react";
 type PlanBadgeProps = {
   type: TPlan;
   size?: "sm" | "md" | "lg" | "xl" | number;
+  variant?: "default" | "outline" | "shiny";
 } & ComponentProps<typeof ZapIcon>;
 
 const sizeMap = {

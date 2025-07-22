@@ -7,11 +7,10 @@ import useUserStore from "@/stores/user";
 import { useQuery } from "@tanstack/react-query";
 import { endOfMonth, endOfWeek, startOfMonth, startOfToday, startOfWeek, subDays } from "date-fns";
 import { enUS, es, pt } from "date-fns/locale";
-import { ArrowUpRightIcon, CalendarIcon } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 import { DateRange } from "react-day-picker";
-import ManageSubscription2 from "../subscription/manage-subscription2";
 import PlanBadge from "./plan-badge";
 
 interface IProps {
@@ -178,21 +177,13 @@ const DateRangePicker = ({ className, initialRange, onChange, align }: IProps) =
             {/* Calendar column */}
             <div className="flex flex-col relative">
               {!isAllowedCustom && (
-                <div className="absolute inset-0 bg-background/40 backdrop-blur-sm z-10 flex flex-col items-center justify-center gap-4 p-4">
+                <div className="absolute inset-0 bg-background/40 backdrop-blur z-10 flex flex-col items-center justify-center gap-4 p-4">
                   <div className="relative group">
                     <div className="">
                       <PlanBadge type="pro" size={36} />
                     </div>
                   </div>
-                  <p className="text-sm text-center">{t("label_upgrade_for_custom_dates")}</p>
-                  {isOwner && (
-                    <ManageSubscription2 selected="pro">
-                      <Button variant="secondary" size="xs">
-                        <ArrowUpRightIcon className="w-4 h-4 mr-2" />
-                        {t("label_upgrade_to_pro")}
-                      </Button>
-                    </ManageSubscription2>
-                  )}
+                  <p className="text-sm text-center font-semibold">{t("label_upgrade_for_custom_dates")}</p>
                 </div>
               )}
               <Calendar

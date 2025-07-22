@@ -324,7 +324,6 @@ export const applyContext = (tmp: ETeamMemberProfile, org: EOrganization, sub: E
   const dueDate = new Date(sub.due_date);
   const isOrgOwner = org.owner_id === tmp.profile_id;
   const orgRole = tmp.role as TOrganizationRole;
-  const isAllowedToInvite = isOrgOwner || orgRole === "admin" || orgRole === "owner";
   const isAdminOrHigher = orgRole === "admin" || orgRole === "owner";
   const isOrgActive = org.status === "active";
   const isSubscriptionDateValid = startDate <= now && now <= dueDate;
@@ -333,6 +332,7 @@ export const applyContext = (tmp: ETeamMemberProfile, org: EOrganization, sub: E
   const isTrialing = (sub.status === "active" || sub.plan === "free_trial") && isSubscriptionDateValid;
   const hasBillingIssues = sub.status !== "past_due";
   const isAccountHolder = sub.profile_id === tmp.profile_id;
+  const isAllowedToInvite = (isOrgOwner || isAdminOrHigher) && isSubscriptionActive && sub.plan === "pro";
 
   return {
     isOrgOwner,

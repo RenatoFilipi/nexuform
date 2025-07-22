@@ -216,7 +216,7 @@ const Password = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
         <div className="flex flex-col gap-1 w-full">
           <h1 className="font-semibold text-base">{t("label_password")}</h1>
-          <p className="text-xs text-muted-foreground">{t("desc_password")}</p>
+          <p className="text-sm text-muted-foreground">{t("desc_password")}</p>
         </div>
         <Form {...passwordHandler}>
           <form onSubmit={passwordHandler.handleSubmit(onPasswordSubmit)} className="flex flex-col gap-6 w-full">
@@ -381,7 +381,7 @@ const Delete = () => {
     <Card className="flex flex-col sm:flex-row justify-between items-center gap-8 p-4 sm:p-8">
       <div className="flex flex-col gap-1">
         <h1 className="font-semibold text-base">{t("label_delete_account")}</h1>
-        <p className="text-xs text-muted-foreground">{t("desc_delete_account")}</p>
+        <p className="text-sm text-muted-foreground">{t("desc_delete_account")}</p>
       </div>
       <div className="flex justify-end items-center w-full">
         <AccountDelete>

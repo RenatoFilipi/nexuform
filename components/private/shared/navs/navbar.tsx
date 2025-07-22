@@ -16,6 +16,7 @@ import useAppStore from "@/stores/app";
 import useEditorStore from "@/stores/editor";
 import useUserStore from "@/stores/user";
 import { minute } from "@/utils/constants";
+import { TPlan } from "@/utils/pricing";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
@@ -37,13 +38,13 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import FeedbackForm from "../custom/feedback-form";
+import PlanBadge from "../custom/plan-badge";
 
 const Navbar = () => {
   const pathname = usePathname();
   const isEditorResource = pathname.split("/")[6] === "editor";
   const isInOrg = pathname.includes("/organizations/") && pathname.split("/organizations/")[1]?.split("/")[0] !== "";
   const isCheckoutResource = pathname.includes("/checkout-result");
-  console.log(pathname);
 
   if (isEditorResource) return <EditorNavbar />;
   if (isInOrg) return <AfterOrgNavbar />;
@@ -110,7 +111,10 @@ const AfterOrgNavbar = () => {
             <div className="hidden sm:flex justify-start items-center gap-2">
               <Separator orientation="vertical" className="h-4 bg-muted-foreground rotate-12" />
               <div className="flex justify-center items-center gap-0">
-                <Link href={orgPath} className="text-sm hover:bg-foreground/10 p-1 rounded">
+                <Link
+                  href={orgPath}
+                  className="text-sm hover:bg-foreground/10 p-1 rounded flex justify-center items-center gap-2">
+                  <PlanBadge size={"sm"} type={app.subscription.plan as TPlan} />
                   {app.organization.name}
                 </Link>
                 <SearchOrgs orgId={orgId}>

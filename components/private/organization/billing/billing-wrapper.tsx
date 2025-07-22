@@ -325,7 +325,7 @@ const BillingUsageCard = ({
                 style={{ width: `${usageValue}%` }}
               />
             </div>
-            <div className="flex justify-between items-center text-xs">
+            <div className="flex justify-end items-center text-xs">
               <span className="text-muted-foreground">
                 {usagePercentage}% {t("label_available")}
               </span>
