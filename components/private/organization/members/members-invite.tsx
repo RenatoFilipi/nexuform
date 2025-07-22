@@ -117,7 +117,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <UpgradeToPro />
+      {app.subscription.plan !== "pro" && <UpgradeToPro />}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-10">
           <div className="grid gap-6">

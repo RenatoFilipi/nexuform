@@ -14,7 +14,7 @@ const FeedbackForm = ({ children }: { children: ReactNode }) => {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent className="flex w-full min-w-80 p-0" align="end">
+      <PopoverContent className="flex w-full min-w-80 p-0 z-40" align="end">
         <Body />
       </PopoverContent>
     </Popover>

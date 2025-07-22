@@ -1,6 +1,6 @@
 "use client";
 
-import { createCheckoutSessionAction } from "@/app/actions/stripe";
+import { createCheckoutSessionAction, updateSubscriptionPlanAction } from "@/app/actions/stripe";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -21,8 +21,17 @@ import { EmbeddedCheckout, EmbeddedCheckoutProvider } from "@stripe/react-stripe
 import { loadStripe } from "@stripe/stripe-js";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { ArrowRightIcon, CheckIcon, ChevronLeftIcon, ClockIcon } from "lucide-react";
+import {
+  ArrowRightIcon,
+  CheckCircleIcon,
+  CheckIcon,
+  ChevronLeftIcon,
+  ClockIcon,
+  LoaderIcon,
+  XCircleIcon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { useState } from "react";
 import PlanBadge from "../custom/plan-badge";
 
@@ -249,6 +258,125 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
   formData.append("subscription_id", app.subscription.stripe_subscription_id as string);
   formData.append("plan", plan.type);
 
+  const onConfirm = async () => {
+    try {
+      setAppState("loading");
+      await updateSubscriptionPlanAction(formData);
+      setAppState("success");
+    } catch (error) {
+      setAppState("error");
+    }
+  };
+
+  if (appState === "loading") {
+    return (
+      <div className="flex flex-1 w-full h-full justify-center items-center flex-col gap-6">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{
+            duration: 1.8,
+            repeat: Infinity,
+            ease: "linear",
+            damping: 10,
+          }}
+          className="relative">
+          <LoaderIcon className="w-12 h-12 text-primary animate-pulse" />
+        </motion.div>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-sm text-muted-foreground font-medium tracking-wide animate-pulse">
+          {t("label_updating_subscription")}
+        </motion.p>
+      </div>
+    );
+  }
+
+  if (appState === "error") {
+    return (
+      <div className="flex flex-1 flex-col items-center justify-center gap-8 text-center p-8">
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: "spring", stiffness: 200 }}
+          className="p-5 rounded-full bg-destructive/10 backdrop-blur-sm">
+          <XCircleIcon className="w-12 h-12 text-destructive" />
+        </motion.div>
+        <div className="space-y-3 max-w-md">
+          <motion.h3
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-2xl font-semibold text-foreground">
+            {t("label_update_failed")}
+          </motion.h3>
+          <motion.p
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-muted-foreground text-sm leading-relaxed">
+            {t("desc_update_failed")}
+          </motion.p>
+        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="flex gap-4 pt-2">
+          <Button
+            variant="outline"
+            onClick={() => setPlan(null)}
+            className="flex justify-center items-center gap-2 px-6 py-3 rounded-lg border-2">
+            <ChevronLeftIcon className="w-5 h-5" />
+            {t("label_go_back")}
+          </Button>
+        </motion.div>
+      </div>
+    );
+  }
+
+  if (appState === "success") {
+    return (
+      <div className="flex flex-1 flex-col items-center justify-center gap-8 text-center p-8">
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: "spring", stiffness: 300 }}
+          className="p-5 rounded-full bg-success/10 backdrop-blur-sm">
+          <CheckCircleIcon className="w-14 h-14 text-success" />
+        </motion.div>
+        <div className="space-y-3 max-w-md">
+          <motion.h3
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-2xl font-semibold text-foreground">
+            {t("label_subscription_updated")}
+          </motion.h3>
+          <motion.p
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-muted-foreground text-sm leading-relaxed">
+            {t("desc_subscription_updated")}
+          </motion.p>
+        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="pt-4">
+          <Button
+            className="px-8 py-3 rounded-lg bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-white shadow-lg transition-all hover:shadow-primary/30"
+            asChild>
+            <Link href="/dashboard/organizations">{t("label_return_to_dashboard")}</Link>
+          </Button>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col h-full w-full gap-6">
       <Card className="relative p-8 rounded-2xl bg-gradient-to-br from-muted/20 to-background border border-muted/30 shadow-lg h-full flex flex-col justify-center items-center w-full overflow-hidden">
@@ -307,10 +435,13 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
           )}
         </motion.div>
       </Card>
-      <div className="flex gap-4">
+      <div className="flex gap-4 justify-between items-center">
         <Button onClick={() => setPlan(null)} variant={"ghost"} size={"sm"} className="">
           <ChevronLeftIcon className="w-4 h-4 mr-1" />
           {t("label_go_back")}
+        </Button>
+        <Button variant={"secondary"} onClick={onConfirm} size="sm" className="">
+          {t("label_complete_subscription")}
         </Button>
       </div>
     </div>

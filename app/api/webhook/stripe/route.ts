@@ -155,14 +155,14 @@ export const POST = async (req: Request) => {
 
       case "customer.subscription.created": {
         const subscription = event.data.object as Stripe.Subscription;
-        await updateSubscription(subscription, "active", true);
+        await updateSubscription(subscription, subscription.status, true);
         break;
       }
 
       case "customer.subscription.updated": {
         const subscription = event.data.object as Stripe.Subscription;
         const status = subscription.status === "active" ? "active" : "inactive";
-        await updateSubscription(subscription, status);
+        await updateSubscription(subscription, subscription.status);
         break;
       }
 

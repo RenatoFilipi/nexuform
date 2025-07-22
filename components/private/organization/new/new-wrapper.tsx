@@ -98,7 +98,7 @@ const NewWrapper = (props: IProps) => {
         <div className="grid sm:grid-cols-2 gap-4 sm:gap-8">
           <MethodCard
             icon={
-              <div className="p-3 rounded bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors">
+              <div className="p-4 rounded-full bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors">
                 <PlusIcon className="w-6 h-6 text-blue-500" />
               </div>
             }
@@ -117,7 +117,7 @@ const NewWrapper = (props: IProps) => {
           />
           <MethodCard
             icon={
-              <div className="p-3 rounded bg-orange-500/10 group-hover:bg-orange-500/20 transition-colors">
+              <div className="p-4 rounded-full bg-orange-500/10 group-hover:bg-orange-500/20 transition-colors">
                 <HexagonIcon className="w-6 h-6 text-orange-500" />
               </div>
             }
