@@ -73,6 +73,14 @@ const getConfig = (plan: TPlan) => {
 };
 const updateSubscription = async (subscription: Stripe.Subscription, status: string) => {
   const customerId = subscription.customer as string;
+
+  const requiredMetadata = ["organization_id", "profile_id"];
+  for (const meta of requiredMetadata) {
+    if (!subscription.metadata?.[meta]) {
+      throw new Error(`Missing required metadata: ${meta}`);
+    }
+  }
+
   const profile = await getProfile(customerId);
 
   const priceToPlanMap: Record<string, TPlan> = {
@@ -80,10 +88,11 @@ const updateSubscription = async (subscription: Stripe.Subscription, status: str
     [proConfig.priceId]: "pro",
   };
 
-  let plan: TPlan =
-    (subscription.metadata?.plan as TPlan) ||
-    priceToPlanMap[subscription.items.data[0]?.price.id || ""] ||
-    "free_trial";
+  let plan: TPlan = subscription.metadata?.plan as TPlan;
+  if (!plan) {
+    const priceId = subscription.items.data[0]?.price.id;
+    plan = priceId ? priceToPlanMap[priceId] : "free_trial";
+  }
 
   const config = getConfig(plan);
 
@@ -115,7 +124,6 @@ const updateSubscription = async (subscription: Stripe.Subscription, status: str
   const { error } = await supabase
     .from("subscriptions")
     .update(subscriptionData)
-    .eq("stripe_subscription_id", subscription.id)
     .eq("profile_id", profile.id)
     .eq("org_id", orgId);
 

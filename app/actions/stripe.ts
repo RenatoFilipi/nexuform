@@ -46,6 +46,7 @@ export const createCheckoutSessionAction = async (formData: FormData) => {
           profile_id: profileId,
           tmp_id: tmpId,
           email,
+          created_at: new Date().toISOString(),
         },
       },
     });
@@ -65,6 +66,8 @@ export const updateSubscriptionPlanAction = async (formData: FormData) => {
       throw new Error("Missing required fields: subscription_id or plan.");
     }
 
+    const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+
     const priceMap: Record<TPlan, string | undefined> = {
       starter: process.env.STRIPE_STARTER_PRICE_ID,
       pro: process.env.STRIPE_PRO_PRICE_ID,
@@ -76,19 +79,22 @@ export const updateSubscriptionPlanAction = async (formData: FormData) => {
       throw new Error(`Missing Stripe price ID for plan: ${plan}`);
     }
 
-    const subscription = await stripe.subscriptions.retrieve(subscriptionId);
-
     const itemId = subscription.items.data[0]?.id;
     if (!itemId) {
       throw new Error("Stripe subscription item ID not found.");
     }
 
+    const updatedMetadata = {
+      ...subscription.metadata,
+      plan,
+      previous_plan: subscription.metadata?.plan,
+      plan_changed_at: new Date().toISOString(),
+    };
+
     await stripe.subscriptions.update(subscriptionId, {
       items: [{ id: itemId, price: priceId }],
       proration_behavior: "always_invoice",
-      metadata: {
-        plan,
-      },
+      metadata: updatedMetadata,
     });
   } catch (error: any) {
     console.error("Error updating subscription plan:", error);
