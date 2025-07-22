@@ -22,7 +22,7 @@ import { ReactNode, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import ManageSubscription2 from "../../shared/subscription/manage-subscription2";
+import ManageSubscription from "../../shared/subscription/manage-subscription";
 
 const MembersInvite = ({ children }: { children: ReactNode }) => {
   const t = useTranslations("app");
@@ -212,12 +212,12 @@ const UpgradeToPro = () => {
           </div>
           {app.context.isOrgOwner && (
             <div className="mt-4 flex items-center justify-center sm:justify-end">
-              <ManageSubscription2 selected="pro">
+              <ManageSubscription selected="pro">
                 <Button size="sm" variant={"secondary"} className="w-full sm:w-fit">
                   <ArrowUpRightIcon className="w-4 h-4 mr-2" />
                   {t("label_upgrade_pro")}
                 </Button>
-              </ManageSubscription2>
+              </ManageSubscription>
             </div>
           )}
         </div>

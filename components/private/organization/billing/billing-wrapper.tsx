@@ -26,7 +26,7 @@ import { useTranslations } from "next-intl";
 import PlanBadge from "../../shared/custom/plan-badge";
 import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 import CancelSubscription from "../../shared/subscription/cancel-subscription";
-import ManageSubscription2 from "../../shared/subscription/manage-subscription2";
+import ManageSubscription from "../../shared/subscription/manage-subscription";
 
 interface IProps {
   locale: string;
@@ -149,12 +149,12 @@ const BillingPlan = () => {
             </div>
           </div>
           <div className="ml-auto w-full md:w-auto">
-            <ManageSubscription2>
+            <ManageSubscription>
               <Button className="gap-2 w-full" variant="outline" size="sm">
                 <ArrowUpRightIcon className="h-4 w-4" />
                 {t("label_manage_sub")}
               </Button>
-            </ManageSubscription2>
+            </ManageSubscription>
           </div>
         </div>
       </Card>
@@ -176,12 +176,12 @@ const BillingPlan = () => {
             </div>
           </div>
           {isOwner && (
-            <ManageSubscription2>
+            <ManageSubscription>
               <Button variant="outline" size="sm" className="gap-2 w-full sm:w-fit">
                 <ArrowUpRightIcon className="h-4 w-4" />
                 {t("label_manage_sub")}
               </Button>
-            </ManageSubscription2>
+            </ManageSubscription>
           )}
         </div>
 

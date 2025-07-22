@@ -172,7 +172,7 @@ const Body = ({
                 {t("label_csv_export")}
               </Button>
             ) : (
-              <ManageSubscription>
+              <ManageSubscription selected="pro">
                 <Button variant="outline" className="w-full sm:w-auto" size={"sm"}>
                   {t("label_csv_export")}
                 </Button>
