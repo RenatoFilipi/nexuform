@@ -24,8 +24,8 @@ const OrgForms = async ({ params }: { params: Promise<{ slug: string }> }) => {
     const organization = await fetchOrganization(slug);
     const teamMemberProfile = await fetchOrgTeamMemberProfile(userId, organization.id);
     const subscription = await fetchSubscription(organization.id);
-    const context = applyContext(teamMemberProfile, organization, subscription);
     const forms = await fetchForms(organization.id, subscription.forms, true);
+    const context = applyContext(teamMemberProfile, organization, subscription);
 
     return (
       <FormsWrapper

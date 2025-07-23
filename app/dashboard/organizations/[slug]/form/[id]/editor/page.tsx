@@ -1,3 +1,8 @@
+import { fetchForm } from "@/app/actions/form-actions";
+import { fetchOrganization } from "@/app/actions/organization-actions";
+import { fetchProfile } from "@/app/actions/profile-actions";
+import { fetchSubscription } from "@/app/actions/subscription-actions";
+import { fetchOrgTeamMemberProfile } from "@/app/actions/team-member-profile-actions";
 import EditorWrapper from "@/components/private/form/editor/editor-wrapper";
 import ErrorUI from "@/components/private/shared/pages/error-ui";
 import { applyContext } from "@/utils/functions";
@@ -14,53 +19,41 @@ const Editor = async ({ params }: { params: Promise<{ slug: string; id: string }
   const email = data.user.email!;
   const userId = data.user.id;
 
-  const profile = await supabase.from("profiles").select("*").eq("id", userId).single();
-  if (profile.error) return <ErrorUI email={email} />;
+  try {
+    const profile = await fetchProfile(userId);
+    const organization = await fetchOrganization(slug);
+    const teamMemberProfile = await fetchOrgTeamMemberProfile(userId, organization.id);
+    const subscription = await fetchSubscription(organization.id);
+    const form = await fetchForm(id, organization.id);
 
-  const organization = await supabase.from("organizations").select("*").eq("public_id", slug).single();
-  if (organization.error) return <ErrorUI email={email} />;
+    const theme = await supabase.from("themes").select("*").eq("form_id", form.id).single();
+    if (theme.error) throw new Error("");
 
-  const orgId = organization.data.id;
+    const blocks = await supabase
+      .from("blocks")
+      .select("*")
+      .eq("form_id", form.id)
+      .order("position", { ascending: true });
+    if (blocks.error) throw new Error("");
 
-  const teamMemberProfile = await supabase
-    .from("team_member_profiles")
-    .select("*")
-    .eq("profile_id", userId)
-    .eq("org_id", orgId)
-    .single();
-  if (teamMemberProfile.error) return <ErrorUI email={email} />;
+    const context = applyContext(teamMemberProfile, organization, subscription);
 
-  const subscription = await supabase.from("subscriptions").select("*").eq("org_id", orgId).single();
-  if (subscription.error) return <ErrorUI email={email} />;
-
-  const form = await supabase.from("forms").select("*").eq("public_id", id).eq("org_id", orgId).single();
-  if (form.error) return <ErrorUI email={email} />;
-
-  const theme = await supabase.from("themes").select("*").eq("form_id", form.data.id).single();
-  if (theme.error) return <ErrorUI email={email} />;
-
-  const blocks = await supabase
-    .from("blocks")
-    .select("*")
-    .eq("form_id", form.data.id)
-    .order("position", { ascending: true });
-  if (blocks.error) return <ErrorUI email={email} />;
-
-  const context = applyContext(teamMemberProfile.data, organization.data, subscription.data);
-
-  return (
-    <EditorWrapper
-      locale={locale}
-      email={email}
-      profile={profile.data}
-      teamMemberProfile={teamMemberProfile.data}
-      organization={organization.data}
-      subscription={subscription.data}
-      form={form.data}
-      theme={theme.data}
-      blocks={blocks.data}
-      context={context}
-    />
-  );
+    return (
+      <EditorWrapper
+        locale={locale}
+        email={email}
+        profile={profile}
+        teamMemberProfile={teamMemberProfile}
+        organization={organization}
+        subscription={subscription}
+        form={form}
+        theme={theme.data}
+        blocks={blocks.data}
+        context={context}
+      />
+    );
+  } catch (error) {
+    return <ErrorUI email={email} />;
+  }
 };
 export default Editor;

@@ -52,3 +52,14 @@ export const fetchForms = async (orgId: string, limit: number, ascending: boolea
   if (error) throw new Error("Failed to fetch forms.");
   return data;
 };
+export const fetchForm = async (publicId: string, orgId: string) => {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("forms")
+    .select("*")
+    .eq("public_id", publicId)
+    .eq("org_id", orgId)
+    .single();
+  if (error) throw new Error("Failed to fetch form.");
+  return data;
+};

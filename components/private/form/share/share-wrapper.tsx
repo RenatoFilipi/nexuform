@@ -9,9 +9,8 @@ import useUserStore from "@/stores/user";
 import { EForm, EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
 import { IContext } from "@/utils/interfaces";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowUpRightIcon, DownloadIcon, ExternalLinkIcon, LinkIcon, LoaderIcon, Share2Icon } from "lucide-react";
+import { DownloadIcon, ExternalLinkIcon, LinkIcon, LoaderIcon, Share2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 import { QRCodeSVG } from "qrcode.react";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
@@ -75,12 +74,6 @@ const ShareWrapper = (props: IProps) => {
           <div className="flex flex-col justify-center items-center gap-1 text-center">
             <h3 className="text-xl font-bold text-foreground">{t("label_not_public")}</h3>
             <p className="text-muted-foreground max-w-md text-sm/relaxed">{t("desc_not_public")}</p>
-            <Button variant={"secondary"} size={"sm"} className="mt-4" asChild>
-              <Link href={`/dashboard/organizations/${app.organization.public_id}/form/${app.form.public_id}/settings`}>
-                {t("label_settings")}
-                <ArrowUpRightIcon className="w-4 h-4 ml-2" />
-              </Link>
-            </Button>
           </div>
         </Card>
       )}

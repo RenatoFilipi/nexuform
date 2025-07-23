@@ -1,3 +1,7 @@
+import { fetchOrganization } from "@/app/actions/organization-actions";
+import { fetchProfile } from "@/app/actions/profile-actions";
+import { fetchSubscription } from "@/app/actions/subscription-actions";
+import { fetchOrgTeamMemberProfile } from "@/app/actions/team-member-profile-actions";
 import MembersWrapper from "@/components/private/organization/members/members-wrapper";
 import ErrorUI from "@/components/private/shared/pages/error-ui";
 import { applyContext } from "@/utils/functions";
@@ -14,46 +18,37 @@ const Members = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const email = data.user.email!;
   const userId = data.user.id;
 
-  const profile = await supabase.from("profiles").select("*").eq("id", userId).single();
-  if (profile.error) return <ErrorUI email={email} />;
+  try {
+    const profile = await fetchProfile(userId);
+    const organization = await fetchOrganization(slug);
+    const teamMemberProfile = await fetchOrgTeamMemberProfile(userId, organization.id);
 
-  const organization = await supabase.from("organizations").select("*").eq("public_id", slug).single();
-  if (organization.error) return <ErrorUI email={email} />;
+    const teamMemberProfiles = await supabase
+      .from("team_member_profiles")
+      .select("*")
+      .eq("org_id", organization.id)
+      .order("created_at", { ascending: true });
+    if (teamMemberProfiles.error) return <ErrorUI email={email} />;
 
-  const orgId = organization.data.id;
+    const subscription = await fetchSubscription(organization.id);
 
-  const teamMemberProfile = await supabase
-    .from("team_member_profiles")
-    .select("*")
-    .eq("profile_id", userId)
-    .eq("org_id", orgId)
-    .single();
-  if (teamMemberProfile.error) return <ErrorUI email={email} />;
+    const context = applyContext(teamMemberProfile, organization, subscription);
 
-  const teamMemberProfiles = await supabase
-    .from("team_member_profiles")
-    .select("*")
-    .eq("org_id", orgId)
-    .order("created_at", { ascending: true });
-  if (teamMemberProfiles.error) return <ErrorUI email={email} />;
-
-  const subscription = await supabase.from("subscriptions").select("*").eq("org_id", orgId).single();
-  if (subscription.error) return <ErrorUI email={email} />;
-
-  const context = applyContext(teamMemberProfile.data, organization.data, subscription.data);
-
-  return (
-    <MembersWrapper
-      locale={locale}
-      email={email}
-      profile={profile.data}
-      organization={organization.data}
-      subscription={subscription.data}
-      teamMemberProfile={teamMemberProfile.data}
-      teamMemberProfiles={teamMemberProfiles.data}
-      context={context}
-    />
-  );
+    return (
+      <MembersWrapper
+        locale={locale}
+        email={email}
+        profile={profile}
+        organization={organization}
+        subscription={subscription}
+        teamMemberProfile={teamMemberProfile}
+        teamMemberProfiles={teamMemberProfiles.data}
+        context={context}
+      />
+    );
+  } catch (error) {
+    return <ErrorUI email={email} />;
+  }
 };
 
 export default Members;
