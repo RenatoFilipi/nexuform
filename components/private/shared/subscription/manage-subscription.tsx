@@ -4,7 +4,7 @@ import {
   createCheckoutSessionAction,
   getSubscriptionDetailsAction,
   updateSubscriptionPlanAction,
-} from "@/app/actions/stripe";
+} from "@/app/actions/stripe-actions";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   AlertDialog,

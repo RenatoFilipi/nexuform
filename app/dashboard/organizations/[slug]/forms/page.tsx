@@ -41,7 +41,12 @@ const OrgForms = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   const context = applyContext(teamMemberProfile.data, organization.data, subscription.data);
 
-  const forms = await supabase.from("forms").select("*").eq("org_id", orgId).order("created_at", { ascending: true });
+  const forms = await supabase
+    .from("forms")
+    .select("*")
+    .eq("org_id", orgId)
+    .order("created_at", { ascending: true })
+    .limit(subscription.data.forms);
   if (forms.error) return <ErrorUI email={email} />;
 
   return (

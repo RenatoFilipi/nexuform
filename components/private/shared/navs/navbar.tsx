@@ -1,6 +1,6 @@
 "use client";
 
-import { signOutAction } from "@/app/actions/auth";
+import { signOutAction } from "@/app/actions/auth-actions";
 import Brand from "@/components/shared/brand";
 import ModeToggle2 from "@/components/shared/mode-toggle2";
 import { Button } from "@/components/ui/button";

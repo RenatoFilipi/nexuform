@@ -1,6 +1,6 @@
 "use client";
 
-import { signInAction } from "@/app/actions/auth";
+import { signInAction } from "@/app/actions/auth-actions";
 import Brand from "@/components/shared/brand";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";

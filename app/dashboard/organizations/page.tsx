@@ -1,3 +1,8 @@
+import { fetchInvitations } from "@/app/actions/invitation-actions";
+import { fetchOrganizations } from "@/app/actions/organization-actions";
+import { fetchProfile } from "@/app/actions/profile-actions";
+import { fetchSubscriptions } from "@/app/actions/subscription-actions";
+import { fetchTeamMemberProfiles } from "@/app/actions/team-member-profile-actions";
 import OrganizationsWrapper from "@/components/private/organizations/organizations-wrapper";
 import ErrorUI from "@/components/private/shared/pages/error-ui";
 import { createClient } from "@/utils/supabase/server";
@@ -8,40 +13,34 @@ const Organizations = async () => {
   const locale = await getLocale();
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
+
   if (!data.user) return redirect("/login");
   const email = data.user.email!;
   const userId = data.user.id;
 
-  const profile = await supabase.from("profiles").select("*").eq("id", userId).single();
-  if (profile.error) return <ErrorUI email={email} />;
+  try {
+    const profile = await fetchProfile(userId);
+    const teamMemberProfiles = await fetchTeamMemberProfiles(userId);
+    const orgIds = teamMemberProfiles.map((x) => x.org_id);
+    const organizations = await fetchOrganizations(orgIds);
+    if (organizations.length < 1) throw new Error("No organization found.");
+    const subscriptions = await fetchSubscriptions(orgIds);
+    const invitations = await fetchInvitations(email, "pending");
 
-  const teamMemberProfiles = await supabase.from("team_member_profiles").select("*").eq("profile_id", userId);
-  if (teamMemberProfiles.error) return <ErrorUI email={email} />;
-
-  const orgIds = teamMemberProfiles.data.map((x) => x.org_id);
-
-  const organizations = await supabase.from("organizations").select("*").in("id", orgIds);
-  if (organizations.error) return <ErrorUI email={email} />;
-
-  if (organizations.data.length < 1) return <ErrorUI email={email} />;
-
-  const subscriptions = await supabase.from("subscriptions").select("*").in("org_id", orgIds);
-  if (subscriptions.error) return <ErrorUI email={email} />;
-
-  const invitations = await supabase.from("invitations").select("*").eq("email", email).eq("status", "pending");
-  if (invitations.error) return <ErrorUI email={email} />;
-
-  return (
-    <OrganizationsWrapper
-      locale={locale}
-      email={email}
-      profile={profile.data}
-      organizations={organizations.data}
-      subscriptions={subscriptions.data}
-      teamMemberProfiles={teamMemberProfiles.data}
-      invitations={invitations.data}
-    />
-  );
+    return (
+      <OrganizationsWrapper
+        locale={locale}
+        email={email}
+        profile={profile}
+        organizations={organizations}
+        subscriptions={subscriptions}
+        teamMemberProfiles={teamMemberProfiles}
+        invitations={invitations}
+      />
+    );
+  } catch (error) {
+    return <ErrorUI email={email} />;
+  }
 };
 
 export default Organizations;
