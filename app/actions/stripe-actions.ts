@@ -116,3 +116,26 @@ export const getSubscriptionDetailsAction = async (id: string) => {
     throw new Error(error?.message || "Failed to fetch subscription.");
   }
 };
+export const createBillingPortalSessionAction = async (formData: FormData) => {
+  try {
+    const origin = (await headers()).get("origin");
+    if (!origin) throw new Error("Missing request origin.");
+
+    const customerId = formData.get("customer_id") as string;
+    const returnUrl = (formData.get("return_url") as string) || `${origin}/dashboard/organizations`;
+
+    if (!customerId) {
+      throw new Error("Missing required field: customer_id.");
+    }
+
+    const session = await stripe.billingPortal.sessions.create({
+      customer: customerId,
+      return_url: returnUrl,
+    });
+
+    return session.url;
+  } catch (error: any) {
+    console.error("Failed to create billing portal session:", error);
+    throw new Error(error?.message || "Failed to create billing portal session.");
+  }
+};

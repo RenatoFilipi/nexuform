@@ -18,6 +18,7 @@ import {
   CalendarIcon,
   CalendarX2Icon,
   CircleHelpIcon,
+  ExternalLinkIcon,
   LayersIcon,
   RefreshCwIcon,
   SendIcon,
@@ -162,7 +163,7 @@ const BillingPlan = () => {
 
   return (
     <Card className="p-5 w-full border-border shadow-sm hover:shadow-md transition-shadow">
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-8">
         {/* Plan Header */}
         <div className="flex items-start justify-between gap-4 flex-col sm:flex-row">
           <div className="flex items-center gap-4">
@@ -225,7 +226,11 @@ const BillingPlan = () => {
 
         {/* Cancel Button */}
         {isOwner && showCancelButton && (
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-2 flex-col sm:flex-row">
+            <Button variant="outline" size="sm" className="">
+              <ExternalLinkIcon className="w-4 h-4 mr-2" />
+              Update Payment Method
+            </Button>
             <CancelSubscription>
               <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-destructive">
                 {t("label_cancel_sub")}
