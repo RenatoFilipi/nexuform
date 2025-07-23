@@ -41,3 +41,14 @@ export const createFormAction = async (formData: FormData) => {
 
   return redirect(successRedirect);
 };
+export const fetchForms = async (orgId: string, limit: number, ascending: boolean) => {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("forms")
+    .select("*")
+    .eq("org_id", orgId)
+    .order("created_at", { ascending })
+    .limit(limit);
+  if (error) throw new Error("Failed to fetch forms.");
+  return data;
+};

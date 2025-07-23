@@ -8,3 +8,9 @@ export const fetchSubscriptions = async (orgIds: string[]) => {
   if (error) throw new Error("Failed to fetch subscription.");
   return data;
 };
+export const fetchSubscription = async (orgId: string) => {
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("subscriptions").select("*").eq("org_id", orgId).single();
+  if (error) throw new Error("Failed to fetch subscription.");
+  return data;
+};

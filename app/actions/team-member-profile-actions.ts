@@ -14,3 +14,14 @@ export const fetchTeamMemberProfiles = async (profileId: string) => {
   if (error) throw new Error("Failed to fetch team member profile.");
   return data;
 };
+export const fetchOrgTeamMemberProfile = async (profileId: string, orgId: string) => {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("team_member_profiles")
+    .select("*")
+    .eq("profile_id", profileId)
+    .eq("org_id", orgId)
+    .single();
+  if (error) throw new Error("Failed to fetch team member profile.");
+  return data;
+};
