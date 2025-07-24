@@ -59,14 +59,12 @@ const MembersWrapper = (props: IProps) => {
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-semibold">{t("label_members")}</h1>
         <div className="flex gap-4">
-          {app.context.isAdminOrHigher && (
-            <MembersInvite>
-              <Button variant={"secondary"} size={"sm"}>
-                <UserPlus2Icon className="w-4 h-4 mr-2" />
-                {t("label_invite_member")}
-              </Button>
-            </MembersInvite>
-          )}
+          <MembersInvite>
+            <Button variant={"secondary"} size={"sm"}>
+              <UserPlus2Icon className="w-4 h-4 mr-2" />
+              {t("label_invite_member")}
+            </Button>
+          </MembersInvite>
         </div>
       </div>
       <div className="flex flex-col gap-6">
@@ -179,7 +177,7 @@ const MemberRow = ({
 
       <div className="w-full md:w-[30%] flex justify-end pl-11 md:pl-0 gap-3">
         {isUpdateAllowed && (
-          <MembersUpdate self={isYou} member={member}>
+          <MembersUpdate member={member}>
             <Button variant={"outline"} size={"sm"} className="w-fit">
               <PenBoxIcon className="w-4 h-4" />
             </Button>

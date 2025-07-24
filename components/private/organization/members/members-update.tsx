@@ -23,15 +23,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-const MembersUpdate = ({
-  children,
-  self,
-  member,
-}: {
-  children: ReactNode;
-  self: boolean;
-  member: ETeamMemberProfile;
-}) => {
+const MembersUpdate = ({ children, member }: { children: ReactNode; member: ETeamMemberProfile }) => {
   const t = useTranslations("app");
   const [open, setOpen] = useState(false);
 
@@ -44,35 +36,30 @@ const MembersUpdate = ({
             <AlertDialogTitle>{t("label_update_member")}</AlertDialogTitle>
             <AlertDialogDescription>{t("desc_update_member")}</AlertDialogDescription>
           </AlertDialogHeader>
-          <Body setState={setOpen} self={self} member={member} />
+          <Body setState={setOpen} member={member} />
         </AlertDialogContent>
       </AlertDialogOverlay>
     </AlertDialog>
   );
 };
-
-const Body = ({
-  setState,
-  self,
-  member,
-}: {
-  setState: TSetState<boolean>;
-  self: boolean;
-  member: ETeamMemberProfile;
-}) => {
+const Body = ({ setState, member }: { setState: TSetState<boolean>; member: ETeamMemberProfile }) => {
   const t = useTranslations("app");
   const app = useAppStore();
-  const [isPending, startTransition] = useTransition();
   const supabase = createClient();
-  const isOwner = app.context.isOrgOwner;
-  const isYou = app.teamMemberProfile.profile_id === member.profile_id;
-  const isStaff = app.teamMemberProfile.role === "staff";
+  const [isPending, startTransition] = useTransition();
+  const isYou = member.id === app.teamMemberProfile.id;
+  const currentUserRole = app.teamMemberProfile.role;
+  const isRoleSelectDisabled =
+    (currentUserRole === "owner" && isYou) ||
+    (currentUserRole === "admin" && (member.role === "owner" || isYou)) ||
+    currentUserRole === "staff";
 
   const formSchema = z.object({
     name: z.string().min(2, { message: t("required_name") }),
     lastName: z.string().min(2, { message: t("required_last_name") }),
     role: z.string(),
   });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: { name: member.name, lastName: member.last_name, role: member.role },
@@ -95,15 +82,13 @@ const Body = ({
         toast.error(t("err_generic"));
         return;
       }
-      const updatedTMPs = app.teamMemberProfiles.map((x) => (x.id === tmp.data.id ? tmp.data : x));
-
-      if (member.profile_id === app.teamMemberProfile.profile_id) {
+      const updatedTeamMemberProfiles = app.teamMemberProfiles.map((x) => (x.id === tmp.data.id ? tmp.data : x));
+      app.setTeamMemberProfiles(updatedTeamMemberProfiles);
+      if (isYou) {
+        const updatedContext = applyContext(tmp.data, app.organization, app.subscription);
+        app.setContext(updatedContext);
         app.setTeamMemberProfile(tmp.data);
       }
-      const updatedContext = applyContext(tmp.data, app.organization, app.subscription);
-
-      app.setTeamMemberProfiles(updatedTMPs);
-      app.setContext(updatedContext);
       toast.success(t("success_generic"));
       setState(false);
     });
@@ -146,23 +131,23 @@ const Body = ({
                 )}
               />
             </div>
-            <div className={`${(isOwner && isYou) || isStaff ? "hidden" : ""}`}>
+            <div>
               <FormField
                 control={form.control}
                 name="role"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{t("label_role")}</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                      disabled={(isOwner && isYou) || isStaff}>
+                    <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isRoleSelectDisabled}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
+                        <SelectItem value="owner" disabled>
+                          {t("label_owner")}
+                        </SelectItem>
                         <SelectItem value="admin">{t("label_admin")}</SelectItem>
                         <SelectItem value="staff">{t("label_staff")}</SelectItem>
                       </SelectContent>
@@ -192,5 +177,4 @@ const Body = ({
     </div>
   );
 };
-
 export default MembersUpdate;
