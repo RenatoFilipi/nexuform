@@ -145,9 +145,11 @@ const Body = ({ setState, member }: { setState: TSetState<boolean>; member: ETea
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="owner" disabled>
-                          {t("label_owner")}
-                        </SelectItem>
+                        {currentUserRole === "owner" && isYou && (
+                          <SelectItem value="owner" disabled>
+                            {t("label_owner")}
+                          </SelectItem>
+                        )}
                         <SelectItem value="admin">{t("label_admin")}</SelectItem>
                         <SelectItem value="staff">{t("label_staff")}</SelectItem>
                       </SelectContent>

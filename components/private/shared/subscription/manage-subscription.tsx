@@ -282,7 +282,28 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
     },
   });
 
-  if (query.isPending) return null;
+  if (query.isPending)
+    return (
+      <div className="flex justify-center items-center w-full h-full">
+        <LoaderIcon className="w-7 h-7 animate-spin text-muted-foreground" />
+      </div>
+    );
+
+  if (query.isError)
+    return (
+      <div className="flex justify-center items-center w-full h-full">
+        <div className="flex flex-col gap-6 justify-center items-center">
+          <div className="flex flex-col justify-center items-center gap-2">
+            <h2 className="text-lg font-semibold">{t("label_error_generic")}</h2>
+            <p className="text-sm text-muted-foreground">{t("desc_error_generic")}</p>
+          </div>
+          <Button variant="outline" onClick={() => setPlan(null)} className="w-fit">
+            <ChevronLeftIcon className="w-4 h-4 mr-2" />
+            {t("label_go_back")}
+          </Button>
+        </div>
+      </div>
+    );
 
   const currentPlanAmount = (query.data?.amount || 0) / 100;
   const newPlanAmount = plan.price.amount;
@@ -348,11 +369,8 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
           className="flex gap-4 pt-2">
-          <Button
-            variant="outline"
-            onClick={() => setPlan(null)}
-            className="flex justify-center items-center gap-2 px-6 py-3 rounded-lg border-2">
-            <ChevronLeftIcon className="w-5 h-5" />
+          <Button variant="outline" onClick={() => setPlan(null)} className="">
+            <ChevronLeftIcon className="w-4 h-4 mr-2" />
             {t("label_go_back")}
           </Button>
         </motion.div>

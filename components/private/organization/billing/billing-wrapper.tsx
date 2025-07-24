@@ -22,6 +22,7 @@ import {
   LayersIcon,
   RefreshCwIcon,
   SendIcon,
+  ZapIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import PlanBadge from "../../shared/custom/plan-badge";
@@ -125,7 +126,7 @@ const BillingPlan = () => {
   const dueDate = new Date(app.subscription.due_date).toLocaleDateString();
   const isFreeTrial = app.subscription.plan === "free_trial";
   const remainingDays = getDaysDifference(new Date(), new Date(app.subscription.due_date));
-  const showCancelButton = app.subscription.status !== "canceled" && app.subscription.plan !== "free_trial";
+  const hasBilling = app.subscription.status !== "canceled" && app.subscription.plan !== "free_trial";
   const isOwner = app.context.isOrgOwner;
 
   const planName = (plan: TPlan) =>
@@ -162,82 +163,78 @@ const BillingPlan = () => {
   }
 
   return (
-    <Card className="p-5 w-full border-border shadow-sm hover:shadow-md transition-shadow">
-      <div className="flex flex-col gap-8">
-        {/* Plan Header */}
-        <div className="flex items-start justify-between gap-4 flex-col sm:flex-row">
-          <div className="flex items-center gap-4">
-            <div className="">
-              <PlanBadge type={app.subscription.plan as TPlan} size={"xl"} />
+    <Card className="p-6 w-full">
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="shrink-0">
+              <PlanBadge type={app.subscription.plan as TPlan} size="xl" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold">{planName(app.subscription.plan as TPlan)}</h2>
-              <p className="text-sm text-muted-foreground">{t("label_plan")}</p>
+              <h2 className="text-xl font-semibold tracking-tight">{planName(app.subscription.plan as TPlan)}</h2>
+              <p className="text-sm text-muted-foreground font-medium">{t("label_plan")}</p>
             </div>
           </div>
           {isOwner && (
-            <ManageSubscription>
-              <Button variant="outline" size="sm" className="gap-2 w-full sm:w-fit">
-                <ArrowUpRightIcon className="h-4 w-4" />
-                {t("label_manage_sub")}
-              </Button>
-            </ManageSubscription>
+            <div className="flex flex-col sm:flex-row gap-3">
+              {isOwner && hasBilling && (
+                <div className="flex gap-3 items-center">
+                  <CancelSubscription>
+                    <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground">
+                      {t("label_cancel_sub")}
+                    </Button>
+                  </CancelSubscription>
+                  <Button variant="outline" size="sm" className="gap-2 px-4">
+                    <ExternalLinkIcon className="w-4 h-4" />
+                    {t("label_update_payment")}
+                  </Button>
+                </div>
+              )}
+              <ManageSubscription>
+                <Button variant="outline" size="sm" className="gap-2 w-full sm:w-fit px-4">
+                  <ZapIcon className="h-4 w-4" />
+                  {t("label_manage_sub")}
+                </Button>
+              </ManageSubscription>
+            </div>
           )}
         </div>
-
-        {/* Divider */}
-        <div className="h-[1px] bg-gradient-to-r from-transparent via-border to-transparent" />
-
-        {/* Plan Details */}
+        <div className="h-px bg-gradient-to-r from-transparent via-border/30 to-transparent" />
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {!isFreeTrial && (
-            <div className="space-y-1">
+            <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                <CalendarIcon className="h-4 w-4" />
+                <CalendarIcon className="h-4 w-4 opacity-80" />
                 {t("label_billing_cycle")}
               </div>
               <p className="text-sm font-medium">
-                {startDate} - {dueDate}
+                <span className="text-foreground">{startDate}</span> -{" "}
+                <span className="text-foreground">{dueDate}</span>
               </p>
             </div>
           )}
 
-          <div className="space-y-1">
+          <div className="space-y-2">
             <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
               {isFreeTrial ? (
                 <>
-                  <CalendarX2Icon className="h-4 w-4" />
+                  <CalendarX2Icon className="h-4 w-4 opacity-80" />
                   {t("label_free_trial_ends")}
                 </>
               ) : (
                 <>
-                  <RefreshCwIcon className="h-4 w-4" />
+                  <RefreshCwIcon className="h-4 w-4 opacity-80" />
                   {t("label_renews")}
                 </>
               )}
             </div>
             <div className="flex items-center gap-2">
-              <p className="text-sm font-medium">{dueDate}</p>
-              <span className="text-muted-foreground">•</span>
+              <p className="text-sm font-medium text-foreground">{dueDate}</p>
+              <span className="text-muted-foreground/50">•</span>
               <p className="text-sm text-muted-foreground">{t("label_n_days_remaining", { n: remainingDays })}</p>
             </div>
           </div>
         </div>
-
-        {/* Cancel Button */}
-        {isOwner && showCancelButton && (
-          <div className="flex justify-end gap-2 flex-col sm:flex-row">
-            <Button variant="outline" size="sm" className="">
-              <ExternalLinkIcon className="w-4 h-4 mr-2" />
-              Update Payment Method
-            </Button>
-            <CancelSubscription>
-              <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-destructive">
-                {t("label_cancel_sub")}
-              </Button>
-            </CancelSubscription>
-          </div>
-        )}
       </div>
     </Card>
   );

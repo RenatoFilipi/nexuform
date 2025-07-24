@@ -518,7 +518,8 @@
     "label_upgrade_plan": "Fazer upgrade do plano",
     "label_downgrade_plan": "Fazer downgrade do plano",
     "label_confirm_change": "Confirmar alteração",
-    "label_month": "mês"
+    "label_month": "mês",
+    "label_update_payment": "Atualizar Pagamento"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

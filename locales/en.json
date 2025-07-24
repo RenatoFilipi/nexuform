@@ -518,7 +518,8 @@
     "label_upgrade_plan": "Upgrade plan",
     "label_downgrade_plan": "Downgrade plan",
     "label_confirm_change": "Confirm change",
-    "label_month": "month"
+    "label_month": "month",
+    "label_update_payment": "Update Payment"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

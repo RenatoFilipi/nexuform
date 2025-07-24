@@ -122,7 +122,8 @@ export const createBillingPortalSessionAction = async (formData: FormData) => {
     if (!origin) throw new Error("Missing request origin.");
 
     const customerId = formData.get("customer_id") as string;
-    const returnUrl = (formData.get("return_url") as string) || `${origin}/dashboard/organizations`;
+    const orgPublicId = formData.get("org_public_id") as string;
+    const returnUrl = `${origin}/dashboard/organizations/${orgPublicId}/billing`;
 
     if (!customerId) {
       throw new Error("Missing required field: customer_id.");
