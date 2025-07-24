@@ -14,7 +14,6 @@ import { useQuery } from "@tanstack/react-query";
 import {
   AlertCircleIcon,
   AlertTriangleIcon,
-  ArrowUpRightIcon,
   CalendarIcon,
   CalendarX2Icon,
   CircleHelpIcon,
@@ -152,7 +151,7 @@ const BillingPlan = () => {
           <div className="ml-auto w-full md:w-auto">
             <ManageSubscription>
               <Button className="gap-2 w-full" variant="outline" size="sm">
-                <ArrowUpRightIcon className="h-4 w-4" />
+                <ZapIcon className="h-4 w-4" />
                 {t("label_manage_sub")}
               </Button>
             </ManageSubscription>
@@ -163,22 +162,26 @@ const BillingPlan = () => {
   }
 
   return (
-    <Card className="p-6 w-full">
+    <Card className="p-6 w-full rounded-xl shadow-sm hover:shadow-md transition-shadow">
       <div className="flex flex-col gap-6">
-        <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between">
+        {/* Header Section */}
+        <div className="flex flex-col space-y-4 lg:space-y-0 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center space-x-4">
-            <div className="shrink-0">
-              <PlanBadge type={app.subscription.plan as TPlan} size="xl" />
-            </div>
+            <PlanBadge
+              type={app.subscription.plan as TPlan}
+              size="xl"
+              className="transition-transform hover:scale-105"
+            />
             <div>
-              <h2 className="text-xl font-semibold tracking-tight">{planName(app.subscription.plan as TPlan)}</h2>
-              <p className="text-sm text-muted-foreground font-medium">{t("label_plan")}</p>
+              <h2 className="text-2xl font-bold">{planName(app.subscription.plan as TPlan)}</h2>
+              <p className="text-sm text-muted-foreground">{t("label_plan")}</p>
             </div>
           </div>
+
           {isOwner && (
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:space-x-3">
               {isOwner && hasBilling && (
-                <div className="flex gap-3 items-center">
+                <>
                   <CancelSubscription>
                     <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground">
                       {t("label_cancel_sub")}
@@ -188,10 +191,10 @@ const BillingPlan = () => {
                     <ExternalLinkIcon className="w-4 h-4" />
                     {t("label_update_payment")}
                   </Button>
-                </div>
+                </>
               )}
               <ManageSubscription>
-                <Button variant="outline" size="sm" className="gap-2 w-full sm:w-fit px-4">
+                <Button variant="outline" size="sm" className="gap-2 w-full sm:w-auto px-4">
                   <ZapIcon className="h-4 w-4" />
                   {t("label_manage_sub")}
                 </Button>
@@ -199,8 +202,12 @@ const BillingPlan = () => {
             </div>
           )}
         </div>
-        <div className="h-px bg-gradient-to-r from-transparent via-border/30 to-transparent" />
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+
+        {/* Divider */}
+        <div className="h-px bg-gradient-to-r from-transparent via-muted-foreground/40 dark:via-muted-foreground/40 to-transparent" />
+
+        {/* Details Section */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {!isFreeTrial && (
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
@@ -208,8 +215,7 @@ const BillingPlan = () => {
                 {t("label_billing_cycle")}
               </div>
               <p className="text-sm font-medium">
-                <span className="text-foreground">{startDate}</span> -{" "}
-                <span className="text-foreground">{dueDate}</span>
+                <span className="">{startDate}</span> - <span className="">{dueDate}</span>
               </p>
             </div>
           )}
@@ -229,8 +235,8 @@ const BillingPlan = () => {
               )}
             </div>
             <div className="flex items-center gap-2">
-              <p className="text-sm font-medium text-foreground">{dueDate}</p>
-              <span className="text-muted-foreground/50">•</span>
+              <p className="text-sm font-medium">{dueDate}</p>
+              <span className="text-muted-foreground">•</span>
               <p className="text-sm text-muted-foreground">{t("label_n_days_remaining", { n: remainingDays })}</p>
             </div>
           </div>

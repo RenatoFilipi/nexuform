@@ -443,7 +443,7 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
               <p className="font-medium text-base capitalize mt-1 text-foreground">{app.subscription.plan}</p>
               <p className="text-primary font-semibold text-sm mt-2">
                 {formatPrice(currentPlanAmount)}
-                <span className="text-muted-foreground font-normal text-xs">/{t("label_month")}</span>
+                <span className="text-muted-foreground font-normal text-xs"> /{t("label_month")}</span>
               </p>
             </div>
           </motion.div>
@@ -473,7 +473,7 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
               <p className="font-medium text-base capitalize mt-1 text-foreground">{plan.name}</p>
               <p className="text-primary font-semibold text-sm mt-2">
                 {formatPrice(newPlanAmount)}
-                <span className="text-muted-foreground font-normal text-xs">/{t("label_month")}</span>
+                <span className="text-muted-foreground font-normal text-xs"> /{t("label_month")}</span>
               </p>
             </div>
           </motion.div>
