@@ -519,7 +519,8 @@
     "label_downgrade_plan": "Reducir plan",
     "label_confirm_change": "Confirmar cambio",
     "label_month": "mes",
-    "label_update_payment": "Actualizar Pago"
+    "label_update_payment": "Actualizar Pago",
+    "label_summary": "Resumen"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

@@ -20,7 +20,7 @@ import { Card } from "@/components/ui/card";
 import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
 import { formatCurrency } from "@/utils/functions";
-import { IPlan, TPlan, getPlans } from "@/utils/pricing";
+import { IPlan, getPlans } from "@/utils/pricing";
 import { TAppState, TSetState } from "@/utils/types";
 import { EmbeddedCheckout, EmbeddedCheckoutProvider } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -28,7 +28,6 @@ import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import {
-  AlertCircleIcon,
   ArrowRightIcon,
   CheckCircleIcon,
   CheckIcon,
@@ -55,7 +54,7 @@ const ManageSubscription = ({ children, selected }: { children: React.ReactNode;
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogOverlay className="backdrop-blur-sm">
         <AlertDialogContent className="flex flex-col w-full max-w-5xl max-h-[95%] h-full overflow-y-auto">
-          <AlertDialogHeader className="">
+          <AlertDialogHeader className="hidden">
             <AlertDialogTitle className="">{t("label_manage_sub")}</AlertDialogTitle>
             <AlertDialogDescription>{t("desc_manage_sub")}</AlertDialogDescription>
           </AlertDialogHeader>
@@ -420,109 +419,102 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
   }
 
   return (
-    <div className="flex flex-col h-full w-full gap-6 overflow-y-auto">
-      <Card className="relative rounded-xl bg-background border border-muted/20 shadow-sm h-full flex flex-col justify-center items-center w-full overflow-y-auto">
-        {/* Header */}
-        <div className="w-full text-center mb-6">
-          <h2 className="text-xl font-semibold text-foreground">{t("label_plan_change_confirmation")}</h2>
+    <div className="flex flex-col h-full w-full max-w-4xl mx-auto p-4 md:p-6 gap-6">
+      {/* Header Section */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 w-full">
+        <div>
+          <h2 className="text-2xl font-bold text-foreground">{t("label_plan_change_confirmation")}</h2>
           <p className="text-sm text-muted-foreground mt-1">{t("desc_review_changes_before_confirmation")}</p>
         </div>
+        <Button
+          onClick={() => setPlan(null)}
+          variant="ghost"
+          size="sm"
+          className="gap-1 text-muted-foreground hover:text-foreground">
+          <ChevronLeftIcon className="w-4 h-4" />
+          {t("label_back")}
+        </Button>
+      </div>
 
-        {/* Plan Comparison */}
-        <div className="relative z-10 flex items-center justify-between w-full max-w-md mb-8">
+      {/* Main Content */}
+      <div className="flex flex-col lg:flex-row gap-8 w-full">
+        <div className="flex-1">
+          {/* New Plan Card - Focused Version */}
           <motion.div
-            initial={{ x: -20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-col items-center gap-3 p-4 bg-card rounded-lg border border-card w-[45%]">
-            <div className="p-2 rounded-full bg-background border">
-              <PlanBadge type={app.subscription.plan as TPlan} size="sm" />
-            </div>
-            <div className="text-center w-full">
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{t("label_current")}</p>
-              <p className="font-medium text-base capitalize mt-1 text-foreground">{app.subscription.plan}</p>
-              <p className="text-primary font-semibold text-sm mt-2">
-                {formatPrice(currentPlanAmount)}
-                <span className="text-muted-foreground font-normal text-xs"> /{t("label_month")}</span>
-              </p>
-            </div>
-          </motion.div>
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            className="border-2 border-primary rounded-2xl p-8 bg-gradient-to-br from-card to-primary/5 shadow-lg">
+            <div className="flex flex-col items-center text-center gap-6">
+              {/* Plan Badge with Emphasis */}
+              <div className="relative">
+                <div className="p-4 rounded-xl bg-background border-2 border-primary/20 shadow-sm">
+                  <PlanBadge type={plan.type} size="xl" />
+                </div>
+              </div>
 
-          <motion.div
-            animate={{
-              x: [-3, 3, -3],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-            }}
-            className="p-2 rounded-full bg-primary/10 mx-2">
-            <ArrowRightIcon className="w-5 h-5 text-primary" />
-          </motion.div>
+              {/* Plan Details */}
+              <div className="w-full space-y-2">
+                <h3 className="text-2xl font-bold text-foreground capitalize">{plan.name}</h3>
 
-          <motion.div
-            initial={{ x: 20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="flex flex-col items-center gap-3 p-4 bg-card rounded-lg border border-card w-[45%]">
-            <div className="p-2 rounded-full bg-background border">
-              <PlanBadge type={plan.type} size="sm" />
-            </div>
-            <div className="text-center w-full">
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{t("label_new")}</p>
-              <p className="font-medium text-base capitalize mt-1 text-foreground">{plan.name}</p>
-              <p className="text-primary font-semibold text-sm mt-2">
-                {formatPrice(newPlanAmount)}
-                <span className="text-muted-foreground font-normal text-xs"> /{t("label_month")}</span>
-              </p>
+                {/* Price Display */}
+                <div className="mt-4">
+                  <p className="text-5xl font-extrabold text-primary">
+                    {formatPrice(newPlanAmount)}
+                    <span className="text-base font-normal text-muted-foreground">/{t("label_month")}</span>
+                  </p>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
 
-        {/* Price Difference */}
-        <div className="w-full max-w-md bg-card rounded-lg p-4 mb-4">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm text-muted-foreground">{t("label_monthly_difference")}:</span>
-            <span
-              className={clsx(
-                "font-semibold",
-                isUpgrade ? "text-success" : isDowngrade ? "text-warning" : "text-muted-foreground"
-              )}>
-              {isSamePrice ? t("label_no_change") : `${isUpgrade ? "+" : "-"}${formatPrice(Math.abs(difference))}`}
-            </span>
+        {/* Summary Section */}
+        <div className="flex-1 space-y-6">
+          <div className="border rounded-xl p-6 bg-card shadow-sm">
+            <h3 className="text-lg font-semibold mb-4">{t("label_summary")}</h3>
+
+            {/* Price Comparison */}
+            <div className="space-y-4">
+              <div className="flex justify-between items-center py-2 border-b">
+                <span className="text-muted-foreground">{t("label_current_plan")}</span>
+                <span className="font-medium">{formatPrice(currentPlanAmount)}</span>
+              </div>
+
+              <div className="flex justify-between items-center py-2 border-b">
+                <span className="text-muted-foreground">{t("label_new_plan")}</span>
+                <span className="font-medium">{formatPrice(newPlanAmount)}</span>
+              </div>
+
+              <div className="flex justify-between items-center pt-2">
+                <span className="text-muted-foreground">{t("label_monthly_difference")}</span>
+                <span
+                  className={clsx(
+                    "font-semibold",
+                    isUpgrade ? "text-success" : isDowngrade ? "text-warning" : "text-muted-foreground"
+                  )}>
+                  {isSamePrice ? t("label_no_change") : `${isUpgrade ? "+" : "-"}${formatPrice(Math.abs(difference))}`}
+                </span>
+              </div>
+            </div>
           </div>
 
-          {!isSamePrice && (
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-muted-foreground">{t("label_new_monthly_total")}:</span>
-              <span className="font-medium text-foreground">{formatPrice(newPlanAmount)}</span>
-            </div>
-          )}
-        </div>
-
-        {/* Notices */}
-        <div className="w-full max-w-md space-y-2 text-center">
+          {/* Notices */}
           {app.subscription.plan === "pro" && plan.type === "starter" && (
-            <Alert variant="warning" className="text-xs py-2">
-              <AlertCircleIcon className="w-4 h-4" />
+            <Alert variant="warning" className="text-sm">
               <AlertTitle>{t("warning_downgrade_title")}</AlertTitle>
               <AlertDescription>{t("warning_downgrade_description")}</AlertDescription>
             </Alert>
           )}
 
-          <p className="text-xs text-muted-foreground">{t("desc_plan_change_notice")}</p>
+          <p className="text-xs text-muted-foreground text-center">{t("desc_plan_change_notice")}</p>
+
+          {/* Confirm Button */}
+          <Button onClick={onConfirm} size="lg" className="w-full gap-2 mt-4" variant={"secondary"}>
+            {isUpgrade ? t("label_upgrade_plan") : isDowngrade ? t("label_downgrade_plan") : t("label_confirm_change")}
+            <ArrowRightIcon className="w-4 h-4" />
+          </Button>
         </div>
-      </Card>
-      {/* Actions */}
-      <div className="flex gap-3 justify-between items-center">
-        <Button onClick={() => setPlan(null)} variant="outline" size="sm" className="gap-1">
-          <ChevronLeftIcon className="w-4 h-4" />
-          {t("label_back")}
-        </Button>
-        <Button onClick={onConfirm} size="sm" className="gap-1" variant={"secondary"}>
-          {isUpgrade ? t("label_upgrade_plan") : isDowngrade ? t("label_downgrade_plan") : t("label_confirm_change")}
-          <ArrowRightIcon className="w-4 h-4" />
-        </Button>
       </div>
     </div>
   );
