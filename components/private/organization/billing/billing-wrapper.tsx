@@ -21,7 +21,6 @@ import {
   LayersIcon,
   RefreshCwIcon,
   SendIcon,
-  ZapIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import PlanBadge from "../../shared/custom/plan-badge";
@@ -151,7 +150,6 @@ const BillingPlan = () => {
           <div className="ml-auto w-full md:w-auto">
             <ManageSubscription>
               <Button className="gap-2 w-full" variant="outline" size="sm">
-                <ZapIcon className="h-4 w-4" />
                 {t("label_manage_sub")}
               </Button>
             </ManageSubscription>
@@ -194,8 +192,7 @@ const BillingPlan = () => {
                 </>
               )}
               <ManageSubscription>
-                <Button variant="outline" size="sm" className="gap-2 w-full sm:w-auto px-4">
-                  <ZapIcon className="h-4 w-4" />
+                <Button variant="secondary" size="sm" className="gap-2 w-full sm:w-auto px-4">
                   {t("label_manage_sub")}
                 </Button>
               </ManageSubscription>

@@ -93,16 +93,25 @@ const Body = ({ setState, selected }: { setState: TSetState<boolean>; selected?:
   if (hasIntentPlan && isUpdatingPlan) return <CheckoutUpdatePlan setPlan={setIntentPlan} plan={intentPlan} />;
 
   return (
-    <div className="flex flex-col h-full gap-6 overflow-y-auto">
+    <div className="flex flex-col h-full gap-6 overflow-y-auto p-4 sm:p-6">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 w-full">
+        <div>
+          <h2 className="text-2xl font-bold text-foreground">{t("label_manage_sub")}</h2>
+          <p className="text-sm text-muted-foreground mt-1">{t("desc_manage_sub")}</p>
+        </div>
+        <Button
+          onClick={() => setState(false)}
+          variant="ghost"
+          size="sm"
+          className="gap-1 text-muted-foreground hover:text-foreground">
+          <ChevronLeftIcon className="w-4 h-4" />
+          {t("label_back")}
+        </Button>
+      </div>
       <div className="grid sm:grid-cols-2 w-full h-full gap-6 overflow-y-auto">
         {localPlans.map((p) => {
           return <PlanCard plan={p} key={p.id} setPlan={setIntentPlan} />;
         })}
-      </div>
-      <div className="flex gap-4">
-        <Button onClick={() => setState(false)} variant={"outline"} size={"sm"} className="">
-          {t("label_close")}
-        </Button>
       </div>
     </div>
   );
@@ -207,7 +216,21 @@ const CheckoutNewPlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IP
   formData.append("plan", plan.type);
 
   return (
-    <div className="flex flex-col h-full w-full gap-6 overflow-y-auto">
+    <div className="flex flex-col h-full w-full gap-6 overflow-y-auto p-4 sm:p-6">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 w-full">
+        <div>
+          <h2 className="text-2xl font-bold text-foreground">{t("label_plan_change_confirmation")}</h2>
+          <p className="text-sm text-muted-foreground mt-1">{t("desc_review_changes_before_confirmation")}</p>
+        </div>
+        <Button
+          onClick={() => setPlan(null)}
+          variant="ghost"
+          size="sm"
+          className="gap-1 text-muted-foreground hover:text-foreground">
+          <ChevronLeftIcon className="w-4 h-4" />
+          {t("label_back")}
+        </Button>
+      </div>
       <div className="grid sm:grid-cols-2 flex-1 h-full gap-6 overflow-y-auto">
         <Card className="relative p-8 rounded-2xl bg-gradient-to-br from-muted/20 to-background border border-muted/30 shadow-lg h-full flex flex-col justify-between w-full overflow-hidden gap-4 overflow-y-auto">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-30" />
@@ -246,12 +269,6 @@ const CheckoutNewPlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IP
             <EmbeddedCheckout />
           </EmbeddedCheckoutProvider>
         </Card>
-      </div>
-      <div className="flex gap-4">
-        <Button onClick={() => setPlan(null)} variant={"ghost"} size={"sm"} className="">
-          <ChevronLeftIcon className="w-4 h-4 mr-1" />
-          {t("label_go_back")}
-        </Button>
       </div>
     </div>
   );
@@ -419,7 +436,7 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
   }
 
   return (
-    <div className="flex flex-col h-full w-full max-w-4xl mx-auto p-4 md:p-6 gap-6">
+    <div className="flex flex-col h-full w-full p-4 sm:p-6 gap-6 overflow-y-auto">
       {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 w-full">
         <div>
@@ -435,16 +452,15 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
           {t("label_back")}
         </Button>
       </div>
-
       {/* Main Content */}
-      <div className="flex flex-col lg:flex-row gap-8 w-full">
+      <div className="flex flex-col sm:flex-row gap-8 w-full h-full">
         <div className="flex-1">
           {/* New Plan Card - Focused Version */}
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.3 }}
-            className="border-2 border-primary rounded-2xl p-8 bg-gradient-to-br from-card to-primary/5 shadow-lg">
+            className="border-2 border-primary/50 rounded p-8 bg-gradient-to-br from-primary/25 to-primary/5 shadow-lg">
             <div className="flex flex-col items-center text-center gap-6">
               {/* Plan Badge with Emphasis */}
               <div className="relative">
@@ -452,14 +468,13 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
                   <PlanBadge type={plan.type} size="xl" />
                 </div>
               </div>
-
               {/* Plan Details */}
               <div className="w-full space-y-2">
                 <h3 className="text-2xl font-bold text-foreground capitalize">{plan.name}</h3>
 
                 {/* Price Display */}
                 <div className="mt-4">
-                  <p className="text-5xl font-extrabold text-primary">
+                  <p className="text-2xl font-extrabold text-primary">
                     {formatPrice(newPlanAmount)}
                     <span className="text-base font-normal text-muted-foreground">/{t("label_month")}</span>
                   </p>
@@ -468,10 +483,9 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
             </div>
           </motion.div>
         </div>
-
         {/* Summary Section */}
-        <div className="flex-1 space-y-6">
-          <div className="border rounded-xl p-6 bg-card shadow-sm">
+        <div className="flex-1 space-y-6 h-full">
+          <div className="border rounded p-6 bg-card shadow-sm">
             <h3 className="text-lg font-semibold mb-4">{t("label_summary")}</h3>
 
             {/* Price Comparison */}
@@ -501,14 +515,12 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
 
           {/* Notices */}
           {app.subscription.plan === "pro" && plan.type === "starter" && (
-            <Alert variant="warning" className="text-sm">
-              <AlertTitle>{t("warning_downgrade_title")}</AlertTitle>
-              <AlertDescription>{t("warning_downgrade_description")}</AlertDescription>
+            <Alert variant="warning" className="text-sm p-4">
+              <AlertTitle className="">{t("warning_downgrade_title")}</AlertTitle>
+              <AlertDescription className="">{t("warning_downgrade_description")}</AlertDescription>
             </Alert>
           )}
-
           <p className="text-xs text-muted-foreground text-center">{t("desc_plan_change_notice")}</p>
-
           {/* Confirm Button */}
           <Button onClick={onConfirm} size="lg" className="w-full gap-2 mt-4" variant={"secondary"}>
             {isUpgrade ? t("label_upgrade_plan") : isDowngrade ? t("label_downgrade_plan") : t("label_confirm_change")}
