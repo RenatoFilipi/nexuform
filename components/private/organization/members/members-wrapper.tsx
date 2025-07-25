@@ -149,7 +149,7 @@ const MemberRow = ({
   const app = useAppStore();
 
   return (
-    <div className="relative flex flex-col md:flex-row items-start md:items-center w-full p-3 gap-3 md:gap-4 border-b hover:bg-muted/50 transition-colors duration-200 group">
+    <div className="relative flex flex-col md:flex-row items-start md:items-center w-full p-2.5 gap-3 md:gap-4 border-b hover:bg-muted/50 transition-colors duration-200 group">
       <div className="md:hidden absolute top-3 right-3">
         <OrgRoleBadge role={member.role as TOrganizationRole} />
       </div>

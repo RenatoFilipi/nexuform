@@ -1,3 +1,4 @@
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -48,6 +49,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
   const [isPending, startTransition] = useTransition();
   const supabase = createClient();
   const app = useAppStore();
+  const isLimit = app.teamMemberProfiles.length >= app.subscription.max_members;
 
   const formSchema = z.object({
     email: z.string().email(t("label_required_email")),
@@ -119,7 +121,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
     <div className="flex flex-col gap-4">
       {app.subscription.plan !== "pro" && <UpgradeToPro />}
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-10">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-6">
           <div className="grid gap-6">
             <div className="">
               <FormField
@@ -162,6 +164,11 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
               />
             </div>
           </div>
+          {isLimit && app.subscription.plan === "pro" && (
+            <Alert className="p-3" variant={"info"}>
+              <AlertDescription>{t("label_members_limit")}</AlertDescription>
+            </Alert>
+          )}
           <div className="flex flex-col-reverse sm:flex-row gap-2 w-full justify-between">
             <Button disabled={isPending} type="button" variant={"outline"} size={"sm"} onClick={() => setState(false)}>
               {t("label_close")}
@@ -170,7 +177,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
               type="submit"
               variant={"secondary"}
               size={"sm"}
-              disabled={isPending || !app.context.isAllowedToInvite}>
+              disabled={isPending || !app.context.isAllowedToInvite || (isLimit && app.subscription.plan === "pro")}>
               {!isPending && <MailPlusIcon className="w-4 h-4 mr-2" />}
               {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
               {t("label_invite")}

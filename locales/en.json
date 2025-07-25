@@ -520,7 +520,8 @@
     "label_confirm_change": "Confirm change",
     "label_month": "month",
     "label_update_payment": "Update Payment",
-    "label_summary": "Summary"
+    "label_summary": "Summary",
+    "label_members_limit": "This organization has reached its member limit. We are currently evaluating options to increase the limit."
   },
   "s": {
     "err_required_all": "Answer all required questions.",

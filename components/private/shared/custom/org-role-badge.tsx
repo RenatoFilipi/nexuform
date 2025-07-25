@@ -17,7 +17,7 @@ const OrgRoleBadge = ({ role, uppercase = false }: { role: TOrganizationRole; up
     }
     case "admin": {
       return (
-        <Badge variant={"green"} uppercase={uppercase} className="w-fit">
+        <Badge variant={"pink"} uppercase={uppercase} className="w-fit">
           <ShieldCheckIcon className="w-4 h-4" />
           {t("label_admin")}
         </Badge>

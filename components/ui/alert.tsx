@@ -11,7 +11,7 @@ const alertVariants = cva(
         default:
           "border border-foreground/10 bg-foreground/5 text-foreground dark:border-white/10 dark:bg-white/5 dark:text-white p-2 rounded-sm shadow-sm",
 
-        info: "border border-info/20 bg-info/5 text-info dark:border-info/30 dark:bg-info/10 dark:text-info p-2 rounded-sm shadow-sm",
+        info: "border border-info/20 bg-info/5 text-info dark:border-info/40 dark:bg-info/10 dark:text-info-foreground p-2 rounded-sm shadow-sm",
 
         destructive:
           "border border-destructive/30 bg-destructive/5 text-destructive dark:border-destructive/40 dark:bg-destructive/10 dark:text-destructive p-2 rounded-sm shadow-sm",
