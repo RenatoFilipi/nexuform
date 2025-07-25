@@ -30,6 +30,7 @@ import {
   LoaderIcon,
   LogOutIcon,
   MenuIcon,
+  PlusIcon,
   XIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -486,6 +487,13 @@ const SearchForms = ({ children, orgId }: { children: React.ReactNode; orgId: st
                 ))}
               </div>
             ) : null}
+          </div>
+          <div className="w-full flex p-2">
+            <Button className="w-full" variant={"outline"} size={"sm"} asChild>
+              <Link href={`/dashboard/organizations/${app.organization.public_id}/forms/new`}>
+                <PlusIcon className="w-4 h-4 mr-2" /> {t("label_create_form")}
+              </Link>
+            </Button>
           </div>
         </div>
       </PopoverContent>

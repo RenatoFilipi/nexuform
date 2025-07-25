@@ -140,3 +140,7 @@ export const createBillingPortalSessionAction = async (formData: FormData) => {
     throw new Error(error?.message || "Failed to create billing portal session.");
   }
 };
+export const getBillingPortalAction = async () => {
+  const url = process.env.STRIPE_CUSTOMER_PORTAL_URL!;
+  return url;
+};

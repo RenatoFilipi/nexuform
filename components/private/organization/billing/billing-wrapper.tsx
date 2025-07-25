@@ -1,5 +1,6 @@
 "use client";
 
+import { getBillingPortalAction } from "@/app/actions/stripe-actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -23,6 +24,7 @@ import {
   SendIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 import PlanBadge from "../../shared/custom/plan-badge";
 import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 import CancelSubscription from "../../shared/subscription/cancel-subscription";
@@ -119,6 +121,7 @@ const BillingUsage = () => {
 const BillingPlan = () => {
   const t = useTranslations("app");
   const app = useAppStore();
+  const user = useUserStore();
   const isCanceled = app.subscription.status === "canceled";
   const startDate = new Date(app.subscription.start_date).toLocaleDateString();
   const dueDate = new Date(app.subscription.due_date).toLocaleDateString();
@@ -133,6 +136,16 @@ const BillingPlan = () => {
       starter: t("label_plan_starter"),
       pro: t("label_plan_pro"),
     }[plan] || "Custom");
+
+  const onBillingPortalSession = async () => {
+    try {
+      const url = await getBillingPortalAction();
+      window.open(url, "_blank", "noopener,noreferrer");
+    } catch (error) {
+      console.error("Failed to redirect to billing portal:", error);
+      toast.error(t("err_generic"));
+    }
+  };
 
   if (isCanceled) {
     return (
@@ -185,7 +198,7 @@ const BillingPlan = () => {
                       {t("label_cancel_sub")}
                     </Button>
                   </CancelSubscription>
-                  <Button variant="outline" size="sm" className="gap-2 px-4">
+                  <Button onClick={onBillingPortalSession} variant="outline" size="sm" className="gap-2 px-4">
                     <ExternalLinkIcon className="w-4 h-4" />
                     {t("label_update_payment")}
                   </Button>
