@@ -162,8 +162,8 @@ const DateRangePicker = ({ className, initialRange, onChange, align }: IProps) =
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto mt-2" align={align}>
-          <div className="flex justify-center items-center gap-4">
+        <PopoverContent className="w-auto mt-2 p-0" align={align}>
+          <div className="flex justify-center items-center gap-4 p-4">
             {/* Presets column */}
             <div className="flex flex-col gap-2">
               <div className="grid grid-cols-1 gap-3">
@@ -197,12 +197,33 @@ const DateRangePicker = ({ className, initialRange, onChange, align }: IProps) =
               />
             </div>
           </div>
-          <div className="flex flex-col gap-2 mt-2">
-            <div className="flex justify-end gap-2">
-              <Button variant="secondary" size="sm" onClick={handleSave}>
-                {t("label_apply")}
-              </Button>
+          <div className="flex justify-end gap-3 border-t p-4">
+            <div className="flex justify-center items-center text-xs text-muted-foreground">
+              {range?.from ? (
+                range.to ? (
+                  <span className="">
+                    {new Date(range.from).toLocaleDateString(user.locale)} →{" "}
+                    {new Date(range.to).toLocaleDateString(user.locale)}
+                  </span>
+                ) : (
+                  <span className="">{new Date(range.from).toLocaleDateString(user.locale)}</span>
+                )
+              ) : (
+                <span className="">-</span>
+              )}
             </div>
+            <Button
+              variant="outline"
+              className="w-fit"
+              size="sm"
+              onClick={() => {
+                setOpen(false);
+              }}>
+              {t("label_close")}
+            </Button>
+            <Button variant="secondary" className="w-fit" size="sm" onClick={handleSave}>
+              {t("label_apply")}
+            </Button>
           </div>
         </PopoverContent>
       </Popover>

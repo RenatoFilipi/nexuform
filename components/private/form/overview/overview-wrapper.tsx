@@ -25,7 +25,7 @@ import { IContext, IInterval } from "@/utils/interfaces";
 import { createClient } from "@/utils/supabase/client";
 import { TFormStatus } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowUpRightIcon, EyeIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
+import { ArrowUpRightIcon, EyeIcon, LayersIcon, SendIcon, TimerIcon, VoteIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -116,7 +116,10 @@ const OverviewWrapper = (props: IProps) => {
       {/* header */}
       <div className="flex flex-col gap-4 w-full sm:flex-row justify-between items-center">
         <div className="flex justify-between items-center w-full sm:w-fit gap-4">
-          <h1 className="font-semibold text-lg sm:text-xl truncate sm:max-w-[290px]">{app.form.name}</h1>
+          <div className="flex justify-center items-center gap-2">
+            <LayersIcon className="w-5 h-5 text-primary" />
+            <h1 className="font-semibold text-lg sm:text-xl truncate sm:max-w-[290px]">{app.form.name}</h1>
+          </div>
           <FormStatusBadge status={app.form.status as TFormStatus} />
         </div>
         <div className="flex gap-4 w-full sm:w-fit">

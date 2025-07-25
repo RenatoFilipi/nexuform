@@ -67,6 +67,7 @@ const MembersWrapper = (props: IProps) => {
           </MembersInvite>
         </div>
       </div>
+      <MemberProfile />
       <div className="flex flex-col gap-6">
         <MemberList />
       </div>
@@ -192,6 +193,26 @@ const MemberRow = ({
         )}
       </div>
     </div>
+  );
+};
+const MemberProfile = () => {
+  const t = useTranslations("app");
+  const app = useAppStore();
+  const currentMember = app.teamMemberProfile;
+
+  return (
+    <Card className="p-4 flex items-center gap-4">
+      <Avvvatars value={currentMember.email} size={50} />
+      <div className="flex-1">
+        <div className="flex items-center gap-2">
+          <span className="font-medium">
+            {currentMember.name} {currentMember.last_name}
+          </span>
+          <OrgRoleBadge role={currentMember.role as TOrganizationRole} />
+        </div>
+        <p className="text-sm text-muted-foreground">{currentMember.email}</p>
+      </div>
+    </Card>
   );
 };
 export default MembersWrapper;

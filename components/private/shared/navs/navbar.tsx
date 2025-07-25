@@ -227,7 +227,7 @@ const AvatarMenuMob = () => {
   ];
 
   return (
-    <div className="border-b flex w-full px-4 sm:px-6 pb-4 flex-col bg-background">
+    <div className="border-b flex w-full px-4 sm:px-6 pb-4 flex-col bg-background z-50">
       <div className="flex flex-col w-full gap-2">
         {resources.map((r) => (
           <Link

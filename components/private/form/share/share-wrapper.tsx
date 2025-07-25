@@ -86,7 +86,6 @@ const ShareWrapper = (props: IProps) => {
     </div>
   );
 };
-
 const ShareLink = () => {
   const t = useTranslations("app");
   const app = useAppStore();
@@ -98,7 +97,7 @@ const ShareLink = () => {
     <Card className="flex flex-col sm:flex-row justify-between items-center gap-8 p-4 sm:p-8">
       <div className="flex flex-col gap-1 w-full">
         <Label className="text-base font-semibold">{t("label_link_share")}</Label>
-        <p className="text-xs text-muted-foreground">{t("desc_link_share")}</p>
+        <p className="text-sm text-muted-foreground">{t("desc_link_share")}</p>
       </div>
       <div className="flex items-center gap-2 w-full">
         <Input value={fullUrl} readOnly className="text-sm flex-1 font-mono bg-muted/30 border-muted-foreground/20" />
@@ -167,7 +166,7 @@ const ShareQrCode = () => {
     <Card className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-8 p-4 sm:p-8">
       <div className="flex flex-col gap-1">
         <Label className="text-base font-semibold">{t("label_qr_share")}</Label>
-        <p className="text-xs text-muted-foreground">{t("desc_qr_share")}</p>
+        <p className="text-sm text-muted-foreground">{t("desc_qr_share")}</p>
       </div>
       <div className="flex flex-col items-center gap-6">
         <div ref={qrCodeRef} className="bg-foreground p-3 rounded shadow-sm border border-muted-foreground/10">
