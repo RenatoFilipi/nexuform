@@ -118,12 +118,20 @@ export const ResetPasswordAction = async (formData: FormData) => {
   const supabase = await createClient();
   const origin = (await headers()).get("origin");
   const email = formData.get("email") as string;
-  if (!email) return encodedRedirect("error", "/password/reset", t("required_email"));
+
+  if (!email) {
+    return encodedRedirect("error", "/password/reset", t("required_email"));
+  }
+
+  const redirectTo = `${origin}/auth/callback?redirect_to=/dashboard/account/password`;
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${origin}/dashboard/account/password`,
+    redirectTo,
   });
-  if (error) return encodedRedirect("error", "/password/reset", t("err_generic"));
+
+  if (error) {
+    return encodedRedirect("error", "/password/reset", t("err_generic"));
+  }
 
   return encodedRedirect("success", "/password/reset", t("label_suc_request_password"));
 };
