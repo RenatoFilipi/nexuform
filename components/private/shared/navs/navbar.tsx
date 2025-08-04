@@ -170,7 +170,7 @@ const AvatarMenuDesk = () => {
 
   const resources = [
     { name: t("label_organizations"), path: "/dashboard/organizations", icon: BoxesIcon, enabled: true },
-    { name: t("label_account"), path: "/dashboard/settings/account", icon: CircleUserIcon, enabled: true },
+    { name: t("label_account"), path: "/dashboard/account/general", icon: CircleUserIcon, enabled: true },
     { name: t("label_help"), path: "/dashboard/help", icon: CircleHelpIcon, enabled: true },
   ];
 
@@ -222,7 +222,7 @@ const AvatarMenuMob = () => {
 
   const resources = [
     { name: t("label_organizations"), path: "/dashboard/organizations", icon: BoxesIcon, enabled: true },
-    { name: t("label_account"), path: "/dashboard/settings/account", icon: CircleUserIcon, enabled: true },
+    { name: t("label_account"), path: "/dashboard/account/general", icon: CircleUserIcon, enabled: true },
     { name: t("label_help"), path: "/dashboard/help", icon: CircleHelpIcon, enabled: true },
   ];
 

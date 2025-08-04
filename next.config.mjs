@@ -20,6 +20,11 @@ const nextConfig = {
         destination: "/",
         permanent: true,
       },
+      {
+        source: "/dashboard/account",
+        destination: "/dashboard/account/general",
+        permanent: true,
+      },
     ];
   },
   devIndicators: false,

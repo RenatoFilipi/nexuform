@@ -21,18 +21,22 @@ const UpdatePasswordForm = () => {
   const supabase = createClient();
   const router = useRouter();
   const [appState, setAppState] = useState<TAppState>("idle");
-  const [code] = useQueryState("code");
+  const [token] = useQueryState("token");
+  const [type] = useQueryState("type");
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const toggleVisibility = () => setIsVisible((prevState) => !prevState);
 
   const query = useQuery({
-    queryKey: [code],
+    queryKey: [token, type],
     queryFn: () => {
-      if (!code) router.push("/login");
+      if (!token || type !== "recovery") {
+        router.push("/login");
+      }
       return null;
     },
     refetchOnWindowFocus: false,
   });
+
   const passwordSchema = z.object({
     password: z
       .string()
@@ -42,31 +46,38 @@ const UpdatePasswordForm = () => {
       .regex(/[A-Z]/, { message: t("required_n_upper", { n: 1 }) })
       .regex(/[\W_]/, { message: t("required_n_special", { n: 1 }) }),
   });
+
   const passwordHandler = useForm<z.infer<typeof passwordSchema>>({
     resolver: zodResolver(passwordSchema),
     defaultValues: { password: "" },
   });
+
   const onPasswordSubmit = async (values: z.infer<typeof passwordSchema>) => {
     setAppState("loading");
-    if (!code) {
+
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
       setAppState("error");
       return;
     }
-    const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
-    if (exchangeError) {
-      setAppState("error");
-      return;
-    }
+
     const { password } = values;
     const { error: passwordError } = await supabase.auth.updateUser({
       password,
     });
+
     if (passwordError) {
       setAppState("error");
       return;
     }
+
     setAppState("success");
   };
+
   if (query.isPending) return null;
 
   if (appState === "error") {
@@ -79,6 +90,7 @@ const UpdatePasswordForm = () => {
       </div>
     );
   }
+
   if (appState === "success") {
     return (
       <div className="flex flex-col justify-center items-center gap-4">
@@ -112,7 +124,7 @@ const UpdatePasswordForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="email">{t("label_password")}</FormLabel>
+                  <FormLabel htmlFor="password">{t("label_password")}</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Input id="password" type={isVisible ? "text" : "password"} {...field} />
