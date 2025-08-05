@@ -1,3 +1,10 @@
+import {
+  fetchBlocks,
+  fetchForm,
+  fetchOrganization,
+  fetchSubscription,
+  fetchTheme,
+} from "@/app/actions/submission-actions";
 import SubmissionFormNotAvailableUI from "@/components/public/submission/submission-form-not-available-ui";
 import SubmissionWrapper from "@/components/public/submission/submission-wrapper";
 import { createClient } from "@/utils/supabase/server";
@@ -8,53 +15,30 @@ const S = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const supabase = await createClient();
   const locale = await getLocale();
 
-  const form = await supabase.from("forms").select("*").eq("public_id", slug).eq("status", "published").single();
-  if (form.error) return <SubmissionFormNotAvailableUI />;
+  try {
+    const form = await fetchForm(slug);
+    const organization = await fetchOrganization(form.org_id);
+    const subscription = await fetchSubscription(organization.id);
+    const now = new Date();
+    const dueDate = new Date(subscription.due_date);
+    if (now > dueDate) throw new Error("No valid date.");
+    await supabase.from("view_logs").insert([{ form_id: form.id, org_id: organization.id }]);
+    const theme = await fetchTheme(form.id);
+    const blocks = await fetchBlocks(form.id);
 
-  const organization = await supabase
-    .from("organizations")
-    .select("*")
-    .eq("id", form.data.org_id)
-    .eq("status", "active")
-    .single();
-  if (organization.error) return <SubmissionFormNotAvailableUI />;
-
-  const orgId = organization.data.id;
-
-  const subscription = await supabase
-    .from("subscriptions")
-    .select("*")
-    .eq("org_id", orgId)
-    .eq("status", "active")
-    .single();
-  if (subscription.error) return <SubmissionFormNotAvailableUI />;
-
-  const now = new Date();
-  const dueDate = new Date(subscription.data.due_date);
-  if (now > dueDate) return <SubmissionFormNotAvailableUI />;
-
-  await supabase.from("view_logs").insert([{ form_id: form.data.id, org_id: orgId }]);
-
-  const theme = await supabase.from("themes").select("*").eq("form_id", form.data.id).single();
-  if (theme.error) return <SubmissionFormNotAvailableUI />;
-
-  const blocks = await supabase
-    .from("blocks")
-    .select("*")
-    .eq("form_id", form.data.id)
-    .order("position", { ascending: true });
-  if (blocks.error) return <SubmissionFormNotAvailableUI />;
-
-  return (
-    <SubmissionWrapper
-      locale={locale}
-      organization={organization.data}
-      subscription={subscription.data}
-      form={form.data}
-      theme={theme.data}
-      blocks={blocks.data}
-    />
-  );
+    return (
+      <SubmissionWrapper
+        locale={locale}
+        organization={organization}
+        subscription={subscription}
+        form={form}
+        theme={theme}
+        blocks={blocks}
+      />
+    );
+  } catch (error) {
+    return <SubmissionFormNotAvailableUI />;
+  }
 };
 
 export default S;

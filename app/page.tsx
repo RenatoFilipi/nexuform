@@ -1,6 +1,5 @@
 import Cta from "@/components/public/landing/cta";
 import Faq from "@/components/public/landing/faq";
-import Features from "@/components/public/landing/features";
 import Footer from "@/components/public/landing/footer";
 import Hero from "@/components/public/landing/hero";
 import HowItWorks from "@/components/public/landing/how-it-works";
