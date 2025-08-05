@@ -12,44 +12,46 @@ const Hero = () => {
   const t = useTranslations("landing");
 
   return (
-    <section className="relative overflow-hidden py-20 md:pt-36 pb-0 w-full">
-      <div className="absolute top-0 left-0 w-full h-full z-0 overflow-hidden">
-        <div className="absolute -bottom-[150px] w-full h-[500px] rounded-full dark:bg-primary/40 bg-primary/80 blur-3xl animate-float-delay hidden sm:flex" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-transparent via-background/10 to-background" />
-      </div>
+    <section className="relative w-full overflow-hidden bg-gradient-to-b from-background via-background to-muted/40 py-24 md:py-36">
       <motion.div
         className="container relative px-4 md:px-6"
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}>
-        <div className="mx-auto max-w-4xl text-center">
-          <Badge variant={"default"} className="mb-6">
-            <ZapIcon className="mr-1 h-3 w-3" />
+        transition={{ duration: 0.6, ease: "easeOut" }}>
+        <div className="mx-auto max-w-5xl text-center">
+          <Badge className="mb-5 px-3 py-1.5 text-sm rounded-full shadow">
+            <ZapIcon className="mr-1 h-4 w-4" />
             {t("hero_badge")}
           </Badge>
-          <h1 className="font-semibold text-4xl sm:text-5xl leading-tight">
+
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight">
             {t.rich("hero_headline", {
               main: (chunks) => (
-                <span className="relative">
-                  <span className="relative z-10 text-primary">{chunks}</span>
+                <span className="relative inline-block">
+                  <span className="relative z-10 text-primary decoration-primary/30 decoration-4 underline-offset-8">
+                    {chunks}
+                  </span>
                 </span>
               ),
             })}
           </h1>
-          <p className="mx-auto my-8 max-w-2xl text-lg text-muted-foreground md:text-lg">{t("hero_subheadline")}</p>
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+
+          <p className="mx-auto mt-6 max-w-2xl text-lg md:text-xl text-muted-foreground">{t("hero_subheadline")}</p>
+
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button
               asChild
-              className="group transition-all hover:shadow-lg hover:shadow-primary/20"
-              size="default"
-              variant={"secondary"}>
+              className="group transition-all hover:shadow-lg hover:shadow-primary/30 text-base px-6 py-3"
+              size="lg"
+              variant="default">
               <Link href="/signup">
                 {t("hero_get_started")}
                 <ArrowRightIcon className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
           </div>
-          <div className="mt-24 flex items-center justify-center gap-8 text-sm text-muted-foreground">
+
+          <div className="mt-16 flex flex-wrap justify-center items-center gap-6 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <CheckIcon className="h-4 w-4 text-green-500" />
               {t("hero_cta1")}
@@ -63,20 +65,24 @@ const Hero = () => {
               {t("hero_cta3")}
             </div>
           </div>
-          <div className="relative mt-8 overflow-hidden">
-            <div className="relative mx-auto max-w-5xl">
-              <div className="relative rounded-t-2xl border border-b-0 border-foreground/20 bg-foreground/5 p-2 shadow-2xl h-80 overflow-hidden">
+
+          <div className="relative mt-20 w-full">
+            <div className="mx-auto max-w-6xl">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+                className="relative rounded-2xl border border-border bg-muted/10 shadow-xl p-3 backdrop-blur-xl">
                 <Image
                   width={1912}
                   height={932}
-                  loading="lazy"
-                  src="/hero-d.png"
+                  src="/sample-hero.png"
                   alt="NexuForm"
-                  className="w-full rounded-t-xl object-cover object-top"
+                  className="w-full h-auto rounded-xl object-cover"
+                  priority
+                  unoptimized
                 />
-              </div>
-              {/* Fade overlay at bottom */}
-              <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-primary/60 via-primary/30 to-transparent" />
+              </motion.div>
             </div>
           </div>
         </div>

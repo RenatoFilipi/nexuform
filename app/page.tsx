@@ -20,7 +20,6 @@ const Home = async () => {
       <div className="relative flex flex-col justify-center items-center px-0 flex-1">
         <Hero />
         <UseCases />
-        <Features />
         <HowItWorks />
         <Pricing plans={plans} />
         <Faq />

@@ -34,19 +34,14 @@ const Pricing = ({ plans }: { plans: IPlan[] }) => {
   };
   return (
     <section id="pricing" className="relative py-16 px-4 sm:px-6 bg-background">
-      <div className="max-w-7xl mx-auto flex flex-col items-center gap-8">
+      <div className="max-w-7xl mx-auto flex flex-col items-center gap-16">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-center max-w-3xl space-y-4">
-          <Badge
-            variant={"primary"}
-            className="text-primary border-primary/30 dark:border-primary/50 px-3 py-1 text-xs">
-            {t("pricing")}
-          </Badge>
-          <h2 className="text-3xl font-bold tracking-tight text-foreground">{t("headline")}</h2>
+          className="text-center space-y-4">
+          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground">{t("headline")}</h2>
           <p className="text-muted-foreground/80 leading-relaxed">{t("subheadline")}</p>
         </motion.div>
 

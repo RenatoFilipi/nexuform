@@ -104,24 +104,6 @@ const HowItWorks = () => {
             </motion.div>
           ))}
         </div>
-
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          viewport={{ once: true }}
-          className="mt-24 text-center">
-          <p className="text-lg text-muted-foreground mb-6">
-            {t("htw_cta_text")} <span className="text-foreground font-semibold">{t("htw_cta_highlight")}</span>
-          </p>
-          <Button asChild size="lg" className="group transition-all text-base hover:shadow-lg hover:shadow-primary/20">
-            <Link href="/signup">
-              {t("htw_cta_button")}
-              <ArrowRightIcon className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </Button>
-        </motion.div>
       </div>
     </section>
   );

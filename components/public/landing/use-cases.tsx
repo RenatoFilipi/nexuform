@@ -112,14 +112,9 @@ const UseCases = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-center max-w-3xl mx-auto mb-16 space-y-5">
-          <Badge
-            variant={"primary"}
-            className="text-primary border-primary/30 dark:border-primary/50 px-3 py-1 text-sm">
-            {t("nav_usecases")}
-          </Badge>
-          <h2 className="text-4xl font-bold tracking-tight text-foreground">{t("usecases_headline")}</h2>
-          <p className="text-lg text-muted-foreground/80 leading-relaxed">{t("usecases_subheadline")}</p>
+          className="text-center mx-auto mb-16 space-y-5">
+          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground">{t("usecases_headline")}</h2>
+          <p className="text-lg text-muted-foreground leading-relaxed">{t("usecases_subheadline")}</p>
         </motion.div>
         <motion.div
           variants={containerVariants}
@@ -130,32 +125,44 @@ const UseCases = () => {
           {ucs.map((uc, index) => (
             <motion.div key={index} variants={cardVariants} whileHover="hover" className="h-full">
               <div
-                className={`relative h-full rounded-xl border ${uc.borderColor} ${uc.bgColor} p-8 transition-all duration-300 group hover:shadow-lg overflow-hidden`}>
-                {/* Floating gradient background */}
+                className={`relative h-full rounded-lg border-2 ${uc.borderColor} ${uc.bgColor} p-6 transition-all duration-300 group hover:shadow-xl hover:-translate-y-1 overflow-hidden`}>
+                {/* Efeito de brilho ao passar o mouse */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
-                  whileHover={{ opacity: 0.05, scale: 1.2 }}
-                  className={`absolute -inset-8 rounded-full ${uc.color.replace(
+                  whileHover={{ opacity: 0.1, scale: 1.2 }}
+                  className={`absolute inset-0 rounded-xl ${uc.color.replace(
                     "text",
                     "bg"
-                  )} opacity-0 blur-3xl transition-opacity duration-500`}
+                  )} opacity-0 blur-xl transition-all duration-500`}
                 />
 
                 <div className="relative z-10 flex flex-col gap-6 h-full">
                   <div className="flex flex-col gap-4">
+                    {/* Ícone com efeito mais suave */}
                     <motion.div
                       variants={iconVariants}
-                      className={`p-3 rounded-xl ${uc.bgColor} w-fit shadow-sm border border-muted-foreground/15 group-hover:border-primary/60`}>
-                      <uc.icon className={`h-6 w-6 ${uc.color}`} />
+                      className={`p-3 rounded-lg ${uc.bgColor} w-fit shadow-md border-2 border-muted-foreground/10 group-hover:border-primary/70 group-hover:shadow-primary/20 group-hover:bg-primary/5 transition-all`}>
+                      <uc.icon className={`h-7 w-7 ${uc.color}`} />
                     </motion.div>
-                    <h3 className="text-xl font-semibold text-foreground">{uc.title}</h3>
+
+                    {/* Título com gradiente sutil no hover */}
+                    <h3 className="text-xl font-bold text-foreground group-hover:bg-clip-text group-hover:text-transparent group-hover:bg-gradient-to-r from-primary to-primary/70 transition-all">
+                      {uc.title}
+                    </h3>
                   </div>
+
+                  {/* Descrição com animação mais suave */}
                   <motion.p
-                    initial={{ opacity: 0.8 }}
+                    initial={{ opacity: 0.9 }}
                     whileHover={{ opacity: 1 }}
-                    className="text-muted-foreground leading-relaxed group-hover:text-foreground">
+                    className="text-muted-foreground leading-relaxed group-hover:text-foreground/90 transition-colors duration-300">
                     {uc.description}
                   </motion.p>
+
+                  {/* Elemento decorativo adicional */}
+                  <div className="mt-auto pt-4">
+                    <div className="h-[2px] w-8 bg-muted-foreground/20 group-hover:bg-primary/80 group-hover:w-12 transition-all duration-500"></div>
+                  </div>
                 </div>
               </div>
             </motion.div>
