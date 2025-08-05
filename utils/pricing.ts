@@ -102,7 +102,7 @@ export const getPlans = async (locale: string) => {
         // { description: t("pricing.starter_feat_06"), comingSoon: false },
       ],
       freeTrialDuration: null,
-      isMostPopular: false,
+      isMostPopular: true,
       ctaLabel: t("pricing.starter_cta"),
       metadata: {
         stripePriceId: null,
@@ -140,7 +140,7 @@ export const getPlans = async (locale: string) => {
         // { description: t("pricing.pro_feat_09"), comingSoon: true },
       ],
       freeTrialDuration: null,
-      isMostPopular: true,
+      isMostPopular: false,
       ctaLabel: t("pricing.pro_cta"),
       metadata: {
         stripePriceId: null,

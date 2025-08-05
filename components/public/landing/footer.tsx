@@ -12,7 +12,6 @@ const Footer = () => {
 
   const urls = [
     { name: t("nav_usecases"), url: "usecases" },
-    { name: t("nav_features"), url: "features" },
     { name: t("nav_htw"), url: "how-it-works" },
     { name: t("nav_pricing"), url: "pricing" },
   ];

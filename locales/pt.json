@@ -521,7 +521,8 @@
     "label_month": "mês",
     "label_update_payment": "Atualizar Pagamento",
     "label_summary": "Resumo",
-    "label_members_limit": "Esta organização atingiu o limite de membros. Estamos avaliando opções para aumentar esse limite."
+    "label_members_limit": "Esta organização atingiu o limite de membros. Estamos avaliando opções para aumentar esse limite.",
+    "label_step": "Passo"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",
@@ -671,7 +672,8 @@
     "usecases_5_title": "Formulários Internos",
     "usecases_5_desc": "Otimize processos internos com formulários seguros e personalizados.",
     "usecases_6_title": "Inscrição em Eventos",
-    "usecases_6_desc": "Gerencie inscrições e confirmações com facilidade usando formulários personalizados para eventos."
+    "usecases_6_desc": "Gerencie inscrições e confirmações com facilidade usando formulários personalizados para eventos.",
+    "label_step": "Passo"
   },
   "pricing": {
     "pricing": "Preços",
