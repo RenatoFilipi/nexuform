@@ -50,7 +50,7 @@ const OrganizationsWrapper = (props: IProps) => {
   if (query.isPending) return null;
 
   return (
-    <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-6 px-3 sm:px-20 lg:px-60 py-4 sm:py-8">
+    <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-6 px-3 sm:px-20 lg:px-80 py-4 sm:py-8">
       <div className="flex w-full justify-between items-center">
         <h1 className="text-xl font-semibold">{t("label_organizations")} </h1>
       </div>
