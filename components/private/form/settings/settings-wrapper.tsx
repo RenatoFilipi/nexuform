@@ -204,7 +204,7 @@ const SettingsLabelColor = () => {
             <div className="flex items-center gap-4">
               <div
                 style={{ backgroundColor: labelColor }}
-                className="w-10 h-10 rounded-lg shadow-md border text-muted-foreground transition-all hover:scale-105 cursor-pointer"
+                className="w-10 h-10 rounded-full shadow-md border text-muted-foreground transition-all hover:scale-105 cursor-pointer"
               />
               <span className="text-sm font-mono text-muted-foreground">{labelColor.toUpperCase()}</span>
             </div>
@@ -216,7 +216,7 @@ const SettingsLabelColor = () => {
                 <button
                   key={index}
                   onClick={() => onColorChange(color)}
-                  className={`w-8 h-8 rounded-md cursor-pointer transition-all hover:scale-110 shadow-sm ${
+                  className={`w-8 h-8 rounded-full cursor-pointer transition-all hover:scale-110 shadow-sm ${
                     labelColor === color ? "ring-2 ring-offset-2 ring-primary" : ""
                   }`}
                   style={{ backgroundColor: color }}

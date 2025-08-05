@@ -17,10 +17,10 @@ const ColorPicker = ({ color, onColorChange, allowCustom }: IProps) => {
           <button
             key={index}
             onClick={() => onColorChange(c)}
-            className={`w-6 h-6 cursor-pointer hover:scale-110 transition-transform border-2 flex justify-center items-center`}
+            className={`w-7 h-7 cursor-pointer rounded-full hover:scale-110 transition-transform border-2 flex justify-center items-center`}
             style={{ backgroundColor: c }}
             title={c}>
-            {color === c && <CheckIcon className="w-4 h-4 text-white" />}
+            {color === c && <CheckIcon className="w-3 h-3 text-white" />}
           </button>
         ))}
       </div>

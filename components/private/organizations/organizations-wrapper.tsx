@@ -113,7 +113,7 @@ const OrganizationsCard = (props: { teamMemberProfile: ETeamMemberProfile }) => 
       <Card className="flex flex-col justify-between h-44 p-4 border hover:border-primary/40 transition-all duration-200 group hover:shadow-md cursor-pointer relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-primary/0 to-primary/0 group-hover:via-primary/5 group-hover:to-primary/10 transition-all duration-300" />
 
-        <div className="flex flex-col gap-2 relative z-10 justify-between h-full">
+        <div className="flex flex-col gap-2 relative justify-between h-full">
           <div className="flex justify-between items-start w-full">
             <div className="flex items-center gap-3 justify-center">
               <PlanBadge type={subscription.plan as TPlan} size={"lg"} />

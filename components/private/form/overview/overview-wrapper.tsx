@@ -117,7 +117,7 @@ const OverviewWrapper = (props: IProps) => {
       <div className="flex flex-col gap-4 w-full sm:flex-row justify-between items-center">
         <div className="flex justify-between items-center w-full sm:w-fit gap-4">
           <div className="flex justify-center items-center gap-2">
-            <LayersIcon className="w-5 h-5 text-primary" />
+            <LayersIcon className="w-5 h-5 text-muted-foreground" />
             <h1 className="font-semibold text-lg sm:text-xl truncate sm:max-w-[290px]">{app.form.name}</h1>
           </div>
           <FormStatusBadge status={app.form.status as TFormStatus} />

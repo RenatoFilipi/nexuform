@@ -5,6 +5,8 @@ import {
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogHeader,
+  AlertDialogOverlay,
+  AlertDialogPortal,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
@@ -72,7 +74,11 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
   const query = useQuery({
     queryKey: ["templateBlocks", template.id],
     queryFn: async () => {
-      const { data, error } = await supabase.from("templates_blocks").select("*").eq("template_id", template.id);
+      const { data, error } = await supabase
+        .from("templates_blocks")
+        .select("*")
+        .eq("template_id", template.id)
+        .order("position", { ascending: true });
       if (error) throw error;
       const { locale } = user;
 
@@ -174,11 +180,8 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
 
       const blocks = await supabase.from("blocks").insert(updatedBlocks);
       if (blocks.error) {
-        console.log(forms.data);
         await supabase.from("forms").delete().eq("id", forms.data.id);
         await supabase.from("themes").delete().eq("id", themes.data.id);
-        console.log("BLOCKS");
-        console.log(blocks.error);
         toast.error(t("err_generic"));
         return;
       }
@@ -187,7 +190,6 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
       router.push(`/dashboard/organizations/${app.organization.public_id}/form/${forms.data.public_id}/editor`);
     } catch (error) {
       toast.error((error as Error).message || t("err_generic"));
-    } finally {
       setAppState("idle");
     }
   };
@@ -195,50 +197,59 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-      <AlertDialogContent className="h-[100%] min-w-[100%] overflow-y-auto p-0 border-transparent">
-        <AlertDialogHeader className="hidden">
-          <AlertDialogTitle></AlertDialogTitle>
-          <AlertDialogDescription></AlertDialogDescription>
-        </AlertDialogHeader>
-        <div className="flex flex-col w-full justify-start items-center h-full overflow-y-auto">
-          <div className="flex flex-wrap justify-between items-center w-full p-3 bg-background">
-            <h1 className="text-base font-semibold tracking-tight text-foreground">{template.name}</h1>
-            <div className="flex flex-wrap gap-2 sm:gap-4 items-center mt-2 sm:mt-0">
-              <Button
-                onClick={() => setOpen(false)}
-                variant="outline"
-                size="sm"
-                className=""
-                disabled={appState === "loading"}>
-                <ChevronLeftIcon className="w-4 h-4 mr-2" />
-                {t("label_go_back")}
-              </Button>
-              <Button
-                variant="secondary"
-                size="sm"
-                disabled={appState === "loading"}
-                onClick={onCreate}
-                className="transition">
-                {appState === "loading" && <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />}
-                {t("label_use_template")}
-              </Button>
+      <AlertDialogPortal>
+        <AlertDialogOverlay className="backdrop-blur-sm" />
+        <AlertDialogContent className="sm:h-[90%] h-[100%] sm:min-w-[70%] min-w-[100%] overflow-y-auto p-0 border-transparent">
+          <AlertDialogHeader className="hidden">
+            <AlertDialogTitle></AlertDialogTitle>
+            <AlertDialogDescription></AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="flex flex-col w-full justify-start items-center h-full overflow-y-auto">
+            <div className="flex flex-col w-full p-4 bg-background border-b border-border sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+              <div className="flex-1 min-w-0">
+                <h1 className="text-lg font-semibold tracking-tight text-foreground truncate sm:text-xl">
+                  {template.name}
+                </h1>
+              </div>
+
+              <div className="flex gap-3 mt-3 w-full sm:mt-0 sm:w-auto">
+                <Button
+                  onClick={() => setOpen(false)}
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 sm:flex-initial sm:px-4"
+                  disabled={appState === "loading"}>
+                  <ChevronLeftIcon className="w-4 h-4 mr-2" />
+                  {t("label_go_back")}
+                </Button>
+
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  disabled={appState === "loading"}
+                  onClick={onCreate}
+                  className="flex-1 sm:flex-initial sm:px-6 transition-colors">
+                  {appState === "loading" ? <LoaderIcon className="w-4 h-4 mr-2 animate-spin" /> : null}
+                  {t("label_use_template")}
+                </Button>
+              </div>
             </div>
+            {query.isPending && (
+              <div className="flex justify-center items-center flex-1">
+                <LoaderIcon className="w-7 h-7 animate-spin" />
+              </div>
+            )}
+            {query.isError && (
+              <div className="flex justify-center items-center flex-1">
+                <span>{t("err_generic")}</span>
+              </div>
+            )}
+            {!query.isPending && !query.isError && query.data && (
+              <BlocksGroup template={query.data.template} blocks={query.data.blocks} />
+            )}
           </div>
-          {query.isPending && (
-            <div className="flex justify-center items-center flex-1">
-              <LoaderIcon className="w-7 h-7 animate-spin" />
-            </div>
-          )}
-          {query.isError && (
-            <div className="flex justify-center items-center flex-1">
-              <span>{t("err_generic")}</span>
-            </div>
-          )}
-          {!query.isPending && !query.isError && query.data && (
-            <BlocksGroup template={query.data.template} blocks={query.data.blocks} />
-          )}
-        </div>
-      </AlertDialogContent>
+        </AlertDialogContent>
+      </AlertDialogPortal>
     </AlertDialog>
   );
 };

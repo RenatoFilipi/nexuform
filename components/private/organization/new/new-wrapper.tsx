@@ -130,8 +130,6 @@ const NewWrapper = (props: IProps) => {
                 className="mt-2 group-hover:border-primary group-hover:text-primary">
                 {t("label_create_form_template")}
                 <ChevronRightIcon className="w-4 h-4 ml-2" />
-                {/* {t("label_soon")} */}
-                {/* <RocketIcon className="w-4 h-4 ml-2" /> */}
               </Button>
             }
           />
@@ -265,7 +263,7 @@ const Preview = (props: { template: ETemplate }) => {
         <p className="text-muted-foreground text-sm group-hover:text-foreground">{description}</p>
       </div>
       <div className="flex justify-between items-center">
-        <Badge variant="primary">
+        <Badge variant="default">
           <span className="first-letter:uppercase">{query.data?.category}</span>
         </Badge>
         <NewPreview template={props.template}>

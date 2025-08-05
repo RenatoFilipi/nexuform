@@ -120,8 +120,8 @@ const EditorCanva = () => {
   const hasBlocks = editor.blocks.length > 0;
 
   const pages = [
-    { view: "blocks", icon: ComponentIcon, label: "Blocks" },
-    { view: "success", icon: CheckCircleIcon, label: "Success" },
+    { view: "blocks", icon: ComponentIcon, label: t("label_blocks") },
+    { view: "success", icon: CheckCircleIcon, label: t("label_success") },
   ];
 
   const handleReorder = (newOrder: EBlock[]) => {
@@ -448,7 +448,9 @@ const ToolStyles = () => {
           <AccordionTrigger className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 pt-0">
             <div className="flex justify-center items-center gap-3">
               {t("label_primary_color")}
-              <div className="w-8 h-4 rounded-md" style={{ backgroundColor: editor.theme.custom_primary_color }}></div>
+              <div
+                className="w-8 h-4 rounded-full"
+                style={{ backgroundColor: editor.theme.custom_primary_color }}></div>
             </div>
           </AccordionTrigger>
           <AccordionContent>

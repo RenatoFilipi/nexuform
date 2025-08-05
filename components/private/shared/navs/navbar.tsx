@@ -260,7 +260,6 @@ const EditorNavbar = () => {
   const orgId = pathname.split("/")[3];
   const formId = pathname.split("/")[5];
   const overviewPath = `/dashboard/organizations/${orgId}/form/${formId}/overview`;
-  const showSaveButton = true;
 
   const handleSave = async () => {
     if (appState === "loading") return;
@@ -270,9 +269,7 @@ const EditorNavbar = () => {
       toast.success(t("suc_update_form"));
       router.push(overviewPath);
     } catch (error) {
-      console.error("Save operation failed:", error);
       toast.error((error as Error).message || t("err_generic"));
-    } finally {
       setAppState("idle");
     }
   };
@@ -447,7 +444,7 @@ const SearchForms = ({ children, orgId }: { children: React.ReactNode; orgId: st
     queryFn: async () => {
       const forms = await supabase
         .from("forms")
-        .select("name, public_id")
+        .select("name, public_id, label_color")
         .eq("org_id", app.organization.id)
         .order("created_at", { ascending: true });
 
@@ -481,6 +478,7 @@ const SearchForms = ({ children, orgId }: { children: React.ReactNode; orgId: st
                     className={`${
                       x.public_id === app.form.public_id ? "bg-foreground/5" : ""
                     } px-3 py-2 text-sm rounded transition-colors flex items-center gap-2 hover:bg-foreground/5 group`}>
+                    <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: x.label_color }} />
                     <span className="flex-1 truncate">{x.name}</span>
                     {x.public_id === app.form.public_id && <CheckIcon className="w-4 h-4" />}
                   </a>

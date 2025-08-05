@@ -156,7 +156,11 @@ const FormCard = ({ form }: { form: EForm }) => {
   ];
 
   return (
-    <Card className="flex flex-col h-40 p-5 justify-between border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm overflow-x-auto">
+    <Card
+      style={{
+        borderLeft: `4px solid ${form.label_color}`,
+      }}
+      className="flex flex-col h-40 p-5 justify-between border hover:border-primary/50 transition-colors duration-200 group hover:shadow-sm overflow-x-auto">
       <div className="flex w-full justify-between items-start">
         <div className="flex flex-col gap-2">
           <h1 className="font-semibold truncate max-w-[270px] transition-colors">{form.name}</h1>
