@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@/components/shared/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import QueryProvider from "@/lib/query-provider";
-import { appName } from "@/utils/envs";
+import { APP_NAME } from "@/utils/envs";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
@@ -39,8 +39,8 @@ export default async function RootLayout({
 
 export const metadata: Metadata = {
   title: {
-    template: `%s | ${appName}`,
-    default: appName,
+    template: `%s | ${APP_NAME}`,
+    default: APP_NAME,
   },
   authors: [{ name: "Renato Filipi" }],
 };

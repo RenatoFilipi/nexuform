@@ -1,6 +1,6 @@
 import Brand from "@/components/shared/brand";
-import { appName, contactEmail } from "@/utils/envs";
-import { termsLastUpdatedAt, termsTopics } from "@/utils/legal";
+import { APP_NAME, SUPPORT_EMAIL, TERMS_DATE } from "@/utils/envs";
+import { termsTopics } from "@/utils/legal";
 import Link from "next/link";
 
 const Terms = () => {
@@ -16,13 +16,13 @@ const Terms = () => {
         <div className="mb-10 text-center">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Terms of Service</h1>
           <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Effective Date: {termsLastUpdatedAt}
+            Effective Date: {TERMS_DATE}
           </p>
         </div>
 
         <div className="mb-8 p-6 bg-blue-50 rounded-lg border border-blue-100 dark:bg-blue-900/20 dark:border-blue-800/50">
           <p className="text-blue-800 dark:text-blue-200">
-            Welcome to {appName}! These Terms govern your use of our form builder platform. Please read them carefully
+            Welcome to {APP_NAME}! These Terms govern your use of our form builder platform. Please read them carefully
             as they affect your legal rights.
           </p>
         </div>
@@ -48,13 +48,13 @@ const Terms = () => {
             For any questions regarding these Terms of Service, please contact:
           </p>
           <a
-            href={`"mailto:${contactEmail}"`}
+            href={`"mailto:${SUPPORT_EMAIL}"`}
             className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors dark:bg-blue-700 dark:hover:bg-blue-600">
-            {contactEmail}
+            {SUPPORT_EMAIL}
           </a>
           <p className="mt-8 text-sm text-gray-500 dark:text-gray-400">
-            By using {appName}, you acknowledge that you have read, understood, and agreed to be bound by these Terms of
-            Service.
+            By using {APP_NAME}, you acknowledge that you have read, understood, and agreed to be bound by these Terms
+            of Service.
           </p>
         </div>
       </div>

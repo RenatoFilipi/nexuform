@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import useAppStore from "@/stores/app";
 import useUserStore from "@/stores/user";
 import { EOrganization, EProfile, ESubscription, ETeamMemberProfile } from "@/utils/entities";
-import { appName } from "@/utils/envs";
+import { APP_NAME } from "@/utils/envs";
 import { IContext } from "@/utils/interfaces";
 import { createClient } from "@/utils/supabase/client";
 import { TAppState } from "@/utils/types";
@@ -141,7 +141,7 @@ const OrgSettings = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
         <div className="flex flex-col gap-1 w-full">
           <h1 className="font-semibold">{t("label_organization")}</h1>
-          <p className="text-sm text-muted-foreground">{t("desc_organization_settings", { name: appName })}</p>
+          <p className="text-sm text-muted-foreground">{t("desc_organization_settings", { name: APP_NAME })}</p>
         </div>
         <Form {...handler}>
           <form onSubmit={handler.handleSubmit(onSubmit)} className="flex flex-col gap-6 w-full">

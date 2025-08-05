@@ -1,6 +1,6 @@
 "use client";
 
-import { freeTrialPeriod } from "@/utils/envs";
+import { FREE_TRIAL_PERIOD } from "@/utils/envs";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDownIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -13,7 +13,7 @@ const Faq = () => {
   const faqData = [
     {
       question: t("faq1_q"),
-      answer: t("faq1_a", { period: freeTrialPeriod }),
+      answer: t("faq1_a", { period: FREE_TRIAL_PERIOD }),
     },
     {
       question: t("faq2_q"),

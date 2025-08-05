@@ -2,7 +2,7 @@
 
 import Brand from "@/components/shared/brand";
 import ModeToggle2 from "@/components/shared/mode-toggle2";
-import { appName } from "@/utils/envs";
+import { APP_NAME } from "@/utils/envs";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
@@ -59,7 +59,7 @@ const Footer = () => {
             ))}
           </div>
           <p className="text-xs text-foreground/50">
-            &copy; {currentYear} {appName}.
+            &copy; {currentYear} {APP_NAME}.
           </p>
         </div>
         <ModeToggle2 />

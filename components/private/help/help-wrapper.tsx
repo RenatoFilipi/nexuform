@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import useUserStore from "@/stores/user";
 import { EProfile } from "@/utils/entities";
-import { contactEmail } from "@/utils/envs";
+import { SUPPORT_EMAIL } from "@/utils/envs";
 import { useQuery } from "@tanstack/react-query";
 import { CopyIcon, MailIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -30,7 +30,7 @@ const HelpWrapper = (props: Props) => {
   });
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText(contactEmail);
+    navigator.clipboard.writeText(SUPPORT_EMAIL);
     toast.success(t("label_link_copied"));
   };
 
@@ -50,7 +50,7 @@ const HelpWrapper = (props: Props) => {
             <p className="text-sm text-muted-foreground">{t("desc_contact_support")}</p>
           </div>
           <div className="flex items-center justify-between bg-accent/50 p-3 rounded-md">
-            <span className="font-mono text-sm truncate">{contactEmail}</span>
+            <span className="font-mono text-sm truncate">{SUPPORT_EMAIL}</span>
             <Button variant="outline" size="sm" onClick={handleCopyEmail} className="shrink-0">
               <CopyIcon className="h-4 w-4 mr-2" />
               {t("label_copy")}

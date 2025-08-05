@@ -1,20 +1,3 @@
-export const freeTrialPeriod = Number(process.env.NEXT_PUBLIC_PLAN_FREE_TRIAL_PERIOD)!;
-export const freeTrialPricing = Number(process.env.NEXT_PUBLIC_PLAN_FREE_TRIAL_PRICING)!;
-export const freeTrialForms = Number(process.env.NEXT_PUBLIC_PLAN_FREE_TRIAL_FORMS)!;
-export const freeTrialSubmissions = Number(process.env.NEXT_PUBLIC_PLAN_FREE_TRIAL_SUBMISSIONS)!;
-
-export const basicPricing = Number(process.env.NEXT_PUBLIC_PLAN_BASIC_PRICING)!;
-export const basicForms = Number(process.env.NEXT_PUBLIC_PLAN_BASIC_FORMS)!;
-export const basicSubmissions = Number(process.env.NEXT_PUBLIC_PLAN_BASIC_SUBMISSIONS)!;
-
-export const proPricing = Number(process.env.NEXT_PUBLIC_PLAN_PRO_PRICING)!;
-export const proForms = Number(process.env.NEXT_PUBLIC_PLAN_PRO_FORMS)!;
-export const proSubmissions = Number(process.env.NEXT_PUBLIC_PLAN_PRO_SUBMISSIONS)!;
-export const appName = process.env.NEXT_PUBLIC_APP_NAME!;
-export const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL!;
-
-// V2
-
 // PLANS
 export const FREE_TRIAL_PERIOD = Number(process.env.NEXT_PUBLIC_FREE_TRIAL_PERIOD!);
 export const FREE_TRIAL_PRICE = Number(process.env.NEXT_PUBLIC_FREE_TRIAL_PRICE!);
@@ -40,4 +23,7 @@ export const STRIPE_PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE
 // HELPERS
 export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME!;
 export const SUPPORT_EMAIL = process.env.NEXT_PUBLIC_SUPPORT_EMAIL!;
-export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL!;
+export const FALLBACK_COLOR = process.env.NEXT_PUBLIC_FALLBACK_COLOR!;
+export const TERMS_DATE = process.env.NEXT_PUBLIC_TERMS_DATE!;
+export const COOKIES_DATE = process.env.NEXT_PUBLIC_COOKIES_DATE!;
+export const PRIVACY_DATE = process.env.NEXT_PUBLIC_PRIVACY_DATE!;

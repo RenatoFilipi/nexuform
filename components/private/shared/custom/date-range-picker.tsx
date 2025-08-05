@@ -164,16 +164,6 @@ const DateRangePicker = ({ className, initialRange, onChange, align }: IProps) =
         </PopoverTrigger>
         <PopoverContent className="w-auto mt-2 p-0" align={align}>
           <div className="flex justify-center items-center gap-4 p-4">
-            {/* Presets column */}
-            <div className="flex flex-col gap-2">
-              <div className="grid grid-cols-1 gap-3">
-                {presets.map((preset) => (
-                  <Button key={preset.id} onClick={preset.handler} variant="outline" size="sm">
-                    {preset.label}
-                  </Button>
-                ))}
-              </div>
-            </div>
             {/* Calendar column */}
             <div className="flex flex-col relative">
               {!isAllowedCustom && (
@@ -195,6 +185,16 @@ const DateRangePicker = ({ className, initialRange, onChange, align }: IProps) =
                 locale={query.data?.locale}
                 className={!isAllowedCustom ? "opacity-50 pointer-events-none" : ""}
               />
+            </div>
+            {/* Presets column */}
+            <div className="flex flex-col gap-2">
+              <div className="grid grid-cols-1 gap-3">
+                {presets.map((preset) => (
+                  <Button key={preset.id} onClick={preset.handler} variant="outline" size="sm">
+                    {preset.label}
+                  </Button>
+                ))}
+              </div>
             </div>
           </div>
           <div className="flex justify-end gap-3 border-t p-4">

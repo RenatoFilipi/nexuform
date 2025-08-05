@@ -1,15 +1,10 @@
-import { appName, contactEmail } from "./envs";
+import { APP_NAME, SUPPORT_EMAIL } from "./envs";
 
-export const privacyLastUpdatedAt = new Date().toLocaleDateString("en-US", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
 export const privacyTopics = [
   {
     title: "1. Information We Collect",
     description: [
-      `When you use ${appName}, we may collect:`,
+      `When you use ${APP_NAME}, we may collect:`,
       "- Personal information (name, email address, company details)",
       "- Form data you create and responses you collect",
       "- Usage data (features used, time spent, interactions)",
@@ -45,7 +40,7 @@ export const privacyTopics = [
   {
     title: "4. Cookies & Tracking Technologies",
     description: [
-      `${appName} uses cookies to:`,
+      `${APP_NAME} uses cookies to:`,
       "• Remember user preferences and settings",
       "• Analyze product usage patterns",
       "• Deliver personalized experiences",
@@ -73,7 +68,7 @@ export const privacyTopics = [
       "→ Export your form data at any time",
       "→ Object to specific data processing",
       "",
-      `To exercise these rights, contact us at ${contactEmail}.`,
+      `To exercise these rights, contact us at ${SUPPORT_EMAIL}.`,
     ],
   },
   {
@@ -88,16 +83,11 @@ export const privacyTopics = [
     ],
   },
 ];
-export const termsLastUpdatedAt = new Date().toLocaleDateString("en-US", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
 export const termsTopics = [
   {
     title: "1. Acceptance of Terms",
     description: [
-      `By accessing or using ${appName}'s services, you confirm that:`,
+      `By accessing or using ${APP_NAME}'s services, you confirm that:`,
       "✓ You have read and understood these Terms",
       "✓ You agree to be legally bound by them",
       "✓ You are at least 18 years old or have parental consent",
@@ -122,7 +112,7 @@ export const termsTopics = [
   {
     title: "3. Intellectual Property Rights",
     description: [
-      `All rights to ${appName} are reserved, including:`,
+      `All rights to ${APP_NAME} are reserved, including:`,
       "🔹 Software, code, and platform architecture",
       "🔹 Branding, logos, and visual assets",
       "🔹 Documentation and knowledge base content",
@@ -184,15 +174,10 @@ export const termsTopics = [
       "Any disputes will be resolved in [Jurisdiction] courts.",
       "",
       "For questions about these terms, contact:",
-      `${contactEmail}`,
+      `${SUPPORT_EMAIL}`,
     ],
   },
 ];
-export const cookiesLastUpdatedAt = new Date().toLocaleDateString("en-US", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
 export const cookieTypes = [
   {
     category: "Essential Cookies",

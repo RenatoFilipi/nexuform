@@ -1,39 +1,10 @@
-import {
-  basicForms,
-  basicPricing,
-  basicSubmissions,
-  freeTrialForms,
-  freeTrialPeriod,
-  freeTrialPricing,
-  freeTrialSubmissions,
-  proForms,
-  proPricing,
-  proSubmissions,
-} from "./envs";
+import { FALLBACK_COLOR } from "./envs";
 import { IBlockViewSettings } from "./interfaces";
 
 export const minWidth640 = "(min-width: 640px)";
 export const minute = 1000 * 60;
 export const day = 24 * 60 * 60 * 1000;
-export const planSettings = {
-  freeTrial: {
-    period: freeTrialPeriod,
-    pricing: freeTrialPricing,
-    forms: freeTrialForms,
-    submissions: freeTrialSubmissions,
-  },
-  basic: {
-    pricing: basicPricing,
-    forms: basicForms,
-    submissions: basicSubmissions,
-  },
-  pro: {
-    pricing: proPricing,
-    forms: proForms,
-    submissions: proSubmissions,
-  },
-};
-export const fallbackColor = "#5C15E7";
+export const fallbackColor = FALLBACK_COLOR;
 export const blockViewSettings: IBlockViewSettings[] = [
   {
     block: "short_text",

@@ -1,6 +1,6 @@
 import Brand from "@/components/shared/brand";
-import { appName, contactEmail } from "@/utils/envs";
-import { cookieTypes, cookiesLastUpdatedAt, managementOptions } from "@/utils/legal";
+import { APP_NAME, COOKIES_DATE, SUPPORT_EMAIL } from "@/utils/envs";
+import { cookieTypes, managementOptions } from "@/utils/legal";
 import Link from "next/link";
 
 const Cookies = () => {
@@ -16,14 +16,15 @@ const Cookies = () => {
         <div className="mb-10 text-center">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Cookie Policy</h1>
           <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Last Updated: {cookiesLastUpdatedAt}
+            Last Updated: {COOKIES_DATE}
           </p>
         </div>
 
         <div className="mb-8 p-6 bg-blue-50 rounded-lg border border-blue-100 dark:bg-blue-900/20 dark:border-blue-800/50">
           <p className="text-blue-800 dark:text-blue-200">
-            This Cookie Policy explains how {appName} uses cookies and similar technologies when you use our website and
-            services. By continuing to use our site, you consent to our use of cookies in accordance with this policy.
+            This Cookie Policy explains how {APP_NAME} uses cookies and similar technologies when you use our website
+            and services. By continuing to use our site, you consent to our use of cookies in accordance with this
+            policy.
           </p>
         </div>
 
@@ -95,9 +96,9 @@ const Cookies = () => {
             If you have any questions about our use of cookies, please contact us at:
           </p>
           <a
-            href={`mailto:${contactEmail}`}
+            href={`mailto:${SUPPORT_EMAIL}`}
             className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors dark:bg-blue-700 dark:hover:bg-blue-600">
-            {contactEmail}
+            {SUPPORT_EMAIL}
           </a>
           <p className="mt-8 text-sm text-gray-500 dark:text-gray-400">
             We may update this Cookie Policy from time to time to reflect changes in technology, legislation, or our
