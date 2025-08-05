@@ -48,13 +48,13 @@ const ResetPasswordForm = () => {
 
   if (success) {
     return (
-      <div className="flex flex-col justify-center items-center gap-6">
-        <div className="flex justify-center items-center p-2 rounded-full bg-primary/20">
-          <CheckIcon className="w-10 h-10 text-primary" />
+      <div className="flex flex-col justify-center items-center gap-6 sm:max-w-lg">
+        <div className="flex justify-center items-center p-5 rounded-full bg-primary/15">
+          <CheckIcon className="w-10 h-10 text-primary" aria-hidden="true" />
         </div>
         <div className="flex flex-col justify-center items-center text-center gap-2">
-          <h1 className="font-semibold text-xl">{t("label_suc_request_password")}</h1>
-          <span className="text-foreground/70 text-sm">{t("desc_suc_request_password")}</span>
+          <h1 className="font-semibold text-2xl">{t("label_suc_request_password")}</h1>
+          <span className="text-muted-foreground text-sm">{t("desc_suc_request_password")}</span>
         </div>
         <Button variant={"default"} size={"sm"} className="w-full" asChild>
           <Link href={"/login"}>{t("label_go_back_login")}</Link>
@@ -65,11 +65,11 @@ const ResetPasswordForm = () => {
 
   return (
     <Form {...form}>
-      <div className="flex sm:max-w-xl w-full justify-center items-center p-8">
+      <div className="flex sm:max-w-lg w-full justify-center items-center p-8">
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-6 justify-center items-center">
           <div className="flex justify-start w-full flex-col gap-2">
-            <h1 className="text-xl font-medium">{t("label_reset_password")}</h1>
-            <span className="text-sm text-foreground/80">{t("desc_reset_password")}</span>
+            <h1 className="text-2xl font-semibold">{t("label_reset_password")}</h1>
+            <span className="text-sm text-muted-foreground">{t("desc_reset_password")}</span>
           </div>
           <div className="flex flex-col gap-3 w-full">
             <FormField
@@ -94,11 +94,12 @@ const ResetPasswordForm = () => {
               {isPending && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}
               {t("label_reset_password")}
             </Button>
-            <div className="flex justify-center items-center w-full">
-              <Link href={"/login"} className="hover:underline text-muted-foreground text-sm">
-                {t("label_go_back_login")}
+            <p className="flex justify-center items-center text-center text-muted-foreground text-sm gap-1">
+              {t("desc_login")}
+              <Link href={"/login"} className="text-foreground hover:underline">
+                {t("label_login")}
               </Link>
-            </div>
+            </p>
           </div>
         </form>
       </div>

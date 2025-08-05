@@ -61,7 +61,7 @@ const LoginForm = () => {
             <div className="flex w-full justify-center">
               <Link href="/" className="group flex justify-center items-center">
                 <Card className="flex justify-center items-center px-3 py-4 hover:bg-muted-foreground/10">
-                  <Brand type="logo" className="fill-foreground h-5" />
+                  <Brand type="logo" className="fill-primary h-5" />
                 </Card>
               </Link>
             </div>
@@ -118,7 +118,7 @@ const LoginForm = () => {
                 />
                 {/* Forgot Password */}
                 <div className="text-sm text-right">
-                  <Link href="/password/reset" className="text-muted-foreground hover:text-foreground hover:underline">
+                  <Link href="/forgot-password" className="text-muted-foreground hover:text-foreground hover:underline">
                     {t("label_forgot_password")}
                   </Link>
                 </div>

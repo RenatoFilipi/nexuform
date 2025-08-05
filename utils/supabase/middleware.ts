@@ -57,7 +57,7 @@ export const updateSession = async (request: NextRequest) => {
       return NextResponse.redirect(new URL("/dashboard/organizations", request.url));
     }
     // password reset
-    if (request.nextUrl.pathname === "/password/reset" && !user.error) {
+    if (request.nextUrl.pathname === "/forgot-password" && !user.error) {
       return NextResponse.redirect(new URL("/dashboard/organizations", request.url));
     }
 

@@ -120,7 +120,7 @@ export const ResetPasswordAction = async (formData: FormData) => {
   const email = formData.get("email") as string;
 
   if (!email) {
-    return encodedRedirect("error", "/password/reset", t("required_email"));
+    return encodedRedirect("error", "/forgot-password", t("required_email"));
   }
 
   const redirectTo = `${origin}/auth/callback?redirect_to=/dashboard/account/password`;
@@ -130,10 +130,10 @@ export const ResetPasswordAction = async (formData: FormData) => {
   });
 
   if (error) {
-    return encodedRedirect("error", "/password/reset", t("err_generic"));
+    return encodedRedirect("error", "/forgot-password", t("err_generic"));
   }
 
-  return encodedRedirect("success", "/password/reset", t("label_suc_request_password"));
+  return encodedRedirect("success", "/forgot-password", t("label_suc_request_password"));
 };
 export const CancelSubscriptionAction = async (formData: FormData) => {
   const t = await getTranslations("auth");

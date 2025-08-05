@@ -68,13 +68,13 @@ const SignupForm = () => {
         <div className="flex flex-col items-center gap-6">
           <Link href="/" className="group flex justify-center items-center">
             <Card className="flex justify-center items-center px-3 py-4 hover:bg-muted-foreground/10">
-              <Brand type="logo" className="fill-foreground h-5" />
+              <Brand type="logo" className="fill-primary h-5" />
             </Card>
           </Link>
           <div className="flex flex-col justify-center items-center text-center gap-2">
             <h1 className="text-2xl font-semibold">{t("label_confirm_email")}</h1>
             <p className="text-sm text-muted-foreground">{t("desc_confirm_email")}</p>
-            <Button variant={"outline"} size={"sm"} className="mt-4" asChild>
+            <Button variant={"secondary"} size={"sm"} className="mt-4" asChild>
               <Link href={"/login"}>{t("label_login")}</Link>
             </Button>
           </div>
@@ -91,7 +91,7 @@ const SignupForm = () => {
             <div className="flex w-full justify-center">
               <Link href="/" className="group flex justify-center items-center">
                 <Card className="flex justify-center items-center px-3 py-4 hover:bg-muted-foreground/10">
-                  <Brand type="logo" className="fill-foreground h-5" />
+                  <Brand type="logo" className="fill-primary h-5" />
                 </Card>
               </Link>
             </div>

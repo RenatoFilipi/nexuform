@@ -1,7 +1,7 @@
 import ResetPasswordForm from "@/components/public/auth/reset-password-form";
 import { Metadata } from "next";
 
-const Reset = () => {
+const ForgotPassword = () => {
   return (
     <div className="min-h-dvh flex justify-center items-center">
       <ResetPasswordForm />
@@ -9,8 +9,8 @@ const Reset = () => {
   );
 };
 
-export default Reset;
+export default ForgotPassword;
 
 export const metadata: Metadata = {
-  title: "Password reset",
+  title: "Forgot password",
 };
