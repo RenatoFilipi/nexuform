@@ -196,7 +196,6 @@ const MemberRow = ({
   );
 };
 const MemberProfile = () => {
-  const t = useTranslations("app");
   const app = useAppStore();
   const currentMember = app.teamMemberProfile;
 
@@ -208,7 +207,6 @@ const MemberProfile = () => {
           <span className="font-medium">
             {currentMember.name} {currentMember.last_name}
           </span>
-          <OrgRoleBadge role={currentMember.role as TOrganizationRole} />
         </div>
         <p className="text-sm text-muted-foreground">{currentMember.email}</p>
       </div>

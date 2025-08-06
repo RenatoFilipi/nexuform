@@ -37,6 +37,7 @@ const S = async ({ params }: { params: Promise<{ slug: string }> }) => {
       />
     );
   } catch (error) {
+    console.log(error);
     return <SubmissionFormNotAvailableUI />;
   }
 };

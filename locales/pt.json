@@ -576,7 +576,19 @@
     "desc_login_headline": "Insira suas credenciais para acessar sua conta",
     "label_signup_headline": "Crie sua conta",
     "desc_signup_headline": "Preencha seus dados para explorar tudo o que oferecemos",
-    "label_plan_canceled": "Plano cancelado"
+    "label_plan_canceled": "Plano cancelado",
+    "label_wl_headline": "Crie Formulários Inteligentes em <main>Minutos.</main>",
+    "label_wl_subheadline": "A nova plataforma NexuForm está quase no ar. Entre na lista de espera e seja um dos primeiros a testar — antes do público geral.",
+    "label_wl_email_ph": "Seu e-mail",
+    "label_wl_leads": "Captura de Leads",
+    "label_wl_feedback": "Pesquisas e Feedbacks",
+    "label_wl_bugs": "Relato de Erros",
+    "label_wl_onboarding": "Onboarding de Usuários",
+    "label_wl_intern": "Formulários Internos",
+    "label_wl_events": "Inscrição em Eventos",
+    "label_wl_other": "Outro",
+    "label_wl_submit": "Entrar na lista de espera",
+    "label_wl_back": "Voltar para o site"
   },
   "landing": {
     "nav_features": "Recursos",
@@ -592,6 +604,7 @@
     "hero_subheadline": "O NexuForm permite que você crie, compartilhe e acompanhe formulários com facilidade — sem ferramentas complicadas, apenas velocidade, clareza e resultados.",
     "hero_badge": "Feito para velocidade e resultados",
     "hero_get_started": "Comece grátis",
+    "hero_check_demo": "Ver demonstração",
     "hero_no_card": "Não precisa de cartão de crédito",
     "hero_cta1": "Teste gratuito por 14 dias",
     "hero_cta2": "Sem precisar de cartão",

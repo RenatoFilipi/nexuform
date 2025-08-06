@@ -576,7 +576,19 @@
     "desc_login_headline": "Enter your credentials to access your account",
     "label_signup_headline": "Create your account",
     "desc_signup_headline": "Fill in your details to explore everything we offer",
-    "label_plan_canceled": "Plan canceled"
+    "label_plan_canceled": "Plan canceled",
+    "label_wl_headline": "Create Smart Forms in <main>Minutes.</main>",
+    "label_wl_subheadline": "The new NexuForm platform is almost live. Join the waitlist and be among the first to test it — before the general public.",
+    "label_wl_email_ph": "Your email",
+    "label_wl_leads": "Lead Capture",
+    "label_wl_feedback": "Surveys and Feedback",
+    "label_wl_bugs": "Bug Reporting",
+    "label_wl_onboarding": "User Onboarding",
+    "label_wl_intern": "Internal Forms",
+    "label_wl_events": "Event Registration",
+    "label_wl_other": "Other",
+    "label_wl_submit": "Join waitlist",
+    "label_wl_back": "Back to website"
   },
   "landing": {
     "nav_features": "Features",
@@ -592,6 +604,7 @@
     "hero_subheadline": "NexuForm lets you create, share and track forms with ease — no bloated tools, just speed, clarity and results.",
     "hero_badge": "Built for speed and results",
     "hero_get_started": "Start for free",
+    "hero_check_demo": "Check demo",
     "hero_no_card": "No credit card required",
     "hero_cta1": "Free 14-day trial",
     "hero_cta2": "No credit card required",

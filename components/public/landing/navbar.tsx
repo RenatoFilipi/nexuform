@@ -38,13 +38,13 @@ const Navbar = () => {
 
   return (
     <div
-      className={`fixed top-0 w-full px-3 z-20 backdrop-blur-xl transition-all duration-300 ${
-        scrolled ? "bg-background/90 shadow py-3" : "bg-background/0 py-3"
+      className={`fixed py-3 sm:py-5 top-0 w-full px-3 z-20 backdrop-blur-xl transition-all duration-300 ${
+        scrolled ? "bg-background/90 shadow" : "bg-background/0"
       }`}>
-      <div className="w-full flex justify-between md:justify-between items-center transition-all duration-300 sm:px-28">
+      <div className="w-full flex justify-between md:justify-between items-center transition-all duration-300 sm:px-72">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center">
-            <Brand type="primary_logo_text" className="h-5 sm:h-4 fill-foreground" />
+            <Brand type="primary_logo_text" className="h-5 sm:h-5 fill-foreground" />
           </Link>
           <div className="hidden md:flex items-center gap-6">
             {sections.map((section) => (
@@ -58,10 +58,10 @@ const Navbar = () => {
           </div>
         </div>
         <div className="hidden md:flex items-center gap-4">
-          <Button variant="outline" size="sm" asChild>
+          <Button variant="outline" size="default" asChild>
             <Link href="/login">{t("label_login")}</Link>
           </Button>
-          <Button variant="secondary" size="sm" asChild>
+          <Button variant="default" size="default" asChild>
             <Link href="/signup">{t("label_get_started")}</Link>
           </Button>
         </div>

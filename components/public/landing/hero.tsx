@@ -2,6 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { DEMO_PATH } from "@/utils/envs";
 import { motion } from "framer-motion";
 import { ArrowRightIcon, CheckIcon, ZapIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -12,7 +13,7 @@ const Hero = () => {
   const t = useTranslations("landing");
 
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-b from-background via-background to-muted/40 py-24 md:py-36">
+    <section className="relative w-full overflow-hidden bg-gradient-to-b from-primary/15 to-background py-24 md:py-36">
       <motion.div
         className="container relative px-4 md:px-6"
         initial={{ opacity: 0, y: 20 }}
@@ -35,23 +36,28 @@ const Hero = () => {
               ),
             })}
           </h1>
-
           <p className="mx-auto mt-6 max-w-2xl text-lg md:text-xl text-muted-foreground">{t("hero_subheadline")}</p>
-
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button
               asChild
               className="group transition-all hover:shadow-lg hover:shadow-primary/30 text-base px-6 py-3"
               size="lg"
               variant="default">
-              <Link href="/signup">
-                {t("hero_get_started")}
+              <Link href="/signup">{t("hero_get_started")}</Link>
+            </Button>
+            <Button
+              asChild
+              className="group transition-all hover:shadow-lg hover:shadow-primary/30 text-base px-6 py-3"
+              size="lg"
+              variant="secondary">
+              <a href={DEMO_PATH}>
+                {t("hero_check_demo")}
                 <ArrowRightIcon className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-              </Link>
+              </a>
             </Button>
           </div>
 
-          <div className="mt-16 flex flex-wrap justify-center items-center gap-6 text-sm text-muted-foreground">
+          <div className="mt-16 flex flex-wrap justify-center items-center gap-6 text-sm">
             <div className="flex items-center gap-2">
               <CheckIcon className="h-4 w-4 text-green-500" />
               {t("hero_cta1")}
@@ -65,14 +71,13 @@ const Hero = () => {
               {t("hero_cta3")}
             </div>
           </div>
-
           <div className="relative mt-20 w-full">
-            <div className="mx-auto max-w-6xl">
+            <div className="mx-auto max-w-full">
               <motion.div
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-                className="relative rounded-2xl border border-border bg-muted/10 shadow-xl p-3 backdrop-blur-xl">
+                className="relative rounded-2xl border border-border bg-muted/10 shadow-xl p-1 backdrop-blur-xl">
                 <Image
                   width={1912}
                   height={932}
