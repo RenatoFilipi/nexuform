@@ -24,7 +24,7 @@ const Navbar = () => {
 
   const links = [
     { name: t("label_login"), path: "/login" },
-    { name: t("label_get_started"), path: "/signup" },
+    { name: t("hero_join_wl"), path: "/signup" },
   ];
   const sections = [
     { name: t("nav_usecases"), id: "#usecases" },
@@ -62,7 +62,7 @@ const Navbar = () => {
             <Link href="/login">{t("label_login")}</Link>
           </Button>
           <Button variant="default" size="default" asChild>
-            <Link href="/signup">{t("label_get_started")}</Link>
+            <Link href="/signup">{t("hero_join_wl")}</Link>
           </Button>
         </div>
         <div className="flex md:hidden">

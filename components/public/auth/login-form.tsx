@@ -61,7 +61,7 @@ const LoginForm = () => {
             <div className="flex w-full justify-center">
               <Link href="/" className="group flex justify-center items-center">
                 <Card className="flex justify-center items-center px-3 py-4 hover:bg-muted-foreground/10">
-                  <Brand type="logo" className="fill-primary h-5" />
+                  <Brand type="logo" className="fill-foreground h-5" />
                 </Card>
               </Link>
             </div>

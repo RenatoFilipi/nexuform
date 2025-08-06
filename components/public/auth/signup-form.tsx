@@ -68,7 +68,7 @@ const SignupForm = () => {
         <div className="flex flex-col items-center gap-6">
           <Link href="/" className="group flex justify-center items-center">
             <Card className="flex justify-center items-center px-3 py-4 hover:bg-muted-foreground/10">
-              <Brand type="logo" className="fill-primary h-5" />
+              <Brand type="logo" className="fill-foreground h-5" />
             </Card>
           </Link>
           <div className="flex flex-col justify-center items-center text-center gap-2">

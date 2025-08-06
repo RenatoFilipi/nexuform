@@ -43,7 +43,8 @@ const Hero = () => {
               className="group transition-all hover:shadow-lg hover:shadow-primary/30 text-base px-6 py-3"
               size="lg"
               variant="default">
-              <Link href="/signup">{t("hero_get_started")}</Link>
+              {/* <Link href="/signup">{t("hero_get_started")}</Link> */}
+              <Link href="/signup">{t("hero_join_wl")}</Link>
             </Button>
             <Button
               asChild
