@@ -1,4 +1,20 @@
 import { createTranslator } from "use-intl/core";
+import {
+  ADDITIONAL_MEMBER_PRICE,
+  FREE_TRIAL_FORMS,
+  FREE_TRIAL_MAX_MEMBERS,
+  FREE_TRIAL_PERIOD,
+  FREE_TRIAL_PRICE,
+  FREE_TRIAL_SUBMISSIONS,
+  PRO_FORMS,
+  PRO_MAX_MEMBERS,
+  PRO_PRICE,
+  PRO_SUBMISSIONS,
+  STARTER_FORMS,
+  STARTER_MAX_MEMBERS,
+  STARTER_PRICE,
+  STARTER_SUBMISSIONS,
+} from "./envs";
 
 export type TPlan = "free_trial" | "starter" | "pro";
 export type TBillingInterval = "month" | "year";
@@ -55,17 +71,16 @@ export const getPlans = async (locale: string) => {
       description: t("pricing.free_trial_description"),
       type: "free_trial",
       price: {
-        amount: 0,
-        annualAmount: 0,
+        amount: FREE_TRIAL_PRICE,
+        annualAmount: FREE_TRIAL_PRICE,
       },
       features: [
         { description: t("pricing.free_trial_feat_01"), comingSoon: false },
         { description: t("pricing.free_trial_feat_02"), comingSoon: false },
         { description: t("pricing.free_trial_feat_03"), comingSoon: false },
         { description: t("pricing.free_trial_feat_04"), comingSoon: false },
-        { description: t("pricing.free_trial_feat_05"), comingSoon: false },
       ],
-      freeTrialDuration: 14,
+      freeTrialDuration: FREE_TRIAL_PERIOD,
       isMostPopular: false,
       ctaLabel: t("pricing.free_trial_cta"),
       metadata: {
@@ -73,9 +88,9 @@ export const getPlans = async (locale: string) => {
         stripeProductId: null,
       },
       limits: {
-        maxForms: 2,
-        maxSubmissionsPerMonth: 100,
-        maxUsers: 1,
+        maxForms: FREE_TRIAL_FORMS,
+        maxSubmissionsPerMonth: FREE_TRIAL_SUBMISSIONS,
+        maxUsers: FREE_TRIAL_MAX_MEMBERS,
       },
       recommendedFor: t("pricing.free_trial_recommended_for"),
       billingIntervalOptions: ["month"],
@@ -89,7 +104,7 @@ export const getPlans = async (locale: string) => {
       description: t("pricing.starter_description"),
       type: "starter",
       price: {
-        amount: 12,
+        amount: STARTER_PRICE,
         annualAmount: 115,
       },
       features: [
@@ -98,8 +113,7 @@ export const getPlans = async (locale: string) => {
         { description: t("pricing.starter_feat_03"), comingSoon: false },
         { description: t("pricing.starter_feat_04"), comingSoon: false },
         { description: t("pricing.starter_feat_05"), comingSoon: false },
-        { description: t("pricing.starter_feat_07"), comingSoon: false },
-        // { description: t("pricing.starter_feat_06"), comingSoon: false },
+        { description: t("pricing.starter_feat_08"), comingSoon: false },
       ],
       freeTrialDuration: null,
       isMostPopular: true,
@@ -109,9 +123,9 @@ export const getPlans = async (locale: string) => {
         stripeProductId: null,
       },
       limits: {
-        maxForms: 5,
-        maxSubmissionsPerMonth: 1500,
-        maxUsers: 1,
+        maxForms: STARTER_FORMS,
+        maxSubmissionsPerMonth: STARTER_SUBMISSIONS,
+        maxUsers: STARTER_MAX_MEMBERS,
       },
       recommendedFor: t("pricing.starter_recommended_for"),
       billingIntervalOptions: ["month", "year"],
@@ -125,7 +139,7 @@ export const getPlans = async (locale: string) => {
       description: t("pricing.pro_description"),
       type: "pro",
       price: {
-        amount: 29,
+        amount: PRO_PRICE,
         annualAmount: 278,
       },
       features: [
@@ -134,10 +148,10 @@ export const getPlans = async (locale: string) => {
         { description: t("pricing.pro_feat_03"), comingSoon: false },
         { description: t("pricing.pro_feat_04"), comingSoon: false },
         { description: t("pricing.pro_feat_05"), comingSoon: false },
+        { description: t("pricing.pro_feat_08"), comingSoon: false },
         { description: t("pricing.pro_feat_06"), comingSoon: false },
         { description: t("pricing.pro_feat_07"), comingSoon: false },
-        { description: t("pricing.pro_feat_08"), comingSoon: false },
-        // { description: t("pricing.pro_feat_09"), comingSoon: true },
+        { description: t("pricing.pro_feat_10"), comingSoon: false },
       ],
       freeTrialDuration: null,
       isMostPopular: false,
@@ -147,10 +161,10 @@ export const getPlans = async (locale: string) => {
         stripeProductId: null,
       },
       limits: {
-        maxForms: 15,
-        maxSubmissionsPerMonth: 5000,
-        maxMembers: 5,
-        additionalMemberPricePerMonth: 5,
+        maxForms: PRO_FORMS,
+        maxSubmissionsPerMonth: PRO_SUBMISSIONS,
+        maxMembers: PRO_MAX_MEMBERS,
+        additionalMemberPricePerMonth: ADDITIONAL_MEMBER_PRICE,
       },
       recommendedFor: t("pricing.pro_recommended_for"),
       billingIntervalOptions: ["month", "year"],
