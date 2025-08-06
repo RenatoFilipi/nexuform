@@ -444,7 +444,7 @@ const SearchForms = ({ children, orgId }: { children: React.ReactNode; orgId: st
     queryFn: async () => {
       const forms = await supabase
         .from("forms")
-        .select("name, public_id, label_color")
+        .select("name, public_id")
         .eq("org_id", app.organization.id)
         .order("created_at", { ascending: true });
 
@@ -478,7 +478,6 @@ const SearchForms = ({ children, orgId }: { children: React.ReactNode; orgId: st
                     className={`${
                       x.public_id === app.form.public_id ? "bg-foreground/5" : ""
                     } px-3 py-2 text-sm rounded transition-colors flex items-center gap-2 hover:bg-foreground/5 group`}>
-                    <span className="w-3 h-3 rounded-md flex-shrink-0" style={{ backgroundColor: x.label_color }} />
                     <span className="flex-1 truncate">{x.name}</span>
                     {x.public_id === app.form.public_id && <CheckIcon className="w-4 h-4" />}
                   </a>
