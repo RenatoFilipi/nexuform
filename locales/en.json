@@ -588,7 +588,11 @@
     "label_wl_events": "Event Registration",
     "label_wl_other": "Other",
     "label_wl_submit": "Join waitlist",
-    "label_wl_back": "Back to website"
+    "label_wl_back": "Back to website",
+    "required_purpose": "Purpose is required",
+    "label_wl_success_title": "You're in!",
+    "label_wl_success_sub": "You've successfully joined the waitlist. We'll keep you posted!",
+    "label_wl_already": "this is great news! you already is on the waitlist!"
   },
   "landing": {
     "nav_features": "Features",

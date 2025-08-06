@@ -1,6 +1,6 @@
 "use client";
 
-import { CancelSubscriptionAction } from "@/app/actions/auth-actions";
+import { cancelSubscriptionAction } from "@/app/actions/auth-actions";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -140,7 +140,7 @@ const CancelConfirm = ({ setState }: { setState: TSetState<boolean> }) => {
       if (app.subscription.stripe_subscription_id) {
         formData.append("stripeSubscriptionId", app.subscription.stripe_subscription_id);
         formData.append("orgPublicId", app.organization.public_id);
-        await CancelSubscriptionAction(formData);
+        await cancelSubscriptionAction(formData);
       }
     });
   };

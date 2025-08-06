@@ -62,7 +62,7 @@ export const signOutAction = async () => {
   await supabase.auth.signOut();
   return redirect("/login");
 };
-export const DeleteAccountAction = async (formData: FormData) => {
+export const deleteAccountAction = async (formData: FormData) => {
   const supabase = superCreateClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE!
@@ -113,7 +113,7 @@ export const DeleteAccountAction = async (formData: FormData) => {
   // 4. Redireciona
   redirect("/login");
 };
-export const ResetPasswordAction = async (formData: FormData) => {
+export const resetPasswordAction = async (formData: FormData) => {
   const t = await getTranslations("auth");
   const supabase = await createClient();
   const origin = (await headers()).get("origin");
@@ -135,7 +135,7 @@ export const ResetPasswordAction = async (formData: FormData) => {
 
   return encodedRedirect("success", "/forgot-password", t("label_suc_request_password"));
 };
-export const CancelSubscriptionAction = async (formData: FormData) => {
+export const cancelSubscriptionAction = async (formData: FormData) => {
   const t = await getTranslations("auth");
 
   const stripeSubscriptionId = formData.get("stripeSubscriptionId") as string | null;
@@ -175,3 +175,4 @@ export const CancelSubscriptionAction = async (formData: FormData) => {
 
   return encodedRedirect("success", `/dashboard/organizations/${orgPublicId}/billing`, t("label_plan_canceled"));
 };
+export const signWaitListAction = async (email: string, purpose: string) => {};

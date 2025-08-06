@@ -588,7 +588,11 @@
     "label_wl_events": "Inscrição em Eventos",
     "label_wl_other": "Outro",
     "label_wl_submit": "Entrar na lista de espera",
-    "label_wl_back": "Voltar para o site"
+    "label_wl_back": "Voltar para o site",
+    "required_purpose": "O propósito é obrigatório",
+    "label_wl_success_title": "Você está dentro!",
+    "label_wl_success_sub": "Você entrou na lista de espera com sucesso. Nós te manteremos informado!",
+    "label_wl_already": "Ótima notícia! Você já está na lista de espera!"
   },
   "landing": {
     "nav_features": "Recursos",

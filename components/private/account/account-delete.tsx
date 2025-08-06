@@ -1,4 +1,4 @@
-import { DeleteAccountAction } from "@/app/actions/auth-actions";
+import { deleteAccountAction } from "@/app/actions/auth-actions";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -73,7 +73,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       }
       const formData = new FormData();
       formData.append("userId", data.user.id);
-      await DeleteAccountAction(formData);
+      await deleteAccountAction(formData);
     });
   };
 

@@ -15,3 +15,4 @@ export type ETheme = Tables<"themes">;
 export type EViewLog = Tables<"view_logs">;
 export type ETeamMemberProfile = Tables<"team_member_profiles">;
 export type EInvitation = Tables<"invitations">;
+export type EWaitlist = Tables<"waitlist">;

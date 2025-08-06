@@ -22,7 +22,7 @@ const ErrorUI = ({ email }: { email: string }) => {
   if (query.isPending) return null;
 
   return (
-    <div className="flex flex-col items-center justify-center h-full px-4 py-6 sm:px-6 lg:px-36 w-full">
+    <div className="flex flex-col items-center justify-center h-full px-4 py-6 sm:px-6 lg:px-36 w-full flex-1">
       <div className="flex flex-col justify-center items-center gap-4">
         <div className="text-center flex flex-col justify-center items-center gap-1">
           <h2 className="text-lg font-semibold">{t("label_error_generic")}</h2>
