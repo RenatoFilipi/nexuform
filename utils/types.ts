@@ -91,3 +91,5 @@ export type TOrganizationStatus = "inactive" | "active";
 export type TMetric = "total_views" | "total_submissions" | "completion_rate" | "completion_time";
 
 export type TOrganizationRole = "owner" | "admin" | "staff";
+
+export type TDateRangePreset = "today" | "3days" | "7days" | "30days" | "this_week" | "this_month";

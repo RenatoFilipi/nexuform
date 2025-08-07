@@ -523,7 +523,11 @@
     "label_summary": "Summary",
     "label_members_limit": "This organization has reached its member limit. We are currently evaluating options to increase the limit.",
     "label_step": "Step",
-    "label_form_notice": "Do not submit sensitive data if you're unsure of the source. Verify that the form is from your company or a trusted source."
+    "label_form_notice": "Do not submit sensitive data if you're unsure of the source. Verify that the form is from your company or a trusted source.",
+    "label_start_date": "Start date",
+    "label_end_date": "End date",
+    "label_single_day": "Single day",
+    "label_no_date_selected": "No date selected"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

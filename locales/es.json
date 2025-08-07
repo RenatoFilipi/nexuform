@@ -523,7 +523,11 @@
     "label_summary": "Resumen",
     "label_members_limit": "Esta organización ha alcanzado su límite de miembros. Actualmente estamos evaluando opciones para aumentar el límite.",
     "label_step": "Paso",
-    "label_form_notice": "No envíes datos sensibles si no estás seguro del origen. Verifica que el formulario sea de tu empresa o de una fuente confiable."
+    "label_form_notice": "No envíes datos sensibles si no estás seguro del origen. Verifica que el formulario sea de tu empresa o de una fuente confiable.",
+    "label_start_date": "Fecha inicial",
+    "label_end_date": "Fecha final",
+    "label_single_day": "Día único",
+    "label_no_date_selected": "Ninguna fecha seleccionada"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",
