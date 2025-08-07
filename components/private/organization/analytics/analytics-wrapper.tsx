@@ -175,7 +175,7 @@ const AnalyticsCard = ({ name, value, icon }: { name: string; value: string; ico
 
       <div className="flex justify-between items-start w-full">
         <span className="text-sm font-medium text-muted-foreground">{name}</span>
-        <div className="flex justify-center items-center p-2 bg-primary/10 rounded-lg text-primary group-hover:bg-primary/20 transition-colors duration-300">
+        <div className="flex justify-center items-center p-2 bg-foreground/5 rounded-lg text-primary group-hover:bg-primary/20 transition-colors duration-300">
           {icon}
         </div>
       </div>

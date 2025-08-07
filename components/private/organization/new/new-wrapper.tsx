@@ -98,7 +98,7 @@ const NewWrapper = (props: IProps) => {
         <div className="grid sm:grid-cols-2 gap-4 sm:gap-8">
           <MethodCard
             icon={
-              <div className="p-4 rounded-full bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors">
+              <div className="p-3 bg-foreground/10 rounded group-hover:bg-foreground/20 transition-colors">
                 <PlusIcon className="w-6 h-6 text-blue-500" />
               </div>
             }
@@ -109,7 +109,7 @@ const NewWrapper = (props: IProps) => {
                 variant={"outline"}
                 size={"sm"}
                 onClick={onNewScratchForm}
-                className="mt-2 group-hover:border-primary group-hover:text-primary">
+                className="mt-2 group-hover:border-primary">
                 {isPending && <LoaderIcon className="w-4 h-4 mr-2 animate-spin" />}
                 {t("label_create_form_scratch")}
               </Button>
@@ -117,7 +117,7 @@ const NewWrapper = (props: IProps) => {
           />
           <MethodCard
             icon={
-              <div className="p-4 rounded-full bg-orange-500/10 group-hover:bg-orange-500/20 transition-colors">
+              <div className="p-3 bg-foreground/10 rounded group-hover:bg-foreground/20 transition-colors">
                 <HexagonIcon className="w-6 h-6 text-orange-500" />
               </div>
             }
@@ -127,7 +127,7 @@ const NewWrapper = (props: IProps) => {
                 variant={"outline"}
                 size={"sm"}
                 onClick={() => setView("method:templates")}
-                className="mt-2 group-hover:border-primary group-hover:text-primary">
+                className="mt-2 group-hover:border-primary">
                 {t("label_create_form_template")}
                 <ChevronRightIcon className="w-4 h-4 ml-2" />
               </Button>
@@ -149,18 +149,25 @@ const MethodCard = (props: IMethodProps) => {
   const limitReached = app.forms.length >= app.subscription.forms;
 
   return (
-    <Card className="flex justify-center items-center w-full border h-60 gap-4 flex-col p-6 rounded-lg hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md group">
-      {props.icon}
-      <p className="text-sm text-center group-hover:text-foreground text-muted-foreground">{props.description}</p>
-      {limitReached && (
-        <Link href={`/dashboard/organizations/${app.organization.public_id}/billing`}>
-          <Button variant={"outline"} size={"sm"} className="mt-2 group-hover:border-primary group-hover:text-primary">
-            {t("label_manage_sub")}
-            <ArrowUpRightIcon className="w-4 h-4 ml-2" />
-          </Button>
-        </Link>
-      )}
-      {!limitReached && props.action}
+    <Card className="flex items-start justify-between w-full border h-60 gap-4 flex-col p-6 rounded-lg hover:border-primary transition-all duration-300 shadow-sm hover:shadow-md group">
+      <div className="flex flex-col gap-5">
+        <div className="w-full flex">{props.icon}</div>
+        <p className="text-sm text-start group-hover:text-foreground text-muted-foreground">{props.description}</p>
+      </div>
+      <div className="flex justify-end w-full">
+        {limitReached && (
+          <Link href={`/dashboard/organizations/${app.organization.public_id}/billing`}>
+            <Button
+              variant={"outline"}
+              size={"sm"}
+              className="mt-2 group-hover:border-primary group-hover:text-primary">
+              {t("label_manage_sub")}
+              <ArrowUpRightIcon className="w-4 h-4 ml-2" />
+            </Button>
+          </Link>
+        )}
+        {!limitReached && props.action}
+      </div>
     </Card>
   );
 };
@@ -228,7 +235,7 @@ const TemplateList = ({ setView }: { setView: TSetState<TView> }) => {
       )}
       {!query.isPending && !query.isError && query.data && (
         <div className="flex flex-col gap-6">
-          <div className="grid sm:grid-cols-2 gap-6">
+          <div className="grid sm:grid-cols-3 gap-6">
             {query.data.templates.map((template) => {
               return <Preview key={template.id} template={template} />;
             })}
@@ -257,9 +264,7 @@ const Preview = (props: { template: ETemplate }) => {
   return (
     <div className="group relative flex flex-col justify-between p-5 min-h-44 rounded-lg bg-card border hover:border-primary transition-all duration-200 overflow-hidden">
       <div className="flex flex-col gap-3 w-full">
-        <h3 className="text-base font-medium line-clamp-2 text-foreground group-hover:text-primary transition-colors duration-200">
-          {name}
-        </h3>
+        <h3 className="text-base font-medium line-clamp-2 text-foreground transition-colors duration-200">{name}</h3>
         <p className="text-muted-foreground text-sm group-hover:text-foreground">{description}</p>
       </div>
       <div className="flex justify-between items-center">
@@ -267,8 +272,8 @@ const Preview = (props: { template: ETemplate }) => {
           <span className="first-letter:uppercase">{query.data?.category}</span>
         </Badge>
         <NewPreview template={props.template}>
-          <Button variant="outline" size="sm">
-            <ArrowUpRightIcon className="w-4 h-4 mr-2 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
+          <Button variant="outline" size="sm" className="group-hover:border-primary">
+            <ArrowUpRightIcon className="w-4 h-4 mr-2 text-muted-foreground transition-colors duration-300" />
             {t("label_preview")}
           </Button>
         </NewPreview>

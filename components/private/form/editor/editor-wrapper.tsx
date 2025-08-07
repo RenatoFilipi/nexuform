@@ -179,7 +179,7 @@ const EditorCanva = () => {
       )}
       {hasBlocks && editor.editorView === "blocks" && (
         <div className="flex justify-center items-start h-full w-full overflow-y-auto py-8">
-          <div className="flex flex-col gap-6 w-full sm:w-[650px]">
+          <div className="flex flex-col gap-6 w-full sm:w-[720px]">
             {/* Header */}
             <div className="flex flex-col gap-2 px-3 justify-center items-start">
               <h1 className="text-2xl font-bold">{editor.form.name}</h1>

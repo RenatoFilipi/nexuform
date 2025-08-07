@@ -199,7 +199,7 @@ const SubmissionEnvironment = () => {
         </div>
       )}
       {appState === "idle" && (
-        <div className="flex flex-col gap-6 sm:w-[620px] w-full mt-10 px-4 sm:px-0">
+        <div className="flex flex-col gap-6 sm:w-[720px] w-full mt-10 px-4 sm:px-0">
           {/* Header */}
           <div className="flex flex-col gap-2 justify-center items-start">
             <h1 className="text-2xl font-bold">{sub.form.name}</h1>

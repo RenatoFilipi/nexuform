@@ -1,6 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { BarChart3Icon, BugIcon, ShieldIcon, UserCheckIcon, UsersIcon, ZapIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -16,7 +17,7 @@ const UseCases = () => {
       color: "text-primary",
       borderColor: "hover:border-primary border-primary/30",
       accent: "bg-primary",
-      bgColor: "bg-transparent hover:bg-primary/5",
+      bgColor: "hover:bg-primary/5",
     },
     {
       title: t("usecases_2_title"),
@@ -25,7 +26,7 @@ const UseCases = () => {
       color: "text-primary",
       borderColor: "hover:border-primary border-primary/30",
       accent: "bg-primary",
-      bgColor: "bg-transparent hover:bg-primary/5",
+      bgColor: "hover:bg-primary/5",
     },
     {
       title: t("usecases_3_title"),
@@ -34,7 +35,7 @@ const UseCases = () => {
       color: "text-primary",
       borderColor: "hover:border-primary border-primary/30",
       accent: "bg-primary",
-      bgColor: "bg-transparent hover:bg-primary/5",
+      bgColor: "hover:bg-primary/5",
     },
     {
       title: t("usecases_4_title"),
@@ -43,7 +44,7 @@ const UseCases = () => {
       color: "text-primary",
       borderColor: "hover:border-primary border-primary/30",
       accent: "bg-primary",
-      bgColor: "bg-transparent hover:bg-primary/5",
+      bgColor: "hover:bg-primary/5",
     },
     {
       title: t("usecases_5_title"),
@@ -52,7 +53,7 @@ const UseCases = () => {
       color: "text-primary",
       borderColor: "hover:border-primary border-primary/30",
       accent: "bg-primary",
-      bgColor: "bg-transparent hover:bg-primary/5",
+      bgColor: "hover:bg-primary/5",
     },
     {
       title: t("usecases_6_title"),
@@ -61,10 +62,9 @@ const UseCases = () => {
       color: "text-primary",
       borderColor: "hover:border-primary border-primary/30",
       accent: "bg-primary",
-      bgColor: "bg-transparent hover:bg-primary/5",
+      bgColor: "hover:bg-primary/5",
     },
   ];
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -121,11 +121,11 @@ const UseCases = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
           {ucs.map((uc, index) => (
             <motion.div key={index} variants={cardVariants} whileHover="hover" className="h-full">
-              <div
-                className={`relative h-full rounded-lg border-2 ${uc.borderColor} ${uc.bgColor} p-6 transition-all duration-300 group hover:shadow-xl hover:-translate-y-1 overflow-hidden`}>
+              <Card
+                className={`relative h-full rounded-lg ${uc.borderColor} ${uc.bgColor} p-6 transition-all duration-300 group hover:shadow-xl hover:-translate-y-1 overflow-hidden`}>
                 {/* Efeito de brilho ao passar o mouse */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -164,7 +164,7 @@ const UseCases = () => {
                     <div className="h-[2px] w-8 bg-muted-foreground/20 group-hover:bg-primary/80 group-hover:w-12 transition-all duration-500"></div>
                   </div>
                 </div>
-              </div>
+              </Card>
             </motion.div>
           ))}
         </motion.div>
