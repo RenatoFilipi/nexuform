@@ -351,7 +351,7 @@ const EditorNavbar = () => {
   if (!app.context.isSubscriptionActive) return null;
 
   return (
-    <nav className="z-10 flex flex-col bg-background fixed w-full border-b">
+    <nav className="z-10 flex flex-col bg-card fixed w-full border-b">
       <div className="flex w-full justify-between items-center h-14 px-4 sm:px-6">
         <div className="flex justify-center items-center gap-2">
           <Button variant={"ghost"} size={"icon"} className="p-2" asChild>

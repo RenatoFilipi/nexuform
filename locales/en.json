@@ -522,13 +522,15 @@
     "label_update_payment": "Update Payment",
     "label_summary": "Summary",
     "label_members_limit": "This organization has reached its member limit. We are currently evaluating options to increase the limit.",
-    "label_step": "Step"
+    "label_step": "Step",
+    "label_form_notice": "Do not submit sensitive data if you're unsure of the source. Verify that the form is from your company or a trusted source."
   },
   "s": {
     "err_required_all": "Answer all required questions.",
     "err_generic": "Something went wrong.",
     "err_sub": "Error on submission, please try again.",
-    "label_powered": "Powered by Nexuform"
+    "label_powered": "Powered by Nexuform",
+    "label_form_notice": "Do not submit sensitive data if you're unsure of the source. Verify that the form is from your company or a trusted source."
   },
   "auth": {
     "label_login": "Login",

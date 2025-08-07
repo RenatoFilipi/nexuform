@@ -134,7 +134,7 @@ const EditorCanva = () => {
 
   return (
     <div className="flex justify-center items-center h-full w-full flex-col">
-      <div className="h-16 w-full flex justify-between items-center px-3 border-b gap-4">
+      <div className="h-16 w-full flex justify-between items-center px-3 gap-4">
         <EditorAddBlock>
           <Button variant={"outline"} size={"sm"}>
             <PlusIcon className="w-4 h-4 mr-2" />
@@ -180,10 +180,12 @@ const EditorCanva = () => {
       {hasBlocks && editor.editorView === "blocks" && (
         <div className="flex justify-center items-start h-full w-full overflow-y-auto py-8">
           <div className="flex flex-col gap-6 w-full sm:w-[650px]">
+            {/* Header */}
             <div className="flex flex-col gap-2 px-3 justify-center items-start">
               <h1 className="text-2xl font-bold">{editor.form.name}</h1>
-              <p className="text-sm text-foreground/80">{editor.form.description}</p>
+              <p className="text-sm text-muted-foreground text-wrap">{editor.form.description}</p>
             </div>
+            {/* Blocks */}
             <Reorder.Group
               axis="y"
               values={editor.blocks}
@@ -199,12 +201,14 @@ const EditorCanva = () => {
                 );
               })}
             </Reorder.Group>
+            {/* Footer */}
             <div className="flex justify-center items-center w-full flex-col gap-6 p-3">
               <button
                 style={{ backgroundColor: editor.theme.custom_primary_color }}
                 className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 text-white w-full">
                 {editor.form.submit_label}
               </button>
+              <span className="text-xs text-muted-foreground text-wrap">{t("label_form_notice")}</span>
               <div className="flex justify-center sm:justify-end items-center w-full gap-2 h-14">
                 {editor.theme.app_branding && <PoweredByBadge version="default" />}
               </div>

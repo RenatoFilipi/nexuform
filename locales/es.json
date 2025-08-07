@@ -522,13 +522,15 @@
     "label_update_payment": "Actualizar Pago",
     "label_summary": "Resumen",
     "label_members_limit": "Esta organización ha alcanzado su límite de miembros. Actualmente estamos evaluando opciones para aumentar el límite.",
-    "label_step": "Paso"
+    "label_step": "Paso",
+    "label_form_notice": "No envíes datos sensibles si no estás seguro del origen. Verifica que el formulario sea de tu empresa o de una fuente confiable."
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",
     "err_generic": "Algo salió mal.",
     "err_sub": "Error al enviar, por favor intente nuevamente.",
-    "label_powered": "Powered by Nexuform"
+    "label_powered": "Powered by Nexuform",
+    "label_form_notice": "No envíes datos sensibles si no estás seguro del origen. Verifica que el formulario sea de tu empresa o de una fuente confiable."
   },
   "auth": {
     "label_login": "Iniciar sesión",

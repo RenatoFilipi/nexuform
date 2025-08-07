@@ -200,10 +200,12 @@ const SubmissionEnvironment = () => {
       )}
       {appState === "idle" && (
         <div className="flex flex-col gap-6 sm:w-[620px] w-full mt-10 px-4 sm:px-0">
+          {/* Header */}
           <div className="flex flex-col gap-2 justify-center items-start">
             <h1 className="text-2xl font-bold">{sub.form.name}</h1>
-            <p className="text-sm text-foreground/80">{sub.form.description}</p>
+            <p className="text-sm text-muted-foreground text-wrap">{sub.form.description}</p>
           </div>
+          {/* Blocks */}
           <div className="flex flex-col gap-2 w-full">
             {sub.blocks.map((block) => {
               const Component = COMPONENT_MAP[block.type as TBlock];
@@ -215,6 +217,7 @@ const SubmissionEnvironment = () => {
               );
             })}
           </div>
+          {/* Footer */}
           <div className="flex justify-center items-center w-full flex-col gap-6 mb-10">
             <button
               disabled={submissionState === "loading"}
@@ -224,6 +227,7 @@ const SubmissionEnvironment = () => {
               {submissionState === "loading" && <LoaderIcon className="animate-spin w-4 h-4 mr-2" />}{" "}
               {sub.form.submit_label}
             </button>
+            <span className="text-xs text-muted-foreground text-wrap">{t("label_form_notice")}</span>
             <div className="flex justify-between sm:justify-between items-center w-full gap-2 h-1/4">
               <ModeToggle2 />
               {sub.theme.app_branding && (
