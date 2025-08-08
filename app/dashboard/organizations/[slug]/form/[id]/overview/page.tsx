@@ -1,4 +1,5 @@
 import { fetchForm } from "@/app/actions/form-actions";
+import { fetchSubmissionLogs, fetchViewLogs } from "@/app/actions/logs-actions";
 import { fetchOrganization } from "@/app/actions/organization-actions";
 import { fetchProfile } from "@/app/actions/profile-actions";
 import { fetchSubscription } from "@/app/actions/subscription-actions";
@@ -26,23 +27,8 @@ const Overview = async ({ params }: { params: Promise<{ slug: string; id: string
     const subscription = await fetchSubscription(organization.id);
     const form = await fetchForm(id, organization.id);
     const dates = getDateRangeFromToday(7);
-
-    const submissionLogs = await supabase
-      .from("submission_logs")
-      .select("*")
-      .eq("form_id", form.id)
-      .gte("created_at", dates.startDate.toISOString())
-      .lte("created_at", dates.endDate.toISOString());
-    if (submissionLogs.error) throw new Error("");
-
-    const viewLogs = await supabase
-      .from("view_logs")
-      .select("*")
-      .eq("form_id", form.id)
-      .gte("created_at", dates.startDate.toISOString())
-      .lte("created_at", dates.endDate.toISOString());
-    if (viewLogs.error) throw new Error("");
-
+    const submissionLogs = await fetchSubmissionLogs([form.id], dates.from.toISOString(), dates.to.toISOString());
+    const viewLogs = await fetchViewLogs([form.id], dates.from.toISOString(), dates.to.toISOString());
     const context = applyContext(teamMemberProfile, organization, subscription);
 
     return (
@@ -54,8 +40,8 @@ const Overview = async ({ params }: { params: Promise<{ slug: string; id: string
         organization={organization}
         subscription={subscription}
         form={form}
-        submissionLogs={submissionLogs.data}
-        viewLogs={viewLogs.data}
+        submissionLogs={submissionLogs}
+        viewLogs={viewLogs}
         context={context}
         dates={dates}
       />

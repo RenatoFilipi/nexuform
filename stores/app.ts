@@ -25,6 +25,8 @@ interface IProps {
   blocks: EBlock[];
   submissions: ESubmission[];
   receivedInvitations: EInvitation[];
+  submissionLogsCompare: ESubmissionLog[];
+  viewLogsCompare: EViewLog[];
 
   setOrganizations: (p: EOrganization[]) => void;
   setSubscriptions: (p: ESubscription[]) => void;
@@ -35,6 +37,8 @@ interface IProps {
   setBlocks: (p: EBlock[]) => void;
   setSubmissions: (p: ESubmission[]) => void;
   setReceivedInvitations: (p: EInvitation[]) => void;
+  setSubmissionLogsCompare: (p: ESubmissionLog[]) => void;
+  setViewLogsCompare: (p: EViewLog[]) => void;
 
   // unit
   form: EForm;
@@ -72,6 +76,8 @@ const useAppStore = create<IProps>((set) => ({
   blocks: [],
   submissions: [],
   receivedInvitations: [],
+  submissionLogsCompare: [],
+  viewLogsCompare: [],
   setForms: (p) => set({ forms: p }),
   setOrganizations: (p) => set({ organizations: p }),
   setSubscriptions: (p) => set({ subscriptions: p }),
@@ -81,6 +87,8 @@ const useAppStore = create<IProps>((set) => ({
   setBlocks: (p) => set({ blocks: p }),
   setSubmissions: (p) => set({ submissions: p }),
   setReceivedInvitations: (p) => set({ receivedInvitations: p }),
+  setSubmissionLogsCompare: (p) => set({ submissionLogsCompare: p }),
+  setViewLogsCompare: (p) => set({ viewLogsCompare: p }),
 
   // unit
   form: {
@@ -143,8 +151,8 @@ const useAppStore = create<IProps>((set) => ({
   setTeamMemberProfile: (p) => set({ teamMemberProfile: p }),
 
   // utils
-  from: dates.startDate,
-  to: dates.endDate,
+  from: dates.from,
+  to: dates.to,
   submissionPagination: { from: paginationFrom, to: paginationTo },
   setFrom: (p) => set({ from: p }),
   setTo: (p) => set({ to: p }),

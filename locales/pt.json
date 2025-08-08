@@ -527,7 +527,8 @@
     "label_start_date": "Data inicial",
     "label_end_date": "Data final",
     "label_single_day": "Único dia",
-    "label_no_date_selected": "Nenhuma data selecionada"
+    "label_no_date_selected": "Nenhuma data selecionada",
+    "label_from_last_period": "do último período"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

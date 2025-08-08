@@ -60,13 +60,27 @@ export const getDateDifferenceInDays = (date1: Date, date2: Date): number => {
   return Math.abs(d2.getTime() - d1.getTime()) / msPerDay + 1;
 };
 
-export const getDateRangeFromToday = (intervalDays: number): { startDate: Date; endDate: Date } => {
-  const endDate = new Date();
-  endDate.setHours(23, 59, 59, 999);
-  const startDate = new Date(endDate);
-  startDate.setDate(startDate.getDate() - (intervalDays - 1));
-  startDate.setHours(0, 0, 0, 0);
-  return { startDate, endDate };
+export const getDateRangeFromToday = (intervalDays: number): { from: Date; to: Date } => {
+  const to = new Date();
+  to.setHours(23, 59, 59, 999);
+  const from = new Date(to);
+  from.setDate(from.getDate() - (intervalDays - 1));
+  from.setHours(0, 0, 0, 0);
+  return { from, to };
+};
+export const getPreviousDateRange = (currentFrom: Date, currentTo: Date): { from: Date; to: Date } => {
+  const diffMs = currentTo.getTime() - currentFrom.getTime(); // diferença em ms
+  const days = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+  const prevTo = new Date(currentFrom);
+  prevTo.setDate(prevTo.getDate() - 1); // um dia antes do período atual
+  prevTo.setHours(23, 59, 59, 999);
+
+  const prevFrom = new Date(prevTo);
+  prevFrom.setDate(prevFrom.getDate() - (days - 1));
+  prevFrom.setHours(0, 0, 0, 0);
+
+  return { from: prevFrom, to: prevTo };
 };
 
 // =========================

@@ -70,8 +70,8 @@ const OverviewWrapper = (props: IProps) => {
       app.setForm(props.form);
       app.setSubmissionLogs(props.submissionLogs);
       app.setViewLogs(props.viewLogs);
-      app.setFrom(props.dates.startDate);
-      app.setTo(props.dates.endDate);
+      app.setFrom(props.dates.from);
+      app.setTo(props.dates.to);
       app.setContext(props.context);
       return null;
     },
@@ -124,7 +124,7 @@ const OverviewWrapper = (props: IProps) => {
         </div>
         <div className="flex gap-4 w-full sm:w-fit">
           <DateRangePicker
-            initialRange={{ from: props.dates.startDate.toISOString(), to: props.dates.endDate.toISOString() }}
+            initialRange={{ from: props.dates.from.toISOString(), to: props.dates.to.toISOString() }}
             onChange={(range) => {
               if (!range) return;
               onSelectRange(range.from, range.to);

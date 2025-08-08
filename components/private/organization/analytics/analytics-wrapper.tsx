@@ -13,7 +13,13 @@ import {
   ETeamMemberProfile,
   EViewLog,
 } from "@/utils/entities";
-import { formatDecimal, formatTime, getAverageCompletionRate, getAverageCompletionTime } from "@/utils/functions";
+import {
+  formatDecimal,
+  formatTime,
+  getAverageCompletionRate,
+  getAverageCompletionTime,
+  getPreviousDateRange,
+} from "@/utils/functions";
 import { IContext, IInterval } from "@/utils/interfaces";
 import { createClient } from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
@@ -24,6 +30,7 @@ import FormSelector from "../../shared/custom/form-selector";
 import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 import SubscriptionUI from "../../shared/pages/subscription-ui";
 import AnalyticsSubmissionsByFormChart from "./analytics-submissions-by-form-chart";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface IProps {
   locale: string;
@@ -37,6 +44,8 @@ interface IProps {
   viewLogs: EViewLog[];
   context: IContext;
   dates: IInterval;
+  submissionLogsCompare: ESubmissionLog[];
+  viewLogsCompare: EViewLog[];
 }
 const AnalyticsWrapper = (props: IProps) => {
   const t = useTranslations("app");
@@ -57,9 +66,11 @@ const AnalyticsWrapper = (props: IProps) => {
       app.setForms(props.forms);
       app.setViewLogs(props.viewLogs);
       app.setSubmissionLogs(props.submissionLogs);
+      app.setViewLogsCompare(props.viewLogsCompare);
+      app.setSubmissionLogsCompare(props.submissionLogsCompare);
       app.setContext(props.context);
-      app.setFrom(props.dates.startDate);
-      app.setTo(props.dates.endDate);
+      app.setFrom(props.dates.from);
+      app.setTo(props.dates.to);
       setIds(props.forms.map((x) => x.id));
       return null;
     },
@@ -72,7 +83,9 @@ const AnalyticsWrapper = (props: IProps) => {
     app.setTo(toDate);
 
     const formIds = app.forms.map((x) => x.id);
+    const prevRange = getPreviousDateRange(fromDate, toDate);
 
+    // SELECT do período atual
     const submissionLogs = await supabase
       .from("submission_logs")
       .select("*")
@@ -89,6 +102,24 @@ const AnalyticsWrapper = (props: IProps) => {
 
     if (!submissionLogs.error) app.setSubmissionLogs(submissionLogs.data);
     if (!viewLogs.error) app.setViewLogs(viewLogs.data);
+
+    // SELECT do período anterior
+    const submissionLogsPrev = await supabase
+      .from("submission_logs")
+      .select("*")
+      .in("form_id", formIds)
+      .gte("created_at", prevRange.from.toISOString())
+      .lte("created_at", prevRange.to.toISOString());
+
+    const viewLogsPrev = await supabase
+      .from("view_logs")
+      .select("*")
+      .in("form_id", formIds)
+      .gte("created_at", prevRange.from.toISOString())
+      .lte("created_at", prevRange.to.toISOString());
+
+    if (!submissionLogsPrev.error) app.setSubmissionLogsCompare(submissionLogsPrev.data);
+    if (!viewLogsPrev.error) app.setViewLogsCompare(viewLogsPrev.data);
   };
 
   if (query.isPending) return null;
@@ -108,7 +139,7 @@ const AnalyticsWrapper = (props: IProps) => {
         <div className="flex justify-center items-center gap-4">
           {app.forms.length > 0 && <FormSelector forms={app.forms} onChange={(e) => setIds(e)} />}
           <DateRangePicker
-            initialRange={{ from: props.dates.startDate.toISOString(), to: props.dates.endDate.toISOString() }}
+            initialRange={{ from: props.dates.from.toISOString(), to: props.dates.to.toISOString() }}
             onChange={(range) => {
               if (!range) return;
               onSelectRange(range.from, range.to);
@@ -130,59 +161,151 @@ const AnalyticsMetrics = ({ ids }: { ids: string[] }) => {
   const t = useTranslations("app");
   const app = useAppStore();
 
+  // Filtrando logs do período atual
   const filteredViewLogs = app.viewLogs.filter((log) => ids.includes(log.form_id));
   const filteredSubmissionLogs = app.submissionLogs.filter((log) => ids.includes(log.form_id));
 
-  const totalViews = filteredViewLogs.length.toString();
-  const totalSubmissions = filteredSubmissionLogs.length.toString();
-  const avgCompletionTime = formatTime(
-    getAverageCompletionTime(filteredSubmissionLogs.map((x) => x.completion_time)),
-    1
+  // Filtrando logs do período de comparação
+  const filteredViewLogsCompare = app.viewLogsCompare.filter((log) => ids.includes(log.form_id));
+  const filteredSubmissionLogsCompare = app.submissionLogsCompare.filter((log) => ids.includes(log.form_id));
+
+  // Cálculos do período atual
+  const totalViews = filteredViewLogs.length;
+  const totalSubmissions = filteredSubmissionLogs.length;
+  const avgCompletionTime = getAverageCompletionTime(filteredSubmissionLogs.map((x) => x.completion_time));
+  const avgCompletionRate = getAverageCompletionRate(totalViews, totalSubmissions);
+
+  // Cálculos do período de comparação
+  const totalViewsCompare = filteredViewLogsCompare.length;
+  const totalSubmissionsCompare = filteredSubmissionLogsCompare.length;
+  const avgCompletionTimeCompare = getAverageCompletionTime(
+    filteredSubmissionLogsCompare.map((x) => x.completion_time)
   );
-  const avgCompletionRate = `${formatDecimal(
-    getAverageCompletionRate(filteredViewLogs.length, filteredSubmissionLogs.length)
-  )}%`;
+  const avgCompletionRateCompare = getAverageCompletionRate(totalViewsCompare, totalSubmissionsCompare);
+
+  // Função auxiliar para formatar delta e porcentagem
+  const formatDelta = (current: number, previous: number) => {
+    const diff = current - previous;
+    const sign = diff > 0 ? "+" : "";
+    return sign + diff.toString();
+  };
+
+  const formatPercentage = (current: number, previous: number) => {
+    if (previous === 0) {
+      if (current === 0) return "0%";
+      return "100%";
+    }
+    const diff = current - previous;
+    const perc = (diff / previous) * 100;
+    const sign = perc > 0 ? "+" : "";
+    return sign + formatDecimal(perc) + "%";
+  };
 
   return (
     <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
       <AnalyticsCard
         name={t("label_total_views")}
-        value={totalViews}
+        value={totalViews.toString()}
+        previousValue={totalViewsCompare.toString()}
+        valueCompare={formatDelta(totalViews, totalViewsCompare)}
+        valuePercentage={formatPercentage(totalViews, totalViewsCompare)}
         icon={<EyeIcon className="w-5 h-5 text-primary" />}
       />
       <AnalyticsCard
         name={t("label_total_submissions")}
-        value={totalSubmissions}
+        value={totalSubmissions.toString()}
+        previousValue={totalSubmissionsCompare.toString()}
+        valueCompare={formatDelta(totalSubmissions, totalSubmissionsCompare)}
+        valuePercentage={formatPercentage(totalSubmissions, totalSubmissionsCompare)}
         icon={<SendIcon className="w-5 h-5 text-primary" />}
       />
       <AnalyticsCard
         name={t("label_completion_rate")}
-        value={avgCompletionRate}
+        value={`${formatDecimal(avgCompletionRate)}%`}
+        previousValue={`${formatDecimal(avgCompletionRateCompare)}%`}
+        valueCompare={formatDelta(avgCompletionRate, avgCompletionRateCompare)}
+        valuePercentage={formatPercentage(avgCompletionRate, avgCompletionRateCompare)}
         icon={<VoteIcon className="w-5 h-5 text-primary" />}
       />
+
       <AnalyticsCard
         name={t("label_avg_completion_time")}
-        value={avgCompletionTime}
+        value={formatTime(avgCompletionTime, 1)}
+        previousValue={formatTime(avgCompletionTimeCompare, 1)}
+        valueCompare={formatTime(avgCompletionTime - avgCompletionTimeCompare, 1)}
+        valuePercentage={formatPercentage(avgCompletionTime, avgCompletionTimeCompare)}
         icon={<TimerIcon className="w-5 h-5 text-primary" />}
       />
     </div>
   );
 };
-const AnalyticsCard = ({ name, value, icon }: { name: string; value: string; icon: React.ReactNode }) => {
-  return (
-    <Card className="group relative p-4 flex flex-col gap-4 w-full h-full border rounded-lg hover:border-primary/50 transition-all duration-300 hover:shadow-sm overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+const AnalyticsCard = ({
+  name,
+  value,
+  previousValue,
+  icon,
+  valueCompare,
+  valuePercentage,
+}: {
+  name: string;
+  value: string;
+  previousValue?: string;
+  icon: React.ReactNode;
+  valueCompare: string;
+  valuePercentage: string;
+}) => {
+  const t = useTranslations("app");
+  const percentageNumber = parseFloat(valuePercentage);
+  const percentageColor =
+    percentageNumber > 0 ? "text-green-500" : percentageNumber < 0 ? "text-red-500" : "text-gray-400";
 
-      <div className="flex justify-between items-start w-full">
-        <span className="text-sm font-medium text-muted-foreground">{name}</span>
+  const variants = {
+    initial: { opacity: 0, y: 10 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -10 },
+  };
+
+  return (
+    <Card className="p-4 flex flex-col justify-between w-full h-full border border-border bg-card shadow-sm rounded-lg">
+      <div className="text-xs text-muted-foreground font-medium mb-2">{name}</div>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={value}
+              className="text-3xl font-bold tracking-tight"
+              variants={variants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              transition={{ duration: 0.1 }}>
+              {value}
+            </motion.span>
+          </AnimatePresence>
+
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={valuePercentage}
+              className={`text-sm font-semibold ${percentageColor}`}
+              variants={variants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              transition={{ duration: 0.1, delay: 0.1 }}>
+              {valuePercentage}
+            </motion.span>
+          </AnimatePresence>
+        </div>
+
         <div className="flex justify-center items-center p-2 bg-foreground/5 rounded-lg text-primary group-hover:bg-primary/20 transition-colors duration-300">
           {icon}
         </div>
       </div>
-
-      <div className="flex flex-col gap-1">
-        <span className="text-xl font-bold tracking-tight">{value}</span>
-      </div>
+      {previousValue && (
+        <div className="mt-3 text-xs text-muted-foreground">
+          {previousValue} {t("label_from_last_period")}
+        </div>
+      )}
     </Card>
   );
 };

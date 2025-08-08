@@ -90,6 +90,6 @@ export interface IContext {
 }
 
 export interface IInterval {
-  startDate: Date;
-  endDate: Date;
+  from: Date;
+  to: Date;
 }

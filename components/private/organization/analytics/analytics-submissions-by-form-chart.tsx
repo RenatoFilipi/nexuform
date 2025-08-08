@@ -108,6 +108,7 @@ const AnalyticsSubmissionsByFormChart = ({ ids }: { ids: string[] }) => {
   if (!hasData || !filteredForms.length) {
     return (
       <Card className="flex flex-col justify-between gap-4 relative border w-full p-6 h-fit">
+        <span className="font-semibold text-base">{t("label_submissions_by_form")}</span>
         <div className="flex justify-center items-center h-[400px]">
           <div className="flex flex-col justify-center items-center gap-2">
             <div className="flex justify-center items-center p-2 w-fit rounded bg-foreground/5">
