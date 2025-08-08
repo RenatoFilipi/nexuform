@@ -192,10 +192,7 @@ const PlanCard = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IPlan | n
           </ul>
         </div>
         <div className="w-full">
-          <Button
-            onClick={() => setPlan(plan)}
-            className="w-full"
-            variant={plan.isMostPopular ? "secondary" : "outline"}>
+          <Button onClick={() => setPlan(plan)} className="w-full" variant={"secondary"}>
             {plan.ctaLabel}
           </Button>
         </div>

@@ -14,7 +14,7 @@ const UpdateSubscriptionUI = () => {
       {/* Left Content */}
       <div className="flex-1 py-12 px-6">
         <div className="flex items-center gap-5">
-          <div className="flex-shrink-0 flex justify-center items-center p-3 rounded-lg bg-primary/10 border border-primary/30 shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
+          <div className="flex-shrink-0 flex justify-center items-center p-3 rounded-lg bg-foreground/5 border border-primary/30 shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
             <WalletIcon className="w-6 h-6 text-primary" />
           </div>
           <div className="flex flex-col gap-2">

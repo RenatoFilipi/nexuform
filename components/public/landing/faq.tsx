@@ -76,7 +76,7 @@ const Faq = () => {
                 <div
                   className={`p-1 rounded-full transition-all ${
                     activeIndex === index
-                      ? "bg-primary/10 text-primary rotate-180"
+                      ? "bg-foreground/5 text-primary rotate-180"
                       : "bg-muted text-muted-foreground group-hover:bg-primary/5"
                   }`}>
                   <ChevronDownIcon className="w-4 h-4" />

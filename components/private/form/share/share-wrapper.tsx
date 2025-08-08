@@ -68,7 +68,7 @@ const ShareWrapper = (props: IProps) => {
       {/* content */}
       {!isPublished && (
         <Card className="flex w-full justify-center items-center flex-col gap-4 py-36 px-4">
-          <div className="flex justify-center items-center p-3 w-fit rounded bg-primary/10">
+          <div className="flex justify-center items-center p-3 w-fit rounded bg-foreground/5">
             <Share2Icon className="w-6 h-6 text-primary" />
           </div>
           <div className="flex flex-col justify-center items-center gap-1 text-center">
@@ -109,14 +109,14 @@ const ShareLink = () => {
             }}
             variant="outline"
             size="icon"
-            className="hover:bg-primary/10 hover:text-primary border-muted-foreground/20">
+            className="hover:bg-foreground/5 hover:text-primary border-muted-foreground/20">
             <LinkIcon className="w-4 h-4" />
           </Button>
           <Button
             variant="outline"
             size="icon"
             asChild
-            className="hover:bg-primary/10 hover:text-primary border-muted-foreground/20">
+            className="hover:bg-foreground/5 hover:text-primary border-muted-foreground/20">
             <a href={fullUrl} target="_blank" rel="noopener noreferrer">
               <ExternalLinkIcon className="w-4 h-4" />
             </a>

@@ -167,7 +167,7 @@ const EditorCanva = () => {
       {!hasBlocks && (
         <div className="flex justify-center items-center h-full w-full overflow-y-auto flex-col gap-4">
           <div className="flex flex-col items-center max-w-md text-center space-y-6">
-            <div className="rounded bg-primary/10 p-3">
+            <div className="rounded bg-foreground/5 p-3">
               <PlusIcon className="h-6 w-6 text-primary" />
             </div>
             <div className="space-y-2">

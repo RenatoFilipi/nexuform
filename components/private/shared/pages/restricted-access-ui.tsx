@@ -7,7 +7,7 @@ const RestrictedAccessUI = () => {
 
   return (
     <Card className="flex w-full justify-center items-center flex-col gap-4 py-36 px-4">
-      <div className="flex justify-center items-center p-3 w-fit rounded bg-primary/10">
+      <div className="flex justify-center items-center p-3 w-fit rounded bg-foreground/5">
         <ShieldXIcon className="w-6 h-6 text-primary" />
       </div>
       <div className="flex flex-col justify-center items-center gap-1 text-center">
