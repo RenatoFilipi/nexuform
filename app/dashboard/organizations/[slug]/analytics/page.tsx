@@ -27,11 +27,9 @@ const Analytics = async ({ params }: { params: Promise<{ slug: string }> }) => {
     const subscription = await fetchSubscription(organization.id);
     const forms = await fetchForms(organization.id, subscription.forms, true);
     const formIds = forms.map((x) => x.id);
-    // logs do período atual
     const dates = getDateRangeFromToday(7);
     const submissionLogs = await fetchSubmissionLogs(formIds, dates.from.toISOString(), dates.to.toISOString());
     const viewLogs = await fetchViewLogs(formIds, dates.from.toISOString(), dates.to.toISOString());
-    // logs do período anterior
     const previousDates = getPreviousDateRange(dates.from, dates.to);
     const previousSubmissionLogs = await fetchSubmissionLogs(
       formIds,
@@ -44,22 +42,6 @@ const Analytics = async ({ params }: { params: Promise<{ slug: string }> }) => {
       previousDates.to.toISOString()
     );
     const context = applyContext(teamMemberProfile, organization, subscription);
-
-    console.log(
-      "\x1b[32m%s\x1b[0m", // verde
-      "📅 Atual:",
-      dates.from.toLocaleString(),
-      "-",
-      dates.to.toLocaleString()
-    );
-
-    console.log(
-      "\x1b[33m%s\x1b[0m", // amarelo
-      "📅 Anterior:",
-      previousDates.from.toLocaleString(),
-      "-",
-      previousDates.to.toLocaleString()
-    );
 
     return (
       <AnalyticsWrapper

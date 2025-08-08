@@ -6,7 +6,7 @@ import { fetchSubscription } from "@/app/actions/subscription-actions";
 import { fetchOrgTeamMemberProfile } from "@/app/actions/team-member-profile-actions";
 import OverviewWrapper from "@/components/private/form/overview/overview-wrapper";
 import ErrorUI from "@/components/private/shared/pages/error-ui";
-import { applyContext, getDateRangeFromToday } from "@/utils/functions";
+import { applyContext, getDateRangeFromToday, getPreviousDateRange } from "@/utils/functions";
 import { createClient } from "@/utils/supabase/server";
 import { getLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
@@ -29,6 +29,17 @@ const Overview = async ({ params }: { params: Promise<{ slug: string; id: string
     const dates = getDateRangeFromToday(7);
     const submissionLogs = await fetchSubmissionLogs([form.id], dates.from.toISOString(), dates.to.toISOString());
     const viewLogs = await fetchViewLogs([form.id], dates.from.toISOString(), dates.to.toISOString());
+    const previousDates = getPreviousDateRange(dates.from, dates.to);
+    const previousSubmissionLogs = await fetchSubmissionLogs(
+      [form.id],
+      previousDates.from.toISOString(),
+      previousDates.to.toISOString()
+    );
+    const previousViewLogs = await fetchViewLogs(
+      [form.id],
+      previousDates.from.toISOString(),
+      previousDates.to.toISOString()
+    );
     const context = applyContext(teamMemberProfile, organization, subscription);
 
     return (
@@ -42,6 +53,8 @@ const Overview = async ({ params }: { params: Promise<{ slug: string; id: string
         form={form}
         submissionLogs={submissionLogs}
         viewLogs={viewLogs}
+        submissionLogsCompare={previousSubmissionLogs}
+        viewLogsCompare={previousViewLogs}
         context={context}
         dates={dates}
       />

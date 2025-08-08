@@ -5,13 +5,14 @@ import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "
 import useAppStore from "@/stores/app";
 import { getDateDifferenceInDays } from "@/utils/functions";
 import { addDays, format, isWithinInterval, parseISO } from "date-fns";
+import { ChartNoAxesColumnIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useReducer, useState } from "react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import { CurveType } from "recharts/types/shape/Curve";
 
-const submissionColor = "#3232d6";
-const viewColor = "#ffa500";
+const submissionColor = "#3B82F6";
+const viewColor = "#10B981";
 
 interface IChartData {
   day: string;
@@ -101,6 +102,22 @@ const OverviewActivityChart = () => {
     { color: submissionColor, name: subKey },
     { color: viewColor, name: viewKey },
   ];
+
+  if (!hasData) {
+    return (
+      <Card className="flex flex-col justify-between gap-4 relative border w-full p-6 h-fit">
+        <span className="font-semibold text-base">{t("label_activity")}</span>
+        <div className="flex justify-center items-center h-[400px]">
+          <div className="flex flex-col justify-center items-center gap-2">
+            <div className="flex justify-center items-center p-2 w-fit rounded bg-foreground/5">
+              <ChartNoAxesColumnIcon className="w-6 h-6 text-primary" />
+            </div>
+            <p className="text-muted-foreground">{t("label_no_data")}</p>
+          </div>
+        </div>
+      </Card>
+    );
+  }
 
   return (
     <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit">

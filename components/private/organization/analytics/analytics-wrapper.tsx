@@ -266,7 +266,8 @@ const AnalyticsCard = ({
   };
 
   return (
-    <Card className="p-4 flex flex-col justify-between w-full h-full border border-border bg-card shadow-sm rounded-lg">
+    <Card className="relative group p-4 flex flex-col justify-between w-full h-full border hover:border-primary bg-card shadow-sm rounded-lg transition-all duration-300 hover:shadow-sm overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       <div className="text-xs text-muted-foreground font-medium mb-2">{name}</div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">

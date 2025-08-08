@@ -190,44 +190,39 @@ const BlockItem = (props: IBlockItem) => {
   const t = useTranslations("app");
 
   const getBlockType = (type: TBlock): string => {
-    switch (type) {
-      case "short_text":
-        return t("label_short_text");
-      case "paragraph_text":
-        return t("label_paragraph_text");
-      case "checkboxes":
-        return t("label_checkboxes");
-      case "multiple_choice":
-        return t("label_multiple_choice");
-      case "dropdown_menu":
-        return t("label_dropdown_menu");
-      case "number_input":
-        return t("label_number_input");
-      case "email_address":
-        return t("label_email_address");
-      case "star_rating":
-        return t("label_star_rating");
-      case "custom_scale":
-        return t("label_custom_scale");
-      case "date_picker":
-        return t("label_date_picker");
-      default:
-        return "--";
-    }
+    const typeLabels: Record<TBlock, string> = {
+      short_text: t("label_short_text"),
+      paragraph_text: t("label_paragraph_text"),
+      checkboxes: t("label_checkboxes"),
+      multiple_choice: t("label_multiple_choice"),
+      dropdown_menu: t("label_dropdown_menu"),
+      number_input: t("label_number_input"),
+      email_address: t("label_email_address"),
+      star_rating: t("label_star_rating"),
+      custom_scale: t("label_custom_scale"),
+      date_picker: t("label_date_picker"),
+    };
+
+    return typeLabels[type] || "--";
   };
+
   return (
-    <div className="space-y-2">
-      <div className="font-medium text-foreground flex items-center gap-2 justify-start">
-        <div className="flex justify-center items-center gap-2">
+    <div className="space-y-3 mb-4 last:mb-0">
+      {/* Header with question and type indicator */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
           <span className="text-sm font-semibold">{props.question}</span>
         </div>
+        <Badge className="">{getBlockType(props.type)}</Badge>
       </div>
-      {props.answer.trim() !== "" ? (
-        <div className="bg-foreground/5 rounded-sm p-2">
-          <p className="text-xs whitespace-pre-wrap text-muted-foreground">{props.answer}</p>
+
+      {/* Answer container */}
+      {props.answer.trim() ? (
+        <div className="p-3 border bg-card rounded-md">
+          <p className="text-xs whitespace-pre-wrap">{props.answer}</p>
         </div>
       ) : (
-        <div className="border border-dashed rounded-lg p-4 text-center">
+        <div className="border-2 border-dashed rounded-md p-4 text-center">
           <p className="text-sm text-muted-foreground">{t("label_no_answer")}</p>
         </div>
       )}

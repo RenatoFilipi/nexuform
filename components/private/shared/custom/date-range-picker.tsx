@@ -198,6 +198,13 @@ const DateRangePicker = ({ className, initialRange, onChange, align }: IProps) =
       days: 1,
     },
     {
+      label: t("label_last_n_days", { n: 3, s: "s" }),
+      value: 3,
+      handler: () => handlePresetSelect(3),
+      id: "3days",
+      days: 3,
+    },
+    {
       label: t("label_last_n_days", { n: 7, s: "s" }),
       value: 7,
       handler: () => handlePresetSelect(7),
