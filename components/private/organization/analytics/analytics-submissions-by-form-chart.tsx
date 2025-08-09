@@ -43,7 +43,7 @@ const AnalyticsSubmissionsByFormChart = ({ ids }: { ids: string[] }) => {
 
   // Filtrar os forms pelos IDs fornecidos
   const filteredForms = useMemo(() => {
-    return app.forms?.filter((form) => ids.includes(form.id)) || [];
+    return app.forms.filter((form) => ids.includes(form.id)) || [];
   }, [app.forms, ids]);
 
   const dateRange = useMemo(() => {
@@ -108,7 +108,10 @@ const AnalyticsSubmissionsByFormChart = ({ ids }: { ids: string[] }) => {
   if (!hasData || !filteredForms.length) {
     return (
       <Card className="flex flex-col justify-between gap-4 relative border w-full p-6 h-fit">
-        <span className="font-semibold text-base">{t("label_submissions_by_form")}</span>
+        <div className="flex items-center gap-2">
+          <ChartNoAxesColumnIcon className="w-5 h-5 text-primary" />
+          <span className="font-semibold text-lg">{t("label_submissions_by_form")}</span>
+        </div>
         <div className="flex justify-center items-center h-[400px]">
           <div className="flex flex-col justify-center items-center gap-2">
             <div className="flex justify-center items-center p-2 w-fit rounded bg-foreground/5">
@@ -124,7 +127,10 @@ const AnalyticsSubmissionsByFormChart = ({ ids }: { ids: string[] }) => {
   return (
     <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit hover:border-primary/50 transition-all duration-300 hover:shadow-sm">
       <div className="flex justify-between items-center">
-        <span className="font-semibold text-base">{t("label_submissions_by_form")}</span>
+        <div className="flex items-center gap-2">
+          <ChartNoAxesColumnIcon className="w-5 h-5 text-primary" />
+          <span className="font-semibold text-lg">{t("label_submissions_by_form")}</span>
+        </div>
         <div className="justify-center items-center gap-4 hidden">
           {filteredForms.map((form) => (
             <div key={form.id} className="flex justify-center items-center gap-2">

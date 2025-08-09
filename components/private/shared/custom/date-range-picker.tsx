@@ -219,7 +219,7 @@ const DateRangePicker = ({ className, initialRange, onChange, align }: IProps) =
     <div className={cn("", className)}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button variant="outline" size="sm" className="justify-between text-left font-normal sm:w-[230px]">
+          <Button variant="outline" size="sm" className="justify-between text-left font-normal w-full sm:w-[230px]">
             <CalendarIcon className="mr-2 h-4 w-4 text-primary" />
             {range?.from ? (
               range.to ? (
@@ -277,7 +277,7 @@ const DateRangePicker = ({ className, initialRange, onChange, align }: IProps) =
               </div>
             </div>
             {/* Selected dates */}
-            <div className="flex flex-col items-center gap-1 px-4 py-3 bg-muted/50 rounded-lg text-sm w-full">
+            <div className="flex flex-col items-center justify-center gap-1 px-4 bg-muted/50 rounded-lg text-sm w-full h-20">
               {range?.from ? (
                 <div className="flex flex-col sm:flex-row items-center gap-1 w-full">
                   <div className="flex-1 text-center bg-background p-2 rounded-md border">

@@ -528,7 +528,8 @@
     "label_end_date": "Data final",
     "label_single_day": "Único dia",
     "label_no_date_selected": "Nenhuma data selecionada",
-    "label_from_last_period": "do último período"
+    "label_from_last_period": "do último período",
+    "label_compare_dates": "Comparação entre períodos (tamanho proporcional ao total de views)"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

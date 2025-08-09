@@ -21,7 +21,7 @@ const FormSelector = ({ forms, onChange }: { forms: EForm[]; onChange: (ids: str
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="flex justify-between items-center gap-3 sm:min-w-44">
+        <Button variant="outline" size="sm" className="flex justify-between items-center gap-3 w-full sm:w-44">
           <div className="flex justify-center items-center gap-2">
             <LayersIcon className="h-4 w-4 text-primary" />
             <span>{t("label_forms")}</span>

@@ -31,6 +31,7 @@ import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 import SubscriptionUI from "../../shared/pages/subscription-ui";
 import AnalyticsSubmissionsByFormChart from "./analytics-submissions-by-form-chart";
 import { motion, AnimatePresence } from "framer-motion";
+import AnalyticsViewsByFormChart from "./analytics-views-by-form-chart";
 
 interface IProps {
   locale: string;
@@ -134,9 +135,9 @@ const AnalyticsWrapper = (props: IProps) => {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-xl font-semibold">{t("label_analytics")}</h1>
-        <div className="flex justify-center items-center gap-4">
+      <div className="flex justify-between items-center flex-col sm:flex-row gap-3">
+        <h1 className="text-xl font-semibold w-full sm:w-fit">{t("label_analytics")}</h1>
+        <div className="flex justify-center items-center gap-4 w-full sm:w-fit flex-col sm:flex-row">
           {app.forms.length > 0 && <FormSelector forms={app.forms} onChange={(e) => setIds(e)} />}
           <DateRangePicker
             initialRange={{ from: props.dates.from.toISOString(), to: props.dates.to.toISOString() }}
@@ -150,8 +151,9 @@ const AnalyticsWrapper = (props: IProps) => {
       </div>
       <div className="flex flex-col gap-6">
         <AnalyticsMetrics ids={ids} />
-        <div className="grid grid-cols-1 gap-6">
+        <div className="grid gap-6">
           <AnalyticsSubmissionsByFormChart ids={ids} />
+          <AnalyticsViewsByFormChart ids={ids} />
         </div>
       </div>
     </div>
