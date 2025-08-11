@@ -171,6 +171,7 @@ const useAppStore = create<IProps>((set) => ({
     isSubscriptionDateValid: false,
     isSubscriptionExpired: false,
     isTrialing: false,
+    subscriptionStatus: "",
   },
   setContext: (p) => set({ context: p }),
 }));

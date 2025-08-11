@@ -87,6 +87,7 @@ export interface IContext {
   isAdminOrHigher: boolean;
   isOrgActive: boolean;
   isAccountHolder: boolean;
+  subscriptionStatus: string;
 }
 
 export interface IInterval {

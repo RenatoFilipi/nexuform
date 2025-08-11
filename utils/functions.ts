@@ -347,6 +347,7 @@ export const applyContext = (tmp: ETeamMemberProfile, org: EOrganization, sub: E
   const hasBillingIssues = sub.status !== "past_due";
   const isAccountHolder = sub.profile_id === tmp.profile_id;
   const isAllowedToInvite = (isOrgOwner || isAdminOrHigher) && isSubscriptionActive && sub.plan === "pro";
+  const subscriptionStatus = sub.status;
 
   return {
     isOrgOwner,
@@ -360,5 +361,6 @@ export const applyContext = (tmp: ETeamMemberProfile, org: EOrganization, sub: E
     isAdminOrHigher,
     isOrgActive,
     isAccountHolder,
+    subscriptionStatus,
   };
 };

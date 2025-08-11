@@ -40,8 +40,9 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
 import PlanBadge from "../custom/plan-badge";
+import { STRIPE_PUBLISHABLE_KEY } from "@/utils/envs";
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
 type TSelected = "starter" | "pro";
 

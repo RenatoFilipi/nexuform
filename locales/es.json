@@ -530,7 +530,9 @@
     "label_no_date_selected": "Ninguna fecha seleccionada",
     "label_from_last_period": "del último período",
     "label_compare_dates": "Comparación entre períodos (tamaño proporcional al total de visualizaciones)",
-    "label_submissions_by_hour": "Distribución Horaria de los Envíos"
+    "label_submissions_by_hour": "Distribución Horaria de los Envíos",
+    "label_pending_payment": "Pago Pendiente",
+    "desc_pending_payment": "Tu pago está pendiente. Por favor, complétalo para activar tu suscripción."
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

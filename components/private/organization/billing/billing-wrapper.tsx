@@ -18,6 +18,7 @@ import {
   CalendarIcon,
   CalendarX2Icon,
   CircleHelpIcon,
+  CreditCardIcon,
   ExternalLinkIcon,
   LayersIcon,
   RefreshCwIcon,
@@ -129,6 +130,7 @@ const BillingPlan = () => {
   const remainingDays = getDaysDifference(new Date(), new Date(app.subscription.due_date));
   const hasBilling = app.subscription.status !== "canceled" && app.subscription.plan !== "free_trial";
   const isOwner = app.context.isOrgOwner;
+  const isIncomplete = app.subscription.status === "incomplete";
 
   const planName = (plan: TPlan) =>
     ({
@@ -146,13 +148,36 @@ const BillingPlan = () => {
       toast.error(t("err_generic"));
     }
   };
+  if (isIncomplete) {
+    return (
+      <Card className="p-5 w-full">
+        <div className="flex flex-col md:flex-row gap-6 items-center">
+          <div className="flex items-center gap-4 w-full md:w-auto">
+            <div className="p-2 rounded bg-foreground/5">
+              <CreditCardIcon className="h-5 w-5 text-warning" />
+            </div>
+            <div className="space-y-1">
+              <h3 className="text-lg font-semibold">{t("label_pending_payment")}</h3>
+              <p className="text-sm text-muted-foreground">{t("desc_pending_payment")}</p>
+            </div>
+          </div>
+          <div className="ml-auto w-full md:w-auto flex justify-center items-center gap-3">
+            <Button onClick={onBillingPortalSession} variant="secondary" size="sm" className="gap-2 px-4">
+              <ExternalLinkIcon className="w-4 h-4" />
+              {t("label_update_payment")}
+            </Button>
+          </div>
+        </div>
+      </Card>
+    );
+  }
 
   if (isCanceled) {
     return (
-      <Card className="p-5 w-full border-warning/20 bg-warning/5">
+      <Card className="p-5 w-full">
         <div className="flex flex-col md:flex-row gap-6 items-center">
           <div className="flex items-center gap-4 w-full md:w-auto">
-            <div className="p-2 rounded-full bg-warning/10">
+            <div className="p-2 rounded bg-foreground/5">
               <AlertTriangleIcon className="h-5 w-5 text-warning" />
             </div>
             <div className="space-y-1">
@@ -160,9 +185,13 @@ const BillingPlan = () => {
               <p className="text-sm text-muted-foreground">{t("desc_sub_cancelled")}</p>
             </div>
           </div>
-          <div className="ml-auto w-full md:w-auto">
+          <div className="ml-auto w-full md:w-auto flex justify-center items-center gap-3">
+            <Button onClick={onBillingPortalSession} variant="outline" size="sm" className="gap-2 px-4">
+              <ExternalLinkIcon className="w-4 h-4" />
+              {t("label_update_payment")}
+            </Button>
             <ManageSubscription>
-              <Button className="gap-2 w-full" variant="outline" size="sm">
+              <Button className="gap-2 w-full" variant="secondary" size="sm">
                 {t("label_manage_sub")}
               </Button>
             </ManageSubscription>

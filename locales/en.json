@@ -530,7 +530,9 @@
     "label_no_date_selected": "No date selected",
     "label_from_last_period": "from last period",
     "label_compare_dates": "Period comparison (size proportional to total views)",
-    "label_submissions_by_hour": "Hourly Submissions Distribution"
+    "label_submissions_by_hour": "Hourly Submissions Distribution",
+    "label_pending_payment": "Pending Payment",
+    "desc_pending_payment": "Your payment is pending. Please complete it to activate your subscription."
   },
   "s": {
     "err_required_all": "Answer all required questions.",
