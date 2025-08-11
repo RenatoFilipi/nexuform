@@ -529,7 +529,8 @@
     "label_single_day": "Día único",
     "label_no_date_selected": "Ninguna fecha seleccionada",
     "label_from_last_period": "del último período",
-    "label_compare_dates": "Comparación entre períodos (tamaño proporcional al total de visualizaciones)"
+    "label_compare_dates": "Comparación entre períodos (tamaño proporcional al total de visualizaciones)",
+    "label_submissions_by_hour": "Distribución Horaria de los Envíos"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

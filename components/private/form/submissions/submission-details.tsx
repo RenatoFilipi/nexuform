@@ -42,7 +42,7 @@ const SubmissionDetails = ({
     return (
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>{children}</SheetTrigger>
-        <SheetContent className="flex flex-col min-w-[650px] overflow-y-auto">
+        <SheetContent className="flex flex-col min-w-[750px] overflow-y-auto">
           <SheetHeader className="hidden">
             <div>
               <SheetTitle></SheetTitle>

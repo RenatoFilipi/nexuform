@@ -32,6 +32,7 @@ import SubscriptionUI from "../../shared/pages/subscription-ui";
 import AnalyticsSubmissionsByFormChart from "./analytics-submissions-by-form-chart";
 import { motion, AnimatePresence } from "framer-motion";
 import AnalyticsViewsByFormChart from "./analytics-views-by-form-chart";
+import AnalyticsSubmissionsByHourChart from "./analytics-submissions-by-hour-chart";
 
 interface IProps {
   locale: string;
@@ -153,6 +154,7 @@ const AnalyticsWrapper = (props: IProps) => {
         <AnalyticsMetrics ids={ids} />
         <div className="grid gap-6">
           <AnalyticsSubmissionsByFormChart ids={ids} />
+          <AnalyticsSubmissionsByHourChart ids={ids} />
           <AnalyticsViewsByFormChart ids={ids} />
         </div>
       </div>

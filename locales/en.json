@@ -529,7 +529,8 @@
     "label_single_day": "Single day",
     "label_no_date_selected": "No date selected",
     "label_from_last_period": "from last period",
-    "label_compare_dates": "Period comparison (size proportional to total views)"
+    "label_compare_dates": "Period comparison (size proportional to total views)",
+    "label_submissions_by_hour": "Hourly Submissions Distribution"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

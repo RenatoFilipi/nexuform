@@ -143,8 +143,8 @@ const AnalyticsViewsByFormChart = ({ ids }: { ids: string[] }) => {
                           }}
                         />
                       </div>
-                      <motion.span variants={countVariants} className="text-xs text-muted-foreground">
-                        {Math.round(currentPercentage)}%
+                      <motion.span variants={countVariants} className="text-xs text-muted-foreground whitespace-nowrap">
+                        {Math.round(currentPercentage)}% ({currentViews})
                       </motion.span>
                     </div>
                   </div>
@@ -165,8 +165,8 @@ const AnalyticsViewsByFormChart = ({ ids }: { ids: string[] }) => {
                           }}
                         />
                       </div>
-                      <motion.span variants={countVariants} className="text-xs text-muted-foreground">
-                        {Math.round(comparePercentage)}%
+                      <motion.span variants={countVariants} className="text-xs text-muted-foreground whitespace-nowrap">
+                        {Math.round(comparePercentage)}% ({compareViews})
                       </motion.span>
                     </div>
                   </div>
