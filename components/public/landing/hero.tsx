@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { DEMO_PATH } from "@/utils/envs";
+import { DEMO_ID } from "@/utils/envs";
 import { motion } from "framer-motion";
 import { ArrowRightIcon, CheckIcon, ZapIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -51,7 +51,7 @@ const Hero = () => {
               className="group transition-all hover:shadow-lg hover:shadow-primary/30 text-base px-6 py-3"
               size="lg"
               variant="secondary">
-              <a href={DEMO_PATH}>
+              <a href={`/s/${DEMO_ID}`}>
                 {t("hero_check_demo")}
                 <ArrowRightIcon className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               </a>

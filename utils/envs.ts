@@ -27,4 +27,4 @@ export const FALLBACK_COLOR = process.env.NEXT_PUBLIC_FALLBACK_COLOR!;
 export const TERMS_DATE = process.env.NEXT_PUBLIC_TERMS_DATE!;
 export const COOKIES_DATE = process.env.NEXT_PUBLIC_COOKIES_DATE!;
 export const PRIVACY_DATE = process.env.NEXT_PUBLIC_PRIVACY_DATE!;
-export const DEMO_PATH = process.env.NEXT_PUBLIC_DEMO_PATH!;
+export const DEMO_ID = process.env.NEXT_PUBLIC_DEMO_ID!;
