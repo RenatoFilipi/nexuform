@@ -107,10 +107,13 @@ const AnalyticsSubmissionsByFormChart = ({ ids }: { ids: string[] }) => {
 
   if (!hasData || !filteredForms.length) {
     return (
-      <Card className="flex flex-col justify-between gap-4 relative border w-full p-6 h-fit">
-        <div className="flex items-center gap-2">
-          <ChartNoAxesColumnIcon className="w-5 h-5 text-primary" />
-          <span className="font-semibold text-lg">{t("label_submissions_by_form")}</span>
+      <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit hover:border-primary transition-all duration-300 hover:shadow-sm">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <ChartNoAxesColumnIcon className="w-5 h-5 text-primary" />
+            <span className="font-semibold text-lg">{t("label_submissions_by_form")}</span>
+          </div>
+          <p className="text-sm text-muted-foreground">{t("desc_submissions_by_form")}</p>
         </div>
         <div className="flex justify-center items-center h-[400px]">
           <div className="flex flex-col justify-center items-center gap-2">
@@ -125,11 +128,14 @@ const AnalyticsSubmissionsByFormChart = ({ ids }: { ids: string[] }) => {
   }
 
   return (
-    <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit hover:border-primary/50 transition-all duration-300 hover:shadow-sm">
+    <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit hover:border-primary transition-all duration-300 hover:shadow-sm">
       <div className="flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <ChartNoAxesColumnIcon className="w-5 h-5 text-primary" />
-          <span className="font-semibold text-lg">{t("label_submissions_by_form")}</span>
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <ChartNoAxesColumnIcon className="w-5 h-5 text-primary" />
+            <span className="font-semibold text-lg">{t("label_submissions_by_form")}</span>
+          </div>
+          <p className="text-sm text-muted-foreground">{t("desc_submissions_by_form")}</p>
         </div>
         <div className="justify-center items-center gap-4 hidden">
           {filteredForms.map((form) => (

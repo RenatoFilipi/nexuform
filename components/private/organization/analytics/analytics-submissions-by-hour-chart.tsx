@@ -14,9 +14,10 @@ import { parseISO } from "date-fns";
 import { TrendingUpDownIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useReducer, useState } from "react";
-import { CartesianGrid, XAxis, Line, LineChart } from "recharts";
+import { CartesianGrid, XAxis, Line, LineChart, TooltipProps } from "recharts";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
+import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 
 interface IChartData {
   hour: string;
@@ -141,10 +142,13 @@ const AnalyticsSubmissionsByHourChart = ({ ids }: { ids: string[] }) => {
 
   if (!hasData || !filteredForms.length) {
     return (
-      <Card className="flex flex-col justify-between gap-4 relative border w-full p-6 h-fit">
-        <div className="flex items-center gap-2">
-          <TrendingUpDownIcon className="w-5 h-5 text-primary" />
-          <span className="font-semibold text-lg">{t("label_submissions_by_hour")}</span>
+      <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit hover:border-primary transition-all duration-300 hover:shadow-sm">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <TrendingUpDownIcon className="w-5 h-5 text-primary" />
+            <span className="font-semibold text-lg">{t("label_submissions_by_hour")}</span>
+          </div>
+          <p className="text-sm text-muted-foreground">{t("desc_submissions_by_hour")}</p>
         </div>
         <div className="flex justify-center items-center h-[400px]">
           <div className="flex flex-col justify-center items-center gap-2">
@@ -161,11 +165,14 @@ const AnalyticsSubmissionsByHourChart = ({ ids }: { ids: string[] }) => {
   const maxValue = Math.max(...chartData.flatMap((item) => filteredForms.map((form) => Number(item[form.id] || 0))));
 
   return (
-    <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit hover:border-primary/50 transition-all duration-300 hover:shadow-sm">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <TrendingUpDownIcon className="w-5 h-5 text-primary" />
-          <span className="font-semibold text-lg">{t("label_submissions_by_hour")}</span>
+    <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit hover:border-primary transition-all duration-300 hover:shadow-sm">
+      <div className="flex justify-between items-center flex-col sm:flex-row gap-2">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <TrendingUpDownIcon className="w-5 h-5 text-primary" />
+            <span className="font-semibold text-lg">{t("label_submissions_by_hour")}</span>
+          </div>
+          <p className="text-sm text-muted-foreground">{t("desc_submissions_by_hour")}</p>
         </div>
         <div className="flex gap-2">
           {buttonsSet
@@ -176,8 +183,12 @@ const AnalyticsSubmissionsByHourChart = ({ ids }: { ids: string[] }) => {
                 size={"sm"}
                 key={x.type}
                 onClick={() => setHoursView(x.type)}
-                className={`${hoursView === x.type ? "bg-foreground/15" : "bg-transparent"}`}>
-                {x.label}
+                className={`${
+                  hoursView === x.type ? "bg-foreground/15" : "bg-transparent"
+                } flex justify-center items-center gap-2`}>
+                <div
+                  className={`${hoursView === x.type ? "bg-primary" : "bg-foreground/15"} w-2 h-2 rounded-full`}></div>
+                <span className={`${hoursView === x.type ? "text-foreground" : "text-foreground/70"}`}>{x.label}</span>
               </Button>
             ))}
         </div>

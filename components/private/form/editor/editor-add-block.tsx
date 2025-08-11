@@ -245,6 +245,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       is_identifier: false,
       min_date: null,
       max_date: null,
+      col_span: 3,
     };
     editor.addBlock(block);
     editor.setBlockView(block);

@@ -532,7 +532,11 @@
     "label_compare_dates": "Period comparison (size proportional to total views)",
     "label_submissions_by_hour": "Hourly Submissions Distribution",
     "label_pending_payment": "Pending Payment",
-    "desc_pending_payment": "Your payment is pending. Please complete it to activate your subscription."
+    "desc_pending_payment": "Your payment is pending. Please complete it to activate your subscription.",
+    "desc_submissions_by_form": "Total responses received per form",
+    "desc_views_by_form": "Number of times each form was viewed by users",
+    "desc_submissions_by_hour": "Times of day when submissions occurred, showing peaks and submission patterns.",
+    "desc_activity": "Activity of your form, comparing views and submissions over time"
   },
   "s": {
     "err_required_all": "Answer all required questions.",

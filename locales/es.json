@@ -532,7 +532,11 @@
     "label_compare_dates": "Comparación entre períodos (tamaño proporcional al total de visualizaciones)",
     "label_submissions_by_hour": "Distribución Horaria de los Envíos",
     "label_pending_payment": "Pago Pendiente",
-    "desc_pending_payment": "Tu pago está pendiente. Por favor, complétalo para activar tu suscripción."
+    "desc_pending_payment": "Tu pago está pendiente. Por favor, complétalo para activar tu suscripción.",
+    "desc_submissions_by_form": "Total de respuestas recibidas por cada formulario",
+    "desc_views_by_form": "Cantidad de veces que cada formulario fue visto por los usuarios",
+    "desc_submissions_by_hour": "Horarios del día en que ocurrieron los envíos, mostrando picos y patrones de envío.",
+    "desc_activity": "Actividad de tu formulario, comparando visualizaciones y envíos a lo largo del tiempo"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

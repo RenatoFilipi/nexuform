@@ -58,6 +58,7 @@ export type Database = {
       }
       blocks: {
         Row: {
+          col_span: number
           created_at: string
           description: string | null
           form_id: string
@@ -80,6 +81,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          col_span?: number
           created_at?: string
           description?: string | null
           form_id: string
@@ -102,6 +104,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          col_span?: number
           created_at?: string
           description?: string | null
           form_id?: string

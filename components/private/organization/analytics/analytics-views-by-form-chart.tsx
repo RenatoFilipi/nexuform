@@ -62,7 +62,7 @@ const AnalyticsViewsByFormChart = ({ ids }: { ids: string[] }) => {
   };
 
   return (
-    <Card className="flex flex-col gap-6 p-6 border shadow-sm hover:border-primary/50 transition-all duration-300 hover:shadow-sm">
+    <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit hover:border-primary transition-all duration-300 hover:shadow-sm">
       <div className="space-y-1">
         <div className="flex items-center gap-2">
           <PieChartIcon className="w-5 h-5 text-primary" />
@@ -75,7 +75,7 @@ const AnalyticsViewsByFormChart = ({ ids }: { ids: string[] }) => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="flex flex-col items-center justify-center py-12 gap-3 text-muted-foreground">
+          className="flex flex-col items-center justify-center py-24 gap-3 text-muted-foreground">
           <div className="flex justify-center items-center p-2 w-fit rounded bg-foreground/5">
             <PieChartIcon className="w-6 h-6 text-primary" />
           </div>

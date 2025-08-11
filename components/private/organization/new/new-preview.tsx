@@ -124,6 +124,7 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
           show_char: x.show_char,
           type: x.type,
           updated_at: x.created_at,
+          col_span: 3,
         };
       });
 
