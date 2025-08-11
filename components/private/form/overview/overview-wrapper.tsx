@@ -282,7 +282,7 @@ const OverviewCard = ({
           <AnimatePresence mode="wait" initial={false}>
             <motion.span
               key={value}
-              className="text-3xl font-bold tracking-tight"
+              className="text-xl font-bold tracking-tight"
               variants={variants}
               initial="initial"
               animate="animate"

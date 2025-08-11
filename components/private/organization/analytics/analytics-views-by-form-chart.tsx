@@ -1,8 +1,7 @@
 import { Card } from "@/components/ui/card";
 import useAppStore from "@/stores/app";
 import { useTranslations } from "next-intl";
-import { useMemo } from "react";
-import { ArrowUp, ArrowDown, Minus, PieChart, ChartNoAxesColumnIcon } from "lucide-react";
+import { ArrowUp, ArrowDown, Minus, PieChartIcon } from "lucide-react";
 import { motion } from "framer-motion";
 
 const AnalyticsViewsByFormChart = ({ ids }: { ids: string[] }) => {
@@ -66,7 +65,7 @@ const AnalyticsViewsByFormChart = ({ ids }: { ids: string[] }) => {
     <Card className="flex flex-col gap-6 p-6 border shadow-sm hover:border-primary/50 transition-all duration-300 hover:shadow-sm">
       <div className="space-y-1">
         <div className="flex items-center gap-2">
-          <PieChart className="w-5 h-5 text-primary" />
+          <PieChartIcon className="w-5 h-5 text-primary" />
           <h3 className="font-semibold text-lg">{t("label_views_by_form")}</h3>
         </div>
         <p className="text-sm text-muted-foreground">{t("label_compare_dates")}</p>
@@ -78,7 +77,7 @@ const AnalyticsViewsByFormChart = ({ ids }: { ids: string[] }) => {
           animate={{ opacity: 1 }}
           className="flex flex-col items-center justify-center py-12 gap-3 text-muted-foreground">
           <div className="flex justify-center items-center p-2 w-fit rounded bg-foreground/5">
-            <ChartNoAxesColumnIcon className="w-6 h-6 text-primary" />
+            <PieChartIcon className="w-6 h-6 text-primary" />
           </div>
           <p>{t("label_no_data")}</p>
         </motion.div>

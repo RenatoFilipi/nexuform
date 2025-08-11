@@ -11,10 +11,10 @@ import {
 } from "@/components/ui/chart";
 import useAppStore from "@/stores/app";
 import { parseISO } from "date-fns";
-import { ChartNoAxesColumnIcon } from "lucide-react";
+import { TrendingUpDownIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useReducer, useState } from "react";
-import { CartesianGrid, XAxis, LabelList, Line, LineChart } from "recharts"; // troquei BarChart e Bar por LineChart e Line
+import { CartesianGrid, XAxis, Line, LineChart } from "recharts";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 
@@ -143,13 +143,13 @@ const AnalyticsSubmissionsByHourChart = ({ ids }: { ids: string[] }) => {
     return (
       <Card className="flex flex-col justify-between gap-4 relative border w-full p-6 h-fit">
         <div className="flex items-center gap-2">
-          <ChartNoAxesColumnIcon className="w-5 h-5 text-primary" />
+          <TrendingUpDownIcon className="w-5 h-5 text-primary" />
           <span className="font-semibold text-lg">{t("label_submissions_by_hour")}</span>
         </div>
         <div className="flex justify-center items-center h-[400px]">
           <div className="flex flex-col justify-center items-center gap-2">
             <div className="flex justify-center items-center p-2 w-fit rounded bg-foreground/5">
-              <ChartNoAxesColumnIcon className="w-6 h-6 text-primary" />
+              <TrendingUpDownIcon className="w-6 h-6 text-primary" />
             </div>
             <p className="text-muted-foreground">{t("label_no_data")}</p>
           </div>
@@ -164,7 +164,7 @@ const AnalyticsSubmissionsByHourChart = ({ ids }: { ids: string[] }) => {
     <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit hover:border-primary/50 transition-all duration-300 hover:shadow-sm">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <ChartNoAxesColumnIcon className="w-5 h-5 text-primary" />
+          <TrendingUpDownIcon className="w-5 h-5 text-primary" />
           <span className="font-semibold text-lg">{t("label_submissions_by_hour")}</span>
         </div>
         <div className="flex gap-2">
