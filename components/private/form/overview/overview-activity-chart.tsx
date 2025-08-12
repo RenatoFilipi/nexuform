@@ -99,8 +99,8 @@ const OverviewActivityChart = () => {
   }, [app.submissionLogs, app.viewLogs, dateRange, app.from, app.to]);
 
   const legends = [
-    { color: submissionColor, name: subKey },
     { color: viewColor, name: viewKey },
+    { color: submissionColor, name: subKey },
   ];
 
   if (!hasData) {
