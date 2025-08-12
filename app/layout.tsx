@@ -8,6 +8,7 @@ import { getLocale, getMessages } from "next-intl/server";
 import { Inter } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({ subsets: ["latin"], fallback: ["system-ui", "arial"] });
 
@@ -28,6 +29,7 @@ export default async function RootLayout({
               <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
                 {children}
                 <Toaster richColors expand position="bottom-right" />
+                <Analytics />
               </ThemeProvider>
             </NuqsAdapter>
           </QueryProvider>
