@@ -13,17 +13,23 @@ const Hero = () => {
   const t = useTranslations("landing");
 
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-b from-primary/15 to-background py-24 md:py-36">
+    <section className="relative w-full overflow-hidden py-24 md:py-36">
+      {/* Background shapes with blur */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -left-20 -top-20 h-96 w-96 rounded-full bg-primary/20 blur-3xl" />
+        <div className="absolute -right-20 bottom-1/3 h-80 w-80 rounded-full bg-primary/20 blur-3xl" />
+      </div>
+
       <motion.div
-        className="container relative px-4 md:px-6"
+        className="container relative px-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}>
-        <div className="mx-auto max-w-5xl text-center">
-          <Badge className="mb-5 px-3 py-1.5 text-sm rounded-full shadow">
-            <ZapIcon className="mr-1 h-4 w-4" />
-            {t("hero_badge")}
-          </Badge>
+        <div className="mx-auto max-w-full text-center flex flex-col justify-center items-center sm:gap-4 w-full">
+          <div className="flex justify-center items-center gap-1 mb-7 px-3 h-8 text-sm rounded-lg shadow backdrop-blur-md bg-card border border-background">
+            <ZapIcon className="mr-1 h-4 w-4 text-primary fill-primary" />
+            <span className="text-foreground/80">{t("hero_badge")}</span>
+          </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight">
             {t.rich("hero_headline", {
@@ -34,26 +40,26 @@ const Hero = () => {
                   </span>
                 </span>
               ),
+              br: () => <br />,
             })}
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg md:text-xl text-muted-foreground">{t("hero_subheadline")}</p>
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
             <Button
               asChild
-              className="group transition-all hover:shadow-lg hover:shadow-primary/30 text-base px-6 py-3"
+              className="group transition-all hover:shadow-lg hover:shadow-primary/15 text-base px-6 py-3 w-full sm:w-fit"
               size="lg"
               variant="default">
-              {/* <Link href="/signup">{t("hero_get_started")}</Link> */}
               <Link href="/signup">{t("hero_join_wl")}</Link>
             </Button>
             <Button
               asChild
-              className="group transition-all hover:shadow-lg hover:shadow-primary/30 text-base px-6 py-3"
+              className="group transition-all hover:shadow-lg hover:shadow-foreground/15 text-base px-6 py-3 w-full sm:w-fit"
               size="lg"
               variant="secondary">
               <a href={`/s/${DEMO_ID}`}>
                 {t("hero_check_demo")}
-                <ArrowRightIcon className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                <ArrowRightIcon className="w-4 h-4 ml-2 transition-transform" />
               </a>
             </Button>
           </div>

@@ -29,7 +29,7 @@
     --info: 229 93% 42%;
     --info-foreground: 0 0% 100%;
     --ring: 0 0% 85.1%;
-    --radius: 0.3rem;
+    --radius: 0.65rem;
     --chart-1: 210 60% 40%;
     --chart-2: 190 50% 45%;
     --chart-3: 240 70% 35%;
@@ -48,13 +48,13 @@
   }
 
   .dark {
-    --background: 0 0.09% 7.07%;
+    --background: 0 0% 4%;
     --foreground: 0 0% 98%;
     --muted: 260 0% 18.46%;
     --muted-foreground: 260 0% 62%;
     --popover: 0 0% 7.84%;
     --popover-foreground: 0 0% 98%;
-    --card: 0 0% 10.59%;
+    --card: 0 0% 9%;
     --card-foreground: 0 0% 98%;
     --border: 260 0% 18.15%;
     --input: 255 0% 21.54%;

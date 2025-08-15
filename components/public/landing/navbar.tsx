@@ -7,6 +7,7 @@ import { MenuIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const t = useTranslations("landing");
@@ -37,68 +38,92 @@ const Navbar = () => {
   ];
 
   return (
-    <div
-      className={`fixed py-3 sm:py-5 top-0 w-full px-3 z-20 backdrop-blur-xl transition-all duration-300 ${
-        scrolled ? "bg-background/90 shadow" : "bg-background/0"
+    <motion.div
+      initial={{ opacity: 0, y: 0 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className={`fixed py-3 sm:py-4 top-0 w-full px-4 z-50 backdrop-blur-xl transition-all duration-300 ${
+        scrolled ? "bg-background/90 border-b border-border/50 shadow-sm" : "bg-background/0"
       }`}>
-      <div className="w-full flex justify-between md:justify-between items-center transition-all duration-300 sm:px-72">
+      <div className="max-w-7xl mx-auto flex justify-between items-center transition-all duration-300">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center">
-            <Brand type="primary_logo_text" className="h-5 sm:h-5 fill-foreground" />
+            <Brand
+              type="primary_logo_text"
+              className="h-5 sm:h-6 fill-foreground hover:opacity-80 transition-opacity"
+            />
           </Link>
           <div className="hidden md:flex items-center gap-6">
             {sections.map((section) => (
               <Link
                 key={section.name}
                 href={section.id}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium">
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium relative group">
                 {section.name}
               </Link>
             ))}
           </div>
         </div>
-        <div className="hidden md:flex items-center gap-4">
-          <Button variant="outline" size="default" asChild>
+
+        <div className="hidden md:flex items-center gap-3">
+          <Button variant="outline" size="sm" asChild className="">
             <Link href="/login">{t("label_login")}</Link>
           </Button>
-          <Button variant="default" size="default" asChild>
+          <Button variant="default" size="sm" asChild className="shadow hover:shadow-md hover:shadow-primary/20">
             <Link href="/signup">{t("hero_join_wl")}</Link>
           </Button>
         </div>
-        <div className="flex md:hidden">
-          <Button onClick={() => setOpen(!open)} variant="ghost" size="icon">
-            {open ? <XIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
+
+        <div className="flex md:hidden items-center gap-2">
+          <Button onClick={() => setOpen(!open)} variant="ghost" size="icon" className="hover:bg-primary/5">
+            {open ? <XIcon className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}
           </Button>
         </div>
       </div>
-      {open && (
-        <div className="flex flex-col w-full">
-          <div className="flex flex-col sm:hidden mt-3 pb-2">
-            {links.map((link) => (
-              <Link
-                href={link.path}
-                key={link.name}
-                className="px-3 py-3 text-sm font-medium text-foreground/80 hover:text-primary hover:bg-primary/5 transition-colors">
-                {link.name}
-              </Link>
-            ))}
-          </div>
-          <div className="flex justify-end items-center gap-4">
-            <ModeToggle2 />
-          </div>
-          <div className="flex justify-start items-center gap-4 mt-4 p-2">
-            {legals.map((legal) => (
-              <Link
-                href={legal.path}
-                key={legal.name}
-                className="text-xs text-foreground/80 hover:underline transition-colors">
-                {legal.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden overflow-hidden">
+            <div className="flex flex-col mt-3 pb-2 border-t border-border/50 pt-3">
+              {sections.map((section) => (
+                <Link
+                  href={section.id}
+                  key={section.name}
+                  onClick={() => setOpen(false)}
+                  className="px-3 py-3 text-sm font-medium text-foreground/80 hover:text-primary hover:bg-primary/5 transition-colors">
+                  {section.name}
+                </Link>
+              ))}
+              {links.map((link) => (
+                <Link
+                  href={link.path}
+                  key={link.name}
+                  onClick={() => setOpen(false)}
+                  className="px-3 py-3 text-sm font-medium text-foreground/80 hover:text-primary hover:bg-primary/5 transition-colors">
+                  {link.name}
+                </Link>
+              ))}
+            </div>
+            <div className="flex justify-start items-center gap-4 mt-2 p-3 border-t border-border/50">
+              {legals.map((legal) => (
+                <Link
+                  href={legal.path}
+                  key={legal.name}
+                  className="text-xs text-muted-foreground hover:text-primary transition-colors">
+                  {legal.name}
+                </Link>
+              ))}
+              <ModeToggle2 />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 };
 
