@@ -118,7 +118,6 @@ const Navbar = () => {
                   {legal.name}
                 </Link>
               ))}
-              <ModeToggle2 />
             </div>
           </motion.div>
         )}

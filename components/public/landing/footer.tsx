@@ -23,24 +23,25 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full px-6 sm:px-8 py-16 dark:bg-black text-foreground">
-      <div className="max-w-7xl mx-auto flex justify-between items-start flex-col sm:flex-row gap-8">
+    <footer className="w-full px-6 sm:px-8 py-16 text-foreground">
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-start gap-12 sm:gap-8">
         {/* Branding + CTA */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-4">
           <Link href="/" className="flex items-center gap-2">
-            <Brand type="logo_text" className="h-4 fill-foreground" />
+            <Brand type="logo_text" className="h-5 fill-foreground transition-all duration-300" />
           </Link>
-          <p className="text-sm text-foreground/60 mb-4 leading-relaxed">{t("footer_cta")}</p>
+          <p className="text-sm text-foreground/70 leading-relaxed max-w-sm">{t("footer_cta")}</p>
         </div>
+
         {/* Product Links */}
-        <div className="flex flex-col gap-3">
-          <h3 className="uppercase tracking-tighter text-xs text-muted-foreground font-medium">{t("label_product")}</h3>
-          <ul className="flex flex-col gap-1">
+        <div className="flex flex-col gap-4">
+          <h3 className="uppercase tracking-wide text-xs font-semibold text-muted-foreground">{t("label_product")}</h3>
+          <ul className="flex flex-col gap-2">
             {urls.map((item) => (
               <li key={item.name}>
                 <Link
                   href={`#${item.url}`}
-                  className="text-sm text-foreground hover:text-primary transition-colors duration-200">
+                  className="text-sm text-foreground/80 hover:text-primary transition-colors duration-300">
                   {item.name}
                 </Link>
               </li>
@@ -48,20 +49,22 @@ const Footer = () => {
           </ul>
         </div>
       </div>
+
       {/* Bottom Bar */}
-      <div className="max-w-7xl mx-auto mt-12 pt-4 border-t border-foreground/10 flex flex-col sm:flex-row justify-between items-center gap-4">
-        <div className="flex justify-center items-center gap-4 flex-col sm:flex-row">
-          <div className="flex gap-4 text-xs text-foreground/50">
+      <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-foreground/10 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 text-xs text-foreground/50">
+          <div className="flex gap-6">
             {legals.map((link) => (
-              <Link key={link.name} href={link.url} className="hover:text-muted-foreground transition text-foreground">
+              <Link key={link.name} href={link.url} className="hover:text-primary transition-colors duration-300">
                 {link.name}
               </Link>
             ))}
           </div>
-          <p className="text-xs text-foreground/50">
-            &copy; {currentYear} {APP_NAME}.
+          <p className="mt-2 sm:mt-0">
+            &copy; {currentYear} {APP_NAME}
           </p>
         </div>
+
         <ModeToggle2 />
       </div>
     </footer>
