@@ -536,7 +536,8 @@
     "desc_submissions_by_form": "Total de respuestas recibidas por cada formulario",
     "desc_views_by_form": "Cantidad de veces que cada formulario fue visto por los usuarios",
     "desc_submissions_by_hour": "Horarios del día en que ocurrieron los envíos, mostrando picos y patrones de envío.",
-    "desc_activity": "Actividad de tu formulario, comparando visualizaciones y envíos a lo largo del tiempo"
+    "desc_activity": "Actividad de tu formulario, comparando visualizaciones y envíos a lo largo del tiempo",
+    "label_invitations": "Invitaciones"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",
@@ -592,7 +593,7 @@
     "label_signup_headline": "Crea tu cuenta",
     "desc_signup_headline": "Completa tus datos para explorar todo lo que ofrecemos",
     "label_plan_canceled": "Plan cancelado",
-    "label_wl_headline": "Crea Formularios Inteligentes en <main>Minutos.</main>",
+    "label_wl_headline": "Valida Ideas en <main>Horas</main>,<br></br> No en Semanas",
     "label_wl_subheadline": "La nueva plataforma NexuForm está por lanzarse. Únete a la lista de espera y sé de los primeros en probarla — antes que el público general.",
     "label_wl_email_ph": "Tu correo electrónico",
     "label_wl_leads": "Captura de Leads",

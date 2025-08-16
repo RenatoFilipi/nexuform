@@ -114,7 +114,7 @@ const Password = () => {
     <Card className="flex flex-col gap-4 p-4 sm:p-8">
       <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
         <div className="flex flex-col gap-1 w-full">
-          <h1 className="font-semibold text-base">{t("label_password")}</h1>
+          <h1 className="font-semibold text-lg">{t("label_password")}</h1>
           <p className="text-sm text-muted-foreground">{t("desc_password")}</p>
         </div>
         <Form {...passwordHandler}>

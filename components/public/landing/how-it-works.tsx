@@ -52,10 +52,7 @@ const HowItWorks = () => {
             <span className="text-sm font-medium uppercase tracking-[0.2em]">{t("htw_preheadline")}</span>
           </div>
           <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight">
-            {t("htw_headline")}{" "}
-            <span className="bg-gradient-to-r from-primary via-pink-500 to-purple-500 bg-clip-text text-transparent">
-              {t("htw_headline_highlight")}
-            </span>
+            {t("htw_headline")} <span className="text-primary">{t("htw_headline_highlight")}</span>
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
             {t("htw_subheadline")}{" "}
