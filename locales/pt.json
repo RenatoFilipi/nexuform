@@ -536,7 +536,8 @@
     "desc_submissions_by_form": "Total de respostas recebidas por cada formulário",
     "desc_views_by_form": "Quantidade de vezes que cada formulário foi visualizado pelos usuários",
     "desc_submissions_by_hour": "Horários do dia em que as submissões ocorreram, mostrando picos e padrões de envio.",
-    "desc_activity": "Atividade do seu formulário, comparando visualizações e envios ao longo do tempo"
+    "desc_activity": "Atividade do seu formulário, comparando visualizações e envios ao longo do tempo",
+    "label_invitations": "Convites"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",
@@ -592,7 +593,7 @@
     "label_signup_headline": "Crie sua conta",
     "desc_signup_headline": "Preencha seus dados para explorar tudo o que oferecemos",
     "label_plan_canceled": "Plano cancelado",
-    "label_wl_headline": "Crie Formulários Inteligentes em <main>Minutos.</main>",
+    "label_wl_headline": "Valide Ideias em <main>Poucas Horas</main>,<br></br> Não em Semanas",
     "label_wl_subheadline": "A nova plataforma NexuForm está quase no ar. Entre na lista de espera e seja um dos primeiros a testar — antes do público geral.",
     "label_wl_email_ph": "Seu e-mail",
     "label_wl_leads": "Captura de Leads",
@@ -619,8 +620,8 @@
     "label_terms": "Termos",
     "label_login": "Entrar",
     "label_get_started": "Começar agora",
-    "hero_headline": "Crie Formulários Inteligentes em <main>Minutos.</main>",
-    "hero_subheadline": "O NexuForm permite que você crie, compartilhe e acompanhe formulários com facilidade — sem ferramentas complicadas, apenas velocidade, clareza e resultados.",
+    "hero_headline": "Valide Ideias em <main>Poucas Horas</main>,<br></br> Não em Semanas",
+    "hero_subheadline": "Crie um formulário de manhã, compartilhe antes do almoço e tome decisões à tarde.",
     "hero_badge": "Feito para velocidade e resultados",
     "hero_get_started": "Comece grátis",
     "hero_check_demo": "Ver demonstração",

@@ -33,6 +33,7 @@ import AnalyticsSubmissionsByFormChart from "./analytics-submissions-by-form-cha
 import { motion, AnimatePresence } from "framer-motion";
 import AnalyticsViewsByFormChart from "./analytics-views-by-form-chart";
 import AnalyticsSubmissionsByHourChart from "./analytics-submissions-by-hour-chart";
+import LoadingUI from "../../shared/custom/loading-ui";
 
 interface IProps {
   locale: string;
@@ -124,7 +125,7 @@ const AnalyticsWrapper = (props: IProps) => {
     if (!viewLogsPrev.error) app.setViewLogsCompare(viewLogsPrev.data);
   };
 
-  if (query.isPending) return null;
+  if (query.isPending) return <LoadingUI />;
 
   if (!app.context.isSubscriptionActive) {
     return <SubscriptionUI />;

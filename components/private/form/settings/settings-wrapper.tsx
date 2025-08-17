@@ -18,6 +18,7 @@ import OptionSelector from "../../shared/custom/option-selector";
 import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 import SubscriptionUI from "../../shared/pages/subscription-ui";
 import FormDelete from "./settings-form-delete";
+import LoadingUI from "../../shared/custom/loading-ui";
 
 interface IProps {
   locale: string;
@@ -51,7 +52,7 @@ const SettingsWrapper = (props: IProps) => {
   });
 
   const isNotStaff = app.context.orgRole !== "staff";
-  if (query.isPending) return null;
+  if (query.isPending) return <LoadingUI />;
 
   if (!app.context.isSubscriptionActive) {
     return <SubscriptionUI />;

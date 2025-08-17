@@ -536,7 +536,8 @@
     "desc_submissions_by_form": "Total responses received per form",
     "desc_views_by_form": "Number of times each form was viewed by users",
     "desc_submissions_by_hour": "Times of day when submissions occurred, showing peaks and submission patterns.",
-    "desc_activity": "Activity of your form, comparing views and submissions over time"
+    "desc_activity": "Activity of your form, comparing views and submissions over time",
+    "label_invitations": "Invitations"
   },
   "s": {
     "err_required_all": "Answer all required questions.",
@@ -592,7 +593,7 @@
     "label_signup_headline": "Create your account",
     "desc_signup_headline": "Fill in your details to explore everything we offer",
     "label_plan_canceled": "Plan canceled",
-    "label_wl_headline": "Create Smart Forms in <main>Minutes.</main>",
+    "label_wl_headline": "Validate Ideas in <main>Hours</main>,<br></br> Not Weeks",
     "label_wl_subheadline": "The new NexuForm platform is almost live. Join the waitlist and be among the first to test it — before the general public.",
     "label_wl_email_ph": "Your email",
     "label_wl_leads": "Lead Capture",
@@ -619,8 +620,8 @@
     "label_terms": "Terms",
     "label_login": "Login",
     "label_get_started": "Get started",
-    "hero_headline": "Create Smart Forms in <main>Minutes.</main>",
-    "hero_subheadline": "NexuForm lets you create, share and track forms with ease — no bloated tools, just speed, clarity and results.",
+    "hero_headline": "Validate Ideas in <main>Hours</main>,<br></br> Not Weeks",
+    "hero_subheadline": "Create a form in the morning, share it before lunch, and make decisions by afternoon.",
     "hero_badge": "Built for speed and results",
     "hero_get_started": "Start for free",
     "hero_check_demo": "Check demo",

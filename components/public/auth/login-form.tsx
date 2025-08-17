@@ -57,12 +57,10 @@ const LoginForm = () => {
     <Form {...form}>
       <div className="flex sm:max-w-xl w-full justify-center items-center p-8">
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-6">
-          <div className="flex flex-col justify-center items-center gap-6">
+          <div className="flex flex-col justify-center items-center gap-8">
             <div className="flex w-full justify-center">
               <Link href="/" className="group flex justify-center items-center">
-                <Card className="flex justify-center items-center px-3 py-4 hover:bg-muted-foreground/10">
-                  <Brand type="logo" className="fill-foreground h-5" />
-                </Card>
+                <Brand type="primary_logo_text" className="fill-foreground h-10" />
               </Link>
             </div>
             <div className="flex flex-col gap-1 justify-center items-center text-center">

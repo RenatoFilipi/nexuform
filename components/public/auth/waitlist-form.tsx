@@ -59,7 +59,7 @@ const WaitlistForm = () => {
 
   if (appState === "success") {
     return (
-      <div className="flex flex-col items-center justify-center min-h-dvh px-4 text-center bg-gradient-to-b from-primary/15 to-background w-full gap-2">
+      <div className="flex flex-col items-center justify-center min-h-dvh px-4 text-center w-full gap-2">
         <CheckCircle2Icon className="h-14 w-14 text-green-500 mb-4" />
         <h2 className="text-3xl font-semibold text-foreground mb-2">🎉 {t("label_wl_success_title")}</h2>
         <p className="text-muted-foreground max-w-md">{t("label_wl_success_sub")}</p>
@@ -71,13 +71,18 @@ const WaitlistForm = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center w-full min-h-dvh bg-gradient-to-b from-primary/15 to-background px-4">
-      <div className="sm:max-w-xl w-full text-center flex flex-col gap-8">
-        <div className="flex justify-center items-center mb-4">
-          <Brand type="primary_logo_text" className="fill-foreground h-8" />
+    <div className="flex flex-col justify-center items-center w-full min-h-dvh px-4 bg-background">
+      <div className="sm:max-w-3xl w-full text-center flex flex-col gap-10 justify-center items-center">
+        {/* Logo */}
+        <div className="flex justify-center items-center mb-6">
+          <Brand
+            type="primary_logo_text"
+            className="fill-foreground h-10 transition-transform duration-300 hover:scale-105"
+          />
         </div>
 
-        <h1 className="text-4xl md:text-5xl font-semibold leading-tight tracking-tight">
+        {/* Headline */}
+        <h1 className="text-4xl md:text-5xl font-extrabold leading-tight tracking-tight text-foreground">
           {t.rich("label_wl_headline", {
             main: (chunks) => (
               <span className="relative inline-block">
@@ -86,13 +91,19 @@ const WaitlistForm = () => {
                 </span>
               </span>
             ),
+            br: () => <br />,
           })}
         </h1>
 
-        <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">{t("label_wl_subheadline")}</p>
+        {/* Subheadline */}
+        <p className="text-base sm:text-lg text-foreground/70 leading-relaxed max-w-prose mx-auto">
+          {t("label_wl_subheadline")}
+        </p>
 
+        {/* Form */}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4 w-full mt-2">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5 w-full mt-4 sm:max-w-xl">
+            {/* Email Input */}
             <FormField
               control={form.control}
               name="email"
@@ -100,19 +111,20 @@ const WaitlistForm = () => {
                 <Input
                   type="email"
                   placeholder={t("label_wl_email_ph")}
-                  className="rounded-md px-4 py-3 text-base"
+                  className="rounded-xl px-5 py-4 text-base border border-foreground/20 bg-background text-foreground shadow-sm focus:ring-2 focus:ring-primary focus:outline-none transition-all duration-300"
                   required
                   {...field}
                 />
               )}
             />
 
+            {/* Purpose Select */}
             <FormField
               control={form.control}
               name="purpose"
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-full rounded-md px-4 py-3 text-left text-base">
+                  <SelectTrigger className="w-full rounded-xl px-5 py-4 text-left text-base border border-foreground/20 bg-background text-foreground shadow-sm focus:ring-2 focus:ring-primary focus:outline-none transition-all duration-300">
                     <SelectValue placeholder="Qual será o seu uso principal?" />
                   </SelectTrigger>
                   <SelectContent>
@@ -128,22 +140,24 @@ const WaitlistForm = () => {
               )}
             />
 
+            {/* Submit Button */}
             <Button
               type="submit"
-              variant={"secondary"}
-              className="w-full text-base h-12"
+              variant="default"
+              className="w-full h-12 rounded-xl shadow-lg transition-all duration-300 flex justify-center items-center gap-2"
               disabled={appState === "loading"}>
-              {appState === "loading" && <LoaderIcon className="w-5 h-5 animate-spin mr-2" />}
+              {appState === "loading" && <LoaderIcon className="w-5 h-5 animate-spin" />}
               {t("label_wl_submit")}
             </Button>
           </form>
         </Form>
 
+        {/* Back Link */}
         <Link
           href="/"
           className={`${
             appState === "loading" ? "pointer-events-none opacity-50" : ""
-          } text-sm text-muted-foreground hover:underline mt-2`}>
+          } text-sm text-foreground/60 hover:text-foreground hover:underline mt-4 transition-colors duration-300`}>
           ← {t("label_wl_back")}
         </Link>
       </div>

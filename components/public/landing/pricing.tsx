@@ -1,59 +1,51 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { CheckIcon, ClockIcon, LightbulbIcon } from "lucide-react";
+import { motion } from "framer-motion";
 import { formatCurrency } from "@/utils/functions";
 import { IPlan } from "@/utils/pricing";
-import { motion } from "framer-motion";
-import { CheckIcon, ClockIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 const Pricing = ({ plans }: { plans: IPlan[] }) => {
   const t = useTranslations("pricing");
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-  const itemVariants = {
-    hidden: { y: 10, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.4,
-        ease: "easeOut",
-      },
-    },
-  };
+
   return (
-    <section id="pricing" className="relative py-16 px-4 sm:px-6 bg-background">
-      <div className="max-w-7xl mx-auto flex flex-col items-center gap-16">
+    <section id="pricing" className="relative py-24 px-4 sm:px-6 bg-background">
+      <div className="max-w-7xl mx-auto flex flex-col items-center gap-20">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.7 }}
           viewport={{ once: true }}
           className="text-center space-y-4">
-          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground">{t("headline")}</h2>
-          <p className="text-muted-foreground/80 leading-relaxed">{t("subheadline")}</p>
+          <h2 className="text-5xl font-extrabold text-foreground tracking-tight">{t("headline")}</h2>
+          <p className="text-muted-foreground/80 text-lg">{t("subheadline")}</p>
         </motion.div>
 
+        {/* Pricing Cards */}
         <motion.div
-          variants={containerVariants}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 w-full">
-          {plans.map((plan) => (
-            <motion.div key={plan.type} variants={itemVariants} whileHover={{ y: -3 }} className="h-full">
-              <CardTemplate plan={plan} />
+          viewport={{ once: true }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.15 } },
+          }}>
+          {plans.map((plan, idx) => (
+            <motion.div
+              key={plan.id}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              whileHover={{ y: -4, scale: 1.0 }}
+              className="h-full">
+              <PricingCard plan={plan} />
             </motion.div>
           ))}
         </motion.div>
@@ -62,78 +54,77 @@ const Pricing = ({ plans }: { plans: IPlan[] }) => {
   );
 };
 
-const CardTemplate = ({ plan }: { plan: IPlan }) => {
+const PricingCard = ({ plan }: { plan: IPlan }) => {
   const t = useTranslations("pricing");
 
   return (
     <Card
-      key={plan.id}
-      className={`relative flex flex-col h-full p-5 rounded-xl ${
+      className={`relative flex flex-col h-full p-6 rounded-3xl backdrop-blur-lg border border-foreground/10 shadow-xl transition-all duration-300 hover:shadow-3xl ${
         plan.isMostPopular
-          ? "border-primary ring-1 ring-primary/10 bg-primary/10"
-          : "border-muted-foreground/15 hover:border-muted-foreground/25"
+          ? "ring-2 ring-primary/40 bg-gradient-to-br from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10"
+          : "bg-card/80 hover:bg-card/90 hover:border-muted-foreground/25"
       }`}>
       {plan.isMostPopular && (
-        <div className="absolute top-0 right-0 bg-primary text-white text-xs font-semibold px-3 py-1 transform translate-x-2 -translate-y-2 rounded-bl-lg">
+        <div className="absolute top-0 right-0 transform translate-x-2 -translate-y-2 bg-primary text-white text-xs font-semibold px-3 py-1 rounded-bl-lg shadow-md">
           {t("most_popular")}
         </div>
       )}
-      <div className="flex flex-col justify-between h-full items-center w-full gap-6">
-        <div className="p-3 flex flex-col w-full">
-          <div className="flex justify-start items-center gap-2">
-            <h3 className="text-lg font-bold text-foreground">{plan.name}</h3>
-          </div>
-          <p className="mt-2 text-muted-foreground text-sm">{plan.description}</p>
-          <div className="mt-6">
-            <div className="flex items-center">
-              <span className="text-4xl">{formatCurrency("USD", plan.price.amount, "compact")}</span>
-              {!plan.freeTrialDuration && (
-                <span className="ml-2 text-sm font-medium text-muted-foreground">/{t("month")}</span>
+
+      {/* Header */}
+      <div className="flex flex-col gap-3 w-full">
+        <h3 className="text-2xl font-bold text-foreground">{plan.name}</h3>
+        <p className="text-sm text-muted-foreground">{plan.description}</p>
+      </div>
+
+      {/* Price */}
+      <div className="mt-6 flex items-baseline gap-2">
+        <span className="text-4xl font-semibold text-foreground">
+          {formatCurrency("USD", plan.price.amount, "compact")}
+        </span>
+        {!plan.freeTrialDuration && <span className="text-sm text-muted-foreground">/{t("month")}</span>}
+      </div>
+      {plan.freeTrialDuration && (
+        <p className="mt-1 text-green-500 font-medium">
+          {plan.freeTrialDuration} {t("day_freetrial")}
+        </p>
+      )}
+
+      {/* Recommended for */}
+      <div className="mt-6">
+        <h4 className="text-sm font-semibold text-foreground flex justify-start items-center gap-1">
+          {t("recommended_for")}
+        </h4>
+        <p className="text-xs text-muted-foreground mt-1">{plan.recommendedFor}</p>
+      </div>
+
+      {/* Features */}
+      <div className="mt-6 flex-1">
+        <h4 className="text-sm font-semibold text-foreground">{t("whats_included")}</h4>
+        <ul className="mt-4 space-y-3">
+          {plan.features.map((feature, i) => (
+            <li key={i} className="flex items-start gap-3">
+              {feature.comingSoon ? (
+                <ClockIcon className="w-4 h-4 text-muted-foreground/70 mt-1" />
+              ) : (
+                <CheckIcon className="w-4 h-4 text-green-500 mt-1" />
               )}
-            </div>
-            {plan.freeTrialDuration && (
-              <p className="mt-1 text-sm text-green-600">
-                {plan.freeTrialDuration}-{t("day_freetrial")}
-              </p>
-            )}
-          </div>
-          <div className="mt-8">
-            <h4 className="text-sm font-semibold">{t("recommended_for")}</h4>
-            <p className="mt-1 text-xs text-muted-foreground">{plan.recommendedFor}</p>
-          </div>
-          <div className="mt-8">
-            <h4 className="text-sm font-semibold">{t("whats_included")}</h4>
-            <ul className="mt-4 space-y-3">
-              {plan.features.map((feature, index) => (
-                <li key={index} className="flex items-start">
-                  {feature.comingSoon ? (
-                    <div className="flex">
-                      <ClockIcon className="w-4 h-4 text-muted-foreground/70" />
-                    </div>
-                  ) : (
-                    <div className={`flex`}>
-                      <CheckIcon className="w-4 h-4 text-green-500" />
-                    </div>
-                  )}
-                  <span
-                    className={`ml-3 text-xs ${
-                      feature.comingSoon ? "text-muted-foreground/70" : "text-muted-foreground"
-                    }`}>
-                    {feature.description}
-                    {feature.comingSoon && (
-                      <span className="ml-1 text-xs text-muted-foreground/70">({t("coming_soon")})</span>
-                    )}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        <div className="w-full">
-          <Button className="w-full" variant={plan.isMostPopular ? "secondary" : "outline"} asChild>
-            <Link href="/signup">{plan.ctaLabel}</Link>
-          </Button>
-        </div>
+              <span className={`text-xs ${feature.comingSoon ? "text-muted-foreground/70" : "text-muted-foreground"}`}>
+                {feature.description}{" "}
+                {feature.comingSoon && <span className="text-muted-foreground/60">({t("coming_soon")})</span>}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* CTA */}
+      <div className="mt-6">
+        <Button
+          className="w-full font-semibold text-sm hover:scale-105 transition-transform duration-200"
+          variant={plan.isMostPopular ? "secondary" : "outline"}
+          asChild>
+          <Link href="/signup">{plan.ctaLabel}</Link>
+        </Button>
       </div>
     </Card>
   );

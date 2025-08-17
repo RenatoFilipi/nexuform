@@ -33,6 +33,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 import SubscriptionUI from "../../shared/pages/subscription-ui";
+import LoadingUI from "../../shared/custom/loading-ui";
 
 interface IProps {
   locale: string;
@@ -69,7 +70,7 @@ const FormsWrapper = (props: IProps) => {
   });
 
   const hasForms = app.forms.length > 0;
-  if (query.isPending) return null;
+  if (query.isPending) return <LoadingUI />;
 
   if (!app.context.isSubscriptionActive) {
     return <SubscriptionUI />;
@@ -91,7 +92,7 @@ const FormsWrapper = (props: IProps) => {
         </Button>
       </div>
       {hasForms && (
-        <div className="overflow-y-auto grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="overflow-y-auto grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {app.forms.map((f) => {
             return <FormCard key={f.id} form={f} />;
           })}
@@ -121,6 +122,7 @@ const FormCard = ({ form }: { form: EForm }) => {
   const isProduction = process.env.NODE_ENV === "production";
   const protocol = isProduction ? "https" : "http";
   const fullUrl = `${protocol}://${window.location.host}/s/${form.public_id}`;
+  const formColor = form.label_color;
 
   const options = [
     {
@@ -156,11 +158,7 @@ const FormCard = ({ form }: { form: EForm }) => {
   ];
 
   return (
-    <Card
-      style={{
-        borderLeft: `4px solid ${form.label_color}`,
-      }}
-      className="flex flex-col h-40 p-5 justify-between border hover:border-primary transition-colors duration-200 group hover:shadow-sm overflow-x-auto">
+    <Card className="flex flex-col h-48 p-5 justify-between border hover:border-primary transition-colors duration-200 group hover:shadow-sm overflow-x-auto">
       <div className="flex w-full justify-between items-start">
         <div className="flex flex-col gap-2">
           <h1 className="font-semibold truncate max-w-[270px] transition-colors">{form.name}</h1>

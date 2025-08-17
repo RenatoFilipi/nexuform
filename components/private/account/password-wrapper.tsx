@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { EyeIcon, EyeOffIcon, LoaderIcon } from "lucide-react";
+import LoadingUI from "../shared/custom/loading-ui";
 
 interface IProps {
   locale: string;
@@ -37,7 +38,7 @@ const PasswordWrapper = (props: IProps) => {
     },
   });
 
-  if (query.isPending) return null;
+  if (query.isPending) return <LoadingUI />;
 
   return (
     <div className="flex flex-col gap-6">
@@ -114,7 +115,7 @@ const Password = () => {
     <Card className="flex flex-col gap-4 p-4 sm:p-8">
       <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
         <div className="flex flex-col gap-1 w-full">
-          <h1 className="font-semibold text-base">{t("label_password")}</h1>
+          <h1 className="font-semibold text-lg">{t("label_password")}</h1>
           <p className="text-sm text-muted-foreground">{t("desc_password")}</p>
         </div>
         <Form {...passwordHandler}>

@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { CopyIcon, MailIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import LoadingUI from "../shared/custom/loading-ui";
 
 interface Props {
   locale: string;
@@ -34,7 +35,7 @@ const HelpWrapper = (props: Props) => {
     toast.success(t("label_link_copied"));
   };
 
-  if (query.isPending) return null;
+  if (query.isPending) return <LoadingUI />;
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">

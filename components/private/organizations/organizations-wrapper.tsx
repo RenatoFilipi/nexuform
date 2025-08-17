@@ -11,12 +11,13 @@ import { TPlan } from "@/utils/pricing";
 import { createClient } from "@/utils/supabase/client";
 import { TOrganizationRole } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { CheckIcon, ChevronRightIcon, LoaderIcon, MailPlusIcon, XIcon } from "lucide-react";
+import { CheckIcon, ChevronRightIcon, Loader2Icon, LoaderIcon, MailPlusIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import OrgRoleBadge from "../shared/custom/org-role-badge";
 import PlanBadge from "../shared/custom/plan-badge";
+import LoadingUI from "../shared/custom/loading-ui";
 
 interface IProps {
   locale: string;
@@ -47,31 +48,47 @@ const OrganizationsWrapper = (props: IProps) => {
     },
   });
 
-  if (query.isPending) return null;
+  if (query.isPending)
+    return (
+      <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-8 px-3 sm:px-20 lg:px-80 py-4 sm:py-8">
+        <LoadingUI />
+      </div>
+    );
 
   return (
-    <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-6 px-3 sm:px-20 lg:px-80 py-4 sm:py-8">
-      <div className="flex w-full justify-between items-center">
-        <h1 className="text-xl font-semibold">{t("label_organizations")} </h1>
-      </div>
-      <div className="flex flex-col gap-6">
-        {hasPendingInvitations && (
-          <div className="grid gap-6">
-            {app.receivedInvitations.map((invitation) => {
-              return <InvitationCard key={invitation.id} invitation={invitation} />;
-            })}
+    <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-8 px-3 sm:px-20 lg:px-80 py-4 sm:py-8">
+      {/* Invitations */}
+      <section className="flex flex-col gap-3">
+        <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">{t("label_invitations")}</h2>
+        {hasPendingInvitations ? (
+          <ul className="flex flex-col border border-border rounded-xl overflow-hidden bg-card divide-y divide-border">
+            {app.receivedInvitations.map((invitation) => (
+              <InvitationItem key={invitation.id} invitation={invitation} />
+            ))}
+          </ul>
+        ) : (
+          <div className="flex flex-col items-center justify-center gap-3 p-7 rounded-xl border border-dashed border-border bg-muted/5 text-center">
+            <MailPlusIcon className="w-8 h-8 text-muted-foreground" />
+            <p className="text-sm text-muted-foreground">{t("label_no_pending_invitations")}</p>
           </div>
         )}
-        <div className="overflow-y-auto grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {app.teamMemberProfiles.map((tmp) => {
-            return <OrganizationsCard key={tmp.id} teamMemberProfile={tmp} />;
-          })}
-        </div>
-      </div>
+      </section>
+
+      {/* Organizations */}
+      <section className="flex flex-col gap-3">
+        <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+          {t("label_organizations")}
+        </h2>
+        <ul className="overflow-y-auto grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          {app.teamMemberProfiles.map((tmp) => (
+            <OrganizationItem key={tmp.id} teamMemberProfile={tmp} />
+          ))}
+        </ul>
+      </section>
     </div>
   );
 };
-const OrganizationsCard = (props: { teamMemberProfile: ETeamMemberProfile }) => {
+const OrganizationItem = (props: { teamMemberProfile: ETeamMemberProfile }) => {
   const t = useTranslations("app");
   const app = useAppStore();
   const tmp = props.teamMemberProfile;
@@ -110,38 +127,72 @@ const OrganizationsCard = (props: { teamMemberProfile: ETeamMemberProfile }) => 
 
   return (
     <a href={orgPath} className="block">
-      <Card className="flex flex-col justify-between h-44 p-4 border hover:border-primary transition-all duration-200 group hover:shadow-md cursor-pointer relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-primary/0 to-primary/0 group-hover:via-primary/5 group-hover:to-primary/10 transition-all duration-300" />
+      <Card
+        className="
+      relative flex flex-col h-48 p-5
+      bg-gradient-to-br from-background via-muted/10 to-background
+      shadow-sm hover:shadow-lg
+      hover:border-primary/40
+      transition-all duration-300 ease-out
+      cursor-pointer overflow-hidden group
+    ">
+        {/* Overlay premium */}
+        <div
+          className="
+        absolute inset-0 rounded-2xl
+        bg-gradient-to-br from-primary/0 via-primary/0 to-primary/0
+        group-hover:via-primary/5 group-hover:to-primary/15
+        opacity-0 group-hover:opacity-100
+        transition-opacity duration-500
+      "
+        />
 
-        <div className="flex flex-col gap-2 relative justify-between h-full">
-          <div className="flex justify-between items-start w-full">
-            <div className="flex items-center gap-3 justify-center">
-              <PlanBadge type={subscription.plan as TPlan} size={"lg"} />
-              <div className="flex flex-col gap-1">
-                <h3 className="text-sm font-semibold line-clamp-1">{organization.name}</h3>
-                <span className="text-xs text-muted-foreground capitalize">
-                  {orgRole === "owner" && t("label_owner")}
-                  {orgRole === "admin" && t("label_admin")}
-                  {orgRole === "staff" && t("label_staff")}
-                </span>
-              </div>
+        <div className="flex flex-col justify-between h-full relative z-10">
+          {/* Top Section: Nome + Role + Plano */}
+          <div className="flex justify-between items-start">
+            <div className="flex flex-col gap-1">
+              <h3 className="text-base font-semibold tracking-tight text-foreground line-clamp-1">
+                {organization.name}
+              </h3>
+              <span className="text-xs text-muted-foreground capitalize">
+                {orgRole === "owner" && t("label_owner")}
+                {orgRole === "admin" && t("label_admin")}
+                {orgRole === "staff" && t("label_staff")}
+              </span>
             </div>
-            <ChevronRightIcon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+
+            {/* Badge do Plano sempre visível no topo */}
+            <PlanBadge type={subscription.plan as TPlan} size="lg" />
           </div>
-          <div className="mt-auto flex flex-col gap-2">
-            {renderStatusBadge()}
-            {!isCanceled && !isExpired && (
-              <p className={`text-xs ${isPastDue ? "text-warning" : "text-muted-foreground"}`}>
-                {t("label_n_days_remaining", { n: remainingDays })}
-              </p>
-            )}
+
+          {/* Middle Divider */}
+          <div className="border-t border-muted/30 my-3" />
+
+          {/* Bottom Section: Status + Dias */}
+          <div className="flex justify-between items-end">
+            <div className="flex flex-col gap-2">
+              {renderStatusBadge()}
+              {!isCanceled && !isExpired && (
+                <p className={`text-xs font-medium ${isPastDue ? "text-warning" : "text-muted-foreground"}`}>
+                  {t("label_n_days_remaining", { n: remainingDays })}
+                </p>
+              )}
+            </div>
+
+            {/* Ícone de navegação */}
+            <ChevronRightIcon
+              className="
+            w-5 h-5 text-muted-foreground
+            group-hover:text-primary transition-colors
+          "
+            />
           </div>
         </div>
       </Card>
     </a>
   );
 };
-const InvitationCard = ({ invitation }: { invitation: EInvitation }) => {
+const InvitationItem = ({ invitation }: { invitation: EInvitation }) => {
   const t = useTranslations("app");
   const user = useUserStore();
   const app = useAppStore();
@@ -232,39 +283,44 @@ const InvitationCard = ({ invitation }: { invitation: EInvitation }) => {
   };
 
   return (
-    <Card className="p-4 flex flex-col sm:flex-row justify-between items-center gap-4 w-full transition-colors hover:bg-foreground/5">
-      <div className="flex flex-1 justify-start items-start gap-4 w-full h-full">
-        <div className="flex justify-center items-center rounded bg-foreground text-background p-3">
+    <Card className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 p-4 hover:bg-card/80 transition-all duration-200 hover:shadow-sm group">
+      {/* Left side */}
+      <div className="flex items-start gap-4">
+        {/* Icon */}
+        <div className="flex justify-center items-center rounded-lg bg-foreground/10 text-foreground p-3 shrink-0 group-hover:bg-foreground/15 transition-colors">
           <MailPlusIcon className="w-5 h-5" />
         </div>
+
+        {/* Content */}
         <div className="flex flex-col gap-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="font-semibold text-sm">{invitation.org_name}</span>
+            <span className="font-medium text-sm text-foreground">{invitation.org_name}</span>
             <OrgRoleBadge role={invitation.role as TOrganizationRole} />
           </div>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-muted-foreground text-sm leading-relaxed">
             {t("label_invited_by")} <span className="font-medium text-foreground">{invitation.inviter_name}</span>
           </p>
-          <span className="text-sm text-muted-foreground">{invitedAt}</span>
+          <span className="text-xs text-muted-foreground">{invitedAt}</span>
         </div>
       </div>
-      <div className="flex sm:flex-col justify-end items-stretch gap-3 w-full sm:w-auto">
+
+      {/* Right side - actions */}
+      <div className="flex sm:flex-row flex-col gap-2 w-full sm:w-auto">
         <Button
-          onClick={() => onAccept()}
+          onClick={onAccept}
           disabled={isPending}
-          variant={"secondary"}
-          size={"sm"}
-          className="w-full sm:w-32 gap-2">
+          size="sm"
+          className="gap-2 hover:bg-primary/90 transition-colors">
           {!isPending && <CheckIcon className="w-4 h-4" />}
           {isPending && <LoaderIcon className="w-4 h-4 animate-spin" />}
           {t("label_accept")}
         </Button>
         <Button
-          onClick={() => onDecline()}
+          onClick={onDecline}
           disabled={isPending}
-          variant={"outline"}
-          size={"sm"}
-          className="w-full sm:w-32 gap-2">
+          variant="outline"
+          size="sm"
+          className="gap-2 hover:bg-destructive/10 hover:text-destructive transition-colors">
           <XIcon className="w-4 h-4" />
           {t("label_decline")}
         </Button>
