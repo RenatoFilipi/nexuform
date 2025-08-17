@@ -16,6 +16,7 @@ import SubscriptionUI from "../../shared/pages/subscription-ui";
 import MembersInvite from "./members-invite";
 import MembersRemove from "./members-remove";
 import MembersUpdate from "./members-update";
+import LoadingUI from "../../shared/custom/loading-ui";
 
 interface IProps {
   locale: string;
@@ -48,7 +49,7 @@ const MembersWrapper = (props: IProps) => {
     },
   });
 
-  if (query.isPending) return null;
+  if (query.isPending) return <LoadingUI />;
 
   if (!app.context.isSubscriptionActive) {
     return <SubscriptionUI />;

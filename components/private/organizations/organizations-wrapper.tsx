@@ -11,12 +11,13 @@ import { TPlan } from "@/utils/pricing";
 import { createClient } from "@/utils/supabase/client";
 import { TOrganizationRole } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { CheckIcon, ChevronRightIcon, LoaderIcon, MailPlusIcon, XIcon } from "lucide-react";
+import { CheckIcon, ChevronRightIcon, Loader2Icon, LoaderIcon, MailPlusIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import OrgRoleBadge from "../shared/custom/org-role-badge";
 import PlanBadge from "../shared/custom/plan-badge";
+import LoadingUI from "../shared/custom/loading-ui";
 
 interface IProps {
   locale: string;
@@ -47,7 +48,12 @@ const OrganizationsWrapper = (props: IProps) => {
     },
   });
 
-  if (query.isPending) return null;
+  if (query.isPending)
+    return (
+      <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-8 px-3 sm:px-20 lg:px-80 py-4 sm:py-8">
+        <LoadingUI />
+      </div>
+    );
 
   return (
     <div className="flex-1 mt-14 mb-14 sm:mb-0 flex flex-col gap-8 px-3 sm:px-20 lg:px-80 py-4 sm:py-8">

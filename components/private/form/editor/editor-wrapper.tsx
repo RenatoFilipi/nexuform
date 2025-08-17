@@ -36,6 +36,7 @@ import SuccessDesign from "../../shared/blocks-design/success-design";
 import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 import SubscriptionUI from "../../shared/pages/subscription-ui";
 import EditorAddBlock from "./editor-add-block";
+import LoadingUI from "../../shared/custom/loading-ui";
 
 interface IProps {
   locale: string;
@@ -74,7 +75,7 @@ const EditorWrapper = (props: IProps) => {
     },
   });
 
-  if (query.isPending) return null;
+  if (query.isPending) return <LoadingUI />;
 
   if (!app.context.isSubscriptionActive) {
     return (

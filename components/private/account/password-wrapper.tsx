@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { EyeIcon, EyeOffIcon, LoaderIcon } from "lucide-react";
+import LoadingUI from "../shared/custom/loading-ui";
 
 interface IProps {
   locale: string;
@@ -37,7 +38,7 @@ const PasswordWrapper = (props: IProps) => {
     },
   });
 
-  if (query.isPending) return null;
+  if (query.isPending) return <LoadingUI />;
 
   return (
     <div className="flex flex-col gap-6">

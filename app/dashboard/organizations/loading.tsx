@@ -1,5 +1,7 @@
+import LoadingUI from "@/components/private/shared/custom/loading-ui";
+
 const Loading = () => {
-  return null;
+  return <LoadingUI />;
 };
 
 export default Loading;

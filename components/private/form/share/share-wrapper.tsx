@@ -16,6 +16,7 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 import SubscriptionUI from "../../shared/pages/subscription-ui";
+import LoadingUI from "../../shared/custom/loading-ui";
 
 interface IProps {
   locale: string;
@@ -49,7 +50,7 @@ const ShareWrapper = (props: IProps) => {
   });
 
   const isPublished = app.form.status === "published";
-  if (query.isPending) return null;
+  if (query.isPending) return <LoadingUI />;
 
   if (!app.context.isSubscriptionActive) {
     return <SubscriptionUI />;

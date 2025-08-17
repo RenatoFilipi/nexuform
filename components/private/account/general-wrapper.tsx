@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import AccountDelete from "./account-delete";
+import LoadingUI from "../shared/custom/loading-ui";
 
 interface IProps {
   locale: string;
@@ -38,7 +39,7 @@ const GeneralWrapper = (props: IProps) => {
     },
   });
 
-  if (query.isPending) return null;
+  if (query.isPending) return <LoadingUI />;
 
   return (
     <div className="flex flex-col gap-6">

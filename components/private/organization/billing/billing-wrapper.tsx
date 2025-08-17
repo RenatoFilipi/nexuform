@@ -30,6 +30,7 @@ import PlanBadge from "../../shared/custom/plan-badge";
 import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 import CancelSubscription from "../../shared/subscription/cancel-subscription";
 import ManageSubscription from "../../shared/subscription/manage-subscription";
+import LoadingUI from "../../shared/custom/loading-ui";
 
 interface IProps {
   locale: string;
@@ -64,7 +65,7 @@ const BillingWrapper = (props: IProps) => {
     },
   });
 
-  if (query.isPending) return null;
+  if (query.isPending) return <LoadingUI />;
 
   if ((!app.context.isOrgOwner && app.subscription.plan !== "pro") || !app.context.isAdminOrHigher) {
     return <RestrictedAccessUI />;

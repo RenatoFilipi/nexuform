@@ -33,6 +33,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 import SubscriptionUI from "../../shared/pages/subscription-ui";
+import LoadingUI from "../../shared/custom/loading-ui";
 
 interface IProps {
   locale: string;
@@ -69,7 +70,7 @@ const FormsWrapper = (props: IProps) => {
   });
 
   const hasForms = app.forms.length > 0;
-  if (query.isPending) return null;
+  if (query.isPending) return <LoadingUI />;
 
   if (!app.context.isSubscriptionActive) {
     return <SubscriptionUI />;

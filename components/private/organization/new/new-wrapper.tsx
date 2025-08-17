@@ -21,6 +21,7 @@ import { useState, useTransition } from "react";
 import RestrictedAccessUI from "../../shared/pages/restricted-access-ui";
 import SubscriptionUI from "../../shared/pages/subscription-ui";
 import NewPreview from "./new-preview";
+import LoadingUI from "../../shared/custom/loading-ui";
 
 type TView = "method:list" | "method:scratch" | "method:templates";
 
@@ -71,7 +72,7 @@ const NewWrapper = (props: IProps) => {
     });
   };
 
-  if (query.isPending) return null;
+  if (query.isPending) return <LoadingUI />;
 
   if (!app.context.isSubscriptionActive) {
     return <SubscriptionUI />;
