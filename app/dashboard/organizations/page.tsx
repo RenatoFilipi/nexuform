@@ -25,7 +25,6 @@ const Organizations = async () => {
     const organizations = await fetchOrganizations(orgIds);
     if (organizations.length < 1) throw new Error("No organization found.");
     const subscriptions = await fetchSubscriptions(orgIds);
-    const invitations = await fetchInvitations(email, "pending");
 
     return (
       <OrganizationsWrapper
@@ -35,7 +34,6 @@ const Organizations = async () => {
         organizations={organizations}
         subscriptions={subscriptions}
         teamMemberProfiles={teamMemberProfiles}
-        invitations={invitations}
       />
     );
   } catch (error) {

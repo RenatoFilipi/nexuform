@@ -22,15 +22,21 @@ import { TAppState } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
 import Avvvatars from "avvvatars-react";
 import {
+  BarChartIcon,
   BoxesIcon,
+  Building2Icon,
   CheckIcon,
   ChevronsUpDownIcon,
   CircleHelpIcon,
   CircleUserIcon,
   LoaderIcon,
   LogOutIcon,
+  MailOpen,
+  MailOpenIcon,
   MenuIcon,
   PlusIcon,
+  SendIcon,
+  UserIcon,
   XIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -42,6 +48,7 @@ import FeedbackForm from "../custom/feedback-form";
 import PlanBadge from "../custom/plan-badge";
 
 const Navbar = () => {
+  const t = useTranslations("app");
   const pathname = usePathname();
   const isEditorResource = pathname.split("/")[6] === "editor";
   const isInOrg = pathname.includes("/organizations/") && pathname.split("/organizations/")[1]?.split("/")[0] !== "";
@@ -54,33 +61,78 @@ const Navbar = () => {
 };
 const BeforeOrgNavbar = () => {
   const t = useTranslations("app");
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
+  const isActive = (path: string) => {
+    const normalize = (p: string) => p.replace(/\/$/, "");
+    return normalize(pathname).startsWith(normalize(path));
+  };
+
+  const resources = [
+    {
+      name: t("label_organizations"),
+      path: `/dashboard/organizations/`,
+      icon: Building2Icon,
+      enabled: true,
+    },
+    {
+      name: t("label_invitations"),
+      path: `/dashboard/invitations`,
+      icon: MailOpenIcon,
+      enabled: true,
+    },
+  ];
+
   return (
-    <nav className={`${open ? "" : "border-b"} z-10 flex flex-col bg-background fixed w-full`}>
-      <div className="flex w-full justify-between items-center h-14 px-4 sm:px-6">
-        {/* content */}
-        <div>
-          <Button variant={"ghost"} size={"icon"} className="p-2" asChild>
-            <a href={"/dashboard/organizations"}>
-              <Brand type="logo" className="h-5 fill-foreground" />
-            </a>
-          </Button>
-        </div>
-        {/* avatar - desk */}
-        <div className="hidden sm:flex justify-center items-center gap-4">
-          <FeedbackForm>
-            <Button variant={"outline"} size={"sm"}>
-              {t("label_feedback")}
+    <nav className="z-10 flex flex-col bg-background fixed w-full">
+      <div>
+        <div className="flex w-full justify-between items-center h-14 px-4 sm:px-6">
+          {/* logo */}
+          <div>
+            <Button variant="ghost" size="icon" className="p-2" asChild>
+              <a href="/dashboard/organizations">
+                <Brand type="logo" className="h-5 fill-foreground" />
+              </a>
             </Button>
-          </FeedbackForm>
-          <AvatarMenuDesk />
+          </div>
+
+          {/* avatar - desktop */}
+          <div className="hidden sm:flex justify-center items-center gap-4">
+            <FeedbackForm>
+              <Button variant="outline" size="sm">
+                {t("label_feedback")}
+              </Button>
+            </FeedbackForm>
+            <AvatarMenuDesk />
+          </div>
+
+          {/* avatar - mobile */}
+          <div className="sm:hidden">
+            <Button variant="ghost" size="icon" onClick={() => setOpen(!open)}>
+              {open ? <XIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
+            </Button>
+          </div>
         </div>
-        {/* avatar = mob */}
-        <div className="sm:hidden">
-          <Button variant={"ghost"} size={"icon"} onClick={() => setOpen(!open)}>
-            {open ? <XIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
-          </Button>
+        {/* links */}
+        <div className="border-b h-10 flex justify-start items-center gap-2 px-2 sm:px-6 overflow-x-auto fixed bg-background w-full truncate z-30">
+          {resources
+            .filter((x) => x.enabled)
+            .map((r) => {
+              const active = isActive(r.path);
+              return (
+                <Link
+                  key={r.name}
+                  href={r.path}
+                  className={`${
+                    active ? "font-medium text-foreground" : "text-muted-foreground"
+                  } text-sm flex justify-center items-center px-2 hover:bg-foreground/5 relative rounded gap-2 h-full`}>
+                  <r.icon className={`${active ? "text-primary" : "text-muted-foreground"} w-4 h-4 hidden`} />
+                  {r.name}
+                  {active && <div className="bg-primary/80 bottom-0 w-full h-0.5 absolute"></div>}
+                </Link>
+              );
+            })}
         </div>
       </div>
       {open && <AvatarMenuMob />}
@@ -169,8 +221,8 @@ const AvatarMenuDesk = () => {
   const user = useUserStore();
 
   const resources = [
-    { name: t("label_organizations"), path: "/dashboard/organizations", icon: BoxesIcon, enabled: true },
-    { name: t("label_account"), path: "/dashboard/account/general", icon: CircleUserIcon, enabled: true },
+    { name: t("label_organizations"), path: "/dashboard/organizations", icon: Building2Icon, enabled: true },
+    { name: t("label_account"), path: "/dashboard/account/general", icon: UserIcon, enabled: true },
     { name: t("label_help"), path: "/dashboard/help", icon: CircleHelpIcon, enabled: true },
   ];
 
@@ -221,8 +273,8 @@ const AvatarMenuMob = () => {
   const t = useTranslations("app");
 
   const resources = [
-    { name: t("label_organizations"), path: "/dashboard/organizations", icon: BoxesIcon, enabled: true },
-    { name: t("label_account"), path: "/dashboard/account/general", icon: CircleUserIcon, enabled: true },
+    { name: t("label_organizations"), path: "/dashboard/organizations", icon: Building2Icon, enabled: true },
+    { name: t("label_account"), path: "/dashboard/account/general", icon: UserIcon, enabled: true },
     { name: t("label_help"), path: "/dashboard/help", icon: CircleHelpIcon, enabled: true },
   ];
 

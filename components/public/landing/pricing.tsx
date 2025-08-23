@@ -79,7 +79,8 @@ const PricingCard = ({ plan }: { plan: IPlan }) => {
       {/* Price */}
       <div className="mt-6 flex items-baseline gap-2">
         <span className="text-4xl font-semibold text-foreground">
-          {formatCurrency("USD", plan.price.amount, "compact")}
+          {plan.price.amount}
+          {/* {formatCurrency("USD", plan.price.amount, "compact")} */}
         </span>
         {!plan.freeTrialDuration && <span className="text-sm text-muted-foreground">/{t("month")}</span>}
       </div>
