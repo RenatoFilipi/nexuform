@@ -9,10 +9,13 @@ import { getDaysDifference } from "@/utils/functions";
 import { TPlan } from "@/utils/pricing";
 import { TOrganizationRole } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronRightIcon } from "lucide-react";
+import { Building2Icon, ChevronRightIcon, SendIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import PlanBadge from "../shared/custom/plan-badge";
 import LoadingUI from "../shared/custom/loading-ui";
+import { useQueryState } from "nuqs";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 interface IProps {
   locale: string;
@@ -26,6 +29,14 @@ const OrganizationsWrapper = (props: IProps) => {
   const t = useTranslations("app");
   const user = useUserStore();
   const app = useAppStore();
+  const [name, setName] = useQueryState("name", { defaultValue: "" });
+  const [role, setRole] = useQueryState("role", { defaultValue: "" });
+  const orgsRoles = [
+    { label: `${t("label_all")}`, role: "", icon: <div className="h-2 w-2 rounded-full bg-foreground"></div> },
+    { label: `${t("label_owner")}`, role: "owner", icon: <div className="h-2 w-2 rounded-full bg-yellow-400"></div> },
+    { label: `${t("label_admin")}`, role: "admin", icon: <div className="h-2 w-2 rounded-full bg-pink-400"></div> },
+    { label: `${t("label_staff")}`, role: "staff", icon: <div className="h-2 w-2 rounded-full bg-sky-400"></div> },
+  ];
 
   const query = useQuery({
     queryKey: ["organizations-page"],
@@ -40,6 +51,18 @@ const OrganizationsWrapper = (props: IProps) => {
     },
   });
 
+  const filteredTMPs = app.teamMemberProfiles.filter((tmp) => {
+    const organization = app.organizations.find((x) => x.id === tmp.org_id);
+    if (!organization) return false;
+
+    const matchName = name.trim() === "" || organization.name.toLowerCase().includes(name.toLowerCase());
+
+    const matchRole = role === "" || tmp.role === role;
+
+    return matchName && matchRole;
+  });
+  const isEmpty = filteredTMPs.length <= 0;
+
   if (query.isPending)
     return (
       <div className="flex-1 mt-24 mb-14 sm:mb-0 flex flex-col gap-8 px-3 sm:px-20 lg:px-80 py-4 sm:py-8">
@@ -49,15 +72,50 @@ const OrganizationsWrapper = (props: IProps) => {
 
   return (
     <div className="flex-1 mt-24 mb-14 sm:mb-0 flex flex-col gap-8 px-3 sm:px-20 lg:px-80 py-4 sm:py-8">
-      <section className="flex flex-col gap-6">
-        <div className="flex justify-between items-center">
+      <section className="flex flex-col gap-6 sm:gap-12">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-xl font-semibold">{t("label_organizations")}</h2>
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            <Input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder={t("label_organizations")}
+              className="w-full sm:w-64 hidden"
+            />
+            <div className="flex gap-2 overflow-x-auto">
+              {orgsRoles.map((r) => (
+                <Button
+                  key={r.role}
+                  variant="outline"
+                  size="sm"
+                  className={`${
+                    role === r.role ? "bg-foreground/10 text-foreground" : "text-muted-foreground"
+                  } flex items-center gap-2 text-sm`}
+                  onClick={() => setRole(role === r.role ? "" : r.role)}>
+                  {r.icon}
+                  {r.label}
+                </Button>
+              ))}
+            </div>
+          </div>
         </div>
-        <ul className="overflow-y-auto grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {app.teamMemberProfiles.map((tmp) => (
-            <OrganizationItem key={tmp.id} teamMemberProfile={tmp} />
-          ))}
-        </ul>
+        {isEmpty && (
+          <Card className="flex w-full justify-center items-center flex-col gap-4 py-28 px-4">
+            <div className="flex justify-center items-center p-3 w-fit rounded bg-foreground/5">
+              <Building2Icon className="w-6 h-6 text-primary" />
+            </div>
+            <div className="flex flex-col justify-center items-center gap-1 text-center">
+              <h3 className="text-muted-foreground max-w-md text-sm/relaxed">{t("label_no_organizations")}</h3>
+            </div>
+          </Card>
+        )}
+        {!isEmpty && (
+          <ul className="overflow-y-auto grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {filteredTMPs.map((tmp) => (
+              <OrganizationItem key={tmp.id} teamMemberProfile={tmp} />
+            ))}
+          </ul>
+        )}
       </section>
     </div>
   );
@@ -108,18 +166,8 @@ const OrganizationItem = (props: { teamMemberProfile: ETeamMemberProfile }) => {
       hover:border-primary/40
       transition-all duration-300 ease-out
       cursor-pointer overflow-hidden group
+      hover:bg-primary/10
     ">
-        {/* Overlay premium */}
-        <div
-          className="
-        absolute inset-0 rounded-2xl
-        bg-gradient-to-br from-primary/0 via-primary/0 to-primary/0
-        group-hover:via-primary/5 group-hover:to-primary/15
-        opacity-0 group-hover:opacity-100
-        transition-opacity duration-500
-      "
-        />
-
         <div className="flex flex-col justify-between h-full relative z-10">
           {/* Top Section: Nome + Role + Plano */}
           <div className="flex justify-between items-start">
