@@ -537,7 +537,8 @@
     "desc_views_by_form": "Quantidade de vezes que cada formulário foi visualizado pelos usuários",
     "desc_submissions_by_hour": "Horários do dia em que as submissões ocorreram, mostrando picos e padrões de envio.",
     "desc_activity": "Atividade do seu formulário, comparando visualizações e envios ao longo do tempo",
-    "label_invitations": "Convites"
+    "label_invitations": "Convites",
+    "label_no_organizations": "Nenhuma organização encontrada"
   },
   "s": {
     "err_required_all": "Responda todas as perguntas obrigatórias.",

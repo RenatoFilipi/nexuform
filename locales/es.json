@@ -537,7 +537,8 @@
     "desc_views_by_form": "Cantidad de veces que cada formulario fue visto por los usuarios",
     "desc_submissions_by_hour": "Horarios del día en que ocurrieron los envíos, mostrando picos y patrones de envío.",
     "desc_activity": "Actividad de tu formulario, comparando visualizaciones y envíos a lo largo del tiempo",
-    "label_invitations": "Invitaciones"
+    "label_invitations": "Invitaciones",
+    "label_no_organizations": "No se encontraron organizaciones"
   },
   "s": {
     "err_required_all": "Responde todas las preguntas obligatorias.",

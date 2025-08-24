@@ -36,7 +36,7 @@ const AccountNavbar = () => {
               className={`${
                 isActive(r.path) ? "font-medium text-foreground" : "text-muted-foreground"
               } text-sm flex justify-center items-center px-2 hover:bg-foreground/5 relative rounded gap-2 h-full`}>
-              <r.icon className={`${isActive(r.path) ? "text-primary" : "text-muted-foreground"} w-4 h-4`} />
+              <r.icon className={`${isActive(r.path) ? "text-primary" : "text-muted-foreground"} w-4 h-4 hidden`} />
               {r.name}
               {isActive(r.path) && <div className="bg-primary/80 bottom-0 w-full h-0.5 absolute"></div>}
             </Link>

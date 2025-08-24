@@ -537,7 +537,8 @@
     "desc_views_by_form": "Number of times each form was viewed by users",
     "desc_submissions_by_hour": "Times of day when submissions occurred, showing peaks and submission patterns.",
     "desc_activity": "Activity of your form, comparing views and submissions over time",
-    "label_invitations": "Invitations"
+    "label_invitations": "Invitations",
+    "label_no_organizations": "No organizations found"
   },
   "s": {
     "err_required_all": "Answer all required questions.",
