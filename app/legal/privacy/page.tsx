@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const Privacy = () => {
   return (
-    <div className="flex flex-col w-full min-h-dvh px-4 sm:px-8 lg:px-16 py-8 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">
+    <div className="flex flex-col w-full min-h-dvh px-4 sm:px-8 lg:px-16 py-8 bg-linear-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">
       <div className="flex justify-center items-center py-8 gap-4">
         <Link href={"/"} className="flex justify-center items-center">
           <Brand type="logo_text" className="h-10 fill-foreground dark:fill-gray-100" />

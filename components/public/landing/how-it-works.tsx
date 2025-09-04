@@ -72,7 +72,7 @@ const HowItWorks = () => {
               {/* Ponto do passo */}
               <div className="relative z-10 h-fit flex justify-center items-center sm:justify-start">
                 {/* Anel externo translucido */}
-                <div className="absolute -inset-2 rounded-full border border-white/20 bg-gradient-to-br from-white/10 to-transparent backdrop-blur-md shadow-lg" />
+                <div className="absolute -inset-2 rounded-full border border-white/20 bg-linear-to-br from-white/10 to-transparent backdrop-blur-md shadow-lg" />
 
                 {/* Círculo principal */}
                 <div className="w-14 h-14 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-xl shadow-md border border-white/20 relative">
@@ -84,7 +84,7 @@ const HowItWorks = () => {
               </div>
 
               {/* Card */}
-              <Card className="flex-1 p-6 rounded-xl bg-gradient-to-br from-card to-card/60 backdrop-blur-sm border border-white/10 shadow-sm hover:shadow-lg transition-all duration-300">
+              <Card className="flex-1 p-6 rounded-xl bg-linear-to-br from-card to-card/60 backdrop-blur-xs border border-white/10 shadow-xs hover:shadow-lg transition-all duration-300">
                 <h3 className="text-lg font-semibold">{step.title}</h3>
                 <p className="mt-2 text-muted-foreground">{step.description}</p>
                 <ul className="mt-4 space-y-2">

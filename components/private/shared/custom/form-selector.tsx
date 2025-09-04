@@ -47,7 +47,7 @@ const FormSelector = ({ forms, onChange }: { forms: EForm[]; onChange: (ids: str
                   <div className="flex items-center gap-3">
                     <div
                       style={{ backgroundColor: f.label_color }}
-                      className={`w-3 h-3 rounded-sm flex-shrink-0 ${isVisible ? "" : "opacity-20"}`}
+                      className={`w-3 h-3 rounded-sm shrink-0 ${isVisible ? "" : "opacity-20"}`}
                     />
                     <span className={`text-sm ${isVisible ? "font-medium" : "text-muted-foreground"}`}>{f.name}</span>
                   </div>

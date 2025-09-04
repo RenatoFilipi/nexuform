@@ -60,7 +60,7 @@ const Faq = () => {
               }}
               className={`border rounded-lg p-4 transition-all ${
                 activeIndex === index
-                  ? "bg-background/80 border-primary/40 shadow-sm"
+                  ? "bg-background/80 border-primary/40 shadow-xs"
                   : "bg-background/80 border-muted-foreground/15 hover:border-muted-foreground/25"
               }`}>
               <button

@@ -258,7 +258,7 @@ const BlockWrapper = ({ children, block }: { children: React.ReactNode; block: E
       {/* Content */}
       <div className="flex-1">{children}</div>
       {/* Action buttons */}
-      <div className="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity flex space-x-1 p-1 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded">
+      <div className="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity flex space-x-1 p-1 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xs rounded">
         <button
           onPointerDown={(e) => {
             e.preventDefault();

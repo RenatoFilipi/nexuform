@@ -44,9 +44,9 @@ const ParagraphTextDesign = ({
           }
           className="
             transition-colors
-            focus-visible:outline-none
+            focus-visible:outline-hidden
             focus-visible:ring-2
-            focus-visible:ring-[var(--ring-color)]
+            focus-visible:ring-(--ring-color)
             focus-visible:ring-offset-2
           "
           minLength={min_char ?? 1}

@@ -26,7 +26,7 @@ const Hero = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}>
         <div className="mx-auto max-w-full text-center flex flex-col justify-center items-center sm:gap-4 w-full">
-          <div className="flex justify-center items-center gap-1 mb-7 px-3 h-8 text-sm rounded-lg shadow backdrop-blur-md bg-card border border-background">
+          <div className="flex justify-center items-center gap-1 mb-7 px-3 h-8 text-sm rounded-lg shadow-sm backdrop-blur-md bg-card border border-background">
             <ZapIcon className="mr-1 h-4 w-4 text-primary fill-primary" />
             <span className="text-foreground/80">{t("hero_badge")}</span>
           </div>

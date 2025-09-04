@@ -62,7 +62,7 @@ const AnalyticsViewsByFormChart = ({ ids }: { ids: string[] }) => {
   };
 
   return (
-    <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit hover:border-primary transition-all duration-300 hover:shadow-sm">
+    <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit hover:border-primary transition-all duration-300 hover:shadow-xs">
       <div className="space-y-1">
         <div className="flex items-center gap-2">
           <PieChartIcon className="w-5 h-5 text-primary" />

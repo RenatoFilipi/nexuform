@@ -203,7 +203,7 @@ const BillingPlan = () => {
   }
 
   return (
-    <Card className="p-6 w-full rounded-xl shadow-sm hover:shadow-md transition-shadow">
+    <Card className="p-6 w-full rounded-xl shadow-xs hover:shadow-md transition-shadow">
       <div className="flex flex-col gap-6">
         {/* Header Section */}
         <div className="flex flex-col space-y-4 lg:space-y-0 lg:flex-row lg:items-center lg:justify-between">
@@ -244,7 +244,7 @@ const BillingPlan = () => {
         </div>
 
         {/* Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-muted-foreground/40 dark:via-muted-foreground/40 to-transparent" />
+        <div className="h-px bg-linear-to-r from-transparent via-muted-foreground/40 dark:via-muted-foreground/40 to-transparent" />
 
         {/* Details Section */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -314,17 +314,17 @@ const BillingUsageCard = ({
   const usageValue = Math.min(usage, 100);
 
   return (
-    <Card className="relative w-full p-6 transition-all hover:shadow-sm rounded border overflow-hidden group bg-gradient-to-br from-background to-muted/10 hover:border-primary/50">
+    <Card className="relative w-full p-6 transition-all hover:shadow-xs rounded border overflow-hidden group bg-linear-to-br from-background to-muted/10 hover:border-primary/50">
       {/* Warning overlay for limit reached */}
       {limit && (
-        <div className="absolute inset-0 bg-gradient-to-br from-destructive/5 via-destructive/10 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-linear-to-br from-destructive/5 via-destructive/10 to-transparent pointer-events-none" />
       )}
 
       <div className="flex flex-col gap-6">
         {/* Header section */}
         <div className="flex justify-between items-start gap-4">
           <div className="flex items-center gap-4">
-            <div className="p-3 rounded-lg bg-foreground/5 group-hover:bg-foreground/10 transition-colors shadow-sm">
+            <div className="p-3 rounded-lg bg-foreground/5 group-hover:bg-foreground/10 transition-colors shadow-xs">
               {icon}
             </div>
             <div className="flex flex-col w-fit">

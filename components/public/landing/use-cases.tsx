@@ -97,12 +97,12 @@ const UseCases = () => {
             <motion.div key={i} variants={cardVariants} whileHover="hover">
               <Card
                 className={`relative h-full p-6 rounded-2xl border border-white/10 
-                  bg-gradient-to-b from-background to-background/50 
-                  backdrop-blur-sm transition-all duration-300`}>
+                  bg-linear-to-b from-background to-background/50 
+                  backdrop-blur-xs transition-all duration-300`}>
                 {/* Glow Border on hover */}
                 <div
                   className={`absolute inset-0 rounded-2xl border-2 border-transparent 
-                    bg-gradient-to-br ${uc.accent} opacity-0 group-hover:opacity-100 
+                    bg-linear-to-br ${uc.accent} opacity-0 group-hover:opacity-100 
                     transition-opacity duration-500 pointer-events-none`}
                 />
 
@@ -110,14 +110,14 @@ const UseCases = () => {
                   <motion.div
                     variants={iconVariants}
                     className={`w-14 h-14 flex items-center justify-center rounded-xl 
-                      bg-gradient-to-br ${uc.accent} ${uc.color} shadow-lg`}>
+                      bg-linear-to-br ${uc.accent} ${uc.color} shadow-lg`}>
                     <uc.icon className="w-7 h-7" />
                   </motion.div>
 
                   <h3 className="mt-6 text-xl font-semibold">{uc.title}</h3>
                   <p className="mt-3 text-muted-foreground flex-1 leading-relaxed">{uc.description}</p>
 
-                  <div className="mt-6 h-[2px] w-10 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                  <div className="mt-6 h-[2px] w-10 bg-linear-to-r from-transparent via-white/20 to-transparent" />
                 </div>
               </Card>
             </motion.div>

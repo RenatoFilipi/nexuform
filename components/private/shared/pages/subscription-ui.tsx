@@ -15,10 +15,10 @@ const SubscriptionUI = () => {
     <Card className="w-full overflow-hidden border shadow-lg">
       <div className="flex flex-col md:flex-row">
         {/* Left Content */}
-        <div className="flex-1 p-8 md:p-10 bg-gradient-to-br from-background to-primary/5">
+        <div className="flex-1 p-8 md:p-10 bg-linear-to-br from-background to-primary/5">
           <div className="flex flex-col items-start gap-3">
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded bg-foreground/5 backdrop-blur-sm border border-primary/20">
+              <div className="p-3 rounded bg-foreground/5 backdrop-blur-xs border border-primary/20">
                 <ZapIcon className="w-6 h-6 text-primary fill-primary" />
               </div>
               <h2 className="text-2xl font-bold tracking-tight text-foreground">{t("label_upgrade_sub")}</h2>

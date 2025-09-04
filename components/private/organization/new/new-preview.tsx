@@ -199,8 +199,8 @@ const NewPreview = ({ children, template }: { children: React.ReactNode; templat
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogPortal>
-        <AlertDialogOverlay className="backdrop-blur-sm" />
-        <AlertDialogContent className="sm:h-[90%] h-[100%] sm:min-w-[70%] min-w-[100%] overflow-y-auto p-0 border-transparent">
+        <AlertDialogOverlay className="backdrop-blur-xs" />
+        <AlertDialogContent className="sm:h-[90%] h-full sm:min-w-[70%] min-w-full overflow-y-auto p-0 border-transparent">
           <AlertDialogHeader className="hidden">
             <AlertDialogTitle></AlertDialogTitle>
             <AlertDialogDescription></AlertDialogDescription>
@@ -276,7 +276,7 @@ const BlocksGroup = ({ blocks, template }: { blocks: EBlock[]; template: ETempla
         <div className="flex justify-center items-center w-full flex-col gap-6">
           <button
             style={{ backgroundColor: defaultTheme.custom_primary_color }}
-            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 text-white w-full">
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 text-white w-full">
             {t("label_submit_form")}
           </button>
         </div>

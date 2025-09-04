@@ -166,7 +166,7 @@ const InvitationItem = ({ invitation }: { invitation: EInvitation }) => {
   };
 
   return (
-    <Card className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 p-4 hover:bg-card/80 transition-all duration-200 hover:shadow-sm group">
+    <Card className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 p-4 hover:bg-card/80 transition-all duration-200 hover:shadow-xs group">
       {/* Left side */}
       <div className="flex items-start gap-4">
         {/* Icon */}

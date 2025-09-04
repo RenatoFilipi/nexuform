@@ -45,7 +45,7 @@ const HelpWrapper = (props: Props) => {
           <h1 className="text-3xl font-bold tracking-tight">{t("label_help")}</h1>
           <p className="text-muted-foreground">{t("desc_help")}</p>
         </div>
-        <div className="space-y-6 bg-card p-6 rounded-lg border shadow-sm">
+        <div className="space-y-6 bg-card p-6 rounded-lg border shadow-xs">
           <div className="space-y-2">
             <h2 className="text-lg font-medium">{t("label_contact_support")}</h2>
             <p className="text-sm text-muted-foreground">{t("desc_contact_support")}</p>

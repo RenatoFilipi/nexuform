@@ -13,7 +13,7 @@ const FormHeader = ({ title, desc, link, path }: FormHeaderProps) => {
     <div className="flex w-full flex-col items-center gap-8">
       {/* Logo Section with hover effect */}
       <Link href="/" className="group flex justify-center items-center">
-        <div className="flex p-4 bg-gradient-to-br from-primary/30 to-primary/5 rounded-lg">
+        <div className="flex p-4 bg-linear-to-br from-primary/30 to-primary/5 rounded-lg">
           <Brand type="logo" className="fill-primary w-10 h-10" />
         </div>
       </Link>

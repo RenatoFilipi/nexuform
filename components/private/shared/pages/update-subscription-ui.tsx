@@ -14,7 +14,7 @@ const UpdateSubscriptionUI = () => {
       {/* Left Content */}
       <div className="flex-1 py-12 px-6">
         <div className="flex items-center gap-5">
-          <div className="flex-shrink-0 flex justify-center items-center p-3 rounded-lg bg-foreground/5 border border-primary/30 shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
+          <div className="shrink-0 flex justify-center items-center p-3 rounded-lg bg-foreground/5 border border-primary/30 shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
             <WalletIcon className="w-6 h-6 text-primary" />
           </div>
           <div className="flex flex-col gap-2">
@@ -24,10 +24,10 @@ const UpdateSubscriptionUI = () => {
         </div>
       </div>
       {/* Right Content - Vertical Divider and Button */}
-      <div className="relative flex flex-col justify-center p-6 bg-gradient-to-br from-muted/20 via-background to-muted/10 rounded-lg w-full py-10">
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-3/4 w-px bg-gradient-to-b from-transparent via-border/30 to-transparent hidden md:block"></div>
+      <div className="relative flex flex-col justify-center p-6 bg-linear-to-br from-muted/20 via-background to-muted/10 rounded-lg w-full py-10">
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-3/4 w-px bg-linear-to-b from-transparent via-border/30 to-transparent hidden md:block"></div>
         <div className="flex flex-col items-center gap-5 text-center">
-          <Button size="default" asChild className="font-semibold shadow-sm hover:shadow-md transition-shadow">
+          <Button size="default" asChild className="font-semibold shadow-xs hover:shadow-md transition-shadow">
             <Link href={`/dashboard/organizations/${app.organization.public_id}/billing`}>
               <span className="flex items-center justify-center">
                 {t("label_manage_sub")}

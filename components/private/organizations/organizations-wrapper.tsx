@@ -162,7 +162,7 @@ const OrganizationItem = (props: { teamMemberProfile: ETeamMemberProfile }) => {
       <Card
         className="
       relative flex flex-col h-48 p-5
-      shadow-sm hover:shadow-lg
+      shadow-xs hover:shadow-lg
       hover:border-primary/40
       transition-all duration-300 ease-out
       cursor-pointer overflow-hidden group

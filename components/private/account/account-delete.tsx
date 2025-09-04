@@ -44,7 +44,7 @@ const AccountDelete = ({ children }: { children: ReactNode }) => {
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogPortal>
-        <AlertDialogOverlay className="backdrop-blur-sm" />
+        <AlertDialogOverlay className="backdrop-blur-xs" />
         <AlertDialogContent className="flex flex-col w-full sm:min-w-[650px]">
           <AlertDialogHeader>
             <AlertDialogTitle className="flex justify-start items-center gap-2">
@@ -81,7 +81,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
 
   return (
     <div className="flex flex-1 flex-col justify-between gap-6">
-      <Card className="relative p-10 shadow h-full flex flex-col justify-center items-center w-full overflow-hidden backdrop-blur-md">
+      <Card className="relative p-10 shadow-sm h-full flex flex-col justify-center items-center w-full overflow-hidden backdrop-blur-md">
         <div className="flex justify-center items-center py-10 flex-col gap-10">
           {/* Ícone animado */}
           <div className="flex justify-center items-center gap-12 relative">

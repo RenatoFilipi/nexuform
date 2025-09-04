@@ -32,7 +32,7 @@ const CancelSubscription = ({ children }: { children: React.ReactNode }) => {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-      <AlertDialogOverlay className="backdrop-blur-sm">
+      <AlertDialogOverlay className="backdrop-blur-xs">
         <AlertDialogContent className="flex flex-col w-full max-w-2xl max-h-[90%] h-full overflow-y-auto">
           <AlertDialogHeader className="">
             <AlertDialogTitle className="text-destructive">{t("label_sub_cancel")}</AlertDialogTitle>
@@ -77,7 +77,7 @@ const Body = ({ setState }: { setState: TSetState<boolean> }) => {
       {continued && <CancelConfirm setState={setContinued} />}
       {!continued && (
         <div className="flex flex-1 flex-col justify-between gap-4 overflow-y-auto">
-          <Card className="border-muted/20 bg-gradient-to-br from-destructive/5 to-background p-6 shadow-sm h-full flex flex-col gap-6 overflow-y-auto">
+          <Card className="border-muted/20 bg-linear-to-br from-destructive/5 to-background p-6 shadow-xs h-full flex flex-col gap-6 overflow-y-auto">
             <div className="flex flex-col items-center gap-4 text-center">
               <div className="rounded-full bg-destructive/10 p-3">
                 <AlertTriangleIcon className="h-6 w-6 text-destructive" />
@@ -147,7 +147,7 @@ const CancelConfirm = ({ setState }: { setState: TSetState<boolean> }) => {
 
   return (
     <div className="flex flex-1 flex-col justify-between gap-4">
-      <div className="relative p-8 rounded-2xl bg-gradient-to-b from-muted/20 to-destructive/10 border border-muted/30 shadow-lg h-full flex flex-col justify-center items-center w-full overflow-hidden gap-4">
+      <div className="relative p-8 rounded-2xl bg-linear-to-b from-muted/20 to-destructive/10 border border-muted/30 shadow-lg h-full flex flex-col justify-center items-center w-full overflow-hidden gap-4">
         <div className="relative z-10 flex items-center justify-center w-full max-w-md">
           <motion.div
             id=""
@@ -167,8 +167,8 @@ const CancelConfirm = ({ setState }: { setState: TSetState<boolean> }) => {
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="flex flex-col items-center gap-4 p-5 bg-background/80 rounded-xl border border-muted/20 shadow-sm backdrop-blur-sm">
-            <div className="p-3 border rounded-full bg-background shadow-sm">
+            className="flex flex-col items-center gap-4 p-5 bg-background/80 rounded-xl border border-muted/20 shadow-xs backdrop-blur-xs">
+            <div className="p-3 border rounded-full bg-background shadow-xs">
               <PlanBadge type={currentPlan} />
             </div>
             <div className="text-center">

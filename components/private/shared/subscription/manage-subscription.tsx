@@ -53,7 +53,7 @@ const ManageSubscription = ({ children, selected }: { children: React.ReactNode;
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-      <AlertDialogOverlay className="backdrop-blur-sm">
+      <AlertDialogOverlay className="backdrop-blur-xs">
         <AlertDialogContent className="flex flex-col w-full max-w-5xl max-h-[95%] h-full overflow-y-auto">
           <AlertDialogHeader className="hidden">
             <AlertDialogTitle className="">{t("label_manage_sub")}</AlertDialogTitle>
@@ -230,8 +230,8 @@ const CheckoutNewPlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState<IP
         </Button>
       </div>
       <div className="grid sm:grid-cols-2 flex-1 h-full gap-6 overflow-y-auto">
-        <Card className="relative p-8 rounded-2xl bg-gradient-to-br from-muted/20 to-background border border-muted/30 shadow-lg h-full flex flex-col justify-between w-full overflow-hidden gap-4 overflow-y-auto">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-30" />
+        <Card className="relative p-8 rounded-2xl bg-linear-to-br from-muted/20 to-background border border-muted/30 shadow-lg h-full flex flex-col justify-between w-full overflow-hidden gap-4 overflow-y-auto">
+          <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-transparent opacity-30" />
           <div className="relative z-10">
             <div className="flex justify-between items-start">
               <div>
@@ -359,7 +359,7 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: "spring", stiffness: 200 }}
-          className="p-5 rounded-full bg-destructive/10 backdrop-blur-sm">
+          className="p-5 rounded-full bg-destructive/10 backdrop-blur-xs">
           <XCircleIcon className="w-12 h-12 text-destructive" />
         </motion.div>
         <div className="space-y-3 max-w-md">
@@ -399,7 +399,7 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: "spring", stiffness: 300 }}
-          className="p-5 rounded-full bg-success/10 backdrop-blur-sm">
+          className="p-5 rounded-full bg-success/10 backdrop-blur-xs">
           <CheckCircleIcon className="w-14 h-14 text-success" />
         </motion.div>
         <div className="space-y-3 max-w-md">
@@ -424,7 +424,7 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
           transition={{ delay: 0.3 }}
           className="pt-4">
           <Button
-            className="px-8 py-3 rounded-lg bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-white shadow-lg transition-all hover:shadow-primary/30"
+            className="px-8 py-3 rounded-lg bg-linear-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-white shadow-lg transition-all hover:shadow-primary/30"
             asChild>
             <Link href="/dashboard/organizations">{t("label_return_to_dashboard")}</Link>
           </Button>
@@ -458,11 +458,11 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.3 }}
-            className="border-2 border-primary/50 rounded p-8 bg-gradient-to-br from-primary/25 to-primary/5 shadow-lg">
+            className="border-2 border-primary/50 rounded p-8 bg-linear-to-br from-primary/25 to-primary/5 shadow-lg">
             <div className="flex flex-col items-center text-center gap-6">
               {/* Plan Badge with Emphasis */}
               <div className="relative">
-                <div className="p-4 rounded-xl bg-background border-2 border-primary/20 shadow-sm">
+                <div className="p-4 rounded-xl bg-background border-2 border-primary/20 shadow-xs">
                   <PlanBadge type={plan.type} size="xl" />
                 </div>
               </div>
@@ -483,7 +483,7 @@ const CheckoutUpdatePlan = ({ plan, setPlan }: { plan: IPlan; setPlan: TSetState
         </div>
         {/* Summary Section */}
         <div className="flex-1 space-y-6 h-full">
-          <div className="border rounded p-6 bg-card shadow-sm">
+          <div className="border rounded p-6 bg-card shadow-xs">
             <h3 className="text-lg font-semibold mb-4">{t("label_summary")}</h3>
 
             {/* Price Comparison */}

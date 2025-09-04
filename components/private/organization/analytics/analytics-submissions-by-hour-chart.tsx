@@ -142,7 +142,7 @@ const AnalyticsSubmissionsByHourChart = ({ ids }: { ids: string[] }) => {
 
   if (!hasData || !filteredForms.length) {
     return (
-      <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit hover:border-primary transition-all duration-300 hover:shadow-sm">
+      <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit hover:border-primary transition-all duration-300 hover:shadow-xs">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <TrendingUpDownIcon className="w-5 h-5 text-primary" />
@@ -165,7 +165,7 @@ const AnalyticsSubmissionsByHourChart = ({ ids }: { ids: string[] }) => {
   const maxValue = Math.max(...chartData.flatMap((item) => filteredForms.map((form) => Number(item[form.id] || 0))));
 
   return (
-    <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit hover:border-primary transition-all duration-300 hover:shadow-sm">
+    <Card className="flex flex-col justify-between gap-4 relative border rounded w-full p-6 h-fit hover:border-primary transition-all duration-300 hover:shadow-xs">
       <div className="flex justify-between items-center flex-col sm:flex-row gap-2">
         <div className="space-y-1">
           <div className="flex items-center gap-2">

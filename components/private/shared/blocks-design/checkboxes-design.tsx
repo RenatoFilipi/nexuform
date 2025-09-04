@@ -56,10 +56,10 @@ const CheckBoxesDesign = ({
                     } as React.CSSProperties
                   }
                   className={`
-                    border-[var(--primary-color)]
-                    data-[state=checked]:bg-[var(--primary-color)]
+                    border-(--primary-color)
+                    data-[state=checked]:bg-(--primary-color)
                     data-[state=checked]:text-white
-                    focus-visible:ring-[var(--primary-color)]
+                    focus-visible:ring-(--primary-color)
                     focus-visible:ring-offset-2
                   `}
                   checked={isChecked}

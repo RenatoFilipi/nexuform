@@ -46,7 +46,7 @@ const SuccessDesign = ({ brand, preview, color, description, title }: IProps) =>
             <div
               className="relative flex items-center justify-center w-16 h-16 rounded-full"
               style={{ backgroundColor: color }}>
-              <CheckIcon className="w-8 h-8 text-white stroke-[3]" />
+              <CheckIcon className="w-8 h-8 text-white stroke-3" />
             </div>
           </div>
           <div className="flex flex-col justify-center items-center gap-3 text-center">

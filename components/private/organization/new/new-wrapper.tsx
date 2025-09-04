@@ -150,7 +150,7 @@ const MethodCard = (props: IMethodProps) => {
   const limitReached = app.forms.length >= app.subscription.forms;
 
   return (
-    <Card className="flex items-start justify-between w-full border h-60 gap-4 flex-col p-6 rounded-lg hover:border-primary transition-all duration-300 shadow-sm hover:shadow-md group">
+    <Card className="flex items-start justify-between w-full border h-60 gap-4 flex-col p-6 rounded-lg hover:border-primary transition-all duration-300 shadow-xs hover:shadow-md group">
       <div className="flex flex-col gap-5">
         <div className="w-full flex">{props.icon}</div>
         <p className="text-sm text-start group-hover:text-foreground text-muted-foreground">{props.description}</p>

@@ -30,7 +30,7 @@ const MembersUpdate = ({ children, member }: { children: ReactNode; member: ETea
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-      <AlertDialogOverlay className="backdrop-blur-sm">
+      <AlertDialogOverlay className="backdrop-blur-xs">
         <AlertDialogContent className="flex flex-col w-full">
           <AlertDialogHeader>
             <AlertDialogTitle>{t("label_update_member")}</AlertDialogTitle>

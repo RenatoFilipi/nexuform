@@ -45,9 +45,9 @@ const MultipleChoiceDesign = ({
                     } as React.CSSProperties
                   }
                   className={twMerge(`
-                    border-[var(--primary-color)]
-                    text-[var(--primary-color)]
-                    focus-visible:ring-[var(--primary-color)]
+                    border-(--primary-color)
+                    text-(--primary-color)
+                    focus-visible:ring-(--primary-color)
                     focus-visible:ring-offset-2
                   `)}
                 />

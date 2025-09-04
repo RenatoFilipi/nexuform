@@ -38,7 +38,7 @@ const MembersRemove = ({
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-      <AlertDialogOverlay className="backdrop-blur-sm">
+      <AlertDialogOverlay className="backdrop-blur-xs">
         <AlertDialogContent className="flex flex-col w-full">
           <AlertDialogHeader>
             <AlertDialogTitle>{t("label_remove_member")}</AlertDialogTitle>
@@ -95,7 +95,7 @@ const Body = ({
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      <div className="relative p-4 md:p-6 rounded-lg bg-gradient-to-br from-muted/20 to-background border border-muted/30 shadow-sm w-full">
+      <div className="relative p-4 md:p-6 rounded-lg bg-linear-to-br from-muted/20 to-background border border-muted/30 shadow-xs w-full">
         <div className="flex flex-col items-center gap-4 w-full">
           <motion.div
             animate={{

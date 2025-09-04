@@ -60,9 +60,9 @@ const CustomScaleDesign = ({
                   h-14 
                   hover:bg-accent 
                   hover:text-accent-foreground
-                  peer-data-[state=checked]:border-[var(--primary-color)]
+                  peer-data-[state=checked]:border-(--primary-color)
                   peer-data-[state=checked]:bg-[color-mix(in_srgb,var(--primary-color)_20%,transparent)]
-                  [&:has([data-state=checked])]:border-[var(--primary-color)]
+                  [&:has([data-state=checked])]:border-(--primary-color)
                 ">
                 {scale}
               </Label>

@@ -111,7 +111,7 @@ const WaitlistForm = () => {
                 <Input
                   type="email"
                   placeholder={t("label_wl_email_ph")}
-                  className="rounded-xl px-5 py-4 text-base border border-foreground/20 bg-background text-foreground shadow-sm focus:ring-2 focus:ring-primary focus:outline-none transition-all duration-300"
+                  className="rounded-xl px-5 py-4 text-base border border-foreground/20 bg-background text-foreground shadow-xs focus:ring-2 focus:ring-primary focus:outline-hidden transition-all duration-300"
                   required
                   {...field}
                 />
@@ -124,7 +124,7 @@ const WaitlistForm = () => {
               name="purpose"
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-full rounded-xl px-5 py-4 text-left text-base border border-foreground/20 bg-background text-foreground shadow-sm focus:ring-2 focus:ring-primary focus:outline-none transition-all duration-300">
+                  <SelectTrigger className="w-full rounded-xl px-5 py-4 text-left text-base border border-foreground/20 bg-background text-foreground shadow-xs focus:ring-2 focus:ring-primary focus:outline-hidden transition-all duration-300">
                     <SelectValue placeholder="Qual será o seu uso principal?" />
                   </SelectTrigger>
                   <SelectContent>

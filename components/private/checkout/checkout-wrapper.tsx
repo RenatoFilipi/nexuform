@@ -12,13 +12,13 @@ const CheckoutWrapper = () => {
   const t = useTranslations("app");
 
   return (
-    <div className="flex justify-center items-center min-h-dvh bg-gradient-to-br from-background/95 via-background to-muted/30 p-4">
+    <div className="flex justify-center items-center min-h-dvh bg-linear-to-br from-background/95 via-background to-muted/30 p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="w-full max-w-lg">
-        <Card className="p-8 sm:p-10 shadow-2xl overflow-hidden relative backdrop-blur-sm">
+        <Card className="p-8 sm:p-10 shadow-2xl overflow-hidden relative backdrop-blur-xs">
           <div className="relative z-10 flex flex-col items-center gap-8 text-center">
             {/* Logo/Brand with subtle animation */}
             <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>

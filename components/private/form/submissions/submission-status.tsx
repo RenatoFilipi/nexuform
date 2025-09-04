@@ -80,7 +80,7 @@ const SubmissionStatus = ({ submission, setState }: { submission: ESubmission; s
   };
 
   return (
-    <div className="inline-flex -space-x-px divide-x divide-primary-foreground/30 shadow-sm shadow-black/5 rtl:space-x-reverse w-full sm:w-fit">
+    <div className="inline-flex -space-x-px divide-x divide-primary-foreground/30 shadow-xs shadow-black/5 rtl:space-x-reverse w-full sm:w-fit">
       <Button
         variant={"secondary"}
         disabled={appState === "loading"}

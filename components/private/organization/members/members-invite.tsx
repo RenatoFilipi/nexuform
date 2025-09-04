@@ -32,7 +32,7 @@ const MembersInvite = ({ children }: { children: ReactNode }) => {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-      <AlertDialogOverlay className="backdrop-blur-sm">
+      <AlertDialogOverlay className="backdrop-blur-xs">
         <AlertDialogContent className="flex flex-col w-full sm:max-w-xl">
           <AlertDialogHeader>
             <AlertDialogTitle>{t("label_invite_member")}</AlertDialogTitle>
@@ -193,11 +193,11 @@ const UpgradeToPro = () => {
   const app = useAppStore();
 
   return (
-    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-primary to-purple-600 text-white">
+    <Card className="relative overflow-hidden border-0 bg-linear-to-br from-primary to-purple-600 text-white">
       <div className="relative z-10 p-6">
         <div className="flex flex-col space-y-4">
           <div className="flex items-center gap-3">
-            <div className="rounded-lg bg-white/20 p-2 backdrop-blur-sm">
+            <div className="rounded-lg bg-white/20 p-2 backdrop-blur-xs">
               <ZapIcon className="h-6 w-6 text-white" />
             </div>
             <h3 className="text-xl font-bold">{t("label_upgrade_pro")}</h3>

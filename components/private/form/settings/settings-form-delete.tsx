@@ -35,7 +35,7 @@ const SettingsFormDelete = ({
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-      <AlertDialogOverlay className="backdrop-blur-sm">
+      <AlertDialogOverlay className="backdrop-blur-xs">
         <AlertDialogContent className="flex flex-col w-full max-w-2xl">
           <AlertDialogHeader>
             <AlertDialogTitle>{t("label_absolute_delete_form")}</AlertDialogTitle>
@@ -69,7 +69,7 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
 
   return (
     <div className="flex flex-1 flex-col justify-between gap-6">
-      <div className="relative p-8 rounded-2xl bg-gradient-to-br from-muted/20 to-background border border-muted/30 shadow-lg h-full flex flex-col justify-center items-center w-full overflow-hidden">
+      <div className="relative p-8 rounded-2xl bg-linear-to-br from-muted/20 to-background border border-muted/30 shadow-lg h-full flex flex-col justify-center items-center w-full overflow-hidden">
         <div className="flex justify-center items-center py-14 flex-col gap-8">
           <motion.div
             animate={{
@@ -88,7 +88,7 @@ const Body = ({ setState, formId, formName }: { setState: TSetState<boolean>; fo
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="flex flex-col items-center gap-4 p-4 bg-destructive/10 rounded-xl border border-muted/20 shadow-sm backdrop-blur-sm">
+            className="flex flex-col items-center gap-4 p-4 bg-destructive/10 rounded-xl border border-muted/20 shadow-xs backdrop-blur-xs">
             <LayersIcon className="text-destructive w-8 h-8" />
           </motion.div>
           <div className="flex flex-col gap-6 items-center text-center">

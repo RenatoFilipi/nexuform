@@ -170,7 +170,7 @@ const ShareQrCode = () => {
         <p className="text-sm text-muted-foreground">{t("desc_qr_share")}</p>
       </div>
       <div className="flex flex-col items-center gap-6">
-        <div ref={qrCodeRef} className="bg-foreground p-3 rounded shadow-sm border border-muted-foreground/10">
+        <div ref={qrCodeRef} className="bg-foreground p-3 rounded shadow-xs border border-muted-foreground/10">
           <QRCodeSVG value={fullUrl} size={170} level="H" />
         </div>
         <Button onClick={downloadQRCode} disabled={isGenerating} className="sm:w-full gap-2" variant="outline">

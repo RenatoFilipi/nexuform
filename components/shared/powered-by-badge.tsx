@@ -22,9 +22,9 @@ const PoweredByBadge = ({ version = "default" }: { version?: TVersion }) => {
   }
   if (version === "gradient") {
     return (
-      <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 hover:from-blue-500/15 hover:to-purple-500/15 transition-colors rounded-lg px-4 py-2 backdrop-blur-sm w-fit">
+      <div className="inline-flex items-center gap-2 bg-linear-to-r from-blue-500/10 to-purple-500/10 hover:from-blue-500/15 hover:to-purple-500/15 transition-colors rounded-lg px-4 py-2 backdrop-blur-xs w-fit">
         <SparklesIcon className="w-4 h-4 text-purple-500" />
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 text-sm font-bold">
+        <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600 text-sm font-bold">
           Powered by {APP_NAME}
         </span>
       </div>
@@ -32,7 +32,7 @@ const PoweredByBadge = ({ version = "default" }: { version?: TVersion }) => {
   }
   if (version === "premium") {
     return (
-      <div className="inline-flex items-center gap-2 bg-amber-50/80 hover:bg-amber-50 dark:bg-amber-900/20 dark:hover:bg-amber-900/30 transition-colors rounded-full px-4 py-1.5 border border-amber-200 dark:border-amber-700/50 shadow-sm dark:shadow-none w-fit">
+      <div className="inline-flex items-center gap-2 bg-amber-50/80 hover:bg-amber-50 dark:bg-amber-900/20 dark:hover:bg-amber-900/30 transition-colors rounded-full px-4 py-1.5 border border-amber-200 dark:border-amber-700/50 shadow-xs dark:shadow-none w-fit">
         <BadgeCheckIcon className="w-4 h-4 text-amber-600 dark:text-amber-400" />
         <span className="text-amber-900 dark:text-amber-100 text-sm font-semibold">{APP_NAME}</span>
         <span className="text-amber-600/80 dark:text-amber-400/90 text-xs font-medium">PRO</span>
@@ -40,7 +40,7 @@ const PoweredByBadge = ({ version = "default" }: { version?: TVersion }) => {
     );
   }
   return (
-    <div className="inline-flex items-center gap-2 bg-foreground/5 hover:bg-foreground/10 transition-colors rounded px-4 py-1.5 border border-foreground/5 shadow-sm w-fit">
+    <div className="inline-flex items-center gap-2 bg-foreground/5 hover:bg-foreground/10 transition-colors rounded px-4 py-1.5 border border-foreground/5 shadow-xs w-fit">
       <span className="text-foreground/80 text-sm font-medium">Powered by</span>
       <span className="text-foreground font-bold">{APP_NAME}</span>
       <ArrowUpRightIcon className="w-4 h-4" />

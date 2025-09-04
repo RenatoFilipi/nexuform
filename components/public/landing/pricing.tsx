@@ -61,7 +61,7 @@ const PricingCard = ({ plan }: { plan: IPlan }) => {
     <Card
       className={`relative flex flex-col h-full p-6 rounded-3xl backdrop-blur-lg border border-foreground/10 shadow-xl transition-all duration-300 hover:shadow-3xl ${
         plan.isMostPopular
-          ? "ring-2 ring-primary/40 bg-gradient-to-br from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10"
+          ? "ring-2 ring-primary/40 bg-linear-to-br from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10"
           : "bg-card/80 hover:bg-card/90 hover:border-muted-foreground/25"
       }`}>
       {plan.isMostPopular && (

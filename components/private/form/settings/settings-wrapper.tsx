@@ -217,7 +217,7 @@ const SettingsLabelColor = () => {
                 <button
                   key={index}
                   onClick={() => onColorChange(color)}
-                  className={`w-8 h-8 rounded-full cursor-pointer transition-all hover:scale-110 shadow-sm ${
+                  className={`w-8 h-8 rounded-full cursor-pointer transition-all hover:scale-110 shadow-xs ${
                     labelColor === color ? "ring-2 ring-offset-2 ring-primary" : ""
                   }`}
                   style={{ backgroundColor: color }}

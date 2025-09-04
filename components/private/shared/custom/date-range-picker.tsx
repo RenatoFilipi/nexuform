@@ -256,7 +256,7 @@ const DateRangePicker = ({ className, initialRange, onChange, align }: IProps) =
               {/* Calendar column */}
               <div className="flex flex-col relative w-full">
                 {!isAllowedCustom && (
-                  <div className="absolute inset-0 bg-background/40 backdrop-blur z-10 flex flex-col items-center justify-center gap-4 p-4">
+                  <div className="absolute inset-0 bg-background/40 backdrop-blur-sm z-10 flex flex-col items-center justify-center gap-4 p-4">
                     <div className="relative group">
                       <div className="">
                         <PlanBadge type="pro" size={36} />

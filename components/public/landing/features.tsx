@@ -126,7 +126,7 @@ const Features = () => {
                   <div className="flex flex-col gap-4">
                     <motion.div
                       variants={iconVariants}
-                      className={`p-3 rounded-xl ${feature.bgColor} w-fit shadow-sm border border-muted-foreground/15 group-hover:border-primary/60`}>
+                      className={`p-3 rounded-xl ${feature.bgColor} w-fit shadow-xs border border-muted-foreground/15 group-hover:border-primary/60`}>
                       <feature.icon className={`h-6 w-6 ${feature.color}`} />
                     </motion.div>
                     <h3 className="text-xl font-semibold text-foreground">{feature.title}</h3>
